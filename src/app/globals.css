@@ -1,0 +1,136 @@
+@import "tailwindcss";
+@import "@heroui/styles";
+
+/*
+ * HeroUI Theme Customization
+ * Add this to your global.css after importing @heroui/styles
+ * Only includes base variables from variables.css
+ * @see https://heroui.com/docs/react/getting-started/theming
+ */
+
+:root,
+.light,
+.default,
+[data-theme="light"],
+[data-theme="default"] {
+  /* Theme Colors (Light Mode) */
+  --accent: oklch(74.72% 0.1459 239.64);
+  --accent-foreground: oklch(15% 0.0292 239.64);
+  --background: oklch(97.02% 0.0200 239.64);
+  --border: oklch(90.00% 0.0200 239.64);
+  --danger: oklch(65.32% 0.2421 24.04);
+  --danger-foreground: oklch(99.11% 0 0);
+  --default: oklch(94.00% 0.0200 239.64);
+  --default-foreground: oklch(21.03% 0.0059 239.64);
+  --field-background: oklch(100.00% 0.0100 239.64);
+  --field-border: transparent;
+  --field-foreground: oklch(21.03% 0.0200 239.64);
+  --field-placeholder: oklch(55.17% 0.0400 239.64);
+  --focus: oklch(74.72% 0.1459 239.64);
+  --foreground: oklch(21.03% 0.0200 239.64);
+  --muted: oklch(55.17% 0.0400 239.64);
+  --overlay: oklch(100.00% 0.0060 239.64);
+  --overlay-foreground: oklch(21.03% 0.0200 239.64);
+  --scrollbar: oklch(87.10% 0.0200 239.64);
+  --segment: oklch(100.00% 0.0200 239.64);
+  --segment-foreground: oklch(21.03% 0.0200 239.64);
+  --separator: oklch(92.00% 0.0200 239.64);
+  --success: oklch(73.29% 0.2012 149.11);
+  --success-foreground: oklch(21.03% 0.0059 149.11);
+  --surface: oklch(100.00% 0.0100 239.64);
+  --surface-foreground: oklch(21.03% 0.0200 239.64);
+  --surface-secondary: oklch(95.24% 0.0160 239.64);
+  --surface-secondary-foreground: oklch(21.03% 0.0200 239.64);
+  --surface-tertiary: oklch(93.73% 0.0160 239.64);
+  --surface-tertiary-foreground: oklch(21.03% 0.0200 239.64);
+  --warning: oklch(78.19% 0.1648 70.63);
+  --warning-foreground: oklch(21.03% 0.0059 70.63);
+
+  /* Border Radius */
+  --radius: 0.5rem;
+  --field-radius: 1rem;
+
+  /* Font Family */
+  /* Make sure to load Instrument Sans font in your app */
+  --font-sans: var(--font-instrument-sans);
+}
+
+.dark,
+[data-theme="dark"] {
+  color-scheme: dark;
+  /* Theme Colors (Dark Mode) */
+  --accent: oklch(74.72% 0.1459 239.64);
+  --accent-foreground: oklch(15% 0.0292 239.64);
+  --background: oklch(12.00% 0.0200 239.64);
+  --border: oklch(28.00% 0.0200 239.64);
+  --danger: oklch(59.40% 0.2046 22.93);
+  --danger-foreground: oklch(99.11% 0 0);
+  --default: oklch(27.40% 0.0200 239.64);
+  --default-foreground: oklch(99.11% 0 0);
+  --field-background: oklch(21.03% 0.0400 239.64);
+  --field-border: transparent;
+  --field-foreground: oklch(99.11% 0.0200 239.64);
+  --field-placeholder: oklch(70.50% 0.0400 239.64);
+  --focus: oklch(74.72% 0.1459 239.64);
+  --foreground: oklch(99.11% 0.0200 239.64);
+  --muted: oklch(70.50% 0.0400 239.64);
+  --overlay: oklch(21.03% 0.0400 239.64);
+  --overlay-foreground: oklch(99.11% 0.0200 239.64);
+  --scrollbar: oklch(70.50% 0.0200 239.64);
+  --segment: oklch(39.64% 0.0200 239.64);
+  --segment-foreground: oklch(99.11% 0.0200 239.64);
+  --separator: oklch(25.00% 0.0200 239.64);
+  --success: oklch(73.29% 0.2012 149.11);
+  --success-foreground: oklch(21.03% 0.0059 149.11);
+  --surface: oklch(21.03% 0.0400 239.64);
+  --surface-foreground: oklch(99.11% 0.0200 239.64);
+  --surface-secondary: oklch(25.70% 0.0300 239.64);
+  --surface-secondary-foreground: oklch(99.11% 0.0200 239.64);
+  --surface-tertiary: oklch(27.21% 0.0300 239.64);
+  --surface-tertiary-foreground: oklch(99.11% 0.0200 239.64);
+  --warning: oklch(82.03% 0.1444 74.64);
+  --warning-foreground: oklch(21.03% 0.0059 74.64);
+}
+@layer components {
+  .page-content {
+    @apply p-1 md:px-4 lg:px-8 md:py-1 lg:py-3 space-y-4 md:space-y-6 text-xs md:text-base;
+  }
+
+  .table__column {
+    @apply px-4 py-2.5 text-left text-xs md:text-base font-medium;
+  }
+
+  .table__cell {
+    @apply px-2 lg:px-4 py-3 text-xs md:text-base whitespace-nowrap;
+  }
+
+  .table__footer {
+    @apply flex items-center px-4 py-2.5;
+  }
+
+  .pulse-pink {
+      animation: pulse-shadow 2s infinite;
+  }
+
+  @keyframes pulse-shadow {
+      0% { box-shadow: 0 0 0 0 rgba(255, 75, 145, 0.4); transform: scale(1); }
+      70% { box-shadow: 0 0 0 15px rgba(255, 75, 145, 0); transform: scale(1.02); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 75, 145, 0); transform: scale(1); }
+  }
+
+  .card-hover:hover {
+    transform: translateY(-8px);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  
+  .shimmer-bar {
+      background: linear-gradient(90deg, var(--success) 0%, #5af9f3 50%, var(--success) 100%);
+      background-size: 200% 100%;
+      animation: shimmer 2s infinite linear;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+}

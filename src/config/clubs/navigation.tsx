@@ -1,0 +1,75 @@
+import { NavItem } from "@/ui";
+import {
+  ArrowDataTransferHorizontalIcon,
+  Building03FreeIcons,
+  Building03Icon,
+  Calendar03Icon,
+  Calendar04Icon,
+  CheckmarkSquare03Icon,
+  DashboardSquare02Icon,
+  DistributeVerticalBottomIcon,
+  Flag03Icon,
+  IdentityCardIcon,
+  Layers01Icon,
+  Mortarboard02Icon,
+  Structure04FreeIcons,
+  Structure04Icon,
+  StudentIcon,
+  TaskDone01Icon,
+  UserGroupIcon,
+  UserIcon,
+  UserMultipleIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+
+export const itemsNavigationClubs: NavItem[] = [
+  {
+    label: "Dashboard",
+    href: "dashboard",
+    action: "dashboard",
+    subject: "home",
+    icon: <HugeiconsIcon icon={DashboardSquare02Icon} />,
+  },
+  {
+    label: "Temporadas",
+    href: "seasons",
+    action: "seasons",
+    subject: "home",
+    icon: <HugeiconsIcon icon={Calendar04Icon} />,
+  },
+  {
+    label: "Clubes",
+    href: "manage",
+    action: "clubs",
+    subject: "home",
+    icon: <HugeiconsIcon icon={Flag03Icon} />,
+  },
+  // {
+  //   label: "Equipos",
+  //   href: "teams",
+  //   action: "teams",
+  //   subject: "home",
+  //   icon: <HugeiconsIcon icon={Structure04FreeIcons} />,
+  // },
+  {
+    label: "Pases",
+    href: "passes",
+    action: "passes",
+    subject: "home",
+    icon: <HugeiconsIcon icon={ArrowDataTransferHorizontalIcon} />,
+  },
+  {
+    label: "Jugadores",
+    href: "players",
+    action: "players",
+    subject: "home",
+    icon: <HugeiconsIcon icon={UserMultipleIcon} />,
+  },
+  {
+    label: "Asistencia",
+    href: "attendance",
+    action: "attendance",
+    subject: "home",
+    icon: <HugeiconsIcon icon={TaskDone01Icon} />,
+  },
+];
