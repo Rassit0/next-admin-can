@@ -5,12 +5,7 @@ import {
   getPlayerPasses,
   TablePlayerPasses,
 } from "@/modules/players-passes";
-import {
-  Gender,
-  getPlayerById,
-  getPlayers,
-  TablePlayers,
-} from "@/modules/players";
+import { getPlayerById, getPlayers, TablePlayers } from "@/modules/players";
 import {
   ErrorPage,
   HeaderPage,
@@ -31,6 +26,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { notFound, redirect } from "next/navigation";
 import { Badge, Chip } from "@heroui/react";
+import { TGender } from "@/modules/persons";
 
 interface Props {
   searchParams: Promise<{
@@ -81,12 +77,12 @@ export default async function PassesPage({ searchParams, params }: Props) {
     return <ErrorPage message={disciplineOptionsResponse.message} />;
   }
 
-  const genderMap: Record<Gender, string> = {
+  const genderMap: Record<TGender, string> = {
     MALE: "Masculino",
     FEMALE: "Femenino",
   };
 
-  const genderClassMap: Record<Gender, string> = {
+  const genderClassMap: Record<TGender, string> = {
     MALE: "bg-blue-400 text-blue-50",
     FEMALE: "bg-pink-400 text-pink-50",
   };
@@ -122,13 +118,13 @@ export default async function PassesPage({ searchParams, params }: Props) {
             </Badge.Anchor>
           }
           description="Historial de pases del jugador."
-          action={
-            <AddModal
-              player={playerResponse.data}
-              // activePassesOptions={activePassesOptionsResponse.data.data}
-              disciplineOptions={disciplineOptionsResponse.data.data}
-            />
-          }
+          // action={
+          //   <AddModal
+          //     player={playerResponse.data}
+          //     // activePassesOptions={activePassesOptionsResponse.data.data}
+          //     disciplineOptions={disciplineOptionsResponse.data.data}
+          //   />
+          // }
           urlBase="/admin"
           breadcrumb={[
             { label: "Directorio de Jugadores", href: "players" },

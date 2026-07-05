@@ -3,7 +3,6 @@ import { Button } from "@heroui/react";
 import { ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useRouter } from "next/navigation";
-import { ActivityType } from "@/modules/activities";
 
 interface Props {
   id: string;

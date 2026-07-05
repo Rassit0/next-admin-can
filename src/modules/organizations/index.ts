@@ -9,7 +9,6 @@ export * from "./components/modal/DeleteModal";
 export * from "./components/ButtonAddActivity";
 export * from "./components/ButtonEditActivity";
 export * from "./components/ButtonManageActivities";
-export * from "./components/tabs-navigation/TabsNavigation";
 
 // Actions
 export * from "./actions/add";
