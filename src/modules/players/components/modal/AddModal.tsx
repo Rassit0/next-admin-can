@@ -44,7 +44,6 @@ export const AddModal = ({
     <Modal key={"cover"}>
       {!isIcon && (
         <Button
-          className="hidden lg:flex"
           variant="primary"
           onPress={() => state.open()}
           isIconOnly={isIcon}
@@ -55,7 +54,6 @@ export const AddModal = ({
       )}
       {isIcon && (
         <Button
-          className="hidden lg:flex"
           variant="primary"
           onPress={() => state.open()}
           isIconOnly={isIcon}

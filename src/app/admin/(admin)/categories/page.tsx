@@ -53,7 +53,10 @@ export default async function DisciplinesPage({ searchParams }: Props) {
         title="Gestión de Categorías"
         description="Administra las categorías del club"
         action={
-          <AddModal disciplinesOptions={disciplinesOptionsResponse.data.data} />
+          <AddModal
+            disciplinesOptions={disciplinesOptionsResponse.data.data}
+            buttonFloatingMobile
+          />
         }
       />
       {/* <!-- Search and Filter Bar (Tonal Architecture) --> */}
