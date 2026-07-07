@@ -85,8 +85,8 @@ export default async function SeasonsPage({ searchParams, params }: Props) {
         </Card.Content>
       </Card>
       <HeaderPage
-        title={<span className="font-bold">Directorio de Clubes</span>}
-        // description="Administra los clubes deportivos del país"
+        title="Gestión de Temporadas"
+        description="Administra las temporadas del club"
         action={
           <AddModal
             institutionId={institution.id}
