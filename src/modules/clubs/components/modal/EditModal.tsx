@@ -70,7 +70,7 @@ export const EditModal = ({
                 Editar información del club.
               </p>
             </Modal.Header>
-            <Modal.Body className="p-6">
+            <Modal.Body className="p-0 md:p-6">
               <FormClub
                 formId="edit-club-form"
                 club={club}

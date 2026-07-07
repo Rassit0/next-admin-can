@@ -55,7 +55,7 @@ export const EditModal = ({
                 Agrega una nueva disciplina al sistema.
               </p>
             </Modal.Header>
-            <Modal.Body className="p-6">
+            <Modal.Body className="p-0 md:p-6">
               <FormLocation
                 formId="edit-location-form"
                 location={location}

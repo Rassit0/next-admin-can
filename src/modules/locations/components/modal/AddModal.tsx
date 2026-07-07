@@ -60,7 +60,7 @@ export const AddModal = () => {
                 Agrega una nueva instalación al sistema.
               </p>
             </Modal.Header>
-            <Modal.Body className="p-6">
+            <Modal.Body className="p-0 md:p-6">
               <FormLocation
                 formId="add-location-form"
                 onSubmited={() => state.close()}

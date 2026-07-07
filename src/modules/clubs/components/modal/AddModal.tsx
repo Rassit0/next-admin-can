@@ -44,7 +44,7 @@ export const AddModal = ({ disciplineId }: Props) => {
                 Agrega un nuevo club al sistema.
               </p>
             </Modal.Header>
-            <Modal.Body className="p-6">
+            <Modal.Body className="p-0 md:p-6">
               <FormClub
                 disciplineId={disciplineId}
                 formId="add-club-form"

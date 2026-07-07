@@ -330,7 +330,7 @@ export default function DashboardPage() {
         </div>
       </section>
       {/* <!-- Floating Confirmation Button (Action Contextual) --> */}
-      <button className="md:hidden fixed bottom-28 right-6 bg-accent text-white p-4 rounded-2xl shadow-xl flex items-center gap-2 active:scale-90 transition-transform z-40">
+      <button className="hidden fixed bottom-28 right-6 bg-accent text-white p-4 rounded-2xl shadow-xl flex items-center gap-2 active:scale-90 transition-transform z-40">
         <HugeiconsIcon icon={SaveIcon} />
         {/* <span className="font-headline font-bold uppercase tracking-wider text-xs">
                 Guardar Asistencia

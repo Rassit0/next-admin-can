@@ -70,7 +70,7 @@ export const AddModal = ({
                 Agrega una nueva categoría al sistema.
               </p>
             </Modal.Header>
-            <Modal.Body className="p-6">
+            <Modal.Body className="p-0 md:p-6">
               <FormCategory
                 formId="add-category-form"
                 disciplinesOptions={disciplinesOptions}
