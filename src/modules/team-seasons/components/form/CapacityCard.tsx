@@ -28,7 +28,7 @@ export const CapacityCard = ({
   handleRemoveError,
 }: Props) => {
   return (
-    <Card className="p-8 shadow-[0px_12px_32px_rgba(25,28,29,0.06)] relative overflow-hidden border border-l-4 border-l-accent">
+    <Card className="lg:p-8 shadow-[0px_12px_32px_rgba(25,28,29,0.06)] relative overflow-hidden border border-l-4 border-l-accent">
       <Card.Header className="flex flex-row items-center gap-3 mb-6">
         <div className="w-10 h-10 rounded-xl bg-accent-soft flex items-center justify-center">
           <HugeiconsIcon icon={UserGroupIcon} className="text-accent" />

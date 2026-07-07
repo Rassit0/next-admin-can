@@ -1,7 +1,14 @@
 import { Calendar, Card, Select, TextArea, TextField } from "@heroui/react";
 import { Calendar04Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { ComboBox, Input, ListBox, Label, FieldError, Alert } from "@heroui/react";
+import {
+  ComboBox,
+  Input,
+  ListBox,
+  Label,
+  FieldError,
+  Alert,
+} from "@heroui/react";
 import { Dispatch, SetStateAction } from "react";
 import { DateValue } from "@internationalized/date";
 import { Gender, ICategoryOption, ISeasonOption } from "@/modules/team-seasons";
@@ -46,7 +53,7 @@ export const BasicInfoCard = ({
   handleRemoveError,
 }: Props) => {
   return (
-    <Card className="p-8 shadow-[0px_12px_32px_rgba(25,28,29,0.06)]  border border-l-4 border-l-accent">
+    <Card className="lg:p-8 shadow-[0px_12px_32px_rgba(25,28,29,0.06)]  border border-l-4 border-l-accent">
       <Card.Header className="flex flex-row items-center gap-3 mb-6">
         <div className="w-10 h-10 rounded-xl bg-accent-soft flex items-center justify-center">
           <HugeiconsIcon icon={Calendar04Icon} className="text-accent" />
@@ -115,9 +122,18 @@ export const BasicInfoCard = ({
           <Alert status="accent">
             <Alert.Indicator />
             <Alert.Content>
-              <Alert.Title>Anulación de Edades de Categoría (Opcional)</Alert.Title>
+              <Alert.Title>
+                Anulación de Edades de Categoría (Opcional)
+              </Alert.Title>
               <Alert.Description>
-                Por defecto, el sistema valida la edad de los atletas usando el rango de edades configurado en la Categoría y comparándolo contra su <strong>edad deportiva actual (Año actual - Año de Nacimiento)</strong>. Si deseas sobrescribir ese cálculo para esta oferta en específico, completa los siguientes campos. 
+                Por defecto, el sistema valida la edad de los atletas usando el
+                rango de edades configurado en la Categoría y comparándolo
+                contra su{" "}
+                <strong>
+                  edad deportiva actual (Año actual - Año de Nacimiento)
+                </strong>
+                . Si deseas sobrescribir ese cálculo para esta oferta en
+                específico, completa los siguientes campos.
               </Alert.Description>
             </Alert.Content>
           </Alert>
@@ -141,7 +157,9 @@ export const BasicInfoCard = ({
               handleRemoveError("minBirthYear");
             }}
           />
-          <FieldError children={errors.minBirthYear && <> {errors.minBirthYear}</>} />
+          <FieldError
+            children={errors.minBirthYear && <> {errors.minBirthYear}</>}
+          />
         </TextField>
         <TextField
           variant="secondary"
@@ -161,7 +179,9 @@ export const BasicInfoCard = ({
               handleRemoveError("maxBirthYear");
             }}
           />
-          <FieldError children={errors.maxBirthYear && <> {errors.maxBirthYear}</>} />
+          <FieldError
+            children={errors.maxBirthYear && <> {errors.maxBirthYear}</>}
+          />
         </TextField>
         <TextField
           className="w-full col-span-full"

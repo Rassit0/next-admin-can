@@ -14,7 +14,10 @@ import {
 import { Money03Icon, UnavailableIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Dispatch, SetStateAction } from "react";
-import { SeasonBillingType, BillingFrequency } from "../../interfaces/team-season.interface";
+import {
+  SeasonBillingType,
+  BillingFrequency,
+} from "../../interfaces/team-season.interface";
 
 interface Props {
   registrationFee: string | null;
@@ -65,7 +68,7 @@ export const FinancialStructureCard = ({
   handleRemoveError,
 }: Props) => {
   return (
-    <Card className="p-8 shadow-[0px_12px_32px_rgba(25,28,29,0.06)] relative overflow-hidden border border-l-4 border-l-tertiary">
+    <Card className="lg:p-8 shadow-[0px_12px_32px_rgba(25,28,29,0.06)] relative overflow-hidden border border-l-4 border-l-tertiary">
       <Card.Header className="flex flex-row items-center gap-3 mb-8">
         <div className="w-10 h-10 rounded-xl bg-warning-soft flex items-center justify-center">
           <HugeiconsIcon icon={Money03Icon} className="text-warning" />
@@ -80,7 +83,9 @@ export const FinancialStructureCard = ({
           <Alert.Content>
             <Alert.Title>Cobros Automatizados</Alert.Title>
             <Alert.Description>
-              Configura cómo el sistema facturará automáticamente a los atletas de esta temporada. El modelo de facturación determina si se cobra cada ciclo de tiempo o si se hace un único pago por adelantado.
+              Configura cómo el sistema facturará automáticamente a los atletas
+              de esta temporada. El modelo de facturación determina si se cobra
+              cada ciclo de tiempo o si se hace un único pago por adelantado.
             </Alert.Description>
           </Alert.Content>
         </Alert>
@@ -105,7 +110,10 @@ export const FinancialStructureCard = ({
           </Select.Trigger>
           <Select.Popover>
             <ListBox>
-              <ListBox.Item id="MONTHLY_ONLY" textValue="Pago Recurrente (Según Frecuencia)">
+              <ListBox.Item
+                id="MONTHLY_ONLY"
+                textValue="Pago Recurrente (Según Frecuencia)"
+              >
                 Pago Recurrente (Según Frecuencia)
                 <ListBox.ItemIndicator />
               </ListBox.Item>
@@ -129,8 +137,10 @@ export const FinancialStructureCard = ({
             children={errors.billingType && <> {errors.billingType}</>}
           />
           <Description className="text-xs text-muted-foreground mt-1">
-            <b>Recurrente:</b> genera cobros iterativos (semanal, quincenal, o mensual). <br/>
-            <b>Único:</b> cobra el valor de toda la temporada por adelantado. <br/>
+            <b>Recurrente:</b> genera cobros iterativos (semanal, quincenal, o
+            mensual). <br />
+            <b>Único:</b> cobra el valor de toda la temporada por adelantado.{" "}
+            <br />
             <b>Ambos:</b> permite al cliente elegir su modalidad al inscribirse.
           </Description>
         </Select>
@@ -160,7 +170,10 @@ export const FinancialStructureCard = ({
                   Mensual (Cada mes)
                   <ListBox.ItemIndicator />
                 </ListBox.Item>
-                <ListBox.Item id="BIWEEKLY" textValue="Quincenal (Cada 14 días)">
+                <ListBox.Item
+                  id="BIWEEKLY"
+                  textValue="Quincenal (Cada 14 días)"
+                >
                   Quincenal (Cada 14 días)
                   <ListBox.ItemIndicator />
                 </ListBox.Item>
@@ -171,10 +184,13 @@ export const FinancialStructureCard = ({
               </ListBox>
             </Select.Popover>
             <FieldError
-              children={errors.billingFrequency && <> {errors.billingFrequency}</>}
+              children={
+                errors.billingFrequency && <> {errors.billingFrequency}</>
+              }
             />
             <Description className="text-xs text-muted-foreground mt-1">
-              Determina cada cuánto tiempo el sistema generará automáticamente un nuevo cobro por el valor de la Cuota Base.
+              Determina cada cuánto tiempo el sistema generará automáticamente
+              un nuevo cobro por el valor de la Cuota Base.
             </Description>
           </Select>
         )}
@@ -207,7 +223,9 @@ export const FinancialStructureCard = ({
               <InputGroup.Suffix>Bs.</InputGroup.Suffix>
             </InputGroup>
             <FieldError
-              children={errors.registrationFee && <> {errors.registrationFee}</>}
+              children={
+                errors.registrationFee && <> {errors.registrationFee}</>
+              }
             />
             <Description className="text-xs text-muted-foreground mt-1">
               Costo inicial y único cobrado al momento de inscribir al atleta.
@@ -223,7 +241,15 @@ export const FinancialStructureCard = ({
             type="text"
             isInvalid={!!errors.recurringFee || undefined}
           >
-            <Label>Cuota Base ({billingFrequency === "WEEKLY" ? "Semanal" : billingFrequency === "BIWEEKLY" ? "Quincenal" : "Mensual"})</Label>
+            <Label>
+              Cuota Base (
+              {billingFrequency === "WEEKLY"
+                ? "Semanal"
+                : billingFrequency === "BIWEEKLY"
+                  ? "Quincenal"
+                  : "Mensual"}
+              )
+            </Label>
             <InputGroup>
               <InputGroup.Prefix>$</InputGroup.Prefix>
               <InputGroup.Input
@@ -233,7 +259,9 @@ export const FinancialStructureCard = ({
                 type="number"
                 value={recurringFee || ""}
                 onChange={(e) => {
-                  setRecurringFee(e.target.value === "" ? null : e.target.value);
+                  setRecurringFee(
+                    e.target.value === "" ? null : e.target.value,
+                  );
                   handleRemoveError("recurringFee");
                 }}
               />
@@ -277,7 +305,8 @@ export const FinancialStructureCard = ({
               children={errors.seasonFee && <> {errors.seasonFee}</>}
             />
             <Description className="text-xs text-muted-foreground mt-1">
-              Monto total que se cobrará si el atleta decide pagar la temporada completa de golpe.
+              Monto total que se cobrará si el atleta decide pagar la temporada
+              completa de golpe.
             </Description>
           </TextField>
         )}
@@ -310,21 +339,29 @@ export const FinancialStructureCard = ({
               children={errors.billingDay && <> {errors.billingDay}</>}
             />
             <Description className="text-xs text-muted-foreground mt-1">
-              El día del mes (1 al 28) en que el sistema generará automáticamente los cargos para los inscritos en esta temporada.
+              El día del mes (1 al 28) en que el sistema generará
+              automáticamente los cargos para los inscritos en esta temporada.
             </Description>
           </NumberField>
         )}
 
         <div className="flex flex-col gap-4 mt-4 pt-4 border-t border-secondary">
-          <Label className="font-headline font-bold">Opciones de Prorrateo</Label>
-          
+          <Label className="font-headline font-bold">
+            Opciones de Prorrateo
+          </Label>
+
           <Alert status="accent">
             <Alert.Indicator />
             <Alert.Content>
               <Alert.Title>Cálculos Proporcionales (Prorrateos)</Alert.Title>
               <Alert.Description>
-                Activa estas opciones para que el motor de pagos asigne montos justos en función del día exacto en que el atleta inicie o termine su membresía. 
-                <br/><strong>Ejemplo:</strong> Si la cuota mensual es de 100 Bs. y el atleta se inscribe a mitad del mes, el sistema le generará automáticamente un cargo de 50 Bs.
+                Activa estas opciones para que el motor de pagos asigne montos
+                justos en función del día exacto en que el atleta inicie o
+                termine su membresía.
+                <br />
+                <strong>Ejemplo:</strong> Si la cuota mensual es de 100 Bs. y el
+                atleta se inscribe a mitad del mes, el sistema le generará
+                automáticamente un cargo de 50 Bs.
               </Alert.Description>
             </Alert.Content>
           </Alert>
@@ -339,7 +376,10 @@ export const FinancialStructureCard = ({
                   <Switch.Thumb />
                 </Switch.Control>
                 <Switch.Content>
-                  <span className="text-sm">Prorratear primera cuota recurrente (si no es ciclo completo)</span>
+                  <span className="text-sm">
+                    Prorratear primera cuota recurrente (si no es ciclo
+                    completo)
+                  </span>
                 </Switch.Content>
               </Switch>
               <Switch
@@ -350,7 +390,9 @@ export const FinancialStructureCard = ({
                   <Switch.Thumb />
                 </Switch.Control>
                 <Switch.Content>
-                  <span className="text-sm">Prorratear última cuota recurrente (al finalizar temporada)</span>
+                  <span className="text-sm">
+                    Prorratear última cuota recurrente (al finalizar temporada)
+                  </span>
                 </Switch.Content>
               </Switch>
               <Switch
@@ -361,7 +403,9 @@ export const FinancialStructureCard = ({
                   <Switch.Thumb />
                 </Switch.Control>
                 <Switch.Content>
-                  <span className="text-sm">Prorratear matrícula en función del avance de temporada</span>
+                  <span className="text-sm">
+                    Prorratear matrícula en función del avance de temporada
+                  </span>
                 </Switch.Content>
               </Switch>
             </>
@@ -376,7 +420,10 @@ export const FinancialStructureCard = ({
                 <Switch.Thumb />
               </Switch.Control>
               <Switch.Content>
-                <span className="text-sm">Prorratear tarifa de temporada (Pago único) en función del avance</span>
+                <span className="text-sm">
+                  Prorratear tarifa de temporada (Pago único) en función del
+                  avance
+                </span>
               </Switch.Content>
             </Switch>
           )}

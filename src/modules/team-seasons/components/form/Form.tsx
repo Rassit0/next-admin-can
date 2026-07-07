@@ -94,18 +94,16 @@ export const FormTeamSeason = ({
       ? teamSeason?.debtToleranceMonths
       : null,
   );
-  
-  const [prorateFirstRecurringFee, setProrateFirstRecurringFee] = useState<boolean>(
-    teamSeason?.prorateFirstRecurringFee ?? true
-  );
-  const [prorateLastRecurringFee, setProrateLastRecurringFee] = useState<boolean>(
-    teamSeason?.prorateLastRecurringFee ?? true
-  );
+
+  const [prorateFirstRecurringFee, setProrateFirstRecurringFee] =
+    useState<boolean>(teamSeason?.prorateFirstRecurringFee ?? true);
+  const [prorateLastRecurringFee, setProrateLastRecurringFee] =
+    useState<boolean>(teamSeason?.prorateLastRecurringFee ?? true);
   const [prorateRegistrationFee, setProrateRegistrationFee] = useState<boolean>(
-    teamSeason?.prorateRegistrationFee ?? false
+    teamSeason?.prorateRegistrationFee ?? false,
   );
   const [prorateSeasonFee, setProrateSeasonFee] = useState<boolean>(
-    teamSeason?.prorateSeasonFee ?? false
+    teamSeason?.prorateSeasonFee ?? false,
   );
 
   const [lateFeeEnabled, setLateFeeEnabled] = useState<boolean>(
@@ -163,8 +161,12 @@ export const FormTeamSeason = ({
         newErrors.registrationFee = "Debe ingresar el valor de la inscripción";
       }
     }
-    if ((billingType === "SINGLE_ONLY" || billingType === "BOTH") && seasonFee === null) {
-      newErrors.seasonFee = "Debe ingresar el valor para la tarifa de la temporada";
+    if (
+      (billingType === "SINGLE_ONLY" || billingType === "BOTH") &&
+      seasonFee === null
+    ) {
+      newErrors.seasonFee =
+        "Debe ingresar el valor para la tarifa de la temporada";
     }
     if (lateFeePerDay === null) {
       newErrors.lateFeePerDay = "Debe ingresar el valor de la multa por día";
@@ -179,17 +181,27 @@ export const FormTeamSeason = ({
     }
     if (billingType !== "SINGLE_ONLY") {
       if (!billingFrequency) {
-        newErrors.billingFrequency = "Debe ingresar la frecuencia de facturación";
+        newErrors.billingFrequency =
+          "Debe ingresar la frecuencia de facturación";
       }
-      
+
       if (billingDay === null) {
         newErrors.billingDay = "Debe ingresar el día de facturación";
       } else {
-        if (billingFrequency === "MONTHLY" && (billingDay < 1 || billingDay > 28)) {
+        if (
+          billingFrequency === "MONTHLY" &&
+          (billingDay < 1 || billingDay > 28)
+        ) {
           newErrors.billingDay = "Para mensual, el día debe ser entre 1 y 28";
-        } else if (billingFrequency === "WEEKLY" && (billingDay < 1 || billingDay > 7)) {
+        } else if (
+          billingFrequency === "WEEKLY" &&
+          (billingDay < 1 || billingDay > 7)
+        ) {
           newErrors.billingDay = "Para semanal, el día debe ser entre 1 y 7";
-        } else if (billingFrequency === "BIWEEKLY" && (billingDay < 1 || billingDay > 14)) {
+        } else if (
+          billingFrequency === "BIWEEKLY" &&
+          (billingDay < 1 || billingDay > 14)
+        ) {
           newErrors.billingDay = "Para quincenal, el día debe ser entre 1 y 14";
         }
       }
@@ -214,12 +226,19 @@ export const FormTeamSeason = ({
       categoryId: categoryId!,
       seasonId: seasonId!,
       gender: gender!,
-      billingDay: (billingType === "SINGLE_ONLY" || billingFrequency !== "MONTHLY") ? 1 : billingDay!,
+      billingDay:
+        billingType === "SINGLE_ONLY" || billingFrequency !== "MONTHLY"
+          ? 1
+          : billingDay!,
       registrationFee: billingType === "SINGLE_ONLY" ? null : registrationFee!,
       recurringFee: billingType === "SINGLE_ONLY" ? null : recurringFee!,
-      seasonFee: (billingType === "SINGLE_ONLY" || billingType === "BOTH") ? seasonFee! : null,
+      seasonFee:
+        billingType === "SINGLE_ONLY" || billingType === "BOTH"
+          ? seasonFee!
+          : null,
       billingType: billingType,
-      billingFrequency: billingType === "SINGLE_ONLY" ? "SINGLE" : billingFrequency,
+      billingFrequency:
+        billingType === "SINGLE_ONLY" ? "SINGLE" : billingFrequency,
       debtToleranceMonths: debtToleranceMonths!,
       prorateFirstRecurringFee,
       prorateLastRecurringFee,
@@ -347,7 +366,7 @@ export const FormTeamSeason = ({
         {/* <!-- Section 3: Políticas de Mora (Full Width Bottom) --> */}
         <div className="lg:col-span-12"></div>
         {/* <!-- Section 4: Estado Final (Floating Sticky-ish bottom or separate block) --> */}
-        <div className="lg:col-span-12 flex justify-end items-center gap-8 p-8 bg-surface-container-low rounded-full">
+        <div className="lg:col-span-12 flex justify-end items-center gap-8 p-4 lg:p-8 bg-surface-container-low rounded-full">
           <div className="flex items-center gap-4">
             <span className="text-sm font-bold text-on-surface-variant">
               Estado de la Oferta:
@@ -382,7 +401,7 @@ export const FormTeamSeason = ({
             </div>
           </div>
         </div>
-        
+
         {/* <!-- Section 5: Errores Globales --> */}
         {Object.keys(errors).length > 0 && (
           <div className="lg:col-span-12">

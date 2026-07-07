@@ -55,7 +55,7 @@ export const DelayPoliciesCard = ({
   }, [lateFeeEnabled]);
 
   return (
-    <Card className="p-8 shadow-[0px_12px_32px_rgba(25,28,29,0.06)] relative overflow-hidden border border-l-4 border-l-danger">
+    <Card className="lg:p-8 shadow-[0px_12px_32px_rgba(25,28,29,0.06)] relative overflow-hidden border border-l-4 border-l-danger">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-danger-soft  flex items-center justify-center">
@@ -78,7 +78,11 @@ export const DelayPoliciesCard = ({
             <Alert.Content>
               <Alert.Title>Motor de Recargos</Alert.Title>
               <Alert.Description>
-                Si habilitas esta opción, el sistema penalizará automáticamente a los atletas que no paguen a tiempo una vez transcurridos los Días de Gracia permitidos, sumando el costo de Mora por cada día de retraso a su factura. Adicionalmente, puede suspender automáticamente membresías que excedan el límite de deudas.
+                Si habilitas esta opción, el sistema penalizará automáticamente
+                a los atletas que no paguen a tiempo una vez transcurridos los
+                Días de Gracia permitidos, sumando el costo de Mora por cada día
+                de retraso a su factura. Adicionalmente, puede suspender
+                automáticamente membresías que excedan el límite de deudas.
               </Alert.Description>
             </Alert.Content>
           </Alert>
@@ -116,11 +120,15 @@ export const DelayPoliciesCard = ({
               >
                 <Label className="flex items-center gap-2 text-sm font-label font-bold">
                   <HugeiconsIcon icon={UnavailableIcon} />
-                  Ciclos de Mora para Suspensión ({
-                    billingFrequency === "WEEKLY" ? "Semanas" :
-                    billingFrequency === "BIWEEKLY" ? "Quincenas" :
-                    billingFrequency === "MONTHLY" ? "Meses" : "Ciclos"
-                  })
+                  Ciclos de Mora para Suspensión (
+                  {billingFrequency === "WEEKLY"
+                    ? "Semanas"
+                    : billingFrequency === "BIWEEKLY"
+                      ? "Quincenas"
+                      : billingFrequency === "MONTHLY"
+                        ? "Meses"
+                        : "Ciclos"}
+                  )
                 </Label>
                 <NumberField.Group>
                   <NumberField.DecrementButton />
@@ -135,15 +143,27 @@ export const DelayPoliciesCard = ({
                   }
                 />
                 <Description className="text-xs text-muted-foreground mt-1">
-                  Cantidad de <b>{
-                    billingFrequency === "WEEKLY" ? "semanas" :
-                    billingFrequency === "BIWEEKLY" ? "quincenas" :
-                    billingFrequency === "MONTHLY" ? "meses" : "ciclos"
-                  } calendario completos</b> de atraso permitidos antes de suspender al atleta. (Ej. 2 significa que se suspenderá si debe más de 2 {
-                    billingFrequency === "WEEKLY" ? "semanas" :
-                    billingFrequency === "BIWEEKLY" ? "quincenas" :
-                    billingFrequency === "MONTHLY" ? "meses" : "ciclos"
-                  } de su cuota base).
+                  Cantidad de{" "}
+                  <b>
+                    {billingFrequency === "WEEKLY"
+                      ? "semanas"
+                      : billingFrequency === "BIWEEKLY"
+                        ? "quincenas"
+                        : billingFrequency === "MONTHLY"
+                          ? "meses"
+                          : "ciclos"}{" "}
+                    calendario completos
+                  </b>{" "}
+                  de atraso permitidos antes de suspender al atleta. (Ej. 2
+                  significa que se suspenderá si debe más de 2{" "}
+                  {billingFrequency === "WEEKLY"
+                    ? "semanas"
+                    : billingFrequency === "BIWEEKLY"
+                      ? "quincenas"
+                      : billingFrequency === "MONTHLY"
+                        ? "meses"
+                        : "ciclos"}{" "}
+                  de su cuota base).
                 </Description>
               </NumberField>
               <div className="flex flex-row gap-4">
@@ -182,7 +202,8 @@ export const DelayPoliciesCard = ({
                     }
                   />
                   <Description className="text-xs text-muted-foreground mt-1">
-                    Monto extra diario cobrado al estar vencida la cuota recurrente.
+                    Monto extra diario cobrado al estar vencida la cuota
+                    recurrente.
                   </Description>
                 </TextField>
 
@@ -214,7 +235,8 @@ export const DelayPoliciesCard = ({
                     children={errors.graceDays && <> {errors.graceDays}</>}
                   />
                   <Description className="text-xs text-muted-foreground mt-1">
-                    Días de tolerancia tras la fecha de pago antes de aplicar multa.
+                    Días de tolerancia tras la fecha de pago antes de aplicar
+                    multa.
                   </Description>
                 </NumberField>
               </div>
