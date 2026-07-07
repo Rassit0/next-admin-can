@@ -53,7 +53,7 @@ export const AddModal = ({
       )}
       {isIcon && (
         <Button
-          className="hidden lg:flex"
+          // className="hidden lg:flex"
           variant="primary"
           onPress={() => state.open()}
           isIconOnly
@@ -85,7 +85,7 @@ export const AddModal = ({
                 <Modal.Heading>Agregar Miembrosdf</Modal.Heading>
               </div>
             </Modal.Header>
-            <Modal.Body className="p-6">
+            <Modal.Body className="p-0 md:p-6">
               <FormPerson
                 formId="add-person-form"
                 onSubmited={() => {

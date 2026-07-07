@@ -56,7 +56,7 @@ export const EditModal = ({
                 Agrega un nuevo equipo al sistema.
               </p>
             </Modal.Header>
-            <Modal.Body className="p-6">
+            <Modal.Body className="p-0 md:p-6">
               <FormTeam
                 formId="edit-team-form"
                 team={team}

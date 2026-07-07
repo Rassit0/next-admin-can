@@ -26,7 +26,7 @@ export default async function AdminLayout({
         urlBase={`/admin`}
       />
       {/* <!-- Main Content Area --> */}
-      <div className="lg:ml-64 min-h-screen transition-all duration-300 pb-24 md:pb-24 lg:pb-2">
+      <div className="lg:ml-64 min-h-screen transition-all duration-300 pb-16 lg:pb-2">
         <div className="max-w-400 mx-auto">
           {/* Container for ultra-wide screens */}
           {/* <!-- TopNavBar --> */}
