@@ -86,7 +86,7 @@ export const ButtonFloating = ({ className, icon, onPress, text }: Props) => {
       initial="visible"
       animate={hidden ? "hidden" : "visible"}
       // Mantenemos tu posicionamiento original
-      className={`fixed bottom-26.25 right-4 z-40 overflow-visible ${className}`}
+      className={`fixed bottom-20 right-4 z-40 overflow-visible ${className}`}
     >
       <Button
         isIconOnly={text ? false : true}

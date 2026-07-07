@@ -27,7 +27,7 @@ export const Item = ({ item, index, urlBase }: Props) => {
     <Link
       key={index}
       className={clsx(
-        "flex flex-col items-center justify-center rounded-2xl px-5 py-2 active:scale-90 transition-all duration-300",
+        "flex flex-col items-center justify-center rounded-2xl px-4 py-1 active:scale-90 transition-all duration-300",
         isActive
           ? "bg-sky-500 text-white shadow-lg shadow-sky-500/20"
           : "bg-sky-50 dark:bg-sky-900/30 text-sky-700 dark:text-sky-300",
