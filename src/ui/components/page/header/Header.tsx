@@ -24,7 +24,7 @@ export const HeaderPage = ({
   breadcrumb,
 }: Props) => {
   return (
-    <section className="flex flex-wrap flex-row justify-between items-center gap-4">
+    <section className="flex flex-wrap flex-row justify-between items-center gap-4 mb-0 lg:mb-4">
       <div className="flex justify-between flex-wrap">
         <div>
           <div className="flex flex-col">
@@ -60,9 +60,11 @@ export const HeaderPage = ({
         </div>
         <div className="flex gap-2">{children}</div>
       </div>
-      <div className="flex flex-wrap w-full md:w-auto justify-end gap-2">
-        {action}
-      </div>
+      {action && (
+        <div className="flex flex-wrap w-full md:w-auto justify-end gap-2">
+          {action}
+        </div>
+      )}
     </section>
   );
 };
