@@ -7,6 +7,7 @@ import {
   NumberField,
   Switch,
   TextField,
+  Alert,
 } from "@heroui/react";
 import {
   MoneyExchange01Icon,
@@ -17,7 +18,10 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import React, { Dispatch, SetStateAction, useEffect } from "react";
 
+import { BillingFrequency } from "../../interfaces/team-season.interface";
+
 interface Props {
+  billingFrequency: BillingFrequency;
   lateFeePerDay: string | null;
   setLateFeePerDay: Dispatch<SetStateAction<string | null>>;
   graceDays: number | null;
@@ -30,6 +34,7 @@ interface Props {
   handleRemoveError: (fieldName: string) => void;
 }
 export const DelayPoliciesCard = ({
+  billingFrequency,
   lateFeePerDay,
   setLateFeePerDay,
   graceDays,
@@ -67,6 +72,17 @@ export const DelayPoliciesCard = ({
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="col-span-full">
+          <Alert status="accent" className="mb-2">
+            <Alert.Indicator />
+            <Alert.Content>
+              <Alert.Title>Motor de Recargos</Alert.Title>
+              <Alert.Description>
+                Si habilitas esta opción, el sistema penalizará automáticamente a los atletas que no paguen a tiempo una vez transcurridos los Días de Gracia permitidos, sumando el costo de Mora por cada día de retraso a su factura. Adicionalmente, puede suspender automáticamente membresías que excedan el límite de deudas.
+              </Alert.Description>
+            </Alert.Content>
+          </Alert>
+        </div>
         <div className="col-span-full flex flex-col w-full gap-4">
           <Switch isSelected={lateFeeEnabled} onChange={setLateFeeEnabled}>
             <Switch.Control>
@@ -100,7 +116,11 @@ export const DelayPoliciesCard = ({
               >
                 <Label className="flex items-center gap-2 text-sm font-label font-bold">
                   <HugeiconsIcon icon={UnavailableIcon} />
-                  Meses de Mora para Suspensión
+                  Ciclos de Mora para Suspensión ({
+                    billingFrequency === "WEEKLY" ? "Semanas" :
+                    billingFrequency === "BIWEEKLY" ? "Quincenas" :
+                    billingFrequency === "MONTHLY" ? "Meses" : "Ciclos"
+                  })
                 </Label>
                 <NumberField.Group>
                   <NumberField.DecrementButton />
@@ -114,8 +134,16 @@ export const DelayPoliciesCard = ({
                     )
                   }
                 />
-                <Description>
-                  Meses de mora para la suspensión del miembro
+                <Description className="text-xs text-muted-foreground mt-1">
+                  Cantidad de <b>{
+                    billingFrequency === "WEEKLY" ? "semanas" :
+                    billingFrequency === "BIWEEKLY" ? "quincenas" :
+                    billingFrequency === "MONTHLY" ? "meses" : "ciclos"
+                  } calendario completos</b> de atraso permitidos antes de suspender al atleta. (Ej. 2 significa que se suspenderá si debe más de 2 {
+                    billingFrequency === "WEEKLY" ? "semanas" :
+                    billingFrequency === "BIWEEKLY" ? "quincenas" :
+                    billingFrequency === "MONTHLY" ? "meses" : "ciclos"
+                  } de su cuota base).
                 </Description>
               </NumberField>
               <div className="flex flex-row gap-4">
@@ -125,7 +153,7 @@ export const DelayPoliciesCard = ({
                   className="w-full"
                   name="lateFeePerDay"
                   type="text"
-                  isInvalid={!!errors.monthlyFee || undefined}
+                  isInvalid={!!errors.recurringFee || undefined}
                 >
                   <Label className="flex items-center gap-2 text-sm font-label font-bold">
                     <HugeiconsIcon icon={MoneyExchange01Icon} />
@@ -153,6 +181,9 @@ export const DelayPoliciesCard = ({
                       errors.lateFeePerDay && <> {errors.lateFeePerDay}</>
                     }
                   />
+                  <Description className="text-xs text-muted-foreground mt-1">
+                    Monto extra diario cobrado al estar vencida la cuota recurrente.
+                  </Description>
                 </TextField>
 
                 <NumberField
@@ -182,8 +213,8 @@ export const DelayPoliciesCard = ({
                   <FieldError
                     children={errors.graceDays && <> {errors.graceDays}</>}
                   />
-                  <Description>
-                    Días de gracia para el pago de la mensualidad
+                  <Description className="text-xs text-muted-foreground mt-1">
+                    Días de tolerancia tras la fecha de pago antes de aplicar multa.
                   </Description>
                 </NumberField>
               </div>

@@ -119,7 +119,7 @@ export const TableSeasons = ({
 
                 <Table.Cell>
                   <div className="flex items-center justify-center gap-1">
-                    <ButtonGestion id={season.id} />
+                    {/* <ButtonGestion id={season.id} /> */}
                     <Button isIconOnly size="sm" variant="tertiary">
                       <HugeiconsIcon icon={EyeIcon} />
                     </Button>

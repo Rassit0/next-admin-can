@@ -6,6 +6,9 @@ export interface ITeamSeasonResponse {
 
 export type Gender = "MALE" | "FEMALE" | "MIXED";
 export type StatusTeamSeason = "DRAFT" | "ACTIVE" | "FINISHED" | "CANCELLED";
+export type SeasonBillingType = "MONTHLY_ONLY" | "SINGLE_ONLY" | "BOTH";
+export type BillingFrequency = "MONTHLY" | "WEEKLY" | "BIWEEKLY" | "SINGLE";
+
 export interface ITeamSeason {
   id: string;
   gender: Gender;
@@ -15,9 +18,18 @@ export interface ITeamSeason {
   description: string | null;
   maxMembers: number;
   minMembers: number;
+  minBirthYear?: number | null;
+  maxBirthYear?: number | null;
   billingDay: number; // Día de facturación
-  registrationFee: string; // Tarifa de inscripción
-  monthlyFee: string; // Tarifa mensual
+  registrationFee?: string | null; // Tarifa de inscripción
+  recurringFee?: string | null; // Tarifa mensual
+  seasonFee?: string | null; // Tarifa completa de temporada
+  billingType: SeasonBillingType; // Tipo de facturación
+  billingFrequency: BillingFrequency; // Frecuencia de facturacion
+  prorateFirstRecurringFee: boolean;
+  prorateLastRecurringFee: boolean;
+  prorateRegistrationFee: boolean;
+  prorateSeasonFee: boolean;
   debtToleranceMonths: number; // Meses de tolerancia de deuda
   lateFeeEnabled: boolean; // Habilitar recargo por mora
   lateFeePerDay: string; // Recargo por mora por día

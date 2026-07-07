@@ -10,9 +10,9 @@ export interface GetPreviewChargesData {
   startDate: string;
   membershipDiscounts?: {
     registrationDiscountPercent: number;
-    monthlyDiscountPercent: number;
+    recurringDiscountPercent: number;
     startDate: string;
-    endDate: string;
+    endDate?: string;
   }[];
   isMigrated: boolean;
 }

@@ -5,7 +5,7 @@ import {
   getSeasonsByDisciplineOptions,
 } from "@/modules/team-seasons";
 import { getTeamById } from "@/modules/teams";
-import { ErrorPage, HeaderPage } from "@/ui";
+import { ButtonBack, ErrorPage, HeaderPage } from "@/ui";
 import { Button } from "@heroui/react";
 import { redirect } from "next/navigation";
 
@@ -67,16 +67,23 @@ export default async function AddTeamSeasonPage({ params }: Props) {
         title={`Crear Oferta de Temporada - ${teamResponse.data.name}`}
         description="Formulario para la creación de una nueva oferta de temporada."
         action={
-          <ButtonsSubmit
-            cancelHref={`/admin/teams/${disciplineId}/${clubId}/${teamId}/team-seasons`}
-            formId="form-team-season"
-          />
+          <>
+            <ButtonsSubmit
+              cancelHref={`/admin/teams/${disciplineId}/${clubId}/${teamId}/team-seasons`}
+              formId="form-team-season"
+            />
+            <ButtonBack />
+          </>
         }
         urlBase={`/admin/teams/${disciplineId}/${clubId}`}
         breadcrumb={[
           { label: "Gestión Equipos", href: `/` },
           {
             label: `Gestión de Temporadas - ${teamResponse.data.name}`,
+            href: `${teamId}/team-seasons`,
+          },
+          {
+            label: `Crear Oferta de Temporada`,
           },
         ]}
       />

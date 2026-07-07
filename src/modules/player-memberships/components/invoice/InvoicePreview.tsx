@@ -125,11 +125,13 @@ export const InvoicePreview = ({
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <p className="text-sm font-semibold text-foreground">
-                      {line.type === "REGISTRATION_FEE"
+                      {line.type === "REGISTRATION" || line.type === "REGISTRATION_FEE"
                         ? "Matrícula de inscripción"
-                        : line.type === "MONTHLY_FEE"
-                          ? "Mensualidad"
-                          : line.type}
+                        : line.type === "RECURRING_FEE"
+                          ? "Cuota Recurrente"
+                          : line.type === "SEASON_FEE"
+                            ? "Pago de Temporada (Adelantado)"
+                            : line.type}
                     </p>
                     <p className="text-[11px] text-muted">{line.description}</p>
                   </div>

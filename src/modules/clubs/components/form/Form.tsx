@@ -31,6 +31,7 @@ export const FormClub = ({
   setIsLoading,
 }: Props) => {
   const [name, setName] = useState(club?.name || "");
+  const [shortName, setShortName] = useState(club?.shortName || "");
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -52,6 +53,7 @@ export const FormClub = ({
     let res;
     const data = {
       name,
+      shortName: shortName || undefined,
       disciplineId,
     };
     if (club) {
@@ -103,6 +105,25 @@ export const FormClub = ({
             placeholder="Ingrese el nombre del rol"
           />
           <FieldError children={errors.name && <> {errors.name}</>} />
+        </TextField>
+
+        <TextField
+          className="w-full"
+          name="shortName"
+          type="text"
+          isInvalid={!!errors.shortName || undefined}
+        >
+          <Label>Nombre Abreviado (Opcional)</Label>
+          <Input
+            variant="secondary"
+            value={shortName}
+            onChange={(e) => {
+              setShortName(e.target.value);
+              setErrors({});
+            }}
+            placeholder="Ej: CAN"
+          />
+          <FieldError children={errors.shortName && <> {errors.shortName}</>} />
         </TextField>
       </Form>
     </Surface>

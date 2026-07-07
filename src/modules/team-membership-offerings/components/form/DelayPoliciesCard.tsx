@@ -75,7 +75,7 @@ export const DelayPoliciesCard = ({
           className="w-full"
           name="lateFeePerDay"
           type="text"
-          isInvalid={!!errors.monthlyFee || undefined}
+          isInvalid={!!errors.recurringFee || undefined}
         >
           <Label className="flex items-center gap-2 text-sm font-label font-bold">
             <HugeiconsIcon icon={MoneyExchange01Icon} />

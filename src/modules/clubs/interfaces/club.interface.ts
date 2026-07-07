@@ -7,6 +7,7 @@ export interface IClubsResponse {
 export interface IClub {
   id: string;
   name: string;
+  shortName?: string;
   organization: Organization;
   // discipline: Discipline;
   createdAt: Date;

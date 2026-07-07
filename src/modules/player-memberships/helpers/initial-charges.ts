@@ -36,35 +36,35 @@ const round2 = (value: number): number => Math.round(value * 100) / 100;
 /**
  * Computes the initial charges generated when a player is enrolled into a
  * TeamSeason. The base prices come 100% from the TeamSeason configuration
- * (registrationFee + monthlyFee) and the discounts come from the selected
+ * (registrationFee + recurringFee) and the discounts come from the selected
  * PaymentPlan. The first monthly fee is charged up-front together with the
  * registration fee.
  */
 export const calculateInitialCharges = (
   teamSeason: Pick<
     ITeamSeason,
-    "registrationFee" | "monthlyFee" | "lateFeeEnabled" | "billingDay"
+    "registrationFee" | "recurringFee" | "lateFeeEnabled" | "billingDay"
   >,
   paymentPlan?: Pick<
     IPaymentPlan,
-    "registrationDiscountPercent" | "monthlyDiscountPercent"
+    "registrationDiscountPercent" | "recurringDiscountPercent"
   > | null,
   currency = "Bs",
 ): InitialChargesBreakdown => {
   const registrationGross = toNumber(teamSeason.registrationFee);
-  const monthlyGross = toNumber(teamSeason.monthlyFee);
+  const monthlyGross = toNumber(teamSeason.recurringFee);
 
   const registrationDiscountPercent = paymentPlan
     ? toNumber(paymentPlan.registrationDiscountPercent)
     : 0;
-  const monthlyDiscountPercent = paymentPlan
-    ? toNumber(paymentPlan.monthlyDiscountPercent)
+  const recurringDiscountPercent = paymentPlan
+    ? toNumber(paymentPlan.recurringDiscountPercent)
     : 0;
 
   const registrationDiscount = round2(
     registrationGross * (registrationDiscountPercent / 100),
   );
-  const monthlyDiscount = round2(monthlyGross * (monthlyDiscountPercent / 100));
+  const monthlyDiscount = round2(monthlyGross * (recurringDiscountPercent / 100));
 
   const registrationNet = round2(registrationGross - registrationDiscount);
   const monthlyNet = round2(monthlyGross - monthlyDiscount);
@@ -84,7 +84,7 @@ export const calculateInitialCharges = (
       label: "Primera mensualidad",
       description: "Cuota correspondiente al primer mes",
       gross: monthlyGross,
-      discountPercent: monthlyDiscountPercent,
+      discountPercent: recurringDiscountPercent,
       discountAmount: monthlyDiscount,
       net: monthlyNet,
     },
@@ -95,7 +95,7 @@ export const calculateInitialCharges = (
   const total = round2(registrationNet + monthlyNet);
 
   const flags: ChargeFlag[] = [];
-  if (registrationDiscountPercent > 0 || monthlyDiscountPercent > 0) {
+  if (registrationDiscountPercent > 0 || recurringDiscountPercent > 0) {
     flags.push({
       type: "success",
       label: "Plan con descuentos aplicados",

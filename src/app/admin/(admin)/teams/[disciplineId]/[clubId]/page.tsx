@@ -145,33 +145,35 @@ export default async function TeamsPage({ searchParams, params }: Props) {
         </Card.Content>
       </Card>
       {/* <!-- Breadcrumbs & Header --> */}
-      <HeaderPage
-        title={`Equipos de "${clubResponse.data.name}"`}
-        description={`Gestión integral de los equipos.`}
-        action={clubId ? <AddModal clubId={clubId} /> : null}
-        urlBase={`/admin/teams/${clubId}`}
-      />
-      {/* <!-- Metrics Panel: Asymmetric Bento Grid --> */}
-      {/* <MetricsPanel /> */}
+      <div>
+        <HeaderPage
+          title={`Equipos de "${clubResponse.data.name}"`}
+          description={`Gestión integral de los equipos.`}
+          action={clubId ? <AddModal clubId={clubId} /> : null}
+          urlBase={`/admin/teams/${clubId}`}
+        />
+        {/* <!-- Metrics Panel: Asymmetric Bento Grid --> */}
+        {/* <MetricsPanel /> */}
 
-      {/* <Separator className="md:hidden my-4" /> */}
+        {/* <Separator className="md:hidden my-4" /> */}
 
-      <Surface className="mt-6 rounded-xl p-2">
-        <div className="flex flex-col gap-2">
-          {/* <!-- Search and Filter Bar (Tonal Architecture) --> */}
-          <SectionFilters />
-          {/* <!-- Grid --> */}
-          <TableTeams
-            teams={teamsResponse.data.data}
-            urlBase={`/admin/teams/${disciplineId}/${clubId}`}
-          />
-          <PaginationSection
-            totalPages={teamsResponse.data.meta.totalPages}
-            itemsPerPage={teamsResponse.data.meta.itemsPerPage}
-            totalItems={teamsResponse.data.meta.totalItems}
-          />
-        </div>
-      </Surface>
+        <Surface className="rounded-xl p-2">
+          <div className="flex flex-col gap-2">
+            {/* <!-- Search and Filter Bar (Tonal Architecture) --> */}
+            <SectionFilters />
+            {/* <!-- Grid --> */}
+            <TableTeams
+              teams={teamsResponse.data.data}
+              urlBase={`/admin/teams/${disciplineId}/${clubId}`}
+            />
+            <PaginationSection
+              totalPages={teamsResponse.data.meta.totalPages}
+              itemsPerPage={teamsResponse.data.meta.itemsPerPage}
+              totalItems={teamsResponse.data.meta.totalItems}
+            />
+          </div>
+        </Surface>
+      </div>
     </>
   );
 }

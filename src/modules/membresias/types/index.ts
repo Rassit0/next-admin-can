@@ -27,7 +27,7 @@ export interface IMemberTeamSeasonAssignment {
   paymentPlanId: string;
   paymentPlan?: IPaymentPlan;
   registrationFeeAmount: number;
-  monthlyFeeAmount: number;
+  recurringFeeAmount: number;
   totalInitialCharges: number;
   status: "active" | "suspended" | "completed" | "withdrawn";
   enrolledAt: Date;

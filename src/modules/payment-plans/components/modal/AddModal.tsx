@@ -7,9 +7,10 @@ import { FormPaymentPlan } from "@/modules/payment-plans";
 
 interface Props {
   teamSeasonId: string;
+  teamSeasonBillingType?: string;
 }
 
-export const AddModal = ({ teamSeasonId }: Props) => {
+export const AddModal = ({ teamSeasonId, teamSeasonBillingType }: Props) => {
   const state = useOverlayState();
   const [loading, setLoading] = useState(false);
 
@@ -55,6 +56,7 @@ export const AddModal = ({ teamSeasonId }: Props) => {
               <FormPaymentPlan
                 formId="add-payment-plan-form"
                 teamSeasonId={teamSeasonId}
+                teamSeasonBillingType={teamSeasonBillingType}
                 onSubmited={() => state.close()}
                 isLoading={loading}
                 setIsLoading={setLoading}

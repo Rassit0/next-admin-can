@@ -33,6 +33,7 @@ export const FormTeam = ({
   setIsLoading,
 }: Props) => {
   const [name, setName] = useState(team?.name || null);
+  const [shortName, setShortName] = useState(team?.shortName || null);
   const [description, setDescription] = useState(team?.description || null);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const handleRemoveError = useCallback((fieldName: string) => {
@@ -57,6 +58,7 @@ export const FormTeam = ({
     let res;
     const data = {
       name: name!,
+      shortName: shortName || undefined,
       description,
       clubId,
     };
@@ -117,6 +119,25 @@ export const FormTeam = ({
             placeholder="Ingrese el nombre del rol"
           />
           <FieldError children={errors.name && <> {errors.name}</>} />
+        </TextField>
+
+        <TextField
+          className="w-full"
+          name="shortName"
+          type="text"
+          isInvalid={!!errors.shortName || undefined}
+        >
+          <Label>Nombre Abreviado (Opcional)</Label>
+          <Input
+            variant="secondary"
+            value={shortName || ""}
+            onChange={(e) => {
+              setShortName(e.target.value || null);
+              handleRemoveError("shortName");
+            }}
+            placeholder="Ej: T1"
+          />
+          <FieldError children={errors.shortName && <> {errors.shortName}</>} />
         </TextField>
 
         <TextField

@@ -7,7 +7,7 @@ import { FinancialStructureCard } from "./FinancialStructureCard";
 import { ITeam } from "@/modules/teams";
 import { useCallback, useRef, useState } from "react";
 
-import { Button, Form, toast } from "@heroui/react";
+import { Alert, Button, Form, toast } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import clsx from "clsx";
 import {
@@ -19,6 +19,8 @@ import {
   ITeamSeason,
   StatusTeamSeason,
   IPostTeamSeason,
+  SeasonBillingType,
+  BillingFrequency,
 } from "@/modules/team-seasons";
 import { STATUS_TEXT_MAP } from "../../constants/team-seasons.constants";
 
@@ -54,6 +56,12 @@ export const FormTeamSeason = ({
   const [minMembers, setMinMembers] = useState<number | null>(
     teamSeason?.minMembers || null,
   );
+  const [minBirthYear, setMinBirthYear] = useState<number | null>(
+    teamSeason?.minBirthYear || null,
+  );
+  const [maxBirthYear, setMaxBirthYear] = useState<number | null>(
+    teamSeason?.maxBirthYear || null,
+  );
   const [categoryId, setCategoryId] = useState<string | null>(
     teamSeason?.category.id || null,
   );
@@ -69,14 +77,37 @@ export const FormTeamSeason = ({
   const [registrationFee, setRegistrationFee] = useState<string | null>(
     teamSeason?.registrationFee || null,
   );
-  const [monthlyFee, setMonthlyFee] = useState<string | null>(
-    teamSeason?.monthlyFee || null,
+  const [recurringFee, setRecurringFee] = useState<string | null>(
+    teamSeason?.recurringFee || null,
+  );
+  const [seasonFee, setSeasonFee] = useState<string | null>(
+    teamSeason?.seasonFee || null,
+  );
+  const [billingType, setBillingType] = useState<SeasonBillingType>(
+    teamSeason?.billingType || "MONTHLY_ONLY",
+  );
+  const [billingFrequency, setBillingFrequency] = useState<BillingFrequency>(
+    teamSeason?.billingFrequency || "MONTHLY",
   );
   const [debtToleranceMonths, setDebtToleranceMonths] = useState<number | null>(
     teamSeason?.debtToleranceMonths !== undefined
       ? teamSeason?.debtToleranceMonths
       : null,
   );
+  
+  const [prorateFirstRecurringFee, setProrateFirstRecurringFee] = useState<boolean>(
+    teamSeason?.prorateFirstRecurringFee ?? true
+  );
+  const [prorateLastRecurringFee, setProrateLastRecurringFee] = useState<boolean>(
+    teamSeason?.prorateLastRecurringFee ?? true
+  );
+  const [prorateRegistrationFee, setProrateRegistrationFee] = useState<boolean>(
+    teamSeason?.prorateRegistrationFee ?? false
+  );
+  const [prorateSeasonFee, setProrateSeasonFee] = useState<boolean>(
+    teamSeason?.prorateSeasonFee ?? false
+  );
+
   const [lateFeeEnabled, setLateFeeEnabled] = useState<boolean>(
     teamSeason?.lateFeeEnabled === true ? true : false,
   );
@@ -114,17 +145,26 @@ export const FormTeamSeason = ({
     if (categoryId === null) {
       newErrors.categoryId = "Debe ingresar la categoría";
     }
+    if (minBirthYear && maxBirthYear && minBirthYear > maxBirthYear) {
+      newErrors.minBirthYear = "El año mínimo no puede ser mayor al máximo";
+      newErrors.maxBirthYear = "El año máximo no puede ser menor al mínimo";
+    }
     if (seasonId === null) {
       newErrors.seasonId = "Debe ingresar la temporada";
     }
     if (gender === null) {
       newErrors.gender = "Debe ingresar el género";
     }
-    if (monthlyFee === null) {
-      newErrors.monthlyFee = "Debe ingresar el valor de la cuota mensual";
+    if (billingType !== "SINGLE_ONLY") {
+      if (!recurringFee) {
+        newErrors.recurringFee = "Debe ingresar el valor de la cuota mensual";
+      }
+      if (!registrationFee) {
+        newErrors.registrationFee = "Debe ingresar el valor de la inscripción";
+      }
     }
-    if (registrationFee === null) {
-      newErrors.registrationFee = "Debe ingresar el valor de la inscripción";
+    if ((billingType === "SINGLE_ONLY" || billingType === "BOTH") && seasonFee === null) {
+      newErrors.seasonFee = "Debe ingresar el valor para la tarifa de la temporada";
     }
     if (lateFeePerDay === null) {
       newErrors.lateFeePerDay = "Debe ingresar el valor de la multa por día";
@@ -137,8 +177,22 @@ export const FormTeamSeason = ({
       newErrors.debtToleranceMonths =
         "Debe ingresar el número de meses de tolerancia de deuda para la suspensión";
     }
-    if (billingDay === null) {
-      newErrors.billingDay = "Debe ingresar el día de facturación";
+    if (billingType !== "SINGLE_ONLY") {
+      if (!billingFrequency) {
+        newErrors.billingFrequency = "Debe ingresar la frecuencia de facturación";
+      }
+      
+      if (billingDay === null) {
+        newErrors.billingDay = "Debe ingresar el día de facturación";
+      } else {
+        if (billingFrequency === "MONTHLY" && (billingDay < 1 || billingDay > 28)) {
+          newErrors.billingDay = "Para mensual, el día debe ser entre 1 y 28";
+        } else if (billingFrequency === "WEEKLY" && (billingDay < 1 || billingDay > 7)) {
+          newErrors.billingDay = "Para semanal, el día debe ser entre 1 y 7";
+        } else if (billingFrequency === "BIWEEKLY" && (billingDay < 1 || billingDay > 14)) {
+          newErrors.billingDay = "Para quincenal, el día debe ser entre 1 y 14";
+        }
+      }
     }
     if (status === null) {
       newErrors.status = "Debe ingresar el estado";
@@ -154,14 +208,23 @@ export const FormTeamSeason = ({
       description: description!,
       maxMembers: maxMembers!,
       minMembers: minMembers!,
+      minBirthYear: minBirthYear,
+      maxBirthYear: maxBirthYear,
       teamId: team.id,
       categoryId: categoryId!,
       seasonId: seasonId!,
       gender: gender!,
-      billingDay: billingDay!,
-      registrationFee: registrationFee!,
-      monthlyFee: monthlyFee!,
+      billingDay: (billingType === "SINGLE_ONLY" || billingFrequency !== "MONTHLY") ? 1 : billingDay!,
+      registrationFee: billingType === "SINGLE_ONLY" ? null : registrationFee!,
+      recurringFee: billingType === "SINGLE_ONLY" ? null : recurringFee!,
+      seasonFee: (billingType === "SINGLE_ONLY" || billingType === "BOTH") ? seasonFee! : null,
+      billingType: billingType,
+      billingFrequency: billingType === "SINGLE_ONLY" ? "SINGLE" : billingFrequency,
       debtToleranceMonths: debtToleranceMonths!,
+      prorateFirstRecurringFee,
+      prorateLastRecurringFee,
+      prorateRegistrationFee,
+      prorateSeasonFee,
       lateFeeEnabled,
       lateFeePerDay: lateFeeEnabled ? lateFeePerDay! : "0",
       graceDays: lateFeeEnabled ? graceDays! : 0,
@@ -224,10 +287,15 @@ export const FormTeamSeason = ({
             setGender={setGender}
             description={description}
             setDescription={setDescription}
+            minBirthYear={minBirthYear}
+            setMinBirthYear={setMinBirthYear}
+            maxBirthYear={maxBirthYear}
+            setMaxBirthYear={setMaxBirthYear}
             errors={errors}
             handleRemoveError={handleRemoveError}
           />
           <DelayPoliciesCard
+            billingFrequency={billingFrequency}
             lateFeePerDay={lateFeePerDay}
             setLateFeePerDay={setLateFeePerDay}
             graceDays={graceDays}
@@ -245,10 +313,24 @@ export const FormTeamSeason = ({
           <FinancialStructureCard
             registrationFee={registrationFee}
             setRegistrationFee={setRegistrationFee}
-            monthlyFee={monthlyFee}
-            setMonthlyFee={setMonthlyFee}
+            recurringFee={recurringFee}
+            setRecurringFee={setRecurringFee}
+            seasonFee={seasonFee}
+            setSeasonFee={setSeasonFee}
+            billingType={billingType}
+            setBillingType={setBillingType}
+            billingFrequency={billingFrequency}
+            setBillingFrequency={setBillingFrequency}
             billingDay={billingDay}
             setBillingDay={setBillingDay}
+            prorateFirstRecurringFee={prorateFirstRecurringFee}
+            setProrateFirstRecurringFee={setProrateFirstRecurringFee}
+            prorateLastRecurringFee={prorateLastRecurringFee}
+            setProrateLastRecurringFee={setProrateLastRecurringFee}
+            prorateRegistrationFee={prorateRegistrationFee}
+            setProrateRegistrationFee={setProrateRegistrationFee}
+            prorateSeasonFee={prorateSeasonFee}
+            setProrateSeasonFee={setProrateSeasonFee}
             errors={errors}
             handleRemoveError={handleRemoveError}
           />
@@ -300,6 +382,27 @@ export const FormTeamSeason = ({
             </div>
           </div>
         </div>
+        
+        {/* <!-- Section 5: Errores Globales --> */}
+        {Object.keys(errors).length > 0 && (
+          <div className="lg:col-span-12">
+            <Alert status="danger">
+              <Alert.Indicator />
+              <Alert.Content>
+                <Alert.Title>Existen campos con errores</Alert.Title>
+                <Alert.Description>
+                  <ul className="list-disc pl-5 mt-2 space-y-1">
+                    {Object.entries(errors).map(([field, msg]) => (
+                      <li key={field} className="text-sm font-medium">
+                        {msg}
+                      </li>
+                    ))}
+                  </ul>
+                </Alert.Description>
+              </Alert.Content>
+            </Alert>
+          </div>
+        )}
       </Form>
     </>
   );

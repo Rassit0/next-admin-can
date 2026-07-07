@@ -32,21 +32,6 @@ export const AddMembershipDrawer = ({ teamSeasonId, size = "lg" }: Props) => {
       >
         Inscribir Atleta
       </Button>
-      <Button
-        className="flex md:hidden"
-        isIconOnly
-        variant="primary"
-        onPress={() => state.open()}
-      >
-        <HugeiconsIcon icon={Add01Icon} />
-      </Button>
-      {/* <ButtonFloating
-        icon={
-          <HugeiconsIcon icon={Add01Icon} className="h-6 w-6 text-background" />
-        }
-        onPress={() => state.open()}
-        // text="Agregar Disciplina"
-      /> */}
       <Drawer.Backdrop isOpen={state.isOpen} onOpenChange={state.setOpen}>
         <Drawer.Content placement="right">
           <Drawer.Dialog>

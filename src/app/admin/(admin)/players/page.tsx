@@ -45,7 +45,7 @@ export default async function PlayersPage({ searchParams }: Props) {
         <HeaderPage
           title="Directorio de Jugadores"
           description="Bienvenido de nuevo. Resumen de hoy."
-          action={<AddModal />}
+          action={<AddModal buttonFloatingMobile />}
         />
         {/* <!-- Filters Bento --> */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">

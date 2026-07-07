@@ -33,6 +33,13 @@ interface ICharacter {
   search: string;
 }
 
+const calculateAge = (birthDateString: Date | string | null) => {
+  if (!birthDateString) return null;
+  const birthDate = new Date(birthDateString);
+  const today = new Date();
+  return today.getFullYear() - birthDate.getFullYear();
+};
+
 export const SelectOrCreatePlayer = ({
   isRequired = true,
   isDisabled = false,
@@ -136,9 +143,16 @@ export const SelectOrCreatePlayer = ({
                         <span className="text-sm font-medium truncate">
                           {item.person.fullName}
                         </span>
-                        <span className="text-xs text-default-500 truncate">
-                          DNI: {item.person.documentNumber}
-                        </span>
+                        <div className="flex items-center gap-1">
+                          <span className="text-xs text-default-500 truncate">
+                            DNI: {item.person.documentNumber}
+                          </span>
+                          {item.person.birthDate && (
+                            <span className="text-xs text-default-500 truncate">
+                              • Edad deportiva: {calculateAge(item.person.birthDate)} años
+                            </span>
+                          )}
+                        </div>
                       </div>
                       <ListBox.ItemIndicator />
                     </div>

@@ -9,7 +9,7 @@ export interface PostOfferingInterface {
   minMembers: number;
   minYear: number;
   maxYear: number;
-  monthlyFee: string; // precio de la mensualidad
+  recurringFee: string; // precio de la mensualidad
   registrationFee: string; // Precio de la matricula
   fullPaymentDiscountPercent: string; // Porcentaje de descuento por pago completo
   lateFeeEnabled: boolean; // Habilitar recargo por mora

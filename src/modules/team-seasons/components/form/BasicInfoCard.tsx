@@ -1,7 +1,7 @@
 import { Calendar, Card, Select, TextArea, TextField } from "@heroui/react";
 import { Calendar04Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { ComboBox, Input, ListBox, Label, FieldError } from "@heroui/react";
+import { ComboBox, Input, ListBox, Label, FieldError, Alert } from "@heroui/react";
 import { Dispatch, SetStateAction } from "react";
 import { DateValue } from "@internationalized/date";
 import { Gender, ICategoryOption, ISeasonOption } from "@/modules/team-seasons";
@@ -19,6 +19,10 @@ interface Props {
   setGender: Dispatch<SetStateAction<Gender | null>>;
   description: string | null;
   setDescription: Dispatch<SetStateAction<string | null>>;
+  minBirthYear: number | null;
+  setMinBirthYear: Dispatch<SetStateAction<number | null>>;
+  maxBirthYear: number | null;
+  setMaxBirthYear: Dispatch<SetStateAction<number | null>>;
   errors: Record<string, string>;
   handleRemoveError: (fieldName: string) => void;
 }
@@ -34,6 +38,10 @@ export const BasicInfoCard = ({
   setGender,
   description,
   setDescription,
+  minBirthYear,
+  setMinBirthYear,
+  maxBirthYear,
+  setMaxBirthYear,
   errors,
   handleRemoveError,
 }: Props) => {
@@ -102,6 +110,59 @@ export const BasicInfoCard = ({
           </Select.Popover>
           <FieldError children={errors.gender && <> {errors.gender}</>} />
         </Select>
+
+        <div className="col-span-full">
+          <Alert status="accent">
+            <Alert.Indicator />
+            <Alert.Content>
+              <Alert.Title>Anulación de Edades de Categoría (Opcional)</Alert.Title>
+              <Alert.Description>
+                Por defecto, el sistema valida la edad de los atletas usando el rango de edades configurado en la Categoría y comparándolo contra su <strong>edad deportiva actual (Año actual - Año de Nacimiento)</strong>. Si deseas sobrescribir ese cálculo para esta oferta en específico, completa los siguientes campos. 
+              </Alert.Description>
+            </Alert.Content>
+          </Alert>
+        </div>
+
+        <TextField
+          variant="secondary"
+          className="w-full"
+          name="minBirthYear"
+          type="number"
+          isInvalid={!!errors.minBirthYear || undefined}
+        >
+          <Label>Año de nacimiento min. (opcional)</Label>
+          <Input
+            min={1900}
+            placeholder="Ej: 2015"
+            type="number"
+            value={minBirthYear || ""}
+            onChange={(e) => {
+              setMinBirthYear(e.target.value ? Number(e.target.value) : null);
+              handleRemoveError("minBirthYear");
+            }}
+          />
+          <FieldError children={errors.minBirthYear && <> {errors.minBirthYear}</>} />
+        </TextField>
+        <TextField
+          variant="secondary"
+          className="w-full"
+          name="maxBirthYear"
+          type="number"
+          isInvalid={!!errors.maxBirthYear || undefined}
+        >
+          <Label>Año de nacimiento max. (opcional)</Label>
+          <Input
+            min={1900}
+            placeholder="Ej: 2016"
+            type="number"
+            value={maxBirthYear || ""}
+            onChange={(e) => {
+              setMaxBirthYear(e.target.value ? Number(e.target.value) : null);
+              handleRemoveError("maxBirthYear");
+            }}
+          />
+          <FieldError children={errors.maxBirthYear && <> {errors.maxBirthYear}</>} />
+        </TextField>
         <TextField
           className="w-full col-span-full"
           name="description"

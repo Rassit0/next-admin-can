@@ -63,8 +63,8 @@ export const FormTeamOffering = ({ team, teamSeason, urlRedirect }: Props) => {
   const [maxYear, setMaxYear] = useState<number | null>(
     teamSeason?.maxYear || null,
   );
-  const [monthlyFee, setMonthlyFee] = useState<string | null>(
-    teamSeason?.monthlyFee || null,
+  const [recurringFee, setRecurringFee] = useState<string | null>(
+    teamSeason?.recurringFee || null,
   );
   const [registrationFee, setRegistrationFee] = useState<string | null>(
     teamSeason?.registrationFee || null,
@@ -127,8 +127,8 @@ export const FormTeamOffering = ({ team, teamSeason, urlRedirect }: Props) => {
     if (maxYear === null) {
       newErrors.maxYear = "Debe ingresar el año máximo";
     }
-    if (monthlyFee === null) {
-      newErrors.monthlyFee = "Debe ingresar el valor de la cuota mensual";
+    if (recurringFee === null) {
+      newErrors.recurringFee = "Debe ingresar el valor de la cuota mensual";
     }
     if (registrationFee === null) {
       newErrors.registrationFee = "Debe ingresar el valor de la inscripción";
@@ -167,7 +167,7 @@ export const FormTeamOffering = ({ team, teamSeason, urlRedirect }: Props) => {
       minMembers: minMembers!,
       minYear: minYear!,
       maxYear: maxYear!,
-      monthlyFee: monthlyFee!,
+      recurringFee: recurringFee!,
       registrationFee: registrationFee!,
       fullPaymentDiscountPercent: fullPaymentDiscountPercent!,
       lateFeeEnabled,
@@ -251,8 +251,8 @@ export const FormTeamOffering = ({ team, teamSeason, urlRedirect }: Props) => {
           <FinancialStructureCard
             registrationFee={registrationFee}
             setRegistrationFee={setRegistrationFee}
-            monthlyFee={monthlyFee}
-            setMonthlyFee={setMonthlyFee}
+            recurringFee={recurringFee}
+            setRecurringFee={setRecurringFee}
             fullPaymentDiscountPercent={fullPaymentDiscountPercent}
             setFullPaymentDiscountPercent={setFullPaymentDiscountPercent}
             errors={errors}

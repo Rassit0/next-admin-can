@@ -46,6 +46,11 @@ import {
   today,
 } from "@internationalized/date";
 
+const capitalizeWords = (str: string | null) => {
+  if (!str) return null;
+  return str.toLowerCase().replace(/(?:^|\s)\S/g, (a) => a.toUpperCase());
+};
+
 interface Props {
   buttonsSubmit?: boolean;
   person?: IPerson;
@@ -279,6 +284,7 @@ export const FormPerson = ({
                     setName(e.target.value || null);
                     handleRemoveError("name");
                   }}
+                  onBlur={() => setName(capitalizeWords(name))}
                   placeholder="Ingrese el nombre"
                 />
                 <FieldError children={errors.name && <> {errors.name}</>} />
@@ -300,6 +306,7 @@ export const FormPerson = ({
                     setLastName(e.target.value || null);
                     handleRemoveError("lastName");
                   }}
+                  onBlur={() => setLastName(capitalizeWords(lastName))}
                   placeholder="Ingrese el primer apellido"
                 />
                 <FieldError
@@ -322,6 +329,7 @@ export const FormPerson = ({
                     setSurName(e.target.value || null);
                     handleRemoveError("secondLastName");
                   }}
+                  onBlur={() => setSurName(capitalizeWords(secondLastName))}
                   placeholder="Ingrese el segundo apellido"
                 />
                 <FieldError
@@ -333,6 +341,7 @@ export const FormPerson = ({
 
               {/* Talla Estandar */}
               <Select
+                isRequired
                 className="w-full"
                 name="documentType"
                 placeholder="Seleccione un documento"
@@ -407,7 +416,7 @@ export const FormPerson = ({
 
               {/* Fecha de Nacimiento */}
               <DatePicker
-                // isRequired
+                isRequired
                 isInvalid={!!errors.birthDate || undefined}
                 name="birthDate"
                 value={birthDate}
@@ -523,6 +532,7 @@ export const FormPerson = ({
 
               {/* Talla Estandar */}
               <Select
+                isRequired
                 className="w-full"
                 name="gender"
                 placeholder="Seleccione un genero"

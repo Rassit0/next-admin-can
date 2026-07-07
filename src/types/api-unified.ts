@@ -143,7 +143,7 @@ export interface ITeamSeason {
   locationId?: string;
   location?: ILocation;
   registrationFee: number;
-  monthlyFee: number;
+  recurringFee: number;
   maxMembers?: number;
   currentMembers: number;
   isActive: boolean;
@@ -192,7 +192,7 @@ export interface IPaymentPlan {
   teamSeasonId: string;
   name: string;
   registrationDiscountPercent: string;
-  monthlyDiscountPercent: string;
+  recurringDiscountPercent: string;
   description?: string;
   isActive: boolean;
   createdAt: Date;
@@ -212,7 +212,7 @@ export interface IMemberAssignment {
   paymentPlanId: string;
   paymentPlan?: IPaymentPlan;
   registrationFee: number;
-  monthlyFee: number;
+  recurringFee: number;
   totalInitialCharges: number;
   status: "active" | "suspended" | "completed" | "withdrawn";
   enrolledAt: Date;

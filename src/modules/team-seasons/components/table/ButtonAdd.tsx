@@ -1,4 +1,5 @@
 "use client";
+import { ButtonFloating } from "@/ui";
 import { Button, Tooltip } from "@heroui/react";
 import {
   Add01Icon,
@@ -10,8 +11,9 @@ import { usePathname, useRouter } from "next/navigation";
 
 interface Props {
   urlBase: string;
+  buttonFloatingMobile?: boolean;
 }
-export const ButtonAdd = ({ urlBase }: Props) => {
+export const ButtonAdd = ({ urlBase, buttonFloatingMobile }: Props) => {
   const router = useRouter();
   const handleAdd = () => {
     router.push(`${urlBase}/add`, {
@@ -19,13 +21,28 @@ export const ButtonAdd = ({ urlBase }: Props) => {
     });
   };
   return (
-    <Button
-      className="hover:bg-accent/30"
-      variant="primary"
-      onClick={handleAdd}
-    >
-      <HugeiconsIcon icon={Add01Icon} />
-      Crear oferta
-    </Button>
+    <>
+      <Button
+        className="hidden lg:flex hover:bg-accent/30"
+        variant="primary"
+        onClick={handleAdd}
+      >
+        <HugeiconsIcon icon={Add01Icon} />
+        Crear oferta
+      </Button>
+      {buttonFloatingMobile && (
+        <ButtonFloating
+          className="lg:hidden"
+          icon={
+            <HugeiconsIcon
+              icon={Add01Icon}
+              className="h-6 w-6 text-background"
+            />
+          }
+          onPress={handleAdd}
+          // text="Agregar Disciplina"
+        />
+      )}
+    </>
   );
 };

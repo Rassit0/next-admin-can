@@ -14,8 +14,8 @@ import { Dispatch, SetStateAction } from "react";
 interface Props {
   registrationFee: string | null;
   setRegistrationFee: Dispatch<SetStateAction<string | null>>;
-  monthlyFee: string | null;
-  setMonthlyFee: Dispatch<SetStateAction<string | null>>;
+  recurringFee: string | null;
+  setRecurringFee: Dispatch<SetStateAction<string | null>>;
   fullPaymentDiscountPercent: string | null;
   setFullPaymentDiscountPercent: Dispatch<SetStateAction<string | null>>;
   errors: Record<string, string>;
@@ -24,8 +24,8 @@ interface Props {
 export const FinancialStructureCard = ({
   registrationFee,
   setRegistrationFee,
-  monthlyFee,
-  setMonthlyFee,
+  recurringFee,
+  setRecurringFee,
   fullPaymentDiscountPercent,
   setFullPaymentDiscountPercent,
   errors,
@@ -76,9 +76,9 @@ export const FinancialStructureCard = ({
           isRequired
           variant="secondary"
           className="w-full"
-          name="monthlyFee"
+          name="recurringFee"
           type="text"
-          isInvalid={!!errors.monthlyFee || undefined}
+          isInvalid={!!errors.recurringFee || undefined}
         >
           <Label>Mensualidad</Label>
           <InputGroup>
@@ -88,16 +88,16 @@ export const FinancialStructureCard = ({
               step="0.01"
               placeholder="0.00"
               type="number"
-              value={monthlyFee || ""}
+              value={recurringFee || ""}
               onChange={(e) => {
-                setMonthlyFee(e.target.value === "" ? null : e.target.value);
-                handleRemoveError("monthlyFee");
+                setRecurringFee(e.target.value === "" ? null : e.target.value);
+                handleRemoveError("recurringFee");
               }}
             />
             <InputGroup.Suffix>Bs.</InputGroup.Suffix>
           </InputGroup>
           <FieldError
-            children={errors.monthlyFee && <> {errors.monthlyFee}</>}
+            children={errors.recurringFee && <> {errors.recurringFee}</>}
           />
         </TextField>
         <NumberField
@@ -134,12 +134,12 @@ export const FinancialStructureCard = ({
             Porcentaje de descuento a aplicar a la mensualidad por pago total.
             <br />
             Mensualidad a pagar:{" "}
-            {monthlyFee && fullPaymentDiscountPercent
+            {recurringFee && fullPaymentDiscountPercent
               ? (
-                  +monthlyFee -
-                  +monthlyFee * +fullPaymentDiscountPercent
+                  +recurringFee -
+                  +recurringFee * +fullPaymentDiscountPercent
                 ).toFixed(2)
-              : monthlyFee || 0}
+              : recurringFee || 0}
           </Description>
         </NumberField>
         {/* <div className="bg-tertiary-fixed/30 p-6 rounded-xl space-y-3">

@@ -11,7 +11,9 @@ interface Props {
     teamSeasonId: string;
     name: string;
     registrationDiscountPercent: string;
-    monthlyDiscountPercent: string;
+    recurringDiscountPercent: string;
+    isSinglePayment: boolean;
+    isDefault: boolean;
   };
 }
 

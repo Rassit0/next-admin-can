@@ -17,7 +17,7 @@ export interface ITeamSeason {
   minMembers: number;
   maxYear: number;
   minYear: number;
-  monthlyFee: string;
+  recurringFee: string;
   registrationFee: string;
   fullPaymentDiscountPercent: string;
   lateFeeEnabled: boolean;

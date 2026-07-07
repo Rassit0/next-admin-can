@@ -82,7 +82,7 @@ export const InvoicePreview = ({ assignment, isLoading }: InvoicePreviewProps) =
         >
           <span className="text-xs text-muted">Cuota Mensual (1er mes)</span>
           <span className="font-semibold text-foreground">
-            {formatCurrency(assignment.monthlyFeeAmount)}
+            {formatCurrency(assignment.recurringFeeAmount)}
           </span>
         </motion.div>
 

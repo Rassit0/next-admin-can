@@ -60,7 +60,9 @@ export const HeaderPage = ({
         </div>
         <div className="flex gap-2">{children}</div>
       </div>
-      <div>{action}</div>
+      <div className="flex flex-wrap w-full md:w-auto justify-end gap-2">
+        {action}
+      </div>
     </section>
   );
 };

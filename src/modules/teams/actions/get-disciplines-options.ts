@@ -14,7 +14,7 @@ export const getDisciplinesOptions = async (): Promise<
       `teams/disciplines/options`,
       {
         next: {
-          tags: ["clubs"],
+          tags: ["disciplines"],
           revalidate: 60 * 60 * 24 * 7, //1 semana
         },
       },

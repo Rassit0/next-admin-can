@@ -14,6 +14,7 @@ import {
 } from "@/modules/team-seasons";
 import { getTeamById } from "@/modules/teams";
 import {
+  ButtonBack,
   ErrorPage,
   HeaderPage,
   PaginationSection,
@@ -107,9 +108,13 @@ export default async function TeamSeasonsPage({ searchParams, params }: Props) {
         title={`Gestión de Temporadas - ${teamResponse.data.name}`}
         description="Gestión integral de las temporadas del equipo."
         action={
-          <ButtonAdd
-            urlBase={`/admin/teams/${disciplineId}/${clubId}/${teamId}/team-seasons`}
-          />
+          <>
+            <ButtonAdd
+              urlBase={`/admin/teams/${disciplineId}/${clubId}/${teamId}/team-seasons`}
+              buttonFloatingMobile
+            />
+            <ButtonBack />
+          </>
         }
         urlBase={`/admin/teams/${disciplineId}/${clubId}`}
         breadcrumb={[

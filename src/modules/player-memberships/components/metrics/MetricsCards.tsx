@@ -77,7 +77,7 @@ export const MetricsCards = ({
     },
     {
       label: "Mensualidad (Bs)",
-      value: String(Number(teamSeason.monthlyFee)),
+      value: String(Number(teamSeason.recurringFee)),
       hint: "Cargo recurrente base",
       icon: Calendar01Icon,
       tone: "text-secondary",

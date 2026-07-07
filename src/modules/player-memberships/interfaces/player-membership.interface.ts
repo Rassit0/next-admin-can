@@ -26,7 +26,7 @@ export interface IMembershipPaymentPlan {
   id: string;
   name: string;
   registrationDiscountPercent: string;
-  monthlyDiscountPercent: string;
+  recurringDiscountPercent: string;
 }
 
 export interface IPlayerMembership {

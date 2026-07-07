@@ -7,6 +7,7 @@ export interface ITeamsResponse {
 export interface ITeam {
   id: string;
   name: string;
+  shortName?: string | null;
   description: string | null;
   club: Club;
   createdAt: Date;

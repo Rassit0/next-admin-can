@@ -25,7 +25,7 @@ export const getPlayersOptions = async (
       `player-memberships/players-options?${params.toString()}`,
       {
         next: {
-          tags: ["players"],
+          tags: ["players", "persons"],
           revalidate: 60 * 60 * 24 * 7, //1 semana
         },
         signal,

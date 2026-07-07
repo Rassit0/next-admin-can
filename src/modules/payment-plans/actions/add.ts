@@ -9,7 +9,9 @@ export const addPaymentPlan = async (data: {
   teamSeasonId: string;
   name: string;
   registrationDiscountPercent: string;
-  monthlyDiscountPercent: string;
+  recurringDiscountPercent: string;
+  isSinglePayment: boolean;
+  isDefault: boolean;
 }): Promise<ServiceResponse<IPaymentPlan>> => {
   return handleServerAction(async () => {
     const response = await api.post<{ message: string; data: IPaymentPlan }>(

@@ -9,7 +9,10 @@ export interface IPaymentPlan {
   teamSeasonId: string;
   name: string;
   registrationDiscountPercent: string;
-  monthlyDiscountPercent: string;
+  recurringDiscountPercent: string;
+  seasonFeeDiscountPercent: string;
+  isSinglePayment: boolean;
+  isDefault: boolean;
   createdAt: Date;
   updatedAt: Date;
 }

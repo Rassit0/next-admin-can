@@ -56,8 +56,8 @@ export const TablePaymentPlans = ({ paymentPlans, teamSeasonId }: Props) => {
               </SortableColumnHeader>
             </Table.Column>
 
-            <Table.Column allowsSorting id="monthlyDiscountPercent">
-              <SortableColumnHeader id="monthlyDiscountPercent">
+            <Table.Column allowsSorting id="recurringDiscountPercent">
+              <SortableColumnHeader id="recurringDiscountPercent">
                 DESCUENTO MENSUAL
               </SortableColumnHeader>
             </Table.Column>
@@ -84,7 +84,7 @@ export const TablePaymentPlans = ({ paymentPlans, teamSeasonId }: Props) => {
                 <Table.Cell>
                   {paymentPlan.registrationDiscountPercent} %
                 </Table.Cell>
-                <Table.Cell>{paymentPlan.monthlyDiscountPercent} %</Table.Cell>
+                <Table.Cell>{paymentPlan.recurringDiscountPercent} %</Table.Cell>
                 <Table.Cell>
                   {paymentPlan.createdAt.toLocaleDateString()}
                 </Table.Cell>

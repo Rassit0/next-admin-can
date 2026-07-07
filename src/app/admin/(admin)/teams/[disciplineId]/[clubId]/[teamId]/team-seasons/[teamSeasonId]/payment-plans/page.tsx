@@ -61,7 +61,7 @@ export default async function PaymentPlansPage({
       <HeaderPage
         title={`Planes de Pago - ${teamSeasonResponse.data.team.name} - ${teamSeasonResponse.data.season.name}`}
         description="Administra los planes de pago de la temporada"
-        action={<AddModal teamSeasonId={teamSeasonId} />}
+        action={<AddModal teamSeasonId={teamSeasonId} teamSeasonBillingType={teamSeasonResponse.data.billingType} />}
         breadcrumb={[
           { label: "Gestión Equipos", href: `/` },
           {

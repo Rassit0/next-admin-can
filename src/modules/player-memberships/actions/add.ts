@@ -11,6 +11,14 @@ export interface AddPlayerMembershipData {
   paymentPlanId: string;
   startedAt: string;
   isMigrated: boolean;
+  membershipDiscounts?: {
+    registrationDiscountPercent: number;
+    recurringDiscountPercent: number;
+    startDate: string;
+    endDate?: string;
+    type: string;
+    reason?: string;
+  }[];
 }
 
 export const addPlayerMembership = async (
