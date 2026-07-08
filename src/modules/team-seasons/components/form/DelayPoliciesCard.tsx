@@ -166,7 +166,7 @@ export const DelayPoliciesCard = ({
                   de su cuota base).
                 </Description>
               </NumberField>
-              <div className="flex flex-row gap-4">
+              <div className="flex flex-col lg:flex-row gap-4">
                 <TextField
                   isRequired
                   variant="secondary"

@@ -15,35 +15,44 @@ import {
 } from "@heroui/react";
 import { Dispatch, SetStateAction } from "react";
 import { useAsyncList } from "@react-stately/data";
-import { getPersonsOptions, IPersonOption } from "@/modules/players";
-import { AddModal } from "@/modules/persons";
+import { AddModal } from "@/modules/players";
+import { getPlayersOptions, IPlayerOption } from "@/modules/player-memberships";
 
 interface Props {
   isRequired?: boolean;
   isDisabled?: boolean;
   label: string;
-  personId: string | null;
-  setPersonId: Dispatch<SetStateAction<string | null>>;
-  errors: Record<string, string>;
-  handleRemoveError: (fieldName: string) => void;
+  playerId: string | null;
+  setPlayerId: Dispatch<SetStateAction<string | null>>;
+  setSelectedPlayer: Dispatch<SetStateAction<IPlayerOption | null>>;
+  errors?: Record<string, string>;
+  handleRemoveError?: (fieldName: string) => void;
 }
 
 interface ICharacter {
   search: string;
 }
 
-export const SelectOrCreatePerson = ({
+const calculateAge = (birthDateString: Date | string | null) => {
+  if (!birthDateString) return null;
+  const birthDate = new Date(birthDateString);
+  const today = new Date();
+  return today.getFullYear() - birthDate.getFullYear();
+};
+
+export const SelectOrCreatePlayer = ({
   isRequired = true,
   isDisabled = false,
   label,
-  personId,
-  setPersonId,
+  playerId,
+  setPlayerId,
+  setSelectedPlayer,
   errors,
   handleRemoveError,
 }: Props) => {
-  const list = useAsyncList<IPersonOption>({
+  const list = useAsyncList<IPlayerOption>({
     async load({ cursor: page = "1", filterText, signal }) {
-      const res = await getPersonsOptions({ search: filterText, page });
+      const res = await getPlayersOptions({ search: filterText, page });
       console.log({ res });
       if (!res) {
         return {
@@ -61,15 +70,20 @@ export const SelectOrCreatePerson = ({
   return (
     <div className="flex items-end gap-4 w-full">
       <Autocomplete
+        isRequired={isRequired}
         allowsEmptyCollection
         variant="secondary"
         className="flex-1"
-        placeholder="Search..."
+        placeholder="Buscar..."
         selectionMode="single"
-        value={personId}
+        value={playerId}
         onChange={(key) => {
-          setPersonId(key?.toString() || "");
-          handleRemoveError("personId");
+          setPlayerId(key?.toString() || "");
+          const selectedPlayer = list.items.find((player) => player.id === key);
+          if (selectedPlayer) {
+            setSelectedPlayer(selectedPlayer);
+          }
+          handleRemoveError?.("playerId");
         }}
       >
         <Label>{label}</Label>
@@ -85,14 +99,14 @@ export const SelectOrCreatePerson = ({
           >
             <SearchField
               autoFocus
-              aria-label="Buscar personas"
+              aria-label="Buscar jugadores"
               className="sticky top-0 z-10"
               name="search"
               variant="secondary"
             >
               <SearchField.Group>
                 <SearchField.SearchIcon />
-                <SearchField.Input placeholder="Search characters..." />
+                <SearchField.Input placeholder="Buscar..." />
                 <Spinner
                   size="sm"
                   className={cn("absolute top-1/2 right-2 -translate-y-1/2", {
@@ -114,24 +128,31 @@ export const SelectOrCreatePerson = ({
             >
               <Collection items={list.items}>
                 {(item) => (
-                  <ListBox.Item id={item.id} textValue={item.fullName}>
+                  <ListBox.Item id={item.id} textValue={item.person.fullName}>
                     <div className="flex items-center gap-3 w-full">
                       <Avatar className="shrink-0" size="sm">
                         <Avatar.Image
-                          alt={item.fullName}
-                          src={item.imageUrl ?? undefined}
+                          alt={item.person.fullName}
+                          src={item.person.imageUrl ?? undefined}
                         />
                         <Avatar.Fallback>
-                          {`${item.name[0]}${item.lastName[0]}`}
+                          {`${item.person.name[0]}${item.person.lastName[0]}`}
                         </Avatar.Fallback>
                       </Avatar>
                       <div className="flex flex-col flex-1">
                         <span className="text-sm font-medium truncate">
-                          {item.fullName}
+                          {item.person.fullName}
                         </span>
-                        <span className="text-xs text-default-500 truncate">
-                          DNI: {item.documentNumber}
-                        </span>
+                        <div className="flex items-center gap-1">
+                          <span className="text-xs text-default-500 truncate">
+                            DNI: {item.person.documentNumber}
+                          </span>
+                          {item.person.birthDate && (
+                            <span className="text-xs text-default-500 truncate">
+                              • Edad deportiva: {calculateAge(item.person.birthDate)} años
+                            </span>
+                          )}
+                        </div>
                       </div>
                       <ListBox.ItemIndicator />
                     </div>
@@ -150,27 +171,12 @@ export const SelectOrCreatePerson = ({
             </ListBox>
           </Autocomplete.Filter>
         </Autocomplete.Popover>
-        <FieldError children={errors.personId && <p>{errors.personId}</p>} />
+        <FieldError children={errors?.playerId && <p>{errors.playerId}</p>} />
       </Autocomplete>
       <AddModal
         isIcon
-        onSubmited={(person) => {
-          if (person) {
-            // Agregar la persona a la lista localmente para que se pueda seleccionar
-            list.append({
-              id: person.id,
-              name: person.name,
-              lastName: person.lastName,
-              secondLastName: person.secondLastName,
-              documentNumber: person.documentNumber,
-              gender: person.gender,
-              birthDate: person.birthDate as Date,
-              fullName: `${person.name} ${person.lastName}`,
-              imageUrl: person.imageUrl,
-            });
-            list.setSelectedKeys(new Set([person.id]));
-            setPersonId(person.id);
-          }
+        onSubmited={() => {
+          list.reload();
         }}
       />
     </div>

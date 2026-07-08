@@ -23,12 +23,21 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: "/logo.png",
+    apple: "/logo.png",
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Admin CAN",
   },
 };
 
 export const viewport: Viewport = {
   colorScheme: "light",
   themeColor: "#ffffff",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({
@@ -42,6 +51,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
+      <head />
       <body className="bg-background text-foreground">
         <Providers>{children}</Providers>
       </body>

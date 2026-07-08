@@ -1,4 +1,5 @@
 "use client";
+import { toast } from "sonner";
 import { iconMap } from "@/utils/iconMap";
 import {
   Calendar,
@@ -15,7 +16,6 @@ import {
   Tag,
   TagGroup,
   TextField,
-  toast,
   ToggleButton,
   Select,
   Button,
@@ -55,7 +55,7 @@ interface Props {
   buttonsSubmit?: boolean;
   person?: IPerson;
   formId: string;
-  onSubmited?: () => void;
+  onSubmited?: (person?: IPerson) => void;
   isLoading?: boolean;
   setIsLoading?: (value: boolean) => void;
 }
@@ -142,6 +142,12 @@ export const FormPerson = ({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    e.stopPropagation();
+
+    // Evitar que el submit de un formulario anidado dispare este submit
+    if ((e.target as HTMLFormElement).id !== formId) {
+      return;
+    }
     const newErrors: Record<string, string> = {};
     if (!name) {
       newErrors.name = "Debe ingresar un nombre";
@@ -206,7 +212,7 @@ export const FormPerson = ({
       }
 
       // 2. Pasamos la descripción formateada al componente de notificaciones
-      toast.danger(res.message, {
+      toast.error(res.message, {
         description: errorDescription,
       });
       if (res.errors) {
@@ -219,7 +225,7 @@ export const FormPerson = ({
         ? "La persona se ha editado exitosamente"
         : "La persona se ha agregado exitosamente",
     });
-    onSubmited?.();
+    onSubmited?.(res.data);
   };
   return (
     <Surface variant="transparent">

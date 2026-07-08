@@ -104,7 +104,11 @@ export const FormTeamOffering = ({ team, teamSeason, urlRedirect }: Props) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // setErrors({});
+    
+    // Evitar que el submit de un formulario anidado dispare este submit
+    if ((e.target as HTMLFormElement).id !== "form-team-offering") {
+      return;
+    }
     const newErrors: Record<string, string> = {};
     if (name === null) {
       newErrors.name = "Debe ingresar un nombre";

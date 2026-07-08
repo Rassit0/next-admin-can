@@ -1,6 +1,8 @@
-import { Toast } from "@heroui/react";
 import { ThemeProvider } from "next-themes";
 import { QueryProvider } from "./QueryProvider";
+import { SerwistProvider } from "@serwist/turbopack/react";
+import { Toaster } from "sonner";
+import { Toast } from "@heroui/react";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
@@ -11,7 +13,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
       disableTransitionOnChange
     >
       <Toast.Provider placement="top end" />
-      <QueryProvider>{children}</QueryProvider>
+      <SerwistProvider swUrl="/serwist/sw.js">{children}</SerwistProvider>
+      <Toaster richColors position="top-right" />
+      {/* <QueryProvider>
+      </QueryProvider> */}
     </ThemeProvider>
   );
 }

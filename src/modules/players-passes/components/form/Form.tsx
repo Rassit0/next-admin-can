@@ -261,6 +261,11 @@ export const FormPlayerPass = ({
     console.log("entro");
     e.preventDefault();
     e.stopPropagation();
+    
+    // Evitar que el submit de un formulario anidado dispare este submit
+    if ((e.target as HTMLFormElement).id !== formId) {
+      return;
+    }
     const newErrors: Record<string, string> = {};
     if (originType === "INTERNAL" && !previousTeamId) {
       newErrors.previousTeamId = "Debe seleccionar un equipo anterior";

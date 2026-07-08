@@ -37,16 +37,16 @@ export const AddModal = ({
   onSubmited,
   buttonFloatingMobile = false,
 }: Props) => {
-  const state = useOverlayState();
+  const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
   return (
-    <Modal key={"cover"}>
+    <Modal>
       {!isIcon && (
         <Button
           className="hidden lg:flex"
           variant="primary"
-          onPress={() => state.open()}
+          onPress={() => setIsOpen(true)}
           isIconOnly={isIcon}
         >
           <HugeiconsIcon icon={Add01Icon} />
@@ -57,7 +57,7 @@ export const AddModal = ({
         <Button
           // className="hidden lg:flex"
           variant="primary"
-          onPress={() => state.open()}
+          onPress={() => setIsOpen(true)}
           isIconOnly={isIcon}
         >
           <HugeiconsIcon icon={Add01Icon} />
@@ -72,11 +72,11 @@ export const AddModal = ({
               className="h-6 w-6 text-background"
             />
           }
-          onPress={() => state.open()}
+          onPress={() => setIsOpen(true)}
           // text="Agregar Disciplina"
         />
       )}
-      <Modal.Backdrop isOpen={state.isOpen} onOpenChange={state.setOpen}>
+      <Modal.Backdrop isOpen={isOpen} onOpenChange={setIsOpen}>
         <Modal.Container placement="center" scroll="outside">
           <Modal.Dialog className="sm:max-w-2xl bg-background-tertiary">
             <Modal.CloseTrigger />
@@ -92,7 +92,7 @@ export const AddModal = ({
               <FormPlayer
                 formId="add-player-form"
                 onSubmited={() => {
-                  state.close();
+                  setIsOpen(false);
                   onSubmited?.();
                 }}
                 isLoading={loading}
@@ -102,7 +102,7 @@ export const AddModal = ({
             <Modal.Footer>
               <Button
                 variant="secondary"
-                onPress={() => state.close()}
+                onPress={() => setIsOpen(false)}
                 isDisabled={loading}
               >
                 Cancelar

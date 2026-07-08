@@ -1,6 +1,5 @@
 // Actions
 export * from "./actions/get";
-export * from "./actions/get-by-id";
 export * from "./actions/add";
 export * from "./actions/lifecycle";
 export * from "./actions/get-preview-charges";
@@ -21,6 +20,6 @@ export * from "./components/table/Table";
 export * from "./components/metrics/MetricsCards";
 
 // Interfaces
-export * from "./interfaces/player-membership.interface";
+export * from "./interfaces/charges.interface";
 export * from "./interfaces/preview_membership-charges.interface";
 export * from "./interfaces/options.interface";

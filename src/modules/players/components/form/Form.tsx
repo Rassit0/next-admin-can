@@ -10,15 +10,15 @@ import {
   ListBox,
   Surface,
   TextField,
-  toast,
   Select,
   TextArea,
   Switch,
 } from "@heroui/react";
 import { addPlayer, editPlayer, PostPlayerInterface } from "@/modules/players";
 import { IPlayer } from "@/modules/players";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SelectOrCreatePerson } from "./SelectOrCreatePerson";
+import { toast } from "sonner";
 
 interface Props {
   player?: IPlayer;
@@ -59,6 +59,11 @@ export const FormPlayer = ({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
+
+    // Evitar que el submit de un formulario anidado (como el de Person) dispare este submit
+    if ((e.target as HTMLFormElement).id !== formId) {
+      return;
+    }
     const newErrors: Record<string, string> = {};
     if (!personId) {
       newErrors.personId = "Debe seleccionar una persona";
@@ -97,7 +102,7 @@ export const FormPlayer = ({
       }
 
       // 2. Pasamos la descripción formateada al componente de notificaciones
-      toast.danger(res.message, {
+      toast.error(res.message, {
         description: errorDescription,
       });
       if (res.errors) {

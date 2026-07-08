@@ -24,10 +24,11 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { FormPerson } from "../form/Form";
 import { useState } from "react";
 import { ButtonFloating } from "@/ui";
+import { IPerson } from "@/modules/persons";
 
 interface Props {
   isIcon?: boolean;
-  onSubmited?: () => void;
+  onSubmited?: (person?: IPerson) => void;
   buttonFloatingMobile?: boolean;
 }
 
@@ -36,16 +37,16 @@ export const AddModal = ({
   onSubmited,
   buttonFloatingMobile = false,
 }: Props) => {
-  const state = useOverlayState();
+  const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
   return (
-    <Modal key={"cover"}>
+    <Modal>
       {!isIcon && (
         <Button
           className="hidden lg:flex"
           variant="primary"
-          onPress={() => state.open()}
+          onPress={() => setIsOpen(true)}
         >
           <HugeiconsIcon icon={Add01Icon} />
           Agregar Miembro
@@ -55,7 +56,7 @@ export const AddModal = ({
         <Button
           // className="hidden lg:flex"
           variant="primary"
-          onPress={() => state.open()}
+          onPress={() => setIsOpen(true)}
           isIconOnly
         >
           <HugeiconsIcon icon={Add01Icon} />
@@ -69,11 +70,11 @@ export const AddModal = ({
               className="h-6 w-6 text-background"
             />
           }
-          onPress={() => state.open()}
+          onPress={() => setIsOpen(true)}
           // text="Agregar Disciplina"
         />
       )}
-      <Modal.Backdrop isOpen={state.isOpen} onOpenChange={state.setOpen}>
+      <Modal.Backdrop isOpen={isOpen} onOpenChange={setIsOpen}>
         <Modal.Container placement="center" scroll="outside">
           <Modal.Dialog className="sm:max-w-2xl bg-background-tertiary">
             <Modal.CloseTrigger />
@@ -88,9 +89,9 @@ export const AddModal = ({
             <Modal.Body className="p-0 md:p-6">
               <FormPerson
                 formId="add-person-form"
-                onSubmited={() => {
-                  onSubmited?.();
-                  state.close();
+                onSubmited={(person) => {
+                  onSubmited?.(person);
+                  setIsOpen(false);
                 }}
                 isLoading={loading}
                 setIsLoading={setLoading}
@@ -99,7 +100,7 @@ export const AddModal = ({
             <Modal.Footer>
               <Button
                 variant="secondary"
-                onPress={() => state.close()}
+                onPress={() => setIsOpen(false)}
                 isDisabled={loading}
               >
                 Cancelar
