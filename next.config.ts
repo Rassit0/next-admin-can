@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 import { withSerwist } from "@serwist/turbopack";
 
-export default withSerwist({
+const nextConfig: NextConfig = {
   output: "standalone",
   images: {
     remotePatterns: [
@@ -13,7 +13,9 @@ export default withSerwist({
       },
     ],
   },
-});
+};
+
+export default withSerwist(nextConfig);
 
 // const nextConfig: NextConfig = {
 //   /* config options here */
