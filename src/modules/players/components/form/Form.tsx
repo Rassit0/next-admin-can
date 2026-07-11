@@ -147,8 +147,7 @@ export const FormPlayer = ({
                 Foto de Perfil
               </h3>
               <p className="text-sm text-on-surface-variant">
-                Sube una foto profesional para la identificadocumentNumberón
-                institudocumentNumberonal. Tamaño máximo: 5 MB.
+                Sube una foto profesional para la identificación institucional. Tamaño máximo: 5 MB.
               </p>
             </div>
           </div> */}
@@ -157,29 +156,37 @@ export const FormPlayer = ({
           <div className="flex flex-col gap-6">
             <div className="flex items-center gap-2">
               <div className="w-1.5 h-6 bg-primary rounded-full"></div>
-              <h2 className="font-headline text-xl font-bold">
-                InformadocumentNumberón Básica
-              </h2>
+              <div>
+                <h2 className="font-headline text-xl font-bold">
+                  Asignación de Perfil
+                </h2>
+                <p className="text-sm text-on-surface-variant mt-1">
+                  Vincula a una persona existente o registra una nueva para habilitar su perfil de jugador.
+                </p>
+              </div>
             </div>
 
             <div className="flex flex-col gap-5">
               <SelectOrCreatePerson
                 isRequired
-                label="Seleccione o cree una persona"
+                label="Persona asociada"
                 personId={personId}
                 setPersonId={setPersonId}
                 errors={errors}
                 handleRemoveError={handleRemoveError}
               />
 
-              <div>
-                <Switch isSelected={isActive} onChange={setIsActive}>
+              <div className="bg-surface-container-low p-4 rounded-xl border border-outline-variant/30 flex items-center justify-between">
+                <div className="flex flex-col gap-1 mr-4">
+                  <span className="text-sm font-medium text-on-surface">Estado del Jugador</span>
+                  <span className="text-xs text-on-surface-variant">
+                    {isActive ? "El jugador está activo y puede ser inscrito en temporadas." : "El jugador está inactivo temporalmente."}
+                  </span>
+                </div>
+                <Switch isSelected={isActive} onChange={setIsActive} size="sm">
                   <Switch.Control>
                     <Switch.Thumb />
                   </Switch.Control>
-                  <Switch.Content>
-                    <Label className="text-sm">Activo</Label>
-                  </Switch.Content>
                 </Switch>
               </div>
             </div>
