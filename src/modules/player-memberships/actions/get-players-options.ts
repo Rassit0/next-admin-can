@@ -1,3 +1,4 @@
+"use server";
 import { api } from "@/utils/api";
 import { ServiceResponse } from "@/types/api";
 import { handleServerAction } from "@/utils";
@@ -11,8 +12,7 @@ interface SearchParams {
 }
 
 export const getPlayersOptions = async (
-  { search, per_page = "10", page = "1", orderBy = "asc" }: SearchParams,
-  signal?: AbortSignal,
+  { search, per_page = "10", page = "1", orderBy = "asc" }: SearchParams
 ): Promise<ServiceResponse<IPlayersOptionsResponse>> => {
   return handleServerAction(async () => {
     const params = new URLSearchParams();
@@ -28,7 +28,6 @@ export const getPlayersOptions = async (
           tags: ["players", "persons"],
           revalidate: 60 * 60 * 24 * 7, //1 semana
         },
-        signal,
       },
     );
 

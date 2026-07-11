@@ -99,7 +99,7 @@ export const FormDiscipline = ({
               setName(e.target.value);
               setErrors({});
             }}
-            placeholder="Ingrese el nombre del rol"
+            placeholder="Ingrese el nombre de la disciplina"
           />
           <FieldError children={errors.name && <> {errors.name}</>} />
         </TextField>

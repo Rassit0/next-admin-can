@@ -116,7 +116,7 @@ export const FormLocation = ({
               setName(e.target.value);
               setErrors({});
             }}
-            placeholder="Ingrese el nombre del rol"
+            placeholder="Ingrese el nombre de la instalación"
           />
           <FieldError children={errors.name && <> {errors.name}</>} />
         </TextField>

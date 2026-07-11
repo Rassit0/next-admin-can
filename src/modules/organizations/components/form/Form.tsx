@@ -138,7 +138,7 @@ export const FormOrganization = ({
               setName(e.target.value);
               setErrors({});
             }}
-            placeholder="Ingrese el nombre del rol"
+            placeholder="Ingrese el nombre de la institución"
           />
           <FieldError children={errors.name && <> {errors.name}</>} />
         </TextField>

@@ -100,7 +100,8 @@ export const FormPaymentPlan = ({
         newErrors.seasonFeeDiscountPercent =
           "Debe ingresar un descuento para la temporada";
       } else if (isInvalidPercent(season)) {
-        newErrors.seasonFeeDiscountPercent = "El porcentaje debe estar entre 0 y 100";
+        newErrors.seasonFeeDiscountPercent =
+          "El porcentaje debe estar entre 0 y 100";
       }
       registration = "0";
       recurring = "0";
@@ -109,14 +110,16 @@ export const FormPaymentPlan = ({
         newErrors.registrationDiscountPercent =
           "Debe ingresar un descuento de inscripción";
       } else if (isInvalidPercent(registration)) {
-        newErrors.registrationDiscountPercent = "El porcentaje debe estar entre 0 y 100";
+        newErrors.registrationDiscountPercent =
+          "El porcentaje debe estar entre 0 y 100";
       }
-      
+
       if (!recurringDiscountPercent) {
         newErrors.recurringDiscountPercent =
           "Debe ingresar un descuento de cuota recurrente";
       } else if (isInvalidPercent(recurring)) {
-        newErrors.recurringDiscountPercent = "El porcentaje debe estar entre 0 y 100";
+        newErrors.recurringDiscountPercent =
+          "El porcentaje debe estar entre 0 y 100";
       }
       season = "0";
     } else {
@@ -126,7 +129,8 @@ export const FormPaymentPlan = ({
           newErrors.seasonFeeDiscountPercent =
             "Debe ingresar un descuento para la temporada";
         } else if (isInvalidPercent(season)) {
-          newErrors.seasonFeeDiscountPercent = "El porcentaje debe estar entre 0 y 100";
+          newErrors.seasonFeeDiscountPercent =
+            "El porcentaje debe estar entre 0 y 100";
         }
         registration = "0";
         recurring = "0";
@@ -135,16 +139,18 @@ export const FormPaymentPlan = ({
           newErrors.registrationDiscountPercent =
             "Debe ingresar un descuento de inscripción";
         } else if (isInvalidPercent(registration)) {
-          newErrors.registrationDiscountPercent = "El porcentaje debe estar entre 0 y 100";
+          newErrors.registrationDiscountPercent =
+            "El porcentaje debe estar entre 0 y 100";
         }
-        
+
         if (!recurringDiscountPercent) {
           newErrors.recurringDiscountPercent =
             "Debe ingresar un descuento de cuota recurrente";
         } else if (isInvalidPercent(recurring)) {
-          newErrors.recurringDiscountPercent = "El porcentaje debe estar entre 0 y 100";
+          newErrors.recurringDiscountPercent =
+            "El porcentaje debe estar entre 0 y 100";
         }
-        
+
         if (advanceCycles < 1)
           newErrors.advanceCycles = "Debe agrupar al menos 1 cuota";
         if (isInvalidPercent(advanceCyclesDiscountPercent)) {
@@ -275,7 +281,7 @@ export const FormPaymentPlan = ({
               setName(e.target.value || null);
               handleRemoveError("name");
             }}
-            placeholder="Ingrese el nombre del rol"
+            placeholder="Ingrese el nombre del plan de pago"
           />
           <FieldError children={errors.name && <> {errors.name}</>} />
           <Description className="text-xs text-muted-foreground mt-1">

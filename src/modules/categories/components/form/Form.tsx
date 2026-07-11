@@ -138,7 +138,7 @@ export const FormCategory = ({
               setName(e.target.value || null);
               handleRemoveError("name");
             }}
-            placeholder="Ingrese el nombre del rol"
+            placeholder="Ingrese el nombre de la categoria"
           />
           <FieldError children={errors.name && <> {errors.name}</>} />
         </TextField>

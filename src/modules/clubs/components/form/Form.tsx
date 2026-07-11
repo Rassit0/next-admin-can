@@ -102,7 +102,7 @@ export const FormClub = ({
               setName(e.target.value);
               setErrors({});
             }}
-            placeholder="Ingrese el nombre del rol"
+            placeholder="Ingrese el nombre del club"
           />
           <FieldError children={errors.name && <> {errors.name}</>} />
         </TextField>

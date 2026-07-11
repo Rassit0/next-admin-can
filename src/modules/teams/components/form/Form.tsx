@@ -116,7 +116,7 @@ export const FormTeam = ({
               setName(e.target.value || null);
               handleRemoveError("name");
             }}
-            placeholder="Ingrese el nombre del rol"
+            placeholder="Ingrese el nombre del equipo"
           />
           <FieldError children={errors.name && <> {errors.name}</>} />
         </TextField>
