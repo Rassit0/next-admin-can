@@ -1,10 +1,4 @@
-import {
-  ButtonBack,
-  ErrorPage,
-  HeaderPage,
-  PaginationSection,
-  SectionFilters,
-} from "@/ui";
+import { ErrorPage, HeaderPage, PaginationSection, SectionFilters } from "@/ui";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { getPaymentPlans } from "@/modules/payment-plans";

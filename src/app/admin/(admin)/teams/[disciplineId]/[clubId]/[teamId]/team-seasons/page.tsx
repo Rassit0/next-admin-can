@@ -14,7 +14,6 @@ import {
 } from "@/modules/team-seasons";
 import { getTeamById } from "@/modules/teams";
 import {
-  ButtonBack,
   ErrorPage,
   HeaderPage,
   PaginationSection,
@@ -113,7 +112,6 @@ export default async function TeamSeasonsPage({ searchParams, params }: Props) {
               urlBase={`/admin/teams/${disciplineId}/${clubId}/${teamId}/team-seasons`}
               buttonFloatingMobile
             />
-            <ButtonBack />
           </>
         }
         urlBase={`/admin/teams/${disciplineId}/${clubId}`}

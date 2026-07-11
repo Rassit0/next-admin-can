@@ -1,10 +1,4 @@
-import {
-  ButtonBack,
-  ErrorPage,
-  HeaderPage,
-  PaginationSection,
-  SectionFilters,
-} from "@/ui";
+import { ErrorPage, HeaderPage, PaginationSection, SectionFilters } from "@/ui";
 import {
   getChargeById,
   getTransactions,
@@ -92,7 +86,6 @@ export default async function ChargeTransactionsPage({
       <HeaderPage
         title={`Detalles de Cargo`}
         description={`Membresía: ${membership.player?.person.name} ${membership.player?.person.lastName}`}
-        action={<ButtonBack />}
         breadcrumb={[
           { label: "Equipos", href: `/` },
           {

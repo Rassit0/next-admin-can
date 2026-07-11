@@ -1,6 +1,6 @@
 import { FormPerson } from "@/modules/persons";
 import { getPlayerById } from "@/modules/players";
-import { ButtonBack, ErrorPage, HeaderPage } from "@/ui";
+import { ErrorPage, HeaderPage } from "@/ui";
 import { Tabs } from "@heroui/react";
 import { cookies } from "next/headers";
 
@@ -31,7 +31,6 @@ export default async function PlayerPage({ params }: Props) {
             label: `Gestión del jugador(a) - ${playerResponse.data.person.name}`,
           },
         ]}
-        action={<ButtonBack />}
       />
       <Tabs className="w-full" variant="secondary">
         <Tabs.ListContainer>

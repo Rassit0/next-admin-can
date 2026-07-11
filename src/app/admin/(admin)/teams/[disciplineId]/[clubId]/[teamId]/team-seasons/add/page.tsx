@@ -5,8 +5,7 @@ import {
   getSeasonsByDisciplineOptions,
 } from "@/modules/team-seasons";
 import { getTeamById } from "@/modules/teams";
-import { ButtonBack, ErrorPage, HeaderPage } from "@/ui";
-import { Button } from "@heroui/react";
+import { ErrorPage, HeaderPage } from "@/ui";
 import { redirect } from "next/navigation";
 
 interface Props {
@@ -72,7 +71,6 @@ export default async function AddTeamSeasonPage({ params }: Props) {
               cancelHref={`/admin/teams/${disciplineId}/${clubId}/${teamId}/team-seasons`}
               formId="form-team-season"
             />
-            <ButtonBack />
           </>
         }
         urlBase={`/admin/teams/${disciplineId}/${clubId}`}
