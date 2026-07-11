@@ -12,7 +12,10 @@ interface Props {
     name: string;
     registrationDiscountPercent: string;
     recurringDiscountPercent: string;
+    seasonFeeDiscountPercent: string;
     isSinglePayment: boolean;
+    advanceCycles?: number;
+    advanceCyclesDiscountPercent?: string;
     isDefault: boolean;
   };
 }

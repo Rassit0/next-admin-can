@@ -1,8 +1,11 @@
 "use client";
-import { Chip, Table } from "@heroui/react";
+import { Chip, Table, Button } from "@heroui/react";
 import { useEffect, useState } from "react";
 import { SortableColumnHeader } from "@/ui";
-import { ICharge } from "@/modules/charges";
+import { ICharge } from "@/modules/charge-transactions";
+import { PayChargeDrawer } from "../drawer/PayChargeDrawer";
+import { useParams } from "next/navigation";
+import Link from "next/link";
 
 interface Props {
   charges: ICharge[];
@@ -18,6 +21,8 @@ const formatCurrency = (amount: number | string) => {
 
 export const TableCharges = ({ charges }: Props) => {
   const [isClient, setIsClient] = useState(false);
+  const [selectedCharge, setSelectedCharge] = useState<ICharge | null>(null);
+  const params = useParams();
 
   useEffect(() => {
     setIsClient(true);
@@ -65,7 +70,7 @@ export const TableCharges = ({ charges }: Props) => {
           className="min-w-200"
         >
           <Table.Header className="bg-surface-secondary">
-            <Table.Column allowsSorting id="description">
+            <Table.Column allowsSorting isRowHeader id="description">
               <SortableColumnHeader id="description">
                 <span className="text-xs font-semibold uppercase tracking-wide">
                   Concepto
@@ -145,8 +150,25 @@ export const TableCharges = ({ charges }: Props) => {
                     </Chip>
                   </Table.Cell>
                   <Table.Cell className="py-3">
-                    <div className="flex items-center justify-center">
-                      <span className="text-xs text-muted">—</span>
+                    <div className="flex items-center justify-center gap-2">
+                      {charge.status === "PENDING" || charge.status === "PARTIAL" ? (
+                        <Button
+                          size="sm"
+                          variant="secondary"
+                          onPress={() => setSelectedCharge(charge)}
+                        >
+                          Pagar
+                        </Button>
+                      ) : null}
+                      {params?.disciplineId && (
+                        <Link
+                          href={`/admin/teams/${params.disciplineId}/${params.clubId}/${params.teamId}/team-seasons/${params.teamSeasonId}/player-memberships/${params.playerMembershipId}/${charge.id}/transactions`}
+                        >
+                          <Button size="sm" variant="secondary" className="px-3">
+                            Ver detalles
+                          </Button>
+                        </Link>
+                      )}
                     </div>
                   </Table.Cell>
                 </Table.Row>
@@ -155,6 +177,13 @@ export const TableCharges = ({ charges }: Props) => {
           </Table.Body>
         </Table.Content>
       </Table.ScrollContainer>
+      {selectedCharge && (
+        <PayChargeDrawer
+          isOpen={!!selectedCharge}
+          onOpenChange={(isOpen) => !isOpen && setSelectedCharge(null)}
+          charge={selectedCharge}
+        />
+      )}
     </Table>
   );
 };

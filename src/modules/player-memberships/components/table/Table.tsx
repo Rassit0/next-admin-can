@@ -35,8 +35,8 @@ export const TableMemberships = ({ memberships, teamSeason }: Props) => {
       <Table.ScrollContainer>
         <Table.Content aria-label="Membresías de atletas" className="min-w-200">
           <Table.Header className="bg-surface-secondary">
-            <Table.Column isRowHeader allowsSorting id="player">
-              <SortableColumnHeader id="player">
+            <Table.Column isRowHeader allowsSorting id="name">
+              <SortableColumnHeader id="name">
                 <span className="text-xs font-semibold uppercase tracking-wide">
                   Atleta
                 </span>
@@ -49,9 +49,14 @@ export const TableMemberships = ({ memberships, teamSeason }: Props) => {
                 </span>
               </SortableColumnHeader>
             </Table.Column>
-            <Table.Column id="initialCharges" className="text-right">
+            <Table.Column id="totalPendingAmount" className="text-right">
               <span className="text-xs font-semibold uppercase tracking-wide">
-                Cargos
+                Pendiente
+              </span>
+            </Table.Column>
+            <Table.Column id="totalPaidAmount" className="text-right">
+              <span className="text-xs font-semibold uppercase tracking-wide">
+                Pagado
               </span>
             </Table.Column>
             <Table.Column allowsSorting id="startedAt">
@@ -127,8 +132,13 @@ export const TableMemberships = ({ memberships, teamSeason }: Props) => {
                     </span>
                   </Table.Cell>
                   <Table.Cell className="py-3 text-right">
-                    <span className="font-semibold tabular-nums text-accent">
+                    <span className="font-semibold tabular-nums text-warning">
                       {formatCurrency(membership.totalPendingAmount, "BOB")}
+                    </span>
+                  </Table.Cell>
+                  <Table.Cell className="py-3 text-right">
+                    <span className="font-semibold tabular-nums text-success">
+                      {formatCurrency(membership.totalPaidAmount, "BOB")}
                     </span>
                   </Table.Cell>
                   <Table.Cell className="py-3 text-sm">

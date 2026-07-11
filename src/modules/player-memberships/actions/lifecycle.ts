@@ -23,15 +23,17 @@ const messages: Record<MembershipLifecycleAction, string> = {
 export const updateMembershipLifecycle = async ({
   id,
   action,
+  reason,
 }: {
   id: string;
   action: MembershipLifecycleAction;
+  reason?: string;
 }): Promise<ServiceResponse<IPlayerMembership>> => {
   return handleServerAction(async () => {
     const response = await api.post<{
       message: string;
       data: IPlayerMembership;
-    }>(`player-memberships/${action}/${id}`, {});
+    }>(`player-memberships/${action}/${id}`, reason ? { reason } : {});
 
     updateTag("player-memberships");
     return {

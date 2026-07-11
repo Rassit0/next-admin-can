@@ -52,6 +52,6 @@ export interface Meta {
   currentPage: number;
   hasNextPage: boolean;
   hasPrevPage: boolean;
-  nextPage: null;
-  prevPage: null;
+  nextPage: number | null;
+  prevPage: number | null;
 }

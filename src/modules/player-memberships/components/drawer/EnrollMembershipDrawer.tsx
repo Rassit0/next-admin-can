@@ -13,8 +13,13 @@ import {
   useOverlayState,
   Alert,
   FieldError,
+  Popover,
 } from "@heroui/react";
-import { Add01Icon, UserAdd01Icon } from "@hugeicons/core-free-icons";
+import {
+  Add01Icon,
+  UserAdd01Icon,
+  InformationCircleIcon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -292,6 +297,27 @@ export const EnrollMembershipDrawer = ({
 
   const [isOpen, setIsOpen] = useState(false);
 
+  const InfoTooltip = ({ text }: { text: string }) => (
+    <Popover>
+      <Button
+        isIconOnly
+        variant="ghost"
+        size="sm"
+        className="h-5 w-5 min-w-5 text-muted-foreground ml-2"
+      >
+        <HugeiconsIcon icon={InformationCircleIcon} size={14} />
+      </Button>
+      <Popover.Content placement="top">
+        <Popover.Dialog className="max-w-50 px-3 py-2">
+          <Popover.Arrow />
+          <p className="text-xs font-normal normal-case tracking-normal text-foreground">
+            {text}
+          </p>
+        </Popover.Dialog>
+      </Popover.Content>
+    </Popover>
+  );
+
   return (
     <>
       <Button
@@ -320,6 +346,18 @@ export const EnrollMembershipDrawer = ({
 
             <Drawer.Body className="gap-5">
               <Surface variant="transparent" className="flex flex-col gap-5">
+                <Alert status="accent" className="mb-2">
+                  <Alert.Indicator />
+                  <Alert.Content>
+                    <Alert.Title>Fechas y Prorrateo</Alert.Title>
+                    <Alert.Description>
+                      La fecha de inicio que elijas determinará cómo el motor
+                      financiero aplica el cálculo de prorrateo (si está activo
+                      en la temporada) para la primera cuota.
+                    </Alert.Description>
+                  </Alert.Content>
+                </Alert>
+
                 <Alert status="accent" className="mb-2">
                   <Alert.Indicator />
                   <Alert.Content>
@@ -370,7 +408,10 @@ export const EnrollMembershipDrawer = ({
                   isDisabled={noPlans}
                   isInvalid={!!errors.planKey || undefined}
                 >
-                  <Label className="text-sm font-semibold">Plan de pago</Label>
+                  <Label className="text-sm font-semibold flex items-center">
+                    Plan de pago
+                    <InfoTooltip text="Los planes definen si se cobra de forma adelantada, recurrente, y sus respectivos descuentos aplicables." />
+                  </Label>
                   <ComboBox.InputGroup>
                     <Input
                       variant="secondary"
@@ -419,8 +460,9 @@ export const EnrollMembershipDrawer = ({
                   name="startedAt"
                   isInvalid={!!errors.startedAt || undefined}
                 >
-                  <Label className="text-sm font-semibold">
+                  <Label className="text-sm font-semibold flex items-center">
                     Fecha de inicio
+                    <InfoTooltip text="Fecha en la que el sistema se basa para cobrar. Si la fecha cae a la mitad de un ciclo mensual (y el prorrateo está activo), el cobro será parcial." />
                   </Label>
                   <Input
                     variant="secondary"
@@ -441,8 +483,9 @@ export const EnrollMembershipDrawer = ({
                         <Switch.Thumb />
                       </Switch.Control>
                       <Switch.Content>
-                        <Label className="text-sm font-semibold">
+                        <Label className="text-sm font-semibold flex items-center">
                           Aplicar Descuento Excepcional
+                          <InfoTooltip text="Estos descuentos se sumarán a los que ya otorga el plan elegido (el total acumulado no puede exceder el 100%)." />
                         </Label>
                       </Switch.Content>
                     </Switch>
@@ -621,8 +664,9 @@ export const EnrollMembershipDrawer = ({
                       <Switch.Thumb />
                     </Switch.Control>
                     <Switch.Content>
-                      <Label className="text-sm">
+                      <Label className="text-sm flex items-center">
                         Es Migración (omitir cargos iniciales)
+                        <InfoTooltip text="Activa esta opción si el jugador ya está en la temporada por migración de datos y NO deseas generar sus cargos de inscripción ahora." />
                       </Label>
                     </Switch.Content>
                   </Switch>

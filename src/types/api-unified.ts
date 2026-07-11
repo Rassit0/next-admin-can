@@ -193,6 +193,10 @@ export interface IPaymentPlan {
   name: string;
   registrationDiscountPercent: string;
   recurringDiscountPercent: string;
+  seasonFeeDiscountPercent: string;
+  isSinglePayment: boolean;
+  advanceCycles?: number;
+  advanceCyclesDiscountPercent?: string | number;
   description?: string;
   isActive: boolean;
   createdAt: Date;

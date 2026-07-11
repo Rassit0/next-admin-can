@@ -10,7 +10,10 @@ export const addPaymentPlan = async (data: {
   name: string;
   registrationDiscountPercent: string;
   recurringDiscountPercent: string;
+  seasonFeeDiscountPercent: string;
   isSinglePayment: boolean;
+  advanceCycles?: number;
+  advanceCyclesDiscountPercent?: string;
   isDefault: boolean;
 }): Promise<ServiceResponse<IPaymentPlan>> => {
   return handleServerAction(async () => {

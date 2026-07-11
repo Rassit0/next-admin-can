@@ -1,7 +1,7 @@
 import { api } from "@/utils/api";
 import { ServiceResponse } from "@/types/api";
 import { handleServerAction } from "@/utils";
-import { ICharge, IChargesResponse } from "@/modules/charges";
+import { ICharge, IChargesResponse } from "@/modules/charge-transactions";
 
 interface SearchParams {
   search?: string;

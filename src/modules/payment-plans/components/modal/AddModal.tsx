@@ -47,7 +47,7 @@ export const AddModal = ({ teamSeasonId, teamSeasonBillingType }: Props) => {
               <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
                 <HugeiconsIcon icon={Layers01Icon} />
               </Modal.Icon>
-              <Modal.Heading>Agregar Categoría</Modal.Heading>
+              <Modal.Heading>Agregar Plan de Pago</Modal.Heading>
               <p className="mt-1.5 text-sm leading-5 text-muted">
                 Agrega un nuevo plan de pago al sistema.
               </p>

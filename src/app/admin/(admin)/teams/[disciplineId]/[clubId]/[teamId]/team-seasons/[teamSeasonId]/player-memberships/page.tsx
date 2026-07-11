@@ -16,9 +16,33 @@ import {
   MetricsCards,
   TableMemberships,
 } from "@/modules/player-memberships";
-import { Button, Card, Alert, Chip } from "@heroui/react";
-import { Wallet01Icon } from "@hugeicons/core-free-icons";
+import { Button, Card, Alert, Chip, Popover } from "@heroui/react";
+import {
+  Wallet01Icon,
+  InformationCircleIcon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+
+const InfoTooltip = ({ text }: { text: string }) => (
+  <Popover>
+    <Button
+      isIconOnly
+      variant="ghost"
+      size="sm"
+      className="h-4 w-4 min-w-4 text-muted-foreground ml-1 p-0"
+    >
+      <HugeiconsIcon icon={InformationCircleIcon} size={14} />
+    </Button>
+    <Popover.Content placement="top">
+      <Popover.Dialog className="max-w-50 px-3 py-2">
+        <Popover.Arrow />
+        <p className="text-xs font-normal normal-case tracking-normal text-foreground">
+          {text}
+        </p>
+      </Popover.Dialog>
+    </Popover.Content>
+  </Popover>
+);
 
 interface Props {
   searchParams: Promise<{
@@ -87,17 +111,16 @@ export default async function PlayerMembershipsPage({
                 Ver pagos
               </Button>
             </Link>
-            <ButtonBack />
           </>
         }
         breadcrumb={[
           { label: "Gestión Equipos", href: `/` },
           {
-            label: `Gestión de Temporadas - ${teamSeason.team.name}`,
+            label: `Temporadas`,
             href: `/admin/teams/${disciplineId}/${clubId}/${teamId}/team-seasons`,
           },
           {
-            label: `Membresías - ${teamSeason.category.name} (${GENDER_MAP[teamSeason.gender] || teamSeason.gender}) - ${teamSeason.season.name}`,
+            label: `Membresías`,
           },
         ]}
       />
@@ -120,8 +143,9 @@ export default async function PlayerMembershipsPage({
           <hr className="border-border" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             <div>
-              <p className="text-xs text-muted-foreground mb-1 uppercase font-semibold">
+              <p className="text-xs text-muted-foreground mb-1 uppercase font-semibold flex items-center">
                 Modelo de Cobro
+                <InfoTooltip text="Define si la temporada permite pagos fragmentados mes a mes, o si es un pago cerrado." />
               </p>
               <p className="font-bold text-sm">
                 {teamSeason.billingType === "MONTHLY_ONLY" && "Sólo Recurrente"}
@@ -132,8 +156,9 @@ export default async function PlayerMembershipsPage({
             {teamSeason.billingType !== "SINGLE_ONLY" && (
               <>
                 <div>
-                  <p className="text-xs text-muted-foreground mb-1 uppercase font-semibold">
+                  <p className="text-xs text-muted-foreground mb-1 uppercase font-semibold flex items-center">
                     Matrícula
+                    <InfoTooltip text="Costo único que se cobra al inicio (o prorrateado) por ingresar al equipo en esta temporada." />
                   </p>
                   <p className="font-bold text-sm">
                     {teamSeason.registrationFee
@@ -142,7 +167,7 @@ export default async function PlayerMembershipsPage({
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs text-muted-foreground mb-1 uppercase font-semibold">
+                  <p className="text-xs text-muted-foreground mb-1 uppercase font-semibold flex items-center">
                     Cuota Base (
                     {teamSeason.billingFrequency === "WEEKLY"
                       ? "Semanal"
@@ -150,6 +175,7 @@ export default async function PlayerMembershipsPage({
                         ? "Quincenal"
                         : "Mensual"}
                     )
+                    <InfoTooltip text="Monto recurrente base que se cobrará periódicamente (antes de aplicar planes o descuentos)." />
                   </p>
                   <p className="font-bold text-sm">
                     {teamSeason.recurringFee
@@ -162,8 +188,9 @@ export default async function PlayerMembershipsPage({
             {(teamSeason.billingType === "SINGLE_ONLY" ||
               teamSeason.billingType === "BOTH") && (
               <div>
-                <p className="text-xs text-muted-foreground mb-1 uppercase font-semibold">
+                <p className="text-xs text-muted-foreground mb-1 uppercase font-semibold flex items-center">
                   Tarifa Temporada Completa
+                  <InfoTooltip text="Costo de la temporada completa si el modelo permite o requiere Pago Único (esquema cerrado)." />
                 </p>
                 <p className="font-bold text-sm">
                   {teamSeason.seasonFee
@@ -173,8 +200,9 @@ export default async function PlayerMembershipsPage({
               </div>
             )}
             <div className="col-span-full">
-              <p className="text-xs text-muted-foreground mb-2 uppercase font-semibold">
+              <p className="text-xs text-muted-foreground mb-2 uppercase font-semibold flex items-center">
                 Opciones de Prorrateo Activas
+                <InfoTooltip text="Si el jugador ingresa tarde (después de la fecha de inicio del ciclo), el sistema cobrará la fracción correspondiente matemáticamente a los días activos de las opciones que veas aquí marcadas." />
               </p>
               <div className="flex flex-wrap gap-2">
                 {teamSeason.prorateRegistrationFee && (
@@ -226,6 +254,11 @@ export default async function PlayerMembershipsPage({
           memberships={memberships}
           teamSeason={teamSeason}
           totalItems={meta.totalItems}
+          globalTotalPending={membershipsResponse.data?.summary?.totalPending}
+          globalTotalPaid={membershipsResponse.data?.summary?.totalPaid}
+          activeMembers={membershipsResponse.data?.summary?.activeMembers}
+          suspendedMembers={membershipsResponse.data?.summary?.suspendedMembers}
+          totalBilled={membershipsResponse.data?.summary?.totalBilled}
         />
 
         <Card className="shadow-[0px_4px_12px_rgba(0,0,0,0.06)] border border-border">
@@ -233,7 +266,8 @@ export default async function PlayerMembershipsPage({
             title="Atletas inscritos"
             description="Asigna membresías y revisa los cargos iniciales generados"
             action={
-              <div className="w-full">
+              <div className="w-full flex gap-2 justify-end">
+                <CreateMassiveManualChargeButton teamSeasonId={teamSeasonId} />
                 <EnrollMembershipDrawer
                   teamSeason={teamSeason}
                   paymentPlans={paymentPlans}
@@ -254,3 +288,5 @@ export default async function PlayerMembershipsPage({
     </>
   );
 }
+
+import { CreateMassiveManualChargeButton } from "@/modules/player-memberships";

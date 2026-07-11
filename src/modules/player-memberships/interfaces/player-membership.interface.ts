@@ -42,11 +42,19 @@ export interface IPlayerMembership {
   createdAt: Date;
   updatedAt: Date;
   totalPendingAmount: number;
+  totalPaidAmount: number;
 }
 
 export interface IPlayerMembershipResponse {
   data: IPlayerMembership[];
   meta: Meta;
+  summary?: {
+    activeMembers: number;
+    suspendedMembers: number;
+    totalBilled: number;
+    totalPending: number;
+    totalPaid: number;
+  };
   message: string;
 }
 

@@ -120,7 +120,7 @@ export default async function TeamSeasonsPage({ searchParams, params }: Props) {
         breadcrumb={[
           { label: "Gestión Equipos", href: `/` },
           {
-            label: `Gestión de Temporadas - ${teamResponse.data.name}`,
+            label: `Temporadas`,
           },
         ]}
       />

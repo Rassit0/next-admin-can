@@ -1,6 +1,7 @@
 import { ChevronRight } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Breadcrumb } from "./Breadcrumb";
+import { ButtonBack } from "../../button-back/ButtonBack";
 
 interface BreadcrumbItem {
   label: string;
@@ -14,6 +15,7 @@ interface Props {
   children?: React.ReactNode;
   urlBase?: string;
   breadcrumb?: BreadcrumbItem[];
+  showButtonBack?: boolean;
 }
 export const HeaderPage = ({
   title,
@@ -22,6 +24,7 @@ export const HeaderPage = ({
   children,
   urlBase,
   breadcrumb,
+  showButtonBack = true,
 }: Props) => {
   return (
     <section className="flex flex-wrap flex-row justify-between items-center gap-4 mb-0 lg:mb-4">
@@ -63,6 +66,7 @@ export const HeaderPage = ({
       {action && (
         <div className="flex flex-wrap w-full md:w-auto justify-end gap-2">
           {action}
+          {showButtonBack && <ButtonBack />}
         </div>
       )}
     </section>

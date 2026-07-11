@@ -16,7 +16,7 @@ export const getPlayerMembershipById = async ({
       `player-memberships/${id}`,
       {
         next: {
-          tags: ["player-memberships"],
+          tags: ["player-memberships", "charges"],
           revalidate: 3600,
         },
       },

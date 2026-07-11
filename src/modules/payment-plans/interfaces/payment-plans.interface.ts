@@ -12,6 +12,8 @@ export interface IPaymentPlan {
   recurringDiscountPercent: string;
   seasonFeeDiscountPercent: string;
   isSinglePayment: boolean;
+  advanceCycles?: number;
+  advanceCyclesDiscountPercent?: string | number;
   isDefault: boolean;
   createdAt: Date;
   updatedAt: Date;

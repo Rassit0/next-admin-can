@@ -81,11 +81,16 @@ export const AddModal = ({
           <Modal.Dialog className="sm:max-w-2xl bg-background-tertiary">
             <Modal.CloseTrigger />
             <Modal.Header>
-              <div className="flex items-center gap-2">
-                <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
-                  <HugeiconsIcon icon={Layers01Icon} />
-                </Modal.Icon>
-                <Modal.Heading>Registrar jugador</Modal.Heading>
+              <div className="flex flex-col gap-1">
+                <div className="flex items-center gap-2">
+                  <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
+                    <HugeiconsIcon icon={IdentityCardIcon} />
+                  </Modal.Icon>
+                  <Modal.Heading>Registrar Perfil de Jugador</Modal.Heading>
+                </div>
+                <p className="text-sm text-muted-foreground ml-10">
+                  Asigna un perfil deportivo a una persona registrada en el sistema.
+                </p>
               </div>
             </Modal.Header>
             <Modal.Body className="p-0 md:p-6">
