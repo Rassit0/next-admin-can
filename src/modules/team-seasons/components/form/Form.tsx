@@ -72,48 +72,48 @@ export const FormTeamSeason = ({
     teamSeason?.gender || null,
   );
   const [billingDay, setBillingDay] = useState<number | null>(
-    teamSeason?.billingDay || null,
+    teamSeason?.billingConfig?.billingDay || null,
   );
   const [registrationFee, setRegistrationFee] = useState<string | null>(
-    teamSeason?.registrationFee || null,
+    teamSeason?.billingConfig?.registrationFee || null,
   );
   const [recurringFee, setRecurringFee] = useState<string | null>(
-    teamSeason?.recurringFee || null,
+    teamSeason?.billingConfig?.recurringFee || null,
   );
   const [seasonFee, setSeasonFee] = useState<string | null>(
-    teamSeason?.seasonFee || null,
+    teamSeason?.billingConfig?.seasonFee || null,
   );
   const [billingType, setBillingType] = useState<SeasonBillingType>(
-    teamSeason?.billingType || "MONTHLY_ONLY",
+    teamSeason?.billingConfig?.billingType || "MONTHLY_ONLY",
   );
   const [billingFrequency, setBillingFrequency] = useState<BillingFrequency>(
-    teamSeason?.billingFrequency || "MONTHLY",
+    teamSeason?.billingConfig?.billingFrequency || "MONTHLY",
   );
   const [debtToleranceMonths, setDebtToleranceMonths] = useState<number | null>(
-    teamSeason?.debtToleranceMonths !== undefined
-      ? teamSeason?.debtToleranceMonths
+    teamSeason?.billingConfig?.debtToleranceMonths !== undefined
+      ? teamSeason?.billingConfig?.debtToleranceMonths
       : null,
   );
 
   const [prorateFirstRecurringFee, setProrateFirstRecurringFee] =
-    useState<boolean>(teamSeason?.prorateFirstRecurringFee ?? true);
+    useState<boolean>(teamSeason?.billingConfig?.prorateFirstRecurringFee ?? true);
   const [prorateLastRecurringFee, setProrateLastRecurringFee] =
-    useState<boolean>(teamSeason?.prorateLastRecurringFee ?? true);
+    useState<boolean>(teamSeason?.billingConfig?.prorateLastRecurringFee ?? true);
   const [prorateRegistrationFee, setProrateRegistrationFee] = useState<boolean>(
-    teamSeason?.prorateRegistrationFee ?? false,
+    teamSeason?.billingConfig?.prorateRegistrationFee ?? false,
   );
   const [prorateSeasonFee, setProrateSeasonFee] = useState<boolean>(
-    teamSeason?.prorateSeasonFee ?? false,
+    teamSeason?.billingConfig?.prorateSeasonFee ?? false,
   );
 
   const [lateFeeEnabled, setLateFeeEnabled] = useState<boolean>(
-    teamSeason?.lateFeeEnabled === true ? true : false,
+    teamSeason?.billingConfig?.lateFeeEnabled === true ? true : false,
   );
   const [lateFeePerDay, setLateFeePerDay] = useState<string | null>(
-    teamSeason?.lateFeePerDay || null,
+    teamSeason?.billingConfig?.lateFeePerDay || null,
   );
   const [graceDays, setGraceDays] = useState<number | null>(
-    teamSeason?.graceDays !== undefined ? teamSeason?.graceDays : null,
+    teamSeason?.billingConfig?.graceDays !== undefined ? teamSeason?.billingConfig?.graceDays : null,
   );
   const [status, setStatus] = useState<StatusTeamSeason>(
     teamSeason?.status || "DRAFT",
@@ -226,27 +226,29 @@ export const FormTeamSeason = ({
       categoryId: categoryId!,
       seasonId: seasonId!,
       gender: gender!,
-      billingDay:
-        billingType === "SINGLE_ONLY" || billingFrequency !== "MONTHLY"
-          ? 1
-          : billingDay!,
-      registrationFee: billingType === "SINGLE_ONLY" ? null : registrationFee!,
-      recurringFee: billingType === "SINGLE_ONLY" ? null : recurringFee!,
-      seasonFee:
-        billingType === "SINGLE_ONLY" || billingType === "BOTH"
-          ? seasonFee!
-          : null,
-      billingType: billingType,
-      billingFrequency:
-        billingType === "SINGLE_ONLY" ? "SINGLE" : billingFrequency,
-      debtToleranceMonths: debtToleranceMonths!,
-      prorateFirstRecurringFee,
-      prorateLastRecurringFee,
-      prorateRegistrationFee,
-      prorateSeasonFee,
-      lateFeeEnabled,
-      lateFeePerDay: lateFeeEnabled ? lateFeePerDay! : "0",
-      graceDays: lateFeeEnabled ? graceDays! : 0,
+      billingConfig: {
+        billingDay:
+          billingType === "SINGLE_ONLY" || billingFrequency !== "MONTHLY"
+            ? 1
+            : billingDay!,
+        registrationFee: billingType === "SINGLE_ONLY" ? null : registrationFee!,
+        recurringFee: billingType === "SINGLE_ONLY" ? null : recurringFee!,
+        seasonFee:
+          billingType === "SINGLE_ONLY" || billingType === "BOTH"
+            ? seasonFee!
+            : null,
+        billingType: billingType,
+        billingFrequency:
+          billingType === "SINGLE_ONLY" ? "SINGLE" : billingFrequency,
+        debtToleranceMonths: debtToleranceMonths!,
+        prorateFirstRecurringFee,
+        prorateLastRecurringFee,
+        prorateRegistrationFee,
+        prorateSeasonFee,
+        lateFeeEnabled,
+        lateFeePerDay: lateFeeEnabled ? lateFeePerDay! : "0",
+        graceDays: lateFeeEnabled ? graceDays! : 0,
+      },
       status,
     };
     if (teamSeason) {

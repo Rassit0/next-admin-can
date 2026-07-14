@@ -43,17 +43,30 @@ export interface IPlayerMembership {
   updatedAt: Date;
   totalPendingAmount: number;
   totalPaidAmount: number;
+  pauses?: IPlayerMembershipPause[];
+}
+
+export interface IPlayerMembershipPause {
+  id: string;
+  playerMembershipId: string;
+  startDate: Date;
+  endDate: Date;
+  reason: string | null;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface IPlayerMembershipResponse {
   data: IPlayerMembership[];
   meta: Meta;
   summary?: {
+    totalBilled: number;
+    totalPaid: number;
+    totalPending: number;
     activeMembers: number;
     suspendedMembers: number;
-    totalBilled: number;
-    totalPending: number;
-    totalPaid: number;
+    occupiedSlotsCount: number;
+    maxMembers: number | null;
   };
   message: string;
 }

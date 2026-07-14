@@ -4,6 +4,18 @@ export interface ISeasonsResponse {
   message: string;
 }
 
+export type SeasonStatus = "ACTIVE" | "FINISHED" | "CANCELLED";
+
+export interface ISeasonEvent {
+  id: string;
+  seasonId: string;
+  eventType: "EXTENSION" | "FINALIZATION" | "CANCELLATION";
+  originalEndDate: Date | null;
+  newEndDate: Date | null;
+  reason: string;
+  createdAt: Date;
+}
+
 export interface ISeason {
   id: string;
   institutionId: string;
@@ -12,6 +24,8 @@ export interface ISeason {
   description: string | null;
   startDate: Date;
   endDate: Date;
+  status: SeasonStatus;
+  events?: ISeasonEvent[];
   createdAt: Date;
   updatedAt: Date;
 }

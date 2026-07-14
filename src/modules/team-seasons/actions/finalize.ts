@@ -7,12 +7,12 @@ import { ITeamSeason } from "@/modules/team-seasons";
 
 export const finalizeTeamSeason = async (
   id: string,
-  statusNotes: string,
+  reason: string,
 ): Promise<ServiceResponse<ITeamSeason>> => {
   return handleServerAction(async () => {
     const response = await api.patch<{ message: string; data: ITeamSeason }>(
-      `team-seasons/${id}/finalize`,
-      { statusNotes },
+      `team-seasons/${id}/finish`,
+      { reason },
     );
 
     console.log(response);

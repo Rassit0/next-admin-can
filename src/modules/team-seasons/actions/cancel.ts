@@ -7,12 +7,12 @@ import { ITeamSeason } from "@/modules/team-seasons";
 
 export const cancelTeamSeason = async (
   id: string,
-  statusNotes: string,
+  reason: string,
 ): Promise<ServiceResponse<ITeamSeason>> => {
   return handleServerAction(async () => {
     const response = await api.patch<{ message: string; data: ITeamSeason }>(
       `team-seasons/${id}/cancel`,
-      { statusNotes },
+      { reason },
     );
 
     console.log(response);

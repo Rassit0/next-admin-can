@@ -142,12 +142,12 @@ export default async function PlayerMembershipsPage({
                 <InfoTooltip text="Define si la temporada permite pagos fragmentados mes a mes, o si es un pago cerrado." />
               </p>
               <p className="font-bold text-sm">
-                {teamSeason.billingType === "MONTHLY_ONLY" && "Sólo Recurrente"}
-                {teamSeason.billingType === "SINGLE_ONLY" && "Sólo Pago Único"}
-                {teamSeason.billingType === "BOTH" && "Pago Único o Recurrente"}
+                {teamSeason.billingConfig?.billingType === "MONTHLY_ONLY" && "Sólo Recurrente"}
+                {teamSeason.billingConfig?.billingType === "SINGLE_ONLY" && "Sólo Pago Único"}
+                {teamSeason.billingConfig?.billingType === "BOTH" && "Pago Único o Recurrente"}
               </p>
             </div>
-            {teamSeason.billingType !== "SINGLE_ONLY" && (
+            {teamSeason.billingConfig?.billingType !== "SINGLE_ONLY" && (
               <>
                 <div>
                   <p className="text-xs text-muted-foreground mb-1 uppercase font-semibold flex items-center">
@@ -155,40 +155,40 @@ export default async function PlayerMembershipsPage({
                     <InfoTooltip text="Costo único que se cobra al inicio (o prorrateado) por ingresar al equipo en esta temporada." />
                   </p>
                   <p className="font-bold text-sm">
-                    {teamSeason.registrationFee
-                      ? `${teamSeason.registrationFee} Bs.`
+                    {teamSeason.billingConfig?.registrationFee
+                      ? `${teamSeason.billingConfig?.registrationFee} Bs.`
                       : "Gratis"}
                   </p>
                 </div>
                 <div>
                   <p className="text-xs text-muted-foreground mb-1 uppercase font-semibold flex items-center">
                     Cuota Base (
-                    {teamSeason.billingFrequency === "WEEKLY"
+                    {teamSeason.billingConfig?.billingFrequency === "WEEKLY"
                       ? "Semanal"
-                      : teamSeason.billingFrequency === "BIWEEKLY"
+                      : teamSeason.billingConfig?.billingFrequency === "BIWEEKLY"
                         ? "Quincenal"
                         : "Mensual"}
                     )
                     <InfoTooltip text="Monto recurrente base que se cobrará periódicamente (antes de aplicar planes o descuentos)." />
                   </p>
                   <p className="font-bold text-sm">
-                    {teamSeason.recurringFee
-                      ? `${teamSeason.recurringFee} Bs.`
+                    {teamSeason.billingConfig?.recurringFee
+                      ? `${teamSeason.billingConfig?.recurringFee} Bs.`
                       : "Gratis"}
                   </p>
                 </div>
               </>
             )}
-            {(teamSeason.billingType === "SINGLE_ONLY" ||
-              teamSeason.billingType === "BOTH") && (
+            {(teamSeason.billingConfig?.billingType === "SINGLE_ONLY" ||
+              teamSeason.billingConfig?.billingType === "BOTH") && (
               <div>
                 <p className="text-xs text-muted-foreground mb-1 uppercase font-semibold flex items-center">
                   Tarifa Temporada Completa
                   <InfoTooltip text="Costo de la temporada completa si el modelo permite o requiere Pago Único (esquema cerrado)." />
                 </p>
                 <p className="font-bold text-sm">
-                  {teamSeason.seasonFee
-                    ? `${teamSeason.seasonFee} Bs.`
+                  {teamSeason.billingConfig?.seasonFee
+                    ? `${teamSeason.billingConfig?.seasonFee} Bs.`
                     : "Gratis"}
                 </p>
               </div>
@@ -199,30 +199,30 @@ export default async function PlayerMembershipsPage({
                 <InfoTooltip text="Si el jugador ingresa tarde (después de la fecha de inicio del ciclo), el sistema cobrará la fracción correspondiente matemáticamente a los días activos de las opciones que veas aquí marcadas." />
               </p>
               <div className="flex flex-wrap gap-2">
-                {teamSeason.prorateRegistrationFee && (
+                {teamSeason.billingConfig?.prorateRegistrationFee && (
                   <Chip size="sm" variant="soft" color="default">
                     Matrícula
                   </Chip>
                 )}
-                {teamSeason.prorateFirstRecurringFee && (
+                {teamSeason.billingConfig?.prorateFirstRecurringFee && (
                   <Chip size="sm" variant="soft" color="default">
                     Primer Cargo Recurrente
                   </Chip>
                 )}
-                {teamSeason.prorateLastRecurringFee && (
+                {teamSeason.billingConfig?.prorateLastRecurringFee && (
                   <Chip size="sm" variant="soft" color="default">
                     Último Cargo Recurrente
                   </Chip>
                 )}
-                {teamSeason.prorateSeasonFee && (
+                {teamSeason.billingConfig?.prorateSeasonFee && (
                   <Chip size="sm" variant="soft" color="default">
                     Tarifa Temporada (Pago Único)
                   </Chip>
                 )}
-                {!teamSeason.prorateRegistrationFee &&
-                  !teamSeason.prorateFirstRecurringFee &&
-                  !teamSeason.prorateLastRecurringFee &&
-                  !teamSeason.prorateSeasonFee && (
+                {!teamSeason.billingConfig?.prorateRegistrationFee &&
+                  !teamSeason.billingConfig?.prorateFirstRecurringFee &&
+                  !teamSeason.billingConfig?.prorateLastRecurringFee &&
+                  !teamSeason.billingConfig?.prorateSeasonFee && (
                     <span className="text-xs italic text-muted-foreground">
                       Ninguna (Se cobran los montos completos siempre)
                     </span>
@@ -245,9 +245,10 @@ export default async function PlayerMembershipsPage({
         </Card>
 
         <MetricsCards
-          memberships={memberships}
           teamSeason={teamSeason}
-          totalItems={meta.totalItems}
+          totalItems={
+            membershipsResponse.data?.summary?.occupiedSlotsCount || 0
+          }
           globalTotalPending={membershipsResponse.data?.summary?.totalPending}
           globalTotalPaid={membershipsResponse.data?.summary?.totalPaid}
           activeMembers={membershipsResponse.data?.summary?.activeMembers}
@@ -269,6 +270,7 @@ export default async function PlayerMembershipsPage({
                 />
               </div>
             }
+            showButtonBack={false}
           />
           <SectionFilters />
           <TableMemberships memberships={memberships} teamSeason={teamSeason} />

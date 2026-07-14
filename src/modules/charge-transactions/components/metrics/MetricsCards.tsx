@@ -69,7 +69,7 @@ export const MetricsCards = ({
     },
     {
       label: "Inscripción (Bs)",
-      value: String(Number(teamSeason.registrationFee)),
+      value: String(Number(teamSeason.billingConfig?.registrationFee)),
       hint: "Tarifa única de ingreso",
       icon: Ticket01Icon,
       tone: "text-primary",
@@ -77,7 +77,7 @@ export const MetricsCards = ({
     },
     {
       label: "Mensualidad (Bs)",
-      value: String(Number(teamSeason.recurringFee)),
+      value: String(Number(teamSeason.billingConfig?.recurringFee)),
       hint: "Cargo recurrente base",
       icon: Calendar01Icon,
       tone: "text-secondary",

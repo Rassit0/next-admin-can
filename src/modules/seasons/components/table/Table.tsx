@@ -7,7 +7,8 @@ import { ButtonGestion } from "./ButtonGestion";
 import { EditModal } from "../modal/EditModal";
 import { SortableColumnHeader } from "@/ui";
 import { DeleteModal } from "../modal/DeleteModal";
-import { ISeason } from "@/modules/seasons";
+import { ISeason, SeasonStatus } from "../../interfaces/season.interface";
+import { SeasonActions } from "../actions/SeasonActions";
 
 interface Props {
   seasons: ISeason[];
@@ -38,22 +39,17 @@ export const TableSeasons = ({
     return null; // O un esqueleto de carga (Skeleton)
   }
 
-  // const statusBgMap: Record<ISeasonStatus, string> = {
-  //   ACTIVE: "bg-success-soft text-success",
-  //   CANCELLED: "bg-danger-soft text-danger",
-  //   DRAFT: "bg-warning-soft text-warning",
-  //   FINISHED: "bg-primary-soft text-primary",
-  // };
+  const statusBgMap: Record<SeasonStatus, string> = {
+    ACTIVE: "bg-success-soft text-success",
+    CANCELLED: "bg-danger-soft text-danger",
+    FINISHED: "bg-primary-soft text-primary",
+  };
 
-  // const statusTextMap: Record<
-  //   ISeasonStatus,
-  //   "Activa" | "Cancelada" | "Borrador" | "Finalizada"
-  // > = {
-  //   ACTIVE: "Activa",
-  //   CANCELLED: "Cancelada",
-  //   DRAFT: "Borrador",
-  //   FINISHED: "Finalizada",
-  // };
+  const statusTextMap: Record<SeasonStatus, string> = {
+    ACTIVE: "Activa",
+    CANCELLED: "Cancelada",
+    FINISHED: "Finalizada",
+  };
 
   return (
     <Table>
@@ -94,9 +90,9 @@ export const TableSeasons = ({
               FECHA FIN
             </Table.Column>
 
-            {/* <Table.Column allowsSorting id="status">
+            <Table.Column allowsSorting id="status">
               ESTADO
-            </Table.Column> */}
+            </Table.Column>
 
             <Table.Column className="text-center">ACCIONES</Table.Column>
           </Table.Header>
@@ -107,15 +103,14 @@ export const TableSeasons = ({
                 <Table.Cell>{season.name}</Table.Cell>
                 <Table.Cell>{season.startDate.toLocaleDateString()}</Table.Cell>
                 <Table.Cell>{season.endDate.toLocaleDateString()}</Table.Cell>
-                {/* <Table.Cell>
+                <Table.Cell>
                   <Chip
-                    // color={statusColorMap[season.status]}
                     className={statusBgMap[season.status]}
                     size="sm"
                   >
                     {statusTextMap[season.status]}
                   </Chip>
-                </Table.Cell> */}
+                </Table.Cell>
 
                 <Table.Cell>
                   <div className="flex items-center justify-center gap-1">
@@ -130,6 +125,7 @@ export const TableSeasons = ({
                       isIcon={true}
                     />
                     <DeleteModal season={season} isIcon={true} />
+                    <SeasonActions season={season} />
                   </div>
                 </Table.Cell>
               </Table.Row>

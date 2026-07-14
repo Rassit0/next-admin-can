@@ -14,6 +14,7 @@ export interface AddPlayerMembershipData {
   membershipDiscounts?: {
     registrationDiscountPercent: number;
     recurringDiscountPercent: number;
+    seasonFeeDiscountPercent: number;
     startDate: string;
     endDate?: string;
     type: string;

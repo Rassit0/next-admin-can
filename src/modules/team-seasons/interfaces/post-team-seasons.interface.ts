@@ -10,19 +10,21 @@ export interface IPostTeamSeason {
   categoryId: string;
   seasonId: string;
   gender: Gender;
-  billingDay: number; // Dia de facturacion
-  registrationFee?: string | null; // Precio de la matricula
-  recurringFee?: string | null; // precio de la mensualidad
-  seasonFee?: string | null; // Tarifa completa de temporada
-  billingType: SeasonBillingType; // Tipo de facturación
-  billingFrequency: BillingFrequency; // Frecuencia de facturación
-  prorateFirstRecurringFee: boolean;
-  prorateLastRecurringFee: boolean;
-  prorateRegistrationFee: boolean;
-  prorateSeasonFee: boolean;
-  debtToleranceMonths: number; // Cantidad de meses para la suspension del miembro
-  lateFeeEnabled: boolean; // Habilitar recargo por mora
-  lateFeePerDay: string; // Recargo por dia de mora
-  graceDays: number; // Dias de gracia
+  billingConfig: {
+    billingDay: number; // Dia de facturacion
+    registrationFee?: string | null; // Precio de la matricula
+    recurringFee?: string | null; // precio de la mensualidad
+    seasonFee?: string | null; // Tarifa completa de temporada
+    billingType: SeasonBillingType; // Tipo de facturación
+    billingFrequency: BillingFrequency; // Frecuencia de facturación
+    prorateFirstRecurringFee: boolean;
+    prorateLastRecurringFee: boolean;
+    prorateRegistrationFee: boolean;
+    prorateSeasonFee: boolean;
+    debtToleranceMonths: number; // Cantidad de meses para la suspension del miembro
+    lateFeeEnabled: boolean; // Habilitar recargo por mora
+    lateFeePerDay: string; // Recargo por dia de mora
+    graceDays: number; // Dias de gracia
+  };
   status: StatusTeamSeason; // Estado de la oferta
 }

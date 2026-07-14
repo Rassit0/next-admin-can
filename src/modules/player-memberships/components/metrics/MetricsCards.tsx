@@ -19,7 +19,6 @@ import {
 } from "@/modules/player-memberships/helpers/initial-charges";
 
 interface Props {
-  memberships: IPlayerMembership[];
   teamSeason: ITeamSeason;
   totalItems: number;
   globalTotalPending?: number;
@@ -51,7 +50,6 @@ const InfoTooltip = ({ text }: { text: string }) => (
 );
 
 export const MetricsCards = ({
-  memberships,
   teamSeason,
   totalItems,
   globalTotalPending = 0,
@@ -93,7 +91,7 @@ export const MetricsCards = ({
     },
     {
       label: "Inscripción (Bs)",
-      value: String(Number(teamSeason.registrationFee)),
+      value: String(Number(teamSeason.billingConfig?.registrationFee)),
       hint: "Costo fijo único de matrícula establecido para ingresar a esta temporada.",
       icon: Ticket01Icon,
       tone: "text-primary",
@@ -101,7 +99,7 @@ export const MetricsCards = ({
     },
     {
       label: "Mensualidad (Bs)",
-      value: String(Number(teamSeason.recurringFee)),
+      value: String(Number(teamSeason.billingConfig?.recurringFee)),
       hint: "Costo base recurrente (por mes) configurado para la temporada (sin contar descuentos).",
       icon: Calendar01Icon,
       tone: "text-secondary",

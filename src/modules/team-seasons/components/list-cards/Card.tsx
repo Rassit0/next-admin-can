@@ -1,8 +1,4 @@
-import {
-  AddMembershipDrawer,
-  ITeamSeason,
-  STATUS_BG_MAP,
-} from "@/modules/team-seasons";
+import { AddMembershipDrawer, ITeamSeason, STATUS_BG_MAP, TeamSeasonActions } from "@/modules/team-seasons";
 import { Button, Card } from "@heroui/react";
 import {
   Add01Icon,
@@ -20,6 +16,7 @@ import { ButtonMemberships } from "./ButtonMemberships";
 import { EnrollMembershipDrawer } from "@/modules/player-memberships";
 import { IPaymentPlan } from "@/modules/payment-plans";
 import { IPlayer } from "@/modules/players";
+import { ButtonToggleBillingEngine } from "./ButtonToggleBillingEngine";
 
 interface Props {
   teamSeason: ITeamSeason;
@@ -151,10 +148,19 @@ export const CardTeamSeason = ({ teamSeason, urlBase }: Props) => {
           src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdnoetj5j2XzJ4YuyxPOW9ygEnipikr9HW2Ws685WzidbfCMuf7oyHv1dPCkWMH3GBc7oW5pjhSwp090-CscKqqUhTwS18FYDOcFyFKRT8XymaR3Sgnjc91-qHv3L2ay9hL-pmILP7EJiiQ6hhh2-LaTDArakpVrCk_-KTeU8lDCIpoxGx4573NRqqyLK_fbEAfKmG1SM8YlugZptSlVr5ImQPVoTjSSlp4vULzIsoJUcN0hPnG_hr5S4SnzZUip_3gexcwcH_rBe8"
         />
         <div
-          className={`absolute top-4 right-4 ${STATUS_BG_MAP[teamSeason.status]} text-white font-label-sm px-4 py-1.5 rounded-full uppercase flex items-center gap-1.5 shadow-lg`}
+          className={`absolute top-4 left-4 ${STATUS_BG_MAP[teamSeason.status]} text-white font-label-sm px-4 py-1.5 rounded-full uppercase flex items-center gap-1.5 shadow-lg`}
         >
           <span className="w-2 h-2 rounded-full bg-white animate-pulse"></span>
           {STATUS_TEXT_MAP[teamSeason.status]}
+        </div>
+        <div className="absolute top-4 right-4 flex items-center gap-2">
+          {teamSeason.status === "ACTIVE" && teamSeason.billingConfig && (
+            <ButtonToggleBillingEngine
+              teamSeasonId={teamSeason.id}
+              billingConfig={teamSeason.billingConfig}
+            />
+          )}
+          <TeamSeasonActions teamSeason={teamSeason} />
         </div>
       </div>
       <div className="p-6 flex-1 flex flex-col">

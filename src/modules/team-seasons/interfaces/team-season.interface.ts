@@ -20,21 +20,8 @@ export interface ITeamSeason {
   minMembers: number;
   minBirthYear?: number | null;
   maxBirthYear?: number | null;
-  billingDay: number; // Día de facturación
-  registrationFee?: string | null; // Tarifa de inscripción
-  recurringFee?: string | null; // Tarifa mensual
-  seasonFee?: string | null; // Tarifa completa de temporada
-  billingType: SeasonBillingType; // Tipo de facturación
-  billingFrequency: BillingFrequency; // Frecuencia de facturacion
-  prorateFirstRecurringFee: boolean;
-  prorateLastRecurringFee: boolean;
-  prorateRegistrationFee: boolean;
-  prorateSeasonFee: boolean;
-  debtToleranceMonths: number; // Meses de tolerancia de deuda
-  lateFeeEnabled: boolean; // Habilitar recargo por mora
-  lateFeePerDay: string; // Recargo por mora por día
-  graceDays: number; // Días de gracia
   status: StatusTeamSeason;
+  billingConfig?: ITeamSeasonBillingConfig;
   _count: {
     playerMemberships: number;
   };
@@ -66,4 +53,23 @@ export interface Meta {
   hasPrevPage: boolean;
   nextPage: null | number;
   prevPage: null | number;
+}
+
+export interface ITeamSeasonBillingConfig {
+  id?: string;
+  isEngineActive: boolean;
+  billingDay: number;
+  registrationFee?: string | null;
+  recurringFee?: string | null;
+  seasonFee?: string | null;
+  billingType: SeasonBillingType;
+  billingFrequency: BillingFrequency;
+  prorateFirstRecurringFee: boolean;
+  prorateLastRecurringFee: boolean;
+  prorateRegistrationFee: boolean;
+  prorateSeasonFee: boolean;
+  debtToleranceMonths: number;
+  lateFeeEnabled: boolean;
+  lateFeePerDay: string;
+  graceDays: number;
 }

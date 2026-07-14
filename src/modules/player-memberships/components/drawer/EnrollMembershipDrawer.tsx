@@ -14,6 +14,8 @@ import {
   Alert,
   FieldError,
   Popover,
+  Toast,
+  CloseButton,
 } from "@heroui/react";
 import {
   Add01Icon,
@@ -44,24 +46,37 @@ interface Props {
 
 const today = () => new Date().toISOString().slice(0, 10);
 
+const toLocalIso = (dateStr: string) => {
+  if (!dateStr) return undefined;
+  return new Date(`${dateStr}T00:00:00`).toISOString();
+};
+
+const getInitialDate = (seasonStart: Date) => {
+  const t = today();
+  const sStart = seasonStart.toISOString().slice(0, 10);
+  return t < sStart ? sStart : t;
+};
+
 export const EnrollMembershipDrawer = ({
   teamSeason,
   paymentPlans,
   size = "md",
 }: Props) => {
-  const state = useOverlayState();
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [playerKey, setPlayerKey] = useState<string | null>(null);
   const [planKey, setPlanKey] = useState<string | null>(
     paymentPlans.find((p) => p.isDefault)?.id ?? null,
   );
-  const [startedAt, setStartedAt] = useState<string>(today());
+  const [startedAt, setStartedAt] = useState<string>(() =>
+    getInitialDate(teamSeason.season.startDate),
+  );
   const [isMigrated, setIsMigrated] = useState(false);
 
   const [hasDiscount, setHasDiscount] = useState(false);
   const [regDiscountPercent, setRegDiscountPercent] = useState<string>("");
   const [recDiscountPercent, setRecDiscountPercent] = useState<string>("");
+  const [seasonDiscountPercent, setSeasonDiscountPercent] =
+    useState<string>("");
   const [discountType, setDiscountType] = useState<string>("SPECIAL_DISCOUNT");
   const [discountReason, setDiscountReason] = useState("");
   const [discountEndDate, setDiscountEndDate] = useState<string>("");
@@ -75,36 +90,57 @@ export const EnrollMembershipDrawer = ({
   const [breakdown, setBreakdown] = useState<IPreviewChargesResponse | null>(
     null,
   );
+  const [apiError, setApiError] = useState<{
+    title: string;
+    description: string;
+  } | null>(null);
 
   // Validaciones en tiempo real
   const errors = useMemo(() => {
     const err: Record<string, string> = {};
-    const sStart = new Date(teamSeason.season.startDate);
-    const sEnd = new Date(teamSeason.season.endDate);
-    const dStart = startedAt ? new Date(startedAt) : null;
+    const sStartStr = new Date(teamSeason.season.startDate)
+      .toISOString()
+      .substring(0, 10);
+    const sEndStr = new Date(teamSeason.season.endDate)
+      .toISOString()
+      .substring(0, 10);
 
     if (!playerKey) err.playerKey = "Seleccione un atleta.";
     if (!planKey) err.planKey = "Seleccione un plan de pago.";
     if (!startedAt) err.startedAt = "Debe ingresar una fecha de inicio.";
-    else if (dStart && (dStart < sStart || dStart > sEnd)) {
-      err.startedAt = `La fecha de inicio debe estar dentro de la temporada (${sStart.toLocaleDateString()} - ${sEnd.toLocaleDateString()}).`;
+    else if (startedAt < sStartStr || startedAt > sEndStr) {
+      err.startedAt = `La fecha de inicio debe estar dentro de la temporada (${sStartStr} al ${sEndStr}).`;
     }
 
     if (hasDiscount) {
       const reg = Number(regDiscountPercent);
       const rec = Number(recDiscountPercent);
+      const season = Number(seasonDiscountPercent);
 
-      if (!regDiscountPercent && !recDiscountPercent) {
-        err.discountPercent =
-          "Debe ingresar al menos un porcentaje de descuento (Matrícula o Mensualidad).";
-      }
-      if (regDiscountPercent && (isNaN(reg) || reg < 0 || reg > 100)) {
-        err.regDiscountPercent =
-          "El descuento debe ser mayor o igual a 0 y máximo 100.";
-      }
-      if (recDiscountPercent && (isNaN(rec) || rec < 0 || rec > 100)) {
-        err.recDiscountPercent =
-          "El descuento debe ser mayor o igual a 0 y máximo 100.";
+      if (selectedPlan?.isSinglePayment) {
+        if (!seasonDiscountPercent) {
+          err.discountPercent = "Debe ingresar un porcentaje de descuento.";
+        }
+        if (
+          seasonDiscountPercent &&
+          (isNaN(season) || season < 0 || season > 100)
+        ) {
+          err.seasonDiscountPercent =
+            "El descuento debe ser mayor o igual a 0 y máximo 100.";
+        }
+      } else {
+        if (!regDiscountPercent && !recDiscountPercent) {
+          err.discountPercent =
+            "Debe ingresar al menos un porcentaje de descuento (Matrícula o Mensualidad).";
+        }
+        if (regDiscountPercent && (isNaN(reg) || reg < 0 || reg > 100)) {
+          err.regDiscountPercent =
+            "El descuento debe ser mayor o igual a 0 y máximo 100.";
+        }
+        if (recDiscountPercent && (isNaN(rec) || rec < 0 || rec > 100)) {
+          err.recDiscountPercent =
+            "El descuento debe ser mayor o igual a 0 y máximo 100.";
+        }
       }
 
       if (!discountType) {
@@ -116,13 +152,12 @@ export const EnrollMembershipDrawer = ({
       }
 
       if (discountEndDate) {
-        const dEnd = new Date(discountEndDate);
-        if (dStart && dEnd < dStart) {
+        if (discountEndDate < startedAt) {
           err.discountEndDate =
             "La fecha de fin no puede ser menor a la de inicio.";
         }
-        if (dEnd > sEnd) {
-          err.discountEndDate = `La fecha de fin no puede exceder la temporada (${sEnd.toLocaleDateString()}).`;
+        if (discountEndDate > sEndStr) {
+          err.discountEndDate = `La fecha de fin no puede exceder la temporada (${sEndStr}).`;
         }
       }
     }
@@ -135,23 +170,27 @@ export const EnrollMembershipDrawer = ({
     discountEndDate,
     regDiscountPercent,
     recDiscountPercent,
+    seasonDiscountPercent,
     discountType,
     discountReason,
     teamSeason,
+    selectedPlan,
   ]);
 
   const reset = () => {
     setPlayerKey(null);
     setPlanKey(paymentPlans.find((p) => p.isDefault)?.id ?? null);
-    setStartedAt(today());
+    setStartedAt(getInitialDate(teamSeason.season.startDate));
     setIsMigrated(false);
     setHasDiscount(false);
     setRegDiscountPercent("");
     setRecDiscountPercent("");
+    setSeasonDiscountPercent("");
     setDiscountType("SPECIAL_DISCOUNT");
     setDiscountReason("");
     setDiscountEndDate("");
     setBreakdown(null);
+    setApiError(null);
   };
 
   useEffect(() => {
@@ -176,26 +215,29 @@ export const EnrollMembershipDrawer = ({
     const res = await getPreviewCharges({
       teamSeasonId: teamSeason.id,
       paymentPlanId: planKey,
-      startDate: new Date(startedAt).toISOString(),
+      startDate: toLocalIso(startedAt)!,
       isMigrated,
       ...(hasDiscount &&
-        (regDiscountPercent !== "" || recDiscountPercent !== "") && {
+        (regDiscountPercent !== "" ||
+          recDiscountPercent !== "" ||
+          seasonDiscountPercent !== "") && {
           membershipDiscounts: [
             {
               registrationDiscountPercent: Number(regDiscountPercent) || 0,
               recurringDiscountPercent: Number(recDiscountPercent) || 0,
-              startDate: new Date(startedAt).toISOString(),
+              seasonFeeDiscountPercent: Number(seasonDiscountPercent) || 0,
+              startDate: toLocalIso(startedAt)!,
               ...(discountEndDate && {
-                endDate: new Date(discountEndDate).toISOString(),
+                endDate: toLocalIso(discountEndDate),
               }),
             },
           ],
         }),
     });
-    console.log({ res });
 
     if (res.error) {
-      toast.danger(res.message, {
+      setApiError({
+        title: res.message,
         description: res.errors
           ? Object.values(res.errors).flat().join(", ")
           : res.message,
@@ -203,69 +245,32 @@ export const EnrollMembershipDrawer = ({
       setBreakdown(null);
       return;
     }
+    setApiError(null);
 
     setBreakdown(res.data);
   };
 
   const handleSubmit = async () => {
-    if (!playerKey || !planKey || !startedAt) {
-      toast.danger("Datos incompletos", {
-        description:
-          "Selecciona el atleta, el plan de pago y la fecha de inicio.",
-      });
-      return;
-    }
-
-    const sStart = new Date(teamSeason.season.startDate);
-    const sEnd = new Date(teamSeason.season.endDate);
-    const dStart = new Date(startedAt);
-
-    if (dStart < sStart || dStart > sEnd) {
-      toast.danger("Fecha inválida", {
-        description: `La fecha de inicio de la membresía debe estar dentro de la temporada (${sStart.toLocaleDateString()} - ${sEnd.toLocaleDateString()}).`,
-      });
-      return;
-    }
-
-    if (hasDiscount && discountEndDate) {
-      const dEnd = new Date(discountEndDate);
-      if (dEnd < dStart) {
-        toast.danger("Fecha de descuento inválida", {
-          description:
-            "La fecha de fin del descuento no puede ser menor a la fecha de inicio.",
-        });
-        return;
-      }
-      if (dEnd > sEnd) {
-        toast.danger("Fecha de descuento inválida", {
-          description: `La fecha de fin del descuento no puede exceder el final de la temporada (${sEnd.toLocaleDateString()}).`,
-        });
-        return;
-      }
-    }
-
     if (Object.keys(errors).length > 0) {
-      toast.danger("Existen campos inválidos", {
-        description: "Revisa el formulario para corregir los errores.",
-      });
       return;
     }
 
     setLoading(true);
     const res = await addPlayerMembership({
-      playerId: playerKey,
+      playerId: playerKey!,
       teamSeasonId: teamSeason.id,
-      paymentPlanId: planKey,
-      startedAt: new Date(startedAt).toISOString(),
+      paymentPlanId: planKey!,
+      startedAt: toLocalIso(startedAt)!,
       isMigrated,
       ...(hasDiscount && {
         membershipDiscounts: [
           {
             registrationDiscountPercent: Number(regDiscountPercent) || 0,
             recurringDiscountPercent: Number(recDiscountPercent) || 0,
-            startDate: new Date(startedAt).toISOString(),
+            seasonFeeDiscountPercent: Number(seasonDiscountPercent) || 0,
+            startDate: toLocalIso(startedAt)!,
             ...(discountEndDate && {
-              endDate: new Date(discountEndDate).toISOString(),
+              endDate: toLocalIso(discountEndDate),
             }),
             type: discountType,
             reason: discountReason || undefined,
@@ -276,21 +281,23 @@ export const EnrollMembershipDrawer = ({
     setLoading(false);
 
     if (res.error) {
-      toast.danger(res.message, {
+      setApiError({
+        title: res.message,
         description: res.errors
           ? Object.values(res.errors).flat().join(", ")
           : res.message,
       });
       return;
     }
+    setApiError(null);
+
+    setIsOpen(false);
     toast.success(res.message, {
       description: selectedPlayer
         ? `${selectedPlayer?.person?.fullName} fue inscrito en la temporada.`
         : undefined,
     });
     reset();
-    state.close();
-    router.refresh();
   };
 
   const noPlans = paymentPlans.length === 0;
@@ -346,6 +353,19 @@ export const EnrollMembershipDrawer = ({
 
             <Drawer.Body className="gap-5">
               <Surface variant="transparent" className="flex flex-col gap-5">
+                {apiError && (
+                  <Alert status="danger" className="mb-2">
+                    <Alert.Indicator />
+                    <Alert.Content>
+                      <Alert.Title>{apiError.title}</Alert.Title>
+                      <Alert.Description>
+                        {apiError.description}
+                      </Alert.Description>
+                    </Alert.Content>
+                    <CloseButton onPress={() => setApiError(null)} />
+                  </Alert>
+                )}
+
                 <Alert status="accent" className="mb-2">
                   <Alert.Indicator />
                   <Alert.Content>
@@ -442,7 +462,8 @@ export const EnrollMembershipDrawer = ({
                             </span>
                             <span className="text-[11px] text-muted">
                               {plan.isSinglePayment
-                                ? teamSeason.billingType === "MONTHLY_ONLY"
+                                ? teamSeason.billingConfig?.billingType ===
+                                  "MONTHLY_ONLY"
                                   ? `Pago Único (Adelantado) • -${plan.recurringDiscountPercent}% (Mensualidades)`
                                   : `Pago Único • -${plan.seasonFeeDiscountPercent}% (Temporada)`
                                 : `Insc. -${plan.registrationDiscountPercent}% • Mens. -${plan.recurringDiscountPercent}%`}
@@ -493,70 +514,106 @@ export const EnrollMembershipDrawer = ({
 
                   {hasDiscount && (
                     <div className="flex flex-col gap-4 pl-4 border-l-2 border-border mb-2">
-                      <div className="flex gap-4">
-                        <TextField
-                          className="w-full"
-                          isInvalid={
-                            !!errors.regDiscountPercent ||
-                            !!errors.discountPercent ||
-                            undefined
-                          }
-                        >
-                          <Label className="text-sm font-semibold">
-                            Desc. Matrícula (%)
-                          </Label>
-                          <Input
-                            variant="secondary"
-                            type="number"
-                            placeholder="Ej. 50"
-                            value={regDiscountPercent}
-                            onChange={(e) =>
-                              setRegDiscountPercent(e.target.value)
+                      <div className="flex flex-wrap gap-4">
+                        {selectedPlan?.isSinglePayment ? (
+                          <TextField
+                            className="w-full"
+                            isInvalid={
+                              !!errors.seasonDiscountPercent ||
+                              !!errors.discountPercent ||
+                              undefined
                             }
-                          />
-                          <p className="text-xs text-muted mt-1 leading-tight">
-                            Dejar vacío si no aplica.
-                          </p>
-                          {(errors.regDiscountPercent ||
-                            errors.discountPercent) && (
-                            <FieldError>
-                              {errors.regDiscountPercent ||
-                                errors.discountPercent}
-                            </FieldError>
-                          )}
-                        </TextField>
-                        <TextField
-                          className="w-full"
-                          isInvalid={
-                            !!errors.recDiscountPercent ||
-                            !!errors.discountPercent ||
-                            undefined
-                          }
-                        >
-                          <Label className="text-sm font-semibold">
-                            Desc. Mensualidad (%)
-                          </Label>
-                          <Input
-                            variant="secondary"
-                            type="number"
-                            placeholder="Ej. 10"
-                            value={recDiscountPercent}
-                            onChange={(e) =>
-                              setRecDiscountPercent(e.target.value)
-                            }
-                          />
-                          <p className="text-xs text-muted mt-1 leading-tight">
-                            Dejar vacío si no aplica.
-                          </p>
-                          {(errors.recDiscountPercent ||
-                            (errors.discountPercent &&
-                              !errors.regDiscountPercent)) && (
-                            <FieldError>
-                              {errors.recDiscountPercent ||
-                                errors.discountPercent}
-                            </FieldError>
-                          )}
-                        </TextField>
+                          >
+                            <Label className="text-sm font-semibold">
+                              Desc. Temporada (%)
+                            </Label>
+                            <Input
+                              variant="secondary"
+                              type="number"
+                              placeholder="Ej. 15"
+                              value={seasonDiscountPercent}
+                              onChange={(e) =>
+                                setSeasonDiscountPercent(e.target.value)
+                              }
+                            />
+                            <p className="text-xs text-muted mt-1 leading-tight">
+                              Se aplica sobre el monto total de la temporada.
+                            </p>
+                            {(errors.seasonDiscountPercent ||
+                              errors.discountPercent) && (
+                              <FieldError>
+                                {errors.seasonDiscountPercent ||
+                                  errors.discountPercent}
+                              </FieldError>
+                            )}
+                          </TextField>
+                        ) : (
+                          <>
+                            <TextField
+                              className="w-full"
+                              isInvalid={
+                                !!errors.regDiscountPercent ||
+                                !!errors.discountPercent ||
+                                undefined
+                              }
+                            >
+                              <Label className="text-sm font-semibold">
+                                Desc. Matrícula (%)
+                              </Label>
+                              <Input
+                                variant="secondary"
+                                type="number"
+                                placeholder="Ej. 50"
+                                value={regDiscountPercent}
+                                onChange={(e) =>
+                                  setRegDiscountPercent(e.target.value)
+                                }
+                              />
+                              <p className="text-xs text-muted mt-1 leading-tight">
+                                Dejar vacío si no aplica.
+                              </p>
+                              {(errors.regDiscountPercent ||
+                                errors.discountPercent) && (
+                                <FieldError>
+                                  {errors.regDiscountPercent ||
+                                    errors.discountPercent}
+                                </FieldError>
+                              )}
+                            </TextField>
+                            <TextField
+                              className="w-full"
+                              isInvalid={
+                                !!errors.recDiscountPercent ||
+                                !!errors.discountPercent ||
+                                undefined
+                              }
+                            >
+                              <Label className="text-sm font-semibold">
+                                Desc. Mensualidad (%)
+                              </Label>
+                              <Input
+                                variant="secondary"
+                                type="number"
+                                placeholder="Ej. 10"
+                                value={recDiscountPercent}
+                                onChange={(e) =>
+                                  setRecDiscountPercent(e.target.value)
+                                }
+                              />
+                              <p className="text-xs text-muted mt-1 leading-tight">
+                                Dejar vacío si no aplica.
+                              </p>
+                              {(errors.recDiscountPercent ||
+                                (errors.discountPercent &&
+                                  !errors.regDiscountPercent)) && (
+                                <FieldError>
+                                  {errors.recDiscountPercent ||
+                                    errors.discountPercent}
+                                </FieldError>
+                              )}
+                            </TextField>
+                          </>
+                        )}
                       </div>
 
                       <ComboBox
@@ -681,6 +738,20 @@ export const EnrollMembershipDrawer = ({
                 })} */}
 
                 {/* {JSON.stringify({ breakdown })} */}
+
+                {/* Error de API */}
+                {apiError && (
+                  <Alert status="danger">
+                    <Alert.Indicator />
+                    <Alert.Content>
+                      <Alert.Title>{apiError.title}</Alert.Title>
+                      <Alert.Description>
+                        {apiError.description}
+                      </Alert.Description>
+                    </Alert.Content>
+                    <CloseButton onPress={() => setApiError(null)} />
+                  </Alert>
+                )}
 
                 {/* Errores globales */}
                 {Object.keys(errors).length > 0 && (

@@ -41,18 +41,15 @@ const round2 = (value: number): number => Math.round(value * 100) / 100;
  * registration fee.
  */
 export const calculateInitialCharges = (
-  teamSeason: Pick<
-    ITeamSeason,
-    "registrationFee" | "recurringFee" | "lateFeeEnabled" | "billingDay"
-  >,
+  teamSeason: ITeamSeason,
   paymentPlan?: Pick<
     IPaymentPlan,
     "registrationDiscountPercent" | "recurringDiscountPercent"
   > | null,
   currency = "Bs",
 ): InitialChargesBreakdown => {
-  const registrationGross = toNumber(teamSeason.registrationFee);
-  const monthlyGross = toNumber(teamSeason.recurringFee);
+  const registrationGross = toNumber(teamSeason.billingConfig?.registrationFee);
+  const monthlyGross = toNumber(teamSeason.billingConfig?.recurringFee);
 
   const registrationDiscountPercent = paymentPlan
     ? toNumber(paymentPlan.registrationDiscountPercent)
@@ -104,7 +101,7 @@ export const calculateInitialCharges = (
   if (registrationGross === 0) {
     flags.push({ type: "info", label: "Temporada sin matrícula" });
   }
-  if (teamSeason.lateFeeEnabled) {
+  if (teamSeason.billingConfig?.lateFeeEnabled) {
     flags.push({
       type: "warning",
       label: "Aplica recargo por mora en pagos tardíos",

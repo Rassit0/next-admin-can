@@ -11,6 +11,7 @@ export interface GetPreviewChargesData {
   membershipDiscounts?: {
     registrationDiscountPercent: number;
     recurringDiscountPercent: number;
+    seasonFeeDiscountPercent: number;
     startDate: string;
     endDate?: string;
   }[];

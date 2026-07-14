@@ -15,78 +15,59 @@ import { getLocalTimeZone, today } from "@internationalized/date";
 import { toast } from "sonner";
 import {
   MoreVerticalSquare01Icon,
-  PauseIcon,
-  PlayIcon,
   CheckmarkCircle02Icon,
   Logout01Icon,
-  Settings01Icon,
   Note01Icon,
   Calendar01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {
-  IPlayerMembership,
-  MembershipLifecycleAction,
-  updateMembershipLifecycle,
-  createMembershipPause,
-} from "@/modules/player-memberships";
+  ITeamSeason,
+  cancelTeamSeason,
+  finalizeTeamSeason,
+  createTeamSeasonPause,
+} from "@/modules/team-seasons";
 
 interface Props {
-  membership: IPlayerMembership;
+  teamSeason: ITeamSeason;
 }
 
 interface ActionDef {
   key: string;
   label: string;
-  icon: typeof PauseIcon;
+  icon: typeof CheckmarkCircle02Icon;
   danger?: boolean;
 }
 
-const ACTIONS_BY_STATUS: Record<IPlayerMembership["status"], ActionDef[]> = {
+const ACTIONS_BY_STATUS: Record<ITeamSeason["status"], ActionDef[]> = {
   ACTIVE: [
     { key: "pause", label: "Programar pausa", icon: Calendar01Icon },
-    { key: "suspend", label: "Suspender", icon: PauseIcon },
     { key: "finish", label: "Finalizar", icon: CheckmarkCircle02Icon },
-    { key: "withdraw", label: "Dar de baja", icon: Logout01Icon, danger: true },
+    { key: "cancel", label: "Cancelar", icon: Logout01Icon, danger: true },
   ],
-  SUSPENDED: [
-    { key: "reactivate", label: "Reactivar", icon: PlayIcon },
-    { key: "finish", label: "Finalizar", icon: CheckmarkCircle02Icon },
-    { key: "withdraw", label: "Dar de baja", icon: Logout01Icon, danger: true },
+  DRAFT: [
+    { key: "cancel", label: "Cancelar", icon: Logout01Icon, danger: true },
   ],
-  WITHDRAWN: [{ key: "reactivate", label: "Reactivar", icon: PlayIcon }],
+  CANCELLED: [],
   FINISHED: [],
-  PENDING_ACTIVE: [
-    { key: "pause", label: "Programar pausa", icon: Calendar01Icon },
-    { key: "activate", label: "Activar", icon: PlayIcon },
-    { key: "withdraw", label: "Dar de baja", icon: Logout01Icon, danger: true },
-  ],
 };
 
-export const MembershipActions = ({ membership }: Props) => {
+export const TeamSeasonActions = ({ teamSeason }: Props) => {
   const router = useRouter();
-  const params = useParams();
   const [loading, setLoading] = useState(false);
-  const statusActions = ACTIONS_BY_STATUS[membership.status] ?? [];
+  const statusActions = ACTIONS_BY_STATUS[teamSeason.status] ?? [];
 
   const confirmState = useOverlayState();
   const [selectedAction, setSelectedAction] = useState<ActionDef | null>(null);
 
-  const allActions: ActionDef[] = [
-    { key: "manage", label: "Gestionar", icon: Settings01Icon },
-    ...statusActions,
-  ];
+  if (statusActions.length === 0) {
+    return null;
+  }
 
   const handleActionSelect = (key: string) => {
-    if (key === "manage") {
-      const manageUrl = `/admin/teams/${params.disciplineId}/${params.clubId}/${params.teamId}/team-seasons/${params.teamSeasonId}/player-memberships/${membership.id}`;
-      router.push(manageUrl);
-      return;
-    }
-
-    const actionDef = allActions.find((a) => a.key === key);
+    const actionDef = statusActions.find((a) => a.key === key);
     if (actionDef) {
       setSelectedAction(actionDef);
       confirmState.open();
@@ -103,7 +84,6 @@ export const MembershipActions = ({ membership }: Props) => {
     const action = selectedAction.key;
 
     let res;
-
     if (action === "pause") {
       const startDate = formData.get("startDate") as string;
       const endDate = formData.get("endDate") as string;
@@ -114,27 +94,25 @@ export const MembershipActions = ({ membership }: Props) => {
         return;
       }
       
-      res = await createMembershipPause({
-        id: membership.id,
+      res = await createTeamSeasonPause({
+        teamSeasonId: teamSeason.id,
         startDate: new Date(startDate).toISOString(),
         endDate: new Date(endDate).toISOString(),
         reason,
       });
-    } else {
-      res = await updateMembershipLifecycle({
-        id: membership.id,
-        action: action as MembershipLifecycleAction,
-        reason,
-      });
+    } else if (action === "finish") {
+      res = await finalizeTeamSeason(teamSeason.id, reason);
+    } else if (action === "cancel") {
+      res = await cancelTeamSeason(teamSeason.id, reason);
     }
 
-    if (res.error) {
-      toast.error(res.message, { description: res.message });
+    if (!res || res.error) {
+      toast.error(res?.message || "Ocurrió un error");
       setLoading(false);
       return;
     }
 
-    toast.success(res.message, { description: res.message });
+    toast.success(res.message);
     confirmState.close();
     setLoading(false);
     router.refresh();
@@ -144,16 +122,17 @@ export const MembershipActions = ({ membership }: Props) => {
     <>
       <Dropdown>
         <Button
-          aria-label="Acciones de membresía"
+          aria-label="Acciones del equipo"
           isIconOnly
           size="sm"
           variant="ghost"
+          className="text-white hover:bg-white/20"
         >
           <HugeiconsIcon icon={MoreVerticalSquare01Icon} />
         </Button>
         <Dropdown.Popover>
           <Dropdown.Menu onAction={(key) => handleActionSelect(key as string)}>
-            {allActions.map((action) => (
+            {statusActions.map((action) => (
               <Dropdown.Item
                 key={action.key}
                 id={action.key}
@@ -195,7 +174,7 @@ export const MembershipActions = ({ membership }: Props) => {
                 <p>
                   ¿Estás seguro de que deseas ejecutar la acción{" "}
                   <strong>{selectedAction?.label.toLowerCase()}</strong> para
-                  esta membresía?
+                  este equipo?
                 </p>
 
                 {selectedAction?.key === "pause" && (
@@ -302,9 +281,9 @@ export const MembershipActions = ({ membership }: Props) => {
                   </div>
                 )}
 
-                <TextField name="reason" className="w-full">
+                <TextField name="reason" className="w-full" isRequired>
                   <Label className="text-sm font-semibold">
-                    Motivo u Observación (Opcional)
+                    Motivo u Observación
                   </Label>
                   <InputGroup>
                     <InputGroup.Prefix>
@@ -314,7 +293,7 @@ export const MembershipActions = ({ membership }: Props) => {
                         className="text-muted-foreground"
                       />
                     </InputGroup.Prefix>
-                    <InputGroup.Input placeholder="Ej. Retiro voluntario, Falta de pago..." />
+                    <InputGroup.Input placeholder="Ej. Falta de alumnos, decisión técnica..." />
                   </InputGroup>
                 </TextField>
               </AlertDialog.Body>

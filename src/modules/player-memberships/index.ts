@@ -7,6 +7,7 @@ export * from "./actions/lifecycle";
 export * from "./actions/get-preview-charges";
 export * from "./actions/get-players-options";
 export * from "./actions/add-massive-manual-charge";
+export * from "./actions/pauses";
 
 // Helpers
 export * from "./helpers/initial-charges";
