@@ -253,6 +253,7 @@ export default async function PlayerMembershipsPage({
           globalTotalPaid={membershipsResponse.data?.summary?.totalPaid}
           activeMembers={membershipsResponse.data?.summary?.activeMembers}
           suspendedMembers={membershipsResponse.data?.summary?.suspendedMembers}
+          pendingMembers={membershipsResponse.data?.summary?.pendingMembers}
           totalBilled={membershipsResponse.data?.summary?.totalBilled}
         />
 

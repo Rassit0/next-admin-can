@@ -65,6 +65,7 @@ export interface IStudentMembershipResponse {
     totalPending: number;
     activeMembers: number;
     suspendedMembers: number;
+    pendingMembers: number;
     occupiedSlotsCount: number;
     maxMembers: number | null;
   };

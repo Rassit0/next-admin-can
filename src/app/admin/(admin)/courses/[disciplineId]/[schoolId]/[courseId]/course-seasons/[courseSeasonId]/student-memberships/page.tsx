@@ -257,6 +257,7 @@ export default async function StudentMembershipsPage({
           globalTotalPaid={membershipsResponse.data?.summary?.totalPaid}
           activeMembers={membershipsResponse.data?.summary?.activeMembers}
           suspendedMembers={membershipsResponse.data?.summary?.suspendedMembers}
+          pendingMembers={membershipsResponse.data?.summary?.pendingMembers}
           totalBilled={membershipsResponse.data?.summary?.totalBilled}
         />
 

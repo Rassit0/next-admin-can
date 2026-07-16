@@ -25,6 +25,7 @@ interface Props {
   globalTotalPaid?: number;
   activeMembers?: number;
   suspendedMembers?: number;
+  pendingMembers?: number;
   totalBilled?: number;
 }
 
@@ -56,6 +57,7 @@ export const MetricsCards = ({
   globalTotalPaid = 0,
   activeMembers = 0,
   suspendedMembers = 0,
+  pendingMembers = 0,
   totalBilled = 0,
 }: Props) => {
   const occupancy =
@@ -88,6 +90,14 @@ export const MetricsCards = ({
       icon: PauseIcon,
       tone: "text-warning",
       bg: "bg-warning/10",
+    },
+    {
+      label: "Pendientes",
+      value: String(pendingMembers),
+      hint: "Atletas recién inscritos cuya membresía está a la espera del pago inicial para activarse.",
+      icon: PauseIcon,
+      tone: "text-muted-foreground",
+      bg: "bg-surface-secondary",
     },
     {
       label: "Inscripción (Bs)",
