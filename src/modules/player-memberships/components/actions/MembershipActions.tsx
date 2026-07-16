@@ -31,6 +31,7 @@ import {
   MembershipLifecycleAction,
   updateMembershipLifecycle,
   createMembershipPause,
+  removeMembership,
 } from "@/modules/player-memberships";
 
 interface Props {
@@ -79,6 +80,15 @@ export const MembershipActions = ({ membership }: Props) => {
     ...statusActions,
   ];
 
+  if (membership.totalPaidAmount === 0) {
+    allActions.push({
+      key: "remove",
+      label: "Eliminar Membresía",
+      icon: Logout01Icon, // Using Logout01Icon as standard for danger
+      danger: true,
+    });
+  }
+
   const handleActionSelect = (key: string) => {
     if (key === "manage") {
       const manageUrl = `/admin/teams/${params.disciplineId}/${params.clubId}/${params.teamId}/team-seasons/${params.teamSeasonId}/player-memberships/${membership.id}`;
@@ -100,11 +110,20 @@ export const MembershipActions = ({ membership }: Props) => {
     setLoading(true);
     const formData = new FormData(e.currentTarget);
     const reason = formData.get("reason") as string;
+    const confirmDelete = formData.get("confirmDelete") as string;
     const action = selectedAction.key;
+
+    if (action === "remove" && confirmDelete !== "ELIMINAR") {
+      toast.error("Debes escribir ELIMINAR para confirmar");
+      setLoading(false);
+      return;
+    }
 
     let res;
 
-    if (action === "pause") {
+    if (action === "remove") {
+      res = await removeMembership(membership.id);
+    } else if (action === "pause") {
       const startDate = formData.get("startDate") as string;
       const endDate = formData.get("endDate") as string;
       
@@ -302,21 +321,34 @@ export const MembershipActions = ({ membership }: Props) => {
                   </div>
                 )}
 
-                <TextField name="reason" className="w-full">
-                  <Label className="text-sm font-semibold">
-                    Motivo u Observación (Opcional)
-                  </Label>
-                  <InputGroup>
-                    <InputGroup.Prefix>
-                      <HugeiconsIcon
-                        icon={Note01Icon}
-                        size={18}
-                        className="text-muted-foreground"
-                      />
-                    </InputGroup.Prefix>
-                    <InputGroup.Input placeholder="Ej. Retiro voluntario, Falta de pago..." />
-                  </InputGroup>
-                </TextField>
+                {selectedAction?.key === "remove" && (
+                  <TextField name="confirmDelete" isRequired className="w-full">
+                    <Label className="text-sm font-semibold">
+                      Escriba ELIMINAR para confirmar
+                    </Label>
+                    <InputGroup>
+                      <InputGroup.Input placeholder="ELIMINAR" />
+                    </InputGroup>
+                  </TextField>
+                )}
+
+                {selectedAction?.key !== "remove" && (
+                  <TextField name="reason" className="w-full">
+                    <Label className="text-sm font-semibold">
+                      Motivo u Observación (Opcional)
+                    </Label>
+                    <InputGroup>
+                      <InputGroup.Prefix>
+                        <HugeiconsIcon
+                          icon={Note01Icon}
+                          size={18}
+                          className="text-muted-foreground"
+                        />
+                      </InputGroup.Prefix>
+                      <InputGroup.Input placeholder="Ej. Retiro voluntario, Falta de pago..." />
+                    </InputGroup>
+                  </TextField>
+                )}
               </AlertDialog.Body>
               <AlertDialog.Footer>
                 <Button
