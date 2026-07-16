@@ -19,7 +19,7 @@ export const getCourseSeasonById = async ({
           tags: ["course-seasons"],
           revalidate: 3600,
         },
-      },
+      }
     );
 
     return {

@@ -1,7 +1,7 @@
 import { api } from "@/utils/api";
 import { ServiceResponse } from "@/types/api";
 import { handleServerAction } from "@/utils";
-import { Gender, ICourseSeasonResponse } from "@/modules/course-seasons";
+import { Gender, ICourseSeasonsResponse } from "@/modules/course-seasons";
 
 interface SearchParams {
   search?: string;
@@ -26,7 +26,7 @@ export const getCourseSeasons = async ({
   seasonId,
   sortField = "createdAt",
   orderBy = "desc",
-}: SearchParams): Promise<ServiceResponse<ICourseSeasonResponse>> => {
+}: SearchParams): Promise<ServiceResponse<ICourseSeasonsResponse>> => {
   return handleServerAction(async () => {
     const params = new URLSearchParams();
     if (search) params.set("search", search);
@@ -39,7 +39,7 @@ export const getCourseSeasons = async ({
     if (sortField) params.set("sortField", sortField);
     if (orderBy) params.set("orderBy", orderBy);
 
-    const res = await api.get<ICourseSeasonResponse>(
+    const res = await api.get<ICourseSeasonsResponse>(
       `course-seasons?${params.toString()}`,
       {
         next: {

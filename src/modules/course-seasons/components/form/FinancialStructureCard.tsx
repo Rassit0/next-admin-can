@@ -42,6 +42,7 @@ interface Props {
   setProrateSeasonFee: Dispatch<SetStateAction<boolean>>;
   errors: Record<string, string>;
   handleRemoveError: (fieldName: string) => void;
+  isFinancialDisabled?: boolean;
 }
 export const FinancialStructureCard = ({
   registrationFee,
@@ -66,6 +67,7 @@ export const FinancialStructureCard = ({
   setProrateSeasonFee,
   errors,
   handleRemoveError,
+  isFinancialDisabled = false,
 }: Props) => {
   return (
     <Card className="lg:p-8 shadow-[0px_12px_32px_rgba(25,28,29,0.06)] relative overflow-hidden border border-l-4 border-l-tertiary">
@@ -92,6 +94,7 @@ export const FinancialStructureCard = ({
 
         <Select
           isRequired
+          isDisabled={isFinancialDisabled}
           className="w-full"
           name="billingType"
           placeholder="Seleccione el modelo de cobro"
@@ -148,6 +151,7 @@ export const FinancialStructureCard = ({
         {billingType !== "SINGLE_ONLY" && (
           <Select
             isRequired
+            isDisabled={isFinancialDisabled}
             className="w-full"
             name="billingFrequency"
             placeholder="Seleccione la frecuencia de cobro"
@@ -229,6 +233,11 @@ export const FinancialStructureCard = ({
             />
             <Description className="text-xs text-muted-foreground mt-1">
               Costo inicial y único cobrado al momento de inscribir al atleta.
+              {isFinancialDisabled && (
+                <span className="block mt-1 text-warning-600 font-medium">
+                  Nota: Modificar este valor solo afectará a las <b>nuevas inscripciones</b>.
+                </span>
+              )}
             </Description>
           </TextField>
         )}
@@ -271,7 +280,12 @@ export const FinancialStructureCard = ({
               children={errors.recurringFee && <> {errors.recurringFee}</>}
             />
             <Description className="text-xs text-muted-foreground mt-1">
-              Cuota base recurrente que se cobrará cada ciclo.
+              Valor de la cuota base que se cobrará periódicamente.
+              {isFinancialDisabled && (
+                <span className="block mt-1 text-warning-600 font-medium">
+                  Nota: Modificar este valor aplicará para las <b>nuevas suscripciones y las próximas cuotas generadas</b>.
+                </span>
+              )}
             </Description>
           </TextField>
         )}
@@ -307,6 +321,11 @@ export const FinancialStructureCard = ({
             <Description className="text-xs text-muted-foreground mt-1">
               Monto total que se cobrará si el atleta decide pagar la temporada
               completa de golpe.
+              {isFinancialDisabled && (
+                <span className="block mt-1 text-warning-600 font-medium">
+                  Nota: Modificar este valor solo afectará a las <b>nuevas inscripciones</b> que elijan este método.
+                </span>
+              )}
             </Description>
           </TextField>
         )}
@@ -314,6 +333,7 @@ export const FinancialStructureCard = ({
         {billingType !== "SINGLE_ONLY" && billingFrequency === "MONTHLY" && (
           <NumberField
             isRequired
+            isDisabled={isFinancialDisabled}
             className="col-span-full"
             variant="secondary"
             minValue={1}
@@ -369,6 +389,7 @@ export const FinancialStructureCard = ({
           {billingType !== "SINGLE_ONLY" && (
             <>
               <Switch
+                isDisabled={isFinancialDisabled}
                 isSelected={prorateFirstRecurringFee}
                 onChange={setProrateFirstRecurringFee}
               >
@@ -383,6 +404,7 @@ export const FinancialStructureCard = ({
                 </Switch.Content>
               </Switch>
               <Switch
+                isDisabled={isFinancialDisabled}
                 isSelected={prorateLastRecurringFee}
                 onChange={setProrateLastRecurringFee}
               >
@@ -396,6 +418,7 @@ export const FinancialStructureCard = ({
                 </Switch.Content>
               </Switch>
               <Switch
+                isDisabled={isFinancialDisabled}
                 isSelected={prorateRegistrationFee}
                 onChange={setProrateRegistrationFee}
               >
@@ -413,6 +436,7 @@ export const FinancialStructureCard = ({
 
           {(billingType === "SINGLE_ONLY" || billingType === "BOTH") && (
             <Switch
+              isDisabled={isFinancialDisabled}
               isSelected={prorateSeasonFee}
               onChange={setProrateSeasonFee}
             >

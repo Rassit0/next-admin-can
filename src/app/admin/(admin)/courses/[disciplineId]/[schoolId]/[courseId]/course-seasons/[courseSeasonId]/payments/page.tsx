@@ -1,4 +1,4 @@
-import { ErrorPage, HeaderPage } from "@/ui";
+import { ErrorPage } from "@/ui";
 import { redirect } from "next/navigation";
 import { getCourseSeasonById } from "@/modules/course-seasons";
 import { getStudentMemberships } from "@/modules/student-memberships";
@@ -34,25 +34,8 @@ export default async function PaymentsPage({ params }: Props) {
     : membershipsResponse.data.data;
 
   return (
-    <>
-      <HeaderPage
-        title={`Pagos · ${courseSeason.course.name}`}
-        description="Procesa cobros y consulta el historial de pagos de la temporada"
-        breadcrumb={[
-          { label: "Gestión Equipos", href: `/` },
-          {
-            label: `Gestión de Temporadas - ${courseSeason.course.name}`,
-            href: `/admin/courses/${disciplineId}/${schoolId}/${courseId}/course-seasons`,
-          },
-          {
-            label: `Membresías - ${courseSeason.course.name}`,
-            href: `/admin/courses/${disciplineId}/${schoolId}/${courseId}/course-seasons/${courseSeasonId}/student-memberships`,
-          },
-          { label: `Pagos - ${courseSeason.season.name}` },
-        ]}
-      />
-
+    <div className="mt-2 flex flex-col gap-6">
       <PaymentsDashboard memberships={memberships} courseSeason={courseSeason} />
-    </>
+    </div>
   );
 }

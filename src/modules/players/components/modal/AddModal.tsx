@@ -23,12 +23,12 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { ButtonFloating } from "@/ui";
-import { FormPlayer } from "@/modules/players";
+import { FormPlayer, IPlayer } from "@/modules/players";
 
 interface Props {
   label?: string;
   isIcon?: boolean;
-  onSubmited?: () => void;
+  onSubmited?: (player?: IPlayer) => void;
   buttonFloatingMobile?: boolean;
 }
 export const AddModal = ({
@@ -89,16 +89,17 @@ export const AddModal = ({
                   <Modal.Heading>Registrar Perfil de Jugador</Modal.Heading>
                 </div>
                 <p className="text-sm text-muted-foreground ml-10">
-                  Asigna un perfil deportivo a una persona registrada en el sistema.
+                  Asigna un perfil deportivo a una persona registrada en el
+                  sistema.
                 </p>
               </div>
             </Modal.Header>
             <Modal.Body className="p-0 md:p-6">
               <FormPlayer
                 formId="add-player-form"
-                onSubmited={() => {
+                onSubmited={(player) => {
+                  onSubmited?.(player);
                   setIsOpen(false);
-                  onSubmited?.();
                 }}
                 isLoading={loading}
                 setIsLoading={setLoading}

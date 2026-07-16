@@ -1,4 +1,24 @@
+export interface ISeasonSummaryResponse {
+  data: {
+    totalBilled: number;
+    totalPaid: number;
+    totalPending: number;
+    activeMembers: number;
+    suspendedMembers: number;
+    pendingMembers: number;
+    occupiedSlotsCount: number;
+    maxMembers: number | null;
+  };
+  message: string;
+}
+
 export interface ITeamSeasonResponse {
+  data: ITeamSeason;
+  meta?: Meta;
+  message: string;
+}
+
+export interface ITeamSeasonsResponse {
   data: ITeamSeason[];
   meta: Meta;
   message: string;

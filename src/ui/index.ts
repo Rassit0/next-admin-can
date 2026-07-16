@@ -17,3 +17,4 @@ export * from "./components/button-redirection/ButtonAdd";
 export * from "./components/button-redirection/ButtonEdit";
 
 export type * from "./interfaces/sidebar/sidebar";
+export * from "./components/navigation/TabsRouteNavigation";

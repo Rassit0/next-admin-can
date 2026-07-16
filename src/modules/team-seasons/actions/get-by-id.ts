@@ -12,15 +12,12 @@ export const getTeamSeasonById = async ({
   id,
 }: SearchParams): Promise<ServiceResponse<ITeamSeason>> => {
   return handleServerAction(async () => {
-    const res = await api.get<{ message: string; data: ITeamSeason }>(
-      `team-seasons/${id}`,
-      {
-        next: {
-          tags: ["team-seasons"],
-          revalidate: 3600,
-        },
+    const res = await api.get<{ message: string; data: ITeamSeason }>(`team-seasons/${id}`, {
+      next: {
+        tags: ["team-seasons"],
+        revalidate: 3600,
       },
-    );
+    });
 
     return {
       error: false,

@@ -1,4 +1,4 @@
-import { ErrorPage, HeaderPage, PaginationSection, SectionFilters } from "@/ui";
+import { ErrorPage, PaginationSection, SectionFilters } from "@/ui";
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { Tabs } from "@heroui/react";
@@ -56,49 +56,7 @@ export default async function PaymentPlansPage({
   const basePath = `/admin/courses/${disciplineId}/${schoolId}/${courseId}/course-seasons/${courseSeasonId}`;
 
   return (
-    <>
-      {/* <!-- Header --> */}
-      <HeaderPage
-        title={`Planes de Pago - ${courseSeasonResponse.data.course.name} - ${courseSeasonResponse.data.season.name}`}
-        description="Administra los planes de pago de la temporada"
-        action={
-          <AddModal
-            courseSeasonId={courseSeasonId}
-            courseSeasonBillingType={
-              courseSeasonResponse.data.billingConfig?.billingType!
-            }
-          />
-        }
-        breadcrumb={[
-          { label: "Gestión Cursos", href: `/` },
-          {
-            label: `Gestión de Temporadas - ${courseSeasonResponse.data.course.name}`,
-            href: `/admin/courses/${disciplineId}/${schoolId}/${courseId}/course-seasons`,
-          },
-          {
-            label: `Gestión de Planes de Pago - ${courseSeasonResponse.data.course.name} - ${courseSeasonResponse.data.season.name}`,
-          },
-        ]}
-      />
-
-      {/* Navigation Tabs */}
-      <div className="flex gap-2 border-b border-border pb-4">
-        <Link href={`${basePath}/payment-plans`}>
-          <div className="px-4 py-2 rounded-t-lg font-medium text-foreground border-b-2 border-accent bg-accent-soft">
-            Planes de Pago
-          </div>
-        </Link>
-        <Link href={`${basePath}/membresias`}>
-          <div className="px-4 py-2 rounded-t-lg font-medium text-muted hover:text-foreground hover:bg-surface transition">
-            Membresías
-          </div>
-        </Link>
-        <Link href={`${basePath}/pagos`}>
-          <div className="px-4 py-2 rounded-t-lg font-medium text-muted hover:text-foreground hover:bg-surface transition">
-            Pagos
-          </div>
-        </Link>
-      </div>
+    <div className="mt-2 flex flex-col gap-6">
 
       {/* <!-- Search and Filter Bar (Tonal Architecture) --> */}
       <SectionFilters />
@@ -115,6 +73,6 @@ export default async function PaymentPlansPage({
         itemsPerPage={paymentPlansResponse.data.meta.itemsPerPage}
         totalItems={paymentPlansResponse.data.meta.totalItems}
       />
-    </>
+    </div>
   );
 }

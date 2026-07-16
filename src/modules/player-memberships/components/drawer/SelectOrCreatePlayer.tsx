@@ -149,7 +149,8 @@ export const SelectOrCreatePlayer = ({
                           </span>
                           {item.person.birthDate && (
                             <span className="text-xs text-default-500 truncate">
-                              • Edad deportiva: {calculateAge(item.person.birthDate)} años
+                              • Edad deportiva:{" "}
+                              {calculateAge(item.person.birthDate)} años
                             </span>
                           )}
                         </div>
@@ -175,8 +176,26 @@ export const SelectOrCreatePlayer = ({
       </Autocomplete>
       <AddModal
         isIcon
-        onSubmited={() => {
-          list.reload();
+        onSubmited={(player) => {
+          if (player) {
+            // Agregar la playera a la lista localmente para que se pueda seleccionar
+            list.append({
+              id: player.id,
+              person: {
+                id: player.person.id,
+                name: player.person.name,
+                lastName: player.person.lastName,
+                secondLastName: player.person.secondLastName,
+                documentNumber: player.person.documentNumber,
+                gender: player.person.gender,
+                birthDate: player.person.birthDate as Date,
+                fullName: `${player.person.name} ${player.person.lastName}`,
+                imageUrl: player.person.imageUrl,
+              },
+            });
+            list.setSelectedKeys(new Set([player.id]));
+            setPlayerId(player.id);
+          }
         }}
       />
     </div>

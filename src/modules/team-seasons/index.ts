@@ -5,6 +5,7 @@ export * from "./actions/delete";
 export * from "../player-memberships/actions/add-massive-manual-charge";
 export * from "./actions/get";
 export * from "./actions/get-by-id";
+export * from "./actions/get-summary";
 export * from "./actions/get-disciplines-options";
 export * from "./actions/get-categories-options";
 export * from "./actions/get-seasons-options";

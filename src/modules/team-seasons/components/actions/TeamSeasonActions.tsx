@@ -19,10 +19,11 @@ import {
   Logout01Icon,
   Note01Icon,
   Calendar01Icon,
+  Edit02Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import {
   ITeamSeason,
   cancelTeamSeason,
@@ -44,11 +45,13 @@ interface ActionDef {
 
 const ACTIONS_BY_STATUS: Record<ITeamSeason["status"], ActionDef[]> = {
   ACTIVE: [
+    { key: "edit", label: "Editar temporada", icon: Edit02Icon },
     { key: "pause", label: "Programar pausa", icon: Calendar01Icon },
     { key: "finish", label: "Finalizar", icon: CheckmarkCircle02Icon },
     { key: "cancel", label: "Cancelar", icon: Logout01Icon, danger: true },
   ],
   DRAFT: [
+    { key: "edit", label: "Editar temporada", icon: Edit02Icon },
     { key: "cancel", label: "Cancelar", icon: Logout01Icon, danger: true },
   ],
   CANCELLED: [],
@@ -57,6 +60,7 @@ const ACTIONS_BY_STATUS: Record<ITeamSeason["status"], ActionDef[]> = {
 
 export const TeamSeasonActions = ({ teamSeason }: Props) => {
   const router = useRouter();
+  const pathname = usePathname();
   const [loading, setLoading] = useState(false);
   const statusActions = [...(ACTIONS_BY_STATUS[teamSeason.status] ?? [])];
 
@@ -80,6 +84,14 @@ export const TeamSeasonActions = ({ teamSeason }: Props) => {
   }
 
   const handleActionSelect = (key: string) => {
+    if (key === "edit") {
+      const teamSeasonsIndex = pathname.indexOf('/team-seasons');
+      const basePath = teamSeasonsIndex !== -1 
+        ? `${pathname.substring(0, teamSeasonsIndex)}/team-seasons/${teamSeason.id}`
+        : pathname;
+      router.push(`${basePath}/edit`);
+      return;
+    }
     const actionDef = statusActions.find((a) => a.key === key);
     if (actionDef) {
       setSelectedAction(actionDef);

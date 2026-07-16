@@ -17,8 +17,8 @@ export interface IPersonOption {
   documentNumber: string;
   gender: string;
   birthDate: Date;
-  imageUrl: string | null;
   fullName: string;
+  imageUrl: string | null;
 }
 
 interface Meta {

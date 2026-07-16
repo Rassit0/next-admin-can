@@ -96,9 +96,13 @@ export const FormTeamSeason = ({
   );
 
   const [prorateFirstRecurringFee, setProrateFirstRecurringFee] =
-    useState<boolean>(teamSeason?.billingConfig?.prorateFirstRecurringFee ?? true);
+    useState<boolean>(
+      teamSeason?.billingConfig?.prorateFirstRecurringFee ?? true,
+    );
   const [prorateLastRecurringFee, setProrateLastRecurringFee] =
-    useState<boolean>(teamSeason?.billingConfig?.prorateLastRecurringFee ?? true);
+    useState<boolean>(
+      teamSeason?.billingConfig?.prorateLastRecurringFee ?? true,
+    );
   const [prorateRegistrationFee, setProrateRegistrationFee] = useState<boolean>(
     teamSeason?.billingConfig?.prorateRegistrationFee ?? false,
   );
@@ -113,12 +117,18 @@ export const FormTeamSeason = ({
     teamSeason?.billingConfig?.lateFeePerDay || null,
   );
   const [graceDays, setGraceDays] = useState<number | null>(
-    teamSeason?.billingConfig?.graceDays !== undefined ? teamSeason?.billingConfig?.graceDays : null,
+    teamSeason?.billingConfig?.graceDays !== undefined
+      ? teamSeason?.billingConfig?.graceDays
+      : null,
   );
   const [status, setStatus] = useState<StatusTeamSeason>(
     teamSeason?.status || "DRAFT",
   );
   // fin form params
+
+  const isEditMode = !!teamSeason;
+  const isStructuralDisabled = isEditMode && teamSeason.status === "ACTIVE";
+  const isFinancialDisabled = isEditMode && teamSeason.status === "ACTIVE";
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -231,7 +241,8 @@ export const FormTeamSeason = ({
           billingType === "SINGLE_ONLY" || billingFrequency !== "MONTHLY"
             ? 1
             : billingDay!,
-        registrationFee: billingType === "SINGLE_ONLY" ? null : registrationFee!,
+        registrationFee:
+          billingType === "SINGLE_ONLY" ? null : registrationFee!,
         recurringFee: billingType === "SINGLE_ONLY" ? null : recurringFee!,
         seasonFee:
           billingType === "SINGLE_ONLY" || billingType === "BOTH"
@@ -294,6 +305,29 @@ export const FormTeamSeason = ({
         onSubmit={handleSubmit}
         className="grid grid-cols-1 lg:grid-cols-12 gap-6"
       >
+        {(isStructuralDisabled || isFinancialDisabled) && (
+          <div className="lg:col-span-12 mb-2">
+            <Alert status="warning">
+              <Alert.Indicator />
+              <Alert.Content>
+                <Alert.Title>
+                  Modo de Edición Restringido (Temporada Activa)
+                </Alert.Title>
+                <Alert.Description>
+                  Esta temporada se encuentra actualmente{" "}
+                  <strong>Activa</strong>. Por seguridad e integridad de los
+                  registros financieros y de membresías, los datos estructurales
+                  (Categoría, Temporada, Género) y la configuración base de
+                  facturación están <strong>bloqueados</strong>. <br />
+                  Aún puedes ajustar los <strong>montos de cobro</strong>{" "}
+                  (Matrícula, Cuotas), cupos y límites de edades, pero estos
+                  cambios afectarán{" "}
+                  <strong>únicamente a las nuevas inscripciones</strong>.
+                </Alert.Description>
+              </Alert.Content>
+            </Alert>
+          </div>
+        )}
         {/* <!-- Section 1: Información Básica & Capacidad --> */}
         <div className="lg:col-span-7 space-y-6">
           {/* <!-- Basic Info Card --> */}
@@ -314,6 +348,7 @@ export const FormTeamSeason = ({
             setMaxBirthYear={setMaxBirthYear}
             errors={errors}
             handleRemoveError={handleRemoveError}
+            isStructuralDisabled={isStructuralDisabled}
           />
           <DelayPoliciesCard
             billingFrequency={billingFrequency}
@@ -354,6 +389,7 @@ export const FormTeamSeason = ({
             setProrateSeasonFee={setProrateSeasonFee}
             errors={errors}
             handleRemoveError={handleRemoveError}
+            isFinancialDisabled={isFinancialDisabled}
           />
           {/* <!-- Capacity Card --> */}
           <CapacityCard

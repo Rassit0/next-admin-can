@@ -32,6 +32,7 @@ interface Props {
   setMaxBirthYear: Dispatch<SetStateAction<number | null>>;
   errors: Record<string, string>;
   handleRemoveError: (fieldName: string) => void;
+  isStructuralDisabled?: boolean;
 }
 
 export const BasicInfoCard = ({
@@ -51,6 +52,7 @@ export const BasicInfoCard = ({
   setMaxBirthYear,
   errors,
   handleRemoveError,
+  isStructuralDisabled = false,
 }: Props) => {
   return (
     <Card className="lg:p-8 shadow-[0px_12px_32px_rgba(25,28,29,0.06)]  border border-l-4 border-l-accent">
@@ -71,6 +73,7 @@ export const BasicInfoCard = ({
           errors={errors}
           handleRemoveError={handleRemoveError}
           isRequired
+          isDisabled={isStructuralDisabled}
         />
         <SelectSeason
           label="Temporada"
@@ -80,9 +83,11 @@ export const BasicInfoCard = ({
           errors={errors}
           handleRemoveError={handleRemoveError}
           isRequired
+          isDisabled={isStructuralDisabled}
         />
         <Select
           isRequired
+          isDisabled={isStructuralDisabled}
           className="w-full"
           name="gender"
           placeholder="Seleccione un genero"
