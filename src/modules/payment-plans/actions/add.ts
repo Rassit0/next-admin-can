@@ -6,7 +6,8 @@ import { IPaymentPlan } from "@/modules/payment-plans";
 import { handleServerAction } from "@/utils";
 
 export const addPaymentPlan = async (data: {
-  teamSeasonId: string;
+  teamSeasonId?: string;
+  courseSeasonId?: string;
   name: string;
   registrationDiscountPercent: string;
   recurringDiscountPercent: string;

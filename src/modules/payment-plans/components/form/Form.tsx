@@ -28,8 +28,10 @@ import {
 
 interface Props {
   paymentPlan?: IPaymentPlan;
-  teamSeasonId: string;
+  teamSeasonId?: string;
+  courseSeasonId?: string;
   teamSeasonBillingType?: string;
+  courseSeasonBillingType?: string;
   formId: string;
   onSubmited?: () => void;
   isLoading?: boolean;
@@ -38,7 +40,9 @@ interface Props {
 export const FormPaymentPlan = ({
   paymentPlan,
   teamSeasonId,
+  courseSeasonId,
   teamSeasonBillingType,
+  courseSeasonBillingType,
   formId,
   onSubmited,
   isLoading,
@@ -54,11 +58,13 @@ export const FormPaymentPlan = ({
     string | null
   >(paymentPlan?.seasonFeeDiscountPercent || null);
 
+  const billingType = teamSeasonBillingType || courseSeasonBillingType;
+
   const [isDefault, setIsDefault] = useState<boolean>(
     paymentPlan?.isDefault || false,
   );
   const [isSinglePayment, setIsSinglePayment] = useState<boolean>(
-    teamSeasonBillingType === "SINGLE_ONLY"
+    billingType === "SINGLE_ONLY"
       ? true
       : paymentPlan?.isSinglePayment || false,
   );
@@ -95,7 +101,7 @@ export const FormPaymentPlan = ({
     };
 
     // Validations based on visible fields
-    if (teamSeasonBillingType === "SINGLE_ONLY") {
+    if (billingType === "SINGLE_ONLY") {
       if (!seasonFeeDiscountPercent) {
         newErrors.seasonFeeDiscountPercent =
           "Debe ingresar un descuento para la temporada";
@@ -105,7 +111,7 @@ export const FormPaymentPlan = ({
       }
       registration = "0";
       recurring = "0";
-    } else if (teamSeasonBillingType === "MONTHLY_ONLY") {
+    } else if (billingType === "MONTHLY_ONLY") {
       if (!registrationDiscountPercent) {
         newErrors.registrationDiscountPercent =
           "Debe ingresar un descuento de inscripción";
@@ -161,7 +167,7 @@ export const FormPaymentPlan = ({
       }
     }
 
-    if (teamSeasonBillingType === "MONTHLY_ONLY") {
+    if (billingType === "MONTHLY_ONLY") {
       if (advanceCycles < 1)
         newErrors.advanceCycles = "Debe agrupar al menos 1 cuota";
       if (isInvalidPercent(advanceCyclesDiscountPercent)) {
@@ -178,6 +184,7 @@ export const FormPaymentPlan = ({
     let res;
     const data = {
       teamSeasonId,
+  courseSeasonId,
       name: name!,
       registrationDiscountPercent: registration,
       recurringDiscountPercent: recurring,
@@ -185,11 +192,11 @@ export const FormPaymentPlan = ({
       isDefault,
       isSinglePayment,
       advanceCycles:
-        isSinglePayment || teamSeasonBillingType === "SINGLE_ONLY"
+        isSinglePayment || billingType === "SINGLE_ONLY"
           ? 1
           : advanceCycles,
       advanceCyclesDiscountPercent:
-        isSinglePayment || teamSeasonBillingType === "SINGLE_ONLY"
+        isSinglePayment || billingType === "SINGLE_ONLY"
           ? "0"
           : advanceCyclesDiscountPercent,
     };
@@ -289,8 +296,8 @@ export const FormPaymentPlan = ({
           </Description>
         </TextField>
 
-        {teamSeasonBillingType === "SINGLE_ONLY" ||
-        (teamSeasonBillingType !== "MONTHLY_ONLY" && isSinglePayment) ? (
+        {billingType === "SINGLE_ONLY" ||
+        (billingType !== "MONTHLY_ONLY" && isSinglePayment) ? (
           <TextField
             isRequired
             className="w-full"
@@ -403,7 +410,7 @@ export const FormPaymentPlan = ({
           </>
         )}
 
-        {!(teamSeasonBillingType === "SINGLE_ONLY" || isSinglePayment) && (
+        {!(billingType === "SINGLE_ONLY" || isSinglePayment) && (
           <>
             <TextField
               isRequired
@@ -499,7 +506,7 @@ export const FormPaymentPlan = ({
 
         <Switch
           isSelected={isSinglePayment}
-          isDisabled={teamSeasonBillingType === "SINGLE_ONLY"}
+          isDisabled={billingType === "SINGLE_ONLY"}
           onChange={setIsSinglePayment}
           className="w-full max-w-full justify-between items-center py-2 flex-row-reverse"
         >

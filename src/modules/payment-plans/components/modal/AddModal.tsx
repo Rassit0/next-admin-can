@@ -6,11 +6,14 @@ import { useState } from "react";
 import { FormPaymentPlan } from "@/modules/payment-plans";
 
 interface Props {
-  teamSeasonId: string;
+  teamSeasonId?: string;
+  courseSeasonId?: string;
   teamSeasonBillingType?: string;
+  courseSeasonBillingType?: string;
 }
 
-export const AddModal = ({ teamSeasonId, teamSeasonBillingType }: Props) => {
+export const AddModal = ({ teamSeasonId,
+  courseSeasonId, teamSeasonBillingType, courseSeasonBillingType }: Props) => {
   const state = useOverlayState();
   const [loading, setLoading] = useState(false);
 
@@ -56,6 +59,7 @@ export const AddModal = ({ teamSeasonId, teamSeasonBillingType }: Props) => {
               <FormPaymentPlan
                 formId="add-payment-plan-form"
                 teamSeasonId={teamSeasonId}
+                courseSeasonId={courseSeasonId}
                 teamSeasonBillingType={teamSeasonBillingType}
                 onSubmited={() => state.close()}
                 isLoading={loading}

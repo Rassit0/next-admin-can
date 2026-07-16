@@ -11,7 +11,10 @@ import { FormPaymentPlan, IPaymentPlan } from "@/modules/payment-plans";
 
 interface Props {
   paymentPlan: IPaymentPlan;
-  teamSeasonId: string;
+  teamSeasonId?: string;
+  courseSeasonId?: string;
+  teamSeasonBillingType?: string;
+  courseSeasonBillingType?: string;
   isIcon?: boolean;
   showButton?: boolean;
   isOpen?: boolean;
@@ -21,6 +24,9 @@ interface Props {
 export const EditModal = ({
   paymentPlan,
   teamSeasonId,
+  courseSeasonId,
+  teamSeasonBillingType,
+  courseSeasonBillingType,
   isIcon = false,
   showButton = true,
   isOpen,
@@ -61,6 +67,9 @@ export const EditModal = ({
                 formId="edit-payment-plan-form"
                 paymentPlan={paymentPlan}
                 teamSeasonId={teamSeasonId}
+                courseSeasonId={courseSeasonId}
+                teamSeasonBillingType={teamSeasonBillingType}
+                courseSeasonBillingType={courseSeasonBillingType}
                 onSubmited={() => state.close()}
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}

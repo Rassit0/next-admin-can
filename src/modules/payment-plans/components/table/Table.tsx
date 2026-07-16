@@ -12,10 +12,13 @@ import { IPaymentPlan } from "@/modules/payment-plans";
 
 interface Props {
   paymentPlans: IPaymentPlan[];
-  teamSeasonId: string;
+  teamSeasonId?: string;
+  courseSeasonId?: string;
+  teamSeasonBillingType?: string;
+  courseSeasonBillingType?: string;
 }
 
-export const TablePaymentPlans = ({ paymentPlans, teamSeasonId }: Props) => {
+export const TablePaymentPlans = ({ paymentPlans, teamSeasonId, courseSeasonId, teamSeasonBillingType, courseSeasonBillingType }: Props) => {
   const [isClient, setIsClient] = useState(false);
 
   // Evitamos la hidratación fallida
@@ -100,6 +103,9 @@ export const TablePaymentPlans = ({ paymentPlans, teamSeasonId }: Props) => {
                     <EditModal
                       paymentPlan={paymentPlan}
                       teamSeasonId={teamSeasonId}
+                      courseSeasonId={courseSeasonId}
+                      teamSeasonBillingType={teamSeasonBillingType}
+                      courseSeasonBillingType={courseSeasonBillingType}
                       isIcon={true}
                     />
                     {/* <DeleteModal paymentPlan={paymentPlan} isIcon={true} /> */}

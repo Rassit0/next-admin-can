@@ -7,7 +7,8 @@ interface SearchParams {
   search?: string;
   per_page?: string;
   page?: string;
-  teamSeasonId: string;
+  teamSeasonId?: string;
+  courseSeasonId?: string;
   callbackUrl?: string;
 }
 
@@ -16,13 +17,15 @@ export const getPaymentPlans = async ({
   per_page = "5",
   page = "1",
   teamSeasonId,
+  courseSeasonId,
 }: SearchParams): Promise<ServiceResponse<IPaymentPlanResponse>> => {
   return handleServerAction(async () => {
     const params = new URLSearchParams();
     if (search) params.set("search", search);
     if (per_page) params.set("per_page", per_page);
     if (page) params.set("page", page);
-    params.set("teamSeasonId", teamSeasonId);
+    if (teamSeasonId) params.set("teamSeasonId", teamSeasonId);
+    if (courseSeasonId) params.set("courseSeasonId", courseSeasonId);
 
     const res = await api.get<IPaymentPlanResponse>(
       `payment-plans?${params.toString()}`,

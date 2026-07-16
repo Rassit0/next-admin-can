@@ -1,0 +1,815 @@
+"use client";
+import {
+  Button,
+  ComboBox,
+  Drawer,
+  Input,
+  Label,
+  ListBox,
+  Surface,
+  Switch,
+  TextField,
+  toast,
+  useOverlayState,
+  Alert,
+  FieldError,
+  Popover,
+  Toast,
+  CloseButton,
+} from "@heroui/react";
+import {
+  Add01Icon,
+  UserAdd01Icon,
+  InformationCircleIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { ICourseSeason } from "@/modules/course-seasons";
+import { IPaymentPlan } from "@/modules/payment-plans";
+import { IStudent } from "@/modules/students";
+import {
+  addStudentMembership,
+  getPreviewCharges,
+  IStudentOption,
+  IPreviewChargesResponse,
+} from "@/modules/student-memberships";
+import { calculateInitialCharges } from "@/modules/student-memberships/helpers/initial-charges";
+import { InvoicePreview } from "@/modules/student-memberships/components/invoice/InvoicePreview";
+import { SelectOrCreateStudent } from "./SelectOrCreateStudent";
+
+interface Props {
+  courseSeason: ICourseSeason;
+  paymentPlans: IPaymentPlan[];
+  size?: "lg" | "md" | "sm";
+}
+
+const today = () => new Date().toISOString().slice(0, 10);
+
+const toLocalIso = (dateStr: string) => {
+  if (!dateStr) return undefined;
+  return new Date(`${dateStr}T00:00:00`).toISOString();
+};
+
+const getInitialDate = (seasonStart: Date) => {
+  const t = today();
+  const sStart = seasonStart.toISOString().slice(0, 10);
+  return t < sStart ? sStart : t;
+};
+
+export const EnrollMembershipDrawer = ({
+  courseSeason,
+  paymentPlans,
+  size = "md",
+}: Props) => {
+  const [loading, setLoading] = useState(false);
+  const [studentKey, setStudentKey] = useState<string | null>(null);
+  const [planKey, setPlanKey] = useState<string | null>(
+    paymentPlans.find((p) => p.isDefault)?.id ?? null,
+  );
+  const [startedAt, setStartedAt] = useState<string>(() =>
+    getInitialDate(courseSeason.season.startDate),
+  );
+  const [isMigrated, setIsMigrated] = useState(false);
+
+  const [hasDiscount, setHasDiscount] = useState(false);
+  const [regDiscountPercent, setRegDiscountPercent] = useState<string>("");
+  const [recDiscountPercent, setRecDiscountPercent] = useState<string>("");
+  const [seasonDiscountPercent, setSeasonDiscountPercent] =
+    useState<string>("");
+  const [discountType, setDiscountType] = useState<string>("SPECIAL_DISCOUNT");
+  const [discountReason, setDiscountReason] = useState("");
+  const [discountEndDate, setDiscountEndDate] = useState<string>("");
+
+  const [selectedStudent, setSelectedStudent] = useState<IStudentOption | null>(
+    null,
+  );
+
+  const selectedPlan = paymentPlans.find((p) => p.id === planKey) ?? null;
+
+  const [breakdown, setBreakdown] = useState<IPreviewChargesResponse | null>(
+    null,
+  );
+  const [apiError, setApiError] = useState<{
+    title: string;
+    description: string;
+  } | null>(null);
+
+  // Validaciones en tiempo real
+  const errors = useMemo(() => {
+    const err: Record<string, string> = {};
+    const sStartStr = new Date(courseSeason.season.startDate)
+      .toISOString()
+      .substring(0, 10);
+    const sEndStr = new Date(courseSeason.season.endDate)
+      .toISOString()
+      .substring(0, 10);
+
+    if (!studentKey) err.studentKey = "Seleccione un atleta.";
+    if (!planKey) err.planKey = "Seleccione un plan de pago.";
+    if (!startedAt) err.startedAt = "Debe ingresar una fecha de inicio.";
+    else if (startedAt < sStartStr || startedAt > sEndStr) {
+      err.startedAt = `La fecha de inicio debe estar dentro de la temporada (${sStartStr} al ${sEndStr}).`;
+    }
+
+    if (hasDiscount) {
+      const reg = Number(regDiscountPercent);
+      const rec = Number(recDiscountPercent);
+      const season = Number(seasonDiscountPercent);
+
+      if (selectedPlan?.isSinglePayment) {
+        if (!seasonDiscountPercent) {
+          err.discountPercent = "Debe ingresar un porcentaje de descuento.";
+        }
+        if (
+          seasonDiscountPercent &&
+          (isNaN(season) || season < 0 || season > 100)
+        ) {
+          err.seasonDiscountPercent =
+            "El descuento debe ser mayor o igual a 0 y máximo 100.";
+        }
+      } else {
+        if (!regDiscountPercent && !recDiscountPercent) {
+          err.discountPercent =
+            "Debe ingresar al menos un porcentaje de descuento (Matrícula o Mensualidad).";
+        }
+        if (regDiscountPercent && (isNaN(reg) || reg < 0 || reg > 100)) {
+          err.regDiscountPercent =
+            "El descuento debe ser mayor o igual a 0 y máximo 100.";
+        }
+        if (recDiscountPercent && (isNaN(rec) || rec < 0 || rec > 100)) {
+          err.recDiscountPercent =
+            "El descuento debe ser mayor o igual a 0 y máximo 100.";
+        }
+      }
+
+      if (!discountType) {
+        err.discountType = "Seleccione un tipo de descuento.";
+      }
+
+      if (discountType === "OTHER" && !discountReason.trim()) {
+        err.discountReason = "Especifique una razón o justificación.";
+      }
+
+      if (discountEndDate) {
+        if (discountEndDate < startedAt) {
+          err.discountEndDate =
+            "La fecha de fin no puede ser menor a la de inicio.";
+        }
+        if (discountEndDate > sEndStr) {
+          err.discountEndDate = `La fecha de fin no puede exceder la temporada (${sEndStr}).`;
+        }
+      }
+    }
+    return err;
+  }, [
+    studentKey,
+    planKey,
+    startedAt,
+    hasDiscount,
+    discountEndDate,
+    regDiscountPercent,
+    recDiscountPercent,
+    seasonDiscountPercent,
+    discountType,
+    discountReason,
+    courseSeason,
+    selectedPlan,
+  ]);
+
+  const reset = () => {
+    setStudentKey(null);
+    setPlanKey(paymentPlans.find((p) => p.isDefault)?.id ?? null);
+    setStartedAt(getInitialDate(courseSeason.season.startDate));
+    setIsMigrated(false);
+    setHasDiscount(false);
+    setRegDiscountPercent("");
+    setRecDiscountPercent("");
+    setSeasonDiscountPercent("");
+    setDiscountType("SPECIAL_DISCOUNT");
+    setDiscountReason("");
+    setDiscountEndDate("");
+    setBreakdown(null);
+    setApiError(null);
+  };
+
+  useEffect(() => {
+    if (!studentKey || !planKey || !startedAt) return;
+    handlePreview();
+  }, [
+    studentKey,
+    planKey,
+    startedAt,
+    isMigrated,
+    hasDiscount,
+    regDiscountPercent,
+    recDiscountPercent,
+    discountEndDate,
+  ]);
+
+  const handlePreview = async () => {
+    if (!studentKey || !planKey || !startedAt) {
+      return;
+    }
+
+    const res = await getPreviewCharges({
+      courseSeasonId: courseSeason.id,
+      paymentPlanId: planKey,
+      startDate: toLocalIso(startedAt)!,
+      isMigrated,
+      ...(hasDiscount &&
+        (regDiscountPercent !== "" ||
+          recDiscountPercent !== "" ||
+          seasonDiscountPercent !== "") && {
+          membershipDiscounts: [
+            {
+              registrationDiscountPercent: Number(regDiscountPercent) || 0,
+              recurringDiscountPercent: Number(recDiscountPercent) || 0,
+              seasonFeeDiscountPercent: Number(seasonDiscountPercent) || 0,
+              startDate: toLocalIso(startedAt)!,
+              ...(discountEndDate && {
+                endDate: toLocalIso(discountEndDate),
+              }),
+            },
+          ],
+        }),
+    });
+
+    if (res.error) {
+      setApiError({
+        title: res.message,
+        description: res.errors
+          ? Object.values(res.errors).flat().join(", ")
+          : res.message,
+      });
+      setBreakdown(null);
+      return;
+    }
+    setApiError(null);
+
+    setBreakdown(res.data);
+  };
+
+  const handleSubmit = async () => {
+    if (Object.keys(errors).length > 0) {
+      return;
+    }
+
+    setLoading(true);
+    const res = await addStudentMembership({
+      studentId: studentKey!,
+      courseSeasonId: courseSeason.id,
+      paymentPlanId: planKey!,
+      startedAt: toLocalIso(startedAt)!,
+      isMigrated,
+      ...(hasDiscount && {
+        membershipDiscounts: [
+          {
+            registrationDiscountPercent: Number(regDiscountPercent) || 0,
+            recurringDiscountPercent: Number(recDiscountPercent) || 0,
+            seasonFeeDiscountPercent: Number(seasonDiscountPercent) || 0,
+            startDate: toLocalIso(startedAt)!,
+            ...(discountEndDate && {
+              endDate: toLocalIso(discountEndDate),
+            }),
+            type: discountType,
+            reason: discountReason || undefined,
+          },
+        ],
+      }),
+    });
+    setLoading(false);
+
+    if (res.error) {
+      setApiError({
+        title: res.message,
+        description: res.errors
+          ? Object.values(res.errors).flat().join(", ")
+          : res.message,
+      });
+      return;
+    }
+    setApiError(null);
+
+    setIsOpen(false);
+    toast.success(res.message, {
+      description: selectedStudent
+        ? `${selectedStudent?.person?.fullName} fue inscrito en la temporada.`
+        : undefined,
+    });
+    reset();
+  };
+
+  const noPlans = paymentPlans.length === 0;
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const InfoTooltip = ({ text }: { text: string }) => (
+    <Popover>
+      <Button
+        isIconOnly
+        variant="ghost"
+        size="sm"
+        className="h-5 w-5 min-w-5 text-muted-foreground ml-2"
+      >
+        <HugeiconsIcon icon={InformationCircleIcon} size={14} />
+      </Button>
+      <Popover.Content placement="top">
+        <Popover.Dialog className="max-w-50 px-3 py-2">
+          <Popover.Arrow />
+          <p className="text-xs font-normal normal-case tracking-normal text-foreground">
+            {text}
+          </p>
+        </Popover.Dialog>
+      </Popover.Content>
+    </Popover>
+  );
+
+  return (
+    <>
+      <Button
+        size={size}
+        className="w-full bg-accent text-accent-foreground font-semibold text-sm shadow-md shadow-accent-soft-hover hover:shadow-lg hover:scale-[1.01] active:scale-95 transition-all"
+        onPress={() => setIsOpen(true)}
+      >
+        <HugeiconsIcon icon={UserAdd01Icon} size={18} />
+        Inscribir Atleta
+      </Button>
+
+      <Drawer.Backdrop isOpen={isOpen} onOpenChange={setIsOpen}>
+        <Drawer.Content placement="right">
+          <Drawer.Dialog className="w-full sm:max-w-md">
+            <Drawer.CloseTrigger />
+            <Drawer.Header className="border-b border-border">
+              <div>
+                <Drawer.Heading className="text-lg font-bold">
+                  Inscribir atleta
+                </Drawer.Heading>
+                <p className="mt-1 text-xs font-medium text-muted">
+                  {courseSeason.course.name} · {courseSeason.season.name}
+                </p>
+              </div>
+            </Drawer.Header>
+
+            <Drawer.Body className="gap-5">
+              <Surface variant="transparent" className="flex flex-col gap-5">
+                {apiError && (
+                  <Alert status="danger" className="mb-2">
+                    <Alert.Indicator />
+                    <Alert.Content>
+                      <Alert.Title>{apiError.title}</Alert.Title>
+                      <Alert.Description>
+                        {apiError.description}
+                      </Alert.Description>
+                    </Alert.Content>
+                    <CloseButton onPress={() => setApiError(null)} />
+                  </Alert>
+                )}
+
+                <Alert status="accent" className="mb-2">
+                  <Alert.Indicator />
+                  <Alert.Content>
+                    <Alert.Title>Fechas y Prorrateo</Alert.Title>
+                    <Alert.Description>
+                      La fecha de inicio que elijas determinará cómo el motor
+                      financiero aplica el cálculo de prorrateo (si está activo
+                      en la temporada) para la primera cuota.
+                    </Alert.Description>
+                  </Alert.Content>
+                </Alert>
+
+                <Alert status="accent" className="mb-2">
+                  <Alert.Indicator />
+                  <Alert.Content>
+                    <Alert.Title>
+                      Categoría: {courseSeason.category.name} (
+                      {courseSeason.category.minAge} -{" "}
+                      {courseSeason.category.maxAge} años)
+                    </Alert.Title>
+                    <Alert.Description>
+                      <p className="mb-1">
+                        {courseSeason.minBirthYear || courseSeason.maxBirthYear
+                          ? `Años de nacimiento permitidos: ${courseSeason.minBirthYear || "Cualquiera"} al ${courseSeason.maxBirthYear || "Cualquiera"}`
+                          : `El atleta debe tener entre ${courseSeason.category.minAge} y ${courseSeason.category.maxAge} años en el año actual.`}
+                      </p>
+                      <p>
+                        <strong>Duración de la temporada:</strong>{" "}
+                        {new Date(
+                          courseSeason.season.startDate,
+                        ).toLocaleDateString()}{" "}
+                        -{" "}
+                        {new Date(
+                          courseSeason.season.endDate,
+                        ).toLocaleDateString()}
+                      </p>
+                    </Alert.Description>
+                  </Alert.Content>
+                </Alert>
+
+                {/* Student picker */}
+                <SelectOrCreateStudent
+                  studentId={studentKey}
+                  setStudentId={setStudentKey}
+                  setSelectedStudent={setSelectedStudent}
+                  // isDisabled={noStudents}
+                  label="Atleta"
+                  errors={errors}
+                />
+
+                {/* Payment plan picker */}
+                <ComboBox
+                  className="w-full"
+                  variant="secondary"
+                  menuTrigger="focus"
+                  selectedKey={planKey}
+                  onSelectionChange={(key) =>
+                    setPlanKey(key ? String(key) : null)
+                  }
+                  isDisabled={noPlans}
+                  isInvalid={!!errors.planKey || undefined}
+                >
+                  <Label className="text-sm font-semibold flex items-center">
+                    Plan de pago
+                    <InfoTooltip text="Los planes definen si se cobra de forma adelantada, recurrente, y sus respectivos descuentos aplicables." />
+                  </Label>
+                  <ComboBox.InputGroup>
+                    <Input
+                      variant="secondary"
+                      placeholder={
+                        noPlans
+                          ? "Crea un plan de pago primero"
+                          : "Selecciona un plan de pago"
+                      }
+                    />
+                    <ComboBox.Trigger />
+                  </ComboBox.InputGroup>
+                  <ComboBox.Popover>
+                    <ListBox>
+                      {paymentPlans.map((plan) => (
+                        <ListBox.Item
+                          key={plan.id}
+                          id={plan.id}
+                          textValue={plan.name}
+                        >
+                          <div className="flex flex-col">
+                            <span className="font-medium flex items-center gap-2">
+                              {plan.name}
+                              {plan.isDefault && (
+                                <span className="bg-primary/10 text-primary text-[9px] px-1.5 py-0.5 rounded-full font-bold uppercase tracking-wide">
+                                  Default
+                                </span>
+                              )}
+                            </span>
+                            <span className="text-[11px] text-muted">
+                              {plan.isSinglePayment
+                                ? courseSeason.billingConfig?.billingType ===
+                                  "MONTHLY_ONLY"
+                                  ? `Pago Único (Adelantado) • -${plan.recurringDiscountPercent}% (Mensualidades)`
+                                  : `Pago Único • -${plan.seasonFeeDiscountPercent}% (Temporada)`
+                                : `Insc. -${plan.registrationDiscountPercent}% • Mens. -${plan.recurringDiscountPercent}%`}
+                            </span>
+                          </div>
+                        </ListBox.Item>
+                      ))}
+                    </ListBox>
+                  </ComboBox.Popover>
+                </ComboBox>
+
+                {/* Start date */}
+                <TextField
+                  className="w-full"
+                  name="startedAt"
+                  isInvalid={!!errors.startedAt || undefined}
+                >
+                  <Label className="text-sm font-semibold flex items-center">
+                    Fecha de inicio
+                    <InfoTooltip text="Fecha en la que el sistema se basa para cobrar. Si la fecha cae a la mitad de un ciclo mensual (y el prorrateo está activo), el cobro será parcial." />
+                  </Label>
+                  <Input
+                    variant="secondary"
+                    type="date"
+                    value={startedAt}
+                    onChange={(e) => setStartedAt(e.target.value)}
+                  />
+                  {errors.startedAt && (
+                    <FieldError>{errors.startedAt}</FieldError>
+                  )}
+                </TextField>
+
+                {/* Switch for migration */}
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-center gap-2 px-1">
+                    <Switch isSelected={hasDiscount} onChange={setHasDiscount}>
+                      <Switch.Control>
+                        <Switch.Thumb />
+                      </Switch.Control>
+                      <Switch.Content>
+                        <Label className="text-sm font-semibold flex items-center">
+                          Aplicar Descuento Excepcional
+                          <InfoTooltip text="Estos descuentos se sumarán a los que ya otorga el plan elegido (el total acumulado no puede exceder el 100%)." />
+                        </Label>
+                      </Switch.Content>
+                    </Switch>
+                  </div>
+
+                  {hasDiscount && (
+                    <div className="flex flex-col gap-4 pl-4 border-l-2 border-border mb-2">
+                      <div className="flex flex-wrap gap-4">
+                        {selectedPlan?.isSinglePayment ? (
+                          <TextField
+                            className="w-full"
+                            isInvalid={
+                              !!errors.seasonDiscountPercent ||
+                              !!errors.discountPercent ||
+                              undefined
+                            }
+                          >
+                            <Label className="text-sm font-semibold">
+                              Desc. Temporada (%)
+                            </Label>
+                            <Input
+                              variant="secondary"
+                              type="number"
+                              placeholder="Ej. 15"
+                              value={seasonDiscountPercent}
+                              onChange={(e) =>
+                                setSeasonDiscountPercent(e.target.value)
+                              }
+                            />
+                            <p className="text-xs text-muted mt-1 leading-tight">
+                              Se aplica sobre el monto total de la temporada.
+                            </p>
+                            {(errors.seasonDiscountPercent ||
+                              errors.discountPercent) && (
+                              <FieldError>
+                                {errors.seasonDiscountPercent ||
+                                  errors.discountPercent}
+                              </FieldError>
+                            )}
+                          </TextField>
+                        ) : (
+                          <>
+                            <TextField
+                              className="w-full"
+                              isInvalid={
+                                !!errors.regDiscountPercent ||
+                                !!errors.discountPercent ||
+                                undefined
+                              }
+                            >
+                              <Label className="text-sm font-semibold">
+                                Desc. Matrícula (%)
+                              </Label>
+                              <Input
+                                variant="secondary"
+                                type="number"
+                                placeholder="Ej. 50"
+                                value={regDiscountPercent}
+                                onChange={(e) =>
+                                  setRegDiscountPercent(e.target.value)
+                                }
+                              />
+                              <p className="text-xs text-muted mt-1 leading-tight">
+                                Dejar vacío si no aplica.
+                              </p>
+                              {(errors.regDiscountPercent ||
+                                errors.discountPercent) && (
+                                <FieldError>
+                                  {errors.regDiscountPercent ||
+                                    errors.discountPercent}
+                                </FieldError>
+                              )}
+                            </TextField>
+                            <TextField
+                              className="w-full"
+                              isInvalid={
+                                !!errors.recDiscountPercent ||
+                                !!errors.discountPercent ||
+                                undefined
+                              }
+                            >
+                              <Label className="text-sm font-semibold">
+                                Desc. Mensualidad (%)
+                              </Label>
+                              <Input
+                                variant="secondary"
+                                type="number"
+                                placeholder="Ej. 10"
+                                value={recDiscountPercent}
+                                onChange={(e) =>
+                                  setRecDiscountPercent(e.target.value)
+                                }
+                              />
+                              <p className="text-xs text-muted mt-1 leading-tight">
+                                Dejar vacío si no aplica.
+                              </p>
+                              {(errors.recDiscountPercent ||
+                                (errors.discountPercent &&
+                                  !errors.regDiscountPercent)) && (
+                                <FieldError>
+                                  {errors.recDiscountPercent ||
+                                    errors.discountPercent}
+                                </FieldError>
+                              )}
+                            </TextField>
+                          </>
+                        )}
+                      </div>
+
+                      <ComboBox
+                        className="w-full"
+                        variant="secondary"
+                        menuTrigger="focus"
+                        selectedKey={discountType}
+                        onSelectionChange={(key) =>
+                          setDiscountType(
+                            key ? String(key) : "SPECIAL_DISCOUNT",
+                          )
+                        }
+                        isInvalid={!!errors.discountType || undefined}
+                      >
+                        <Label className="text-sm font-semibold">
+                          Tipo de Descuento
+                        </Label>
+                        <ComboBox.InputGroup>
+                          <Input variant="secondary" />
+                          <ComboBox.Trigger />
+                        </ComboBox.InputGroup>
+                        <ComboBox.Popover>
+                          <ListBox>
+                            <ListBox.Item id="SCHOLARSHIP" textValue="Beca">
+                              Beca
+                            </ListBox.Item>
+                            <ListBox.Item
+                              id="SPECIAL_DISCOUNT"
+                              textValue="Descuento especial"
+                            >
+                              Descuento especial
+                            </ListBox.Item>
+                            <ListBox.Item
+                              id="FINANCIAL_AID"
+                              textValue="Ayuda económica"
+                            >
+                              Ayuda económica
+                            </ListBox.Item>
+                            <ListBox.Item id="AGREEMENT" textValue="Convenio">
+                              Convenio
+                            </ListBox.Item>
+                            <ListBox.Item
+                              id="EXEMPTION"
+                              textValue="Exoneración"
+                            >
+                              Exoneración
+                            </ListBox.Item>
+                            <ListBox.Item id="OTHER" textValue="Otro">
+                              Otro
+                            </ListBox.Item>
+                          </ListBox>
+                        </ComboBox.Popover>
+                      </ComboBox>
+
+                      <TextField
+                        className="w-full"
+                        isInvalid={!!errors.discountReason || undefined}
+                      >
+                        <Label className="text-sm font-semibold">
+                          Razón / Justificación
+                        </Label>
+                        <Input
+                          variant="secondary"
+                          placeholder="Ej. Convenio con la municipalidad"
+                          value={discountReason}
+                          onChange={(e) => setDiscountReason(e.target.value)}
+                        />
+                        <p className="text-xs text-muted mt-1 leading-tight">
+                          Opcional, salvo que el tipo sea "Otro".
+                        </p>
+                        {errors.discountReason && (
+                          <FieldError>{errors.discountReason}</FieldError>
+                        )}
+                      </TextField>
+
+                      <TextField
+                        className="w-full"
+                        isInvalid={!!errors.discountEndDate || undefined}
+                      >
+                        <Label className="text-sm font-semibold">
+                          Fecha Fin del Descuento (Opcional)
+                        </Label>
+                        <Input
+                          variant="secondary"
+                          type="date"
+                          value={discountEndDate}
+                          onChange={(e) => setDiscountEndDate(e.target.value)}
+                        />
+                        <p className="text-xs text-muted mt-1 leading-tight">
+                          Si se deja en blanco, el descuento será permanente
+                          hasta que termine la temporada.
+                        </p>
+                        {errors.discountEndDate && (
+                          <FieldError>{errors.discountEndDate}</FieldError>
+                        )}
+                      </TextField>
+                    </div>
+                  )}
+                </div>
+
+                {/* Switch for migration */}
+                <div className="flex items-center gap-2 px-1">
+                  <Switch isSelected={isMigrated} onChange={setIsMigrated}>
+                    <Switch.Control>
+                      <Switch.Thumb />
+                    </Switch.Control>
+                    <Switch.Content>
+                      <Label className="text-sm flex items-center">
+                        Es Migración (omitir cargos iniciales)
+                        <InfoTooltip text="Activa esta opción si el jugador ya está en la temporada por migración de datos y NO deseas generar sus cargos de inscripción ahora." />
+                      </Label>
+                    </Switch.Content>
+                  </Switch>
+                </div>
+
+                {/* {JSON.stringify({
+                  courseSeasonId: courseSeason.id,
+                  studentKey,
+                  planKey,
+                  startedAt,
+                  // breakdown,
+                })} */}
+
+                {/* {JSON.stringify({ breakdown })} */}
+
+                {/* Error de API */}
+                {apiError && (
+                  <Alert status="danger">
+                    <Alert.Indicator />
+                    <Alert.Content>
+                      <Alert.Title>{apiError.title}</Alert.Title>
+                      <Alert.Description>
+                        {apiError.description}
+                      </Alert.Description>
+                    </Alert.Content>
+                    <CloseButton onPress={() => setApiError(null)} />
+                  </Alert>
+                )}
+
+                {/* Errores globales */}
+                {Object.keys(errors).length > 0 && (
+                  <Alert status="danger">
+                    <Alert.Indicator />
+                    <Alert.Content>
+                      <Alert.Title>
+                        Formulario incompleto o inválido
+                      </Alert.Title>
+                      <Alert.Description>
+                        <ul className="list-disc pl-5 mt-1 text-sm space-y-1">
+                          {Object.entries(errors).map(([field, msg]) => (
+                            <li key={field}>{msg}</li>
+                          ))}
+                        </ul>
+                      </Alert.Description>
+                    </Alert.Content>
+                  </Alert>
+                )}
+
+                {/* Live invoice preview */}
+                {breakdown?.data && (
+                  <InvoicePreview
+                    breakdown={breakdown}
+                    planName={selectedPlan?.name}
+                    studentName={
+                      selectedStudent ? selectedStudent.person.fullName : null
+                    }
+                  />
+                )}
+              </Surface>
+            </Drawer.Body>
+
+            <Drawer.Footer className="border-t border-border">
+              <Button
+                slot="close"
+                variant="secondary"
+                isDisabled={loading}
+                onPress={() => reset()}
+                className="font-medium"
+              >
+                Cancelar
+              </Button>
+              <Button
+                onPress={handleSubmit}
+                isPending={loading}
+                isDisabled={
+                  loading || noPlans || Object.keys(errors).length > 0
+                }
+                className="font-semibold"
+              >
+                <HugeiconsIcon icon={Add01Icon} size={18} />
+                Confirmar
+              </Button>
+            </Drawer.Footer>
+          </Drawer.Dialog>
+        </Drawer.Content>
+      </Drawer.Backdrop>
+    </>
+  );
+};

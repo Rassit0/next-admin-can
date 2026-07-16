@@ -7,7 +7,8 @@ interface SearchParams {
   search?: string;
   per_page?: string;
   page?: string;
-  playerMembershipId: string;
+  playerMembershipId?: string;
+  studentMembershipId?: string;
 }
 
 const parseCharge = (charge: ICharge): ICharge => ({
@@ -22,6 +23,7 @@ export const getCharges = async ({
   per_page = "10",
   page = "1",
   playerMembershipId,
+  studentMembershipId,
 }: SearchParams): Promise<ServiceResponse<IChargesResponse>> => {
   return handleServerAction(async () => {
     const params = new URLSearchParams();
@@ -30,6 +32,8 @@ export const getCharges = async ({
     if (page) params.set("page", page);
     if (playerMembershipId)
       params.set("playerMembershipId", playerMembershipId);
+    if (studentMembershipId)
+      params.set("studentMembershipId", studentMembershipId);
 
     const res = await api.get<IChargesResponse>(
       `charges?${params.toString()}`,

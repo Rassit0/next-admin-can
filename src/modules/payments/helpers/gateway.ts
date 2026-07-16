@@ -1,5 +1,7 @@
 import { ITeamSeason } from "@/modules/team-seasons";
+import { ICourseSeason } from "@/modules/course-seasons";
 import { IPlayerMembership } from "@/modules/player-memberships";
+import { IStudentMembership } from "@/modules/student-memberships";
 import { calculateInitialCharges } from "@/modules/player-memberships";
 import {
   IPayment,
@@ -7,8 +9,8 @@ import {
   PaymentResult,
 } from "@/modules/payments/interfaces/payment.interface";
 
-const fullName = (membership: IPlayerMembership): string => {
-  const person = membership.player?.person;
+const fullName = (membership: any): string => {
+  const person = (membership.player?.person || membership.student?.person);
   if (!person) return "Atleta";
   return [person.name, person.lastName, person.secondLastName]
     .filter(Boolean)
@@ -23,14 +25,14 @@ const fullName = (membership: IPlayerMembership): string => {
  * memberships keep an outstanding PENDING balance.
  */
 export const buildPaymentLedger = (
-  memberships: IPlayerMembership[],
-  teamSeason: ITeamSeason,
+  memberships: any[],
+  season: any,
 ): IPayment[] => {
   const ledger: IPayment[] = [];
 
   memberships.forEach((membership) => {
     const breakdown = calculateInitialCharges(
-      teamSeason,
+      season,
       membership.paymentPlan,
     );
     const collected = membership.status === "ACTIVE";
@@ -41,7 +43,7 @@ export const buildPaymentLedger = (
         id: `${membership.id}-${line.key}`,
         membershipId: membership.id,
         athleteName: fullName(membership),
-        athleteImageUrl: membership.player?.person.imageUrl ?? null,
+        athleteImageUrl: (membership.player?.person || membership.student?.person).imageUrl ?? null,
         concept: line.label,
         amount: line.net,
         currency: breakdown.currency,

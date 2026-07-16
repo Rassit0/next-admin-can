@@ -1,7 +1,21 @@
-import { ErrorPage, HeaderPage, PaginationSection, SectionFilters } from "@/ui";
+import {
+  ErrorPage,
+  HeaderPage,
+  PaginationSection,
+  SectionFilters,
+  TabsTypeFilter,
+} from "@/ui";
 import { redirect } from "next/navigation";
-import { AddModal, getClubs, getDisciplinesOptions } from "@/modules/clubs";
-import { TableClubs } from "@/modules/clubs/components/table/Table";
+import {
+  AddModal,
+  getSchools,
+  getDisciplinesOptions,
+  SelectDisciplineOptions,
+} from "@/modules/schools";
+import { TableSchools } from "@/modules/schools/components/table/Table";
+import { Card } from "@heroui/react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Structure04FreeIcons } from "@hugeicons/core-free-icons";
 
 interface Props {
   searchParams: Promise<{
@@ -14,8 +28,8 @@ interface Props {
 }
 export default async function SchoolsPage({ searchParams }: Props) {
   const { search, page, per_page, sortField, orderBy } = await searchParams;
-  const [clubsResponse, disciplinesOptionsResponse] = await Promise.all([
-    getClubs({
+  const [schoolsResponse, disciplinesOptionsResponse] = await Promise.all([
+    getSchools({
       search,
       page,
       per_page,
@@ -26,13 +40,18 @@ export default async function SchoolsPage({ searchParams }: Props) {
   ]);
 
   // 1. Manejo de error específico (Ej: 401 no autorizado)
-  if (clubsResponse.error && clubsResponse.statusCode === 401) {
+  if (schoolsResponse.error && schoolsResponse.statusCode === 401) {
     redirect("/login");
   }
 
   // 2. Manejo de errores generales (400, 500, etc.)
-  if (clubsResponse.error) {
-    return <ErrorPage message={clubsResponse.message} />;
+  if (schoolsResponse.error) {
+    return (
+      <ErrorPage
+        message={schoolsResponse.message}
+        path={{ href: "/schools", label: "Recargar la lista de Escuelas" }}
+      />
+    );
   }
 
   // 1. Manejo de error específico (Ej: 401 no autorizado)
@@ -50,20 +69,22 @@ export default async function SchoolsPage({ searchParams }: Props) {
 
   return (
     <>
-      {/* <!-- Header --> */}
-      <HeaderPage
-        title="Gestión de Escuelas"
-        description="Administra las escuelas deportivas del país"
-      />
-      {/* <!-- Search and Filter Bar (Tonal Architecture) --> */}
-      <SectionFilters />
-      {/* <!-- Main Member Table --> */}
-
-      <PaginationSection
-        totalPages={clubsResponse.data.meta.totalPages}
-        itemsPerPage={clubsResponse.data.meta.itemsPerPage}
-        totalItems={clubsResponse.data.meta.totalItems}
-      />
+      <Card>
+        <Card.Header>
+          <div className="flex items-center gap-2">
+            <HugeiconsIcon icon={Structure04FreeIcons} />
+            <Card.Title className="text-xl font-bold">
+              Seleccione una Disciplina
+            </Card.Title>
+          </div>
+        </Card.Header>
+        <Card.Content>
+          <SelectDisciplineOptions
+            disciplineOptions={disciplinesOptionsResponse.data.data}
+            urlBase="/admin/schools"
+          />
+        </Card.Content>
+      </Card>
     </>
   );
 }

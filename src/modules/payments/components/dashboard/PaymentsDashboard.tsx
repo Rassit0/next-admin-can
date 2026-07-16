@@ -9,7 +9,9 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";
 import { useMemo, useState } from "react";
 import { ITeamSeason } from "@/modules/team-seasons";
+import { ICourseSeason } from "@/modules/course-seasons";
 import { IPlayerMembership } from "@/modules/player-memberships";
+import { IStudentMembership } from "@/modules/student-memberships";
 import { formatCurrency } from "@/modules/player-memberships";
 import {
   IPayment,
@@ -20,13 +22,14 @@ import { PaymentsHistoryTable } from "@/modules/payments/components/table/Paymen
 import { PaymentGatewayModal } from "@/modules/payments/components/gateway/PaymentGatewayModal";
 
 interface Props {
-  memberships: IPlayerMembership[];
-  teamSeason: ITeamSeason;
+  memberships: any[];
+  teamSeason?: ITeamSeason;
+  courseSeason?: ICourseSeason;
 }
 
-export const PaymentsDashboard = ({ memberships, teamSeason }: Props) => {
+export const PaymentsDashboard = ({ memberships, teamSeason, courseSeason }: Props) => {
   const [payments, setPayments] = useState<IPayment[]>(() =>
-    buildPaymentLedger(memberships, teamSeason),
+    buildPaymentLedger(memberships, (teamSeason || courseSeason) as any),
   );
   const [activeTab, setActiveTab] = useState<string>("pending");
   const [selected, setSelected] = useState<IPayment | null>(null);

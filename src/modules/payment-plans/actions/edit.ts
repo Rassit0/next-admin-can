@@ -8,7 +8,8 @@ import { handleServerAction } from "@/utils";
 interface Props {
   id: string;
   data: {
-    teamSeasonId: string;
+    teamSeasonId?: string;
+    courseSeasonId?: string;
     name: string;
     registrationDiscountPercent: string;
     recurringDiscountPercent: string;
