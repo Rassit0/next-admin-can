@@ -18,9 +18,12 @@ const GENDER_MAP: Record<string, string> = {
   MIXED: "Mixto",
 };
 
-export default async function TeamSeasonDetailLayout({ children, params }: LayoutProps) {
+export default async function TeamSeasonDetailLayout({
+  children,
+  params,
+}: LayoutProps) {
   const { disciplineId, clubId, teamId, teamSeasonId } = await params;
-  
+
   const teamSeasonResponse = await getTeamSeasonById({ id: teamSeasonId });
 
   if (teamSeasonResponse.error) {
@@ -55,8 +58,12 @@ export default async function TeamSeasonDetailLayout({ children, params }: Layou
           },
         ]}
       />
-      <div className="flex flex-col gap-6 page-content">
-        <TabsRouteNavigation routes={tabsRoutes} basePath={basePath} defaultRoute="/" />
+      <div className="flex flex-col page-content">
+        <TabsRouteNavigation
+          routes={tabsRoutes}
+          basePath={basePath}
+          defaultRoute="/"
+        />
         {children}
       </div>
     </>
