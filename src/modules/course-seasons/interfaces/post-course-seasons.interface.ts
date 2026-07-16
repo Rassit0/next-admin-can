@@ -27,4 +27,5 @@ export interface IPostCourseSeason {
     graceDays: number; // Dias de gracia
   };
   status: StatusCourseSeason; // Estado de la oferta
+  isRegistrationOpen?: boolean;
 }

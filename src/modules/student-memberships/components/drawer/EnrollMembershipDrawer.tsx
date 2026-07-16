@@ -329,6 +329,7 @@ export const EnrollMembershipDrawer = ({
     <>
       <Button
         size={size}
+        isDisabled={!courseSeason.isRegistrationOpen}
         className="w-full bg-accent text-accent-foreground font-semibold text-sm shadow-md shadow-accent-soft-hover hover:shadow-lg hover:scale-[1.01] active:scale-95 transition-all"
         onPress={() => setIsOpen(true)}
       >

@@ -147,11 +147,26 @@ export const CardCourseSeason = ({ courseSeason, urlBase }: Props) => {
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
           src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdnoetj5j2XzJ4YuyxPOW9ygEnipikr9HW2Ws685WzidbfCMuf7oyHv1dPCkWMH3GBc7oW5pjhSwp090-CscKqqUhTwS18FYDOcFyFKRT8XymaR3Sgnjc91-qHv3L2ay9hL-pmILP7EJiiQ6hhh2-LaTDArakpVrCk_-KTeU8lDCIpoxGx4573NRqqyLK_fbEAfKmG1SM8YlugZptSlVr5ImQPVoTjSSlp4vULzIsoJUcN0hPnG_hr5S4SnzZUip_3gexcwcH_rBe8"
         />
-        <div
-          className={`absolute top-4 left-4 ${STATUS_BG_MAP[courseSeason.status]} text-white font-label-sm px-4 py-1.5 rounded-full uppercase flex items-center gap-1.5 shadow-lg`}
-        >
-          <span className="w-2 h-2 rounded-full bg-white animate-pulse"></span>
-          {STATUS_TEXT_MAP[courseSeason.status]}
+        <div className="absolute top-4 left-4 flex flex-col gap-2 items-start">
+          <div
+            className={`${STATUS_BG_MAP[courseSeason.status]} text-white font-label-sm px-4 py-1.5 rounded-full uppercase flex items-center gap-1.5 shadow-lg`}
+          >
+            <span className="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+            {STATUS_TEXT_MAP[courseSeason.status]}
+          </div>
+          {(courseSeason.status === "ACTIVE" || courseSeason.status === "DRAFT") && (
+            <div
+              className={`${
+                courseSeason.isRegistrationOpen
+                  ? "bg-success"
+                  : "bg-danger"
+              } text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase shadow-md border border-white/20`}
+            >
+              {courseSeason.isRegistrationOpen
+                ? "Inscripciones Abiertas"
+                : "Inscripciones Cerradas"}
+            </div>
+          )}
         </div>
         <div className="absolute top-4 right-4 flex items-center gap-2">
           {courseSeason.status === "ACTIVE" && courseSeason.billingConfig && (

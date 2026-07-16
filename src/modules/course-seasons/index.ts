@@ -12,6 +12,7 @@ export * from "./actions/cancel";
 export * from "./actions/extend";
 export * from "./actions/finalize";
 export * from "./actions/toggle-billing";
+export * from "./actions/toggle-registration";
 
 // Components
 export * from "./components/grid-cards/GridCards";

@@ -27,4 +27,5 @@ export interface IPostTeamSeason {
     graceDays: number; // Dias de gracia
   };
   status: StatusTeamSeason; // Estado de la oferta
+  isRegistrationOpen?: boolean;
 }

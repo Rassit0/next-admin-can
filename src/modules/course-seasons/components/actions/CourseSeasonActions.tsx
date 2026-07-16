@@ -28,6 +28,7 @@ import {
   cancelCourseSeason,
   finalizeCourseSeason,
   createCourseSeasonPause,
+  toggleCourseSeasonRegistration,
 } from "@/modules/course-seasons";
 
 interface Props {
@@ -57,7 +58,19 @@ const ACTIONS_BY_STATUS: Record<ICourseSeason["status"], ActionDef[]> = {
 export const CourseSeasonActions = ({ courseSeason }: Props) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const statusActions = ACTIONS_BY_STATUS[courseSeason.status] ?? [];
+  const statusActions = [...(ACTIONS_BY_STATUS[courseSeason.status] ?? [])];
+
+  if (courseSeason.status === "ACTIVE" || courseSeason.status === "DRAFT") {
+    statusActions.unshift({
+      key: courseSeason.isRegistrationOpen
+        ? "close_registration"
+        : "open_registration",
+      label: courseSeason.isRegistrationOpen
+        ? "Cerrar inscripciones"
+        : "Abrir inscripciones",
+      icon: CheckmarkCircle02Icon,
+    });
+  }
 
   const confirmState = useOverlayState();
   const [selectedAction, setSelectedAction] = useState<ActionDef | null>(null);
@@ -87,13 +100,13 @@ export const CourseSeasonActions = ({ courseSeason }: Props) => {
     if (action === "pause") {
       const startDate = formData.get("startDate") as string;
       const endDate = formData.get("endDate") as string;
-      
+
       if (!startDate || !endDate) {
         toast.error("Debes seleccionar las fechas de inicio y fin");
         setLoading(false);
         return;
       }
-      
+
       res = await createCourseSeasonPause({
         courseSeasonId: courseSeason.id,
         startDate: new Date(startDate).toISOString(),
@@ -104,6 +117,14 @@ export const CourseSeasonActions = ({ courseSeason }: Props) => {
       res = await finalizeCourseSeason(courseSeason.id, reason);
     } else if (action === "cancel") {
       res = await cancelCourseSeason(courseSeason.id, reason);
+    } else if (
+      action === "close_registration" ||
+      action === "open_registration"
+    ) {
+      res = await toggleCourseSeasonRegistration(
+        courseSeason.id,
+        action === "open_registration",
+      );
     }
 
     if (!res || res.error) {
@@ -235,9 +256,7 @@ export const CourseSeasonActions = ({ courseSeason }: Props) => {
                       className="w-full"
                       defaultValue={today(getLocalTimeZone())}
                     >
-                      <Label className="text-sm font-semibold">
-                        Fecha fin
-                      </Label>
+                      <Label className="text-sm font-semibold">Fecha fin</Label>
                       <DateField.Group variant="secondary">
                         <DateField.Input>
                           {(segment) => <DateField.Segment segment={segment} />}
@@ -281,21 +300,24 @@ export const CourseSeasonActions = ({ courseSeason }: Props) => {
                   </div>
                 )}
 
-                <TextField name="reason" className="w-full" isRequired>
-                  <Label className="text-sm font-semibold">
-                    Motivo u Observación
-                  </Label>
-                  <InputGroup>
-                    <InputGroup.Prefix>
-                      <HugeiconsIcon
-                        icon={Note01Icon}
-                        size={18}
-                        className="text-muted-foreground"
-                      />
-                    </InputGroup.Prefix>
-                    <InputGroup.Input placeholder="Ej. Falta de alumnos, decisión técnica..." />
-                  </InputGroup>
-                </TextField>
+                {selectedAction?.key !== "open_registration" &&
+                  selectedAction?.key !== "close_registration" && (
+                    <TextField name="reason" className="w-full" isRequired>
+                      <Label className="text-sm font-semibold">
+                        Motivo u Observación
+                      </Label>
+                      <InputGroup>
+                        <InputGroup.Prefix>
+                          <HugeiconsIcon
+                            icon={Note01Icon}
+                            size={18}
+                            className="text-muted-foreground"
+                          />
+                        </InputGroup.Prefix>
+                        <InputGroup.Input placeholder="Ej. Falta de alumnos, decisión técnica..." />
+                      </InputGroup>
+                    </TextField>
+                  )}
               </AlertDialog.Body>
               <AlertDialog.Footer>
                 <Button

@@ -21,6 +21,7 @@ export interface ITeamSeason {
   minBirthYear?: number | null;
   maxBirthYear?: number | null;
   status: StatusTeamSeason;
+  isRegistrationOpen: boolean;
   billingConfig?: ITeamSeasonBillingConfig;
   _count: {
     playerMemberships: number;

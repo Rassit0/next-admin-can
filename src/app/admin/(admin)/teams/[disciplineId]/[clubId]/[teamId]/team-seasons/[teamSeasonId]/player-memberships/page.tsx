@@ -125,14 +125,24 @@ export default async function PlayerMembershipsPage({
             <h3 className="font-headline font-bold text-lg">
               Resumen Financiero y Reglas
             </h3>
-            <Chip
-              color="accent"
-              variant="soft"
-              size="sm"
-              className="font-semibold tracking-wide uppercase"
-            >
-              Género: {GENDER_MAP[teamSeason.gender] || teamSeason.gender}
-            </Chip>
+            <div className="flex items-center gap-2">
+              <Chip
+                color={teamSeason.isRegistrationOpen ? "success" : "danger"}
+                variant="soft"
+                size="sm"
+                className="font-semibold tracking-wide uppercase"
+              >
+                {teamSeason.isRegistrationOpen ? "Inscripciones Abiertas" : "Inscripciones Cerradas"}
+              </Chip>
+              <Chip
+                color="accent"
+                variant="soft"
+                size="sm"
+                className="font-semibold tracking-wide uppercase"
+              >
+                Género: {GENDER_MAP[teamSeason.gender] || teamSeason.gender}
+              </Chip>
+            </div>
           </div>
           <hr className="border-border" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

@@ -21,6 +21,7 @@ export interface ICourseSeason {
   minBirthYear?: number | null;
   maxBirthYear?: number | null;
   status: StatusCourseSeason;
+  isRegistrationOpen: boolean;
   billingConfig?: ICourseSeasonBillingConfig;
   _count: {
     studentMemberships: number;

@@ -125,14 +125,24 @@ export default async function StudentMembershipsPage({
             <h3 className="font-headline font-bold text-lg">
               Resumen Financiero y Reglas
             </h3>
-            <Chip
-              color="accent"
-              variant="soft"
-              size="sm"
-              className="font-semibold tracking-wide uppercase"
-            >
-              Género: {GENDER_MAP[courseSeason.gender] || courseSeason.gender}
-            </Chip>
+            <div className="flex items-center gap-2">
+              <Chip
+                color={courseSeason.isRegistrationOpen ? "success" : "danger"}
+                variant="soft"
+                size="sm"
+                className="font-semibold tracking-wide uppercase"
+              >
+                {courseSeason.isRegistrationOpen ? "Inscripciones Abiertas" : "Inscripciones Cerradas"}
+              </Chip>
+              <Chip
+                color="accent"
+                variant="soft"
+                size="sm"
+                className="font-semibold tracking-wide uppercase"
+              >
+                Género: {GENDER_MAP[courseSeason.gender] || courseSeason.gender}
+              </Chip>
+            </div>
           </div>
           <hr className="border-border" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
