@@ -1,58 +1,114 @@
 import { ApiError } from "./errors/ApiError";
 
+export interface HttpRequestOptions {
+  headers?: Record<string, string>;
+  params?: Record<string, string | number | boolean>;
+  signal?: AbortSignal;
+  timeout?: number;
+  cache?: RequestCache;
+  next?: {
+    revalidate?: number | false;
+    tags?: string[];
+  };
+}
+
 export interface HttpAdapter {
-  get<T>(endpoint: string, options?: RequestInit): Promise<T>;
-  post<T>(endpoint: string, data?: any, options?: RequestInit): Promise<T>;
-  patch<T>(endpoint: string, data?: any, options?: RequestInit): Promise<T>;
-  put<T>(endpoint: string, data?: any, options?: RequestInit): Promise<T>;
-  delete<T>(endpoint: string, options?: RequestInit): Promise<T>;
+  get<T>(endpoint: string, options?: HttpRequestOptions): Promise<T>;
+  post<T>(
+    endpoint: string,
+    data?: any,
+    options?: HttpRequestOptions,
+  ): Promise<T>;
+  patch<T>(
+    endpoint: string,
+    data?: any,
+    options?: HttpRequestOptions,
+  ): Promise<T>;
+  put<T>(
+    endpoint: string,
+    data?: any,
+    options?: HttpRequestOptions,
+  ): Promise<T>;
+  delete<T>(endpoint: string, options?: HttpRequestOptions): Promise<T>;
 }
 
 export class CANApiAdapter implements HttpAdapter {
   private readonly baseUrl: string;
+  private readonly defaultTimeout: number;
 
-  constructor() {
+  constructor(defaultTimeout = 10000) {
     this.baseUrl = process.env.NEXT_PUBLIC_CAN_API_URL || "";
+    this.defaultTimeout = defaultTimeout;
   }
-  // MÉTODO CENTRALIZADOR: Aquí controlas la conexión
-  private async request<T>(endpoint: string, options: RequestInit): Promise<T> {
-    if (!this.baseUrl) {
-      if (!this.baseUrl) {
-        // Registra el error real en la consola para ti (desarrollador)
-        console.error(
-          "CRITICAL: NEXT_PUBLIC_CAN_API_URL is missing in environment variables",
-        );
 
-        // Lanza un error genérico para el usuario
-        throw new ApiError(
-          500,
-          "El servicio no está disponible en este momento.",
-        );
+  // MÉTODO CENTRALIZADOR: Aquí controlas la conexión
+  private async request<T>(
+    endpoint: string,
+    method: string,
+    data?: any,
+    options?: HttpRequestOptions,
+  ): Promise<T> {
+    if (!this.baseUrl) {
+      console.error(
+        "CRITICAL: NEXT_PUBLIC_CAN_API_URL is missing in environment variables",
+      );
+      throw new ApiError(500, "El servicio no está disponible en este momento.");
+    }
+
+    let url = `${this.baseUrl}${endpoint}`;
+    if (options?.params) {
+      const searchParams = new URLSearchParams();
+      Object.entries(options.params).forEach(([key, value]) => {
+        searchParams.append(key, String(value));
+      });
+      url += `?${searchParams.toString()}`;
+    }
+
+    const timeoutController = new AbortController();
+    const ms = options?.timeout || this.defaultTimeout;
+    const timeout = setTimeout(() => {
+      timeoutController.abort();
+    }, ms);
+
+    const signal = options?.signal
+      ? AbortSignal.any([options?.signal, timeoutController.signal])
+      : timeoutController.signal;
+
+    const fetchOptions: RequestInit = {
+      method,
+      signal,
+      headers: {
+        Accept: "application/json",
+        ...options?.headers,
+      },
+      cache: options?.cache,
+      next: options?.next,
+    };
+
+    if (data) {
+      const isFormData = data instanceof FormData;
+      fetchOptions.body = isFormData ? data : JSON.stringify(data);
+      if (!isFormData) {
+        fetchOptions.headers = {
+          ...fetchOptions.headers,
+          "Content-Type": "application/json",
+        };
       }
     }
 
-    console.log("endpoint", endpoint);
-
-    const timeoutController = new AbortController();
-
-    const timeout = setTimeout(() => {
-      timeoutController.abort();
-    }, 10000);
-
-    const signal = options.signal
-      ? AbortSignal.any([options.signal, timeoutController.signal])
-      : timeoutController.signal;
     try {
-      const res = await fetch(`${this.baseUrl}${endpoint}`, {
-        ...options,
-        signal,
-      });
+      const res = await fetch(url, fetchOptions);
       return await this.handleResponse<T>(res, endpoint);
     } catch (error) {
-      // Si el error ya es una instancia de ApiError, lo relanzamos
       if (error instanceof ApiError) throw error;
 
-      // Si llegamos aquí, es un fallo de conexión o red
+      if ((error as Error).name === "AbortError") {
+        throw new ApiError(
+          408,
+          "La petición ha tardado demasiado tiempo (Timeout).",
+        );
+      }
+
       throw new ApiError(
         503,
         "No se pudo establecer conexión con el servidor.",
@@ -64,16 +120,17 @@ export class CANApiAdapter implements HttpAdapter {
   }
 
   private async handleResponse<T>(res: Response, endpoint: string): Promise<T> {
+    if (res.status === 204) {
+      return {} as T;
+    }
+
     const contentType = res.headers.get("content-type");
 
     if (res.ok) {
       if (contentType && contentType.includes("application/json")) {
         return res.json() as Promise<T>;
       } else {
-        // console.log("status", res.status);
-        // console.log("content-type", res.headers.get("content-type"));
         const text = await res.text();
-        // console.log("body", text);
         throw new ApiError(
           res.status,
           `Respuesta inesperada en ${endpoint}`,
@@ -91,9 +148,11 @@ export class CANApiAdapter implements HttpAdapter {
     }
 
     const errorMap: Record<number, string> = {
+      400: "Petición incorrecta",
       401: "Token inválido o expirado",
       403: "Acceso denegado",
       404: "Recurso no encontrado",
+      500: "Error interno del servidor",
     };
 
     const message =
@@ -101,82 +160,38 @@ export class CANApiAdapter implements HttpAdapter {
       errorMap[res.status] ||
       `Error ${res.status}: ${res.statusText}`;
 
-    // console.log("errorData", errorData);
-    // console.log("message", message);
-
     throw new ApiError(res.status, message, errorData.errors || errorData);
   }
 
-  async get<T>(endpoint: string, options?: RequestInit): Promise<T> {
-    return this.request<T>(endpoint, {
-      method: "GET",
-      ...options,
-    });
+  async get<T>(endpoint: string, options?: HttpRequestOptions): Promise<T> {
+    return this.request<T>(endpoint, "GET", undefined, options);
   }
 
   async post<T>(
     endpoint: string,
-    data: FormData | Record<string, any>,
-    options?: RequestInit,
+    data: any,
+    options?: HttpRequestOptions,
   ): Promise<T> {
-    // console.log("URL de petición:", `${this.baseUrl}${endpoint}`);
-    const isFormData = data instanceof FormData;
-    return this.request<T>(endpoint, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        ...(isFormData ? {} : { "Content-Type": "application/json" }),
-        ...options?.headers,
-      },
-      body: isFormData ? data : JSON.stringify(data),
-      ...options,
-    });
+    return this.request<T>(endpoint, "POST", data, options);
   }
 
   async patch<T>(
     endpoint: string,
-    data: FormData | Record<string, any>,
-    options?: RequestInit,
+    data: any,
+    options?: HttpRequestOptions,
   ): Promise<T> {
-    const isFormData = data instanceof FormData;
-    return this.request<T>(endpoint, {
-      method: "PATCH",
-      headers: {
-        Accept: "application/json",
-        ...(isFormData ? {} : { "Content-Type": "application/json" }),
-        ...options?.headers,
-      },
-      body: isFormData ? data : JSON.stringify(data),
-      ...options,
-    });
+    return this.request<T>(endpoint, "PATCH", data, options);
   }
 
   async put<T>(
     endpoint: string,
-    data: FormData | Record<string, any>,
-    options?: RequestInit,
+    data: any,
+    options?: HttpRequestOptions,
   ): Promise<T> {
-    const isFormData = data instanceof FormData;
-    return this.request<T>(endpoint, {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        ...(isFormData ? {} : { "Content-Type": "application/json" }),
-        ...options?.headers,
-      },
-      body: isFormData ? data : JSON.stringify(data),
-      ...options,
-    });
+    return this.request<T>(endpoint, "PUT", data, options);
   }
 
-  async delete<T>(endpoint: string, options?: RequestInit): Promise<T> {
-    return this.request<T>(endpoint, {
-      method: "DELETE",
-      headers: {
-        Accept: "application/json",
-        ...options?.headers,
-      },
-      ...options,
-    });
+  async delete<T>(endpoint: string, options?: HttpRequestOptions): Promise<T> {
+    return this.request<T>(endpoint, "DELETE", undefined, options);
   }
 }

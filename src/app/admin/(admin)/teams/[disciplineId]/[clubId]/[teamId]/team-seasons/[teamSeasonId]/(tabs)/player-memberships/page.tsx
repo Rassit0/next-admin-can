@@ -92,9 +92,8 @@ export default async function PlayerMembershipsPage({
 
   return (
     <>
-      <div className="flex flex-col gap-6 page-content mt-2">
+      <div className="flex flex-col gap-6 mt-2">
         <Card className="shadow-[0px_4px_12px_rgba(0,0,0,0.06)] border border-border">
-
           <HeaderPage
             title="Atletas inscritos"
             description="Asigna membresías y revisa los cargos iniciales generados"

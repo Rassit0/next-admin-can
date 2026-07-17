@@ -107,7 +107,7 @@ export default async function PlayerMembershipPage({
         breadcrumb={[
           { label: "Gestión Equipos", href: `/` },
           {
-            label: `Gestión de Temporadas - ${teamSeason.team.name}`,
+            label: `Temporadas`,
             href: `/admin/teams/${disciplineId}/${clubId}/${teamId}/team-seasons`,
           },
           {
