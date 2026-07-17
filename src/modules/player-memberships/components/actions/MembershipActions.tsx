@@ -119,6 +119,12 @@ export const MembershipActions = ({ membership }: Props) => {
       return;
     }
 
+    if (action !== "remove" && action !== "activate" && !reason?.trim()) {
+      toast.error("El motivo es obligatorio para esta acción");
+      setLoading(false);
+      return;
+    }
+
     let res;
 
     if (action === "remove") {
@@ -333,9 +339,13 @@ export const MembershipActions = ({ membership }: Props) => {
                 )}
 
                 {selectedAction?.key !== "remove" && (
-                  <TextField name="reason" className="w-full">
+                  <TextField 
+                    name="reason" 
+                    className="w-full"
+                    isRequired={selectedAction?.key !== "activate"}
+                  >
                     <Label className="text-sm font-semibold">
-                      Motivo u Observación (Opcional)
+                      Motivo u Observación {selectedAction?.key === "activate" && "(Opcional)"}
                     </Label>
                     <InputGroup>
                       <InputGroup.Prefix>
