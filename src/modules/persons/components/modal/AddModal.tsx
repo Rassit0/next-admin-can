@@ -74,7 +74,11 @@ export const AddModal = ({
           // text="Agregar Disciplina"
         />
       )}
-      <Modal.Backdrop isOpen={isOpen} onOpenChange={setIsOpen}>
+      <Modal.Backdrop
+        isOpen={isOpen}
+        onOpenChange={setIsOpen}
+        isDismissable={false}
+      >
         <Modal.Container placement="center" scroll="outside">
           <Modal.Dialog className="sm:max-w-2xl bg-background-tertiary">
             <Modal.CloseTrigger />

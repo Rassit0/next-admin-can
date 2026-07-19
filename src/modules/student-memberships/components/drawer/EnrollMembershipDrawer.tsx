@@ -501,10 +501,10 @@ export const EnrollMembershipDrawer = ({
                 <div className="flex flex-col gap-4">
                   <div className="flex items-center gap-2 px-1">
                     <Switch isSelected={hasDiscount} onChange={setHasDiscount}>
-                      <Switch.Control>
-                        <Switch.Thumb />
-                      </Switch.Control>
                       <Switch.Content>
+                        <Switch.Control>
+                          <Switch.Thumb />
+                        </Switch.Control>
                         <Label className="text-sm font-semibold flex items-center">
                           Aplicar Descuento Excepcional
                           <InfoTooltip text="Estos descuentos se sumarán a los que ya otorga el plan elegido (el total acumulado no puede exceder el 100%)." />
@@ -718,10 +718,10 @@ export const EnrollMembershipDrawer = ({
                 {/* Switch for migration */}
                 <div className="flex items-center gap-2 px-1">
                   <Switch isSelected={isMigrated} onChange={setIsMigrated}>
-                    <Switch.Control>
-                      <Switch.Thumb />
-                    </Switch.Control>
                     <Switch.Content>
+                      <Switch.Control>
+                        <Switch.Thumb />
+                      </Switch.Control>
                       <Label className="text-sm flex items-center">
                         Es Migración (omitir cargos iniciales)
                         <InfoTooltip text="Activa esta opción si el jugador ya está en la temporada por migración de datos y NO deseas generar sus cargos de inscripción ahora." />

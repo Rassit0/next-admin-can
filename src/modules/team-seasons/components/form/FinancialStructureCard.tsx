@@ -235,7 +235,8 @@ export const FinancialStructureCard = ({
               Costo inicial y único cobrado al momento de inscribir al atleta.
               {isFinancialDisabled && (
                 <span className="block mt-1 text-warning-600 font-medium">
-                  Nota: Modificar este valor solo afectará a las <b>nuevas inscripciones</b>.
+                  Nota: Modificar este valor solo afectará a las{" "}
+                  <b>nuevas inscripciones</b>.
                 </span>
               )}
             </Description>
@@ -283,7 +284,8 @@ export const FinancialStructureCard = ({
               Valor de la cuota base que se cobrará periódicamente.
               {isFinancialDisabled && (
                 <span className="block mt-1 text-warning-600 font-medium">
-                  Nota: Modificar este valor aplicará para las <b>nuevas suscripciones y las próximas cuotas generadas</b>.
+                  Nota: Modificar este valor aplicará para las{" "}
+                  <b>nuevas suscripciones y las próximas cuotas generadas</b>.
                 </span>
               )}
             </Description>
@@ -323,7 +325,8 @@ export const FinancialStructureCard = ({
               completa de golpe.
               {isFinancialDisabled && (
                 <span className="block mt-1 text-warning-600 font-medium">
-                  Nota: Modificar este valor solo afectará a las <b>nuevas inscripciones</b> que elijan este método.
+                  Nota: Modificar este valor solo afectará a las{" "}
+                  <b>nuevas inscripciones</b> que elijan este método.
                 </span>
               )}
             </Description>
@@ -393,10 +396,10 @@ export const FinancialStructureCard = ({
                 isSelected={prorateFirstRecurringFee}
                 onChange={setProrateFirstRecurringFee}
               >
-                <Switch.Control>
-                  <Switch.Thumb />
-                </Switch.Control>
                 <Switch.Content>
+                  <Switch.Control>
+                    <Switch.Thumb />
+                  </Switch.Control>
                   <span className="text-sm">
                     Prorratear primera cuota recurrente (si no es ciclo
                     completo)
@@ -408,10 +411,10 @@ export const FinancialStructureCard = ({
                 isSelected={prorateLastRecurringFee}
                 onChange={setProrateLastRecurringFee}
               >
-                <Switch.Control>
-                  <Switch.Thumb />
-                </Switch.Control>
                 <Switch.Content>
+                  <Switch.Control>
+                    <Switch.Thumb />
+                  </Switch.Control>
                   <span className="text-sm">
                     Prorratear última cuota recurrente (al finalizar temporada)
                   </span>
@@ -422,10 +425,10 @@ export const FinancialStructureCard = ({
                 isSelected={prorateRegistrationFee}
                 onChange={setProrateRegistrationFee}
               >
-                <Switch.Control>
-                  <Switch.Thumb />
-                </Switch.Control>
                 <Switch.Content>
+                  <Switch.Control>
+                    <Switch.Thumb />
+                  </Switch.Control>
                   <span className="text-sm">
                     Prorratear matrícula en función del avance de temporada
                   </span>
@@ -440,10 +443,10 @@ export const FinancialStructureCard = ({
               isSelected={prorateSeasonFee}
               onChange={setProrateSeasonFee}
             >
-              <Switch.Control>
-                <Switch.Thumb />
-              </Switch.Control>
               <Switch.Content>
+                <Switch.Control>
+                  <Switch.Thumb />
+                </Switch.Control>
                 <span className="text-sm">
                   Prorratear tarifa de temporada (Pago único) en función del
                   avance
