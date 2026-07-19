@@ -7,6 +7,7 @@ import {
   Delete01Icon,
   Edit03Icon,
   EyeIcon,
+  Search01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import clsx from "clsx";
@@ -81,7 +82,24 @@ export const TablePersons = ({ persons }: Props) => {
             </Table.Column>
             <Table.Column className="text-center">ACCIONES</Table.Column>
           </Table.Header>
-          <Table.Body>
+          <Table.Body
+            renderEmptyState={() => (
+              <div className="flex h-full w-full flex-col items-center justify-center gap-4 p-8 text-center">
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-default-100 text-default-500">
+                  <HugeiconsIcon icon={Search01Icon} className="size-6" />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="text-medium font-medium">
+                    No se encontraron personas
+                  </span>
+                  <span className="text-sm text-default-400">
+                    Intenta con otros términos de búsqueda o agrega una nueva
+                    persona.
+                  </span>
+                </div>
+              </div>
+            )}
+          >
             {persons.map((person) => (
               <Table.Row key={person.id} id={person.id}>
                 <Table.Cell className="font-medium">

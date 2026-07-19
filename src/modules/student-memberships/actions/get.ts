@@ -16,7 +16,9 @@ interface SearchParams {
   paymentPlanId?: string;
 }
 
-const parseMembership = (membership: IStudentMembership): IStudentMembership => ({
+const parseMembership = (
+  membership: IStudentMembership,
+): IStudentMembership => ({
   ...membership,
   startedAt: membership.startedAt ? new Date(membership.startedAt) : new Date(),
   finishedAt: membership.finishedAt ? new Date(membership.finishedAt) : null,
@@ -47,7 +49,7 @@ export const getStudentMemberships = async ({
       `student-memberships?${params.toString()}`,
       {
         next: {
-          tags: ["student-memberships", "charges"],
+          tags: ["student-memberships", "charges", "students", "persons"],
           revalidate: 3600,
         },
       },

@@ -32,7 +32,7 @@ export const getPlayers = async ({
       {
         // 2do argumento: options (aquí va el caché)
         next: {
-          tags: ["players"],
+          tags: ["players", "persons"],
           revalidate: 3600,
         },
       },
