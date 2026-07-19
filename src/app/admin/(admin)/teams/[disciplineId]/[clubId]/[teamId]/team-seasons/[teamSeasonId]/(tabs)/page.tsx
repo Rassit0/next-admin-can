@@ -1,5 +1,8 @@
 import { ErrorPage } from "@/ui";
-import { getTeamSeasonById, getTeamSeasonSummary } from "@/modules/team-seasons";
+import {
+  getTeamSeasonById,
+  getTeamSeasonSummary,
+} from "@/modules/team-seasons";
 import { MetricsCards } from "@/modules/player-memberships";
 import { Button, Card, Alert, Chip, Popover } from "@heroui/react";
 import { InformationCircleIcon } from "@hugeicons/core-free-icons";
@@ -63,14 +66,16 @@ export default async function TeamSeasonDashboardPage({ params }: Props) {
           <h3 className="font-headline font-bold text-lg">
             Resumen Financiero y Reglas
           </h3>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center flex-wrap gap-2">
             <Chip
               color={teamSeason.isRegistrationOpen ? "success" : "danger"}
               variant="soft"
               size="sm"
               className="font-semibold tracking-wide uppercase"
             >
-              {teamSeason.isRegistrationOpen ? "Inscripciones Abiertas" : "Inscripciones Cerradas"}
+              {teamSeason.isRegistrationOpen
+                ? "Inscripciones Abiertas"
+                : "Inscripciones Cerradas"}
             </Chip>
             <Chip
               color="accent"
@@ -90,9 +95,12 @@ export default async function TeamSeasonDashboardPage({ params }: Props) {
               <InfoTooltip text="Define si la temporada permite pagos fragmentados mes a mes, o si es un pago cerrado." />
             </p>
             <p className="font-bold text-sm">
-              {teamSeason.billingConfig?.billingType === "MONTHLY_ONLY" && "Sólo Recurrente"}
-              {teamSeason.billingConfig?.billingType === "SINGLE_ONLY" && "Sólo Pago Único"}
-              {teamSeason.billingConfig?.billingType === "BOTH" && "Pago Único o Recurrente"}
+              {teamSeason.billingConfig?.billingType === "MONTHLY_ONLY" &&
+                "Sólo Recurrente"}
+              {teamSeason.billingConfig?.billingType === "SINGLE_ONLY" &&
+                "Sólo Pago Único"}
+              {teamSeason.billingConfig?.billingType === "BOTH" &&
+                "Pago Único o Recurrente"}
             </p>
           </div>
           {teamSeason.billingConfig?.billingType !== "SINGLE_ONLY" && (

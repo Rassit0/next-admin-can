@@ -7,7 +7,7 @@ interface Props {
 }
 export const Header = ({ organization }: Props) => {
   return (
-    <Link href="/admin" className="px-4 lg:px-6 mb-8 flex items-center gap-3">
+    <Link href="/" className="px-4 lg:px-6 mb-8 flex items-center gap-3">
       <div className="w-10 h-10 shrink-0 rounded-full bg-primary-container flex items-center justify-center">
         <img
           src="/images/logo-can.png"

@@ -40,8 +40,6 @@ export const FormOrganization = ({
   // Form
   const [name, setName] = useState(organization?.name || "");
   const [address, setAddress] = useState(organization?.address || "");
-  const [email, setEmail] = useState(organization?.email || "");
-  const [phone, setPhone] = useState(organization?.phone || "");
   const [logoUrl, setLogoUrl] = useState(organization?.imageUrl || "");
   const [description, setDescription] = useState("");
   const [isActive, setIsActive] = useState<boolean>(true);
@@ -75,8 +73,6 @@ export const FormOrganization = ({
       name,
       address,
       description,
-      email,
-      phone,
       logoUrl,
       isActive,
       disciplineIds: allDisciplines ? [] : disciplineIds,
@@ -182,42 +178,6 @@ export const FormOrganization = ({
           />
           {/* <Description>Maximum 500 characters</Description> */}
           <FieldError children={errors.address && <> {errors.address}</>} />
-        </TextField>
-
-        <TextField
-          className="w-full"
-          name="phone"
-          type="text"
-          isInvalid={!!errors.phone || undefined}
-        >
-          <Label>Teléfono</Label>
-          <Input
-            value={phone}
-            onChange={(e) => {
-              setPhone(e.target.value);
-              setErrors({});
-            }}
-            placeholder="Ingrese el teléfono de la escuela"
-          />
-          <FieldError children={errors.phone && <> {errors.phone}</>} />
-        </TextField>
-
-        <TextField
-          className="w-full"
-          name="email"
-          type="email"
-          isInvalid={!!errors.email || undefined}
-        >
-          <Label>Correo Electrónico</Label>
-          <Input
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-              setErrors({});
-            }}
-            placeholder="Ingrese el correo electrónico de la escuela"
-          />
-          <FieldError children={errors.email && <> {errors.email}</>} />
         </TextField>
 
         <TextField

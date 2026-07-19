@@ -64,7 +64,7 @@ export const HeaderPage = ({
         <div className="flex gap-2">{children}</div>
       </div>
       {action && (
-        <div className="flex flex-row w-full md:w-auto justify-end gap-2">
+        <div className="flex flex-row flex-wrap w-full md:w-auto justify-end gap-2">
           {action}
           {showButtonBack && <ButtonBack />}
         </div>

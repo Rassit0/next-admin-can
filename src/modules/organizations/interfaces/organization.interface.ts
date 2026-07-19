@@ -9,12 +9,23 @@ export interface IOrganization {
   name: string;
   imageUrl: null | string;
   address: string;
-  email: null | string;
-  phone: null | string;
+  latitude: null | number;
+  longitude: null | number;
+  googleMapsUrl: null | string;
+  contacts: IOrganizationContact[];
   clubs: Club[];
   schools: School[];
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface IOrganizationContact {
+  id: string;
+  department: string;
+  contactName: null | string;
+  phone: null | string;
+  email: null | string;
+  isDefault: boolean;
 }
 
 export interface Club {

@@ -11,8 +11,6 @@ interface Props {
     name: string;
     imageUrl?: string;
     address: string;
-    email?: string;
-    phone?: string;
   };
 }
 

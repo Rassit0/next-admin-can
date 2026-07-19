@@ -98,14 +98,14 @@ export default async function PlayerMembershipsPage({
             title="Atletas inscritos"
             description="Asigna membresías y revisa los cargos iniciales generados"
             action={
-              <div className="w-full flex gap-2 justify-end">
+              <>
                 <CreateMassiveManualChargeButton teamSeasonId={teamSeasonId} />
                 <EnrollMembershipDrawer
                   teamSeason={teamSeason}
                   paymentPlans={paymentPlans}
                   size="md"
                 />
-              </div>
+              </>
             }
             showButtonBack={false}
           />
