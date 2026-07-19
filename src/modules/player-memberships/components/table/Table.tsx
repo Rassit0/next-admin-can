@@ -115,7 +115,7 @@ export const TableMemberships = ({ memberships, teamSeason }: Props) => {
                       <div className="flex flex-col min-w-0">
                         <span className="font-medium text-foreground truncate">
                           {person
-                            ? `${person.name} ${person.lastName}`
+                            ? `${person.name} ${person.lastName} ${person.secondLastName}`
                             : "Atleta"}
                         </span>
                         {person ? (
