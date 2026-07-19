@@ -1,3 +1,4 @@
+"use server";
 import { api } from "@/utils/api";
 import { ServiceResponse } from "@/types/api";
 import { IStudentsResponse } from "@/modules/students";

@@ -87,7 +87,7 @@ export const AddModal = ({
                 <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
                   <HugeiconsIcon icon={Layers01Icon} />
                 </Modal.Icon>
-                <Modal.Heading>Agregar Miembrosdf</Modal.Heading>
+                <Modal.Heading>Agregar Miembro</Modal.Heading>
               </div>
             </Modal.Header>
             <Modal.Body className="p-0 md:p-6">

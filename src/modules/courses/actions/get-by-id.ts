@@ -1,3 +1,4 @@
+"use server";
 import { api } from "@/utils/api";
 import { ServiceResponse } from "@/types/api";
 import { handleServerAction } from "@/utils";
@@ -12,12 +13,15 @@ export const getCourseById = async ({
   id,
 }: SearchParams): Promise<ServiceResponse<ICourse>> => {
   return handleServerAction(async () => {
-    const res = await api.get<{ message: string; data: ICourse }>(`courses/${id}`, {
-      next: {
-        tags: ["courses"],
-        revalidate: 3600,
+    const res = await api.get<{ message: string; data: ICourse }>(
+      `courses/${id}`,
+      {
+        next: {
+          tags: ["courses"],
+          revalidate: 3600,
+        },
       },
-    });
+    );
 
     return {
       error: false,

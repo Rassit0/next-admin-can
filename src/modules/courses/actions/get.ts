@@ -1,3 +1,4 @@
+"use server";
 import { api } from "@/utils/api";
 import { ServiceResponse } from "@/types/api";
 import { handleServerAction } from "@/utils";
@@ -24,12 +25,15 @@ export const getCourses = async ({
     if (page) params.set("page", page);
     if (schoolId) params.set("schoolId", schoolId);
 
-    const res = await api.get<ICoursesResponse>(`courses?${params.toString()}`, {
-      next: {
-        tags: ["courses"],
-        revalidate: 3600,
+    const res = await api.get<ICoursesResponse>(
+      `courses?${params.toString()}`,
+      {
+        next: {
+          tags: ["courses"],
+          revalidate: 3600,
+        },
       },
-    });
+    );
 
     const data = res.data.map((course) => ({
       ...course,
