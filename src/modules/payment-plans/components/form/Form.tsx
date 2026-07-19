@@ -184,7 +184,7 @@ export const FormPaymentPlan = ({
     let res;
     const data = {
       teamSeasonId,
-  courseSeasonId,
+      courseSeasonId,
       name: name!,
       registrationDiscountPercent: registration,
       recurringDiscountPercent: recurring,
@@ -192,9 +192,7 @@ export const FormPaymentPlan = ({
       isDefault,
       isSinglePayment,
       advanceCycles:
-        isSinglePayment || billingType === "SINGLE_ONLY"
-          ? 1
-          : advanceCycles,
+        isSinglePayment || billingType === "SINGLE_ONLY" ? 1 : advanceCycles,
       advanceCyclesDiscountPercent:
         isSinglePayment || billingType === "SINGLE_ONLY"
           ? "0"
@@ -487,10 +485,10 @@ export const FormPaymentPlan = ({
           onChange={setIsDefault}
           className="w-full max-w-full justify-between items-center py-2 flex-row-reverse"
         >
-          <Switch.Control>
-            <Switch.Thumb />
-          </Switch.Control>
           <Switch.Content>
+            <Switch.Control>
+              <Switch.Thumb />
+            </Switch.Control>
             <div className="flex flex-col">
               <Label className="text-sm text-foreground font-medium flex items-center">
                 Marcar como plan por defecto
@@ -510,10 +508,10 @@ export const FormPaymentPlan = ({
           onChange={setIsSinglePayment}
           className="w-full max-w-full justify-between items-center py-2 flex-row-reverse"
         >
-          <Switch.Control>
-            <Switch.Thumb />
-          </Switch.Control>
           <Switch.Content>
+            <Switch.Control>
+              <Switch.Thumb />
+            </Switch.Control>
             <div className="flex flex-col">
               <Label className="text-sm text-foreground font-medium flex items-center">
                 Obligar Pago Único (Toda la temporada por adelantado)
