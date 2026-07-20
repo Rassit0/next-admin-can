@@ -116,7 +116,7 @@ export default async function TeamSeasonsPage({ searchParams, params }: Props) {
         }
         urlBase={`/admin/teams/${disciplineId}/${clubId}`}
         breadcrumb={[
-          { label: "Gestión Equipos", href: `/` },
+          { label: "Equipos", href: `/` },
           {
             label: `Temporadas`,
           },

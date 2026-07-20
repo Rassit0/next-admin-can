@@ -1,7 +1,18 @@
+import { HeaderPage } from "@/ui";
+
 export default function AttendancePage() {
   return (
-    <div>
-      <h1>AttendancesPage Page</h1>
-    </div>
+    <>
+      <HeaderPage
+        title="Asistencias"
+        description="Gestión y control de asistencias."
+        breadcrumb={[
+          { label: "Asistencias" },
+        ]}
+      />
+      <div>
+        <h1>AttendancesPage Page</h1>
+      </div>
+    </>
   );
 }

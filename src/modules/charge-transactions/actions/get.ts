@@ -10,6 +10,8 @@ interface SearchParams {
   page?: string;
   playerMembershipId?: string;
   studentMembershipId?: string;
+  teamSeasonId?: string;
+  courseSeasonId?: string;
 }
 
 const parseCharge = (charge: ICharge): ICharge => ({
@@ -25,6 +27,8 @@ export const getCharges = async ({
   page = "1",
   playerMembershipId,
   studentMembershipId,
+  teamSeasonId,
+  courseSeasonId,
 }: SearchParams): Promise<ServiceResponse<IChargesResponse>> => {
   return handleServerAction(async () => {
     const params = new URLSearchParams();
@@ -35,6 +39,10 @@ export const getCharges = async ({
       params.set("playerMembershipId", playerMembershipId);
     if (studentMembershipId)
       params.set("studentMembershipId", studentMembershipId);
+    if (teamSeasonId)
+      params.set("teamSeasonId", teamSeasonId);
+    if (courseSeasonId)
+      params.set("courseSeasonId", courseSeasonId);
 
     const res = await api.get<IChargesResponse>(
       `charges?${params.toString()}`,

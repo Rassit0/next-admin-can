@@ -35,13 +35,13 @@ export default async function PaymentsPage({ params }: Props) {
         title={`Pagos - ${courseSeasonResponse.data.course.name} - ${courseSeasonResponse.data.season.name}`}
         description="Administra los pagos de membresías y sus estados"
         breadcrumb={[
-          { label: "Gestión Cursos", href: `/` },
+          { label: "Cursos", href: `/` },
           {
-            label: `Gestión de Temporadas - ${courseSeasonResponse.data.course.name}`,
+            label: `${courseSeasonResponse.data.course.name}`,
             href: `/admin/courses/${disciplineId}/${schoolId}/${courseId}/course-seasons`,
           },
           {
-            label: `Pagos - ${courseSeasonResponse.data.course.name} - ${courseSeasonResponse.data.season.name}`,
+            label: "Pagos",
           },
         ]}
       />

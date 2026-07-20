@@ -24,11 +24,11 @@ export default async function PlayerPage({ params }: Props) {
         description={`Detalles de ${playerResponse.data.person.name} ${playerResponse.data.person.lastName}.`}
         breadcrumb={[
           {
-            label: "Lista de Jugadores",
+            label: "Jugadores",
             href: playerBackUrl?.value || `/admin/players`,
           },
           {
-            label: `Gestión del jugador(a) - ${playerResponse.data.person.name}`,
+            label: `${playerResponse.data.person.name}`,
           },
         ]}
       />

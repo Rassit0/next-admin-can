@@ -127,9 +127,9 @@ export default async function PassesPage({ searchParams, params }: Props) {
           // }
           urlBase="/admin"
           breadcrumb={[
-            { label: "Directorio de Jugadores", href: "players" },
+            { label: "Jugadores", href: "players" },
             {
-              label: `Kardex - ${playerResponse.data.person.name} ${playerResponse.data.person.lastName} ${playerResponse.data.person.secondLastName || ""}`,
+              label: "Kardex",
             },
           ]}
         />

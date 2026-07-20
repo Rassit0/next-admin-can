@@ -29,13 +29,13 @@ export default async function PaymentsPage({ params }: Props) {
         title={`Pagos - ${teamSeasonResponse.data.team.name} - ${teamSeasonResponse.data.season.name}`}
         description="Administra los pagos de membresías y sus estados"
         breadcrumb={[
-          { label: "Gestión Equipos", href: `/` },
+          { label: "Equipos", href: `/` },
           {
-            label: `Gestión de Temporadas - ${teamSeasonResponse.data.team.name}`,
+            label: `${teamSeasonResponse.data.team.name}`,
             href: `/admin/teams/${disciplineId}/${clubId}/${teamId}/team-seasons`,
           },
           {
-            label: `Pagos - ${teamSeasonResponse.data.team.name} - ${teamSeasonResponse.data.season.name}`,
+            label: "Pagos",
           },
         ]}
       />

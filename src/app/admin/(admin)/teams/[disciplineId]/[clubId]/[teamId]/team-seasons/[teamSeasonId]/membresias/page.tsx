@@ -29,13 +29,13 @@ export default async function MembershipsPage({ params }: Props) {
         title={`Membresías - ${teamSeasonResponse.data.team.name} - ${teamSeasonResponse.data.season.name}`}
         description="Administra las asignaciones de membresías y cargos iniciales"
         breadcrumb={[
-          { label: "Gestión Equipos", href: `/` },
+          { label: "Equipos", href: `/` },
           {
-            label: `Gestión de Temporadas - ${teamSeasonResponse.data.team.name}`,
+            label: `${teamSeasonResponse.data.team.name}`,
             href: `/admin/teams/${disciplineId}/${clubId}/${teamId}/team-seasons`,
           },
           {
-            label: `Membresías - ${teamSeasonResponse.data.team.name} - ${teamSeasonResponse.data.season.name}`,
+            label: "Membresías",
           },
         ]}
       />

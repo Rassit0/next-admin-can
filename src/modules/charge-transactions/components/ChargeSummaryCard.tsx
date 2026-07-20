@@ -59,11 +59,13 @@ export const ChargeSummaryCard = ({ charge }: Props) => {
           <div className="flex flex-row flex-wrap gap-4 justify-end">
             <div className="flex flex-col gap-1 text-right border-r border-default-200 pr-4">
               <p className="text-sm text-default-500">Monto Base</p>
-              <p className={`text-lg font-mono ${discountNum > 0 ? "line-through text-default-400" : "font-bold text-foreground"}`}>
+              <p
+                className={`text-lg font-mono ${discountNum > 0 ? "line-through text-default-400" : "font-bold text-foreground"}`}
+              >
                 {amountNum.toFixed(2)} Bs
               </p>
             </div>
-            
+
             {discountNum > 0 && (
               <div className="flex flex-col gap-1 text-right border-r border-default-200 pr-4">
                 <p className="text-sm text-default-500">Descuento</p>
@@ -71,7 +73,10 @@ export const ChargeSummaryCard = ({ charge }: Props) => {
                   -{discountNum.toFixed(2)} Bs
                 </p>
                 {charge.discountReason && (
-                  <p className="text-xs text-default-400 max-w-[150px] truncate" title={charge.discountReason}>
+                  <p
+                    className="text-xs text-default-400 max-w-37.5 truncate"
+                    title={charge.discountReason}
+                  >
                     ({charge.discountReason})
                   </p>
                 )}

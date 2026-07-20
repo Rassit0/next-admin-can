@@ -10,6 +10,7 @@ import Link from "next/link";
 
 interface Props {
   charges: ICharge[];
+  showPerson?: boolean;
 }
 
 const formatCurrency = (amount: number | string) => {
@@ -20,7 +21,7 @@ const formatCurrency = (amount: number | string) => {
   }).format(value);
 };
 
-export const TableCharges = ({ charges }: Props) => {
+export const TableCharges = ({ charges, showPerson = false }: Props) => {
   const [isClient, setIsClient] = useState(false);
   const [selectedCharge, setSelectedCharge] = useState<ICharge | null>(null);
   const params = useParams();
@@ -71,7 +72,20 @@ export const TableCharges = ({ charges }: Props) => {
           className="min-w-200"
         >
           <Table.Header className="bg-surface-secondary">
-            <Table.Column allowsSorting isRowHeader id="description">
+            {showPerson && (
+              <Table.Column allowsSorting isRowHeader id="person">
+                <SortableColumnHeader id="person">
+                  <span className="text-xs font-semibold uppercase tracking-wide">
+                    Persona
+                  </span>
+                </SortableColumnHeader>
+              </Table.Column>
+            )}
+            <Table.Column
+              allowsSorting
+              isRowHeader={!showPerson}
+              id="description"
+            >
               <SortableColumnHeader id="description">
                 <span className="text-xs font-semibold uppercase tracking-wide">
                   Concepto
@@ -127,13 +141,36 @@ export const TableCharges = ({ charges }: Props) => {
                   id={charge.id}
                   className="border-b border-border last:border-b-0 hover:bg-surface-secondary/40"
                 >
+                  {showPerson && (
+                    <Table.Cell className="py-3">
+                      <span className="font-semibold text-foreground">
+                        {(() => {
+                          if (charge.membershipCharges?.[0]) {
+                            const person =
+                              charge.membershipCharges[0].playerMembership
+                                .player.person;
+                            return `${person.name} ${person.lastName}`;
+                          }
+                          if (charge.studentCharges?.[0]) {
+                            const person =
+                              charge.studentCharges[0].studentMembership.student
+                                .person;
+                            return `${person.name} ${person.lastName}`;
+                          }
+                          return "—";
+                        })()}
+                      </span>
+                    </Table.Cell>
+                  )}
                   <Table.Cell className="py-3">
                     <span className="font-semibold text-foreground">
                       {charge.description}
                     </span>
                   </Table.Cell>
                   <Table.Cell className="py-3 text-right">
-                    <span className={`font-medium ${Number(charge.discountAmount) > 0 ? 'text-muted line-through' : 'text-foreground'}`}>
+                    <span
+                      className={`font-medium ${Number(charge.discountAmount) > 0 ? "text-muted line-through" : "text-foreground"}`}
+                    >
                       {formatCurrency(charge.amount)}
                     </span>
                   </Table.Cell>
@@ -144,7 +181,10 @@ export const TableCharges = ({ charges }: Props) => {
                           -{formatCurrency(Number(charge.discountAmount))}
                         </span>
                         {charge.discountReason && (
-                          <span className="text-[10px] text-muted-foreground italic truncate max-w-[120px]" title={charge.discountReason}>
+                          <span
+                            className="text-[10px] text-muted-foreground italic truncate max-w-30"
+                            title={charge.discountReason}
+                          >
                             "{charge.discountReason}"
                           </span>
                         )}
@@ -154,12 +194,15 @@ export const TableCharges = ({ charges }: Props) => {
                     )}
                   </Table.Cell>
                   <Table.Cell className="py-3 text-right">
-                    <span className={`font-bold tabular-nums text-[15px] ${Number(charge.pendingAmount) <= 0 ? 'text-success-600' : 'text-primary-700'}`}>
+                    <span
+                      className={`font-bold tabular-nums text-[15px] ${Number(charge.pendingAmount) <= 0 ? "text-success-600" : "text-primary-700"}`}
+                    >
                       {formatCurrency(charge.pendingAmount)}
                     </span>
                   </Table.Cell>
                   <Table.Cell className="py-3 text-sm">
-                    {new Date(charge.dueDate) < new Date() && charge.status !== "PAID" ? (
+                    {new Date(charge.dueDate) < new Date() &&
+                    charge.status !== "PAID" ? (
                       <span className="text-danger-600 font-semibold bg-danger-50 px-2 py-0.5 rounded border border-danger-100">
                         {new Date(charge.dueDate).toLocaleDateString("es-BO")}
                       </span>
@@ -181,11 +224,25 @@ export const TableCharges = ({ charges }: Props) => {
                   </Table.Cell>
                   <Table.Cell className="py-3">
                     <div className="flex items-center justify-center gap-2">
-                      <ChargeActions 
-                        charge={charge} 
-                        onPay={(c) => setSelectedCharge(c)}
-                        detailsHref={params?.disciplineId ? `/admin/teams/${params.disciplineId}/${params.clubId}/${params.teamId}/team-seasons/${params.teamSeasonId}/player-memberships/${params.playerMembershipId}/${charge.id}/transactions` : undefined}
-                      />
+                      {(() => {
+                        const membershipId =
+                          charge.membershipCharges?.[0]?.playerMembership?.id ||
+                          charge.studentCharges?.[0]?.studentMembership?.id ||
+                          params?.playerMembershipId;
+
+                        const detailsHref =
+                          params?.disciplineId && membershipId
+                            ? `/admin/teams/${params.disciplineId}/${params.clubId}/${params.teamId}/team-seasons/${params.teamSeasonId}/player-memberships/${membershipId}/${charge.id}/transactions`
+                            : undefined;
+
+                        return (
+                          <ChargeActions
+                            charge={charge}
+                            onPay={(c) => setSelectedCharge(c)}
+                            detailsHref={detailsHref}
+                          />
+                        );
+                      })()}
                     </div>
                   </Table.Cell>
                 </Table.Row>

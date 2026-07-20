@@ -1,4 +1,5 @@
 import { findPersonById } from "@/modules/persons";
+import { HeaderPage } from "@/ui";
 import { Button, Card, Switch } from "@heroui/react";
 import {
   AddCircleFreeIcons,
@@ -52,6 +53,14 @@ export default async function MemberPage({
   const { data: person } = response;
   return (
     <div className="p-8 max-w-7xl mx-auto space-y-12">
+      <HeaderPage
+        title="Perfil de Miembro"
+        description="Gestión y detalles del miembro seleccionado."
+        breadcrumb={[
+          { label: "Miembros", href: "/admin/members" },
+          { label: `${person.name}` },
+        ]}
+      />
       {/* <!-- Hero Section: Identity & Stats --> */}
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
         <div className="lg:col-span-8 flex flex-col md:flex-row items-center md:items-end gap-8">

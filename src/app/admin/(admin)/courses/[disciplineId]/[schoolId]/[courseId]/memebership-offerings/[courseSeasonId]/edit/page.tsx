@@ -69,13 +69,13 @@ export default async function AddBidManagementPage({ params }: Props) {
         }
         urlBase="/admin/schools"
         breadcrumb={[
-          { label: "Gestión Schooles", href: "manage" },
+          { label: "Escuelas", href: "manage" },
           {
             label: courseResponse.data.school.name,
             href: `${courseResponse.data.school.id}/manage`,
           },
           {
-            label: `Gestión de Ofertas - ${courseResponse.data.name}`,
+            label: `${courseResponse.data.name}`,
             href: `${courseResponse.data.school.id}/manage/${courseId}/bid-management`,
           },
           { label: `Editar Oferta` },

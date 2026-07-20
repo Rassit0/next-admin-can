@@ -35,13 +35,13 @@ export default async function MembershipsPage({ params }: Props) {
         title={`Membresías - ${courseSeasonResponse.data.course.name} - ${courseSeasonResponse.data.season.name}`}
         description="Administra las asignaciones de membresías y cargos iniciales"
         breadcrumb={[
-          { label: "Gestión Cursos", href: `/` },
+          { label: "Cursos", href: `/` },
           {
-            label: `Gestión de Temporadas - ${courseSeasonResponse.data.course.name}`,
+            label: `${courseSeasonResponse.data.course.name}`,
             href: `/admin/courses/${disciplineId}/${schoolId}/${courseId}/course-seasons`,
           },
           {
-            label: `Membresías - ${courseSeasonResponse.data.course.name} - ${courseSeasonResponse.data.season.name}`,
+            label: "Membresías",
           },
         ]}
       />

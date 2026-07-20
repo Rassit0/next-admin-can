@@ -102,9 +102,9 @@ export default async function BidManagementPage({
         }
         urlBase={`/admin/courses/${disciplineId}/${schoolId}`}
         breadcrumb={[
-          { label: "Gestión Equipos", href: `/` },
+          { label: "Equipos", href: `/` },
           {
-            label: `Gestión de Temporadas - ${courseResponse.data.name}`,
+            label: `${courseResponse.data.name}`,
           },
         ]}
       />

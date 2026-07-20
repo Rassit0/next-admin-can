@@ -125,7 +125,7 @@ export default async function CourseSeasonsPage({
         }
         urlBase={`/admin/courses/${disciplineId}/${schoolId}`}
         breadcrumb={[
-          { label: "Gestión Cursos", href: `/` },
+          { label: "Cursos", href: `/` },
           {
             label: `Temporadas`,
           },

@@ -48,7 +48,7 @@ export default async function TeamSeasonDetailLayout({
         description={`Equipo: ${teamSeason.team.name} · Detalle de la temporada`}
         action={<TeamSeasonActions teamSeason={teamSeason} />}
         breadcrumb={[
-          { label: "Gestión Equipos", href: `/` },
+          { label: "Equipos", href: `/` },
           {
             label: `Temporadas`,
             href: `/admin/teams/${disciplineId}/${clubId}/${teamId}/team-seasons`,

@@ -110,7 +110,7 @@ export default async function StudentMembershipPage({
           </>
         }
         breadcrumb={[
-          { label: "Gestión Cursos", href: `/` },
+          { label: "Cursos", href: `/` },
           {
             label: `Temporadas`,
             href: `/admin/courses/${disciplineId}/${schoolId}/${courseId}/course-seasons`,

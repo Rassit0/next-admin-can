@@ -98,9 +98,9 @@ export default async function EditCourseSeasonPage({ params }: Props) {
         }
         urlBase={`/admin/courses/${disciplineId}/${schoolId}`}
         breadcrumb={[
-          { label: "Gestión Cursos", href: `/` },
+          { label: "Cursos", href: `/` },
           {
-            label: `Gestión de Temporadas - ${courseResponse.data.name}`,
+            label: `${courseResponse.data.name}`,
           },
         ]}
       />

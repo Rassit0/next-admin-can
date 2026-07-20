@@ -69,13 +69,13 @@ export default async function AddBidManagementPage({ params }: Props) {
         }
         urlBase="/admin/clubs"
         breadcrumb={[
-          { label: "Gestión Clubes", href: "manage" },
+          { label: "Clubes", href: "manage" },
           {
             label: teamResponse.data.club.name,
             href: `${teamResponse.data.club.id}/manage`,
           },
           {
-            label: `Gestión de Ofertas - ${teamResponse.data.name}`,
+            label: `${teamResponse.data.name}`,
             href: `${teamResponse.data.club.id}/manage/${teamId}/bid-management`,
           },
           { label: `Editar Oferta` },

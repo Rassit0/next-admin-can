@@ -77,9 +77,9 @@ export default async function AddCourseSeasonPage({ params }: Props) {
         }
         urlBase={`/admin/courses/${disciplineId}/${schoolId}`}
         breadcrumb={[
-          { label: "Gestión Cursos", href: `/` },
+          { label: "Cursos", href: `/` },
           {
-            label: `Gestión de Temporadas - ${courseResponse.data.name}`,
+            label: `${courseResponse.data.name}`,
             href: `${courseId}/course-seasons`,
           },
           {

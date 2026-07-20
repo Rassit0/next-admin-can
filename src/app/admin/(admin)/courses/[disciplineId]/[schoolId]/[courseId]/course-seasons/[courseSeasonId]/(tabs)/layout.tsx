@@ -45,7 +45,7 @@ export default async function CourseSeasonDetailLayout({ children, params }: Lay
         description={`Curso: ${courseSeason.course.name} · Detalle de la temporada`}
         action={<CourseSeasonActions courseSeason={courseSeason} />}
         breadcrumb={[
-          { label: "Gestión Cursos", href: `/` },
+          { label: "Cursos", href: `/` },
           {
             label: `Temporadas`,
             href: `/admin/courses/${disciplineId}/${schoolId}/${courseId}/course-seasons`,

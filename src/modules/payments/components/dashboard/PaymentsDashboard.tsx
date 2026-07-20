@@ -13,65 +13,40 @@ import { ICourseSeason } from "@/modules/course-seasons";
 import { IPlayerMembership } from "@/modules/player-memberships";
 import { IStudentMembership } from "@/modules/student-memberships";
 import { formatCurrency } from "@/modules/player-memberships";
-import {
-  IPayment,
-  PaymentMethod,
-} from "@/modules/payments/interfaces/payment.interface";
-import { buildPaymentLedger } from "@/modules/payments/helpers/gateway";
-import { PaymentsHistoryTable } from "@/modules/payments/components/table/PaymentsHistoryTable";
-import { PaymentGatewayModal } from "@/modules/payments/components/gateway/PaymentGatewayModal";
+import { TableCharges, ICharge } from "@/modules/charge-transactions";
 
 interface Props {
-  memberships: any[];
+  memberships: (IPlayerMembership | IStudentMembership)[];
+  charges: ICharge[];
   teamSeason?: ITeamSeason;
   courseSeason?: ICourseSeason;
 }
 
-export const PaymentsDashboard = ({ memberships, teamSeason, courseSeason }: Props) => {
-  const [payments, setPayments] = useState<IPayment[]>(() =>
-    buildPaymentLedger(memberships, (teamSeason || courseSeason) as any),
-  );
+export const PaymentsDashboard = ({
+  memberships,
+  charges,
+  teamSeason,
+  courseSeason,
+}: Props) => {
   const [activeTab, setActiveTab] = useState<string>("pending");
-  const [selected, setSelected] = useState<IPayment | null>(null);
-  const [isGatewayOpen, setIsGatewayOpen] = useState(false);
 
-  const pending = payments.filter((p) => p.status === "PENDING");
-  const paid = payments.filter((p) => p.status === "PAID");
+  const pending = charges.filter(
+    (p) => p.status === "PENDING" || p.status === "PARTIAL",
+  );
+  const paid = charges.filter((p) => p.status === "PAID");
 
   const totals = useMemo(() => {
-    const currency = payments[0]?.currency ?? "Bs";
-    const collected = paid.reduce((acc, p) => acc + p.amount, 0);
-    const outstanding = pending.reduce((acc, p) => acc + p.amount, 0);
-    return { currency, collected, outstanding };
-  }, [payments, paid, pending]);
-
-  const openGateway = (payment: IPayment) => {
-    setSelected(payment);
-    setIsGatewayOpen(true);
-  };
-
-  const handlePaid = (
-    paymentId: string,
-    reference: string,
-    method: PaymentMethod,
-  ) => {
-    setPayments((prev) =>
-      prev.map((p) =>
-        p.id === paymentId
-          ? {
-              ...p,
-              status: "PAID",
-              method,
-              reference,
-              paidAt: new Date(),
-            }
-          : p,
-      ),
+    const currency = "Bs";
+    const collected = charges.reduce(
+      (acc, p) => acc + (parseFloat(p.amount) - parseFloat(p.pendingAmount)),
+      0,
     );
-    toast.success("Pago registrado", {
-      description: `Ref. ${reference}`,
-    });
-  };
+    const outstanding = charges.reduce(
+      (acc, p) => acc + parseFloat(p.pendingAmount),
+      0,
+    );
+    return { currency, collected, outstanding };
+  }, [charges]);
 
   const cards = [
     {
@@ -100,7 +75,7 @@ export const PaymentsDashboard = ({ memberships, teamSeason, courseSeason }: Pro
   const tableForTab = (key: string) => {
     if (key === "pending") return pending;
     if (key === "paid") return paid;
-    return payments;
+    return charges;
   };
 
   return (
@@ -125,7 +100,7 @@ export const PaymentsDashboard = ({ memberships, teamSeason, courseSeason }: Pro
                   </p>
                 </div>
                 <span
-                  className={`flex-shrink-0 flex size-12 items-center justify-center rounded-lg ${card.bg} ${card.tone} shadow-sm`}
+                  className={`shrink-0 flex size-12 items-center justify-center rounded-lg ${card.bg} ${card.tone} shadow-sm`}
                 >
                   <HugeiconsIcon icon={card.icon} size={22} />
                 </span>
@@ -143,13 +118,22 @@ export const PaymentsDashboard = ({ memberships, teamSeason, courseSeason }: Pro
         >
           <Tabs.List className="gap-1">
             <Tabs.Tab id="pending" className="text-xs font-semibold">
-              Pendientes <span className="ml-1.5 px-2 py-0.5 rounded-full bg-warning/10 text-warning text-[10px] font-bold">{pending.length}</span>
+              Pendientes{" "}
+              <span className="ml-1.5 px-2 py-0.5 rounded-full bg-warning/10 text-warning text-[10px] font-bold">
+                {pending.length}
+              </span>
             </Tabs.Tab>
             <Tabs.Tab id="paid" className="text-xs font-semibold">
-              Realizados <span className="ml-1.5 px-2 py-0.5 rounded-full bg-success/10 text-success text-[10px] font-bold">{paid.length}</span>
+              Realizados{" "}
+              <span className="ml-1.5 px-2 py-0.5 rounded-full bg-success/10 text-success text-[10px] font-bold">
+                {paid.length}
+              </span>
             </Tabs.Tab>
             <Tabs.Tab id="all" className="text-xs font-semibold">
-              Todos <span className="ml-1.5 px-2 py-0.5 rounded-full bg-default/20 text-muted text-[10px] font-bold">{payments.length}</span>
+              Todos{" "}
+              <span className="ml-1.5 px-2 py-0.5 rounded-full bg-default/20 text-muted text-[10px] font-bold">
+                {charges.length}
+              </span>
             </Tabs.Tab>
           </Tabs.List>
 
@@ -161,29 +145,12 @@ export const PaymentsDashboard = ({ memberships, teamSeason, courseSeason }: Pro
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.25 }}
               >
-                <PaymentsHistoryTable
-                  payments={tableForTab(key)}
-                  onPay={openGateway}
-                  emptyLabel={
-                    key === "pending"
-                      ? "No hay pagos pendientes. Todo al día."
-                      : key === "paid"
-                        ? "Aún no se han registrado pagos."
-                        : "No hay movimientos de pago."
-                  }
-                />
+                <TableCharges charges={tableForTab(key)} showPerson />
               </motion.div>
             </Tabs.Panel>
           ))}
         </Tabs>
       </Card>
-
-      <PaymentGatewayModal
-        payment={selected}
-        isOpen={isGatewayOpen}
-        onOpenChange={setIsGatewayOpen}
-        onPaid={handlePaid}
-      />
     </div>
   );
 };

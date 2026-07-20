@@ -21,7 +21,23 @@ export interface ICharge {
   parentCharge: null | ICharge;
   childCharges: ICharge[];
   membershipCharges: MembershipCharge[];
-  studentCharges: any[];
+  studentCharges: StudentCharge[];
+}
+
+export interface StudentCharge {
+  id: string;
+  type: string;
+  studentMembership: StudentMembership;
+}
+
+export interface StudentMembership {
+  id: string;
+  student: Student;
+}
+
+export interface Student {
+  id: string;
+  person: Person;
 }
 
 export interface MembershipCharge {

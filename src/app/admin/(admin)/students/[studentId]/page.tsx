@@ -24,11 +24,11 @@ export default async function StudentPage({ params }: Props) {
         description={`Detalles de ${studentResponse.data.person.name} ${studentResponse.data.person.lastName}.`}
         breadcrumb={[
           {
-            label: "Lista de Jugadores",
+            label: "Jugadores",
             href: studentBackUrl?.value || `/admin/students`,
           },
           {
-            label: `Gestión del jugador(a) - ${studentResponse.data.person.name}`,
+            label: `${studentResponse.data.person.name}`,
           },
         ]}
       />

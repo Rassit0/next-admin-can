@@ -61,9 +61,9 @@ export default async function AddBidManagementPage({ params }: Props) {
         }
         urlBase={`/admin/teams/${disciplineId}/${clubId}`}
         breadcrumb={[
-          { label: "Gestión Equipos", href: "/" },
+          { label: "Equipos", href: "/" },
           {
-            label: `Gestión de Temporadas - ${teamResponse.data.name}`,
+            label: `${teamResponse.data.name}`,
             href: `${teamId}/team-seasons`,
           },
           { label: `Nueva Oferta` },
