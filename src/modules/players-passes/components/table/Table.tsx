@@ -1,6 +1,6 @@
 "use client";
 import { Avatar, Button, Chip, Table } from "@heroui/react";
-import { Copy01Icon, Delete01Icon, EyeIcon } from "@hugeicons/core-free-icons";
+import { Copy01Icon, Delete01Icon, EyeIcon , Search01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ButtonManage } from "@/modules/players";
 import { SortableColumnHeader } from "@/ui";
@@ -109,7 +109,23 @@ export const TablePlayerPasses = ({ playerPasses }: Props) => {
 
             <Table.Column className="text-center">ACCIONES</Table.Column>
           </Table.Header>
-          <Table.Body>
+          <Table.Body
+            renderEmptyState={() => (
+              <div className="flex h-full w-full flex-col items-center justify-center gap-4 p-8 text-center">
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-default-100 text-default-500">
+                  <HugeiconsIcon icon={Search01Icon} className="size-6" />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="text-medium font-medium">
+                    No se encontraron registros
+                  </span>
+                  <span className="text-sm text-default-400">
+                    Intenta con otros términos de búsqueda o agrega uno nuevo.
+                  </span>
+                </div>
+              </div>
+            )}
+          >
             {playerPasses.map((playerPass) => {
               return (
                 <Table.Row key={playerPass.id} id={playerPass.id}>

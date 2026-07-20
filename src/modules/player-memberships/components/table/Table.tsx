@@ -1,4 +1,6 @@
 "use client";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Search01Icon } from "@hugeicons/core-free-icons";
 import { Avatar, Table } from "@heroui/react";
 import { useEffect, useState } from "react";
 import { SortableColumnHeader } from "@/ui";

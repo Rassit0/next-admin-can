@@ -15,6 +15,7 @@ import {
   MoreVerticalIcon,
   Delete02Icon,
   Invoice01Icon,
+  Search01Icon,
 } from "@hugeicons/core-free-icons";
 import { ITransaction } from "../../interfaces/transactions.interface";
 import { useFormStatus } from "react-dom";
