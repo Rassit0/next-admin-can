@@ -11,6 +11,8 @@ export interface ICharge {
   description: string;
   amount: string;
   pendingAmount: string;
+  discountAmount?: string | number;
+  discountReason?: string | null;
   dueDate: Date;
   status: ChargeStatus;
   parentChargeId: null;

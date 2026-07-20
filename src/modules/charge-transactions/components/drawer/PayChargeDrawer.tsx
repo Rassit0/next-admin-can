@@ -18,7 +18,7 @@ import {
   Calendar02Icon,
   Invoice01Icon,
 } from "@hugeicons/core-free-icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { ICharge } from "../../interfaces/charges.interface";
@@ -43,6 +43,17 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
   const [reference, setReference] = useState<string>("");
   const [notes, setNotes] = useState<string>("");
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    if (isOpen) {
+      setAmount(pendingAmount.toString());
+      setTransactionDate(new Date().toISOString().slice(0, 16));
+      setReference("");
+      setNotes("");
+      setPaymentMethod("CASH");
+      setErrors({});
+    }
+  }, [isOpen, pendingAmount]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -109,13 +120,42 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
             </Drawer.Header>
 
             <Drawer.Body className="gap-6 pt-6">
-              <div className="bg-primary-50 p-4 rounded-xl border border-primary-100 flex justify-between items-center">
-                <span className="text-primary-700 font-medium">
-                  Saldo Pendiente
-                </span>
-                <span className="text-2xl font-bold text-primary font-mono">
-                  {pendingAmount.toFixed(2)} Bs
-                </span>
+              <div className="bg-primary-50 p-4 rounded-xl border border-primary-100 flex flex-col gap-2">
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-primary-600">Monto Base</span>
+                  <span className={`font-semibold ${Number(charge.discountAmount) > 0 ? "line-through text-primary-400" : "text-primary-700"}`}>
+                    {Number(charge.amount).toFixed(2)} Bs
+                  </span>
+                </div>
+                {Number(charge.discountAmount) > 0 && (
+                  <>
+                    <div className="flex justify-between items-center text-sm">
+                      <span className="text-primary-600">Descuento</span>
+                      <span className="font-semibold text-success-600">-{Number(charge.discountAmount).toFixed(2)} Bs</span>
+                    </div>
+                    <div className="flex justify-between items-center text-sm border-t border-primary-200 border-dashed pt-2 mt-1">
+                      <span className="text-primary-600 font-medium">Total Esperado</span>
+                      <span className="font-bold text-primary-700">
+                        {(Number(charge.amount) - Number(charge.discountAmount)).toFixed(2)} Bs
+                      </span>
+                    </div>
+                  </>
+                )}
+                
+                {Number(charge.amount) - Number(charge.discountAmount || 0) - pendingAmount > 0 && (
+                  <div className="flex justify-between items-center text-sm text-warning-600">
+                    <span>Abonado hasta ahora</span>
+                    <span className="font-semibold text-warning-600">
+                      -{(Number(charge.amount) - Number(charge.discountAmount || 0) - pendingAmount).toFixed(2)} Bs
+                    </span>
+                  </div>
+                )}
+                <div className="flex justify-between items-center border-t border-primary-200 pt-2 mt-1">
+                  <span className="text-primary-700 font-medium">Saldo a Pagar</span>
+                  <span className="text-2xl font-bold text-primary font-mono">
+                    {pendingAmount.toFixed(2)} Bs
+                  </span>
+                </div>
               </div>
 
               <TextField

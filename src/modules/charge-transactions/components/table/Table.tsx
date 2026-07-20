@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { SortableColumnHeader } from "@/ui";
 import { ICharge } from "@/modules/charge-transactions";
 import { PayChargeDrawer } from "../drawer/PayChargeDrawer";
+import { ChargeActions } from "../actions/ChargeActions";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 
@@ -122,9 +123,16 @@ export const TableCharges = ({ charges }: Props) => {
                   className="border-b border-border last:border-b-0 hover:bg-surface-secondary/40"
                 >
                   <Table.Cell className="py-3">
-                    <span className="font-medium text-foreground">
-                      {charge.description}
-                    </span>
+                    <div className="flex flex-col gap-1">
+                      <span className="font-medium text-foreground">
+                        {charge.description}
+                      </span>
+                      {Number(charge.discountAmount) > 0 && (
+                        <span className="text-[10px] text-primary bg-primary-50 border border-primary-100 w-fit px-2 py-0.5 rounded-full font-semibold inline-flex items-center gap-1">
+                          Descuento aplicado: {formatCurrency(Number(charge.discountAmount))}
+                        </span>
+                      )}
+                    </div>
                   </Table.Cell>
                   <Table.Cell className="py-3 text-right">
                     <span className="font-medium">
@@ -151,24 +159,11 @@ export const TableCharges = ({ charges }: Props) => {
                   </Table.Cell>
                   <Table.Cell className="py-3">
                     <div className="flex items-center justify-center gap-2">
-                      {charge.status === "PENDING" || charge.status === "PARTIAL" ? (
-                        <Button
-                          size="sm"
-                          variant="secondary"
-                          onPress={() => setSelectedCharge(charge)}
-                        >
-                          Pagar
-                        </Button>
-                      ) : null}
-                      {params?.disciplineId && (
-                        <Link
-                          href={`/admin/teams/${params.disciplineId}/${params.clubId}/${params.teamId}/team-seasons/${params.teamSeasonId}/player-memberships/${params.playerMembershipId}/${charge.id}/transactions`}
-                        >
-                          <Button size="sm" variant="secondary" className="px-3">
-                            Ver detalles
-                          </Button>
-                        </Link>
-                      )}
+                      <ChargeActions 
+                        charge={charge} 
+                        onPay={(c) => setSelectedCharge(c)}
+                        detailsHref={params?.disciplineId ? `/admin/teams/${params.disciplineId}/${params.clubId}/${params.teamId}/team-seasons/${params.teamSeasonId}/player-memberships/${params.playerMembershipId}/${charge.id}/transactions` : undefined}
+                      />
                     </div>
                   </Table.Cell>
                 </Table.Row>
