@@ -106,7 +106,7 @@ export default async function ChargeTransactionsPage({
         <div className="flex flex-col gap-4">
           <div className="flex justify-between items-center">
             <h3 className="text-xl font-bold">Historial de Pagos</h3>
-            {Number(charge.pendingAmount) > 0 && (
+            {charge.status !== "PAID" && (
               <PayChargeButton charge={charge} />
             )}
           </div>

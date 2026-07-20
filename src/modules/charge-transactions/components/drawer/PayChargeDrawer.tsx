@@ -63,9 +63,16 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
       const amountNum = Number(amount || pendingAmount);
       const method = paymentMethod as "CASH" | "TRANSFER" | "QR";
 
-      if (amountNum <= 0 || amountNum > pendingAmount) {
+      if (pendingAmount > 0 && amountNum <= 0) {
         toast.danger(
-          "El monto debe ser mayor a 0 y no exceder el saldo pendiente.",
+          "El monto debe ser mayor a 0 si existe deuda pendiente.",
+        );
+        return;
+      }
+
+      if (amountNum < 0 || amountNum > pendingAmount) {
+        toast.danger(
+          "El monto no puede exceder el saldo pendiente ni ser negativo.",
         );
         return;
       }
@@ -169,7 +176,7 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
                   variant="secondary"
                   type="number"
                   step="0.01"
-                  min="0.01"
+                  min={pendingAmount === 0 ? "0" : "0.01"}
                   max={pendingAmount}
                   value={amount}
                   onChange={(e) => {

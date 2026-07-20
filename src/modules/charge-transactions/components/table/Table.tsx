@@ -83,6 +83,11 @@ export const TableCharges = ({ charges }: Props) => {
                 Monto
               </span>
             </Table.Column>
+            <Table.Column id="discount" className="text-right">
+              <span className="text-xs font-semibold uppercase tracking-wide">
+                Descuento
+              </span>
+            </Table.Column>
             <Table.Column id="pendingAmount" className="text-right">
               <span className="text-xs font-semibold uppercase tracking-wide">
                 Pendiente
@@ -123,29 +128,46 @@ export const TableCharges = ({ charges }: Props) => {
                   className="border-b border-border last:border-b-0 hover:bg-surface-secondary/40"
                 >
                   <Table.Cell className="py-3">
-                    <div className="flex flex-col gap-1">
-                      <span className="font-medium text-foreground">
-                        {charge.description}
-                      </span>
-                      {Number(charge.discountAmount) > 0 && (
-                        <span className="text-[10px] text-primary bg-primary-50 border border-primary-100 w-fit px-2 py-0.5 rounded-full font-semibold inline-flex items-center gap-1">
-                          Descuento aplicado: {formatCurrency(Number(charge.discountAmount))}
-                        </span>
-                      )}
-                    </div>
+                    <span className="font-semibold text-foreground">
+                      {charge.description}
+                    </span>
                   </Table.Cell>
                   <Table.Cell className="py-3 text-right">
-                    <span className="font-medium">
+                    <span className={`font-medium ${Number(charge.discountAmount) > 0 ? 'text-muted line-through' : 'text-foreground'}`}>
                       {formatCurrency(charge.amount)}
                     </span>
                   </Table.Cell>
                   <Table.Cell className="py-3 text-right">
-                    <span className="font-semibold tabular-nums text-accent">
+                    {Number(charge.discountAmount) > 0 ? (
+                      <div className="flex flex-col items-end gap-0.5">
+                        <span className="inline-flex items-center px-1.5 py-0.5 rounded bg-success-50 text-success-700 border border-success-200 text-xs font-bold shadow-sm">
+                          -{formatCurrency(Number(charge.discountAmount))}
+                        </span>
+                        {charge.discountReason && (
+                          <span className="text-[10px] text-muted-foreground italic truncate max-w-[120px]" title={charge.discountReason}>
+                            "{charge.discountReason}"
+                          </span>
+                        )}
+                      </div>
+                    ) : (
+                      <span className="text-muted/50">-</span>
+                    )}
+                  </Table.Cell>
+                  <Table.Cell className="py-3 text-right">
+                    <span className={`font-bold tabular-nums text-[15px] ${Number(charge.pendingAmount) <= 0 ? 'text-success-600' : 'text-primary-700'}`}>
                       {formatCurrency(charge.pendingAmount)}
                     </span>
                   </Table.Cell>
                   <Table.Cell className="py-3 text-sm">
-                    {new Date(charge.dueDate).toLocaleDateString("es-BO")}
+                    {new Date(charge.dueDate) < new Date() && charge.status !== "PAID" ? (
+                      <span className="text-danger-600 font-semibold bg-danger-50 px-2 py-0.5 rounded border border-danger-100">
+                        {new Date(charge.dueDate).toLocaleDateString("es-BO")}
+                      </span>
+                    ) : (
+                      <span className="text-foreground/80 font-medium">
+                        {new Date(charge.dueDate).toLocaleDateString("es-BO")}
+                      </span>
+                    )}
                   </Table.Cell>
                   <Table.Cell className="py-3">
                     <Chip
