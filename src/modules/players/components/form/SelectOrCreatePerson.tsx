@@ -130,7 +130,7 @@ export const SelectOrCreatePerson = ({
                           {item.fullName}
                         </span>
                         <span className="text-xs text-default-500 truncate">
-                          DNI: {item.documentNumber}
+                          {item.documentType}: {item.documentNumber}
                         </span>
                       </div>
                       <ListBox.ItemIndicator />
@@ -165,6 +165,7 @@ export const SelectOrCreatePerson = ({
               documentNumber: person.documentNumber,
               gender: person.gender,
               birthDate: person.birthDate as Date,
+              documentType: person.documentType,
               fullName: `${person.name} ${person.lastName}`,
               imageUrl: person.imageUrl,
             });

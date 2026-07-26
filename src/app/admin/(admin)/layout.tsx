@@ -4,12 +4,32 @@ import { getOrganizationById, getInstitutions } from "@/modules/organizations";
 import { BottonNavBar, ErrorPage, Header, Sidebar } from "@/ui";
 import { iconMap } from "@/utils";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { auth } from "@/auth";
+import { getPermissionsArray } from "@/modules/roles";
 
 export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await auth();
+  let userPermissions: string[] = [];
+
+  if (session?.user?.roleId) {
+    const permRes = await getPermissionsArray({ roleId: session.user.roleId });
+    if (!permRes.error && permRes.data) {
+      userPermissions = permRes.data;
+    }
+  }
+
+  // Filtrar items basado en los permisos (requiere al menos un permiso para el módulo, o ser dashboard)
+  const allowedItems = itemsNavigation.filter((item) => {
+    if (item.action === "dashboard") return true;
+    if (item.subject === "home") return true; // Para los que aún no has migrado
+
+    return userPermissions.some((p) => p.endsWith(`_${item.subject}`));
+  });
+
   const institutionsResponse = await getInstitutions({});
 
   if (institutionsResponse.error || !institutionsResponse.data) {
@@ -22,7 +42,7 @@ export default async function AdminLayout({
       {/* <!-- SideNavBar --> */}
       <Sidebar
         organization={institution}
-        items={itemsNavigation}
+        items={allowedItems}
         urlBase={`/admin`}
       />
       {/* <!-- Main Content Area --> */}
@@ -38,7 +58,7 @@ export default async function AdminLayout({
           </main>
         </div>
         {/* <!-- Mobile BottomNavBar --> */}
-        <BottonNavBar items={itemsNavigation} urlBase={`/admin`} />
+        <BottonNavBar items={allowedItems} urlBase={`/admin`} />
       </div>
     </>
   );

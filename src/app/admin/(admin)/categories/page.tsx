@@ -7,6 +7,8 @@ import {
   getDisciplinesOptions,
 } from "@/modules/categories";
 
+import { resolvePageData } from "@/utils/resolvePageData";
+
 interface Props {
   searchParams: Promise<{
     search?: string;
@@ -14,37 +16,21 @@ interface Props {
     page?: string;
   }>;
 }
+
 export default async function DisciplinesPage({ searchParams }: Props) {
   const { search, page, per_page } = await searchParams;
-  const [categoriesResponse, disciplinesOptionsResponse] = await Promise.all([
-    getCategories({
-      search,
-      page,
-      per_page,
-    }),
+  
+  // Usamos resolvePageData para extraer la data directamente.
+  // Si hay un error, Next.js capturará la excepción y mostrará `app/admin/error.tsx`.
+  // Si es 401, nos redirigirá automáticamente a `/api/logout`.
+  const [categoriesRes, disciplinesOptionsRes] = await resolvePageData([
+    getCategories({ search, page, per_page }),
     getDisciplinesOptions(),
   ]);
 
-  // 1. Manejo de error específico (Ej: 401 no autorizado)
-  if (categoriesResponse.error && categoriesResponse.statusCode === 401) {
-    redirect("/login");
-  }
+  const categories = categoriesRes.data;
+  const disciplinesOptions = disciplinesOptionsRes.data;
 
-  // 2. Manejo de errores generales (400, 500, etc.)
-  if (categoriesResponse.error) {
-    return <ErrorPage message={categoriesResponse.message} />;
-  }
-
-  if (
-    disciplinesOptionsResponse.error &&
-    disciplinesOptionsResponse.statusCode === 401
-  ) {
-    redirect("/login");
-  }
-
-  if (disciplinesOptionsResponse.error) {
-    return <ErrorPage message={disciplinesOptionsResponse.message} />;
-  }
 
   return (
     <>
@@ -54,7 +40,7 @@ export default async function DisciplinesPage({ searchParams }: Props) {
         description="Administra las categorías del club"
         action={
           <AddModal
-            disciplinesOptions={disciplinesOptionsResponse.data.data}
+            disciplinesOptions={disciplinesOptions.data}
             buttonFloatingMobile
           />
         }
@@ -63,13 +49,13 @@ export default async function DisciplinesPage({ searchParams }: Props) {
       <SectionFilters />
       {/* <!-- Main Member Table --> */}
       <TableCategories
-        categories={categoriesResponse.data.data}
-        disciplinesOptions={disciplinesOptionsResponse.data.data}
+        categories={categories.data}
+        disciplinesOptions={disciplinesOptions.data}
       />
       <PaginationSection
-        totalPages={categoriesResponse.data.meta.totalPages}
-        itemsPerPage={categoriesResponse.data.meta.itemsPerPage}
-        totalItems={categoriesResponse.data.meta.totalItems}
+        totalPages={categories.meta.totalPages}
+        itemsPerPage={categories.meta.itemsPerPage}
+        totalItems={categories.meta.totalItems}
       />
     </>
   );

@@ -7,12 +7,10 @@ import {
   Gender,
   getCategoriesByDisciplineOptions,
   getSeasonsByDisciplineOptions,
+  getTeamContext,
   getTeamSeasons,
-  GridCards,
   ListCards,
-  TableTeamSeasons,
 } from "@/modules/team-seasons";
-import { getTeamById } from "@/modules/teams";
 import {
   ErrorPage,
   HeaderPage,
@@ -39,7 +37,7 @@ export default async function TeamSeasonsPage({ searchParams, params }: Props) {
   const [teamSeasonsResponse, teamResponse, categoriesOptions, seasonsOptions] =
     await Promise.all([
       getTeamSeasons({ search, page, per_page, teamId, gender }),
-      getTeamById({ id: teamId }),
+      getTeamContext({ id: teamId }),
       getCategoriesByDisciplineOptions(disciplineId),
       getSeasonsByDisciplineOptions(disciplineId),
     ]);

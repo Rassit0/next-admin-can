@@ -216,3 +216,12 @@ export const formatCurrency = (amount: number) => {
     minimumFractionDigits: 2,
   }).format(amount);
 };
+
+export const STAFF_ROLES_TRANSLATOR: Record<string, string> = {
+  HEAD_COACH: "Entrenador Principal",
+  ASSISTANT_COACH: "Asistente Técnico",
+  ASSISTANT: "Asistente",
+  VOLUNTEER: "Voluntario",
+  DELEGATE: "Delegado",
+  OTHER: "Otro",
+};

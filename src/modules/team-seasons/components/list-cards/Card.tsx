@@ -1,5 +1,5 @@
 import { AddMembershipDrawer, ITeamSeason, STATUS_BG_MAP, TeamSeasonActions } from "@/modules/team-seasons";
-import { Button, Card } from "@heroui/react";
+import { Avatar, Button, Card } from "@heroui/react";
 import {
   Add01Icon,
   Delete01Icon,
@@ -182,9 +182,31 @@ export const CardTeamSeason = ({ teamSeason, urlBase }: Props) => {
         <h3 className="font-display font-bold text-headline-md text-primary mb-1">
           {teamSeason.category.name}
         </h3>
-        <p className="text-on-surface-variant text-sm mb-6 italic opacity-80">
+        <p className="text-on-surface-variant text-sm mb-4 italic opacity-80">
           {teamSeason.description}
         </p>
+        
+        {(() => {
+          const primaryStaff = teamSeason.teamSeasonStaffs?.find((s) => s.isPrimary)?.staff.person || teamSeason.teamSeasonStaffs?.[0]?.staff.person;
+          if (!primaryStaff) return null;
+          return (
+            <div className="flex items-center gap-3 mb-6 bg-surface-container-low p-2 rounded-lg border border-border/50">
+              <Avatar size="sm">
+                {primaryStaff.imageUrl && (
+                  <Avatar.Image src={primaryStaff.imageUrl} alt={`${primaryStaff.name} ${primaryStaff.lastName}`} />
+                )}
+                <Avatar.Fallback>{`${primaryStaff.name.charAt(0)}${primaryStaff.lastName.charAt(0)}`}</Avatar.Fallback>
+              </Avatar>
+              <div className="flex flex-col">
+                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Entrenador Principal</span>
+                <span className="text-xs font-semibold text-foreground">
+                  {primaryStaff.name} {primaryStaff.lastName}
+                </span>
+              </div>
+            </div>
+          );
+        })()}
+
         {teamSeason.status === "ACTIVE" &&
           teamSeason._count.playerMemberships < teamSeason.maxMembers && (
             <ContentActive />

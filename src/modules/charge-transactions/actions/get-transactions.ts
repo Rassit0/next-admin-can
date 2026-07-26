@@ -6,6 +6,7 @@ import {
   ITransaction,
   ITransactionsResponse,
 } from "../interfaces/transactions.interface";
+import { auth } from "@/auth";
 
 interface SearchParams {
   search?: string;
@@ -35,6 +36,15 @@ export const getTransactions = async ({
   chargeId,
   payerPersonId,
 }: SearchParams): Promise<ServiceResponse<ITransactionsResponse>> => {
+  const session = await auth();
+
+  if (!session?.user)
+    return {
+      error: true,
+      statusCode: 401,
+      message: "Su sesión ha expirado. Por favor, inicie sesión nuevamente.",
+    };
+
   return handleServerAction(async () => {
     const params = new URLSearchParams();
     if (search) params.set("search", search);
@@ -49,6 +59,9 @@ export const getTransactions = async ({
         next: {
           tags: ["transactions"],
           revalidate: 3600,
+        },
+        headers: {
+          Authorization: `Bearer ${session.user.token}`,
         },
       },
     );

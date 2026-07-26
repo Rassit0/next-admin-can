@@ -16,6 +16,8 @@ export interface GetPreviewChargesData {
     endDate?: string;
   }[];
   isMigrated: boolean;
+  chargeRegistrationOnMigration?: boolean;
+  chargeCurrentMonthOnMigration?: boolean;
 }
 
 export const getPreviewCharges = async (

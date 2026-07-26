@@ -8,3 +8,14 @@ export type ServiceResponse<T> =
       errors?: any;
       statusCode: number;
     };
+
+export interface IPaginationMeta {
+  totalItems: number;
+  itemsPerPage: number;
+  totalPages: number;
+  currentPage: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+  nextPage: number | null;
+  prevPage: number | null;
+}

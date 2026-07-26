@@ -3,6 +3,7 @@ import { api } from "@/utils/api";
 import { ServiceResponse } from "@/types/api";
 import { handleServerAction } from "@/utils";
 import { IPaymentPlanResponse } from "@/modules/payment-plans";
+import { auth } from "@/auth";
 
 interface SearchParams {
   search?: string;
@@ -20,6 +21,16 @@ export const getPaymentPlans = async ({
   teamSeasonId,
   courseSeasonId,
 }: SearchParams): Promise<ServiceResponse<IPaymentPlanResponse>> => {
+  const session = await auth();
+  console.log("session desde getCategories:", session?.user);
+
+  if (!session?.user?.token)
+    return {
+      error: true,
+      statusCode: 401,
+      message: "Su sesión ha expirado. Por favor, inicie sesión nuevamente.",
+    };
+
   return handleServerAction(async () => {
     const params = new URLSearchParams();
     if (search) params.set("search", search);
@@ -34,6 +45,9 @@ export const getPaymentPlans = async ({
         next: {
           tags: ["payment-plans"],
           revalidate: 3600,
+        },
+        headers: {
+          Authorization: `Bearer ${session.user.token}`,
         },
       },
     );

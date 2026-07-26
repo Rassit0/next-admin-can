@@ -11,6 +11,8 @@ export interface AddStudentMembershipData {
   paymentPlanId: string;
   startedAt: string;
   isMigrated: boolean;
+  chargeRegistrationOnMigration?: boolean;
+  chargeCurrentMonthOnMigration?: boolean;
   membershipDiscounts?: {
     registrationDiscountPercent: number;
     recurringDiscountPercent: number;

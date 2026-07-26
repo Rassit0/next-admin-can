@@ -3,6 +3,7 @@ import { api } from "@/utils/api";
 import { ServiceResponse } from "@/types/api";
 import { handleServerAction } from "@/utils";
 import { ICharge, IChargesResponse } from "@/modules/charge-transactions";
+import { auth } from "@/auth";
 
 interface SearchParams {
   search?: string;
@@ -30,6 +31,15 @@ export const getCharges = async ({
   teamSeasonId,
   courseSeasonId,
 }: SearchParams): Promise<ServiceResponse<IChargesResponse>> => {
+  const session = await auth();
+
+  if (!session?.user?.token)
+    return {
+      error: true,
+      statusCode: 401,
+      message: "Su sesión ha expirado. Por favor, inicie sesión nuevamente.",
+    };
+
   return handleServerAction(async () => {
     const params = new URLSearchParams();
     if (search) params.set("search", search);
@@ -39,10 +49,8 @@ export const getCharges = async ({
       params.set("playerMembershipId", playerMembershipId);
     if (studentMembershipId)
       params.set("studentMembershipId", studentMembershipId);
-    if (teamSeasonId)
-      params.set("teamSeasonId", teamSeasonId);
-    if (courseSeasonId)
-      params.set("courseSeasonId", courseSeasonId);
+    if (teamSeasonId) params.set("teamSeasonId", teamSeasonId);
+    if (courseSeasonId) params.set("courseSeasonId", courseSeasonId);
 
     const res = await api.get<IChargesResponse>(
       `charges?${params.toString()}`,
@@ -50,6 +58,9 @@ export const getCharges = async ({
         next: {
           tags: ["charges"],
           revalidate: 3600,
+        },
+        headers: {
+          Authorization: `Bearer ${session.user.token}`,
         },
       },
     );

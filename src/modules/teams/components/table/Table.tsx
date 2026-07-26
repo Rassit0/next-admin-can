@@ -1,11 +1,10 @@
 "use client";
 import { Avatar, Button, Checkbox, Chip, Table } from "@heroui/react";
-import { EyeIcon , Search01Icon } from "@hugeicons/core-free-icons";
+import { EyeIcon, Search01Icon, Calendar02Icon, Edit03Icon, Delete01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useEffect, useState } from "react";
-import { ButtonGestion } from "./ButtonGestion";
 import { EditModal } from "../modal/EditModal";
-import { SortableColumnHeader } from "@/ui";
+import { SortableColumnHeader, TableActions, ActionDef } from "@/ui";
 import { DeleteModal } from "../modal/DeleteModal";
 import { iconMap } from "@/utils";
 import { ITeam } from "@/modules/teams";
@@ -17,6 +16,11 @@ interface Props {
 
 export const TableTeams = ({ teams, urlBase }: Props) => {
   const [isClient, setIsClient] = useState(false);
+  
+  // Estado para los modales centralizados
+  const [selectedTeam, setSelectedTeam] = useState<ITeam | null>(null);
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   // Evitamos la hidratación fallida
   useEffect(() => {
@@ -83,30 +87,73 @@ export const TableTeams = ({ teams, urlBase }: Props) => {
               </div>
             )}
           >
-            {teams.map((team) => (
-              <Table.Row key={team.id} id={team.id}>
-                <Table.Cell>{team.id}</Table.Cell>
-                <Table.Cell>{team.name}</Table.Cell>
-                <Table.Cell>{team.description}</Table.Cell>
-                <Table.Cell>
-                  <div className="flex items-center justify-center gap-1">
-                    <ButtonGestion teamId={team.id} urlBase={urlBase} />
-                    <Button isIconOnly size="sm" variant="tertiary">
-                      <HugeiconsIcon icon={EyeIcon} />
-                    </Button>
-                    <EditModal
-                      team={team}
-                      clubId={team.club.id}
-                      isIcon={true}
-                    />
-                    <DeleteModal team={team} isIcon={true} />
-                  </div>
-                </Table.Cell>
-              </Table.Row>
-            ))}
+            {teams.map((team) => {
+              const rowActions: ActionDef[] = [
+                {
+                  key: "gestion",
+                  label: "Gestionar temporadas",
+                  icon: Calendar02Icon,
+                  href: `${urlBase}/${team.id}/team-seasons`,
+                },
+                {
+                  key: "details",
+                  label: "Detalles",
+                  icon: EyeIcon,
+                },
+                {
+                  key: "edit",
+                  label: "Editar",
+                  icon: Edit03Icon,
+                  onPress: () => {
+                    setSelectedTeam(team);
+                    setIsEditOpen(true);
+                  },
+                },
+                {
+                  key: "delete",
+                  label: "Eliminar",
+                  icon: Delete01Icon,
+                  danger: true,
+                  onPress: () => {
+                    setSelectedTeam(team);
+                    setIsDeleteOpen(true);
+                  },
+                },
+              ];
+
+              return (
+                <Table.Row key={team.id} id={team.id}>
+                  <Table.Cell>{team.id}</Table.Cell>
+                  <Table.Cell>{team.name}</Table.Cell>
+                  <Table.Cell>{team.description}</Table.Cell>
+                  <Table.Cell className="text-center">
+                    <TableActions actions={rowActions} />
+                  </Table.Cell>
+                </Table.Row>
+              );
+            })}
           </Table.Body>
         </Table.Content>
       </Table.ScrollContainer>
+
+      {/* Modales centralizados (mejor rendimiento, 1 sola instancia en el DOM) */}
+      {selectedTeam && (
+        <>
+          <EditModal
+            team={selectedTeam}
+            clubId={selectedTeam.club.id}
+            showButton={false}
+            isOpen={isEditOpen}
+            onOpenChange={setIsEditOpen}
+          />
+          <DeleteModal
+            team={selectedTeam}
+            showButton={false}
+            isOpen={isDeleteOpen}
+            onOpenChange={setIsDeleteOpen}
+          />
+        </>
+      )}
     </Table>
   );
 };

@@ -6,7 +6,7 @@ import {
   Layers01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useState } from "react";
+import { Dispatch, useState } from "react";
 import {
   AlertEditDialog,
   FormCategory,
@@ -20,7 +20,7 @@ interface Props {
   isIcon?: boolean;
   showButton?: boolean;
   isOpen?: boolean;
-  onOpenChange?: (open: boolean) => void;
+  setIsOpen?: Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const EditModal = ({
@@ -29,9 +29,9 @@ export const EditModal = ({
   isIcon = false,
   showButton = true,
   isOpen,
-  onOpenChange,
+  setIsOpen,
 }: Props) => {
-  const state = useOverlayState({ isOpen, onOpenChange });
+  const state = useOverlayState({ isOpen, onOpenChange: setIsOpen });
   const [isLoading, setIsLoading] = useState(false);
 
   return (

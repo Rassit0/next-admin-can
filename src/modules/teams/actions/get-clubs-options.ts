@@ -6,10 +6,21 @@ import {
   IClubOptions,
   IClubOptionsResponse,
 } from "../interfaces/options.team.interface";
+import { auth } from "@/auth";
 
 export const getClubsOptions = async (
   disciplineId: string,
 ): Promise<ServiceResponse<IClubOptionsResponse>> => {
+  const session = await auth();
+  console.log("session desde getClubsOptions:", session?.user);
+
+  if (!session?.user?.token)
+    return {
+      error: true,
+      statusCode: 401,
+      message: "Su sesión ha expirado. Por favor, inicie sesión nuevamente.",
+    };
+
   return handleServerAction(async () => {
     const res = await api.get<IClubOptionsResponse>(
       `teams/clubs-by-discipline/options/${disciplineId}`,
@@ -17,6 +28,9 @@ export const getClubsOptions = async (
         next: {
           tags: ["clubs"],
           revalidate: 60 * 60 * 24 * 7, //1 semana
+        },
+        headers: {
+          Authorization: `Bearer ${session.user.token}`,
         },
       },
     );

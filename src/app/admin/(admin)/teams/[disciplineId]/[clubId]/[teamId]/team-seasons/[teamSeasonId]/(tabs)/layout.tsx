@@ -36,6 +36,7 @@ export default async function TeamSeasonDetailLayout({
 
   const tabsRoutes = [
     { value: "/", title: "Información General" },
+    { value: "/staff", title: "Personal" },
     { value: "/player-memberships", title: "Membresías" },
     { value: "/payment-plans", title: "Planes de Pago" },
     { value: "/payments", title: "Transacciones" },

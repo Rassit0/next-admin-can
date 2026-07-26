@@ -1,12 +1,9 @@
-export interface IPlayersOptionsResponse {
-  data: IPlayerOption[];
+import { TGender } from "@/modules/persons";
+
+export interface IPersonsOptionsResponse {
+  data: IPersonOption[];
   message: string;
   meta: Meta;
-}
-
-export interface IPlayerOption {
-  id: string;
-  person: IPersonOption;
 }
 
 export interface IPersonOption {
@@ -15,8 +12,8 @@ export interface IPersonOption {
   lastName: string;
   secondLastName: string | null;
   documentNumber: string;
-  gender: string;
-  birthDate: Date;
+  gender: TGender;
+  birthDate: Date | null;
   imageUrl: string | null;
   fullName: string;
 }

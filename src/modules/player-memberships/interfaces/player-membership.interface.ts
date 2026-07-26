@@ -33,6 +33,17 @@ export interface IPlayerMembership {
   id: string;
   playerId: string;
   teamSeasonId: string;
+  teamSeason: {
+    team: {
+      name: string;
+    };
+    category: {
+      name: string;
+    };
+    season: {
+      name: string;
+    };
+  };
   paymentPlanId: string;
   startedAt: Date;
   finishedAt: Date | null;

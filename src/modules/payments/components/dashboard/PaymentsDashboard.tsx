@@ -20,6 +20,7 @@ interface Props {
   charges: ICharge[];
   teamSeason?: ITeamSeason;
   courseSeason?: ICourseSeason;
+  urlBase?: string;
 }
 
 export const PaymentsDashboard = ({
@@ -27,6 +28,7 @@ export const PaymentsDashboard = ({
   charges,
   teamSeason,
   courseSeason,
+  urlBase,
 }: Props) => {
   const [activeTab, setActiveTab] = useState<string>("pending");
 
@@ -145,7 +147,7 @@ export const PaymentsDashboard = ({
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.25 }}
               >
-                <TableCharges charges={tableForTab(key)} showPerson />
+                <TableCharges charges={tableForTab(key)} showPerson urlBase={urlBase} />
               </motion.div>
             </Tabs.Panel>
           ))}

@@ -6,6 +6,7 @@ export * from "./actions/get";
 export * from "./actions/get-by-id";
 export * from "./actions/get-clubs-options";
 export * from "./actions/get-disciplines-options";
+export * from "./actions/get-club-context";
 
 // Components
 export * from "./components/list-cards/grid-card/GridCards";

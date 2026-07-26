@@ -36,6 +36,7 @@ import {
 
 interface Props {
   membership: IPlayerMembership;
+  origin?: string;
 }
 
 interface ActionDef {
@@ -66,7 +67,7 @@ const ACTIONS_BY_STATUS: Record<IPlayerMembership["status"], ActionDef[]> = {
   ],
 };
 
-export const MembershipActions = ({ membership }: Props) => {
+export const MembershipActions = ({ membership, origin }: Props) => {
   const router = useRouter();
   const params = useParams();
   const [loading, setLoading] = useState(false);
@@ -91,7 +92,9 @@ export const MembershipActions = ({ membership }: Props) => {
 
   const handleActionSelect = (key: string) => {
     if (key === "manage") {
-      const manageUrl = `/admin/teams/${params.disciplineId}/${params.clubId}/${params.teamId}/team-seasons/${params.teamSeasonId}/player-memberships/${membership.id}`;
+      const manageUrl = origin
+        ? `/admin/player-memberships/${membership.id}?from=${origin}`
+        : `/admin/player-memberships/${membership.id}`;
       router.push(manageUrl);
       return;
     }
@@ -132,13 +135,13 @@ export const MembershipActions = ({ membership }: Props) => {
     } else if (action === "pause") {
       const startDate = formData.get("startDate") as string;
       const endDate = formData.get("endDate") as string;
-      
+
       if (!startDate || !endDate) {
         toast.error("Debes seleccionar las fechas de inicio y fin");
         setLoading(false);
         return;
       }
-      
+
       res = await createMembershipPause({
         id: membership.id,
         startDate: new Date(startDate).toISOString(),
@@ -281,9 +284,7 @@ export const MembershipActions = ({ membership }: Props) => {
                       className="w-full"
                       defaultValue={today(getLocalTimeZone())}
                     >
-                      <Label className="text-sm font-semibold">
-                        Fecha fin
-                      </Label>
+                      <Label className="text-sm font-semibold">Fecha fin</Label>
                       <DateField.Group variant="secondary">
                         <DateField.Input>
                           {(segment) => <DateField.Segment segment={segment} />}
@@ -339,13 +340,14 @@ export const MembershipActions = ({ membership }: Props) => {
                 )}
 
                 {selectedAction?.key !== "remove" && (
-                  <TextField 
-                    name="reason" 
+                  <TextField
+                    name="reason"
                     className="w-full"
                     isRequired={selectedAction?.key !== "activate"}
                   >
                     <Label className="text-sm font-semibold">
-                      Motivo u Observación {selectedAction?.key === "activate" && "(Opcional)"}
+                      Motivo u Observación{" "}
+                      {selectedAction?.key === "activate" && "(Opcional)"}
                     </Label>
                     <InputGroup>
                       <InputGroup.Prefix>

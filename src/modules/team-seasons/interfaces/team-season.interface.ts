@@ -43,6 +43,7 @@ export interface ITeamSeason {
   status: StatusTeamSeason;
   isRegistrationOpen: boolean;
   billingConfig?: ITeamSeasonBillingConfig;
+  teamSeasonStaffs?: any[];
   _count: {
     playerMemberships: number;
   };
@@ -93,4 +94,24 @@ export interface ITeamSeasonBillingConfig {
   lateFeeEnabled: boolean;
   lateFeePerDay: string;
   graceDays: number;
+}
+
+export interface Team {
+  id: string;
+  name: string;
+  shortName?: string | null;
+  description: string | null;
+  club: Club;
+}
+
+export interface Club {
+  id: string;
+  name: string;
+  discipline: Discipline;
+}
+
+export interface Discipline {
+  id: string;
+  name: string;
+  icon: string;
 }

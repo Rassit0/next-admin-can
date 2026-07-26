@@ -1,3 +1,4 @@
+"use client";
 import {
   ComboBox,
   FieldError,
@@ -149,7 +150,8 @@ export const SelectOrCreatePlayer = ({
                           </span>
                           {item.person.birthDate && (
                             <span className="text-xs text-default-500 truncate">
-                              • Edad deportiva: {calculateAge(item.person.birthDate)} años
+                              • Edad deportiva:{" "}
+                              {calculateAge(item.person.birthDate)} años
                             </span>
                           )}
                         </div>

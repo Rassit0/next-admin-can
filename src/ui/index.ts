@@ -1,3 +1,5 @@
+export { Crest } from "./components/crest";
+
 export * from "./components/sidebar/Sidebar";
 export * from "./components/header/Header";
 export * from "./components/bottom-navbar/BottonNavBar";
@@ -18,3 +20,7 @@ export * from "./components/button-redirection/ButtonEdit";
 
 export type * from "./interfaces/sidebar/sidebar";
 export * from "./components/navigation/TabsRouteNavigation";
+
+export * from "./components/particles-background/particles-background";
+
+export * from "./components/table-actions/TableActions";

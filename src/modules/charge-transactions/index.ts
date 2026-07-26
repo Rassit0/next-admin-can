@@ -8,10 +8,12 @@ export * from "./actions/add-discount";
 export * from "./actions/remove-discount";
 export * from "./actions/update";
 export * from "./actions/remove";
+export * from "./actions/get-persons-options";
 
 // Interfaces
 export * from "./interfaces/charges.interface";
 export * from "./interfaces/transactions.interface";
+export * from "./interfaces/options.interface";
 
 // Components
 export * from "./components/ChargeSummaryCard";
@@ -20,3 +22,4 @@ export * from "./components/drawer/PayChargeDrawer";
 export * from "./components/table/TableTransactions";
 export * from "./components/table/Table";
 export * from "./components/actions/ChargeActions";
+export * from "./components/drawer/SelectOrCreatePerson";

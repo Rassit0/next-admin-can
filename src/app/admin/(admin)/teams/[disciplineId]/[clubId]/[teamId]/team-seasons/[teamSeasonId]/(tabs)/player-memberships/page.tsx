@@ -61,21 +61,11 @@ export default async function PlayerMembershipsPage({
   const { disciplineId, clubId, teamId, teamSeasonId } = await params;
 
   const [membershipsResponse, teamSeasonResponse, paymentPlansResponse] =
-    await Promise.all([
+    await resolvePageData([
       getPlayerMemberships({ search, page, per_page, teamSeasonId, status }),
       getTeamSeasonById({ id: teamSeasonId }),
       getPaymentPlans({ per_page: "100", teamSeasonId }),
     ]);
-
-  if (membershipsResponse.error && membershipsResponse.statusCode === 401) {
-    redirect("/login");
-  }
-  if (teamSeasonResponse.error) {
-    return <ErrorPage message={teamSeasonResponse.message} />;
-  }
-  if (membershipsResponse.error) {
-    return <ErrorPage message={membershipsResponse.message} />;
-  }
 
   const teamSeason = teamSeasonResponse.data;
   const memberships = membershipsResponse.data.data;
@@ -89,6 +79,8 @@ export default async function PlayerMembershipsPage({
     FEMALE: "Femenino",
     MIXED: "Mixto",
   };
+
+  const basePath = `/admin/teams/player-memberships`;
 
   return (
     <>
@@ -110,7 +102,11 @@ export default async function PlayerMembershipsPage({
             showButtonBack={false}
           />
           <SectionFilters />
-          <TableMemberships memberships={memberships} teamSeason={teamSeason} />
+          <TableMemberships
+            memberships={memberships}
+            showTeamSeasonDetail={false}
+            origin="teams"
+          />
           <PaginationSection
             totalPages={meta.totalPages}
             itemsPerPage={meta.itemsPerPage}
@@ -123,3 +119,4 @@ export default async function PlayerMembershipsPage({
 }
 
 import { CreateMassiveManualChargeButton } from "@/modules/player-memberships";
+import { resolvePageData } from "@/utils/resolvePageData";

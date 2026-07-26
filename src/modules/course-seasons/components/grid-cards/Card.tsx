@@ -6,7 +6,7 @@ import {
   STATUS_TITLE_MAP,
   StatusCourseSeason,
 } from "@/modules/course-seasons";
-import { Card, Chip } from "@heroui/react";
+import { Card, Chip, Avatar } from "@heroui/react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Calendar03Icon, Money03Icon } from "@hugeicons/core-free-icons";
 import { ProgressMembers } from "./ProgressMembers";
@@ -64,6 +64,28 @@ export const CardCourseOffering = ({ courseSeason }: Props) => {
           label="Cupos Ocupados"
         />
       </div>
+
+      {(() => {
+        const primaryStaff = courseSeason.courseSeasonStaffs?.find((s) => s.isPrimary)?.staff.person || courseSeason.courseSeasonStaffs?.[0]?.staff.person;
+        if (!primaryStaff) return null;
+        return (
+          <div className="flex items-center gap-3 mb-4 bg-surface-container-low p-2 rounded-lg border border-border/50">
+            <Avatar size="sm">
+              {primaryStaff.imageUrl && (
+                <Avatar.Image src={primaryStaff.imageUrl} alt={`${primaryStaff.name} ${primaryStaff.lastName}`} />
+              )}
+              <Avatar.Fallback>{`${primaryStaff.name.charAt(0)}${primaryStaff.lastName.charAt(0)}`}</Avatar.Fallback>
+            </Avatar>
+            <div className="flex flex-col">
+              <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Entrenador Principal</span>
+              <span className="text-xs font-semibold text-foreground">
+                {primaryStaff.name} {primaryStaff.lastName}
+              </span>
+            </div>
+          </div>
+        );
+      })()}
+
       <div className="space-y-3 mb-6 flex-1">
         <div className="flex items-center gap-3 text-sm text-on-surface-variant">
           <HugeiconsIcon icon={Calendar03Icon} className="text-accent" />

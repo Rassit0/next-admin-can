@@ -10,6 +10,7 @@ export interface IPersonOption {
   lastName: string;
   secondLastName: string | null;
   documentNumber: string;
+  documentType: string;
   gender: string;
   birthDate: Date;
   imageUrl: string | null;

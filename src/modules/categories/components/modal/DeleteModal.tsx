@@ -6,7 +6,7 @@ import {
   toast,
   useOverlayState,
 } from "@heroui/react";
-import React, { useState } from "react";
+import React, { Dispatch, useState } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Delete01Icon } from "@hugeicons/core-free-icons";
 import { deleteCategory, ICategory } from "@/modules/categories";
@@ -16,16 +16,16 @@ interface Props {
   isIcon?: boolean;
   showButton?: boolean;
   isOpen?: boolean;
-  onOpenChange?: (open: boolean) => void;
+  setIsOpen?: Dispatch<React.SetStateAction<boolean>>;
 }
 export const DeleteModal = ({
   category,
   isIcon = false,
   showButton = true,
   isOpen,
-  onOpenChange,
+  setIsOpen,
 }: Props) => {
-  const state = useOverlayState({ isOpen, onOpenChange });
+  const state = useOverlayState({ isOpen, onOpenChange: setIsOpen });
   const [isLoading, setIsLoading] = useState(false);
 
   const handleDelete = async () => {

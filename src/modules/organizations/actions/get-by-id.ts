@@ -3,6 +3,7 @@ import { api } from "@/utils/api";
 import { ServiceResponse } from "@/types/api";
 import { handleServerAction } from "@/utils";
 import { IOrganization } from "../interfaces/organization.interface";
+import { auth } from "@/auth";
 
 interface SearchParams {
   id: string;
@@ -12,6 +13,16 @@ interface SearchParams {
 export const getOrganizationById = async ({
   id,
 }: SearchParams): Promise<ServiceResponse<IOrganization>> => {
+  const session = await auth();
+  console.log("session desde getCategories:", session?.user);
+
+  if (!session?.user?.token)
+    return {
+      error: true,
+      statusCode: 401,
+      message: "Su sesión ha expirado. Por favor, inicie sesión nuevamente.",
+    };
+
   return handleServerAction(async () => {
     const res = await api.get<{ message: string; data: IOrganization }>(
       `organizations/${id}`,
@@ -19,6 +30,9 @@ export const getOrganizationById = async ({
         next: {
           tags: ["organizations"],
           revalidate: 3600,
+        },
+        headers: {
+          Authorization: `Bearer ${session.user.token}`,
         },
       },
     );

@@ -1,13 +1,20 @@
 "use client";
 import { Avatar, Button, Checkbox, Chip, Table } from "@heroui/react";
-import { EyeIcon , Search01Icon } from "@hugeicons/core-free-icons";
+import {
+  Delete01Icon,
+  Edit03Icon,
+  EyeIcon,
+  Search01Icon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useEffect, useState } from "react";
 import { ButtonGestion } from "./ButtonGestion";
 import { EditModal } from "../modal/EditModal";
-import { SortableColumnHeader } from "@/ui";
+import { SortableColumnHeader, TableActions } from "@/ui";
 import { DeleteModal } from "../modal/DeleteModal";
 import { iconMap } from "@/utils";
+import { useSession } from "next-auth/react";
+import { usePermissions } from "@/shared/providers/PermissionsProvider";
 import { ICategory, IDisciplineOptions } from "@/modules/categories";
 
 interface Props {
@@ -16,6 +23,21 @@ interface Props {
 }
 
 export const TableCategories = ({ categories, disciplinesOptions }: Props) => {
+  const { data, status } = useSession();
+  const permissions = usePermissions();
+
+  const create = permissions.some((p) => p === "CREATE_CATEGORIES");
+  const edit = permissions.some((p) => p === "UPDATE_CATEGORIES");
+  const del = permissions.some((p) => p === "DELETE_CATEGORIES");
+
+  // Estado para los modales centralizados
+  const [selectedCategory, setSelectedCategory] = useState<ICategory | null>(
+    null,
+  );
+  const [isOpenEditModal, setIsOpenEditModal] = useState(false);
+  const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
+  // const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
+
   const [isClient, setIsClient] = useState(false);
 
   // Evitamos la hidratación fallida
@@ -110,27 +132,59 @@ export const TableCategories = ({ categories, disciplinesOptions }: Props) => {
                 </Table.Cell>
 
                 <Table.Cell>
-                  <div className="flex items-center justify-center gap-1">
-                    <ButtonGestion
-                      id={category.id}
-                      clubId={category.discipline.id}
-                    />
-                    <Button isIconOnly size="sm" variant="tertiary">
-                      <HugeiconsIcon icon={EyeIcon} />
-                    </Button>
-                    <EditModal
-                      category={category}
-                      disciplinesOptions={disciplinesOptions}
-                      isIcon={true}
-                    />
-                    <DeleteModal category={category} isIcon={true} />
-                  </div>
+                  <TableActions
+                    actions={[
+                      {
+                        key: "edit",
+                        label: "Editar",
+                        permission: "UPDATE_CATEGORIES",
+                        icon: Edit03Icon,
+                        onPress: () => {
+                          setSelectedCategory(category);
+                          setIsOpenEditModal(true);
+                        },
+                      },
+                      {
+                        key: "delete",
+                        danger: true,
+                        label: "Eliminar",
+                        permission: "DELETE_CATEGORIES",
+                        icon: Delete01Icon,
+                        onPress: () => {
+                          setSelectedCategory(category);
+                          setIsOpenDeleteModal(true);
+                        },
+                      },
+                    ]}
+                  />
                 </Table.Cell>
               </Table.Row>
             ))}
           </Table.Body>
         </Table.Content>
       </Table.ScrollContainer>
+
+      {/* Modales centralizados (solo se monta 1 vez) */}
+      {selectedCategory && isOpenEditModal && (
+        <EditModal
+          category={selectedCategory}
+          disciplinesOptions={disciplinesOptions}
+          showButton={false}
+          isOpen={isOpenEditModal}
+          setIsOpen={setIsOpenEditModal}
+        />
+      )}
+
+      {/* Modales centralizados (solo se monta 1 vez) */}
+      {selectedCategory && isOpenDeleteModal && (
+        <DeleteModal
+          category={selectedCategory}
+          isIcon={true}
+          showButton={false}
+          isOpen={isOpenDeleteModal}
+          setIsOpen={setIsOpenDeleteModal}
+        />
+      )}
     </Table>
   );
 };

@@ -1,8 +1,10 @@
-"use server";
+﻿"use server";
 import { api } from "@/utils/api";
 import { ServiceResponse } from "@/types/api";
 import { handleServerAction } from "@/utils";
 import { ICategoryResponse } from "@/modules/categories";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
 interface SearchParams {
   search?: string;
@@ -18,6 +20,16 @@ export const getCategories = async ({
   page = "1",
   clubId,
 }: SearchParams): Promise<ServiceResponse<ICategoryResponse>> => {
+  const session = await auth();
+  console.log("session desde getCategories:", session?.user);
+
+  if (!session?.user?.token)
+    return {
+      error: true,
+      statusCode: 401,
+      message: "Su sesión ha expirado. Por favor, inicie sesión nuevamente.",
+    };
+
   return handleServerAction(async () => {
     const params = new URLSearchParams();
     if (search) params.set("search", search);
@@ -31,6 +43,9 @@ export const getCategories = async ({
         next: {
           tags: ["categories"],
           revalidate: 3600,
+        },
+        headers: {
+          Authorization: `Bearer ${session.user.token}`,
         },
       },
     );

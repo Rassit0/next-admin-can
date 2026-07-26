@@ -1,3 +1,4 @@
+import { logoutAction } from "@/modules/auth/actions/logout";
 import {
   Add01Icon,
   Logout01Icon,
@@ -22,15 +23,18 @@ export const Footer = () => {
           Configuración
         </span>
       </a>
-      <a
-        className="flex items-center justify-center lg:justify-start gap-3 px-3 py-3 rounded-xl transition-colors duration-200 text-slate-500 dark:text-slate-400 hover:text-sky-600 hover:bg-slate-200/50 dark:hover:bg-slate-800"
-        href="#"
+      {/* <form action={logoutAction} className="w-full"> */}
+      <button
+        // type="submit"
+        onClick={logoutAction}
+        className="flex w-full items-center justify-center lg:justify-start gap-3 px-3 py-3 rounded-xl transition-colors duration-200 text-slate-500 dark:text-slate-400 hover:text-sky-600 hover:bg-slate-200/50 dark:hover:bg-slate-800"
       >
         <HugeiconsIcon icon={Logout01Icon} />
         <span className="text-sm font-semibold hidden lg:block nav-text">
           Cerrar Sesión
         </span>
-      </a>
+      </button>
+      {/* </form> */}
     </div>
   );
 };

@@ -71,6 +71,10 @@ export const EnrollMembershipDrawer = ({
     getInitialDate(courseSeason.season.startDate),
   );
   const [isMigrated, setIsMigrated] = useState(false);
+  const [chargeRegistrationOnMigration, setChargeRegistrationOnMigration] =
+    useState(false);
+  const [chargeCurrentMonthOnMigration, setChargeCurrentMonthOnMigration] =
+    useState(false);
 
   const [hasDiscount, setHasDiscount] = useState(false);
   const [regDiscountPercent, setRegDiscountPercent] = useState<string>("");
@@ -182,6 +186,8 @@ export const EnrollMembershipDrawer = ({
     setPlanKey(paymentPlans.find((p) => p.isDefault)?.id ?? null);
     setStartedAt(getInitialDate(courseSeason.season.startDate));
     setIsMigrated(false);
+    setChargeRegistrationOnMigration(false);
+    setChargeCurrentMonthOnMigration(false);
     setHasDiscount(false);
     setRegDiscountPercent("");
     setRecDiscountPercent("");
@@ -201,6 +207,8 @@ export const EnrollMembershipDrawer = ({
     planKey,
     startedAt,
     isMigrated,
+    chargeRegistrationOnMigration,
+    chargeCurrentMonthOnMigration,
     hasDiscount,
     regDiscountPercent,
     recDiscountPercent,
@@ -217,6 +225,10 @@ export const EnrollMembershipDrawer = ({
       paymentPlanId: planKey,
       startDate: toLocalIso(startedAt)!,
       isMigrated,
+      ...(isMigrated && {
+        chargeRegistrationOnMigration,
+        chargeCurrentMonthOnMigration,
+      }),
       ...(hasDiscount &&
         (regDiscountPercent !== "" ||
           recDiscountPercent !== "" ||
@@ -262,6 +274,10 @@ export const EnrollMembershipDrawer = ({
       paymentPlanId: planKey!,
       startedAt: toLocalIso(startedAt)!,
       isMigrated,
+      ...(isMigrated && {
+        chargeRegistrationOnMigration,
+        chargeCurrentMonthOnMigration,
+      }),
       ...(hasDiscount && {
         membershipDiscounts: [
           {
@@ -384,14 +400,14 @@ export const EnrollMembershipDrawer = ({
                   <Alert.Content>
                     <Alert.Title>
                       Categoría: {courseSeason.category.name} (
-                      {courseSeason.category.minAge} -{" "}
-                      {courseSeason.category.maxAge} años)
+                      {courseSeason.category.minAge} a{" "}
+                      {courseSeason.category.maxAge || "Sin límite"} años)
                     </Alert.Title>
                     <Alert.Description>
                       <p className="mb-1">
                         {courseSeason.minBirthYear || courseSeason.maxBirthYear
                           ? `Años de nacimiento permitidos: ${courseSeason.minBirthYear || "Cualquiera"} al ${courseSeason.maxBirthYear || "Cualquiera"}`
-                          : `El atleta debe tener entre ${courseSeason.category.minAge} y ${courseSeason.category.maxAge} años en el año actual.`}
+                          : `El atleta debe tener ${courseSeason.category.maxAge ? `entre ${courseSeason.category.minAge} y ${courseSeason.category.maxAge} años` : `${courseSeason.category.minAge} años en adelante`} en el año actual.`}
                       </p>
                       <p>
                         <strong>Duración de la temporada:</strong>{" "}
@@ -716,18 +732,56 @@ export const EnrollMembershipDrawer = ({
                 </div>
 
                 {/* Switch for migration */}
-                <div className="flex items-center gap-2 px-1">
-                  <Switch isSelected={isMigrated} onChange={setIsMigrated}>
-                    <Switch.Content>
-                      <Switch.Control>
-                        <Switch.Thumb />
-                      </Switch.Control>
-                      <Label className="text-sm flex items-center">
-                        Es Migración (omitir cargos iniciales)
-                        <InfoTooltip text="Activa esta opción si el jugador ya está en la temporada por migración de datos y NO deseas generar sus cargos de inscripción ahora." />
-                      </Label>
-                    </Switch.Content>
-                  </Switch>
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-center gap-2 px-1">
+                    <Switch isSelected={isMigrated} onChange={setIsMigrated}>
+                      <Switch.Content>
+                        <Switch.Control>
+                          <Switch.Thumb />
+                        </Switch.Control>
+                        <Label className="text-sm flex items-center">
+                          Es Migración (omitir cargos anteriores)
+                          <InfoTooltip text="Activa esta opción si el atleta ya inició su temporada en otro sistema, y sólo deseas facturarle desde el mes actual en adelante. Ignorará cuotas de meses previos." />
+                        </Label>
+                      </Switch.Content>
+                    </Switch>
+                  </div>
+                  {isMigrated && (
+                    <div className="flex flex-col gap-4 pl-4 border-l-2 border-border mb-2">
+                      <div className="flex items-center gap-2 px-1">
+                        <Switch
+                          isSelected={chargeRegistrationOnMigration}
+                          onChange={setChargeRegistrationOnMigration}
+                        >
+                          <Switch.Content>
+                            <Switch.Control>
+                              <Switch.Thumb />
+                            </Switch.Control>
+                            <Label className="text-sm flex items-center">
+                              Cobrar Matrícula (Opcional)
+                              <InfoTooltip text="Fuerza la creación de la factura por inscripción/matrícula a pesar de ser migrado, en caso de que aún deba la inscripción." />
+                            </Label>
+                          </Switch.Content>
+                        </Switch>
+                      </div>
+                      <div className="flex items-center gap-2 px-1">
+                        <Switch
+                          isSelected={chargeCurrentMonthOnMigration}
+                          onChange={setChargeCurrentMonthOnMigration}
+                        >
+                          <Switch.Content>
+                            <Switch.Control>
+                              <Switch.Thumb />
+                            </Switch.Control>
+                            <Label className="text-sm flex items-center">
+                              Cobrar Mes Actual (Opcional)
+                              <InfoTooltip text="Por defecto la migración asume que este mes ya está pagado. Si activas esto, se generará la cuota del mes correspondiente a la fecha de inicio seleccionada." />
+                            </Label>
+                          </Switch.Content>
+                        </Switch>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* {JSON.stringify({

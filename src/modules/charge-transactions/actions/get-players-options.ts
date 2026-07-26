@@ -3,6 +3,7 @@ import { api } from "@/utils/api";
 import { ServiceResponse } from "@/types/api";
 import { handleServerAction } from "@/utils";
 import { IPlayersOptionsResponse } from "@/modules/player-memberships";
+import { auth } from "@/auth";
 
 interface SearchParams {
   search?: string;
@@ -15,6 +16,15 @@ export const getPlayersOptions = async (
   { search, per_page = "10", page = "1", orderBy = "asc" }: SearchParams,
   signal?: AbortSignal,
 ): Promise<ServiceResponse<IPlayersOptionsResponse>> => {
+  const session = await auth();
+
+  if (!session?.user?.token)
+    return {
+      error: true,
+      statusCode: 401,
+      message: "Su sesión ha expirado. Por favor, inicie sesión nuevamente.",
+    };
+
   return handleServerAction(async () => {
     const params = new URLSearchParams();
     if (search) params.set("search", search);
@@ -28,6 +38,9 @@ export const getPlayersOptions = async (
         next: {
           tags: ["players", "persons"],
           revalidate: 60 * 60 * 24 * 7, //1 semana
+        },
+        headers: {
+          Authorization: `Bearer ${session.user.token}`,
         },
         signal,
       },

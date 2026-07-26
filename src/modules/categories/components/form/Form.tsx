@@ -11,6 +11,7 @@ import {
   ComboBox,
   Select,
   ListBox,
+  Description,
 } from "@heroui/react";
 import React, { useCallback, useState } from "react";
 import {
@@ -62,9 +63,6 @@ export const FormCategory = ({
     if (!minAge) {
       newErrors.minAge = "Debe ingresar un año minimo";
     }
-    if (!maxAge) {
-      newErrors.maxAge = "Debe ingresar un año maximo";
-    }
     if (minAge && maxAge && minAge > maxAge) {
       newErrors.maxAge = "El año maximo debe ser mayor al año minimo";
     }
@@ -80,7 +78,7 @@ export const FormCategory = ({
     const data = {
       name: name!,
       minAge: minAge!,
-      maxAge: maxAge!,
+      maxAge: maxAge ?? undefined,
       disciplineId: disciplineId!,
       description,
     };
@@ -107,7 +105,7 @@ export const FormCategory = ({
 
       // 2. Pasamos la descripción formateada al componente de notificaciones
       toast.danger(res.message, {
-        description: errorDescription,
+        // description: errorDescription,
       });
       if (res.errors) {
         setErrors(res.errors);
@@ -144,17 +142,16 @@ export const FormCategory = ({
         </TextField>
 
         <TextField
-          isRequired
           className="w-full"
           name="maxAge"
           type="text"
           isInvalid={!!errors.maxAge || undefined}
         >
-          <Label>Edad Max.</Label>
+          <Label>Edad Max. (Opcional)</Label>
           <Input
             variant="secondary"
             min={2}
-            placeholder="12"
+            placeholder="Ej. 18"
             type="number"
             value={maxAge || ""}
             onChange={(e) => {
@@ -162,6 +159,9 @@ export const FormCategory = ({
               handleRemoveError("maxAge");
             }}
           />
+          <Description>
+            Deje vacío si la categoría no tiene límite de edad máxima.
+          </Description>
           <FieldError children={errors.maxAge && <> {errors.maxAge}</>} />
         </TextField>
         <TextField

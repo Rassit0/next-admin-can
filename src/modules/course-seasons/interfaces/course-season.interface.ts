@@ -43,6 +43,7 @@ export interface ICourseSeason {
   status: StatusCourseSeason;
   isRegistrationOpen: boolean;
   billingConfig?: ICourseSeasonBillingConfig;
+  courseSeasonStaffs?: any[];
   _count: {
     studentMemberships: number;
   };

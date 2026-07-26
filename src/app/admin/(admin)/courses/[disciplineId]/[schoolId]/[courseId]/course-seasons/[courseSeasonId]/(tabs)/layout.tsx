@@ -33,6 +33,7 @@ export default async function CourseSeasonDetailLayout({ children, params }: Lay
 
   const tabsRoutes = [
     { value: "/", title: "Información General" },
+    { value: "/staff", title: "Personal" },
     { value: "/student-memberships", title: "Membresías" },
     { value: "/payment-plans", title: "Planes de Pago" },
     { value: "/payments", title: "Transacciones" },

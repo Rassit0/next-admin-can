@@ -1,17 +1,13 @@
-import { EditModal, getClubById, IClub } from "@/modules/clubs";
 import {
   AddModal,
-  FiltersBar,
-  MetricsPanel,
-  GridCards,
   getClubsOptions,
   SelectClubOptions,
   getDisciplinesOptions,
   SelectDisciplineOptions,
+  getClubContext,
+  getTeams,
 } from "@/modules/teams";
-import { getTeams } from "@/modules/teams";
 import { TableTeams } from "@/modules/teams/components/table/Table";
-import { ServiceResponse } from "@/types/api";
 import { ErrorPage, HeaderPage, PaginationSection, SectionFilters } from "@/ui";
 import { Card, Separator, Surface } from "@heroui/react";
 import { FootballIcon, Structure04FreeIcons } from "@hugeicons/core-free-icons";
@@ -45,7 +41,7 @@ export default async function TeamsPage({ searchParams, params }: Props) {
     }),
     getClubsOptions(disciplineId),
     getDisciplinesOptions(),
-    getClubById({ id: clubId }),
+    getClubContext({ id: clubId }),
   ]);
 
   // 1. Manejo de error específico (Ej: 401 no autorizado)

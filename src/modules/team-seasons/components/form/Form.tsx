@@ -4,7 +4,6 @@ import { BasicInfoCard } from "./BasicInfoCard";
 import { CapacityCard } from "./CapacityCard";
 import { DelayPoliciesCard } from "./DelayPoliciesCard";
 import { FinancialStructureCard } from "./FinancialStructureCard";
-import { ITeam } from "@/modules/teams";
 import { useCallback, useRef, useState } from "react";
 
 import { Alert, Button, Form, toast } from "@heroui/react";
@@ -21,12 +20,13 @@ import {
   IPostTeamSeason,
   SeasonBillingType,
   BillingFrequency,
+  Team,
 } from "@/modules/team-seasons";
 import { STATUS_TEXT_MAP } from "../../constants/team-seasons.constants";
 
 interface Props {
   formId: string;
-  team: ITeam;
+  team: Team;
   teamSeason?: ITeamSeason;
   categoriesOptions: ICategoryOption[];
   seasonsOptions: ISeasonOption[];

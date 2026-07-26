@@ -1,9 +1,10 @@
 import { ErrorPage } from "@/ui";
 import { getCourseSeasonById, getCourseSeasonSummary } from "@/modules/course-seasons";
 import { MetricsCards } from "@/modules/student-memberships";
-import { Button, Card, Alert, Chip, Popover } from "@heroui/react";
+import { Avatar, Button, Card, Alert, Chip, Popover } from "@heroui/react";
 import { InformationCircleIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { STAFF_ROLES_TRANSLATOR } from "@/utils/constants";
 
 const InfoTooltip = ({ text }: { text: string }) => (
   <Popover>
@@ -58,6 +59,37 @@ export default async function CourseSeasonDashboardPage({ params }: Props) {
 
   return (
     <div className="flex flex-col gap-6">
+      {courseSeason.courseSeasonStaffs && courseSeason.courseSeasonStaffs.length > 0 && (
+        <Card className="p-6 shadow-[0px_4px_12px_rgba(0,0,0,0.06)] border border-border flex flex-col gap-5 bg-surface-container-lowest">
+          <div className="flex items-center justify-between">
+            <h3 className="font-headline font-bold text-lg">
+              Personal Asignado
+            </h3>
+          </div>
+          <hr className="border-border" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {courseSeason.courseSeasonStaffs.map((staffAssignment) => (
+              <div key={staffAssignment.id} className="flex items-center gap-3 bg-surface-container-low p-3 rounded-xl border border-border/50">
+                <Avatar size="md">
+                  {staffAssignment.staff.person.imageUrl && (
+                    <Avatar.Image src={staffAssignment.staff.person.imageUrl} alt={`${staffAssignment.staff.person.name} ${staffAssignment.staff.person.lastName}`} />
+                  )}
+                  <Avatar.Fallback>{`${staffAssignment.staff.person.name.charAt(0)}${staffAssignment.staff.person.lastName.charAt(0)}`}</Avatar.Fallback>
+                </Avatar>
+                <div className="flex flex-col">
+                  <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+                    {staffAssignment.isPrimary ? "Profesor Principal" : "Staff"} • {STAFF_ROLES_TRANSLATOR[staffAssignment.role] || staffAssignment.role}
+                  </span>
+                  <span className="text-sm font-semibold text-foreground">
+                    {staffAssignment.staff.person.name} {staffAssignment.staff.person.lastName}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Card>
+      )}
+
       <Card className="p-6 shadow-[0px_4px_12px_rgba(0,0,0,0.06)] border border-border flex flex-col gap-5 bg-surface-container-lowest">
         <div className="flex items-center justify-between">
           <h3 className="font-headline font-bold text-lg">

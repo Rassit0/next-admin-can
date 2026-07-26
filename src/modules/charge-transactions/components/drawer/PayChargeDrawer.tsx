@@ -23,6 +23,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ICharge } from "../../interfaces/charges.interface";
 import { addTransaction } from "../../actions/add-transaction";
+import { SelectOrCreatePerson } from "./SelectOrCreatePerson";
+import { IPersonOption } from "@/modules/charge-transactions";
 
 interface Props {
   isOpen: boolean;
@@ -35,6 +37,12 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
   const pendingAmount = Number(charge.pendingAmount || 0);
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const [personId, setPersonId] = useState<string | null>(null);
+  const [selectedPerson, setSelectedPerson] = useState<IPersonOption | null>(
+    null,
+  );
+
   const [paymentMethod, setPaymentMethod] = useState<string>("CASH");
   const [amount, setAmount] = useState<string>(pendingAmount.toString());
   const [transactionDate, setTransactionDate] = useState<string>(
@@ -63,10 +71,13 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
       const amountNum = Number(amount || pendingAmount);
       const method = paymentMethod as "CASH" | "TRANSFER" | "QR";
 
+      if (!personId) {
+        toast.danger("Debe seleccionar una persona.");
+        return;
+      }
+
       if (pendingAmount > 0 && amountNum <= 0) {
-        toast.danger(
-          "El monto debe ser mayor a 0 si existe deuda pendiente.",
-        );
+        toast.danger("El monto debe ser mayor a 0 si existe deuda pendiente.");
         return;
       }
 
@@ -78,10 +89,11 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
       }
 
       const res = await addTransaction({
-        payerPersonId:
-          charge.membershipCharges?.[0]?.playerMembership?.player?.person?.id ||
-          charge.studentCharges?.[0]?.studentMembership?.student?.person?.id ||
-          "",
+        // payerPersonId:
+        //   charge.membershipCharges?.[0]?.playerMembership?.player?.person?.id ||
+        //   charge.studentCharges?.[0]?.studentMembership?.student?.person?.id ||
+        //   "",
+        payerPersonId: personId!,
         amount: amountNum,
         type: "INCOME",
         paymentMethod: method,
@@ -130,7 +142,9 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
               <div className="bg-primary-50 p-4 rounded-xl border border-primary-100 flex flex-col gap-2">
                 <div className="flex justify-between items-center text-sm">
                   <span className="text-primary-600">Monto Base</span>
-                  <span className={`font-semibold ${Number(charge.discountAmount) > 0 ? "line-through text-primary-400" : "text-primary-700"}`}>
+                  <span
+                    className={`font-semibold ${Number(charge.discountAmount) > 0 ? "line-through text-primary-400" : "text-primary-700"}`}
+                  >
                     {Number(charge.amount).toFixed(2)} Bs
                   </span>
                 </div>
@@ -138,32 +152,59 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
                   <>
                     <div className="flex justify-between items-center text-sm">
                       <span className="text-primary-600">Descuento</span>
-                      <span className="font-semibold text-success-600">-{Number(charge.discountAmount).toFixed(2)} Bs</span>
+                      <span className="font-semibold text-success-600">
+                        -{Number(charge.discountAmount).toFixed(2)} Bs
+                      </span>
                     </div>
                     <div className="flex justify-between items-center text-sm border-t border-primary-200 border-dashed pt-2 mt-1">
-                      <span className="text-primary-600 font-medium">Total Esperado</span>
+                      <span className="text-primary-600 font-medium">
+                        Total Esperado
+                      </span>
                       <span className="font-bold text-primary-700">
-                        {(Number(charge.amount) - Number(charge.discountAmount)).toFixed(2)} Bs
+                        {(
+                          Number(charge.amount) - Number(charge.discountAmount)
+                        ).toFixed(2)}{" "}
+                        Bs
                       </span>
                     </div>
                   </>
                 )}
-                
-                {Number(charge.amount) - Number(charge.discountAmount || 0) - pendingAmount > 0 && (
+
+                {Number(charge.amount) -
+                  Number(charge.discountAmount || 0) -
+                  pendingAmount >
+                  0 && (
                   <div className="flex justify-between items-center text-sm text-warning-600">
                     <span>Abonado hasta ahora</span>
                     <span className="font-semibold text-warning-600">
-                      -{(Number(charge.amount) - Number(charge.discountAmount || 0) - pendingAmount).toFixed(2)} Bs
+                      -
+                      {(
+                        Number(charge.amount) -
+                        Number(charge.discountAmount || 0) -
+                        pendingAmount
+                      ).toFixed(2)}{" "}
+                      Bs
                     </span>
                   </div>
                 )}
                 <div className="flex justify-between items-center border-t border-primary-200 pt-2 mt-1">
-                  <span className="text-primary-700 font-medium">Saldo a Pagar</span>
+                  <span className="text-primary-700 font-medium">
+                    Saldo a Pagar
+                  </span>
                   <span className="text-2xl font-bold text-primary font-mono">
                     {pendingAmount.toFixed(2)} Bs
                   </span>
                 </div>
               </div>
+
+              <SelectOrCreatePerson
+                personId={personId}
+                setPersonId={setPersonId}
+                setSelectedPerson={setSelectedPerson}
+                // isDisabled={noPlayers}
+                label="Pagador"
+                errors={errors}
+              />
 
               <TextField
                 className="w-full"

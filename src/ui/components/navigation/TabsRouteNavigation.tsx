@@ -33,7 +33,7 @@ export const TabsRouteNavigation = ({
     const nextPath = value === "/" ? basePath : `${basePath}${value}`;
 
     startTransition(() => {
-      router.push(nextPath, {
+      router.replace(nextPath, {
         scroll: false,
       });
     });

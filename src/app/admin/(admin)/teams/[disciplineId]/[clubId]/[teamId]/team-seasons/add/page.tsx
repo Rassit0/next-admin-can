@@ -3,8 +3,8 @@ import {
   FormTeamSeason,
   getCategoriesByDisciplineOptions,
   getSeasonsByDisciplineOptions,
+  getTeamContext,
 } from "@/modules/team-seasons";
-import { getTeamById } from "@/modules/teams";
 import { ErrorPage, HeaderPage } from "@/ui";
 import { redirect } from "next/navigation";
 
@@ -15,7 +15,7 @@ interface Props {
 export default async function AddTeamSeasonPage({ params }: Props) {
   const { disciplineId, clubId, teamId } = await params;
   const [teamResponse, categoriesOptions, seasonsOptions] = await Promise.all([
-    getTeamById({ id: teamId }),
+    getTeamContext({ id: teamId }),
     getCategoriesByDisciplineOptions(disciplineId),
     getSeasonsByDisciplineOptions(disciplineId),
   ]);

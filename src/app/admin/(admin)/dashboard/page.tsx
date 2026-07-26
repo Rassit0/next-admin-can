@@ -215,7 +215,7 @@ export default function DashboardPage() {
               />
               Actividad
             </h3>
-            <div className="relative space-y-8 before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-0.5 before:bg-white/10">
+            <div className="relative space-y-8 before:absolute before:left-2.75 before:top-2 before:bottom-2 before:w-0.5 before:bg-white/10">
               {/* <!-- Activity 1 --> */}
               <div className="relative pl-8">
                 <div className="absolute left-0 top-1 w-6 h-6 rounded-full bg-sky-500 flex items-center justify-center">

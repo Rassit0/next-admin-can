@@ -13,6 +13,7 @@ import Link from "next/link";
 interface Props {
   charges: ICharge[];
   showPerson?: boolean;
+  urlBase?: string;
 }
 
 const formatCurrency = (amount: number | string) => {
@@ -23,7 +24,11 @@ const formatCurrency = (amount: number | string) => {
   }).format(value);
 };
 
-export const TableCharges = ({ charges, showPerson = false }: Props) => {
+export const TableCharges = ({
+  charges,
+  showPerson = false,
+  urlBase,
+}: Props) => {
   const [isClient, setIsClient] = useState(false);
   const [selectedCharge, setSelectedCharge] = useState<ICharge | null>(null);
   const params = useParams();
@@ -232,16 +237,11 @@ export const TableCharges = ({ charges, showPerson = false }: Props) => {
                           charge.studentCharges?.[0]?.studentMembership?.id ||
                           params?.playerMembershipId;
 
-                        const detailsHref =
-                          params?.disciplineId && membershipId
-                            ? `/admin/teams/${params.disciplineId}/${params.clubId}/${params.teamId}/team-seasons/${params.teamSeasonId}/player-memberships/${membershipId}/${charge.id}/transactions`
-                            : undefined;
-
                         return (
                           <ChargeActions
                             charge={charge}
                             onPay={(c) => setSelectedCharge(c)}
-                            detailsHref={detailsHref}
+                            detailsHref={urlBase ? `${urlBase}${charge.id}/transactions` : undefined}
                           />
                         );
                       })()}
