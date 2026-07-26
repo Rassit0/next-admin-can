@@ -6,13 +6,11 @@ import {
 } from "@/modules/module-louncher";
 import { getInstitutions } from "@/modules/organizations";
 import { ErrorPage, Header } from "@/ui";
+import { resolvePageData } from "@/utils/resolvePageData";
 
 export default async function HomePage() {
-  const [institutionsResponse] = await Promise.all([getInstitutions({})]);
+  const [institutionsResponse] = await resolvePageData([getInstitutions({})]);
 
-  if (institutionsResponse.error || !institutionsResponse.data) {
-    return <ErrorPage message={institutionsResponse.message} />;
-  }
   const institution = institutionsResponse.data.data[0];
 
   return (
