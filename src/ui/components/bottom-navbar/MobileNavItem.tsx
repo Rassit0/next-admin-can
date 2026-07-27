@@ -42,7 +42,7 @@ export const MobileNavItem = ({ item, urlBase, isActive, onClick }: Props) => {
             {item.icon}
           </div>
           {item.label && (
-            <span className="font-inter text-[9px] font-bold tracking-tight whitespace-nowrap uppercase mt-0.5 text-center w-full px-0.5">
+            <span className="font-inter text-[8px] sm:text-[9px] font-bold tracking-tighter uppercase mt-1 text-center w-full truncate px-0.5">
               {item.label}
             </span>
           )}

@@ -48,7 +48,7 @@ export const BottonNavBar = ({ items, urlBase }: Props) => {
   return (
     <>
       {/* Contenedor wrapper para asegurar el espacio de seguridad inferior del dispositivo y mantener la barra flotante */}
-      <div className="lg:hidden fixed bottom-0 left-0 w-full z-50 px-4 pb-4 pb-safe pointer-events-none flex justify-center">
+      <div className="lg:hidden fixed bottom-0 left-0 w-full z-50 px-3 pb-3 pb-safe pointer-events-none flex justify-center">
         <motion.nav
           variants={{
             visible: { y: 0, opacity: 1 },
@@ -58,7 +58,7 @@ export const BottonNavBar = ({ items, urlBase }: Props) => {
           transition={springTransition}
           className="w-full max-w-md bg-white/75 dark:bg-slate-900/75 backdrop-blur-3xl border border-white/40 dark:border-slate-700/50 shadow-2xl flex justify-between items-center px-2 py-1.5 rounded-3xl pointer-events-auto"
         >
-          <div className="flex w-full justify-between items-center gap-1 relative">
+          <div className="flex w-full justify-between items-center gap-0 relative">
             {leftItems.map((item, index) => (
               <div
                 key={`left-${index}`}
@@ -74,7 +74,7 @@ export const BottonNavBar = ({ items, urlBase }: Props) => {
             ))}
 
             {showMoreButton && (
-              <div className="flex-[1.2] flex justify-center relative shrink-0">
+              <div className="flex-[0.9] md:flex-[1.2] flex justify-center relative shrink-0">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.92 }}
