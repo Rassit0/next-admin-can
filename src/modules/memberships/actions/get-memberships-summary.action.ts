@@ -19,6 +19,8 @@ export const getMembershipsSummary = async (): Promise<
             "memberships",
             "player-memberships",
             "student-memberships",
+            "charges",
+            "transactions",
           ],
           revalidate: 60, // Refresh every 60 seconds or adjust as needed
         },
