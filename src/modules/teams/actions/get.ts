@@ -3,7 +3,6 @@ import { api } from "@/utils/api";
 import { ServiceResponse } from "@/types/api";
 import { handleServerAction } from "@/utils";
 import { ITeamsResponse } from "../interfaces/team.interface";
-import { auth } from "@/auth";
 
 interface SearchParams {
   search?: string;
@@ -19,16 +18,6 @@ export const getTeams = async ({
   page = "1",
   clubId,
 }: SearchParams): Promise<ServiceResponse<ITeamsResponse>> => {
-  const session = await auth();
-  console.log("session desde getTeams:", session?.user);
-
-  if (!session?.user?.token)
-    return {
-      error: true,
-      statusCode: 401,
-      message: "Su sesión ha expirado. Por favor, inicie sesión nuevamente.",
-    };
-
   return handleServerAction(async () => {
     const params = new URLSearchParams();
     if (search) params.set("search", search);
@@ -40,9 +29,6 @@ export const getTeams = async ({
       next: {
         tags: ["teams"],
         revalidate: 3600,
-      },
-      headers: {
-        Authorization: `Bearer ${session.user.token}`,
       },
     });
 

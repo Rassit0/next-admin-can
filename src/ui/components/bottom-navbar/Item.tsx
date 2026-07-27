@@ -2,7 +2,7 @@
 import { NavItem } from "@/ui/interfaces/sidebar/sidebar";
 import clsx from "clsx";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 
 interface Props {
   item: NavItem;
@@ -11,6 +11,8 @@ interface Props {
 }
 export const Item = ({ item, index, urlBase }: Props) => {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const fromContext = searchParams.get("from");
 
   // Obtener el path despues de la urlBase si existe
   const currentPath = pathname.replace(urlBase ?? "", "");
@@ -21,8 +23,11 @@ export const Item = ({ item, index, urlBase }: Props) => {
   // Obtener el primer segmento del item
   const itemSegment = item.href.split("/").filter(Boolean)[0] ?? "/";
 
-  // Si el primer segmento del path es igual al primer segmento del item, entonces el item esta activo
-  const isActive = currentSegment === itemSegment;
+  // Si hay un parámetro 'from', sobreescribe el segmento actual para mantener el bottom navbar en contexto
+  const effectiveSegment = fromContext || currentSegment;
+
+  // Si el primer segmento efectivo es igual al primer segmento del item, el item esta activo
+  const isActive = effectiveSegment === itemSegment;
   return (
     <Link
       key={index}

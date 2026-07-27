@@ -8,15 +8,6 @@ import { auth } from "@/auth";
 export const getDisciplinesOptions = async (): Promise<
   ServiceResponse<IDisciplineOptionsResponse>
 > => {
-  const session = await auth();
-
-  if (!session?.user)
-    return {
-      error: true,
-      statusCode: 401,
-      message: "Su sesión ha expirado. Por favor, inicie sesión nuevamente.",
-    };
-
   return handleServerAction(async () => {
     const res = await api.get<IDisciplineOptionsResponse>(
       `clubs/disciplines/options`,
@@ -24,9 +15,6 @@ export const getDisciplinesOptions = async (): Promise<
         next: {
           tags: ["disciplines"],
           revalidate: 60 * 60 * 24 * 7, //1 semana
-        },
-        headers: {
-          Authorization: `Bearer ${session.user.token}`,
         },
       },
     );

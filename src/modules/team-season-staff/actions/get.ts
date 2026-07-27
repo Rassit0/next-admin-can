@@ -3,7 +3,6 @@ import { api } from "@/utils/api";
 import { ServiceResponse } from "@/types/api";
 import { handleServerAction } from "@/utils";
 import { ITeamSeasonStaffResponse } from "../interfaces/staff.interface";
-import { auth } from "@/auth";
 
 interface SearchParams {
   search?: string;
@@ -22,16 +21,6 @@ export const getTeamSeasonStaff = async ({
   teamSeasonId,
   role,
 }: SearchParams): Promise<ServiceResponse<ITeamSeasonStaffResponse>> => {
-  const session = await auth();
-  console.log("session desde getTeamSeasonStaff:", session?.user);
-
-  if (!session?.user?.token)
-    return {
-      error: true,
-      statusCode: 401,
-      message: "Su sesión ha expirado. Por favor, inicie sesión nuevamente.",
-    };
-
   return handleServerAction(async () => {
     const params = new URLSearchParams();
     if (search) params.set("search", search);
@@ -46,9 +35,6 @@ export const getTeamSeasonStaff = async ({
       {
         next: {
           tags: ["team-season-staff"],
-        },
-        headers: {
-          Authorization: `Bearer ${session.user.token}`,
         },
       },
     );

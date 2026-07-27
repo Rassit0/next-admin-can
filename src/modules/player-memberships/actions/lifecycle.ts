@@ -30,25 +30,11 @@ export const updateMembershipLifecycle = async ({
   action: MembershipLifecycleAction;
   reason?: string;
 }): Promise<ServiceResponse<IPlayerMembership>> => {
-  const session = await auth();
-  console.log("session desde updateMembershipLifecycle:", session?.user);
-
-  if (!session?.user?.token)
-    return {
-      error: true,
-      statusCode: 401,
-      message: "Su sesión ha expirado. Por favor, inicie sesión nuevamente.",
-    };
-
   return handleServerAction(async () => {
     const response = await api.post<{
       message: string;
       data: IPlayerMembership;
-    }>(`player-memberships/${action}/${id}`, reason ? { reason } : {}, {
-      headers: {
-        Authorization: `Bearer ${session.user.token}`,
-      },
-    });
+    }>(`player-memberships/${action}/${id}`, reason ? { reason } : {});
 
     updateTag("player-memberships");
     return {

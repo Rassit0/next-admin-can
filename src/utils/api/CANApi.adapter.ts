@@ -6,11 +6,14 @@ export interface HttpRequestOptions {
   signal?: AbortSignal;
   timeout?: number;
   cache?: RequestCache;
+  omitToken?: boolean;
   next?: {
     revalidate?: number | false;
     tags?: string[];
   };
 }
+
+export type TokenFetcher = () => Promise<string | undefined | null>;
 
 export interface HttpAdapter {
   get<T>(endpoint: string, options?: HttpRequestOptions): Promise<T>;
@@ -35,10 +38,12 @@ export interface HttpAdapter {
 export class CANApiAdapter implements HttpAdapter {
   private readonly baseUrl: string;
   private readonly defaultTimeout: number;
+  private readonly tokenFetcher?: TokenFetcher;
 
-  constructor(defaultTimeout = 10000) {
+  constructor(defaultTimeout = 10000, tokenFetcher?: TokenFetcher) {
     this.baseUrl = process.env.NEXT_PUBLIC_CAN_API_URL || "";
     this.defaultTimeout = defaultTimeout;
+    this.tokenFetcher = tokenFetcher;
   }
 
   // MÉTODO CENTRALIZADOR: Aquí controlas la conexión
@@ -74,11 +79,21 @@ export class CANApiAdapter implements HttpAdapter {
       ? AbortSignal.any([options?.signal, timeoutController.signal])
       : timeoutController.signal;
 
+    let token: string | undefined | null = undefined;
+    if (this.tokenFetcher && !options?.omitToken) {
+      try {
+        token = await this.tokenFetcher();
+      } catch (error) {
+        console.error("Error fetching token in API Adapter", error);
+      }
+    }
+
     const fetchOptions: RequestInit = {
       method,
       signal,
       headers: {
         Accept: "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
         ...options?.headers,
       },
       cache: options?.cache,

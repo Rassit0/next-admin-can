@@ -83,9 +83,9 @@ export const itemsNavigation: NavItem[] = [
   },
   {
     label: "Membresías",
-    href: "player-memberships",
-    action: "player-memberships",
-    subject: "PLAYER_MEMBERSHIPS",
+    href: "memberships",
+    action: "memberships",
+    subject: ["PLAYER_MEMBERSHIPS", "STUDENT_MEMBERSHIPS"],
     icon: <HugeiconsIcon icon={IdentityCardIcon} size={20} />,
   },
   {

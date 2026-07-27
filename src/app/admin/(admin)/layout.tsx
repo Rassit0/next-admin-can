@@ -27,7 +27,8 @@ export default async function AdminLayout({
     if (item.action === "dashboard") return true;
     if (item.subject === "home") return true; // Para los que aún no has migrado
 
-    return userPermissions.some((p) => p.endsWith(`_${item.subject}`));
+    const subjects = Array.isArray(item.subject) ? item.subject : [item.subject];
+    return userPermissions.some((p) => subjects.some((sub) => p.endsWith(`_${sub}`)));
   });
 
   const institutionsResponse = await getInstitutions({});

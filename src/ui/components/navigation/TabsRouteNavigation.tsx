@@ -1,6 +1,6 @@
 "use client";
 import { Tabs } from "@heroui/react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useTransition } from "react";
 
 interface IRouteProps {
@@ -12,28 +12,40 @@ interface Props {
   routes: IRouteProps[];
   defaultRoute?: string;
   basePath?: string;
+  variant?: "primary" | "secondary";
 }
 
 export const TabsRouteNavigation = ({
   routes,
   defaultRoute = "",
   basePath = "",
+  variant = "secondary",
 }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
 
   const currentSubPath = pathname.replace(basePath, "");
-  
-  const selectedKey = routes.find(r => r.value === currentSubPath || (r.value === '/' && currentSubPath === ''))?.value || defaultRoute;
+
+  const selectedKey =
+    routes.find(
+      (r) =>
+        r.value === currentSubPath ||
+        (r.value === "/" && currentSubPath === ""),
+    )?.value || defaultRoute;
 
   const handleChange = (value: string) => {
     if (value === selectedKey) return;
-    
+
     const nextPath = value === "/" ? basePath : `${basePath}${value}`;
+    const fromContext = searchParams.get("from");
+    const finalPath = fromContext
+      ? `${nextPath}?from=${fromContext}`
+      : nextPath;
 
     startTransition(() => {
-      router.replace(nextPath, {
+      router.replace(finalPath, {
         scroll: false,
       });
     });
@@ -42,7 +54,7 @@ export const TabsRouteNavigation = ({
   return (
     <Tabs
       className="w-full"
-      variant="secondary"
+      variant={variant}
       selectedKey={selectedKey}
       onSelectionChange={(key) => handleChange(key as string)}
       isDisabled={isPending}
@@ -50,7 +62,11 @@ export const TabsRouteNavigation = ({
       <Tabs.ListContainer>
         <Tabs.List aria-label="Navegación de secciones">
           {routes.map((route) => (
-            <Tabs.Tab key={route.value} id={route.value} className="py-6 md:py-2">
+            <Tabs.Tab
+              key={route.value}
+              id={route.value}
+              className="py-6 md:py-2"
+            >
               {route.title}
               <Tabs.Indicator />
             </Tabs.Tab>

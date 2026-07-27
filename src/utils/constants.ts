@@ -210,11 +210,12 @@ export const PERMISSIONS = [
 ];
 
 export const formatCurrency = (amount: number) => {
-  return new Intl.NumberFormat("es-BO", {
-    style: "currency",
-    currency: "BOB",
+  const formatted = new Intl.NumberFormat("es-BO", {
     minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   }).format(amount);
+  
+  return `Bs. ${formatted}`;
 };
 
 export const STAFF_ROLES_TRANSLATOR: Record<string, string> = {

@@ -4,7 +4,6 @@ import { ServiceResponse } from "@/types/api";
 import { updateTag } from "next/cache";
 import { IPaymentPlan } from "@/modules/payment-plans";
 import { handleServerAction } from "@/utils";
-import { auth } from "@/auth";
 
 export const addPaymentPlan = async (data: {
   teamSeasonId?: string;
@@ -18,25 +17,10 @@ export const addPaymentPlan = async (data: {
   advanceCyclesDiscountPercent?: string;
   isDefault: boolean;
 }): Promise<ServiceResponse<IPaymentPlan>> => {
-  const session = await auth();
-  console.log("session desde addPaymentPlan:", session?.user);
-
-  if (!session?.user?.token)
-    return {
-      error: true,
-      statusCode: 401,
-      message: "Su sesión ha expirado. Por favor, inicie sesión nuevamente.",
-    };
-
   return handleServerAction(async () => {
     const response = await api.post<{ message: string; data: IPaymentPlan }>(
       `payment-plans`,
       data,
-      {
-        headers: {
-          Authorization: `Bearer ${session.user.token}`,
-        },
-      },
     );
 
     updateTag("payment-plans");

@@ -35,16 +35,6 @@ export const getPlayerMemberships = async ({
   playerId,
   paymentPlanId,
 }: SearchParams): Promise<ServiceResponse<IPlayerMembershipResponse>> => {
-  const session = await auth();
-  console.log("session desde getCategories:", session?.user);
-
-  if (!session?.user?.token)
-    return {
-      error: true,
-      statusCode: 401,
-      message: "Su sesión ha expirado. Por favor, inicie sesión nuevamente.",
-    };
-
   return handleServerAction(async () => {
     const params = new URLSearchParams();
     if (search) params.set("search", search);
@@ -61,9 +51,6 @@ export const getPlayerMemberships = async ({
         next: {
           tags: ["player-memberships", "charges", "persons", "players"],
           revalidate: 3600,
-        },
-        headers: {
-          Authorization: `Bearer ${session.user.token}`,
         },
       },
     );

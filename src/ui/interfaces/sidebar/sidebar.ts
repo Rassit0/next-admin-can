@@ -13,6 +13,6 @@ export interface NavItem {
   icon?: ReactNode;
   href: string; // obligatorio si no hay subMenu
   action: Action;
-  subject: string;
+  subject: string | string[];
   children?: never; // no permitido
 }

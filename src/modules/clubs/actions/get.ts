@@ -3,8 +3,6 @@ import { api } from "@/utils/api";
 import { ServiceResponse } from "@/types/api";
 import { handleServerAction } from "@/utils";
 import { IClubsResponse } from "../interfaces/club.interface";
-import { updateTag } from "next/cache";
-import { auth } from "@/auth";
 
 interface SearchParams {
   search?: string;
@@ -24,15 +22,6 @@ export const getClubs = async ({
   disciplineId,
   orderBy = "asc",
 }: SearchParams): Promise<ServiceResponse<IClubsResponse>> => {
-  const session = await auth();
-
-  if (!session?.user)
-    return {
-      error: true,
-      statusCode: 401,
-      message: "Su sesión ha expirado. Por favor, inicie sesión nuevamente.",
-    };
-
   return handleServerAction(async () => {
     const params = new URLSearchParams();
     if (search) params.set("search", search);
@@ -46,9 +35,6 @@ export const getClubs = async ({
       next: {
         tags: ["clubs"],
         // revalidate: 3600,
-      },
-      headers: {
-        Authorization: `Bearer ${session.user.token}`,
       },
     });
 
