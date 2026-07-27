@@ -15,4 +15,11 @@ export interface NavItem {
   action: Action;
   subject: string | string[];
   children?: never; // no permitido
+
+  mobile?: {
+    visible?: boolean;
+    priority?: number;
+    position?: number;
+    featured?: boolean;
+  };
 }
