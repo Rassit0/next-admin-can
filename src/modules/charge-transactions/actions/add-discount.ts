@@ -36,6 +36,9 @@ export const addChargeDiscount = async (
     });
 
     updateTag("charges");
+    updateTag("player-memberships");
+    updateTag("student-memberships");
+    updateTag("transactions");
     return {
       error: false,
       data: response.data,

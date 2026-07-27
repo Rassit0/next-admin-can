@@ -45,6 +45,8 @@ export const addPlayerMembership = async (
     });
 
     updateTag("player-memberships");
+    updateTag("student-memberships");
+    updateTag("charges");
     return {
       error: false,
       data: response.data,
