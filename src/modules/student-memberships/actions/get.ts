@@ -49,7 +49,13 @@ export const getStudentMemberships = async ({
       `student-memberships?${params.toString()}`,
       {
         next: {
-          tags: ["student-memberships", "charges", "students", "persons"],
+          tags: [
+            "student-memberships",
+            "charges",
+            "students",
+            "persons",
+            "transactions",
+          ],
           revalidate: 3600,
         },
       },

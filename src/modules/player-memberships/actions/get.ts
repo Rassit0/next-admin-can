@@ -49,7 +49,13 @@ export const getPlayerMemberships = async ({
       `player-memberships?${params.toString()}`,
       {
         next: {
-          tags: ["player-memberships", "charges", "persons", "players"],
+          tags: [
+            "player-memberships",
+            "charges",
+            "persons",
+            "players",
+            "transactions",
+          ],
           revalidate: 3600,
         },
       },

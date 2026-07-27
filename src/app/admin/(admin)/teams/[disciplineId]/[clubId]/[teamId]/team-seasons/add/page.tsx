@@ -75,7 +75,7 @@ export default async function AddTeamSeasonPage({ params }: Props) {
         }
         urlBase={`/admin/teams/${disciplineId}/${clubId}`}
         breadcrumb={[
-          { label: "Equipos", href: `/` },
+          { label: "Equipos", href: `/admin/teams` },
           {
             label: `${teamResponse.data.name}`,
             href: `${teamId}/team-seasons`,
