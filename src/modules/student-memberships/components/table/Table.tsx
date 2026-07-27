@@ -9,19 +9,27 @@ import { IStudentMembership } from "@/modules/student-memberships";
 import { StatusChip } from "@/modules/student-memberships/components/status/StatusChip";
 import { MembershipActions } from "@/modules/student-memberships/components/actions/MembershipActions";
 import {
-  calculateInitialCharges,
   formatCurrency,
 } from "@/modules/student-memberships/helpers/initial-charges";
 
 interface Props {
   memberships: IStudentMembership[];
-  courseSeason: ICourseSeason;
+  courseSeason?: ICourseSeason;
+  showCourseSeasonDetail?: boolean;
+  showStudentDetail?: boolean;
+  origin?: string;
 }
 
 const initials = (name: string, lastName: string) =>
   `${name?.[0] ?? ""}${lastName?.[0] ?? ""}`.toUpperCase();
 
-export const TableMemberships = ({ memberships, courseSeason }: Props) => {
+export const TableMemberships = ({
+  memberships,
+  courseSeason,
+  showCourseSeasonDetail = true,
+  showStudentDetail = true,
+  origin,
+}: Props) => {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -35,15 +43,26 @@ export const TableMemberships = ({ memberships, courseSeason }: Props) => {
   return (
     <Table>
       <Table.ScrollContainer>
-        <Table.Content aria-label="Membresías de atletas" className="min-w-200">
+        <Table.Content aria-label="Membresías de estudiantes" className="min-w-200">
           <Table.Header className="bg-surface-secondary">
-            <Table.Column isRowHeader allowsSorting id="name">
-              <SortableColumnHeader id="name">
-                <span className="text-xs font-semibold uppercase tracking-wide">
-                  Atleta
-                </span>
-              </SortableColumnHeader>
-            </Table.Column>
+            {showStudentDetail && (
+              <Table.Column isRowHeader allowsSorting id="name">
+                <SortableColumnHeader id="name">
+                  <span className="text-xs font-semibold uppercase tracking-wide">
+                    Estudiante
+                  </span>
+                </SortableColumnHeader>
+              </Table.Column>
+            )}
+            {showCourseSeasonDetail && (
+              <Table.Column allowsSorting id="courseSeason">
+                <SortableColumnHeader id="courseSeason">
+                  <span className="text-xs font-semibold uppercase tracking-wide">
+                    Curso / Categoría
+                  </span>
+                </SortableColumnHeader>
+              </Table.Column>
+            )}
             <Table.Column allowsSorting id="paymentPlan">
               <SortableColumnHeader id="paymentPlan">
                 <span className="text-xs font-semibold uppercase tracking-wide">
@@ -84,50 +103,61 @@ export const TableMemberships = ({ memberships, courseSeason }: Props) => {
           <Table.Body
             renderEmptyState={() => (
               <div className="py-10 text-center text-sm text-muted">
-                Aún no hay atletas inscritos en esta temporada.
+                Aún no hay estudiantes inscritos en esta temporada.
               </div>
             )}
           >
             {memberships.map((membership) => {
               const person = membership.student?.person;
-              const charges = calculateInitialCharges(
-                courseSeason,
-                membership.paymentPlan,
-              );
               return (
                 <Table.Row
                   key={membership.id}
                   id={membership.id}
                   className="border-b border-border last:border-b-0 hover:bg-surface-secondary/40"
                 >
-                  <Table.Cell className="py-3">
-                    <div className="flex items-center gap-3">
-                      <Avatar size="sm">
-                        <Avatar.Image
-                          alt={person?.name ?? "Atleta"}
-                          src={person?.imageUrl ?? undefined}
-                          loading="lazy"
-                        />
-                        <Avatar.Fallback className="bg-accent-soft text-accent">
-                          {person
-                            ? initials(person.name, person.lastName)
-                            : "AT"}
-                        </Avatar.Fallback>
-                      </Avatar>
+                  {showStudentDetail && (
+                    <Table.Cell className="py-3">
+                      <div className="flex items-center gap-3">
+                        <Avatar size="sm">
+                          <Avatar.Image
+                            alt={person?.name ?? "Estudiante"}
+                            src={person?.imageUrl ?? undefined}
+                            loading="lazy"
+                          />
+                          <Avatar.Fallback className="bg-accent-soft text-accent">
+                            {person
+                              ? initials(person.name, person.lastName)
+                              : "ES"}
+                          </Avatar.Fallback>
+                        </Avatar>
+                        <div className="flex flex-col min-w-0">
+                          <span className="font-medium text-foreground truncate">
+                            {person
+                              ? [person.lastName, person.secondLastName, person.name].filter(Boolean).join(" ")
+                              : "Estudiante"}
+                          </span>
+                          {person ? (
+                            <span className="text-xs text-muted truncate">
+                              {person.documentType} {person.documentNumber}
+                            </span>
+                          ) : null}
+                        </div>
+                      </div>
+                    </Table.Cell>
+                  )}
+                  {showCourseSeasonDetail && (
+                    <Table.Cell className="py-3">
                       <div className="flex flex-col min-w-0">
                         <span className="font-medium text-foreground truncate">
-                          {person
-                            ? `${person.name} ${person.lastName} ${person.secondLastName}`
-                            : "Atleta"}
+                          {courseSeason?.course?.name ?? "—"}
                         </span>
-                        {person ? (
-                          <span className="text-xs text-muted truncate">
-                            {person.documentType} {person.documentNumber}
-                          </span>
-                        ) : null}
+                        <span className="text-xs text-muted truncate">
+                          {courseSeason?.category?.name ?? "—"} •{" "}
+                          {courseSeason?.season?.name ?? "—"}
+                        </span>
                       </div>
-                    </div>
-                  </Table.Cell>
+                    </Table.Cell>
+                  )}
                   <Table.Cell className="py-3">
                     <span className="font-medium text-foreground">
                       {membership.paymentPlan?.name ?? "—"}
@@ -151,7 +181,10 @@ export const TableMemberships = ({ memberships, courseSeason }: Props) => {
                   </Table.Cell>
                   <Table.Cell className="py-3">
                     <div className="flex items-center justify-center">
-                      <MembershipActions membership={membership} />
+                      <MembershipActions
+                        membership={membership}
+                        origin={origin}
+                      />
                     </div>
                   </Table.Cell>
                 </Table.Row>

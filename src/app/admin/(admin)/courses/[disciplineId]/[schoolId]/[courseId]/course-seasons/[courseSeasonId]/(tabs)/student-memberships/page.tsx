@@ -61,21 +61,11 @@ export default async function StudentMembershipsPage({
   const { disciplineId, schoolId, courseId, courseSeasonId } = await params;
 
   const [membershipsResponse, courseSeasonResponse, paymentPlansResponse] =
-    await Promise.all([
+    await resolvePageData([
       getStudentMemberships({ search, page, per_page, courseSeasonId, status }),
       getCourseSeasonById({ id: courseSeasonId }),
       getPaymentPlans({ per_page: "100", courseSeasonId }),
     ]);
-
-  if (membershipsResponse.error && membershipsResponse.statusCode === 401) {
-    redirect("/login");
-  }
-  if (courseSeasonResponse.error) {
-    return <ErrorPage message={courseSeasonResponse.message} />;
-  }
-  if (membershipsResponse.error) {
-    return <ErrorPage message={membershipsResponse.message} />;
-  }
 
   const courseSeason = courseSeasonResponse.data;
   const memberships = membershipsResponse.data.data;
@@ -94,7 +84,6 @@ export default async function StudentMembershipsPage({
     <>
       <div className="flex flex-col gap-6 page-content mt-2">
         <Card className="shadow-[0px_4px_12px_rgba(0,0,0,0.06)] border border-border">
-
           <HeaderPage
             title="Atletas inscritos"
             description="Asigna membresías y revisa los cargos iniciales generados"
@@ -129,3 +118,4 @@ export default async function StudentMembershipsPage({
 }
 
 import { CreateMassiveManualChargeButton } from "@/modules/student-memberships";
+import { resolvePageData } from "@/utils/resolvePageData";

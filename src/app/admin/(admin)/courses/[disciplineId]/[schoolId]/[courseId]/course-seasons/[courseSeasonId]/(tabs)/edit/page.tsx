@@ -4,9 +4,11 @@ import {
   getCategoriesByDisciplineOptions,
   getSeasonsByDisciplineOptions,
   getCourseSeasonById,
+  getShiftsOptions,
 } from "@/modules/course-seasons";
 import { getCourseById } from "@/modules/courses";
 import { ErrorPage, HeaderPage } from "@/ui";
+import { resolvePageData } from "@/utils/resolvePageData";
 import { Button } from "@heroui/react";
 import { redirect } from "next/navigation";
 
@@ -26,65 +28,15 @@ export default async function EditCourseSeasonPage({ params }: Props) {
     categoriesOptions,
     seasonsOptions,
     courseSeasonResponse,
-  ] = await Promise.all([
+    shiftsOptions,
+  ] = await resolvePageData([
     getCourseById({ id: courseId }),
     getCategoriesByDisciplineOptions(disciplineId),
     getSeasonsByDisciplineOptions(disciplineId),
     getCourseSeasonById({ id: courseSeasonId }),
+    getShiftsOptions(),
   ]);
 
-  if (courseResponse.error && courseResponse.statusCode === 401) {
-    redirect("/login");
-  }
-
-  // 2. Manejo de errores generales (400, 500, etc.)
-  if (courseResponse.error) {
-    return (
-      <ErrorPage
-        message={courseResponse.message}
-        path={{
-          href: `/schools`,
-          label: "Volver a la lista de schooles",
-        }}
-      />
-    );
-  }
-
-  if (categoriesOptions.error) {
-    return (
-      <ErrorPage
-        message={categoriesOptions.message}
-        path={{
-          href: `/schools/${courseResponse.data.school.id}/manage`,
-          label: "Volver a la lista de escuelas",
-        }}
-      />
-    );
-  }
-
-  if (seasonsOptions.error) {
-    return (
-      <ErrorPage
-        message={seasonsOptions.message}
-        path={{
-          href: `/schools/${courseResponse.data.school.id}/manage`,
-          label: "Volver a la lista de escuelas",
-        }}
-      />
-    );
-  }
-
-  if (courseSeasonResponse.error) {
-    return (
-      <ErrorPage
-        message={courseSeasonResponse.message}
-        path={{
-          href: `/schools/${courseResponse.data.school.id}/manage`,
-          label: "Volver a la lista de escuelas",
-        }}
-      />
-    );
-  }
   return (
     <>
       <HeaderPage
@@ -110,6 +62,7 @@ export default async function EditCourseSeasonPage({ params }: Props) {
         course={courseResponse.data}
         categoriesOptions={categoriesOptions.data.data}
         seasonsOptions={seasonsOptions.data.data}
+        shiftsOptions={shiftsOptions.data.data}
         urlRedirect={`/admin/courses/${disciplineId}/${schoolId}/${courseId}/course-seasons`}
       />
     </>

@@ -47,7 +47,9 @@ export default async function TeamSeasonDetailLayout({
       <HeaderPage
         title={`${teamSeason.category.name} (${GENDER_MAP[teamSeason.gender] || teamSeason.gender}) · ${teamSeason.season.name}`}
         description={`Equipo: ${teamSeason.team.name} · Detalle de la temporada`}
-        action={<TeamSeasonActions teamSeason={teamSeason} />}
+        action={
+          <TeamSeasonActions teamSeason={teamSeason} baseUrl={basePath} />
+        }
         breadcrumb={[
           { label: "Equipos", href: `/` },
           {

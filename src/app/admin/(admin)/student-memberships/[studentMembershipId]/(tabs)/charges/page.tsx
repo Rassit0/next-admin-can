@@ -32,7 +32,7 @@ interface Props {
     status?: string;
   }>;
   params: Promise<{
-    playerMembershipId: string;
+    studentMembershipId: string;
   }>;
 }
 
@@ -41,19 +41,19 @@ export default async function PlayerMembershipChargesPage({
   params,
 }: Props) {
   const { search, page, per_page, status } = await searchParams;
-  const { playerMembershipId } = await params;
+  const { studentMembershipId } = await params;
 
   const [chargesRes] = await resolvePageData([
     getCharges({
       search,
       page,
       per_page,
-      playerMembershipId,
+      studentMembershipId,
     }),
   ]);
   const charges = chargesRes.data;
 
-  const urlBase = `/admin/player-memberships/${playerMembershipId}/charges/`;
+  const urlBase = `/admin/student-memberships/${studentMembershipId}/charges/`;
 
   return (
     <>
@@ -62,7 +62,7 @@ export default async function PlayerMembershipChargesPage({
           <SectionFilters
             actions={
               <CreateManualChargeButton
-                playerMembershipId={playerMembershipId}
+                studentMembershipId={studentMembershipId}
               />
             }
           />

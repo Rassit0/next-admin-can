@@ -1,4 +1,9 @@
-import { StatusCourseSeason, Gender, SeasonBillingType, BillingFrequency } from "./course-season.interface";
+import {
+  StatusCourseSeason,
+  Gender,
+  SeasonBillingType,
+  BillingFrequency,
+} from "./course-season.interface";
 
 export interface IPostCourseSeason {
   description: string | null;
@@ -9,6 +14,7 @@ export interface IPostCourseSeason {
   courseId: string;
   categoryId: string;
   seasonId: string;
+  shiftId: string;
   gender: Gender;
   billingConfig: {
     billingDay: number; // Dia de facturacion

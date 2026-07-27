@@ -1,25 +1,4 @@
 import { ErrorPage, HeaderPage, PaginationSection, SectionFilters } from "@/ui";
-import { redirect } from "next/navigation";
-import Link from "next/link";
-import { getPaymentPlans } from "@/modules/payment-plans";
-import { getPlayers } from "@/modules/players";
-import { getTeamSeasonById } from "@/modules/team-seasons";
-import {
-  EnrollMembershipDrawer,
-  getPlayerMembershipById,
-  getPlayerMemberships,
-  MetricsCards,
-  TableMemberships,
-  StatusChip,
-  getTeamSeasonContext,
-} from "@/modules/player-memberships";
-import { Button, Card, Alert, Chip, Tabs } from "@heroui/react";
-import {
-  Wallet01Icon,
-  UserCircleIcon,
-  File02Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { getCharges, TableCharges } from "@/modules/charge-transactions";
 import { CreateManualChargeButton } from "@/modules/charge-transactions/components/drawer/CreateManualChargeButton";
 import { resolvePageData } from "@/utils/resolvePageData";
@@ -32,7 +11,7 @@ interface Props {
     status?: string;
   }>;
   params: Promise<{
-    playerMembershipId: string;
+    studentMembershipId: string;
   }>;
 }
 
@@ -41,19 +20,19 @@ export default async function PlayerMembershipChargesPage({
   params,
 }: Props) {
   const { search, page, per_page, status } = await searchParams;
-  const { playerMembershipId } = await params;
+  const { studentMembershipId } = await params;
 
   const [chargesRes] = await resolvePageData([
     getCharges({
       search,
       page,
       per_page,
-      playerMembershipId,
+      studentMembershipId,
     }),
   ]);
   const charges = chargesRes.data;
 
-  const urlBase = `/admin/player-memberships/${playerMembershipId}/charges/`;
+  const urlBase = `/admin/player-memberships/${studentMembershipId}/charges/`;
 
   return (
     <>
@@ -62,7 +41,7 @@ export default async function PlayerMembershipChargesPage({
           <SectionFilters
             actions={
               <CreateManualChargeButton
-                playerMembershipId={playerMembershipId}
+                studentMembershipId={studentMembershipId}
               />
             }
           />

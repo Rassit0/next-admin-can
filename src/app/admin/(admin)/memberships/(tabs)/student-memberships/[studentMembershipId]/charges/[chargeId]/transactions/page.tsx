@@ -4,14 +4,10 @@ import {
   getTransactions,
   ChargeSummaryCard,
   TableTransactions,
-  PayChargeDrawer,
 } from "@/modules/charge-transactions";
-import { getPlayerMembershipById } from "@/modules/player-memberships";
-import { Button } from "@heroui/react";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { Add01Icon } from "@hugeicons/core-free-icons";
 import { PayChargeButton } from "./PayChargeButton";
 import { resolvePageData } from "@/utils/resolvePageData";
+import { getStudentMembershipById } from "@/modules/student-memberships";
 
 interface Props {
   searchParams: Promise<{
@@ -20,7 +16,7 @@ interface Props {
     page?: string;
   }>;
   params: Promise<{
-    playerMembershipId: string;
+    studentMembershipId: string;
     chargeId: string;
   }>;
 }
@@ -30,11 +26,11 @@ export default async function ChargeTransactionsPage({
   params,
 }: Props) {
   const { search, page, per_page } = await searchParams;
-  const { playerMembershipId, chargeId } = await params;
+  const { studentMembershipId, chargeId } = await params;
 
   const [membershipResponse, chargeResponse, transactionsResponse] =
     await resolvePageData([
-      getPlayerMembershipById({ id: playerMembershipId }),
+      getStudentMembershipById({ id: studentMembershipId }),
       getChargeById(chargeId),
       getTransactions({ search, page, per_page, chargeId }),
     ]);
@@ -48,7 +44,7 @@ export default async function ChargeTransactionsPage({
     <>
       <HeaderPage
         title={`Detalles de Cargo`}
-        description={`Membresía: ${membership.player?.person.name} ${membership.player?.person.lastName}`}
+        description={`Membresía: ${membership.student?.person.name} ${membership.student?.person.lastName}`}
         // breadcrumb={[
         //   { label: "Membresías", href: `/admin/player-memberships` },
         //   {

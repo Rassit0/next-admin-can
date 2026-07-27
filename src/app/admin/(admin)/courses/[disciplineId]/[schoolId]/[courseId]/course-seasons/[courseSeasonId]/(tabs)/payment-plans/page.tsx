@@ -1,4 +1,4 @@
-import { ErrorPage, PaginationSection, SectionFilters } from "@/ui";
+import { ErrorPage, HeaderPage, PaginationSection, SectionFilters } from "@/ui";
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { Tabs } from "@heroui/react";
@@ -57,6 +57,12 @@ export default async function PaymentPlansPage({
 
   return (
     <div className="mt-2 flex flex-col gap-6">
+      <HeaderPage
+        title="Planes de pago"
+        description="Aquí puedes ver todos los planes de pago de la temporada"
+        action={<AddModal courseSeasonId={courseSeasonId} />}
+        showButtonBack={false}
+      />
 
       {/* <!-- Search and Filter Bar (Tonal Architecture) --> */}
       <SectionFilters />

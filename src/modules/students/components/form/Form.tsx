@@ -14,7 +14,11 @@ import {
   TextArea,
   Switch,
 } from "@heroui/react";
-import { addStudent, editStudent, PostStudentInterface } from "@/modules/students";
+import {
+  addStudent,
+  editStudent,
+  PostStudentInterface,
+} from "@/modules/students";
 import { IStudent } from "@/modules/students";
 import { useEffect, useState } from "react";
 import { SelectOrCreatePerson } from "./SelectOrCreatePerson";
@@ -23,7 +27,7 @@ import { toast } from "sonner";
 interface Props {
   student?: IStudent;
   formId: string;
-  onSubmited?: () => void;
+  onSubmited?: (student?: IStudent) => void;
   isLoading?: boolean;
   setIsLoading?: (value: boolean) => void;
 }
@@ -115,7 +119,7 @@ export const FormStudent = ({
         ? "El jugador se ha editado exitosamente"
         : "El jugador se ha agregado exitosamente",
     });
-    onSubmited?.();
+    onSubmited?.(res.data);
   };
   return (
     <Surface variant="transparent">
@@ -161,7 +165,8 @@ export const FormStudent = ({
                   Asignación de Perfil
                 </h2>
                 <p className="text-sm text-on-surface-variant mt-1">
-                  Vincula a una persona existente o registra una nueva para habilitar su perfil de jugador.
+                  Vincula a una persona existente o registra una nueva para
+                  habilitar su perfil de jugador.
                 </p>
               </div>
             </div>
@@ -178,9 +183,13 @@ export const FormStudent = ({
 
               <div className="bg-surface-container-low p-4 rounded-xl border border-outline-variant/30 flex items-center justify-between">
                 <div className="flex flex-col gap-1 mr-4">
-                  <span className="text-sm font-medium text-on-surface">Estado del Jugador</span>
+                  <span className="text-sm font-medium text-on-surface">
+                    Estado del Jugador
+                  </span>
                   <span className="text-xs text-on-surface-variant">
-                    {isActive ? "El jugador está activo y puede ser inscrito en temporadas." : "El jugador está inactivo temporalmente."}
+                    {isActive
+                      ? "El jugador está activo y puede ser inscrito en temporadas."
+                      : "El jugador está inactivo temporalmente."}
                   </span>
                 </div>
                 <Switch isSelected={isActive} onChange={setIsActive} size="sm">

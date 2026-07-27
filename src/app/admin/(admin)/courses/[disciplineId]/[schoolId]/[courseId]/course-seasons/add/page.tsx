@@ -3,9 +3,11 @@ import {
   FormCourseSeason,
   getCategoriesByDisciplineOptions,
   getSeasonsByDisciplineOptions,
+  getShiftsOptions,
 } from "@/modules/course-seasons";
 import { getCourseById } from "@/modules/courses";
 import { ErrorPage, HeaderPage } from "@/ui";
+import { resolvePageData } from "@/utils/resolvePageData";
 import { redirect } from "next/navigation";
 
 interface Props {
@@ -14,54 +16,13 @@ interface Props {
 
 export default async function AddCourseSeasonPage({ params }: Props) {
   const { disciplineId, schoolId, courseId } = await params;
-  const [courseResponse, categoriesOptions, seasonsOptions] = await Promise.all(
-    [
+  const [courseResponse, categoriesOptions, seasonsOptions, shiftsOptions] =
+    await resolvePageData([
       getCourseById({ id: courseId }),
       getCategoriesByDisciplineOptions(disciplineId),
       getSeasonsByDisciplineOptions(disciplineId),
-    ],
-  );
-
-  if (courseResponse.error && courseResponse.statusCode === 401) {
-    redirect("/login");
-  }
-
-  // 2. Manejo de errores generales (400, 500, etc.)
-  if (courseResponse.error) {
-    return (
-      <ErrorPage
-        message={courseResponse.message}
-        path={{
-          href: `/schools`,
-          label: "Volver a la lista de Escuelas",
-        }}
-      />
-    );
-  }
-
-  if (categoriesOptions.error) {
-    return (
-      <ErrorPage
-        message={categoriesOptions.message}
-        path={{
-          href: `/schools/${courseResponse.data.school.id}/manage`,
-          label: "Volver a la lista de Cursos",
-        }}
-      />
-    );
-  }
-
-  if (seasonsOptions.error) {
-    return (
-      <ErrorPage
-        message={seasonsOptions.message}
-        path={{
-          href: `/schools/${courseResponse.data.school.id}/manage`,
-          label: "Volver a la lista de Cursos",
-        }}
-      />
-    );
-  }
+      getShiftsOptions(),
+    ]);
   return (
     <>
       <HeaderPage
@@ -92,6 +53,7 @@ export default async function AddCourseSeasonPage({ params }: Props) {
         course={courseResponse.data}
         categoriesOptions={categoriesOptions.data.data}
         seasonsOptions={seasonsOptions.data.data}
+        shiftsOptions={shiftsOptions.data.data}
         urlRedirect={`/admin/courses/${disciplineId}/${schoolId}/${courseId}/course-seasons`}
       />
     </>

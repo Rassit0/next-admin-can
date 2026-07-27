@@ -1,18 +1,3 @@
-import { ErrorPage, HeaderPage, PaginationSection, SectionFilters } from "@/ui";
-import { redirect } from "next/navigation";
-import Link from "next/link";
-import { getPaymentPlans } from "@/modules/payment-plans";
-import { getPlayers } from "@/modules/players";
-import { getTeamSeasonById } from "@/modules/team-seasons";
-import {
-  EnrollMembershipDrawer,
-  getPlayerMembershipById,
-  getPlayerMemberships,
-  MetricsCards,
-  TableMemberships,
-  StatusChip,
-  getTeamSeasonContext,
-} from "@/modules/player-memberships";
 import { Button, Card, Alert, Chip, Tabs } from "@heroui/react";
 import {
   Wallet01Icon,
@@ -30,19 +15,19 @@ interface Props {
     status?: string;
   }>;
   params: Promise<{
-    playerMembershipId: string;
+    studentMembershipId: string;
   }>;
 }
 
-export default async function PlayerMembershipInfoPage({
+export default async function StudentMembershipInfoPage({
   searchParams,
   params,
 }: Props) {
   const { search, page, per_page, status } = await searchParams;
-  const { playerMembershipId } = await params;
+  const { studentMembershipId } = await params;
 
   const [membershipRes] = await resolvePageData([
-    getPlayerMembershipById({ id: playerMembershipId }),
+    getStudentMembershipById({ id: studentMembershipId }),
   ]);
   const membership = membershipRes.data;
 
@@ -60,9 +45,9 @@ export default async function PlayerMembershipInfoPage({
                 Nombre Completo
               </p>
               <p className="font-semibold text-foreground text-md">
-                {membership.player?.person.name}{" "}
-                {membership.player?.person.lastName}{" "}
-                {membership.player?.person.secondLastName || ""}
+                {membership.student?.person.name}{" "}
+                {membership.student?.person.lastName}{" "}
+                {membership.student?.person.secondLastName || ""}
               </p>
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -71,8 +56,8 @@ export default async function PlayerMembershipInfoPage({
                   Documento
                 </p>
                 <p className="font-semibold text-foreground">
-                  {membership.player?.person.documentType}:{" "}
-                  {membership.player?.person.documentNumber}
+                  {membership.student?.person.documentType}:{" "}
+                  {membership.student?.person.documentNumber}
                 </p>
               </div>
               <div>
@@ -80,7 +65,7 @@ export default async function PlayerMembershipInfoPage({
                   Teléfono
                 </p>
                 <p className="font-semibold text-foreground">
-                  {membership.player?.person.phone || "No registrado"}
+                  {membership.student?.person.phone || "No registrado"}
                 </p>
               </div>
             </div>
@@ -89,7 +74,7 @@ export default async function PlayerMembershipInfoPage({
                 Correo Electrónico
               </p>
               <p className="font-semibold text-foreground">
-                {membership.player?.person.email || "No registrado"}
+                {membership.student?.person.email || "No registrado"}
               </p>
             </div>
           </div>
@@ -153,3 +138,7 @@ export default async function PlayerMembershipInfoPage({
 }
 
 import { resolvePageData } from "@/utils/resolvePageData";
+import {
+  getStudentMembershipById,
+  StatusChip,
+} from "@/modules/student-memberships";

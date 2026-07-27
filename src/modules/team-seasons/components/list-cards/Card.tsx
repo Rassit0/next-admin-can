@@ -1,4 +1,9 @@
-import { AddMembershipDrawer, ITeamSeason, STATUS_BG_MAP, TeamSeasonActions } from "@/modules/team-seasons";
+import {
+  AddMembershipDrawer,
+  ITeamSeason,
+  STATUS_BG_MAP,
+  TeamSeasonActions,
+} from "@/modules/team-seasons";
 import { Avatar, Button, Card } from "@heroui/react";
 import {
   Add01Icon,
@@ -154,12 +159,11 @@ export const CardTeamSeason = ({ teamSeason, urlBase }: Props) => {
             <span className="w-2 h-2 rounded-full bg-white animate-pulse"></span>
             {STATUS_TEXT_MAP[teamSeason.status]}
           </div>
-          {(teamSeason.status === "ACTIVE" || teamSeason.status === "DRAFT") && (
+          {(teamSeason.status === "ACTIVE" ||
+            teamSeason.status === "DRAFT") && (
             <div
               className={`${
-                teamSeason.isRegistrationOpen
-                  ? "bg-success"
-                  : "bg-danger"
+                teamSeason.isRegistrationOpen ? "bg-success" : "bg-danger"
               } text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase shadow-md border border-white/20`}
             >
               {teamSeason.isRegistrationOpen
@@ -175,7 +179,7 @@ export const CardTeamSeason = ({ teamSeason, urlBase }: Props) => {
               billingConfig={teamSeason.billingConfig}
             />
           )}
-          <TeamSeasonActions teamSeason={teamSeason} />
+          <TeamSeasonActions teamSeason={teamSeason} baseUrl={urlBase} />
         </div>
       </div>
       <div className="p-6 flex-1 flex flex-col">
@@ -185,20 +189,27 @@ export const CardTeamSeason = ({ teamSeason, urlBase }: Props) => {
         <p className="text-on-surface-variant text-sm mb-4 italic opacity-80">
           {teamSeason.description}
         </p>
-        
+
         {(() => {
-          const primaryStaff = teamSeason.teamSeasonStaffs?.find((s) => s.isPrimary)?.staff.person || teamSeason.teamSeasonStaffs?.[0]?.staff.person;
+          const primaryStaff =
+            teamSeason.teamSeasonStaffs?.find((s) => s.isPrimary)?.staff
+              .person || teamSeason.teamSeasonStaffs?.[0]?.staff.person;
           if (!primaryStaff) return null;
           return (
             <div className="flex items-center gap-3 mb-6 bg-surface-container-low p-2 rounded-lg border border-border/50">
               <Avatar size="sm">
                 {primaryStaff.imageUrl && (
-                  <Avatar.Image src={primaryStaff.imageUrl} alt={`${primaryStaff.name} ${primaryStaff.lastName}`} />
+                  <Avatar.Image
+                    src={primaryStaff.imageUrl}
+                    alt={`${primaryStaff.name} ${primaryStaff.lastName}`}
+                  />
                 )}
                 <Avatar.Fallback>{`${primaryStaff.name.charAt(0)}${primaryStaff.lastName.charAt(0)}`}</Avatar.Fallback>
               </Avatar>
               <div className="flex flex-col">
-                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Entrenador Principal</span>
+                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+                  Entrenador Principal
+                </span>
                 <span className="text-xs font-semibold text-foreground">
                   {primaryStaff.name} {primaryStaff.lastName}
                 </span>

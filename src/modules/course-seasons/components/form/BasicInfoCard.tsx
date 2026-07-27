@@ -11,17 +11,26 @@ import {
 } from "@heroui/react";
 import { Dispatch, SetStateAction } from "react";
 import { DateValue } from "@internationalized/date";
-import { Gender, ICategoryOption, ISeasonOption } from "@/modules/course-seasons";
+import {
+  Gender,
+  ICategoryOption,
+  ISeasonOption,
+  IShiftOption,
+} from "@/modules/course-seasons";
 import { SelectCategory } from "./SelectCategory";
 import { SelectSeason } from "./SelectSeason";
+import { SelectShift } from "./SelectShift";
 
 interface Props {
   categoriesOptions: ICategoryOption[];
   seasonsOptions: ISeasonOption[];
+  shiftsOptions: IShiftOption[];
   categoryId: string | null;
   setCategoryId: Dispatch<SetStateAction<string | null>>;
   seasonId: string | null;
   setSeasonId: Dispatch<SetStateAction<string | null>>;
+  shiftId: string | null;
+  setShiftId: Dispatch<SetStateAction<string | null>>;
   gender: Gender | null;
   setGender: Dispatch<SetStateAction<Gender | null>>;
   description: string | null;
@@ -38,10 +47,13 @@ interface Props {
 export const BasicInfoCard = ({
   categoriesOptions,
   seasonsOptions,
+  shiftsOptions,
   categoryId,
   setCategoryId,
   seasonId,
   setSeasonId,
+  shiftId,
+  setShiftId,
   gender,
   setGender,
   description,
@@ -80,6 +92,16 @@ export const BasicInfoCard = ({
           seasonsOptions={seasonsOptions}
           seasonId={seasonId}
           setSeasonId={setSeasonId}
+          errors={errors}
+          handleRemoveError={handleRemoveError}
+          isRequired
+          isDisabled={isStructuralDisabled}
+        />
+        <SelectShift
+          label="Turno"
+          shiftsOptions={shiftsOptions}
+          shiftId={shiftId}
+          setShiftId={setShiftId}
           errors={errors}
           handleRemoveError={handleRemoveError}
           isRequired

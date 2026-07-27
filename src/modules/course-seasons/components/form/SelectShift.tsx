@@ -1,14 +1,14 @@
 import { ComboBox, FieldError, Input, Label, ListBox } from "@heroui/react";
 import { Dispatch, SetStateAction } from "react";
-import { ICategoryOption } from "@/modules/course-seasons";
+import { IShiftOption } from "@/modules/course-seasons";
 
 interface Props {
   isRequired?: boolean;
   isDisabled?: boolean;
   label: string;
-  categoriesOptions: ICategoryOption[];
-  categoryId: string | null;
-  setCategoryId: Dispatch<SetStateAction<string | null>>;
+  shiftsOptions: IShiftOption[];
+  shiftId: string | null;
+  setShiftId: Dispatch<SetStateAction<string | null>>;
   errors: Record<string, string>;
   handleRemoveError: (fieldName: string) => void;
 }
@@ -17,9 +17,9 @@ export const SelectShift = ({
   isRequired = true,
   isDisabled = false,
   label,
-  categoriesOptions,
-  categoryId,
-  setCategoryId,
+  shiftsOptions,
+  shiftId,
+  setShiftId,
   errors,
   handleRemoveError,
 }: Props) => {
@@ -28,37 +28,31 @@ export const SelectShift = ({
       variant="secondary"
       isRequired={isRequired}
       isDisabled={isDisabled}
-      isInvalid={!!errors.categoryId || undefined}
+      isInvalid={!!errors.shiftId || undefined}
       className="w-full"
-      name="categoryId"
-      value={categoryId}
+      name="shiftId"
+      value={shiftId}
       onChange={(key) => {
-        setCategoryId(key?.toString() || "");
-        handleRemoveError("categoryId");
+        setShiftId(key?.toString() || "");
+        handleRemoveError("shiftId");
       }}
     >
       <Label>{label}</Label>
       <ComboBox.InputGroup>
-        <Input placeholder="Buscar pase..." />
+        <Input placeholder="Buscar turno..." />
         <ComboBox.Trigger />
       </ComboBox.InputGroup>
       <ComboBox.Popover>
         <ListBox>
-          {categoriesOptions.map((category) => (
-            <ListBox.Item
-              key={category.id}
-              id={category.id}
-              textValue={category.name}
-            >
-              {category.name}
+          {shiftsOptions.map((shift) => (
+            <ListBox.Item key={shift.id} id={shift.id} textValue={shift.name}>
+              {shift.name}
               <ListBox.ItemIndicator />
             </ListBox.Item>
           ))}
         </ListBox>
       </ComboBox.Popover>
-      <FieldError
-        children={errors.currentCourseId && <p>{errors.currentCourseId}</p>}
-      />
+      <FieldError children={errors.shiftId && <p>{errors.shiftId}</p>} />
     </ComboBox>
   );
 };

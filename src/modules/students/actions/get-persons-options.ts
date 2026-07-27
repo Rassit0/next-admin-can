@@ -39,6 +39,7 @@ export const getPersonsOptions = async (
         signal,
       },
     );
+    console.log({ resPersons: res });
 
     return {
       error: false,

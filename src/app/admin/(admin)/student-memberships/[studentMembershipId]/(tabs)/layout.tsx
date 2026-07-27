@@ -1,23 +1,23 @@
 import { ErrorPage, HeaderPage, TabsRouteNavigation } from "@/ui";
 import React from "react";
 import { resolvePageData } from "@/utils/resolvePageData";
-import { getPlayerMembershipById } from "@/modules/player-memberships";
+import { getStudentMembershipById } from "@/modules/student-memberships";
 
 interface LayoutProps {
   children: React.ReactNode;
   params: Promise<{
-    playerMembershipId: string;
+    studentMembershipId: string;
   }>;
 }
 
-export default async function TeamSeasonDetailLayout({
+export default async function StudentSeasonDetailLayout({
   children,
   params,
 }: LayoutProps) {
-  const { playerMembershipId } = await params;
+  const { studentMembershipId } = await params;
 
   const [membershipRes] = await resolvePageData([
-    getPlayerMembershipById({ id: playerMembershipId }),
+    getStudentMembershipById({ id: studentMembershipId }),
   ]);
 
   const membership = membershipRes.data;
@@ -34,13 +34,13 @@ export default async function TeamSeasonDetailLayout({
     <>
       <HeaderPage
         title={
-          membership.player
-            ? `${membership.player.person.name} ${membership.player.person.lastName} ${membership.player.person.secondLastName || ""}`
-            : "Membresía del Atleta"
+          membership.student
+            ? `${membership.student.person.name} ${membership.student.person.lastName} ${membership.student.person.secondLastName || ""}`
+            : "Membresía del Estudiante"
         }
-        description={`Equipo: ${membership.teamSeason.team.name} · Categoría: ${membership.teamSeason.category.name} · Temporada: ${membership.teamSeason.season.name}`}
+        description={`Curso: ${membership.courseSeason.course.name} · Temporada: ${membership.courseSeason.season.name}`}
         breadcrumb={[
-          { label: "Membresías", href: `/admin/player-memberships` },
+          { label: "Membresías", href: `/admin/student-memberships` },
           {
             label: `Detalles`,
           },
@@ -49,7 +49,7 @@ export default async function TeamSeasonDetailLayout({
       <div className="flex flex-col page-content">
         <TabsRouteNavigation
           routes={tabsRoutes}
-          basePath={`/admin/player-memberships/${playerMembershipId}`}
+          basePath={`/admin/student-memberships/${studentMembershipId}`}
           defaultRoute="/"
         />
         {children}

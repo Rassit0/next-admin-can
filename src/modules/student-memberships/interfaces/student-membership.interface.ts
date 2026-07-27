@@ -33,6 +33,20 @@ export interface IStudentMembership {
   id: string;
   studentId: string;
   courseSeasonId: string;
+  courseSeason: {
+    course: {
+      name: string;
+    };
+    category: {
+      name: string;
+    };
+    season: {
+      name: string;
+    };
+    shift: {
+      name: string;
+    };
+  };
   paymentPlanId: string;
   startedAt: Date;
   finishedAt: Date | null;

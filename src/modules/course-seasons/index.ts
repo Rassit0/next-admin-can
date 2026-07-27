@@ -14,6 +14,7 @@ export * from "./actions/extend";
 export * from "./actions/finalize";
 export * from "./actions/toggle-billing";
 export * from "./actions/toggle-registration";
+export * from "./actions/get-shifts-options";
 
 // Components
 export * from "./components/grid-cards/GridCards";

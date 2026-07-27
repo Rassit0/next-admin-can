@@ -21,6 +21,7 @@ import {
   IPostCourseSeason,
   SeasonBillingType,
   BillingFrequency,
+  IShiftOption,
 } from "@/modules/course-seasons";
 import { STATUS_TEXT_MAP } from "../../constants/course-seasons.constants";
 
@@ -30,6 +31,7 @@ interface Props {
   courseSeason?: ICourseSeason;
   categoriesOptions: ICategoryOption[];
   seasonsOptions: ISeasonOption[];
+  shiftsOptions: IShiftOption[];
   urlRedirect: string;
 }
 
@@ -39,6 +41,7 @@ export const FormCourseSeason = ({
   courseSeason,
   categoriesOptions,
   seasonsOptions,
+  shiftsOptions,
   urlRedirect,
 }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -67,6 +70,9 @@ export const FormCourseSeason = ({
   );
   const [seasonId, setSeasonId] = useState<string | null>(
     courseSeason?.season.id || null,
+  );
+  const [shiftId, setShiftId] = useState<string | null>(
+    courseSeason?.shift.id || null,
   );
   const [gender, setGender] = useState<Gender | null>(
     courseSeason?.gender || null,
@@ -160,6 +166,9 @@ export const FormCourseSeason = ({
     if (seasonId === null) {
       newErrors.seasonId = "Debe ingresar la temporada";
     }
+    if (shiftId === null) {
+      newErrors.shiftId = "Debe ingresar el turno";
+    }
     if (gender === null) {
       newErrors.gender = "Debe ingresar el género";
     }
@@ -235,6 +244,7 @@ export const FormCourseSeason = ({
       courseId: course.id,
       categoryId: categoryId!,
       seasonId: seasonId!,
+      shiftId: shiftId!,
       gender: gender!,
       billingConfig: {
         billingDay:
@@ -334,10 +344,13 @@ export const FormCourseSeason = ({
           <BasicInfoCard
             categoriesOptions={categoriesOptions}
             seasonsOptions={seasonsOptions}
+            shiftsOptions={shiftsOptions}
             categoryId={categoryId}
             setCategoryId={setCategoryId}
             seasonId={seasonId}
             setSeasonId={setSeasonId}
+            shiftId={shiftId}
+            setShiftId={setShiftId}
             gender={gender}
             setGender={setGender}
             description={description}

@@ -35,6 +35,7 @@ export interface ICourseSeason {
   course: Category;
   category: Category;
   season: Season;
+  shift: Shift;
   description: string | null;
   maxMembers: number;
   minMembers: number;
@@ -64,6 +65,11 @@ export interface Season {
   description: string | null;
   startDate: Date;
   endDate: Date;
+}
+
+export interface Shift {
+  id: string;
+  name: string;
 }
 
 export interface Meta {

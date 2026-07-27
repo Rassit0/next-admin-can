@@ -31,6 +31,7 @@ export const itemsNavigation: NavItem[] = [
     action: "dashboard",
     subject: "home",
     icon: <HugeiconsIcon icon={DashboardSquare02Icon} size={20} />,
+    mobile: { priority: 10 },
   },
   {
     label: "Disciplinas",
@@ -73,6 +74,7 @@ export const itemsNavigation: NavItem[] = [
     action: "teams",
     subject: "TEAMS",
     icon: <HugeiconsIcon icon={UserGroupIcon} size={20} />,
+    mobile: { priority: 7 },
   },
   {
     label: "Jugadores",
@@ -87,6 +89,7 @@ export const itemsNavigation: NavItem[] = [
     action: "memberships",
     subject: ["PLAYER_MEMBERSHIPS", "STUDENT_MEMBERSHIPS"],
     icon: <HugeiconsIcon icon={IdentityCardIcon} size={20} />,
+    mobile: { priority: 9 },
   },
   {
     label: "Escuelas",
@@ -94,6 +97,7 @@ export const itemsNavigation: NavItem[] = [
     action: "schools",
     subject: "SCHOOLS",
     icon: <HugeiconsIcon icon={Mortarboard02Icon} size={20} />,
+    mobile: { priority: 8 },
   },
   {
     label: "Cursos",

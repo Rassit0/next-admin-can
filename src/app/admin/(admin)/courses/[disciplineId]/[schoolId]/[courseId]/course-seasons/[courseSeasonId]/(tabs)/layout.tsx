@@ -1,5 +1,8 @@
 import { ErrorPage, HeaderPage, TabsRouteNavigation } from "@/ui";
-import { getCourseSeasonById, CourseSeasonActions } from "@/modules/course-seasons";
+import {
+  getCourseSeasonById,
+  CourseSeasonActions,
+} from "@/modules/course-seasons";
 import React from "react";
 
 interface LayoutProps {
@@ -18,10 +21,15 @@ const GENDER_MAP: Record<string, string> = {
   MIXED: "Mixto",
 };
 
-export default async function CourseSeasonDetailLayout({ children, params }: LayoutProps) {
+export default async function CourseSeasonDetailLayout({
+  children,
+  params,
+}: LayoutProps) {
   const { disciplineId, schoolId, courseId, courseSeasonId } = await params;
-  
-  const courseSeasonResponse = await getCourseSeasonById({ id: courseSeasonId });
+
+  const courseSeasonResponse = await getCourseSeasonById({
+    id: courseSeasonId,
+  });
 
   if (courseSeasonResponse.error) {
     return <ErrorPage message={courseSeasonResponse.message} />;
@@ -44,7 +52,9 @@ export default async function CourseSeasonDetailLayout({ children, params }: Lay
       <HeaderPage
         title={`${courseSeason.category.name} (${GENDER_MAP[courseSeason.gender] || courseSeason.gender}) · ${courseSeason.season.name}`}
         description={`Curso: ${courseSeason.course.name} · Detalle de la temporada`}
-        action={<CourseSeasonActions courseSeason={courseSeason} />}
+        action={
+          <CourseSeasonActions courseSeason={courseSeason} baseUrl={basePath} />
+        }
         breadcrumb={[
           { label: "Cursos", href: `/` },
           {
@@ -57,7 +67,11 @@ export default async function CourseSeasonDetailLayout({ children, params }: Lay
         ]}
       />
       <div className="flex flex-col gap-6 page-content">
-        <TabsRouteNavigation routes={tabsRoutes} basePath={basePath} defaultRoute="/" />
+        <TabsRouteNavigation
+          routes={tabsRoutes}
+          basePath={basePath}
+          defaultRoute="/"
+        />
         {children}
       </div>
     </>

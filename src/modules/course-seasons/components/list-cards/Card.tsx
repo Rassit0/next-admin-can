@@ -1,4 +1,9 @@
-import { AddMembershipDrawer, ICourseSeason, STATUS_BG_MAP, CourseSeasonActions } from "@/modules/course-seasons";
+import {
+  AddMembershipDrawer,
+  ICourseSeason,
+  STATUS_BG_MAP,
+  CourseSeasonActions,
+} from "@/modules/course-seasons";
 import { Avatar, Button, Card } from "@heroui/react";
 import {
   Add01Icon,
@@ -50,7 +55,10 @@ export const CardCourseSeason = ({ courseSeason, urlBase }: Props) => {
           {/* <EnrollMembershipDrawer courseSeason={courseSeason} size="md" /> */}
 
           <div className="grid grid-cols-2 gap-2">
-            <ButtonMemberships courseSeasonId={courseSeason.id} urlBase={urlBase} />
+            <ButtonMemberships
+              courseSeasonId={courseSeason.id}
+              urlBase={urlBase}
+            />
             <ButtonPlans courseSeasonId={courseSeason.id} urlBase={urlBase} />
           </div>
         </div>
@@ -154,12 +162,11 @@ export const CardCourseSeason = ({ courseSeason, urlBase }: Props) => {
             <span className="w-2 h-2 rounded-full bg-white animate-pulse"></span>
             {STATUS_TEXT_MAP[courseSeason.status]}
           </div>
-          {(courseSeason.status === "ACTIVE" || courseSeason.status === "DRAFT") && (
+          {(courseSeason.status === "ACTIVE" ||
+            courseSeason.status === "DRAFT") && (
             <div
               className={`${
-                courseSeason.isRegistrationOpen
-                  ? "bg-success"
-                  : "bg-danger"
+                courseSeason.isRegistrationOpen ? "bg-success" : "bg-danger"
               } text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase shadow-md border border-white/20`}
             >
               {courseSeason.isRegistrationOpen
@@ -175,7 +182,7 @@ export const CardCourseSeason = ({ courseSeason, urlBase }: Props) => {
               billingConfig={courseSeason.billingConfig}
             />
           )}
-          <CourseSeasonActions courseSeason={courseSeason} />
+          <CourseSeasonActions courseSeason={courseSeason} baseUrl={urlBase} />
         </div>
       </div>
       <div className="p-6 flex-1 flex flex-col">
@@ -187,18 +194,25 @@ export const CardCourseSeason = ({ courseSeason, urlBase }: Props) => {
         </p>
 
         {(() => {
-          const primaryStaff = courseSeason.courseSeasonStaffs?.find((s) => s.isPrimary)?.staff.person || courseSeason.courseSeasonStaffs?.[0]?.staff.person;
+          const primaryStaff =
+            courseSeason.courseSeasonStaffs?.find((s) => s.isPrimary)?.staff
+              .person || courseSeason.courseSeasonStaffs?.[0]?.staff.person;
           if (!primaryStaff) return null;
           return (
             <div className="flex items-center gap-3 mb-6 bg-surface-container-low p-2 rounded-lg border border-border/50">
               <Avatar size="sm">
                 {primaryStaff.imageUrl && (
-                  <Avatar.Image src={primaryStaff.imageUrl} alt={`${primaryStaff.name} ${primaryStaff.lastName}`} />
+                  <Avatar.Image
+                    src={primaryStaff.imageUrl}
+                    alt={`${primaryStaff.name} ${primaryStaff.lastName}`}
+                  />
                 )}
                 <Avatar.Fallback>{`${primaryStaff.name.charAt(0)}${primaryStaff.lastName.charAt(0)}`}</Avatar.Fallback>
               </Avatar>
               <div className="flex flex-col">
-                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Entrenador Principal</span>
+                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+                  Entrenador Principal
+                </span>
                 <span className="text-xs font-semibold text-foreground">
                   {primaryStaff.name} {primaryStaff.lastName}
                 </span>

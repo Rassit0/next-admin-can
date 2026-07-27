@@ -23,12 +23,12 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { ButtonFloating } from "@/ui";
-import { FormStudent } from "@/modules/students";
+import { FormStudent, IStudent } from "@/modules/students";
 
 interface Props {
   label?: string;
   isIcon?: boolean;
-  onSubmited?: () => void;
+  onSubmited?: (student?: IStudent) => void;
   buttonFloatingMobile?: boolean;
 }
 export const AddModal = ({
@@ -50,7 +50,7 @@ export const AddModal = ({
           isIconOnly={isIcon}
         >
           <HugeiconsIcon icon={Add01Icon} />
-          {label || "Agregar Jugador"}
+          {label || "Agregar Estudiante"}
         </Button>
       )}
       {isIcon && (
@@ -86,19 +86,20 @@ export const AddModal = ({
                   <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
                     <HugeiconsIcon icon={IdentityCardIcon} />
                   </Modal.Icon>
-                  <Modal.Heading>Registrar Perfil de Jugador</Modal.Heading>
+                  <Modal.Heading>Registrar Perfil de Estudiante</Modal.Heading>
                 </div>
                 <p className="text-sm text-muted-foreground ml-10">
-                  Asigna un perfil deportivo a una persona registrada en el sistema.
+                  Asigna un perfil deportivo a una persona registrada en el
+                  sistema.
                 </p>
               </div>
             </Modal.Header>
             <Modal.Body className="p-0 md:p-6">
               <FormStudent
                 formId="add-student-form"
-                onSubmited={() => {
+                onSubmited={(student) => {
+                  onSubmited?.(student);
                   setIsOpen(false);
-                  onSubmited?.();
                 }}
                 isLoading={loading}
                 setIsLoading={setLoading}

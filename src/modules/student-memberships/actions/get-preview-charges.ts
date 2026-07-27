@@ -24,8 +24,9 @@ export const getPreviewCharges = async (
   data: GetPreviewChargesData,
 ): Promise<ServiceResponse<IPreviewChargesResponse>> => {
   return handleServerAction(async () => {
+    console.log({ data });
     const response = await api.post<IPreviewChargesResponse>(
-      `membership-charges/preview`,
+      `student-charges/preview`,
       data,
     );
 

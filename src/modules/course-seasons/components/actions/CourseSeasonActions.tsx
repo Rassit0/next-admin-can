@@ -34,6 +34,7 @@ import {
 
 interface Props {
   courseSeason: ICourseSeason;
+  baseUrl: string;
 }
 
 interface ActionDef {
@@ -58,7 +59,7 @@ const ACTIONS_BY_STATUS: Record<ICourseSeason["status"], ActionDef[]> = {
   FINISHED: [],
 };
 
-export const CourseSeasonActions = ({ courseSeason }: Props) => {
+export const CourseSeasonActions = ({ courseSeason, baseUrl }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
   const [loading, setLoading] = useState(false);
@@ -85,11 +86,7 @@ export const CourseSeasonActions = ({ courseSeason }: Props) => {
 
   const handleActionSelect = (key: string) => {
     if (key === "edit") {
-      const courseSeasonsIndex = pathname.indexOf('/course-seasons');
-      const basePath = courseSeasonsIndex !== -1 
-        ? `${pathname.substring(0, courseSeasonsIndex)}/course-seasons/${courseSeason.id}`
-        : pathname;
-      router.push(`${basePath}/edit`);
+      router.push(`${baseUrl}/${courseSeason.id}/edit`);
       return;
     }
     const actionDef = statusActions.find((a) => a.key === key);
@@ -148,7 +145,7 @@ export const CourseSeasonActions = ({ courseSeason }: Props) => {
     toast.success(res.message);
     confirmState.close();
     setLoading(false);
-    router.refresh();
+    // router.refresh();
   };
 
   return (

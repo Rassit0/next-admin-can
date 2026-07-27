@@ -4,7 +4,7 @@ export interface ICategoriesOptionsResponse {
 }
 
 export interface ICategoryOption {
-  id: number;
+  id: string;
   name: string;
   minAge: number;
   maxAge: number;
@@ -16,7 +16,7 @@ export interface ISeasonsOptionsResponse {
 }
 
 export interface ISeasonOption {
-  id: number;
+  id: string;
   name: string;
   startDate: Date;
   endDate: Date;

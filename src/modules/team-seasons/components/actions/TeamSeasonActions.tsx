@@ -34,6 +34,7 @@ import {
 
 interface Props {
   teamSeason: ITeamSeason;
+  baseUrl: string;
 }
 
 interface ActionDef {
@@ -58,7 +59,7 @@ const ACTIONS_BY_STATUS: Record<ITeamSeason["status"], ActionDef[]> = {
   FINISHED: [],
 };
 
-export const TeamSeasonActions = ({ teamSeason }: Props) => {
+export const TeamSeasonActions = ({ teamSeason, baseUrl }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
   const [loading, setLoading] = useState(false);
@@ -85,11 +86,7 @@ export const TeamSeasonActions = ({ teamSeason }: Props) => {
 
   const handleActionSelect = (key: string) => {
     if (key === "edit") {
-      const teamSeasonsIndex = pathname.indexOf('/team-seasons');
-      const basePath = teamSeasonsIndex !== -1 
-        ? `${pathname.substring(0, teamSeasonsIndex)}/team-seasons/${teamSeason.id}`
-        : pathname;
-      router.push(`${basePath}/edit`);
+      router.push(`${baseUrl}/${teamSeason.id}/edit`);
       return;
     }
     const actionDef = statusActions.find((a) => a.key === key);
@@ -148,7 +145,7 @@ export const TeamSeasonActions = ({ teamSeason }: Props) => {
     toast.success(res.message);
     confirmState.close();
     setLoading(false);
-    router.refresh();
+    // router.refresh();
   };
 
   return (

@@ -4,39 +4,15 @@ import Link from "next/link";
 import { getPaymentPlans } from "@/modules/payment-plans";
 import { getPlayers } from "@/modules/players";
 import { getTeamSeasonById } from "@/modules/team-seasons";
-import {
-  EnrollMembershipDrawer,
-  getPlayerMemberships,
-  MetricsCards,
-  TableMemberships,
-} from "@/modules/player-memberships";
-import { Button, Card, Alert, Chip, Popover } from "@heroui/react";
-import {
-  Wallet01Icon,
-  InformationCircleIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 
-const InfoTooltip = ({ text }: { text: string }) => (
-  <Popover>
-    <Button
-      isIconOnly
-      variant="ghost"
-      size="sm"
-      className="h-4 w-4 min-w-4 text-muted-foreground ml-1 p-0"
-    >
-      <HugeiconsIcon icon={InformationCircleIcon} size={14} />
-    </Button>
-    <Popover.Content placement="top">
-      <Popover.Dialog className="max-w-50 px-3 py-2">
-        <Popover.Arrow />
-        <p className="text-xs font-normal normal-case tracking-normal text-foreground">
-          {text}
-        </p>
-      </Popover.Dialog>
-    </Popover.Content>
-  </Popover>
-);
+import {
+  CreateMassiveManualChargeButton,
+  TableMemberships,
+} from "@/modules/student-memberships";
+import { resolvePageData } from "@/utils/resolvePageData";
+import { getStudentMemberships } from "@/modules/student-memberships";
+
+import { Button, Card, Alert, Chip, Popover } from "@heroui/react";
 
 interface Props {
   searchParams: Promise<{
@@ -44,23 +20,23 @@ interface Props {
     per_page?: string;
     page?: string;
     status?: string;
-    teamSeasonId?: string;
+    courseSeasonId?: string;
   }>;
   params: Promise<{}>;
 }
 
-export default async function PlayerMembershipsPage({ searchParams }: Props) {
-  const { search, page, per_page, status, teamSeasonId } = await searchParams;
+export default async function StudentMembershipsPage({ searchParams }: Props) {
+  const { search, page, per_page, status, courseSeasonId } = await searchParams;
 
   const [membershipsRes, paymentPlansRes] = await resolvePageData([
-    getPlayerMemberships({
+    getStudentMemberships({
       search,
       page,
       per_page,
-      teamSeasonId,
+      courseSeasonId,
       status,
     }),
-    getPaymentPlans({ per_page: "100", teamSeasonId }),
+    getPaymentPlans({ per_page: "100", courseSeasonId }),
   ]);
 
   const memberships = membershipsRes.data.data;
@@ -82,9 +58,9 @@ export default async function PlayerMembershipsPage({ searchParams }: Props) {
             description="Gestiona todas las membresías, planes de pago y cargos de los atletas."
             action={
               <>
-                {teamSeasonId && (
+                {courseSeasonId && (
                   <CreateMassiveManualChargeButton
-                    teamSeasonId={teamSeasonId}
+                    courseSeasonId={courseSeasonId}
                   />
                 )}
               </>
@@ -92,7 +68,10 @@ export default async function PlayerMembershipsPage({ searchParams }: Props) {
             showButtonBack={false}
           />
           <SectionFilters />
-          <TableMemberships memberships={memberships} showPlayerDetail={true} />
+          <TableMemberships
+            memberships={memberships}
+            showStudentDetail={true}
+          />
           <PaginationSection
             totalPages={meta.totalPages}
             itemsPerPage={meta.itemsPerPage}
@@ -103,6 +82,3 @@ export default async function PlayerMembershipsPage({ searchParams }: Props) {
     </>
   );
 }
-
-import { CreateMassiveManualChargeButton } from "@/modules/player-memberships";
-import { resolvePageData } from "@/utils/resolvePageData";

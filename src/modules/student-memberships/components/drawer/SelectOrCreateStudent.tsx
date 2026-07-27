@@ -16,7 +16,10 @@ import {
 import { Dispatch, SetStateAction } from "react";
 import { useAsyncList } from "@react-stately/data";
 import { AddModal } from "@/modules/students";
-import { getStudentsOptions, IStudentOption } from "@/modules/student-memberships";
+import {
+  getStudentsOptions,
+  IStudentOption,
+} from "@/modules/student-memberships";
 
 interface Props {
   isRequired?: boolean;
@@ -79,7 +82,9 @@ export const SelectOrCreateStudent = ({
         value={studentId}
         onChange={(key) => {
           setStudentId(key?.toString() || "");
-          const selectedStudent = list.items.find((student) => student.id === key);
+          const selectedStudent = list.items.find(
+            (student) => student.id === key,
+          );
           if (selectedStudent) {
             setSelectedStudent(selectedStudent);
           }
@@ -149,7 +154,8 @@ export const SelectOrCreateStudent = ({
                           </span>
                           {item.person.birthDate && (
                             <span className="text-xs text-default-500 truncate">
-                              • Edad deportiva: {calculateAge(item.person.birthDate)} años
+                              • Edad deportiva:{" "}
+                              {calculateAge(item.person.birthDate)} años
                             </span>
                           )}
                         </div>
@@ -175,8 +181,26 @@ export const SelectOrCreateStudent = ({
       </Autocomplete>
       <AddModal
         isIcon
-        onSubmited={() => {
-          list.reload();
+        onSubmited={(student) => {
+          if (student) {
+            // Agregar la studenta a la lista localmente para que se pueda seleccionar
+            list.append({
+              id: student.id,
+              person: {
+                id: student.person.id,
+                name: student.person.name,
+                lastName: student.person.lastName,
+                secondLastName: student.person.secondLastName,
+                documentNumber: student.person.documentNumber,
+                gender: student.person.gender,
+                birthDate: student.person.birthDate as Date,
+                fullName: `${student.person.name} ${student.person.lastName}`,
+                imageUrl: student.person.imageUrl,
+              },
+            });
+            list.setSelectedKeys(new Set([student.id]));
+            setStudentId(student.id);
+          }
         }}
       />
     </div>
