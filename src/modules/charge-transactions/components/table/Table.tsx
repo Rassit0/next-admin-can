@@ -31,6 +31,7 @@ export const TableCharges = ({
 }: Props) => {
   const [isClient, setIsClient] = useState(false);
   const [selectedCharge, setSelectedCharge] = useState<ICharge | null>(null);
+  const [isOpenDrawerPay, setIsOpenDrawerPay] = useState(false);
   const params = useParams();
 
   useEffect(() => {
@@ -240,8 +241,15 @@ export const TableCharges = ({
                         return (
                           <ChargeActions
                             charge={charge}
-                            onPay={(c) => setSelectedCharge(c)}
-                            detailsHref={urlBase ? `${urlBase}${charge.id}/transactions` : undefined}
+                            onPay={(c) => {
+                              setSelectedCharge(c);
+                              setIsOpenDrawerPay(true);
+                            }}
+                            detailsHref={
+                              urlBase
+                                ? `${urlBase}${charge.id}/transactions`
+                                : undefined
+                            }
                           />
                         );
                       })()}
@@ -255,8 +263,8 @@ export const TableCharges = ({
       </Table.ScrollContainer>
       {selectedCharge && (
         <PayChargeDrawer
-          isOpen={!!selectedCharge}
-          onOpenChange={(isOpen) => !isOpen && setSelectedCharge(null)}
+          isOpen={isOpenDrawerPay}
+          onOpenChange={setIsOpenDrawerPay}
           charge={selectedCharge}
         />
       )}
