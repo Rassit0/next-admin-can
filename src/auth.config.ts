@@ -63,9 +63,10 @@ export const authConfig = {
       if (isAdminRoute) {
         if (!isLoggedIn) return false; // Redirige a /login si no está autenticado
         return true;
-      } else if (isLoggedIn && path === "/login") {
-        return NextResponse.redirect(new URL(`/admin/dashboard`, nextUrl));
       }
+      // else if (isLoggedIn && path === "/login") {
+      //   return NextResponse.redirect(new URL(`/admin/dashboard`, nextUrl));
+      // }
 
       return true;
     },
