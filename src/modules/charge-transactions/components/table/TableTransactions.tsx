@@ -20,9 +20,9 @@ import {
 import { ITransaction } from "../../interfaces/transactions.interface";
 import { useFormStatus } from "react-dom";
 import { removeTransaction } from "../../actions/remove-transaction";
-// import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { PrintReportDialog } from "../dialog/PrintReportDialog";
 
 interface Props {
   transactions: ITransaction[];
@@ -34,6 +34,10 @@ export const TableTransactions = ({ transactions }: Props) => {
     null,
   );
   const [isLoading, setIsLoading] = useState(false);
+
+  // Estado para el diálogo de impresión de recibo
+  const [printTransactionId, setPrintTransactionId] = useState<string | null>(null);
+  const [showPrintDialog, setShowPrintDialog] = useState(false);
 
   const handleConfirmVoid = async () => {
     if (!transactionToVoid) return;
@@ -191,10 +195,8 @@ export const TableTransactions = ({ transactions }: Props) => {
                             aria-label="Acciones de Transacción"
                             onAction={(key) => {
                               if (key === "print") {
-                                toast.info(
-                                  "Descarga de recibo en desarrollo...",
-                                );
-                                // window.open(`${process.env.NEXT_PUBLIC_API_URL}/transactions/${item.id}/receipt`, "_blank");
+                                setPrintTransactionId(item.id);
+                                setShowPrintDialog(true);
                               } else if (key === "void") {
                                 setTransactionToVoid(item.id);
                               }
@@ -265,6 +267,12 @@ export const TableTransactions = ({ transactions }: Props) => {
           </AlertDialog.Dialog>
         </AlertDialog.Container>
       </AlertDialog.Backdrop>
+
+      <PrintReportDialog
+        transactionId={printTransactionId}
+        isOpen={showPrintDialog}
+        onOpenChange={setShowPrintDialog}
+      />
     </>
   );
 };

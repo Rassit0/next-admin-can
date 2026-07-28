@@ -9,6 +9,7 @@ export * from "./actions/remove-discount";
 export * from "./actions/update";
 export * from "./actions/remove";
 export * from "./actions/get-persons-options";
+export * from "./actions/get-transaction-report";
 
 // Interfaces
 export * from "./interfaces/charges.interface";
@@ -23,3 +24,4 @@ export * from "./components/table/TableTransactions";
 export * from "./components/table/Table";
 export * from "./components/actions/ChargeActions";
 export * from "./components/drawer/SelectOrCreatePerson";
+export * from "./components/dialog/PrintReportDialog";

@@ -6,12 +6,22 @@ import { useState } from "react";
 import { PayChargeDrawer } from "@/modules/charge-transactions";
 import { ICharge } from "@/modules/charge-transactions";
 
-export const PayChargeButton = ({ charge }: { charge: ICharge }) => {
+export const PayChargeButton = ({
+  charge,
+  isDisabled = false,
+}: {
+  charge: ICharge;
+  isDisabled: boolean;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
-      <Button variant="primary" onPress={() => setIsOpen(true)}>
+      <Button
+        variant="primary"
+        isDisabled={isDisabled}
+        onPress={() => setIsOpen(true)}
+      >
         <HugeiconsIcon icon={Add01Icon} size={18} />
         Registrar Pago
       </Button>
