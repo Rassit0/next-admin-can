@@ -161,9 +161,9 @@ export const TableStudents = ({ students }: Props) => {
                   <Chip
                     size="sm"
                     variant="soft"
-                    className={genderClassMap[student.person.gender]}
+                    className={student.person.gender ? genderClassMap[student.person.gender] : ""}
                   >
-                    {genderMap[student.person.gender]}
+                    {student.person.gender ? genderMap[student.person.gender] : "-"}
                   </Chip>
                 </Table.Cell>
                 <Table.Cell>

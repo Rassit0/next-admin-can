@@ -8,9 +8,10 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 interface Props {
   children: React.ReactNode;
   id: string;
+  className?: string;
 }
 
-export const SortableColumnHeader = ({ children, id }: Props) => {
+export const SortableColumnHeader = ({ children, id, className }: Props) => {
   const router = useRouter();
 
   const pathname = usePathname();
@@ -55,6 +56,7 @@ export const SortableColumnHeader = ({ children, id }: Props) => {
       className={clsx(
         "group flex items-center gap-1 select-none transition-colors",
         "hover:text-primary",
+        className
       )}
     >
       <span>{children}</span>

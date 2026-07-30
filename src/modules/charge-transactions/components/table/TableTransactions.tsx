@@ -36,7 +36,9 @@ export const TableTransactions = ({ transactions }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   // Estado para el diálogo de impresión de recibo
-  const [printTransactionId, setPrintTransactionId] = useState<string | null>(null);
+  const [printTransactionId, setPrintTransactionId] = useState<string | null>(
+    null,
+  );
   const [showPrintDialog, setShowPrintDialog] = useState(false);
 
   const handleConfirmVoid = async () => {
@@ -101,6 +103,11 @@ export const TableTransactions = ({ transactions }: Props) => {
             <Table.Header className="bg-surface-secondary">
               <Table.Column isRowHeader>
                 <span className="text-xs font-semibold uppercase tracking-wide">
+                  N° Recibo
+                </span>
+              </Table.Column>
+              <Table.Column>
+                <span className="text-xs font-semibold uppercase tracking-wide">
                   Fecha
                 </span>
               </Table.Column>
@@ -138,6 +145,13 @@ export const TableTransactions = ({ transactions }: Props) => {
                   id={item.id}
                   className="border-b border-border last:border-b-0 hover:bg-surface-secondary/40"
                 >
+                  <Table.Cell className="py-3">
+                    <div className="flex flex-col">
+                      <span className="font-semibold text-foreground">
+                        {item.receiptSeries}-{item.receiptNumber}
+                      </span>
+                    </div>
+                  </Table.Cell>
                   <Table.Cell className="py-3">
                     <div className="flex flex-col">
                       <span className="font-semibold text-foreground">

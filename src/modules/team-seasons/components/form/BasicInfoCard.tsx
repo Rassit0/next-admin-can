@@ -1,4 +1,4 @@
-import { Calendar, Card, Select, TextArea, TextField } from "@heroui/react";
+import { Calendar, Card, Select, Switch, TextArea, TextField } from "@heroui/react";
 import { Calendar04Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
@@ -30,6 +30,8 @@ interface Props {
   setMinBirthYear: Dispatch<SetStateAction<number | null>>;
   maxBirthYear: number | null;
   setMaxBirthYear: Dispatch<SetStateAction<number | null>>;
+  validateAge: boolean;
+  setValidateAge: Dispatch<SetStateAction<boolean>>;
   errors: Record<string, string>;
   handleRemoveError: (fieldName: string) => void;
   isStructuralDisabled?: boolean;
@@ -50,6 +52,8 @@ export const BasicInfoCard = ({
   setMinBirthYear,
   maxBirthYear,
   setMaxBirthYear,
+  validateAge,
+  setValidateAge,
   errors,
   handleRemoveError,
   isStructuralDisabled = false,
@@ -124,24 +128,49 @@ export const BasicInfoCard = ({
         </Select>
 
         <div className="col-span-full">
-          <Alert status="accent">
-            <Alert.Indicator />
-            <Alert.Content>
-              <Alert.Title>
-                Anulación de Edades de Categoría (Opcional)
-              </Alert.Title>
-              <Alert.Description>
-                Por defecto, el sistema valida la edad de los atletas usando el
-                rango de edades configurado en la Categoría y comparándolo
-                contra su{" "}
-                <strong>
-                  edad deportiva actual (Año actual - Año de Nacimiento)
-                </strong>
-                . Si deseas sobrescribir ese cálculo para esta oferta en
-                específico, completa los siguientes campos.
-              </Alert.Description>
-            </Alert.Content>
-          </Alert>
+          <div className="flex items-center justify-between mb-4">
+            <Switch isSelected={validateAge} onChange={setValidateAge}>
+              <Switch.Control>
+                <Switch.Thumb />
+              </Switch.Control>
+              <Switch.Content>
+                Validar edad al inscribir
+              </Switch.Content>
+            </Switch>
+          </div>
+          {!validateAge && (
+            <Alert status="warning">
+              <Alert.Indicator />
+              <Alert.Content>
+                <Alert.Title>Validación de edad desactivada</Alert.Title>
+                <Alert.Description>
+                  Los jugadores podrán inscribirse sin importar su edad o si no
+                  tienen fecha de nacimiento registrada. Útil durante la
+                  migración de datos.
+                </Alert.Description>
+              </Alert.Content>
+            </Alert>
+          )}
+          {validateAge && (
+            <Alert status="accent">
+              <Alert.Indicator />
+              <Alert.Content>
+                <Alert.Title>
+                  Anulación de Edades de Categoría (Opcional)
+                </Alert.Title>
+                <Alert.Description>
+                  Por defecto, el sistema valida la edad de los atletas usando el
+                  rango de edades configurado en la Categoría y comparándolo
+                  contra su{" "}
+                  <strong>
+                    edad deportiva actual (Año actual - Año de Nacimiento)
+                  </strong>
+                  . Si deseas sobrescribir ese cálculo para esta oferta en
+                  específico, completa los siguientes campos.
+                </Alert.Description>
+              </Alert.Content>
+            </Alert>
+          )}
         </div>
 
         <TextField
@@ -150,6 +179,7 @@ export const BasicInfoCard = ({
           name="minBirthYear"
           type="number"
           isInvalid={!!errors.minBirthYear || undefined}
+          isDisabled={!validateAge}
         >
           <Label>Año de nacimiento min. (opcional)</Label>
           <Input
@@ -172,6 +202,7 @@ export const BasicInfoCard = ({
           name="maxBirthYear"
           type="number"
           isInvalid={!!errors.maxBirthYear || undefined}
+          isDisabled={!validateAge}
         >
           <Label>Año de nacimiento max. (opcional)</Label>
           <Input

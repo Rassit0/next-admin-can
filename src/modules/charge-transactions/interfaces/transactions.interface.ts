@@ -1,6 +1,8 @@
 export interface ITransaction {
   id: string;
   payerPersonId: string;
+  receiptSeries: string;
+  receiptNumber: number;
   amount: number;
   transactionDate: Date | string;
   description: string;

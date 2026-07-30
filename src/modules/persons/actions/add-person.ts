@@ -17,9 +17,9 @@ export const addPerson = async ({
     formData.append("name", data.name);
     formData.append("lastName", data.lastName);
     formData.append("secondLastName", data.secondLastName || "");
-    formData.append("gender", data.gender);
-    formData.append("documentType", data.documentType);
-    formData.append("documentNumber", data.documentNumber);
+    formData.append("gender", data.gender || "");
+    if (data.documentType) formData.append("documentType", data.documentType);
+    if (data.documentNumber) formData.append("documentNumber", data.documentNumber);
     if (data.email) formData.append("email", data.email);
     if (data.phone) formData.append("phone", data.phone);
     if (data.address) formData.append("address", data.address);

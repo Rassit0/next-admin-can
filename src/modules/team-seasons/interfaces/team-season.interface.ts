@@ -40,6 +40,7 @@ export interface ITeamSeason {
   minMembers: number;
   minBirthYear?: number | null;
   maxBirthYear?: number | null;
+  validateAge: boolean;
   status: StatusTeamSeason;
   isRegistrationOpen: boolean;
   billingConfig?: ITeamSeasonBillingConfig;

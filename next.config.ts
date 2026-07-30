@@ -3,6 +3,14 @@ import { withSerwist } from "@serwist/turbopack";
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  transpilePackages: [
+    "@fullcalendar/common",
+    "@fullcalendar/core",
+    "@fullcalendar/react",
+    "@fullcalendar/daygrid",
+    "@fullcalendar/timegrid",
+    "@fullcalendar/interaction",
+  ],
   images: {
     remotePatterns: [
       {

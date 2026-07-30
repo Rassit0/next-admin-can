@@ -13,6 +13,7 @@ export interface IPaymentPlan {
   seasonFeeDiscountPercent: string;
   isSinglePayment: boolean;
   advanceCycles?: number;
+  promotionalCycles?: number;
   advanceCyclesDiscountPercent?: string | number;
   isDefault: boolean;
   createdAt: Date;

@@ -1,0 +1,56 @@
+import { Metadata } from "next";
+import { getTransactions } from "@/modules/accounting-cash-flow/actions/get";
+import { CashFlowClient } from "@/modules/accounting-cash-flow/components/CashFlowClient";
+import { getAccountCategories } from "@/modules/account-categories/actions/get";
+import { getFinancialAccounts } from "@/modules/financial-accounts/actions/get-all";
+import { resolvePageData } from "@/utils/resolvePageData";
+
+export const metadata: Metadata = {
+  title: "Flujo de Caja | Sistema de Gestión CAN",
+  description: "Historial de movimientos directos de ingresos y egresos.",
+};
+
+export default async function CashFlowPage({
+  searchParams,
+}: {
+  searchParams: Record<string, string>;
+}) {
+  const { search, page, per_page, sortField, orderBy, type, paymentMethod, startDate, endDate, origin, categoryId } = searchParams;
+
+  const [response, categoriesRes, financialAccountsRes] = await resolvePageData([
+    getTransactions({
+      search,
+      page,
+      per_page,
+      sortField,
+      orderBy,
+      type,
+      paymentMethod,
+      startDate,
+      endDate,
+      origin,
+      categoryId
+    }),
+    getAccountCategories({ per_page: "100" }),
+    getFinancialAccounts(),
+  ]);
+
+  const financialAccounts = financialAccountsRes.data || [];
+
+  return (
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-2">
+        <h1 className="text-2xl font-bold">Flujo de Caja</h1>
+        <p className="text-default-500">
+          Consulta y registra el movimiento de dinero en tiempo real.
+        </p>
+      </div>
+
+      <CashFlowClient 
+        response={response.data!} 
+        categories={categoriesRes.data?.data || []} 
+        financialAccounts={financialAccounts || []}
+      />
+    </div>
+  );
+}

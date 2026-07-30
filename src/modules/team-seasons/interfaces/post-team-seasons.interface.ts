@@ -6,6 +6,7 @@ export interface IPostTeamSeason {
   minMembers: number;
   minBirthYear?: number | null;
   maxBirthYear?: number | null;
+  validateAge?: boolean;
   teamId: string;
   categoryId: string;
   seasonId: string;

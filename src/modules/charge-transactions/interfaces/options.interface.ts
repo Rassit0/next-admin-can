@@ -11,8 +11,8 @@ export interface IPersonOption {
   name: string;
   lastName: string;
   secondLastName: string | null;
-  documentNumber: string;
-  gender: TGender;
+  documentNumber: string | null;
+  gender: TGender | null;
   birthDate: Date | null;
   imageUrl: string | null;
   fullName: string;

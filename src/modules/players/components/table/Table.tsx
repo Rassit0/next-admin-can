@@ -169,9 +169,9 @@ export const TablePlayers = ({ players }: Props) => {
                   <Chip
                     size="sm"
                     variant="soft"
-                    className={genderClassMap[player.person.gender]}
+                    className={player.person.gender ? genderClassMap[player.person.gender] : ""}
                   >
-                    {genderMap[player.person.gender]}
+                    {player.person.gender ? genderMap[player.person.gender] : "-"}
                   </Chip>
                 </Table.Cell>
                 <Table.Cell>

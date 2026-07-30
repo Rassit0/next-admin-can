@@ -21,6 +21,7 @@ import {
   UserIcon,
   UserMultipleIcon,
   Time02Icon,
+  Invoice01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
@@ -112,6 +113,13 @@ export const itemsNavigation: NavItem[] = [
     action: "students",
     subject: "STUDENTS",
     icon: <HugeiconsIcon icon={StudentIcon} size={20} />,
+  },
+  {
+    label: "Contabilidad",
+    href: "accounting",
+    action: "accounting",
+    subject: ["ACCOUNT_CHARGES", "ACCOUNT_CATEGORIES"],
+    icon: <HugeiconsIcon icon={Invoice01Icon} size={20} />,
   },
   {
     label: "Asistencia",

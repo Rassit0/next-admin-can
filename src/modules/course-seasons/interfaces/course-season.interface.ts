@@ -41,6 +41,7 @@ export interface ICourseSeason {
   minMembers: number;
   minBirthYear?: number | null;
   maxBirthYear?: number | null;
+  validateAge: boolean;
   status: StatusCourseSeason;
   isRegistrationOpen: boolean;
   billingConfig?: ICourseSeasonBillingConfig;

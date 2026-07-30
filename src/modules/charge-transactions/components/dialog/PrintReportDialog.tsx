@@ -8,7 +8,10 @@ import {
   PrinterIcon,
 } from "@hugeicons/core-free-icons";
 import { useState, useCallback } from "react";
-import { getTransactionReport } from "../../actions/get-transaction-report";
+import {
+  getTransactionReport,
+  getTransactionReportSingle,
+} from "@/modules/charge-transactions";
 
 interface Props {
   transactionId: string | null;
@@ -35,7 +38,12 @@ export const PrintReportDialog = ({
       setIsLoading(true);
 
       try {
-        const res = await getTransactionReport(transactionId);
+        let res;
+        if (action === "print") {
+          res = await getTransactionReport(transactionId);
+        } else {
+          res = await getTransactionReportSingle(transactionId);
+        }
 
         if (res.error || !res.data) {
           toast.danger(res.message || "Error al generar el reporte.");

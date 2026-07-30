@@ -62,6 +62,9 @@ export const FormTeamSeason = ({
   const [maxBirthYear, setMaxBirthYear] = useState<number | null>(
     teamSeason?.maxBirthYear || null,
   );
+  const [validateAge, setValidateAge] = useState<boolean>(
+    teamSeason?.validateAge ?? true,
+  );
   const [categoryId, setCategoryId] = useState<string | null>(
     teamSeason?.category.id || null,
   );
@@ -232,6 +235,7 @@ export const FormTeamSeason = ({
       minMembers: minMembers!,
       minBirthYear: minBirthYear,
       maxBirthYear: maxBirthYear,
+      validateAge,
       teamId: team.id,
       categoryId: categoryId!,
       seasonId: seasonId!,
@@ -346,6 +350,8 @@ export const FormTeamSeason = ({
             setMinBirthYear={setMinBirthYear}
             maxBirthYear={maxBirthYear}
             setMaxBirthYear={setMaxBirthYear}
+            validateAge={validateAge}
+            setValidateAge={setValidateAge}
             errors={errors}
             handleRemoveError={handleRemoveError}
             isStructuralDisabled={isStructuralDisabled}

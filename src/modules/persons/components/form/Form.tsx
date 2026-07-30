@@ -155,18 +155,6 @@ export const FormPerson = ({
     if (!lastName) {
       newErrors.lastName = "Debe ingresar un apellido";
     }
-    if (!documentNumber) {
-      newErrors.documentNumber = "Debe ingresar un número de documento";
-    }
-    if (!birthDate) {
-      newErrors.birthDate = "Debe ingresar una fecha de nacimiento";
-    }
-    if (!documentType) {
-      newErrors.documentType = "Debe seleccionar un tipo de documento";
-    }
-    if (!gender) {
-      newErrors.gender = "Debe seleccionar un género";
-    }
 
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) {
@@ -179,14 +167,14 @@ export const FormPerson = ({
       name: name!,
       lastName: lastName!,
       secondLastName,
-      birthDate: birthDate!.toDate(getLocalTimeZone()),
+      birthDate: birthDate ? birthDate.toDate(getLocalTimeZone()) : null,
       image,
-      documentType: documentType!,
-      documentNumber: documentNumber!,
+      documentType: documentType || null,
+      documentNumber: documentNumber || null,
       phone,
       email,
       address,
-      gender: gender!,
+      gender: gender || null,
     };
     if (person) {
       res = await editPerson({ id: person.id, data });
@@ -347,7 +335,6 @@ export const FormPerson = ({
 
               {/* Talla Estandar */}
               <Select
-                isRequired
                 className="w-full"
                 name="documentType"
                 placeholder="Seleccione un documento"
@@ -397,7 +384,6 @@ export const FormPerson = ({
 
               {/* Campo: CI */}
               <TextField
-                isRequired
                 className="w-full"
                 name="documentNumber"
                 type="text"
@@ -422,7 +408,6 @@ export const FormPerson = ({
 
               {/* Fecha de Nacimiento */}
               <DatePicker
-                isRequired
                 isInvalid={!!errors.birthDate || undefined}
                 name="birthDate"
                 value={birthDate}
@@ -538,7 +523,6 @@ export const FormPerson = ({
 
               {/* Talla Estandar */}
               <Select
-                isRequired
                 className="w-full"
                 name="gender"
                 placeholder="Seleccione un genero"

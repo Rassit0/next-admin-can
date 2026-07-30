@@ -1,26 +1,12 @@
 import { ApiError } from "./errors/ApiError";
 
-type JsonBody = Record<string, unknown> | unknown[];
-
-export type RequestBody =
-  | JsonBody
-  | FormData
-  | Blob
-  | ArrayBuffer
-  | ArrayBufferView
-  | URLSearchParams
-  | null;
-
-export type ResponseType = "json" | "blob" | "text" | "arrayBuffer";
-
 export interface HttpRequestOptions {
   headers?: Record<string, string>;
-  params?: Record<string, string | number | boolean | null | undefined>;
+  params?: Record<string, string | number | boolean>;
   signal?: AbortSignal;
   timeout?: number;
   cache?: RequestCache;
   omitToken?: boolean;
-  responseType?: ResponseType;
   next?: {
     revalidate?: number | false;
     tags?: string[];
@@ -29,441 +15,244 @@ export interface HttpRequestOptions {
 
 export type TokenFetcher = () => Promise<string | undefined | null>;
 
-export enum HttpMethod {
-  GET = "GET",
-  POST = "POST",
-  PATCH = "PATCH",
-  PUT = "PUT",
-  DELETE = "DELETE",
-}
+type HttpMethod = "GET" | "POST" | "PATCH" | "PUT" | "DELETE";
 
 export interface HttpAdapter {
   get<T>(endpoint: string, options?: HttpRequestOptions): Promise<T>;
   post<T>(
     endpoint: string,
-    data?: unknown,
+    data?: any,
     options?: HttpRequestOptions,
   ): Promise<T>;
   patch<T>(
     endpoint: string,
-    data?: unknown,
+    data?: any,
     options?: HttpRequestOptions,
   ): Promise<T>;
   put<T>(
     endpoint: string,
-    data?: unknown,
+    data?: any,
     options?: HttpRequestOptions,
   ): Promise<T>;
   delete<T>(endpoint: string, options?: HttpRequestOptions): Promise<T>;
   getBlob(endpoint: string, options?: HttpRequestOptions): Promise<Blob>;
-  getText(endpoint: string, options?: HttpRequestOptions): Promise<string>;
-  getArrayBuffer(
-    endpoint: string,
-    options?: HttpRequestOptions,
-  ): Promise<ArrayBuffer>;
 }
 
-type FetchOptions = RequestInit & {
-  next?: HttpRequestOptions["next"];
-};
-
-const ACCEPT_HEADER: Record<ResponseType, string> = {
-  json: "application/json",
-  blob: "*/*",
-  text: "text/plain",
-  arrayBuffer: "*/*",
+const ERROR_MESSAGES: Readonly<Record<number, string>> = {
+  400: "Petición incorrecta",
+  401: "Token inválido o expirado",
+  403: "Acceso denegado",
+  404: "Recurso no encontrado",
+  500: "Error interno del servidor",
 };
 
 export class CANApiAdapter implements HttpAdapter {
   private readonly baseUrl: string;
+  private readonly defaultTimeout: number;
+  private readonly tokenFetcher?: TokenFetcher;
 
-  constructor(
-    private readonly defaultTimeout = 10000,
-    private readonly tokenFetcher?: TokenFetcher,
-  ) {
-    this.baseUrl = process.env.NEXT_PUBLIC_CAN_API_URL ?? "";
-  }
+  constructor(defaultTimeout = 10000, tokenFetcher?: TokenFetcher) {
+    this.baseUrl = process.env.NEXT_PUBLIC_CAN_API_URL || "";
+    this.defaultTimeout = defaultTimeout;
+    this.tokenFetcher = tokenFetcher;
 
-  private buildUrl(
-    endpoint: string,
-    params?: HttpRequestOptions["params"],
-  ): string {
-    if (!this.baseUrl && !/^https?:\/\//.test(endpoint)) {
-      throw new ApiError(
-        500,
-        "El servicio no está disponible: NEXT_PUBLIC_CAN_API_URL no está configurada.",
-      );
-    }
-
-    try {
-      if (/^https?:\/\//.test(endpoint)) {
-        return endpoint;
-      }
-
-      const base = this.baseUrl.replace(/\/+$/, "");
-      const path = endpoint.replace(/^\/+/, "");
-      const url = new URL(`${base}/${path}`);
-
-      if (params) {
-        for (const [key, value] of Object.entries(params)) {
-          if (value == null) continue;
-          url.searchParams.append(key, String(value));
-        }
-      }
-
-      return url.toString();
-    } catch {
-      throw new ApiError(
-        500,
-        `URL inválida: no se pudo construir la ruta para "${endpoint}".`,
+    if (!this.baseUrl) {
+      console.error(
+        "CRITICAL: NEXT_PUBLIC_CAN_API_URL is missing in environment variables",
       );
     }
   }
 
-  private async buildHeaders(
-    options?: HttpRequestOptions,
-  ): Promise<Record<string, string>> {
-    const headers: Record<string, string> = {
-      Accept: ACCEPT_HEADER[options?.responseType ?? "json"],
-    };
-
-    if (!options?.omitToken && this.tokenFetcher) {
-      const token = await this.tokenFetcher().catch(() => undefined);
-      if (token) {
-        headers.Authorization = `Bearer ${token}`;
-      }
-    }
-
-    if (options?.headers) {
-      Object.assign(headers, options.headers);
-    }
-
-    return headers;
-  }
-
-  private buildRequestBody(
-    data: unknown,
-    headers: Record<string, string>,
-  ): BodyInit | undefined {
-    if (data == null) return undefined;
-
-    if (
-      data instanceof FormData ||
-      data instanceof Blob ||
-      data instanceof ArrayBuffer ||
-      data instanceof URLSearchParams
-    ) {
-      return data;
-    }
-
-    if (ArrayBuffer.isView(data)) {
-      return data as BodyInit;
-    }
-
-    try {
-      const seen = new WeakSet();
-      const json = JSON.stringify(data, (_key, value) => {
-        if (typeof value === "object" && value !== null) {
-          if (seen.has(value)) {
-            return undefined;
-          }
-          seen.add(value);
-        }
-        return value;
-      });
-
-      if (json === undefined) {
-        throw new ApiError(
-          400,
-          "No se pudo serializar el cuerpo de la petición.",
-        );
-      }
-
-      if (!headers["Content-Type"]) {
-        headers["Content-Type"] = "application/json";
-      }
-
-      return json;
-    } catch (error) {
-      if (error instanceof ApiError) throw error;
-      throw new ApiError(
-        400,
-        "No se pudo serializar el cuerpo de la petición.",
-        error,
-      );
-    }
-  }
-
-  private createAbortController(options?: HttpRequestOptions): {
-    signal: AbortSignal;
-    abortReason: () => "timeout" | "external" | undefined;
-    dispose: () => void;
-  } {
-    const controller = new AbortController();
-    const externalSignal = options?.signal;
-    let abortReason: "timeout" | "external" | undefined;
-    const disposers: Array<() => void> = [];
-
-    const timeout = options?.timeout ?? this.defaultTimeout;
-
-    if (typeof AbortSignal.timeout === "function" && timeout > 0) {
-      const timeoutSignal = AbortSignal.timeout(timeout);
-      const onTimeout = () => {
-        if (controller.signal.aborted) return;
-        abortReason = "timeout";
-        controller.abort();
-      };
-      timeoutSignal.addEventListener("abort", onTimeout, { once: true });
-      disposers.push(() =>
-        timeoutSignal.removeEventListener("abort", onTimeout),
-      );
-    } else {
-      const timer = setTimeout(() => {
-        abortReason = "timeout";
-        controller.abort();
-      }, timeout);
-      disposers.push(() => clearTimeout(timer));
-    }
-
-    if (externalSignal) {
-      if (externalSignal.aborted) {
-        abortReason = "external";
-        controller.abort();
-      } else {
-        const onExternalAbort = () => {
-          if (controller.signal.aborted) return;
-          abortReason = "external";
-          controller.abort();
-        };
-        externalSignal.addEventListener("abort", onExternalAbort, {
-          once: true,
-        });
-        disposers.push(() =>
-          externalSignal.removeEventListener("abort", onExternalAbort),
-        );
-      }
-    }
-
-    return {
-      signal: controller.signal,
-      abortReason: () => abortReason,
-      dispose: () => {
-        for (const fn of disposers) {
-          fn();
-        }
-      },
-    };
-  }
-
-  private async executeFetch(
+  /**
+   * Método centralizador: Contiene TODA la lógica de comunicación HTTP.
+   * Construye la URL, query params, timeout, AbortController, token,
+   * headers, body, cache, ejecuta el fetch y maneja errores de conexión.
+   * Retorna el Response crudo sin procesarlo.
+   */
+  private async requestRaw(
     endpoint: string,
     method: HttpMethod,
-    data?: unknown,
+    data?: any,
     options?: HttpRequestOptions,
   ): Promise<Response> {
-    const url = this.buildUrl(endpoint, options?.params);
+    if (!this.baseUrl) {
+      throw new ApiError(
+        500,
+        "El servicio no está disponible en este momento.",
+      );
+    }
 
-    const { signal, abortReason, dispose } =
-      this.createAbortController(options);
+    let url = `${this.baseUrl}${endpoint}`;
+    if (options?.params) {
+      const searchParams = new URLSearchParams();
+      for (const [key, value] of Object.entries(options.params)) {
+        searchParams.append(key, String(value));
+      }
+      url += `?${searchParams.toString()}`;
+    }
+
+    const timeoutController = new AbortController();
+    const ms = options?.timeout || this.defaultTimeout;
+    const timeout = setTimeout(() => timeoutController.abort(), ms);
+
+    const signal = options?.signal
+      ? AbortSignal.any([options.signal, timeoutController.signal])
+      : timeoutController.signal;
+
+    let token: string | undefined | null;
+    if (this.tokenFetcher && !options?.omitToken) {
+      try {
+        token = await this.tokenFetcher();
+      } catch (error) {
+        console.error("Error fetching token in API Adapter", error);
+      }
+    }
+
+    const headers: Record<string, string> = {
+      Accept: "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...options?.headers,
+    };
+
+    if (data && !(data instanceof FormData)) {
+      headers["Content-Type"] = "application/json";
+    }
+
+    const fetchOptions: RequestInit = {
+      method,
+      signal,
+      headers,
+      body: data
+        ? data instanceof FormData
+          ? data
+          : JSON.stringify(data)
+        : undefined,
+      cache: options?.cache,
+      next: options?.next,
+    };
 
     try {
-      const headers = await this.buildHeaders(options);
-
-      const init: FetchOptions = {
-        method,
-        signal,
-        headers,
-        cache: options?.cache,
-        next: options?.next,
-      };
-
-      const body = this.buildRequestBody(data, headers);
-      if (body !== undefined) {
-        init.body = body;
-      }
-
-      return await fetch(url, init);
+      return await fetch(url, fetchOptions);
     } catch (error) {
       if (error instanceof ApiError) throw error;
 
-      if (error instanceof TypeError) {
+      if ((error as Error).name === "AbortError") {
         throw new ApiError(
-          503,
-          "No se pudo conectar con el servidor.",
-          error.message,
+          408,
+          "La petición ha tardado demasiado tiempo (Timeout).",
         );
       }
 
-      if (error instanceof Error && error.name === "AbortError") {
-        if (abortReason() === "timeout") {
-          throw new ApiError(408, "Tiempo de espera agotado.");
-        }
-        throw new ApiError(499, "Petición cancelada.");
-      }
-
-      throw new ApiError(503, "No se pudo establecer conexión.", error);
+      throw new ApiError(
+        503,
+        "No se pudo establecer conexión con el servidor.",
+        { originalError: error instanceof Error ? error.message : error },
+      );
     } finally {
-      dispose();
+      clearTimeout(timeout);
     }
   }
 
-  private async parseErrorResponse(
-    response: Response,
-  ): Promise<{ message: string; errors?: unknown }> {
-    const contentType = response.headers.get("content-type") ?? "";
-
-    if (contentType.includes("application/json")) {
-      const text = await response.text().catch(() => "");
-      if (text) {
-        try {
-          const body = JSON.parse(text) as Record<string, unknown>;
-          return {
-            message:
-              typeof body.message === "string"
-                ? body.message
-                : response.statusText,
-            errors: body.errors,
-          };
-        } catch {
-          /* JSON inválido */
-        }
-      }
-    }
-
-    if (contentType.startsWith("text/")) {
-      const text = await response.text().catch(() => "");
-      return { message: text || response.statusText };
-    }
-
-    return { message: response.statusText || "Error desconocido" };
-  }
-
-  private parseSuccessResponse<T>(
-    response: Response,
-    responseType: ResponseType,
-  ): Promise<T> {
-    switch (responseType) {
-      case "json": {
-        const contentType = response.headers.get("content-type") ?? "";
-        if (contentType.includes("application/json")) {
-          return response.json() as Promise<T>;
-        }
-        if (contentType.startsWith("text/")) {
-          return response.text() as unknown as Promise<T>;
-        }
-        return Promise.resolve({} as T);
-      }
-      case "blob":
-        return response.blob() as Promise<T>;
-      case "text":
-        return response.text() as Promise<T>;
-      case "arrayBuffer":
-        return response.arrayBuffer() as Promise<T>;
-    }
-  }
-
-  private emptyResult<T>(): T {
-    return {} as T;
-  }
-
+  /**
+   * Ejecuta la petición HTTP y procesa la respuesta como JSON.
+   */
   private async request<T>(
     endpoint: string,
     method: HttpMethod,
-    data?: unknown,
+    data?: any,
     options?: HttpRequestOptions,
-    responseType?: ResponseType,
   ): Promise<T> {
-    const resolvedType = responseType ?? options?.responseType ?? "json";
-
-    const response = await this.executeFetch(endpoint, method, data, options);
-
-    if (!response.ok) {
-      const cloned = response.clone();
-      const errorBody = await this.parseErrorResponse(cloned);
-      throw new ApiError(response.status, errorBody.message, errorBody.errors);
-    }
-
-    if (response.status === 204) {
-      return this.emptyResult<T>();
-    }
-
-    return this.parseSuccessResponse<T>(response, resolvedType);
+    const response = await this.requestRaw(endpoint, method, data, options);
+    return this.handleResponse<T>(response, endpoint);
   }
 
+  /**
+   * Procesa la respuesta HTTP:
+   * - 204: retorna objeto vacío
+   * - OK + JSON: parsea y retorna
+   * - OK + no-JSON: lanza ApiError (respuesta inesperada)
+   * - Error: lanza ApiError con el mensaje del servidor
+   */
+  private async handleResponse<T>(res: Response, endpoint: string): Promise<T> {
+    if (res.status === 204) {
+      return {} as T;
+    }
+
+    const contentType = res.headers.get("content-type");
+
+    if (res.ok) {
+      if (contentType?.includes("application/json")) {
+        return res.json() as Promise<T>;
+      }
+      const text = await res.text();
+      throw new ApiError(
+        res.status,
+        `Respuesta inesperada en ${endpoint}`,
+        text,
+      );
+    }
+
+    // Manejo de errores
+    let errorData: any = {};
+    if (contentType?.includes("application/json")) {
+      errorData = await res.json().catch(() => ({}));
+    } else {
+      errorData = { raw: await res.text() };
+    }
+
+    const message =
+      errorData.message ||
+      ERROR_MESSAGES[res.status] ||
+      `Error ${res.status}: ${res.statusText}`;
+
+    throw new ApiError(res.status, message, errorData.errors || errorData);
+  }
+
+  // --- Métodos públicos ---
+
   get<T>(endpoint: string, options?: HttpRequestOptions): Promise<T> {
-    return this.request<T>(
-      endpoint,
-      HttpMethod.GET,
-      undefined,
-      options,
-      "json",
-    );
+    return this.request<T>(endpoint, "GET", undefined, options);
+  }
+
+  /**
+   * Descarga contenido binario (PDFs, imágenes, etc.).
+   * Reutiliza requestRaw() para la comunicación y handleResponse() para errores.
+   */
+  async getBlob(endpoint: string, options?: HttpRequestOptions): Promise<Blob> {
+    const response = await this.requestRaw(endpoint, "GET", undefined, options);
+
+    if (!response.ok) {
+      await this.handleResponse<never>(response, endpoint);
+    }
+
+    return response.blob();
   }
 
   post<T>(
     endpoint: string,
-    data?: unknown,
+    data: any,
     options?: HttpRequestOptions,
   ): Promise<T> {
-    return this.request<T>(endpoint, HttpMethod.POST, data, options, "json");
+    return this.request<T>(endpoint, "POST", data, options);
   }
 
   patch<T>(
     endpoint: string,
-    data?: unknown,
+    data: any,
     options?: HttpRequestOptions,
   ): Promise<T> {
-    return this.request<T>(endpoint, HttpMethod.PATCH, data, options, "json");
+    return this.request<T>(endpoint, "PATCH", data, options);
   }
 
   put<T>(
     endpoint: string,
-    data?: unknown,
+    data: any,
     options?: HttpRequestOptions,
   ): Promise<T> {
-    return this.request<T>(endpoint, HttpMethod.PUT, data, options, "json");
+    return this.request<T>(endpoint, "PUT", data, options);
   }
 
   delete<T>(endpoint: string, options?: HttpRequestOptions): Promise<T> {
-    return this.request<T>(
-      endpoint,
-      HttpMethod.DELETE,
-      undefined,
-      options,
-      "json",
-    );
-  }
-
-  getBlob(endpoint: string, options?: HttpRequestOptions): Promise<Blob> {
-    return this.request<Blob>(
-      endpoint,
-      HttpMethod.GET,
-      undefined,
-      options,
-      "blob",
-    );
-  }
-
-  getText(endpoint: string, options?: HttpRequestOptions): Promise<string> {
-    return this.request<string>(
-      endpoint,
-      HttpMethod.GET,
-      undefined,
-      options,
-      "text",
-    );
-  }
-
-  getArrayBuffer(
-    endpoint: string,
-    options?: HttpRequestOptions,
-  ): Promise<ArrayBuffer> {
-    return this.request<ArrayBuffer>(
-      endpoint,
-      HttpMethod.GET,
-      undefined,
-      options,
-      "arrayBuffer",
-    );
+    return this.request<T>(endpoint, "DELETE", undefined, options);
   }
 }

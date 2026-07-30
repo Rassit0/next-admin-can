@@ -39,7 +39,7 @@ export const getStudentsOptions = async (
           ...student,
           person: {
             ...student.person,
-            birthDate: new Date(student.person.birthDate),
+            birthDate: student.person.birthDate ? new Date(student.person.birthDate) : null,
           },
         })),
       },

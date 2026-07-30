@@ -46,7 +46,7 @@ export const getPersonsOptions = async (
         ...res,
         data: res.data.map((person) => ({
           ...person,
-          birthDate: new Date(person.birthDate),
+          birthDate: person.birthDate ? new Date(person.birthDate) : null,
         })),
       },
       message: res.message || "Personas obtenidas exitosamente",

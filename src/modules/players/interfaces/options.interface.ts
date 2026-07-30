@@ -9,10 +9,10 @@ export interface IPersonOption {
   name: string;
   lastName: string;
   secondLastName: string | null;
-  documentNumber: string;
-  documentType: string;
-  gender: string;
-  birthDate: Date;
+  documentNumber: string | null;
+  documentType: string | null;
+  gender: string | null;
+  birthDate: Date | null;
   imageUrl: string | null;
   fullName: string;
 }

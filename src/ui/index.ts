@@ -24,3 +24,4 @@ export * from "./components/navigation/TabsRouteNavigation";
 export * from "./components/particles-background/particles-background";
 
 export * from "./components/table-actions/TableActions";
+export * from "./components/InfoTooltip";

@@ -10,6 +10,7 @@ export * from "./actions/update";
 export * from "./actions/remove";
 export * from "./actions/get-persons-options";
 export * from "./actions/get-transaction-report";
+export * from "./actions/get-transaction-report-single";
 
 // Interfaces
 export * from "./interfaces/charges.interface";

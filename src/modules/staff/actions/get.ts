@@ -42,7 +42,7 @@ export const getStaff = async ({
           ...staff,
           person: {
             ...staff.person,
-            birthDate: new Date(staff.person.birthDate),
+            birthDate: staff.person.birthDate ? new Date(staff.person.birthDate) : null,
           },
         })),
       },

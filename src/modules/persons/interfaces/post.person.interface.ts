@@ -6,10 +6,10 @@ export interface PostPersonInterface {
   secondLastName?: string | null;
   birthDate?: Date | null;
   image?: File | null;
-  documentType: string;
-  documentNumber: string;
+  documentType?: string | null;
+  documentNumber?: string | null;
   phone?: string | null;
   email?: string | null;
   address?: string | null;
-  gender: TGender;
+  gender?: TGender | null;
 }

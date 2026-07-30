@@ -19,3 +19,9 @@ export interface IPaginationMeta {
   nextPage: number | null;
   prevPage: number | null;
 }
+
+export interface PaginatedResponse<T> {
+  data: T[];
+  meta: IPaginationMeta;
+  message?: string;
+}

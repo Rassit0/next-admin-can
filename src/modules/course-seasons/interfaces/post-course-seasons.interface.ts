@@ -11,6 +11,7 @@ export interface IPostCourseSeason {
   minMembers: number;
   minBirthYear?: number | null;
   maxBirthYear?: number | null;
+  validateAge?: boolean;
   courseId: string;
   categoryId: string;
   seasonId: string;

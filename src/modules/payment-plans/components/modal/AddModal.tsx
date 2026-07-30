@@ -61,6 +61,7 @@ export const AddModal = ({ teamSeasonId,
                 teamSeasonId={teamSeasonId}
                 courseSeasonId={courseSeasonId}
                 teamSeasonBillingType={teamSeasonBillingType}
+                courseSeasonBillingType={courseSeasonBillingType}
                 onSubmited={() => state.close()}
                 isLoading={loading}
                 setIsLoading={setLoading}

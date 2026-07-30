@@ -44,7 +44,7 @@ export const EditModal = ({
           onPress={() => state.open()}
         >
           <HugeiconsIcon icon={Edit03Icon} />
-          {!isIcon && "Editar Disciplina"}
+          {!isIcon && "Editar Plan"}
         </Button>
       )}
       <Modal.Backdrop isOpen={state.isOpen} onOpenChange={state.setOpen}>
@@ -56,10 +56,10 @@ export const EditModal = ({
                 <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
                   <HugeiconsIcon icon={Layers01Icon} />
                 </Modal.Icon>
-                <Modal.Heading>Agregar Disciplina</Modal.Heading>
+                <Modal.Heading>Editar Plan de Pago</Modal.Heading>
               </div>
               <p className="mt-1.5 text-sm leading-5 text-muted">
-                Agrega un nuevo equipo al sistema.
+                Edita las configuraciones de este plan de pago.
               </p>
             </Modal.Header>
             <Modal.Body className="p-6">

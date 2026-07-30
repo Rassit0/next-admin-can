@@ -13,12 +13,12 @@ export interface IPerson {
   secondLastName: string | null;
   birthDate: Date | null;
   imageUrl: string | null;
-  documentType: TDocumentType;
-  documentNumber: string;
+  documentType: TDocumentType | null;
+  documentNumber: string | null;
   email: string | null;
   phone: string | null;
   address: string | null;
-  gender: TGender;
+  gender: TGender | null;
   createdAt: Date;
   updatedAt: Date;
 }

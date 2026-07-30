@@ -20,9 +20,9 @@ export const editPerson = async ({
 
     formData.append("name", data.name);
     formData.append("lastName", data.lastName);
-    formData.append("gender", data.gender);
-    formData.append("documentType", data.documentType);
-    formData.append("documentNumber", data.documentNumber);
+    formData.append("gender", data.gender || "");
+    if (data.documentType) formData.append("documentType", data.documentType);
+    if (data.documentNumber) formData.append("documentNumber", data.documentNumber);
     if (data.secondLastName)
       formData.append("secondLastName", data.secondLastName);
     if (data.email) formData.append("email", data.email);

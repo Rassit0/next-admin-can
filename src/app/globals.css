@@ -133,4 +133,27 @@
     0% { background-position: 200% 0; }
     100% { background-position: -200% 0; }
   }
+
+  /* FullCalendar integration with HeroUI/Tailwind */
+  .calendar-wrapper .fc {
+    --fc-page-bg-color: transparent;
+    --fc-neutral-bg-color: var(--default);
+    --fc-neutral-text-color: var(--default-foreground);
+    --fc-border-color: var(--border);
+
+    --fc-button-text-color: var(--default-foreground);
+    --fc-button-bg-color: var(--default);
+    --fc-button-border-color: var(--border);
+    --fc-button-hover-bg-color: var(--surface-secondary);
+    --fc-button-hover-border-color: var(--border);
+    --fc-button-active-bg-color: var(--surface-tertiary);
+    --fc-button-active-border-color: var(--border);
+
+    --fc-event-bg-color: var(--accent);
+    --fc-event-border-color: var(--accent);
+    --fc-event-text-color: var(--accent-foreground);
+
+    --fc-today-bg-color: var(--surface-secondary);
+    --fc-highlight-color: var(--surface-tertiary);
+  }
 }

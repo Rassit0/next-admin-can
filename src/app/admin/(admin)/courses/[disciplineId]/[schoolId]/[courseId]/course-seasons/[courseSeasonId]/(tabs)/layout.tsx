@@ -38,13 +38,15 @@ export default async function CourseSeasonDetailLayout({
   const courseSeason = courseSeasonResponse.data;
 
   const basePath = `/admin/courses/${disciplineId}/${schoolId}/${courseId}/course-seasons/${courseSeasonId}`;
+  const actionsBaseUrl = `/admin/courses/${disciplineId}/${schoolId}/${courseId}/course-seasons`;
 
   const tabsRoutes = [
     { value: "/", title: "Información General" },
     { value: "/staff", title: "Personal" },
-    { value: "/student-memberships", title: "Membresías" },
+    { value: "/student-memberships", title: "Matrículas" },
     { value: "/payment-plans", title: "Planes de Pago" },
     { value: "/payments", title: "Transacciones" },
+    { value: "/horarios", title: "Horarios" },
   ];
 
   return (
@@ -53,7 +55,7 @@ export default async function CourseSeasonDetailLayout({
         title={`${courseSeason.category.name} (${GENDER_MAP[courseSeason.gender] || courseSeason.gender}) · ${courseSeason.season.name}`}
         description={`Curso: ${courseSeason.course.name} · Detalle de la temporada`}
         action={
-          <CourseSeasonActions courseSeason={courseSeason} baseUrl={basePath} />
+          <CourseSeasonActions courseSeason={courseSeason} baseUrl={actionsBaseUrl} />
         }
         breadcrumb={[
           { label: "Cursos", href: `/` },
