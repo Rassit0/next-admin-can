@@ -2,6 +2,9 @@
 
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import { formatCurrency } from "@/utils/constants";
+import { InfoTooltip } from "@/ui";
+import { Card } from "@heroui/react";
+import { ValueType } from "recharts/types/component/DefaultTooltipContent";
 
 interface Props {
   data: {
@@ -11,23 +14,27 @@ interface Props {
 }
 
 const COLORS = [
-  "hsl(var(--heroui-primary))", 
-  "hsl(var(--heroui-secondary))", 
-  "hsl(var(--heroui-warning))", 
-  "hsl(var(--heroui-danger))",
-  "hsl(var(--heroui-success))",
+  "var(--primary)", 
+  "var(--secondary)", 
+  "var(--warning)", 
+  "var(--danger)",
+  "var(--success)",
 ];
 
 export const AccountingExpensesChart = ({ data }: Props) => {
   return (
-    <div className="bg-default-50 border border-default-200 p-6 rounded-xl shadow-sm flex flex-col gap-4">
-      <div>
-        <h3 className="font-semibold text-lg">Distribución de Egresos</h3>
-        <p className="text-sm text-default-500">Gastos por categoría</p>
-      </div>
-      <div className="flex-1 w-full h-[300px]">
-        <ResponsiveContainer width="100%" height="100%">
-          <PieChart>
+    <Card className="border-none bg-background/60 dark:bg-default-100/50 w-full h-full shadow-sm">
+      <Card.Header className="px-6 pt-6 flex-col items-start gap-1">
+        <Card.Title className="text-lg font-semibold flex items-center">
+          Distribución de Egresos
+          <InfoTooltip text="Muestra en qué categorías se están gastando los recursos de la academia actualmente." />
+        </Card.Title>
+        <p className="text-sm text-muted-foreground">Gastos por categoría</p>
+      </Card.Header>
+      <div className="px-6 pb-6 pt-0 flex-1">
+        <div className="w-full h-[300px] mt-4">
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart>
             <Pie
               data={data}
               cx="50%"
@@ -42,13 +49,19 @@ export const AccountingExpensesChart = ({ data }: Props) => {
               ))}
             </Pie>
             <Tooltip 
-              contentStyle={{ borderRadius: "8px", border: "1px solid hsl(var(--heroui-default-200))", boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)" }}
-              formatter={(value: any) => formatCurrency(Number(value))}
+              contentStyle={{
+                backgroundColor: "var(--background)",
+                border: "1px solid var(--border)",
+                borderRadius: "var(--radius)",
+                color: "var(--foreground)",
+              }}
+              formatter={(value: ValueType | undefined) => formatCurrency(Number(value) || 0)}
             />
-            <Legend wrapperStyle={{ fontSize: "12px", paddingTop: "10px" }} />
+            <Legend wrapperStyle={{ paddingTop: "20px" }} />
           </PieChart>
         </ResponsiveContainer>
       </div>
     </div>
+    </Card>
   );
 };

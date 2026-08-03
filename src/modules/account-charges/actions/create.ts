@@ -20,6 +20,7 @@ export interface CreateAccountChargeDto {
   immediatePayment?: {
     paymentMethod: string;
     financialAccountId?: string;
+    attachmentIds?: string[];
   };
 }
 

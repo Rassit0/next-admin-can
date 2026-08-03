@@ -7,9 +7,14 @@ import { logoutAction } from "@/modules/auth/actions/logout";
  * Automáticamente extrae la data, o maneja los errores redirigiendo a /api/logout si es 401,
  * o lanzando un error (para que lo capture el error.tsx de Next.js).
  */
-export async function resolvePageData<T extends any[]>(promises: {
-  [K in keyof T]: Promise<ServiceResponse<T[K]>>;
-}): Promise<{ [K in keyof T]: ServiceResponse<T[K]> & { data: T[K] } }> {
+export async function resolvePageData<T extends any[]>(
+  promises: {
+    [K in keyof T]: Promise<ServiceResponse<T[K]>>;
+  },
+  options?: {
+    path?: { href: string; label: string };
+  }
+): Promise<{ [K in keyof T]: ServiceResponse<T[K]> & { data: T[K] } }> {
   const results = await Promise.all(promises);
 
   for (const res of results) {
@@ -22,9 +27,11 @@ export async function resolvePageData<T extends any[]>(promises: {
         redirect("/login?expired=true");
       }
       // Lanzar el error hará que Next.js renderice el archivo error.tsx más cercano
-      throw new Error(
-        res.message || "Ocurrió un error al cargar los datos de la página",
-      );
+      const errorMessage = res.message || "Ocurrió un error al cargar los datos de la página";
+      if (options?.path) {
+        throw new Error(JSON.stringify({ message: errorMessage, path: options.path }));
+      }
+      throw new Error(errorMessage);
     }
   }
 

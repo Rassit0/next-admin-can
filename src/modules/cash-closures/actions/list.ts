@@ -12,7 +12,7 @@ export const getCashClosuresByAccount = async (
   return handleServerAction(async () => {
     const queryParams = new URLSearchParams({
       page: page.toString(),
-      limit: limit.toString(),
+      per_page: limit.toString(),
     });
 
     const res = await api.get<{

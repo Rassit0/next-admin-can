@@ -8,26 +8,15 @@ import { Card } from "@heroui/react";
 import { FootballIcon, Structure04FreeIcons } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { redirect } from "next/navigation";
+import { resolvePageData } from "@/utils/resolvePageData";
 
 export default async function CoursesPage() {
-  const disciplinesOptionsResponse = await getDisciplinesOptions();
-
-  if (
-    disciplinesOptionsResponse.error &&
-    disciplinesOptionsResponse.statusCode === 401
-  ) {
-    redirect("/login");
-  }
-
-  // 2. Manejo de errores generales (400, 500, etc.)
-  if (disciplinesOptionsResponse.error) {
-    return (
-      <ErrorPage
-        message={disciplinesOptionsResponse.message}
-        path={{ href: "/courses", label: "Volver a la lista de cursos" }}
-      />
-    );
-  }
+  const [disciplinesOptionsResponse] = await resolvePageData(
+    [getDisciplinesOptions()],
+    {
+      path: { href: "/courses", label: "Volver a la lista de cursos" },
+    }
+  );
 
   return (
     <>

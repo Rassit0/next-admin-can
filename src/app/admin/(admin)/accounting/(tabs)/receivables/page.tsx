@@ -8,14 +8,14 @@ export const metadata: Metadata = {
   description: "Cuentas administrativas por cobrar del club",
 };
 
-export default async function ReceivablesPage({
+export default async function AccountsReceivablePage({
   searchParams,
 }: {
   searchParams?: Promise<{
     search?: string;
     page?: string;
     per_page?: string;
-    status?: string | string[];
+    status?: string;
   }>;
 }) {
   const resolvedSearchParams = await searchParams;

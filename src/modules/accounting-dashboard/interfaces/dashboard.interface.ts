@@ -10,7 +10,8 @@ export interface IDashboardAlert {
 
 export interface IAccountingDashboardSummary {
   kpis: {
-    totalReceivables: number;
+    totalAccountReceivables: number;
+    totalMembershipReceivables: number;
     totalPayables: number;
     receivablesTrend: number;
     payablesTrend: number;

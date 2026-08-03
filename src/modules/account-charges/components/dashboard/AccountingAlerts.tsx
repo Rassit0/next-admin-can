@@ -3,6 +3,7 @@
 import { Button, Chip } from "@heroui/react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Alert02Icon, ArrowRight02Icon, Calendar03Icon, CalendarMinus02Icon } from "@hugeicons/core-free-icons";
+import { InfoTooltip } from "@/ui";
 import Link from "next/link";
 import { IDashboardAlert } from "@/modules/accounting-dashboard/interfaces/dashboard.interface";
 
@@ -57,7 +58,10 @@ export const AccountingAlerts = ({ alerts }: Props) => {
           <div className="flex justify-between items-center p-4 border-b border-default-100 bg-default-50/50">
             <div className="flex gap-2 items-center text-primary">
               <HugeiconsIcon icon={Calendar03Icon} size={20} />
-              <h3 className="font-semibold text-foreground">Atención: Por Cobrar</h3>
+              <h3 className="font-semibold text-foreground flex items-center">
+                Atención: Por Cobrar
+                <InfoTooltip text="Muestra alertas sobre cuentas por cobrar que requieren tu atención, como cobros vencidos o cercanos a vencer." />
+              </h3>
             </div>
             <Chip size="sm" color="default">{receivables.reduce((acc, curr) => acc + curr.count, 0)}</Chip>
           </div>
@@ -77,7 +81,10 @@ export const AccountingAlerts = ({ alerts }: Props) => {
           <div className="flex justify-between items-center p-4 border-b border-default-100 bg-default-50/50">
             <div className="flex gap-2 items-center text-danger">
               <HugeiconsIcon icon={Calendar03Icon} size={20} />
-              <h3 className="font-semibold text-foreground">Atención: Por Pagar</h3>
+              <h3 className="font-semibold text-foreground flex items-center">
+                Atención: Por Pagar
+                <InfoTooltip text="Muestra alertas sobre obligaciones y cuentas por pagar que están vencidas o próximas a su fecha límite." />
+              </h3>
             </div>
             <Chip size="sm" color="danger">{payables.reduce((acc, curr) => acc + curr.count, 0)}</Chip>
           </div>

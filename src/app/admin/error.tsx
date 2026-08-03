@@ -15,9 +15,23 @@ export default function Error({
     console.error("Uncaught error caught by error.tsx:", error);
   }, [error]);
 
+  let message = error.message || "Ocurrió un error inesperado al cargar la vista.";
+  let path = undefined;
+
+  try {
+    const parsed = JSON.parse(error.message);
+    if (parsed.message) {
+      message = parsed.message;
+      path = parsed.path;
+    }
+  } catch (e) {
+    // No es un string JSON válido, mantener el mensaje original
+  }
+
   return (
     <ErrorPage 
-      message={error.message || "Ocurrió un error inesperado al cargar la vista."} 
+      message={message} 
+      path={path}
     />
   );
 }

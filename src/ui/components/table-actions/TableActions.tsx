@@ -69,9 +69,11 @@ export const TableActions = ({ actions, mode = "responsive" }: Props) => {
   const renderDropdown = (className: string) => (
     <div className={`items-center ${className}`}>
       <Dropdown>
-        <Button aria-label="Acciones" isIconOnly size="sm" variant="ghost">
-          <HugeiconsIcon icon={MoreVerticalSquare01Icon} />
-        </Button>
+        <Dropdown.Trigger>
+          <Button aria-label="Acciones" isIconOnly size="sm" variant="ghost">
+            <HugeiconsIcon icon={MoreVerticalSquare01Icon} />
+          </Button>
+        </Dropdown.Trigger>
         <Dropdown.Popover>
           <Dropdown.Menu
             onAction={(key) => {

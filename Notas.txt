@@ -1,0 +1,16 @@
+¡Hola! Retomemos el trabajo en el "Sistema de Gestión CAN" (ERP en Next.js para el front y NestJS para el back). 
+
+**Contexto actual:**
+- En nuestra última sesión dejamos el módulo financiero estable y el código subido al repositorio. 
+- Estandarizamos los Server Actions (usando handleServerAction y resolvePageData) para las cuentas financieras.
+- Actualizamos los modales y drawers (CashClosure y FinancialAccount) a la nueva sintaxis de componentes compuestos de HeroUI.
+- El backend de "Cierres de caja" y "Transferencias internas" con Prisma ya fue implementado y migrado.
+
+**Nuestra hoja de ruta pendiente es la siguiente:**
+
+1. **Probar el flujo de "Arqueos de Caja":** Necesito que me ayudes a validar el funcionamiento de crear cuentas y hacer arqueos desde la interfaz (localhost:3000) para asegurar que la conexión frontend-backend está 100% limpia.
+2. **Auditoría UX/Funcional del Módulo Financiero:** Tenemos pendiente identificar ineficiencias en los formularios (ej. cómo vamos a manejar la subida de comprobantes y el registro de proveedores ocasionales sin saturar la BD).
+3. **Refinamiento de Políticas `onDelete` en Prisma:** Revisar las relaciones entre `FinancialAccount`, `Transaction` y `CashClosure` para garantizar que no se rompa la integridad histórica (en contabilidad nada se borra, todo se anula).
+4. **Módulo de Periodos Contables:** Empezar a diseñar la lógica para "Cierres de Mes" que evite modificaciones retroactivas en el Ledger.
+
+Empecemos por el Punto 1. ¿Cómo procedemos para testear el flujo de Arqueos de Caja?

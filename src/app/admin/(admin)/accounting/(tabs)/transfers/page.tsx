@@ -7,9 +7,10 @@ import { resolvePageData } from "@/utils/resolvePageData";
 export default async function TransfersPage({
   searchParams,
 }: {
-  searchParams: { page?: string; per_page?: string; sourceAccountId?: string; destinationAccountId?: string; startDate?: string; endDate?: string; };
+  searchParams: Promise<{ page?: string; per_page?: string; sourceAccountId?: string; destinationAccountId?: string; startDate?: string; endDate?: string; }>;
 }) {
-  const { page, per_page, sourceAccountId, destinationAccountId, startDate, endDate } = searchParams;
+  const resolvedSearchParams = await searchParams;
+  const { page, per_page, sourceAccountId, destinationAccountId, startDate, endDate } = resolvedSearchParams;
 
   const [transfersRes, accountsRes] = await resolvePageData([
     getInternalTransfers({ page, per_page, sourceAccountId, destinationAccountId, startDate, endDate }),

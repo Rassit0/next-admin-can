@@ -131,7 +131,7 @@ export const InternalTransferDrawer = ({
                 <Select.Popover>
                   <ListBox>
                     {activeAccounts.map((acc) => (
-                      <ListBox.Item id={acc.id} textValue={acc.name}>
+                      <ListBox.Item key={acc.id} id={acc.id} textValue={acc.name}>
                         <div className="flex flex-col">
                           <span className="text-small">{acc.name}</span>
                           <span className="text-tiny text-default-400">Saldo: {Number(acc.cachedBalance).toFixed(2)}</span>
@@ -159,7 +159,7 @@ export const InternalTransferDrawer = ({
                 <Select.Popover>
                   <ListBox>
                     {activeAccounts.map((acc) => (
-                      <ListBox.Item id={acc.id} textValue={acc.name}>
+                      <ListBox.Item key={acc.id} id={acc.id} textValue={acc.name}>
                         <div className="flex flex-col">
                           <span className="text-small">{acc.name}</span>
                           <span className="text-tiny text-default-400">Saldo: {Number(acc.cachedBalance).toFixed(2)}</span>

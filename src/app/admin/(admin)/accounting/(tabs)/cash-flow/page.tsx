@@ -13,9 +13,10 @@ export const metadata: Metadata = {
 export default async function CashFlowPage({
   searchParams,
 }: {
-  searchParams: Record<string, string>;
+  searchParams: Promise<Record<string, string>>;
 }) {
-  const { search, page, per_page, sortField, orderBy, type, paymentMethod, startDate, endDate, origin, categoryId } = searchParams;
+  const resolvedSearchParams = await searchParams;
+  const { search, page, per_page, sortField, orderBy, type, paymentMethod, startDate, endDate, origin, categoryId } = resolvedSearchParams;
 
   const [response, categoriesRes, financialAccountsRes] = await resolvePageData([
     getTransactions({
