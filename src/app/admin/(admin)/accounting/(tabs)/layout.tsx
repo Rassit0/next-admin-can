@@ -16,6 +16,7 @@ export default async function AccountingTabsLayout({
     { value: "/receivables", title: "Por Cobrar" },
     { value: "/payables", title: "Por Pagar" },
     { value: "/categories", title: "Categorías" },
+    { value: "/reports", title: "Reportes" },
   ];
 
   return (

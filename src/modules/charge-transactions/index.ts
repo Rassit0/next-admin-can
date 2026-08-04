@@ -26,3 +26,4 @@ export * from "./components/table/Table";
 export * from "./components/actions/ChargeActions";
 export * from "./components/drawer/SelectOrCreatePerson";
 export * from "./components/dialog/PrintReportDialog";
+export * from "./components/drawer/AdvanceChargeButton";

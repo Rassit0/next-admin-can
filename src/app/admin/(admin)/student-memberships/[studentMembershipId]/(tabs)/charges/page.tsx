@@ -20,7 +20,7 @@ import {
   File02Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { getCharges, TableCharges } from "@/modules/charge-transactions";
+import { getCharges, TableCharges, AdvanceChargeButton } from "@/modules/charge-transactions";
 import { CreateManualChargeButton } from "@/modules/charge-transactions/components/drawer/CreateManualChargeButton";
 import { resolvePageData } from "@/utils/resolvePageData";
 
@@ -61,9 +61,14 @@ export default async function PlayerMembershipChargesPage({
         <div className="flex justify-between items-center">
           <SectionFilters
             actions={
-              <CreateManualChargeButton
-                studentMembershipId={studentMembershipId}
-              />
+              <div className="flex gap-2">
+                <CreateManualChargeButton
+                  studentMembershipId={studentMembershipId}
+                />
+                <AdvanceChargeButton
+                  studentMembershipId={studentMembershipId}
+                />
+              </div>
             }
           />
         </div>
