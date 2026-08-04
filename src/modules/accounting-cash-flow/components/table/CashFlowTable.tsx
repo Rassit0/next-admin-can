@@ -35,23 +35,17 @@ export const CashFlowTable = ({ transactions }: Props) => {
                   Fecha
                 </SortableColumnHeader>
               </Table.Column>
-              <Table.Column allowsSorting id="concept">
-                <SortableColumnHeader id="concept">
-                  Concepto
-                </SortableColumnHeader>
+              <Table.Column id="concept">
+                <div className="font-semibold">Concepto</div>
               </Table.Column>
-              <Table.Column allowsSorting id="category">
-                <SortableColumnHeader id="category">
-                  Categoría
-                </SortableColumnHeader>
+              <Table.Column id="category">
+                <div className="font-semibold">Categoría</div>
               </Table.Column>
               <Table.Column allowsSorting id="type">
                 <SortableColumnHeader id="type">Tipo</SortableColumnHeader>
               </Table.Column>
-              <Table.Column allowsSorting id="paymentMethod">
-                <SortableColumnHeader id="paymentMethod">
-                  Método
-                </SortableColumnHeader>
+              <Table.Column id="paymentMethod">
+                <div className="font-semibold">Método</div>
               </Table.Column>
               <Table.Column>Origen</Table.Column>
               <Table.Column>Cuenta Financiera</Table.Column>
@@ -161,16 +155,14 @@ export const CashFlowTable = ({ transactions }: Props) => {
                   <Table.Cell>
                     <div className="relative flex justify-end items-center gap-2">
                       <Dropdown>
-                        <Dropdown.Trigger>
-                          <Button
-                            aria-label="Acciones"
-                            isIconOnly
-                            size="sm"
-                            variant="ghost"
-                          >
-                            <HugeiconsIcon icon={MoreVerticalIcon} />
-                          </Button>
-                        </Dropdown.Trigger>
+                        <Button
+                          aria-label="Acciones"
+                          isIconOnly
+                          size="sm"
+                          variant="ghost"
+                        >
+                          <HugeiconsIcon icon={MoreVerticalIcon} />
+                        </Button>
                         <Dropdown.Popover>
                           <Dropdown.Menu
                             aria-label="Acciones de Transacción"
