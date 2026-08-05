@@ -47,7 +47,9 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
 
   const [paymentMethod, setPaymentMethod] = useState<string>("CASH");
   const [financialAccountId, setFinancialAccountId] = useState<string>("");
-  const [financialAccounts, setFinancialAccounts] = useState<FinancialAccount[]>([]);
+  const [financialAccounts, setFinancialAccounts] = useState<
+    FinancialAccount[]
+  >([]);
   const [amount, setAmount] = useState<string>(pendingAmount.toString());
   const [transactionDate, setTransactionDate] = useState<string>(
     new Date().toISOString().slice(0, 16),
@@ -63,7 +65,7 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
   const [showPrintDialog, setShowPrintDialog] = useState(false);
 
   useEffect(() => {
-    getFinancialAccounts().then(res => {
+    getFinancialAccounts().then((res) => {
       if (res.data) setFinancialAccounts(res.data);
     });
   }, []);
@@ -75,10 +77,10 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
       setReference("");
       setNotes("");
       setPaymentMethod("CASH");
-      
+
       const defaultAcc = financialAccounts.find((a) => a.isDefault);
       setFinancialAccountId(defaultAcc ? defaultAcc.id : "");
-      
+
       setErrors({});
     }
   }, [isOpen, pendingAmount, financialAccounts]);
@@ -240,6 +242,7 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
 
                 <Select
                   className="w-full"
+                  variant="secondary"
                   placeholder="Seleccionar caja o cuenta banco"
                   value={financialAccountId}
                   onChange={(val) => setFinancialAccountId(val as string)}
@@ -253,7 +256,11 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
                   <Select.Popover>
                     <ListBox>
                       {financialAccounts.map((account) => (
-                        <ListBox.Item key={account.id} id={account.id} textValue={account.name}>
+                        <ListBox.Item
+                          key={account.id}
+                          id={account.id}
+                          textValue={account.name}
+                        >
                           <div className="flex flex-col">
                             <span className="font-medium text-foreground">
                               {account.name}
