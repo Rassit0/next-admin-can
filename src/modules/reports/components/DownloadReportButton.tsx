@@ -26,7 +26,22 @@ export function DownloadReportButton({ reportId, start, end, format = 'pdf' }: P
         throw new Error(result.error || 'Error al generar el reporte');
       }
 
-      window.open(result.url, '_blank');
+      // Convert data URL to Blob to prevent browser hanging on large base64 strings
+      const base64Part = result.url.split(',')[1];
+      const byteCharacters = atob(base64Part);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: "application/pdf" });
+      const blobUrl = URL.createObjectURL(blob);
+
+      window.open(blobUrl, '_blank');
+      
+      // Clean up object URL after a while
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
+
       toast.success('Reporte generado exitosamente');
     } catch (error: any) {
       toast.error(error.message || 'Ocurrió un error inesperado al descargar el reporte');

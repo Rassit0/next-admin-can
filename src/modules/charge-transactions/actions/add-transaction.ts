@@ -13,6 +13,7 @@ export interface AddTransactionData {
   description: string;
   type: "INCOME" | "EXPENSE";
   paymentMethod: "CASH" | "TRANSFER" | "QR";
+  financialAccountId: string;
   reference?: string;
   notes?: string;
   chargeTransactions: {

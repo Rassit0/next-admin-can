@@ -4,6 +4,7 @@ import { AccountingKpiCards } from "@/modules/account-charges/components/dashboa
 import { AccountingAlerts } from "@/modules/account-charges/components/dashboard/AccountingAlerts";
 import { AccountingCashFlowChart } from "@/modules/account-charges/components/dashboard/AccountingCashFlowChart";
 import { AccountingExpensesChart } from "@/modules/account-charges/components/dashboard/AccountingExpensesChart";
+import { AccountingBalancesCard } from "@/modules/account-charges/components/dashboard/AccountingBalancesCard";
 
 interface Props {
   searchParams: Promise<{ start?: string; end?: string }>;
@@ -20,7 +21,7 @@ export default async function AccountingDashboardPage({ searchParams }: Props) {
     return <ErrorPage message={summaryRes.message} />;
   }
 
-  const { kpis, alerts, cashFlow, expensesByCategory } = summaryRes.data;
+  const { kpis, alerts, cashFlow, expensesByCategory, accounts } = summaryRes.data;
 
   let subtitle = "Resumen del estado actual (Este mes).";
   
@@ -56,12 +57,19 @@ export default async function AccountingDashboardPage({ searchParams }: Props) {
         alerts={alerts} 
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-4">
-        <div className="lg:col-span-2">
-          <AccountingCashFlowChart data={cashFlow} />
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mt-4">
+        <div className="lg:col-span-3">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="lg:col-span-2">
+              <AccountingCashFlowChart data={cashFlow} />
+            </div>
+            <div className="lg:col-span-2">
+              <AccountingExpensesChart data={expensesByCategory} />
+            </div>
+          </div>
         </div>
         <div className="lg:col-span-1">
-          <AccountingExpensesChart data={expensesByCategory} />
+          <AccountingBalancesCard accounts={accounts} />
         </div>
       </div>
     </div>

@@ -10,16 +10,18 @@ export interface IDashboardAlert {
 
 export interface IAccountingDashboardSummary {
   kpis: {
-    totalAccountReceivables: number;
-    totalMembershipReceivables: number;
-    totalPayables: number;
-    receivablesTrend: number;
-    payablesTrend: number;
+    treasury: {
+      availableBalance: number;
+    };
+    financial: {
+      totalReceivables: number;
+      totalPayables: number;
+      netPosition: number;
+      receivablesTrend: number;
+      payablesTrend: number;
+    };
     monthlyIncome: number;
     monthlyExpenses: number;
-    totalInCash: number;
-    totalInBanks: number;
-    netPosition: number;
   };
   alerts: IDashboardAlert[];
   cashFlow: {
@@ -30,5 +32,13 @@ export interface IAccountingDashboardSummary {
   expensesByCategory: {
     name: string;
     value: number;
+  }[];
+  accounts: {
+    id: string;
+    name: string;
+    type: string;
+    currency: string;
+    isActive: boolean;
+    balance: number;
   }[];
 }

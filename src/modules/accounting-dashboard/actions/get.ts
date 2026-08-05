@@ -10,19 +10,28 @@ interface GetSummaryParams {
 }
 
 export const getAccountingDashboardSummary = async (
-  params?: GetSummaryParams
+  params?: GetSummaryParams,
 ): Promise<ServiceResponse<IAccountingDashboardSummary>> => {
   return handleServerAction(async () => {
     const searchParams = new URLSearchParams();
     if (params?.start) searchParams.append("start", params.start);
     if (params?.end) searchParams.append("end", params.end);
-    
-    const query = searchParams.toString();
-    const endpoint = query ? `accounting-dashboard/summary?${query}` : "accounting-dashboard/summary";
 
-    const res = await api.get<{ message?: string; data: IAccountingDashboardSummary }>(endpoint, {
+    const query = searchParams.toString();
+    const endpoint = query
+      ? `accounting-dashboard/summary?${query}`
+      : "accounting-dashboard/summary";
+
+    const res = await api.get<{
+      message?: string;
+      data: IAccountingDashboardSummary;
+    }>(endpoint, {
       next: {
-        tags: ["accounting-dashboard", "accounting-dashboard-summary-v2", "account-charges"],
+        tags: [
+          "accounting-dashboard",
+          "accounting-dashboard-summary-v3",
+          "account-charges",
+        ],
         revalidate: 3600,
       },
     });

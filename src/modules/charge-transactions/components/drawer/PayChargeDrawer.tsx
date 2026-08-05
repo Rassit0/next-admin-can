@@ -24,6 +24,8 @@ import { ICharge } from "../../interfaces/charges.interface";
 import { addTransaction } from "../../actions/add-transaction";
 import { SelectOrCreatePerson } from "./SelectOrCreatePerson";
 import { IPersonOption } from "@/modules/charge-transactions";
+import { getFinancialAccounts } from "@/modules/financial-accounts/actions/get-all";
+import { FinancialAccount } from "@/modules/financial-accounts/interfaces/financial-account.interface";
 import { PrintReportDialog } from "../dialog/PrintReportDialog";
 
 interface Props {
@@ -44,6 +46,8 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
   );
 
   const [paymentMethod, setPaymentMethod] = useState<string>("CASH");
+  const [financialAccountId, setFinancialAccountId] = useState<string>("");
+  const [financialAccounts, setFinancialAccounts] = useState<FinancialAccount[]>([]);
   const [amount, setAmount] = useState<string>(pendingAmount.toString());
   const [transactionDate, setTransactionDate] = useState<string>(
     new Date().toISOString().slice(0, 16),
@@ -59,15 +63,25 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
   const [showPrintDialog, setShowPrintDialog] = useState(false);
 
   useEffect(() => {
+    getFinancialAccounts().then(res => {
+      if (res.data) setFinancialAccounts(res.data);
+    });
+  }, []);
+
+  useEffect(() => {
     if (isOpen) {
       setAmount(pendingAmount.toString());
       setTransactionDate(new Date().toISOString().slice(0, 16));
       setReference("");
       setNotes("");
       setPaymentMethod("CASH");
+      
+      const defaultAcc = financialAccounts.find((a) => a.isDefault);
+      setFinancialAccountId(defaultAcc ? defaultAcc.id : "");
+      
       setErrors({});
     }
-  }, [isOpen, pendingAmount]);
+  }, [isOpen, pendingAmount, financialAccounts]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -80,6 +94,11 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
 
       if (!personId) {
         toast.danger("Debe seleccionar una persona.");
+        return;
+      }
+
+      if (!financialAccountId) {
+        toast.danger("Debe seleccionar una cuenta financiera destino.");
         return;
       }
 
@@ -96,14 +115,11 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
       }
 
       const res = await addTransaction({
-        // payerPersonId:
-        //   charge.membershipCharges?.[0]?.playerMembership?.player?.person?.id ||
-        //   charge.studentCharges?.[0]?.studentMembership?.student?.person?.id ||
-        //   "",
         payerPersonId: personId!,
         amount: amountNum,
         type: "INCOME",
         paymentMethod: method,
+        financialAccountId,
         reference,
         notes,
         transactionDate,
@@ -221,6 +237,37 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
                   label="Pagador"
                   errors={errors}
                 />
+
+                <Select
+                  className="w-full"
+                  placeholder="Seleccionar caja o cuenta banco"
+                  value={financialAccountId}
+                  onChange={(val) => setFinancialAccountId(val as string)}
+                  isInvalid={!!errors.financialAccountId || undefined}
+                >
+                  <Label>Cuenta de Destino</Label>
+                  <Select.Trigger>
+                    <Select.Value />
+                    <Select.Indicator />
+                  </Select.Trigger>
+                  <Select.Popover>
+                    <ListBox>
+                      {financialAccounts.map((account) => (
+                        <ListBox.Item key={account.id} id={account.id} textValue={account.name}>
+                          <div className="flex flex-col">
+                            <span className="font-medium text-foreground">
+                              {account.name}
+                            </span>
+                            <span className="text-xs text-muted">
+                              {account.type === "BANK" ? "Banco" : "Efectivo"}
+                            </span>
+                          </div>
+                          <ListBox.ItemIndicator />
+                        </ListBox.Item>
+                      ))}
+                    </ListBox>
+                  </Select.Popover>
+                </Select>
 
                 <TextField
                   className="w-full"

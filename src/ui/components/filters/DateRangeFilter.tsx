@@ -13,15 +13,21 @@ type DateRange = {
   end: DateValue;
 };
 
-export function DateRangeFilter() {
+export function DateRangeFilter({ 
+  startKey = "start", 
+  endKey = "end" 
+}: { 
+  startKey?: string; 
+  endKey?: string; 
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
   const getInitialValue = () => {
     const tz = getLocalTimeZone();
-    const startParam = searchParams.get("start");
-    const endParam = searchParams.get("end");
+    const startParam = searchParams.get(startKey);
+    const endParam = searchParams.get(endKey);
     
     if (startParam && endParam) {
       try {
@@ -47,20 +53,21 @@ export function DateRangeFilter() {
   useEffect(() => {
     // Sincronizar URL cuando el valor cambia
     if (value && value.start && value.end) {
-      const currentStart = searchParams.get("start");
-      const currentEnd = searchParams.get("end");
+      const currentStart = searchParams.get(startKey);
+      const currentEnd = searchParams.get(endKey);
       
       const newStart = value.start.toString();
       const newEnd = value.end.toString();
       
       if (currentStart !== newStart || currentEnd !== newEnd) {
         const params = new URLSearchParams(searchParams.toString());
-        params.set("start", newStart);
-        params.set("end", newEnd);
-        router.push(`${pathname}?${params.toString()}`);
+        params.set(startKey, newStart);
+        params.set(endKey, newEnd);
+        // Usar router.replace en lugar de push para no llenar el historial y scroll={false}
+        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
       }
     }
-  }, [value, pathname, router, searchParams]);
+  }, [value, pathname, router, searchParams, startKey, endKey]);
 
   const setToday = () => {
     const t = today(getLocalTimeZone());
