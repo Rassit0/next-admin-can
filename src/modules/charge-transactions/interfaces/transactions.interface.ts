@@ -1,5 +1,6 @@
 export interface ITransaction {
   id: string;
+  paymentId?: string;
   payerPersonId: string;
   receiptSeries: string;
   receiptNumber: number;
@@ -11,6 +12,7 @@ export interface ITransaction {
   status: "PENDING" | "PAID" | "FAILED" | "VOIDED";
   reference?: string;
   notes?: string;
+  financialAccountName?: string | null;
   receiptUrls?: string[];
   createdAt: Date | string;
   updatedAt: Date | string;

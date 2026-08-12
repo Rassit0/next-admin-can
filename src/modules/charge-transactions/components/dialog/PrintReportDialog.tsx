@@ -15,17 +15,19 @@ import {
 
 interface Props {
   transactionId: string | null;
+  reportType?: "payment" | "transaction";
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
   onSuccess?: () => void;
 }
 
 /**
- * Componente reutilizable para descargar/imprimir el recibo PDF de una transacción.
- * Se puede usar desde cualquier lugar pasando el transactionId.
+ * Componente reutilizable para descargar/imprimir el recibo PDF de un pago o transacción.
+ * Se puede usar desde cualquier lugar pasando el transactionId y el tipo de reporte.
  */
 export const PrintReportDialog = ({
   transactionId,
+  reportType = "transaction",
   isOpen,
   onOpenChange,
   onSuccess,
@@ -40,9 +42,9 @@ export const PrintReportDialog = ({
       try {
         let res;
         if (action === "print") {
-          res = await getTransactionReport(transactionId);
+          res = await getTransactionReport(transactionId, reportType);
         } else {
-          res = await getTransactionReportSingle(transactionId);
+          res = await getTransactionReportSingle(transactionId, reportType);
         }
 
         if (res.error || !res.data) {

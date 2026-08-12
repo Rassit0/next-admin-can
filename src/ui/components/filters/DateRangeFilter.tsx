@@ -31,9 +31,16 @@ export function DateRangeFilter({
     
     if (startParam && endParam) {
       try {
+        const startJsDate = new Date(startParam);
+        const endJsDate = new Date(endParam);
+        
+        // Extract local YYYY-MM-DD from the JS Date
+        const startStr = `${startJsDate.getFullYear()}-${String(startJsDate.getMonth() + 1).padStart(2, '0')}-${String(startJsDate.getDate()).padStart(2, '0')}`;
+        const endStr = `${endJsDate.getFullYear()}-${String(endJsDate.getMonth() + 1).padStart(2, '0')}-${String(endJsDate.getDate()).padStart(2, '0')}`;
+        
         return {
-          start: parseDate(startParam),
-          end: parseDate(endParam)
+          start: parseDate(startStr),
+          end: parseDate(endStr)
         };
       } catch (e) {
         // Fallback si la fecha es inválida
@@ -56,8 +63,16 @@ export function DateRangeFilter({
       const currentStart = searchParams.get(startKey);
       const currentEnd = searchParams.get(endKey);
       
-      const newStart = value.start.toString();
-      const newEnd = value.end.toString();
+      const tz = getLocalTimeZone();
+      
+      // Convertir a Date nativo para obtener el límite inferior y superior exacto
+      const startLocal = value.start.toDate(tz);
+      
+      const endLocal = value.end.toDate(tz);
+      endLocal.setHours(23, 59, 59, 999);
+      
+      const newStart = startLocal.toISOString();
+      const newEnd = endLocal.toISOString();
       
       if (currentStart !== newStart || currentEnd !== newEnd) {
         const params = new URLSearchParams(searchParams.toString());

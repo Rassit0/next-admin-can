@@ -1,9 +1,9 @@
 import { ErrorPage, HeaderPage, PaginationSection, SectionFilters } from "@/ui";
 import {
   getChargeById,
-  getTransactions,
+  getPayments,
   ChargeSummaryCard,
-  TableTransactions,
+  TablePayments,
 } from "@/modules/charge-transactions";
 import { PayChargeButton } from "./PayChargeButton";
 import { resolvePageData } from "@/utils/resolvePageData";
@@ -28,16 +28,16 @@ export default async function ChargeTransactionsPage({
   const { search, page, per_page } = await searchParams;
   const { studentMembershipId, chargeId } = await params;
 
-  const [membershipResponse, chargeResponse, transactionsResponse] =
+  const [membershipResponse, chargeResponse, paymentsResponse] =
     await resolvePageData([
       getStudentMembershipById({ id: studentMembershipId }),
       getChargeById(chargeId),
-      getTransactions({ search, page, per_page, chargeId }),
+      getPayments({ search, page, per_page, chargeId }),
     ]);
 
   const membership = membershipResponse.data;
   const charge = chargeResponse.data;
-  const transactions = transactionsResponse.data;
+  const payments = paymentsResponse.data;
 
   // Render Client Component for the Drawer state
   return (
@@ -66,12 +66,12 @@ export default async function ChargeTransactionsPage({
 
           <SectionFilters />
 
-          <TableTransactions transactions={transactions.data} />
+          <TablePayments payments={payments.data} />
 
           <PaginationSection
-            totalPages={transactions.meta.totalPages}
-            itemsPerPage={transactions.meta.itemsPerPage}
-            totalItems={transactions.meta.totalItems}
+            totalPages={payments.meta.totalPages}
+            itemsPerPage={payments.meta.itemsPerPage}
+            totalItems={payments.meta.totalItems}
           />
         </div>
       </div>

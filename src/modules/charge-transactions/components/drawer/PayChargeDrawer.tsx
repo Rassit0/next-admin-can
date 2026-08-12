@@ -61,10 +61,13 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
     FinancialAccount[]
   >([]);
 
+  const getLocalDatetime = () => {
+    const tzOffset = new Date().getTimezoneOffset() * 60000;
+    return new Date(Date.now() - tzOffset).toISOString().slice(0, 16);
+  };
+
   const [splits, setSplits] = useState<SplitItem[]>([]);
-  const [transactionDate, setTransactionDate] = useState<string>(
-    new Date().toISOString().slice(0, 16),
-  );
+  const [transactionDate, setTransactionDate] = useState<string>(getLocalDatetime());
   const [notes, setNotes] = useState<string>("");
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -82,7 +85,7 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
 
   useEffect(() => {
     if (isOpen) {
-      setTransactionDate(new Date().toISOString().slice(0, 16));
+      setTransactionDate(getLocalDatetime());
       setNotes("");
 
       const defaultAcc = financialAccounts.find((a) => a.isDefault);
@@ -149,7 +152,7 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
         paymentMethod: splits[0].paymentMethod as "CASH" | "TRANSFER" | "QR",
         financialAccountId: splits[0].financialAccountId,
         notes,
-        transactionDate,
+        transactionDate: new Date(transactionDate).toISOString(),
         description: `Pago para: ${charge.description}`,
         chargeId: charge.id,
         splitTransactions: splits.map((s) => ({

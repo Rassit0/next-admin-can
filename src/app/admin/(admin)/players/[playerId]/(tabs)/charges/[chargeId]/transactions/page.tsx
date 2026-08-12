@@ -1,9 +1,9 @@
 import { ErrorPage, HeaderPage, PaginationSection, SectionFilters } from "@/ui";
 import {
   getChargeById,
-  getTransactions,
+  getPayments,
   ChargeSummaryCard,
-  TableTransactions,
+  TablePayments,
   PayChargeDrawer,
 } from "@/modules/charge-transactions";
 import { getPlayerMembershipById } from "@/modules/player-memberships";
@@ -42,24 +42,24 @@ export default async function ChargeTransactionsPage({
     chargeId,
   } = await params;
 
-  const [membershipResponse, chargeResponse, transactionsResponse] =
+  const [membershipResponse, chargeResponse, paymentsResponse] =
     await Promise.all([
       getPlayerMembershipById({ id: playerMembershipId }),
       getChargeById(chargeId),
-      getTransactions({ search, page, per_page, chargeId }),
+      getPayments({ search, page, per_page, chargeId }),
     ]);
 
   if (
     membershipResponse.error ||
     chargeResponse.error ||
-    transactionsResponse.error
+    paymentsResponse.error
   ) {
     return (
       <ErrorPage
         message={
           membershipResponse.message ||
           chargeResponse.message ||
-          transactionsResponse.message
+          paymentsResponse.message
         }
       />
     );
@@ -68,7 +68,7 @@ export default async function ChargeTransactionsPage({
   const membership = membershipResponse.data;
   const charge = chargeResponse.data;
 
-  const transactions = transactionsResponse.error
+  const payments = paymentsResponse.error
     ? {
         data: [],
         meta: {
@@ -78,7 +78,7 @@ export default async function ChargeTransactionsPage({
           totalItems: 0,
         },
       }
-    : transactionsResponse.data;
+    : paymentsResponse.data;
 
   // Render Client Component for the Drawer state
   return (
@@ -113,12 +113,12 @@ export default async function ChargeTransactionsPage({
 
           <SectionFilters />
 
-          <TableTransactions transactions={transactions.data} />
+          <TablePayments payments={payments.data} />
 
           <PaginationSection
-            totalPages={transactions.meta.totalPages}
-            itemsPerPage={transactions.meta.itemsPerPage}
-            totalItems={transactions.meta.totalItems}
+            totalPages={payments.meta.totalPages}
+            itemsPerPage={payments.meta.itemsPerPage}
+            totalItems={payments.meta.totalItems}
           />
         </div>
       </div>

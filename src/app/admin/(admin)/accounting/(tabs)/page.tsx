@@ -28,8 +28,7 @@ export default async function AccountingDashboardPage({ searchParams }: Props) {
   if (resolvedSearchParams.start && resolvedSearchParams.end) {
     try {
       const formatFecha = (iso: string) => {
-        const [y, m, d] = iso.split('-');
-        const date = new Date(parseInt(y), parseInt(m) - 1, parseInt(d));
+        const date = new Date(iso);
         return new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'short', year: 'numeric' }).format(date);
       };
       subtitle = `Resumen desde el ${formatFecha(resolvedSearchParams.start)} hasta el ${formatFecha(resolvedSearchParams.end)}.`;

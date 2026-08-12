@@ -41,18 +41,15 @@ export const TableTransactions = ({ transactions }: Props) => {
   );
   const [showPrintDialog, setShowPrintDialog] = useState(false);
 
+  const [printReportType, setPrintReportType] = useState<"payment" | "transaction">("transaction");
+
   const handleConfirmVoid = async () => {
     if (!transactionToVoid) return;
     const id = transactionToVoid;
     setTransactionToVoid(null);
-    // const loadingId = toast("Anulando transacción...", {
-    //   isLoading: true,
-    //   timeout: 0,
-    // });
     setIsLoading(true);
     const res = await removeTransaction(id);
     setIsLoading(false);
-    // toast.close(loadingId);
     if (res.error) {
       toast.danger(res.message);
     } else {
@@ -209,7 +206,13 @@ export const TableTransactions = ({ transactions }: Props) => {
                             aria-label="Acciones de Transacción"
                             onAction={(key) => {
                               if (key === "print") {
-                                setPrintTransactionId(item.id);
+                                if (item.paymentId) {
+                                  setPrintTransactionId(item.paymentId);
+                                  setPrintReportType("payment");
+                                } else {
+                                  setPrintTransactionId(item.id);
+                                  setPrintReportType("transaction");
+                                }
                                 setShowPrintDialog(true);
                               } else if (key === "void") {
                                 setTransactionToVoid(item.id);
@@ -284,6 +287,7 @@ export const TableTransactions = ({ transactions }: Props) => {
 
       <PrintReportDialog
         transactionId={printTransactionId}
+        reportType={printReportType}
         isOpen={showPrintDialog}
         onOpenChange={setShowPrintDialog}
       />
