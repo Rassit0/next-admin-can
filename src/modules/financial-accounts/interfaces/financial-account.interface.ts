@@ -12,6 +12,7 @@ export interface FinancialAccount {
   accountNumber?: string;
   lastReconciledAt?: string;
   isActive: boolean;
+  allowedPaymentMethods: string[];
   createdAt: string;
   updatedAt: string;
 }

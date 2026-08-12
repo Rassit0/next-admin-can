@@ -34,27 +34,37 @@ interface Props {
   charge: ICharge;
 }
 
+export interface SplitItem {
+  id: string;
+  amount: string;
+  paymentMethod: string;
+  financialAccountId: string;
+  reference: string;
+}
+
+const PAYMENT_METHOD_LABELS: Record<string, string> = {
+  CASH: "Efectivo",
+  TRANSFER: "Transferencia",
+  QR: "Código QR",
+};
+
 export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
   const router = useRouter();
   const pendingAmount = Number(charge.pendingAmount || 0);
 
   const [isLoading, setIsLoading] = useState(false);
-
   const [personId, setPersonId] = useState<string | null>(null);
   const [selectedPerson, setSelectedPerson] = useState<IPersonOption | null>(
     null,
   );
-
-  const [paymentMethod, setPaymentMethod] = useState<string>("CASH");
-  const [financialAccountId, setFinancialAccountId] = useState<string>("");
   const [financialAccounts, setFinancialAccounts] = useState<
     FinancialAccount[]
   >([]);
-  const [amount, setAmount] = useState<string>(pendingAmount.toString());
+
+  const [splits, setSplits] = useState<SplitItem[]>([]);
   const [transactionDate, setTransactionDate] = useState<string>(
     new Date().toISOString().slice(0, 16),
   );
-  const [reference, setReference] = useState<string>("");
   const [notes, setNotes] = useState<string>("");
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -72,15 +82,19 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
 
   useEffect(() => {
     if (isOpen) {
-      setAmount(pendingAmount.toString());
       setTransactionDate(new Date().toISOString().slice(0, 16));
-      setReference("");
       setNotes("");
-      setPaymentMethod("CASH");
 
       const defaultAcc = financialAccounts.find((a) => a.isDefault);
-      setFinancialAccountId(defaultAcc ? defaultAcc.id : "");
-
+      setSplits([
+        {
+          id: Math.random().toString(),
+          amount: pendingAmount.toString(),
+          paymentMethod: defaultAcc?.allowedPaymentMethods?.[0] || "",
+          financialAccountId: defaultAcc ? defaultAcc.id : "",
+          reference: "",
+        },
+      ]);
       setErrors({});
     }
   }, [isOpen, pendingAmount, financialAccounts]);
@@ -91,47 +105,59 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
     setIsLoading(true);
 
     try {
-      const amountNum = Number(amount || pendingAmount);
-      const method = paymentMethod as "CASH" | "TRANSFER" | "QR";
+      const totalAmountNum = splits.reduce(
+        (acc, curr) => acc + Number(curr.amount || 0),
+        0,
+      );
+
+      const hasInvalidMethod = splits.some(s => !s.paymentMethod);
+      if (hasInvalidMethod) {
+        toast.danger("Debe seleccionar un método de pago válido para cada cuenta.");
+        setIsLoading(false);
+        return;
+      }
 
       if (!personId) {
         toast.danger("Debe seleccionar una persona.");
         return;
       }
 
-      if (!financialAccountId) {
-        toast.danger("Debe seleccionar una cuenta financiera destino.");
-        return;
+      for (let i = 0; i < splits.length; i++) {
+        if (!splits[i].financialAccountId) {
+          toast.danger(
+            `Debe seleccionar una cuenta financiera en la fila ${i + 1}.`,
+          );
+          return;
+        }
+        if (Number(splits[i].amount) <= 0) {
+          toast.danger(`El monto debe ser mayor a 0 en la fila ${i + 1}.`);
+          return;
+        }
       }
 
-      if (pendingAmount > 0 && amountNum <= 0) {
-        toast.danger("El monto debe ser mayor a 0 si existe deuda pendiente.");
-        return;
-      }
-
-      if (amountNum < 0 || amountNum > pendingAmount) {
+      if (totalAmountNum < 0 || totalAmountNum > pendingAmount) {
         toast.danger(
-          "El monto no puede exceder el saldo pendiente ni ser negativo.",
+          "El monto total no puede exceder el saldo pendiente ni ser negativo.",
         );
         return;
       }
 
       const res = await addTransaction({
         payerPersonId: personId!,
-        amount: amountNum,
+        amount: totalAmountNum,
         type: "INCOME",
-        paymentMethod: method,
-        financialAccountId,
-        reference,
+        paymentMethod: splits[0].paymentMethod as "CASH" | "TRANSFER" | "QR",
+        financialAccountId: splits[0].financialAccountId,
         notes,
         transactionDate,
         description: `Pago para: ${charge.description}`,
-        chargeTransactions: [
-          {
-            chargeId: charge.id,
-            amountApplied: amountNum,
-          },
-        ],
+        chargeId: charge.id,
+        splitTransactions: splits.map((s) => ({
+          amount: Number(s.amount),
+          paymentMethod: s.paymentMethod as "CASH" | "TRANSFER" | "QR",
+          financialAccountId: s.financialAccountId,
+          reference: s.reference,
+        })),
       });
 
       if (res.error) {
@@ -240,162 +266,155 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
                   errors={errors}
                 />
 
-                <Select
-                  className="w-full"
-                  variant="secondary"
-                  placeholder="Seleccionar caja o cuenta banco"
-                  value={financialAccountId}
-                  onChange={(val) => setFinancialAccountId(val as string)}
-                  isInvalid={!!errors.financialAccountId || undefined}
-                >
-                  <Label>Cuenta de Destino</Label>
-                  <Select.Trigger>
-                    <Select.Value />
-                    <Select.Indicator />
-                  </Select.Trigger>
-                  <Select.Popover>
-                    <ListBox>
-                      {financialAccounts.map((account) => (
-                        <ListBox.Item
-                          key={account.id}
-                          id={account.id}
-                          textValue={account.name}
-                        >
-                          <div className="flex flex-col">
-                            <span className="font-medium text-foreground">
-                              {account.name}
-                            </span>
-                            <span className="text-xs text-muted">
-                              {account.type === "BANK" ? "Banco" : "Efectivo"}
-                            </span>
+                {splits.map((split, index) => (
+                  <div
+                    key={split.id}
+                    className="flex flex-col gap-4 p-4 border border-primary-200 rounded-lg bg-background relative"
+                  >
+                    {splits.length > 1 && (
+                      <div className="absolute top-2 right-2 text-xs font-semibold text-primary-500">
+                        Pago #{index + 1}
+                      </div>
+                    )}
+                    <div className="grid grid-cols-2 gap-4">
+                      <Select
+                        className="w-full"
+                        variant="secondary"
+                        placeholder="Caja/Banco"
+                        value={split.financialAccountId}
+                        onChange={(value) => {
+                          const newSplits = [...splits];
+                          newSplits[index].financialAccountId = value as string;
+                          const selectedAcc = financialAccounts.find(a => a.id === value);
+                          if (selectedAcc && (!selectedAcc.allowedPaymentMethods || !selectedAcc.allowedPaymentMethods.includes(newSplits[index].paymentMethod))) {
+                            newSplits[index].paymentMethod = selectedAcc.allowedPaymentMethods?.[0] || "";
+                          }
+                          setSplits(newSplits);
+                        }}
+                      >
+                        <Label>Cuenta Destino</Label>
+                        <Select.Trigger>
+                          <Select.Value />
+                          <Select.Indicator />
+                        </Select.Trigger>
+                        <Select.Popover>
+                          <ListBox>
+                            {financialAccounts.map((account) => (
+                              <ListBox.Item
+                                key={account.id}
+                                id={account.id}
+                                textValue={account.name}
+                              >
+                                {account.name}
+                                <ListBox.ItemIndicator />
+                              </ListBox.Item>
+                            ))}
+                          </ListBox>
+                        </Select.Popover>
+                      </Select>
+                      <TextField className="w-full" isRequired>
+                        <Label>Monto (Bs)</Label>
+                        <Input
+                          variant="secondary"
+                          type="number"
+                          step="0.01"
+                          value={split.amount}
+                          onChange={(e) => {
+                            const newSplits = [...splits];
+                            newSplits[index].amount = e.target.value;
+                            setSplits(newSplits);
+                          }}
+                        />
+                      </TextField>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      {(() => {
+                        const selectedAcc = financialAccounts.find(a => a.id === split.financialAccountId);
+                        const hasMethods = selectedAcc && selectedAcc.allowedPaymentMethods && selectedAcc.allowedPaymentMethods.length > 0;
+                        return (
+                          <div className="w-full">
+                            <Select
+                              isRequired
+                              className="w-full"
+                              variant="secondary"
+                              value={split.paymentMethod}
+                              isDisabled={!hasMethods}
+                              onChange={(value) => {
+                                const newSplits = [...splits];
+                                newSplits[index].paymentMethod = value as string;
+                                setSplits(newSplits);
+                              }}
+                            >
+                              <Label>Método de Pago</Label>
+                              <Select.Trigger>
+                                <Select.Value />
+                                <Select.Indicator />
+                              </Select.Trigger>
+                              <Select.Popover>
+                                <ListBox>
+                                  {(selectedAcc?.allowedPaymentMethods || []).map((method) => (
+                                    <ListBox.Item key={method} id={method} textValue={PAYMENT_METHOD_LABELS[method] || method}>
+                                      {PAYMENT_METHOD_LABELS[method] || method}
+                                      <ListBox.ItemIndicator />
+                                    </ListBox.Item>
+                                  ))}
+                                </ListBox>
+                              </Select.Popover>
+                            </Select>
+                            {!hasMethods && split.financialAccountId && (
+                              <p className="text-xs text-danger mt-1">
+                                Esta cuenta no puede recibir pagos.
+                              </p>
+                            )}
                           </div>
-                          <ListBox.ItemIndicator />
-                        </ListBox.Item>
-                      ))}
-                    </ListBox>
-                  </Select.Popover>
-                </Select>
+                        );
+                      })()}
+                      <TextField className="w-full">
+                        <Label>Ref / Comprobante</Label>
+                        <Input
+                          variant="secondary"
+                          value={split.reference}
+                          onChange={(e) => {
+                            const newSplits = [...splits];
+                            newSplits[index].reference = e.target.value;
+                            setSplits(newSplits);
+                          }}
+                        />
+                      </TextField>
+                    </div>
+                    {splits.length > 1 && (
+                      <Button
+                        size="sm"
+                        variant="danger-soft"
+                        className="mt-2"
+                        onPress={() =>
+                          setSplits(splits.filter((s) => s.id !== split.id))
+                        }
+                      >
+                        Eliminar
+                      </Button>
+                    )}
+                  </div>
+                ))}
 
-                <TextField
-                  className="w-full"
-                  isRequired
-                  name="amount"
-                  isInvalid={!!errors.amount || undefined}
-                >
-                  <Label>Monto a abonar (Bs)</Label>
-                  <Input
-                    variant="secondary"
-                    type="number"
-                    step="0.01"
-                    min={pendingAmount === 0 ? "0" : "0.01"}
-                    max={pendingAmount}
-                    value={amount}
-                    onChange={(e) => {
-                      setAmount(e.target.value);
-                      setErrors({});
-                    }}
-                    placeholder="0.00"
-                  />
-                  <FieldError
-                    children={errors.amount && <> {errors.amount}</>}
-                  />
-                </TextField>
-
-                <TextField
-                  className="w-full"
-                  isRequired
-                  name="transactionDate"
-                  isInvalid={!!errors.transactionDate || undefined}
-                >
-                  <Label>Fecha de Pago</Label>
-                  <Input
-                    variant="secondary"
-                    type="datetime-local"
-                    value={transactionDate}
-                    onChange={(e) => {
-                      setTransactionDate(e.target.value);
-                      setErrors({});
-                    }}
-                  />
-                  <FieldError
-                    children={
-                      errors.transactionDate && <> {errors.transactionDate}</>
-                    }
-                  />
-                </TextField>
-
-                <Select
-                  isRequired
-                  className="w-full"
-                  name="paymentMethod"
-                  placeholder="Seleccione el Método de Pago"
-                  variant="secondary"
-                  isInvalid={!!errors.paymentMethod || undefined}
-                  value={paymentMethod}
-                  onChange={(e) => {
-                    setPaymentMethod(e?.toString() || "CASH");
-                    setErrors({});
+                <Button
+                  variant="primary"
+                  onPress={() => {
+                      const defaultAcc = financialAccounts.find((a) => a.isDefault);
+                      setSplits([
+                        ...splits,
+                        {
+                          id: Math.random().toString(),
+                          amount: "",
+                          paymentMethod: defaultAcc?.allowedPaymentMethods?.[0] || "",
+                          financialAccountId: defaultAcc?.id || "",
+                          reference: "",
+                        },
+                      ])
                   }}
                 >
-                  <Label>Método de Pago</Label>
-                  <Select.Trigger>
-                    <Select.Value />
-                    <Select.Indicator />
-                  </Select.Trigger>
-                  <Select.Popover>
-                    <ListBox>
-                      <ListBox.Item
-                        id="CASH"
-                        textValue="Efectivo"
-                        onPress={() => setPaymentMethod("CASH")}
-                      >
-                        Efectivo
-                        <ListBox.ItemIndicator />
-                      </ListBox.Item>
-                      <ListBox.Item
-                        id="TRANSFER"
-                        textValue="Transferencia"
-                        onPress={() => setPaymentMethod("TRANSFER")}
-                      >
-                        Transferencia
-                        <ListBox.ItemIndicator />
-                      </ListBox.Item>
-                      <ListBox.Item
-                        id="QR"
-                        textValue="Código QR"
-                        onPress={() => setPaymentMethod("QR")}
-                      >
-                        Código QR
-                        <ListBox.ItemIndicator />
-                      </ListBox.Item>
-                    </ListBox>
-                  </Select.Popover>
-                  <FieldError
-                    children={
-                      errors.paymentMethod && <> {errors.paymentMethod}</>
-                    }
-                  />
-                </Select>
-
-                <TextField
-                  className="w-full"
-                  name="reference"
-                  isInvalid={!!errors.reference || undefined}
-                >
-                  <Label>Número de Referencia / Comprobante</Label>
-                  <Input
-                    variant="secondary"
-                    placeholder="Ej. 12345678"
-                    value={reference}
-                    onChange={(e) => {
-                      setReference(e.target.value);
-                      setErrors({});
-                    }}
-                  />
-                  <FieldError
-                    children={errors.reference && <> {errors.reference}</>}
-                  />
-                </TextField>
+                  + Agregar Método de Pago
+                </Button>
 
                 <TextField
                   className="w-full"

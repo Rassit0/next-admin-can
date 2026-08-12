@@ -8,6 +8,8 @@ import {
   ListBox,
   Label,
   Switch,
+  CheckboxGroup,
+  Checkbox,
 } from "@heroui/react";
 import { Cancel01Icon, FloppyDiskIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -39,6 +41,7 @@ export const FinancialAccountDrawer = ({
   const [isDefault, setIsDefault] = useState(false);
   const [isActive, setIsActive] = useState(true);
   const [initialBalance, setInitialBalance] = useState("");
+  const [allowedPaymentMethods, setAllowedPaymentMethods] = useState<string[]>([]);
 
   const router = useRouter();
 
@@ -52,6 +55,7 @@ export const FinancialAccountDrawer = ({
         setIsDefault(accountToEdit.isDefault || false);
         setIsActive(accountToEdit.isActive ?? true);
         setInitialBalance("");
+        setAllowedPaymentMethods(accountToEdit.allowedPaymentMethods || []);
       } else {
         setName("");
         setDescription("");
@@ -60,6 +64,7 @@ export const FinancialAccountDrawer = ({
         setIsDefault(false);
         setIsActive(true);
         setInitialBalance("");
+        setAllowedPaymentMethods(["CASH", "TRANSFER", "QR"]);
       }
     }
   }, [isOpen, accountToEdit]);
@@ -67,6 +72,10 @@ export const FinancialAccountDrawer = ({
   const handleSubmit = async () => {
     if (!name || !type) {
       toast.error("Por favor complete todos los campos requeridos");
+      return;
+    }
+    if (allowedPaymentMethods.length === 0) {
+      toast.error("Debe seleccionar al menos un método de pago permitido");
       return;
     }
 
@@ -78,6 +87,7 @@ export const FinancialAccountDrawer = ({
         type,
         accountNumber,
         isDefault,
+        allowedPaymentMethods,
       };
 
       if (accountToEdit) {
@@ -161,6 +171,45 @@ export const FinancialAccountDrawer = ({
                   </ListBox>
                 </Select.Popover>
               </Select>
+
+              <div>
+                <Label className="mb-2 text-sm font-semibold block">
+                  Métodos de Pago Permitidos
+                </Label>
+                <CheckboxGroup
+                  value={allowedPaymentMethods}
+                  onChange={(val) => setAllowedPaymentMethods(val as string[])}
+                  className="flex flex-row gap-4"
+                >
+                  <Checkbox value="CASH">
+                    <Checkbox.Content>
+                      <Checkbox.Control>
+                        <Checkbox.Indicator />
+                      </Checkbox.Control>
+                      Efectivo
+                    </Checkbox.Content>
+                  </Checkbox>
+                  <Checkbox value="TRANSFER">
+                    <Checkbox.Content>
+                      <Checkbox.Control>
+                        <Checkbox.Indicator />
+                      </Checkbox.Control>
+                      Transferencia
+                    </Checkbox.Content>
+                  </Checkbox>
+                  <Checkbox value="QR">
+                    <Checkbox.Content>
+                      <Checkbox.Control>
+                        <Checkbox.Indicator />
+                      </Checkbox.Control>
+                      Código QR
+                    </Checkbox.Content>
+                  </Checkbox>
+                </CheckboxGroup>
+                <span className="text-xs text-default-500 mt-1 block">
+                  Seleccione qué métodos puede recibir esta cuenta.
+                </span>
+              </div>
 
               <div>
                 <Label className="mb-1 text-sm font-semibold">

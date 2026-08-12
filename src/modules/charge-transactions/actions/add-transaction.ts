@@ -16,9 +16,12 @@ export interface AddTransactionData {
   financialAccountId: string;
   reference?: string;
   notes?: string;
-  chargeTransactions: {
-    chargeId: string;
-    amountApplied: number;
+  chargeId?: string;
+  splitTransactions?: {
+    amount: number;
+    paymentMethod: "CASH" | "TRANSFER" | "QR";
+    financialAccountId: string;
+    reference?: string;
   }[];
 }
 
@@ -34,7 +37,7 @@ export const addTransaction = async (
     }>(`transactions`, data);
 
     updateTag("transactions");
-    updateTag("charges"); // Update charges to reflect the new paid status
+    updateTag("charges");
     return {
       error: false,
       data: response.data,
