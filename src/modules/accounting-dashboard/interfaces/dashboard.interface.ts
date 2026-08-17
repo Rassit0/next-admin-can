@@ -16,7 +16,7 @@ export interface IAccountingDashboardSummary {
     financial: {
       totalReceivables: number;
       totalPayables: number;
-      netPosition: number;
+      periodResult: number;
       receivablesTrend: number;
       payablesTrend: number;
     };

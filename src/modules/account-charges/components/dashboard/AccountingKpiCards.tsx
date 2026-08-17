@@ -1,7 +1,14 @@
 "use client";
 
 import { HugeiconsIcon } from "@hugeicons/react";
-import { ArrowDown02Icon, ArrowUp02Icon, MoneySendSquareIcon, MoneyReceiveSquareIcon, Wallet02Icon, Activity01Icon } from "@hugeicons/core-free-icons";
+import {
+  ArrowDown02Icon,
+  ArrowUp02Icon,
+  MoneySendSquareIcon,
+  MoneyReceiveSquareIcon,
+  Wallet02Icon,
+  Activity01Icon,
+} from "@hugeicons/core-free-icons";
 import { InfoTooltip } from "@/ui";
 import clsx from "clsx";
 
@@ -12,7 +19,7 @@ interface KpiData {
   financial: {
     totalReceivables: number;
     totalPayables: number;
-    netPosition: number;
+    periodResult: number;
     receivablesTrend: number;
     payablesTrend: number;
   };
@@ -42,10 +49,14 @@ export const AccountingKpiCards = ({ data }: Props) => {
           "flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full",
           isGood
             ? "bg-success-50 text-success-600"
-            : "bg-danger-50 text-danger-600"
+            : "bg-danger-50 text-danger-600",
         )}
       >
-        {isPositive ? <HugeiconsIcon icon={ArrowUp02Icon} size={14} /> : <HugeiconsIcon icon={ArrowDown02Icon} size={14} />}
+        {isPositive ? (
+          <HugeiconsIcon icon={ArrowUp02Icon} size={14} />
+        ) : (
+          <HugeiconsIcon icon={ArrowDown02Icon} size={14} />
+        )}
         {Math.abs(trend)}%
       </div>
     );
@@ -68,8 +79,12 @@ export const AccountingKpiCards = ({ data }: Props) => {
             </div>
           </div>
           <div>
-            <h3 className="text-lg sm:text-xl font-bold truncate">{formatCurrency(data.treasury.availableBalance)}</h3>
-            <p className="text-[10px] sm:text-xs text-default-400 mt-0.5 truncate">Efectivo y Bancos</p>
+            <h3 className="text-lg sm:text-xl font-bold truncate">
+              {formatCurrency(data.treasury.availableBalance)}
+            </h3>
+            <p className="text-[10px] sm:text-xs text-default-400 mt-0.5 truncate">
+              Efectivo y Bancos
+            </p>
           </div>
         </div>
       </div>
@@ -90,8 +105,12 @@ export const AccountingKpiCards = ({ data }: Props) => {
             {renderTrend(data.financial.receivablesTrend, false)}
           </div>
           <div>
-            <h3 className="text-lg sm:text-xl font-bold truncate">{formatCurrency(data.financial.totalReceivables)}</h3>
-            <p className="text-[10px] sm:text-xs text-default-400 mt-0.5 truncate">Deudas a favor</p>
+            <h3 className="text-lg sm:text-xl font-bold truncate">
+              {formatCurrency(data.financial.totalReceivables)}
+            </h3>
+            <p className="text-[10px] sm:text-xs text-default-400 mt-0.5 truncate">
+              Deudas a favor
+            </p>
           </div>
         </div>
       </div>
@@ -112,13 +131,17 @@ export const AccountingKpiCards = ({ data }: Props) => {
             {renderTrend(data.financial.payablesTrend, true)}
           </div>
           <div>
-            <h3 className="text-lg sm:text-xl font-bold truncate">{formatCurrency(data.financial.totalPayables)}</h3>
-            <p className="text-[10px] sm:text-xs text-default-400 mt-0.5 truncate">Obligaciones de pago</p>
+            <h3 className="text-lg sm:text-xl font-bold truncate">
+              {formatCurrency(data.financial.totalPayables)}
+            </h3>
+            <p className="text-[10px] sm:text-xs text-default-400 mt-0.5 truncate">
+              Obligaciones de pago
+            </p>
           </div>
         </div>
       </div>
 
-      {/* 4. Posición Neta */}
+      {/* 4. Resultado del Período */}
       <div className="border-none bg-default-50 rounded-large shadow-sm">
         <div className="p-3 sm:p-4 gap-2 sm:gap-3 flex flex-col">
           <div className="flex justify-between items-start">
@@ -127,14 +150,18 @@ export const AccountingKpiCards = ({ data }: Props) => {
                 <HugeiconsIcon icon={Activity01Icon} size={20} />
               </div>
               <p className="text-xs sm:text-sm text-default-500 font-medium flex items-center gap-1">
-                Posición Neta
-                <InfoTooltip text="Proyección de liquidez. Representa el saldo final si cobras y pagas todas las deudas actuales (Disponible + Por Cobrar - Por Pagar)." />
+                Resultado del Período
+                <InfoTooltip text="Ingresos menos egresos generados dentro del período seleccionado." />
               </p>
             </div>
           </div>
           <div>
-            <h3 className="text-lg sm:text-xl font-bold truncate">{formatCurrency(data.financial.netPosition)}</h3>
-            <p className="text-[10px] sm:text-xs text-default-400 mt-0.5 truncate">Proyección Financiera</p>
+            <h3 className="text-lg sm:text-xl font-bold truncate">
+              {formatCurrency(data.financial.periodResult)}
+            </h3>
+            <p className="text-[10px] sm:text-xs text-default-400 mt-0.5 truncate">
+              Ingresos - Egresos
+            </p>
           </div>
         </div>
       </div>
@@ -154,8 +181,12 @@ export const AccountingKpiCards = ({ data }: Props) => {
             </div>
           </div>
           <div>
-            <h3 className="text-lg sm:text-xl font-bold truncate">{formatCurrency(data.monthlyIncome)}</h3>
-            <p className="text-[10px] sm:text-xs text-default-400 mt-0.5 truncate">Total Ingresos</p>
+            <h3 className="text-lg sm:text-xl font-bold truncate">
+              {formatCurrency(data.monthlyIncome)}
+            </h3>
+            <p className="text-[10px] sm:text-xs text-default-400 mt-0.5 truncate">
+              Total Ingresos
+            </p>
           </div>
         </div>
       </div>
@@ -175,12 +206,15 @@ export const AccountingKpiCards = ({ data }: Props) => {
             </div>
           </div>
           <div>
-            <h3 className="text-lg sm:text-xl font-bold truncate">{formatCurrency(data.monthlyExpenses)}</h3>
-            <p className="text-[10px] sm:text-xs text-default-400 mt-0.5 truncate">Total Egresos</p>
+            <h3 className="text-lg sm:text-xl font-bold truncate">
+              {formatCurrency(data.monthlyExpenses)}
+            </h3>
+            <p className="text-[10px] sm:text-xs text-default-400 mt-0.5 truncate">
+              Total Egresos
+            </p>
           </div>
         </div>
       </div>
-      
     </div>
   );
 };

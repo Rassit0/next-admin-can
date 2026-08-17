@@ -34,6 +34,8 @@ export const getAccountingDashboardSummary = async (
           "transactions",
           "charges",
           "cash-closures",
+          "internal-transfers",
+          "financial-accounts",
         ],
         revalidate: 3600,
       },

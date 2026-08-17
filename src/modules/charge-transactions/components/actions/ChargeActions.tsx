@@ -107,9 +107,17 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
     });
   }
   
-  // Only allow adding/editing discounts if the charge is not fully paid, or if we explicitly want to allow it anyway.
-  // Generally, if it's PENDING or PARTIAL it can be discounted.
-  if (charge.status !== "PAID" && charge.status !== "CANCELLED") {
+  // A charge is fully paid with real money if the total paid amount equals or exceeds the charge amount
+  // We use the actual payments data from the backend as the single source of truth for real money.
+  const paidAmount = charge.payments
+    ? charge.payments
+        .filter((p) => p.status === "COMPLETED")
+        .reduce((sum, p) => sum + Number(p.amount), 0)
+    : Number(charge.amount) - Number(charge.discountAmount || 0) - Number(charge.pendingAmount || 0);
+  const isFullyPaidWithMoney = paidAmount >= Number(charge.amount);
+
+  // We allow adding/editing discounts if the charge is not cancelled and not fully paid with money.
+  if (charge.status !== "CANCELLED" && !isFullyPaidWithMoney) {
     allActions.push({
       key: "add-discount",
       label: hasDiscount ? "Editar Descuento" : "Aplicar Descuento",
@@ -125,7 +133,9 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
     });
   }
 
-  if (hasDiscount && charge.status !== "PAID") {
+  // We allow removing discount as long as it has a discount and is not cancelled.
+  // (If it has a discount, it couldn't have been fully paid with money alone).
+  if (hasDiscount && charge.status !== "CANCELLED") {
     allActions.push({
       key: "remove-discount",
       label: "Remover Descuento",

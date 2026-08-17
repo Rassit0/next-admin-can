@@ -22,10 +22,6 @@ export const Filters = ({
 
   const [search, setSearch] = useState(searchParams.get("search") || "");
 
-  useEffect(() => {
-    setSearch(searchParams.get("search") || "");
-  }, [searchParams]);
-
   const handleUrlUpdate = useDebouncedCallback((value: string) => {
     const params = new URLSearchParams(searchParams);
 

@@ -9,11 +9,16 @@ import {
   ListBox,
   Label,
   TextField,
+  DatePicker,
+  DateField,
+  Calendar,
 } from "@heroui/react";
 import { toast } from "sonner";
 import { createInternalTransfer } from "../actions/create";
 import { FinancialAccount } from "../../financial-accounts/interfaces/financial-account.interface";
 import { useRouter } from "next/navigation";
+import type { DateValue } from "@internationalized/date";
+import { getLocalTimeZone, today } from "@internationalized/date";
 
 interface Props {
   isOpen: boolean;
@@ -34,7 +39,7 @@ export const InternalTransferDrawer = ({
   const [destinationAccountId, setDestinationAccountId] = useState("");
   const [description, setDescription] = useState("");
   const [reference, setReference] = useState("");
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState<DateValue | null>(today(getLocalTimeZone()));
 
   const router = useRouter();
 
@@ -45,7 +50,7 @@ export const InternalTransferDrawer = ({
       setDestinationAccountId("");
       setDescription("");
       setReference("");
-      setDate(new Date().toISOString().split("T")[0]);
+      setDate(today(getLocalTimeZone()));
     }
   }, [isOpen]);
 
@@ -68,7 +73,9 @@ export const InternalTransferDrawer = ({
         destinationAccountId,
         description: description || undefined,
         reference: reference || undefined,
-        date: date ? new Date(date).toISOString() : undefined,
+        date: date
+          ? new Date(`${date.toString()}T12:00:00`).toISOString()
+          : undefined,
       });
 
       if (response.error) {
@@ -76,7 +83,9 @@ export const InternalTransferDrawer = ({
         return;
       }
 
-      toast.success(response.message || "Transferencia registrada exitosamente");
+      toast.success(
+        response.message || "Transferencia registrada exitosamente",
+      );
       onOpenChange(false);
       onSuccess?.();
       router.refresh();
@@ -87,7 +96,7 @@ export const InternalTransferDrawer = ({
     }
   };
 
-  const activeAccounts = accounts.filter(a => a.isActive);
+  const activeAccounts = accounts.filter((a) => a.isActive);
 
   return (
     <Drawer.Backdrop isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -104,7 +113,12 @@ export const InternalTransferDrawer = ({
           </Drawer.Header>
           <Drawer.Body className="pb-6 mt-4">
             <div className="flex flex-col gap-4">
-              <TextField className="w-full" name="amount" type="number" isRequired>
+              <TextField
+                className="w-full"
+                name="amount"
+                type="number"
+                isRequired
+              >
                 <Label>Monto</Label>
                 <Input
                   variant="secondary"
@@ -121,7 +135,9 @@ export const InternalTransferDrawer = ({
                 placeholder="Selecciona cuenta que envía"
                 variant="secondary"
                 selectedKey={sourceAccountId}
-                onSelectionChange={(key) => setSourceAccountId(key ? String(key) : "")}
+                onSelectionChange={(key) =>
+                  setSourceAccountId(key ? String(key) : "")
+                }
               >
                 <Label>Cuenta de Origen</Label>
                 <Select.Trigger>
@@ -131,10 +147,16 @@ export const InternalTransferDrawer = ({
                 <Select.Popover>
                   <ListBox>
                     {activeAccounts.map((acc) => (
-                      <ListBox.Item key={acc.id} id={acc.id} textValue={acc.name}>
+                      <ListBox.Item
+                        key={acc.id}
+                        id={acc.id}
+                        textValue={acc.name}
+                      >
                         <div className="flex flex-col">
                           <span className="text-small">{acc.name}</span>
-                          <span className="text-tiny text-default-400">Saldo: {Number(acc.cachedBalance).toFixed(2)}</span>
+                          <span className="text-tiny text-default-400">
+                            Saldo: {Number(acc.cachedBalance).toFixed(2)}
+                          </span>
                         </div>
                       </ListBox.Item>
                     ))}
@@ -149,7 +171,9 @@ export const InternalTransferDrawer = ({
                 placeholder="Selecciona cuenta que recibe"
                 variant="secondary"
                 selectedKey={destinationAccountId}
-                onSelectionChange={(key) => setDestinationAccountId(key ? String(key) : "")}
+                onSelectionChange={(key) =>
+                  setDestinationAccountId(key ? String(key) : "")
+                }
               >
                 <Label>Cuenta de Destino</Label>
                 <Select.Trigger>
@@ -159,10 +183,16 @@ export const InternalTransferDrawer = ({
                 <Select.Popover>
                   <ListBox>
                     {activeAccounts.map((acc) => (
-                      <ListBox.Item key={acc.id} id={acc.id} textValue={acc.name}>
+                      <ListBox.Item
+                        key={acc.id}
+                        id={acc.id}
+                        textValue={acc.name}
+                      >
                         <div className="flex flex-col">
                           <span className="text-small">{acc.name}</span>
-                          <span className="text-tiny text-default-400">Saldo: {Number(acc.cachedBalance).toFixed(2)}</span>
+                          <span className="text-tiny text-default-400">
+                            Saldo: {Number(acc.cachedBalance).toFixed(2)}
+                          </span>
                         </div>
                       </ListBox.Item>
                     ))}
@@ -170,14 +200,51 @@ export const InternalTransferDrawer = ({
                 </Select.Popover>
               </Select>
 
-              <TextField className="w-full" name="date" type="date">
+              <DatePicker
+                className="w-full"
+                name="date"
+                value={date}
+                onChange={setDate}
+              >
                 <Label>Fecha</Label>
-                <Input
-                  variant="secondary"
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                />
-              </TextField>
+                <DateField.Group fullWidth variant="secondary">
+                  <DateField.Input>
+                    {(segment) => <DateField.Segment segment={segment} />}
+                  </DateField.Input>
+                  <DateField.Suffix>
+                    <DatePicker.Trigger>
+                      <DatePicker.TriggerIndicator />
+                    </DatePicker.Trigger>
+                  </DateField.Suffix>
+                </DateField.Group>
+                <DatePicker.Popover>
+                  <Calendar aria-label="Seleccionar fecha">
+                    <Calendar.Header>
+                      <Calendar.YearPickerTrigger>
+                        <Calendar.YearPickerTriggerHeading />
+                        <Calendar.YearPickerTriggerIndicator />
+                      </Calendar.YearPickerTrigger>
+                      <Calendar.NavButton slot="previous" />
+                      <Calendar.NavButton slot="next" />
+                    </Calendar.Header>
+                    <Calendar.Grid>
+                      <Calendar.GridHeader>
+                        {(day) => (
+                          <Calendar.HeaderCell>{day}</Calendar.HeaderCell>
+                        )}
+                      </Calendar.GridHeader>
+                      <Calendar.GridBody>
+                        {(date) => <Calendar.Cell date={date} />}
+                      </Calendar.GridBody>
+                    </Calendar.Grid>
+                    <Calendar.YearPickerGrid>
+                      <Calendar.YearPickerGridBody>
+                        {({ year }) => <Calendar.YearPickerCell year={year} />}
+                      </Calendar.YearPickerGridBody>
+                    </Calendar.YearPickerGrid>
+                  </Calendar>
+                </DatePicker.Popover>
+              </DatePicker>
 
               <TextField className="w-full" name="description" type="text">
                 <Label>Descripción</Label>

@@ -17,7 +17,7 @@ export const getTeamSeasonById = async ({
       `team-seasons/${id}`,
       {
         next: {
-          tags: ["teams"],
+          tags: ["team-seasons"],
           revalidate: 3600,
         },
       },
