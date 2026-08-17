@@ -29,8 +29,8 @@ interface Props {
   setCategoryId: Dispatch<SetStateAction<string | null>>;
   seasonId: string | null;
   setSeasonId: Dispatch<SetStateAction<string | null>>;
-  shiftId: string | null;
-  setShiftId: Dispatch<SetStateAction<string | null>>;
+  shiftIds: string[];
+  setShiftIds: Dispatch<SetStateAction<string[]>>;
   gender: Gender | null;
   setGender: Dispatch<SetStateAction<Gender | null>>;
   description: string | null;
@@ -54,8 +54,8 @@ export const BasicInfoCard = ({
   setCategoryId,
   seasonId,
   setSeasonId,
-  shiftId,
-  setShiftId,
+  shiftIds,
+  setShiftIds,
   gender,
   setGender,
   description,
@@ -102,14 +102,14 @@ export const BasicInfoCard = ({
           isDisabled={isStructuralDisabled}
         />
         <SelectShift
-          label="Turno"
+          label="Turnos"
           shiftsOptions={shiftsOptions}
-          shiftId={shiftId}
-          setShiftId={setShiftId}
+          shiftIds={shiftIds}
+          setShiftIds={setShiftIds}
           errors={errors}
           handleRemoveError={handleRemoveError}
-          isRequired
           isDisabled={isStructuralDisabled}
+          isRequired
         />
         <Select
           isRequired

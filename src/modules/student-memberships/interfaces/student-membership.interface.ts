@@ -96,3 +96,21 @@ export interface Meta {
   nextPage: number | null;
   prevPage: number | null;
 }
+
+export interface IMembershipHistoryCreator {
+  id: string;
+  email: string;
+  person: {
+    name: string;
+    lastName: string;
+  } | null;
+}
+
+export interface IStudentMembershipHistory {
+  id: string;
+  previousStatus: StudentMembershipStatus | null;
+  newStatus: StudentMembershipStatus;
+  reason: string | null;
+  createdAt: Date;
+  createdBy: IMembershipHistoryCreator | null;
+}

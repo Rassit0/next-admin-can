@@ -11,7 +11,12 @@ import {
   Switch,
   Alert,
 } from "@heroui/react";
-import { Money03Icon, UnavailableIcon } from "@hugeicons/core-free-icons";
+import {
+  Calendar03Icon,
+  MoneyExchange01Icon,
+  Money03Icon,
+  UnavailableIcon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Dispatch, SetStateAction } from "react";
 import {
@@ -83,11 +88,11 @@ export const FinancialStructureCard = ({
         <Alert status="accent" className="mb-2">
           <Alert.Indicator />
           <Alert.Content>
-            <Alert.Title>Cobros Automatizados</Alert.Title>
+            <Alert.Title>Configuración de Cobros</Alert.Title>
             <Alert.Description>
-              Configura cómo el sistema facturará automáticamente a los atletas
+              Configura cómo se estructurarán los cobros de los atletas
               de esta temporada. El modelo de facturación determina si se cobra
-              cada ciclo de tiempo o si se hace un único pago por adelantado.
+              cada ciclo temporal o si se hace un único pago por adelantado.
             </Alert.Description>
           </Alert.Content>
         </Alert>
@@ -140,7 +145,7 @@ export const FinancialStructureCard = ({
             children={errors.billingType && <> {errors.billingType}</>}
           />
           <Description className="text-xs text-muted-foreground mt-1">
-            <b>Recurrente:</b> genera cobros iterativos (semanal, quincenal, o
+            <b>Recurrente:</b> el precio se aplica a cada ciclo temporal (semanal, quincenal, o
             mensual). <br />
             <b>Único:</b> cobra el valor de toda la temporada por adelantado.{" "}
             <br />
@@ -163,7 +168,7 @@ export const FinancialStructureCard = ({
               handleRemoveError("billingFrequency");
             }}
           >
-            <Label>Frecuencia de Facturación</Label>
+            <Label>Duración del Ciclo</Label>
             <Select.Trigger>
               <Select.Value />
               <Select.Indicator />
@@ -193,8 +198,8 @@ export const FinancialStructureCard = ({
               }
             />
             <Description className="text-xs text-muted-foreground mt-1">
-              Determina cada cuánto tiempo el sistema generará automáticamente
-              un nuevo cobro por el valor de la Cuota Base.
+              Determina el período de tiempo que abarca cada ciclo. El atleta deberá
+              adquirir los ciclos para estar al día.
             </Description>
           </Select>
         )}
@@ -208,7 +213,7 @@ export const FinancialStructureCard = ({
             type="text"
             isInvalid={!!errors.registrationFee || undefined}
           >
-            <Label>Matrícula</Label>
+            <Label>Costo de Inscripción / Matrícula</Label>
             <InputGroup>
               <InputGroup.Prefix>$</InputGroup.Prefix>
               <InputGroup.Input
@@ -252,7 +257,7 @@ export const FinancialStructureCard = ({
             isInvalid={!!errors.recurringFee || undefined}
           >
             <Label>
-              Cuota Base (
+              Precio del Ciclo (
               {billingFrequency === "WEEKLY"
                 ? "Semanal"
                 : billingFrequency === "BIWEEKLY"
@@ -281,11 +286,11 @@ export const FinancialStructureCard = ({
               children={errors.recurringFee && <> {errors.recurringFee}</>}
             />
             <Description className="text-xs text-muted-foreground mt-1">
-              Valor de la cuota base que se cobrará periódicamente.
+              Precio a pagar por la adquisición de cada ciclo.
               {isFinancialDisabled && (
                 <span className="block mt-1 text-warning-600 font-medium">
                   Nota: Modificar este valor aplicará para las{" "}
-                  <b>nuevas suscripciones y las próximas cuotas generadas</b>.
+                  <b>nuevas suscripciones y los próximos ciclos adquiridos</b>.
                 </span>
               )}
             </Description>
@@ -333,58 +338,26 @@ export const FinancialStructureCard = ({
           </TextField>
         )}
 
-        {billingType !== "SINGLE_ONLY" && billingFrequency === "MONTHLY" && (
-          <NumberField
-            isRequired
-            isDisabled={isFinancialDisabled}
-            className="col-span-full"
-            variant="secondary"
-            minValue={1}
-            maxValue={28}
-            name="billingDay"
-            step={1}
-            value={billingDay !== null ? +billingDay : undefined}
-            onChange={(v) => {
-              setBillingDay(isNaN(v) ? null : v);
-              handleRemoveError("billingDay");
-            }}
-          >
-            <Label className="flex items-center gap-2 text-sm font-label font-bold">
-              <HugeiconsIcon icon={UnavailableIcon} />
-              Día de Facturación Mensual
-            </Label>
-            <NumberField.Group>
-              <NumberField.DecrementButton />
-              <NumberField.Input />
-              <NumberField.IncrementButton />
-            </NumberField.Group>
-            <FieldError
-              children={errors.billingDay && <> {errors.billingDay}</>}
-            />
-            <Description className="text-xs text-muted-foreground mt-1">
-              El día del mes (1 al 28) en que el sistema generará
-              automáticamente los cargos para los inscritos en esta temporada.
-            </Description>
-          </NumberField>
-        )}
-
         <div className="flex flex-col gap-4 mt-4 pt-4 border-t border-secondary">
-          <Label className="font-headline font-bold">
-            Opciones de Prorrateo
-          </Label>
+          <h3 className="font-headline font-bold text-lg text-on-surface">
+            Configuración del Ciclo
+          </h3>
+          <p className="text-xs text-on-surface-variant font-medium">
+            Vencimiento y prorrateos de los ciclos comprados.
+          </p>
 
           <Alert status="accent">
             <Alert.Indicator />
             <Alert.Content>
               <Alert.Title>Cálculos Proporcionales (Prorrateos)</Alert.Title>
               <Alert.Description>
-                Activa estas opciones para que el motor de pagos asigne montos
+                Activa estas opciones para que el sistema sugiera montos
                 justos en función del día exacto en que el atleta inicie o
                 termine su membresía.
                 <br />
-                <strong>Ejemplo:</strong> Si la cuota mensual es de 100 Bs. y el
-                atleta se inscribe a mitad del mes, el sistema le generará
-                automáticamente un cargo de 50 Bs.
+                <strong>Ejemplo:</strong> Si la cuota de ciclo es de 100 Bs. y el
+                atleta se inscribe a mitad del mes, el sistema le sugerirá
+                un cargo de 50 Bs.
               </Alert.Description>
             </Alert.Content>
           </Alert>

@@ -2,14 +2,19 @@
 import { useState } from "react";
 import { AccountChargesTable, AccountChargeDrawer } from "../components";
 import { IAccountCharge } from "../interfaces/charge.interface";
-import { Button } from "@heroui/react";
+import { Button, AlertDialog } from "@heroui/react";
 import { PlusSignIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { api } from "@/utils/api";
+import { cancelAccountCharge } from "../actions/cancel";
 
-export const CreateChargeButton = ({ direction }: { direction: "RECEIVABLE" | "PAYABLE" }) => {
+export const CreateChargeButton = ({
+  direction,
+}: {
+  direction: "RECEIVABLE" | "PAYABLE";
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
@@ -33,9 +38,21 @@ export const CreateChargeButton = ({ direction }: { direction: "RECEIVABLE" | "P
   );
 };
 
-export const AccountChargesClient = ({ charges, direction }: { charges: IAccountCharge[], direction: "RECEIVABLE" | "PAYABLE" }) => {
+export const AccountChargesClient = ({
+  charges,
+  direction,
+}: {
+  charges: IAccountCharge[];
+  direction: "RECEIVABLE" | "PAYABLE";
+}) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [selectedCharge, setSelectedCharge] = useState<IAccountCharge | null>(null);
+  const [selectedCharge, setSelectedCharge] = useState<IAccountCharge | null>(
+    null,
+  );
+  const [chargeToCancel, setChargeToCancel] = useState<IAccountCharge | null>(
+    null,
+  );
+  const [isCancelling, setIsCancelling] = useState(false);
   const router = useRouter();
 
   const handleEdit = (charge: IAccountCharge) => {
@@ -43,15 +60,21 @@ export const AccountChargesClient = ({ charges, direction }: { charges: IAccount
     setIsDrawerOpen(true);
   };
 
-  const handleCancel = async (charge: IAccountCharge) => {
-    if (confirm(`¿Estás seguro de anular el registro "${charge.title}"?`)) {
-      try {
-        await api.delete(`account-charges/${charge.id}`);
-        toast.success("Registro anulado exitosamente");
-        router.refresh();
-      } catch (error: any) {
-        toast.error(error.message || "Error al anular el registro");
-      }
+  const handleCancelClick = (charge: IAccountCharge) => {
+    setChargeToCancel(charge);
+  };
+
+  const executeCancel = async () => {
+    if (!chargeToCancel) return;
+    setIsCancelling(true);
+    const res = await cancelAccountCharge(chargeToCancel.id);
+    setIsCancelling(false);
+
+    if (res.error) {
+      toast.error(res.message || "Error al anular el registro");
+    } else {
+      toast.success(res.message || "Registro anulado exitosamente");
+      setChargeToCancel(null);
     }
   };
 
@@ -67,7 +90,7 @@ export const AccountChargesClient = ({ charges, direction }: { charges: IAccount
       <AccountChargesTable
         accountCharges={charges}
         onEdit={handleEdit}
-        onCancel={handleCancel}
+        onCancel={handleCancelClick}
       />
       <AccountChargeDrawer
         isOpen={isDrawerOpen}
@@ -76,6 +99,44 @@ export const AccountChargesClient = ({ charges, direction }: { charges: IAccount
         direction={direction}
         onSuccess={() => router.refresh()}
       />
+
+      <AlertDialog.Backdrop
+        isOpen={!!chargeToCancel}
+        onOpenChange={(isOpen) => !isOpen && setChargeToCancel(null)}
+      >
+        <AlertDialog.Container>
+          <AlertDialog.Dialog className="sm:max-w-100">
+            <AlertDialog.CloseTrigger />
+            <AlertDialog.Header>
+              <AlertDialog.Icon status="danger" />
+              <AlertDialog.Heading>¿Anular registro?</AlertDialog.Heading>
+            </AlertDialog.Header>
+            <AlertDialog.Body>
+              <p>
+                ¿Estás seguro de que deseas anular el registro{" "}
+                <strong>{chargeToCancel?.title}</strong>? Esta acción no se
+                puede deshacer.
+              </p>
+            </AlertDialog.Body>
+            <AlertDialog.Footer>
+              <Button
+                variant="tertiary"
+                onPress={() => setChargeToCancel(null)}
+                isDisabled={isCancelling}
+              >
+                Cancelar
+              </Button>
+              <Button
+                variant="danger"
+                onPress={executeCancel}
+                isPending={isCancelling}
+              >
+                Anular
+              </Button>
+            </AlertDialog.Footer>
+          </AlertDialog.Dialog>
+        </AlertDialog.Container>
+      </AlertDialog.Backdrop>
     </>
   );
 };

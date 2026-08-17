@@ -9,7 +9,7 @@ import { auth } from "@/auth";
 export interface AddTransactionData {
   payerPersonId: string;
   amount: number;
-  transactionDate: Date | string;
+  transactionDate: string;
   description: string;
   type: "INCOME" | "EXPENSE";
   paymentMethod: "CASH" | "TRANSFER" | "QR";

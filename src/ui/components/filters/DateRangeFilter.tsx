@@ -47,11 +47,11 @@ export function DateRangeFilter({
       }
     }
     
-    // Por defecto: Este mes
+    // Por defecto: Hoy
     const t = today(tz);
     return {
-      start: startOfMonth(t),
-      end: endOfMonth(t)
+      start: t,
+      end: t
     };
   };
 

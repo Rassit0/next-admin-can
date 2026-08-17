@@ -28,10 +28,10 @@ export interface IPostCourseSeason {
     prorateLastRecurringFee: boolean;
     prorateRegistrationFee: boolean;
     prorateSeasonFee: boolean;
-    debtToleranceMonths: number; // Cantidad de meses para la suspension del miembro
     lateFeeEnabled: boolean; // Habilitar recargo por mora
     lateFeePerDay: string; // Recargo por dia de mora
     graceDays: number; // Dias de gracia
+    debtToleranceMonths?: number;
   };
   status: StatusCourseSeason; // Estado de la oferta
   isRegistrationOpen?: boolean;

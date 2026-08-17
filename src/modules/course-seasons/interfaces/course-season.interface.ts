@@ -86,7 +86,6 @@ export interface Meta {
 
 export interface ICourseSeasonBillingConfig {
   id?: string;
-  isEngineActive: boolean;
   billingDay: number;
   registrationFee?: string | null;
   recurringFee?: string | null;

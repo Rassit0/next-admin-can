@@ -2,6 +2,7 @@ import {
   ButtonsSubmit,
   FormCourseSeason,
   getCategoriesByDisciplineOptions,
+  getCourseSeasonById,
   getSeasonsByDisciplineOptions,
   getShiftsOptions,
 } from "@/modules/course-seasons";
@@ -12,17 +13,30 @@ import { redirect } from "next/navigation";
 
 interface Props {
   params: Promise<{ disciplineId: string; schoolId: string; courseId: string }>;
+  searchParams: Promise<{ cloneFromId?: string }>;
 }
 
-export default async function AddCourseSeasonPage({ params }: Props) {
-  const { disciplineId, schoolId, courseId } = await params;
-  const [courseResponse, categoriesOptions, seasonsOptions, shiftsOptions] =
-    await resolvePageData([
-      getCourseById({ id: courseId }),
-      getCategoriesByDisciplineOptions(disciplineId),
-      getSeasonsByDisciplineOptions(disciplineId),
-      getShiftsOptions(),
-    ]);
+export default async function AddCourseSeasonPage({
+  params,
+  searchParams,
+}: Props) {
+  const [{ disciplineId, schoolId, courseId }, { cloneFromId }] =
+    await Promise.all([params, searchParams]);
+
+  const [
+    courseResponse,
+    categoriesOptions,
+    seasonsOptions,
+    shiftsOptions,
+    courseSeasonResponse,
+  ] = await resolvePageData([
+    getCourseById({ id: courseId }),
+    getCategoriesByDisciplineOptions(disciplineId),
+    getSeasonsByDisciplineOptions(disciplineId),
+    getShiftsOptions(),
+    cloneFromId ? getCourseSeasonById({ id: cloneFromId }) : Promise.resolve(undefined as any),
+  ]);
+
   return (
     <>
       <HeaderPage
@@ -51,6 +65,8 @@ export default async function AddCourseSeasonPage({ params }: Props) {
       <FormCourseSeason
         formId="form-course-season"
         course={courseResponse.data}
+        courseSeason={courseSeasonResponse?.data as any}
+        isClone={!!cloneFromId}
         categoriesOptions={categoriesOptions.data.data}
         seasonsOptions={seasonsOptions.data.data}
         shiftsOptions={shiftsOptions.data.data}

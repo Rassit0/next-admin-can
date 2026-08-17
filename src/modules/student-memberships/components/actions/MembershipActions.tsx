@@ -33,6 +33,7 @@ import {
   createMembershipPause,
   removeStudentMembership,
 } from "@/modules/student-memberships";
+import { TransferShiftDrawer } from "../drawer/TransferShiftDrawer";
 
 interface Props {
   membership: IStudentMembership;
@@ -48,6 +49,7 @@ interface ActionDef {
 
 const ACTIONS_BY_STATUS: Record<IStudentMembership["status"], ActionDef[]> = {
   ACTIVE: [
+    { key: "transfer", label: "Transferir turno", icon: Calendar01Icon },
     { key: "pause", label: "Programar pausa", icon: Calendar01Icon },
     { key: "suspend", label: "Suspender", icon: PauseIcon },
     { key: "finish", label: "Finalizar", icon: CheckmarkCircle02Icon },
@@ -61,6 +63,7 @@ const ACTIONS_BY_STATUS: Record<IStudentMembership["status"], ActionDef[]> = {
   WITHDRAWN: [{ key: "reactivate", label: "Reactivar", icon: PlayIcon }],
   FINISHED: [],
   PENDING_ACTIVE: [
+    { key: "transfer", label: "Transferir turno", icon: Calendar01Icon },
     { key: "pause", label: "Programar pausa", icon: Calendar01Icon },
     { key: "activate", label: "Activar", icon: PlayIcon },
     { key: "withdraw", label: "Dar de baja", icon: Logout01Icon, danger: true },
@@ -74,6 +77,7 @@ export const MembershipActions = ({ membership, origin }: Props) => {
   const statusActions = ACTIONS_BY_STATUS[membership.status] ?? [];
 
   const confirmState = useOverlayState();
+  const transferState = useOverlayState();
   const [selectedAction, setSelectedAction] = useState<ActionDef | null>(null);
 
   const allActions: ActionDef[] = [
@@ -96,6 +100,11 @@ export const MembershipActions = ({ membership, origin }: Props) => {
         ? `/admin/student-memberships/${membership.id}?from=${origin}`
         : `/admin/student-memberships/${membership.id}`;
       router.push(manageUrl);
+      return;
+    }
+
+    if (key === "transfer") {
+      transferState.open();
       return;
     }
 
@@ -382,6 +391,12 @@ export const MembershipActions = ({ membership, origin }: Props) => {
           </AlertDialog.Dialog>
         </AlertDialog.Container>
       </AlertDialog.Backdrop>
+
+      <TransferShiftDrawer
+        isOpen={transferState.isOpen}
+        onOpenChange={transferState.setOpen}
+        membership={membership}
+      />
     </>
   );
 };

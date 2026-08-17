@@ -13,6 +13,8 @@ interface SearchParams {
   studentMembershipId?: string;
   teamSeasonId?: string;
   courseSeasonId?: string;
+  status?: string;
+  type?: string;
 }
 
 const parseCharge = (charge: ICharge): ICharge => ({
@@ -30,6 +32,8 @@ export const getCharges = async ({
   studentMembershipId,
   teamSeasonId,
   courseSeasonId,
+  status,
+  type,
 }: SearchParams): Promise<ServiceResponse<IChargesResponse>> => {
   const session = await auth();
 
@@ -51,6 +55,8 @@ export const getCharges = async ({
       params.set("studentMembershipId", studentMembershipId);
     if (teamSeasonId) params.set("teamSeasonId", teamSeasonId);
     if (courseSeasonId) params.set("courseSeasonId", courseSeasonId);
+    if (status) params.set("status", status);
+    if (type) params.set("type", type);
 
     const res = await api.get<IChargesResponse>(
       `charges?${params.toString()}`,

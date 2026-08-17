@@ -96,7 +96,7 @@ export const AdvanceChargesDrawer = ({
         onOpenChange(false);
       }
     } catch (error) {
-      toast.error("Ocurrió un error inesperado al generar los cargos.");
+      toast.error("Ocurrió un error inesperado al realizar la compra de los ciclos.");
     } finally {
       setIsGenerating(false);
     }
@@ -125,10 +125,10 @@ export const AdvanceChargesDrawer = ({
             <div>
               <Drawer.Heading className="text-lg font-bold flex items-center gap-2">
                 <HugeiconsIcon icon={Money01Icon} />
-                Adelantar Cuotas
+                Comprar Ciclos Adelantados
               </Drawer.Heading>
               <p className="mt-1 text-xs font-medium text-muted">
-                Genera las próximas cuotas de esta colegiatura por adelantado.
+                Permite comprar por adelantado los próximos ciclos de esta colegiatura.
               </p>
             </div>
           </Drawer.Header>
@@ -144,8 +144,8 @@ export const AdvanceChargesDrawer = ({
                     ¿Confirmar adelanto?
                   </h3>
                   <p className="text-sm text-muted mt-2">
-                    Estás a punto de generar{" "}
-                    <strong>{previewData?.charges.length} cuotas</strong> por un
+                    Estás a punto de comprar{" "}
+                    <strong>{previewData?.charges.length} ciclos</strong> por un
                     total de{" "}
                     <strong>
                       {previewData && formatCurrency(previewData.breakdown.totalNetAmount)}
@@ -170,7 +170,7 @@ export const AdvanceChargesDrawer = ({
                   minValue={1}
                 >
                   <Label className="text-sm font-semibold">
-                    Cantidad de cuotas a adelantar
+                    Cantidad de ciclos a comprar
                   </Label>
                   <InputGroup>
                     <InputGroup.Input
@@ -281,7 +281,7 @@ export const AdvanceChargesDrawer = ({
                   !previewData?.charges.length
                 }
               >
-                Generar Adelanto
+                Comprar Ciclos
               </Button>
             )}
           </Drawer.Footer>

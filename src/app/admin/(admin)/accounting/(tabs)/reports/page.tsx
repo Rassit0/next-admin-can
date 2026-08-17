@@ -13,8 +13,10 @@ export default async function ReportsPage({ searchParams }: { searchParams: Prom
   general_end?: string;
   closures_start?: string;
   closures_end?: string;
+  detailed_start?: string;
+  detailed_end?: string;
 }> }) {
-  const { general_start, general_end, closures_start, closures_end } = await searchParams;
+  const { general_start, general_end, closures_start, closures_end, detailed_start, detailed_end } = await searchParams;
 
   return (
     <div className="space-y-6">
@@ -71,6 +73,30 @@ export default async function ReportsPage({ searchParams }: { searchParams: Prom
           <div className="h-px bg-default-200 w-full" />
           <div className="p-6 pt-4">
             <DownloadReportButton reportId="accounting.cash-closures" start={closures_start} end={closures_end} />
+          </div>
+        </div>
+
+        {/* Tarjeta: Reporte Detallado de Contabilidad */}
+        <div className="flex flex-col bg-white dark:bg-zinc-900 rounded-xl border border-default-200 shadow-sm overflow-hidden">
+          <div className="flex flex-col gap-3 p-6 pb-4">
+            <div className="flex items-center gap-2">
+              <HugeiconsIcon icon={File01Icon} className="text-primary" />
+              <p className="text-md font-bold">Reporte Detallado</p>
+            </div>
+            <p className="text-sm text-default-500">
+              Desglose de ingresos por grupos concepto (Escuelas, Equipos), detallando recibos y distribución en cuentas financieras.
+            </p>
+          </div>
+          <div className="h-px bg-default-200 w-full" />
+          <div className="flex-1 space-y-4 p-6">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Período de análisis</label>
+              <DateRangeFilter startKey="detailed_start" endKey="detailed_end" />
+            </div>
+          </div>
+          <div className="h-px bg-default-200 w-full" />
+          <div className="p-6 pt-4">
+            <DownloadReportButton reportId="accounting.detailed" start={detailed_start} end={detailed_end} />
           </div>
         </div>
 

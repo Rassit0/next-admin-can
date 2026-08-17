@@ -26,6 +26,8 @@ import { addChargeDiscount } from "../../actions/add-discount";
 import { removeChargeDiscount } from "../../actions/remove-discount";
 import { updateCharge } from "../../actions/update";
 import { removeCharge } from "../../actions/remove";
+import { applyLateFee } from "../../actions/apply-late-fee";
+import { previewLateFee, ILateFeePreview } from "../../actions/preview-late-fee";
 
 interface Props {
   charge: ICharge;
@@ -58,12 +60,17 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
   );
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [lateFeePreview, setLateFeePreview] = useState<ILateFeePreview | null>(null);
 
   const hasDiscount = Number(charge.discountAmount) > 0;
   
   const isManual = 
     charge.membershipCharges?.[0]?.type === 'MANUAL' || 
     charge.studentCharges?.[0]?.type === 'MANUAL';
+
+  const isStudentCharge = charge.studentCharges && charge.studentCharges.length > 0;
+  const isLateFee = charge.studentCharges?.[0]?.type === 'LATE_FEE';
+  const isPastDue = new Date(charge.dueDate) < new Date();
 
   const allActions: ActionDef[] = [];
   
@@ -110,6 +117,14 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
     });
   }
 
+  if (isStudentCharge && !isLateFee && isPastDue && (charge.status === "PENDING" || charge.status === "PARTIAL")) {
+    allActions.push({
+      key: "apply-late-fee",
+      label: "Aplicar Mora",
+      icon: Note01Icon,
+    });
+  }
+
   if (hasDiscount && charge.status !== "PAID") {
     allActions.push({
       key: "remove-discount",
@@ -134,6 +149,24 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
     if (actionDef) {
       setSelectedAction(actionDef);
       
+      if (key === "apply-late-fee") {
+        setLoading(true);
+        previewLateFee(charge.id).then((res) => {
+          setLoading(false);
+          if (res.error) {
+            toast.error(res.message);
+            return;
+          }
+          if (res.data?.alreadyHasLateFee) {
+             toast.error("Este cargo ya tiene una mora generada que está pendiente de pago.");
+             return;
+          }
+          setLateFeePreview(res.data!);
+          confirmState.open();
+        });
+        return;
+      }
+
       // Reset form on open
       if (key === "add-discount") {
         setDiscountAmount(charge.discountAmount ? charge.discountAmount.toString() : "");
@@ -159,7 +192,9 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
 
     let res;
 
-    if (action === "remove-discount") {
+    if (action === "apply-late-fee") {
+      res = await applyLateFee(charge.id);
+    } else if (action === "remove-discount") {
       res = await removeChargeDiscount(charge.id);
     } else if (action === "delete-charge") {
       res = await removeCharge(charge.id);
@@ -286,6 +321,40 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
                       ? "¿Estás seguro de que deseas remover el descuento de este cargo? El saldo pendiente se ajustará automáticamente."
                       : "¿Estás seguro de que deseas eliminar este cargo manualmente? Esta acción no se puede deshacer."}
                   </p>
+                )}
+
+                {selectedAction?.key === "apply-late-fee" && lateFeePreview && (
+                  <>
+                    <p className="text-sm mb-2">
+                      Estás a punto de aplicar una mora a este cargo vencido.
+                    </p>
+                    <div className="bg-surface-secondary p-3 rounded-lg flex flex-col gap-1 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Monto Original:</span>
+                        <span className="font-semibold">{lateFeePreview.originalAmount} Bs</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Días transcurridos:</span>
+                        <span className="font-semibold">{lateFeePreview.daysPassed} días</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Días de gracia permitidos:</span>
+                        <span className="font-semibold">{lateFeePreview.graceDays} días</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Días sancionables:</span>
+                        <span className="font-semibold text-danger">{lateFeePreview.punishableDays} días</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Recargo por día:</span>
+                        <span className="font-semibold">{lateFeePreview.lateFeePerDay} Bs</span>
+                      </div>
+                      <div className="border-t border-border mt-2 pt-2 flex justify-between font-bold text-base">
+                        <span>Total Mora a Aplicar:</span>
+                        <span className="text-danger">{lateFeePreview.totalLateFeeAmount} Bs</span>
+                      </div>
+                    </div>
+                  </>
                 )}
 
                 {selectedAction?.key === "edit-charge" && (

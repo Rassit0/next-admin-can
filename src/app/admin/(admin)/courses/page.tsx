@@ -15,7 +15,7 @@ export default async function CoursesPage() {
     [getDisciplinesOptions()],
     {
       path: { href: "/courses", label: "Volver a la lista de cursos" },
-    }
+    },
   );
 
   return (

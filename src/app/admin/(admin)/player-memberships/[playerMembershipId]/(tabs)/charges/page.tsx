@@ -22,6 +22,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { getCharges, TableCharges, AdvanceChargeButton } from "@/modules/charge-transactions";
 import { CreateManualChargeButton } from "@/modules/charge-transactions/components/drawer/CreateManualChargeButton";
+import { RegularizeHistoricalChargeButton } from "@/modules/charge-transactions/components/drawer/RegularizeHistoricalChargeButton";
 import { resolvePageData } from "@/utils/resolvePageData";
 
 interface Props {
@@ -62,6 +63,9 @@ export default async function PlayerMembershipChargesPage({
           <SectionFilters
             actions={
               <div className="flex gap-2">
+                <RegularizeHistoricalChargeButton
+                  playerMembershipId={playerMembershipId}
+                />
                 <CreateManualChargeButton
                   playerMembershipId={playerMembershipId}
                 />

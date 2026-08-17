@@ -20,6 +20,7 @@ import {
   Note01Icon,
   Calendar01Icon,
   Edit02Icon,
+  Delete01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
@@ -30,6 +31,7 @@ import {
   finalizeCourseSeason,
   createCourseSeasonPause,
   toggleCourseSeasonRegistration,
+  deleteCourseSeason,
 } from "@/modules/course-seasons";
 
 interface Props {
@@ -54,6 +56,7 @@ const ACTIONS_BY_STATUS: Record<ICourseSeason["status"], ActionDef[]> = {
   DRAFT: [
     { key: "edit", label: "Editar temporada", icon: Edit02Icon },
     { key: "cancel", label: "Cancelar", icon: Logout01Icon, danger: true },
+    { key: "delete", label: "Eliminar", icon: Delete01Icon, danger: true },
   ],
   CANCELLED: [],
   FINISHED: [],
@@ -126,6 +129,8 @@ export const CourseSeasonActions = ({ courseSeason, baseUrl }: Props) => {
       res = await finalizeCourseSeason(courseSeason.id, reason);
     } else if (action === "cancel") {
       res = await cancelCourseSeason(courseSeason.id, reason);
+    } else if (action === "delete") {
+      res = await deleteCourseSeason(courseSeason.id);
     } else if (
       action === "close_registration" ||
       action === "open_registration"
@@ -204,8 +209,14 @@ export const CourseSeasonActions = ({ courseSeason, baseUrl }: Props) => {
                 <p>
                   ¿Estás seguro de que deseas ejecutar la acción{" "}
                   <strong>{selectedAction?.label.toLowerCase()}</strong> para
-                  este equipo?
+                  este turno?
                 </p>
+
+                {selectedAction?.key === "cancel" && (
+                  <div className="p-3 bg-warning/20 border border-warning/50 rounded-lg text-sm text-warning-800">
+                    <strong>Atención:</strong> Cancelar el turno no lo elimina. La información histórica, membresías, ciclos, deudas y cobros relacionados se conservan.
+                  </div>
+                )}
 
                 {selectedAction?.key === "pause" && (
                   <div className="flex gap-4 w-full">
@@ -310,7 +321,8 @@ export const CourseSeasonActions = ({ courseSeason, baseUrl }: Props) => {
                 )}
 
                 {selectedAction?.key !== "open_registration" &&
-                  selectedAction?.key !== "close_registration" && (
+                  selectedAction?.key !== "close_registration" && 
+                  selectedAction?.key !== "delete" && (
                     <TextField name="reason" className="w-full" isRequired>
                       <Label className="text-sm font-semibold">
                         Motivo u Observación

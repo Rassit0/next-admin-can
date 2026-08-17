@@ -44,8 +44,7 @@ export const getCourseSeasons = async ({
       `course-seasons?${params.toString()}`,
       {
         next: {
-          // tags: ["course-seasons"],
-          // revalidate: 3600,
+          tags: ["course-seasons"],
         },
       },
     );

@@ -25,6 +25,7 @@ export default async function StudentSeasonDetailLayout({
   const tabsRoutes = [
     { value: "/", title: "Información General" },
     { value: "/charges", title: "Cargos" },
+    { value: "/histories", title: "Actividad" },
     // { value: "/player-memberships", title: "Membresías" },
     // { value: "/payment-plans", title: "Planes de Pago" },
     // { value: "/payments", title: "Transacciones" },

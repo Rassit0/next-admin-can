@@ -1,4 +1,4 @@
-import { ComboBox, FieldError, Input, Label, ListBox } from "@heroui/react";
+import { FieldError, Label, ListBox, Select } from "@heroui/react";
 import { Dispatch, SetStateAction } from "react";
 import { IShiftOption } from "@/modules/course-seasons";
 
@@ -7,8 +7,8 @@ interface Props {
   isDisabled?: boolean;
   label: string;
   shiftsOptions: IShiftOption[];
-  shiftId: string | null;
-  setShiftId: Dispatch<SetStateAction<string | null>>;
+  shiftIds: string[];
+  setShiftIds: Dispatch<SetStateAction<string[]>>;
   errors: Record<string, string>;
   handleRemoveError: (fieldName: string) => void;
 }
@@ -18,31 +18,32 @@ export const SelectShift = ({
   isDisabled = false,
   label,
   shiftsOptions,
-  shiftId,
-  setShiftId,
+  shiftIds,
+  setShiftIds,
   errors,
   handleRemoveError,
 }: Props) => {
   return (
-    <ComboBox
+    <Select
       variant="secondary"
       isRequired={isRequired}
       isDisabled={isDisabled}
-      isInvalid={!!errors.shiftId || undefined}
+      isInvalid={!!errors.shiftIds || undefined}
       className="w-full"
-      name="shiftId"
-      value={shiftId}
-      onChange={(key) => {
-        setShiftId(key?.toString() || "");
-        handleRemoveError("shiftId");
+      name="shiftIds"
+      selectionMode="multiple"
+      value={shiftIds}
+      onChange={(keys: any) => {
+        setShiftIds(Array.from(keys) as string[]);
+        handleRemoveError("shiftIds");
       }}
     >
       <Label>{label}</Label>
-      <ComboBox.InputGroup>
-        <Input placeholder="Buscar turno..." />
-        <ComboBox.Trigger />
-      </ComboBox.InputGroup>
-      <ComboBox.Popover>
+      <Select.Trigger>
+        <Select.Value />
+        <Select.Indicator />
+      </Select.Trigger>
+      <Select.Popover>
         <ListBox>
           {shiftsOptions.map((shift) => (
             <ListBox.Item key={shift.id} id={shift.id} textValue={shift.name}>
@@ -51,8 +52,8 @@ export const SelectShift = ({
             </ListBox.Item>
           ))}
         </ListBox>
-      </ComboBox.Popover>
-      <FieldError children={errors.shiftId && <p>{errors.shiftId}</p>} />
-    </ComboBox>
+      </Select.Popover>
+      <FieldError children={errors.shiftIds && <p>{errors.shiftIds}</p>} />
+    </Select>
   );
 };

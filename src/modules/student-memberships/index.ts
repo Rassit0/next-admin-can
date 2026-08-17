@@ -9,6 +9,7 @@ export * from "./actions/get-students-options";
 export * from "./actions/add-massive-manual-charge";
 export * from "./actions/remove";
 export * from "./actions/pauses";
+export * from "./actions/transfer-shift";
 
 // Helpers
 export * from "./helpers/initial-charges";

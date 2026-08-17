@@ -33,6 +33,7 @@ interface Props {
   seasonsOptions: ISeasonOption[];
   shiftsOptions: IShiftOption[];
   urlRedirect: string;
+  isClone?: boolean;
 }
 
 export const FormCourseSeason = ({
@@ -43,6 +44,7 @@ export const FormCourseSeason = ({
   seasonsOptions,
   shiftsOptions,
   urlRedirect,
+  isClone = false,
 }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -74,15 +76,13 @@ export const FormCourseSeason = ({
   const [seasonId, setSeasonId] = useState<string | null>(
     courseSeason?.season.id || null,
   );
-  const [shiftId, setShiftId] = useState<string | null>(
-    courseSeason?.shift.id || null,
+  const [shiftIds, setShiftIds] = useState<string[]>(
+    courseSeason?.shift?.id && !isClone ? [courseSeason.shift.id] : [],
   );
   const [gender, setGender] = useState<Gender | null>(
     courseSeason?.gender || null,
   );
-  const [billingDay, setBillingDay] = useState<number | null>(
-    courseSeason?.billingConfig?.billingDay || null,
-  );
+
   const [registrationFee, setRegistrationFee] = useState<string | null>(
     courseSeason?.billingConfig?.registrationFee || null,
   );
@@ -98,10 +98,8 @@ export const FormCourseSeason = ({
   const [billingFrequency, setBillingFrequency] = useState<BillingFrequency>(
     courseSeason?.billingConfig?.billingFrequency || "MONTHLY",
   );
-  const [debtToleranceMonths, setDebtToleranceMonths] = useState<number | null>(
-    courseSeason?.billingConfig?.debtToleranceMonths !== undefined
-      ? courseSeason?.billingConfig?.debtToleranceMonths
-      : null,
+  const [billingDay, setBillingDay] = useState<number | null>(
+    courseSeason?.billingConfig?.billingDay || null,
   );
 
   const [prorateFirstRecurringFee, setProrateFirstRecurringFee] =
@@ -135,7 +133,7 @@ export const FormCourseSeason = ({
   );
   // fin form params
 
-  const isEditMode = !!courseSeason;
+  const isEditMode = !!courseSeason && !isClone;
   const isStructuralDisabled = isEditMode && courseSeason.status === "ACTIVE";
   const isFinancialDisabled = isEditMode && courseSeason.status === "ACTIVE";
 
@@ -148,8 +146,8 @@ export const FormCourseSeason = ({
     });
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement> | null) => {
+    if (e) e.preventDefault();
     console.log("submit", course.id);
     // setErrors({});
     const newErrors: Record<string, string> = {};
@@ -169,8 +167,8 @@ export const FormCourseSeason = ({
     if (seasonId === null) {
       newErrors.seasonId = "Debe ingresar la temporada";
     }
-    if (shiftId === null) {
-      newErrors.shiftId = "Debe ingresar el turno";
+    if (shiftIds.length === 0) {
+      newErrors.shiftIds = "Debe seleccionar al menos un turno";
     }
     if (gender === null) {
       newErrors.gender = "Debe ingresar el género";
@@ -197,36 +195,12 @@ export const FormCourseSeason = ({
     if (graceDays === null) {
       newErrors.graceDays = "Debe ingresar el número de días de gracia";
     }
-    if (debtToleranceMonths === null) {
-      newErrors.debtToleranceMonths =
-        "Debe ingresar el número de meses de tolerancia de deuda para la suspensión";
-    }
     if (billingType !== "SINGLE_ONLY") {
       if (!billingFrequency) {
         newErrors.billingFrequency =
           "Debe ingresar la frecuencia de facturación";
       }
 
-      if (billingDay === null) {
-        newErrors.billingDay = "Debe ingresar el día de facturación";
-      } else {
-        if (
-          billingFrequency === "MONTHLY" &&
-          (billingDay < 1 || billingDay > 28)
-        ) {
-          newErrors.billingDay = "Para mensual, el día debe ser entre 1 y 28";
-        } else if (
-          billingFrequency === "WEEKLY" &&
-          (billingDay < 1 || billingDay > 7)
-        ) {
-          newErrors.billingDay = "Para semanal, el día debe ser entre 1 y 7";
-        } else if (
-          billingFrequency === "BIWEEKLY" &&
-          (billingDay < 1 || billingDay > 14)
-        ) {
-          newErrors.billingDay = "Para quincenal, el día debe ser entre 1 y 14";
-        }
-      }
     }
     if (status === null) {
       newErrors.status = "Debe ingresar el estado";
@@ -237,8 +211,7 @@ export const FormCourseSeason = ({
       return;
     }
     setIsLoading?.(true);
-    let res;
-    const data: IPostCourseSeason = {
+    const baseData = {
       description: description!,
       maxMembers: maxMembers!,
       minMembers: minMembers!,
@@ -248,13 +221,9 @@ export const FormCourseSeason = ({
       courseId: course.id,
       categoryId: categoryId!,
       seasonId: seasonId!,
-      shiftId: shiftId!,
       gender: gender!,
       billingConfig: {
-        billingDay:
-          billingType === "SINGLE_ONLY" || billingFrequency !== "MONTHLY"
-            ? 1
-            : billingDay!,
+        billingDay: 1,
         registrationFee:
           billingType === "SINGLE_ONLY" ? null : registrationFee!,
         recurringFee: billingType === "SINGLE_ONLY" ? null : recurringFee!,
@@ -265,7 +234,6 @@ export const FormCourseSeason = ({
         billingType: billingType,
         billingFrequency:
           billingType === "SINGLE_ONLY" ? "SINGLE" : billingFrequency,
-        debtToleranceMonths: debtToleranceMonths!,
         prorateFirstRecurringFee,
         prorateLastRecurringFee,
         prorateRegistrationFee,
@@ -273,45 +241,83 @@ export const FormCourseSeason = ({
         lateFeeEnabled,
         lateFeePerDay: lateFeeEnabled ? lateFeePerDay! : "0",
         graceDays: lateFeeEnabled ? graceDays! : 0,
+        debtToleranceMonths: 0,
       },
       status,
     };
-    if (courseSeason) {
-      res = await editCourseSeason({ id: courseSeason.id, data });
+
+    if (courseSeason && !isClone) {
+      // Modo edición: solo hay un turno
+      const data = { ...baseData, shiftId: shiftIds[0] };
+      const configData = {
+        registrationFee: Number(registrationFee) || 0,
+        recurringFee: Number(recurringFee) || 0,
+        seasonFee: Number(seasonFee) || 0,
+        billingType,
+        billingFrequency,
+        billingDay,
+        prorateFirstRecurringFee,
+      };
+      const res = await editCourseSeason({ id: courseSeason.id, data });
+      setIsLoading?.(false);
+      
+      if (res.error) {
+        let errorDescription = res.message;
+        if (res.errors) {
+          errorDescription = Object.entries(res.errors)
+            .map(([field, messages]) => {
+              const msgList = Array.isArray(messages) ? messages.join(", ") : messages;
+              return `${field}: ${msgList}`;
+            }).join("\n");
+        }
+        toast.danger("Error", { description: errorDescription });
+        if (res.errors) setErrors(res.errors);
+        return;
+      }
+      
+      toast.success("¡Cambios guardados!", { description: "La temporada se ha actualizado correctamente." });
+      router.push(urlRedirect);
+      
     } else {
-      res = await addCourseSeason(data);
-    }
-    setIsLoading?.(false);
-    if (res.error) {
-      let errorDescription = res.message;
-
-      if (res.errors) {
-        // Convertimos el objeto { type: ["msg"] } en una lista de strings limpia
-        errorDescription = Object.entries(res.errors)
-          .map(([field, messages]) => {
-            const msgList = Array.isArray(messages)
-              ? messages.join(", ")
-              : messages;
-            return `${field}: ${msgList}`;
-          })
-          .join("\n"); // Los separamos por saltos de línea para el toast
-      }
-
-      // 2. Pasamos la descripción formateada al componente de notificaciones
-      toast.danger(res.message, {
-        description: errorDescription,
+      // Modo creación: puede haber múltiples turnos
+      const results = await Promise.allSettled(
+        shiftIds.map(shiftId => addCourseSeason({ ...baseData, shiftId }))
+      );
+      
+      setIsLoading?.(false);
+      
+      let successes = 0;
+      let failures = 0;
+      let lastErrorMessage = "";
+      const successfulShiftIds: string[] = [];
+      
+      results.forEach((r, idx) => {
+        if (r.status === 'fulfilled' && !r.value.error) {
+          successes++;
+          successfulShiftIds.push(shiftIds[idx]);
+        } else {
+          failures++;
+          if (r.status === 'fulfilled' && r.value.message) {
+            lastErrorMessage = r.value.message;
+          }
+        }
       });
-      if (res.errors) {
-        setErrors(res.errors);
+      
+      if (failures > 0) {
+        toast.danger("Error parcial", { 
+          description: `Se crearon ${successes} turnos. ${failures} fallaron. ${lastErrorMessage}` 
+        });
+        // Remove successful ones so user can retry failures
+        setShiftIds(prev => prev.filter(id => !successfulShiftIds.includes(id)));
+      } else {
+        toast.success("¡Temporada creada!", { 
+          description: `Se crearon ${successes} turnos exitosamente.` 
+        });
+        router.push(urlRedirect);
       }
-      return;
     }
-    toast.success(res.message, {
-      description: res.message,
-    });
-
-    router.push(urlRedirect);
   };
+
   return (
     <>
       <Form
@@ -353,8 +359,8 @@ export const FormCourseSeason = ({
             setCategoryId={setCategoryId}
             seasonId={seasonId}
             setSeasonId={setSeasonId}
-            shiftId={shiftId}
-            setShiftId={setShiftId}
+            shiftIds={shiftIds}
+            setShiftIds={setShiftIds}
             gender={gender}
             setGender={setGender}
             description={description}
@@ -375,8 +381,6 @@ export const FormCourseSeason = ({
             setLateFeePerDay={setLateFeePerDay}
             graceDays={graceDays}
             setGraceDays={setGraceDays}
-            debtToleranceMonths={debtToleranceMonths}
-            setDebtToleranceMonths={setDebtToleranceMonths}
             lateFeeEnabled={lateFeeEnabled}
             setLateFeeEnabled={setLateFeeEnabled}
             errors={errors}
@@ -398,6 +402,7 @@ export const FormCourseSeason = ({
             setBillingFrequency={setBillingFrequency}
             billingDay={billingDay}
             setBillingDay={setBillingDay}
+
             prorateFirstRecurringFee={prorateFirstRecurringFee}
             setProrateFirstRecurringFee={setProrateFirstRecurringFee}
             prorateLastRecurringFee={prorateLastRecurringFee}
@@ -479,6 +484,15 @@ export const FormCourseSeason = ({
             </Alert>
           </div>
         )}
+        <Button
+            size="lg"
+            variant="secondary"
+            className="w-full md:w-auto font-bold bg-primary-100 text-primary-800"
+            isDisabled={isLoading}
+            onPress={() => handleSubmit(null)}
+          >
+            {isEditMode ? "Guardar Cambios" : "Guardar Temporada"}
+        </Button>
       </Form>
     </>
   );

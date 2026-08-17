@@ -13,12 +13,24 @@ interface Props {
 }
 
 export const ListCards = ({ courseSeasons, urlBase }: Props) => {
+  const groupedCourseSeasons = courseSeasons.reduce((acc, curr) => {
+    // Unique key: course + category + season + gender + status
+    const key = `${curr.course?.id}-${curr.category.id}-${curr.season.id}-${curr.gender}-${curr.status}`;
+    if (!acc[key]) {
+      acc[key] = [];
+    }
+    acc[key].push(curr);
+    return acc;
+  }, {} as Record<string, ICourseSeason[]>);
+
+  const groups = Object.values(groupedCourseSeasons);
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
-      {courseSeasons.map((courseSeason) => (
+      {groups.map((group, idx) => (
         <CardCourseSeason
-          key={courseSeason.id}
-          courseSeason={courseSeason}
+          key={idx}
+          courseSeasons={group}
           urlBase={urlBase}
         />
       ))}

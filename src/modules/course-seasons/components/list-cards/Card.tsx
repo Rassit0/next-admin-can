@@ -8,229 +8,135 @@ import { Avatar, Button, Card } from "@heroui/react";
 import {
   Add01Icon,
   Delete01Icon,
-  Edit02Icon,
   Money03Icon,
   UserGroupIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import React from "react";
+import Link from "next/link";
 import { STATUS_TEXT_MAP } from "../../../course-membership-offerings/constants/course-offering.constants";
 import { ButtonEdit } from "./ButtonEdit";
 import { ButtonPlans } from "./ButtonPlans";
 import { ButtonMemberships } from "./ButtonMemberships";
-import { EnrollMembershipDrawer } from "@/modules/student-memberships";
-import { IPaymentPlan } from "@/modules/payment-plans";
-import { IStudent } from "@/modules/students";
-import { ButtonToggleBillingEngine } from "./ButtonToggleBillingEngine";
 
 interface Props {
-  courseSeason: ICourseSeason;
+  courseSeasons: ICourseSeason[];
   urlBase: string;
 }
 
-export const CardCourseSeason = ({ courseSeason, urlBase }: Props) => {
-  const ContentActive = () => {
-    return (
-      <>
-        <div className="space-y-4 mb-8">
-          <div>
-            <div className="flex justify-between text-[10px] font-label-sm mb-1 uppercase text-outline">
-              Ocupación del Clan
-            </div>
-            <div className="w-full h-2.5 bg-surface rounded-full overflow-hidden relative">
-              <div
-                className={`absolute inset-y-0 left-0 shimmer-bar rounded-full w-[${(courseSeason._count.studentMemberships / courseSeason.maxMembers) * 100}%]`}
-              ></div>
-            </div>
-            <div className="flex justify-between text-[10px] mt-1 font-label-sm text-on-surface-variant">
-              <span>Capacidad: {courseSeason.maxMembers}</span>
-              <span className="text-primary font-bold">
-                {courseSeason._count.studentMemberships} Atletas
-              </span>
-            </div>
-          </div>
-        </div>
-        <div className="mt-auto space-y-3">
-          <AddMembershipDrawer courseSeasonId={courseSeason.id} />
-          {/* <EnrollMembershipDrawer courseSeason={courseSeason} size="md" /> */}
+export const CardCourseSeason = ({ courseSeasons, urlBase }: Props) => {
+  if (!courseSeasons || courseSeasons.length === 0) return null;
+  const baseSeason = courseSeasons[0]; // Used for common metadata
 
-          <div className="grid grid-cols-2 gap-2">
-            <ButtonMemberships
-              courseSeasonId={courseSeason.id}
-              urlBase={urlBase}
-            />
-            <ButtonPlans courseSeasonId={courseSeason.id} urlBase={urlBase} />
-          </div>
-        </div>
-      </>
-    );
-  };
-
-  const ContentActiveCompleted = () => {
+  const renderShift = (cs: ICourseSeason) => {
     return (
-      <>
-        <div className="space-y-4 mb-8">
-          <div>
-            <div className="flex justify-between text-[10px] font-label-sm mb-1 uppercase text-outline">
-              Ocupación del Clan
-            </div>
-            <div className="w-full h-2.5 bg-surface rounded-full overflow-hidden relative">
-              <div className="absolute inset-y-0 left-0 bg-accent rounded-full w-full"></div>
-            </div>
-            <div className="flex justify-between text-[10px] mt-1 font-label-sm text-error font-bold">
-              <span>Capacidad: 25</span>
-              <span>¡MAXIMA CAPACIDAD!</span>
+      <div key={cs.id} className="p-3 bg-surface-container-low border border-border/50 rounded-xl mb-3">
+        <div className="flex justify-between items-center mb-2">
+          <div className="flex items-center gap-2">
+            <span className="font-bold text-sm text-foreground">{cs.shift?.name || "Turno"}</span>
+            <div className="text-[10px] font-label-sm text-on-surface-variant bg-surface px-2 py-0.5 rounded-full border border-border/50">
+              {cs._count?.studentMemberships || 0} / {cs.maxMembers}
             </div>
           </div>
+          <div className="flex items-center gap-1">
+            <CourseSeasonActions courseSeason={cs} baseUrl={urlBase} />
+          </div>
         </div>
-        <div className="mt-auto space-y-3">
-          <Button className="w-full py-3.5 bg-outline-variant/40 text-on-surface-variant/50 rounded-full font-extrabold text-md cursor-not-allowed border border-outline-variant/20">
-            ¡Cupos Llenos!
-          </Button>
-          <div className="grid grid-cols-2 gap-2">
-            <Button variant="secondary" className="w-full">
-              <HugeiconsIcon icon={UserGroupIcon} />
-              <span className="text-xs font-bold">Miembros</span>
-            </Button>
-            <Button variant="secondary" className="w-full">
-              <HugeiconsIcon icon={Money03Icon} />
-              <span className="text-xs font-bold">Planes</span>
+        
+        {cs.status === "ACTIVE" && (
+          <div className="flex items-center gap-2 mt-2">
+            {(cs._count?.studentMemberships || 0) < cs.maxMembers ? (
+              <div className="flex-1">
+                <AddMembershipDrawer courseSeasonId={cs.id} />
+              </div>
+            ) : (
+              <Button size="sm" className="flex-1 py-1 bg-outline-variant/40 text-on-surface-variant/50 rounded-full font-extrabold text-[10px] cursor-not-allowed border border-outline-variant/20">Lleno</Button>
+            )}
+            <ButtonMemberships courseSeasonId={cs.id} urlBase={urlBase} />
+            <ButtonPlans courseSeasonId={cs.id} urlBase={urlBase} />
+          </div>
+        )}
+        {cs.status === "DRAFT" && (
+          <div className="flex items-center gap-2 mt-2">
+            <ButtonEdit urlBase={urlBase} courseSeasonId={cs.id} />
+            <Button
+              variant="danger-soft"
+              size="sm"
+              className="w-full font-bold text-xs hover:bg-error-container/20 rounded-full transition-all"
+            >
+              <HugeiconsIcon icon={Delete01Icon} strokeWidth={3} size={16} />
+              Eliminar
             </Button>
           </div>
-        </div>
-      </>
-    );
-  };
-
-  const ContentDraft = () => {
-    return (
-      <>
-        <div className="space-y-4 mb-8">
-          <div className="p-4 bg-default rounded-full border border-outline-variant/20 border-dashed">
-            <p className="text-xs text-outline text-center">
-              Faltan detalles por definir para activar esta temporada.
-            </p>
+        )}
+        {cs.status === "FINISHED" && (
+          <div className="flex items-center gap-2 mt-2">
+            <Button size="sm" className="flex-1 bg-surface-container-highest text-on-surface-variant rounded-full font-bold text-xs">
+              Estadísticas
+            </Button>
+            <ButtonMemberships courseSeasonId={cs.id} urlBase={urlBase} />
           </div>
-        </div>
-        <div className="mt-auto space-y-3">
-          <ButtonEdit urlBase={urlBase} courseSeasonId={courseSeason.id} />
-          <Button
-            variant="danger-soft"
-            className="w-full py-3.5 font-bold text-md hover:bg-error-container/20 rounded-full transition-all"
-          >
-            <HugeiconsIcon icon={Delete01Icon} strokeWidth={3} />
-            Eliminar Borrador
-          </Button>
-        </div>
-      </>
+        )}
+      </div>
     );
   };
 
-  const ContentFinished = () => {
-    return (
-      <>
-        <div className="mt-auto space-y-3">
-          <Button className="w-full py-3.5 bg-surface-container-highest text-on-surface-variant rounded-full font-bold text-md flex items-center justify-center gap-2 hover:bg-surface-variant transition-all">
-            <span className="material-symbols-outlined text-lg">
-              assessment
-            </span>
-            Ver Reporte / Estadísticas
-          </Button>
-          <Button className="w-full py-3.5 bg-surface-container-highest text-on-surface-variant rounded-full font-bold text-md flex items-center justify-center gap-2 hover:bg-surface-variant transition-all">
-            <span className="material-symbols-outlined text-lg">
-              visibility
-            </span>
-            Ver Miembros
-          </Button>
-        </div>
-      </>
-    );
-  };
+  const hasAnyOpen = courseSeasons.some((cs) => cs.isRegistrationOpen);
 
   return (
-    <Card className="p-0 overflow-hidden card-hover flex flex-col group shadow-sm">
-      <div className="h-52 relative overflow-hidden">
+    <Card className="p-0 overflow-hidden flex flex-col shadow-sm">
+      <div className="h-40 relative overflow-hidden">
         <img
-          alt="Hawaiian Waves"
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-          src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdnoetj5j2XzJ4YuyxPOW9ygEnipikr9HW2Ws685WzidbfCMuf7oyHv1dPCkWMH3GBc7oW5pjhSwp090-CscKqqUhTwS18FYDOcFyFKRT8XymaR3Sgnjc91-qHv3L2ay9hL-pmILP7EJiiQ6hhh2-LaTDArakpVrCk_-KTeU8lDCIpoxGx4573NRqqyLK_fbEAfKmG1SM8YlugZptSlVr5ImQPVoTjSSlp4vULzIsoJUcN0hPnG_hr5S4SnzZUip_3gexcwcH_rBe8"
+          alt="Course"
+          className="w-full h-full object-cover"
+          src={"https://lh3.googleusercontent.com/aida-public/AB6AXuBdnoetj5j2XzJ4YuyxPOW9ygEnipikr9HW2Ws685WzidbfCMuf7oyHv1dPCkWMH3GBc7oW5pjhSwp090-CscKqqUhTwS18FYDOcFyFKRT8XymaR3Sgnjc91-qHv3L2ay9hL-pmILP7EJiiQ6hhh2-LaTDArakpVrCk_-KTeU8lDCIpoxGx4573NRqqyLK_fbEAfKmG1SM8YlugZptSlVr5ImQPVoTjSSlp4vULzIsoJUcN0hPnG_hr5S4SnzZUip_3gexcwcH_rBe8"}
         />
-        <div className="absolute top-4 left-4 flex flex-col gap-2 items-start">
+        <div className="absolute top-3 left-3 flex flex-col gap-2 items-start">
           <div
-            className={`${STATUS_BG_MAP[courseSeason.status]} text-white font-label-sm px-4 py-1.5 rounded-full uppercase flex items-center gap-1.5 shadow-lg`}
+            className={`${STATUS_BG_MAP[baseSeason.status]} text-white font-label-sm px-3 py-1 rounded-full uppercase flex items-center gap-1.5 shadow-lg text-[10px]`}
           >
-            <span className="w-2 h-2 rounded-full bg-white animate-pulse"></span>
-            {STATUS_TEXT_MAP[courseSeason.status]}
+            {baseSeason.status === "ACTIVE" && <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>}
+            {STATUS_TEXT_MAP[baseSeason.status]}
           </div>
-          {(courseSeason.status === "ACTIVE" ||
-            courseSeason.status === "DRAFT") && (
+          {(baseSeason.status === "ACTIVE" || baseSeason.status === "DRAFT") && (
             <div
               className={`${
-                courseSeason.isRegistrationOpen ? "bg-success" : "bg-danger"
-              } text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase shadow-md border border-white/20`}
+                hasAnyOpen ? "bg-success" : "bg-danger"
+              } text-white text-[9px] font-bold px-2 py-0.5 rounded-full uppercase shadow-md border border-white/20`}
             >
-              {courseSeason.isRegistrationOpen
+              {hasAnyOpen
                 ? "Inscripciones Abiertas"
                 : "Inscripciones Cerradas"}
             </div>
           )}
         </div>
-        <div className="absolute top-4 right-4 flex items-center gap-2">
-          {courseSeason.status === "ACTIVE" && courseSeason.billingConfig && (
-            <ButtonToggleBillingEngine
-              courseSeasonId={courseSeason.id}
-              billingConfig={courseSeason.billingConfig}
-            />
-          )}
-          <CourseSeasonActions courseSeason={courseSeason} baseUrl={urlBase} />
-        </div>
       </div>
-      <div className="p-6 flex-1 flex flex-col">
-        <h3 className="font-display font-bold text-headline-md text-primary mb-1">
-          {courseSeason.category.name}
+      <div className="p-5 flex-1 flex flex-col">
+        <h3 className="font-display font-bold text-headline-sm text-primary mb-1">
+          {baseSeason.course?.name || "Curso"} - {baseSeason.category?.name}
         </h3>
-        <p className="text-on-surface-variant text-sm mb-4 italic opacity-80">
-          {courseSeason.description}
+        <p className="text-on-surface-variant text-xs mb-4 italic opacity-80">
+          {baseSeason.season?.name} • {baseSeason.gender}
         </p>
-
-        {(() => {
-          const primaryStaff =
-            courseSeason.courseSeasonStaffs?.find((s) => s.isPrimary)?.staff
-              .person || courseSeason.courseSeasonStaffs?.[0]?.staff.person;
-          if (!primaryStaff) return null;
-          return (
-            <div className="flex items-center gap-3 mb-6 bg-surface-container-low p-2 rounded-lg border border-border/50">
-              <Avatar size="sm">
-                {primaryStaff.imageUrl && (
-                  <Avatar.Image
-                    src={primaryStaff.imageUrl}
-                    alt={`${primaryStaff.name} ${primaryStaff.lastName}`}
-                  />
-                )}
-                <Avatar.Fallback>{`${primaryStaff.name.charAt(0)}${primaryStaff.lastName.charAt(0)}`}</Avatar.Fallback>
-              </Avatar>
-              <div className="flex flex-col">
-                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
-                  Entrenador Principal
-                </span>
-                <span className="text-xs font-semibold text-foreground">
-                  {primaryStaff.name} {primaryStaff.lastName}
-                </span>
-              </div>
-            </div>
-          );
-        })()}
-
-        {courseSeason.status === "ACTIVE" &&
-          courseSeason._count.studentMemberships < courseSeason.maxMembers && (
-            <ContentActive />
-          )}
-        {courseSeason.status === "ACTIVE" &&
-          courseSeason._count.studentMemberships >= courseSeason.maxMembers && (
-            <ContentActiveCompleted />
-          )}
-        {courseSeason.status === "DRAFT" && <ContentDraft />}
-        {courseSeason.status === "FINISHED" && <ContentFinished />}
+        
+        <div className="mt-2">
+          <div className="flex items-center justify-between mb-3">
+            <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Turnos Disponibles</h4>
+            <Link href={`${urlBase}/add?cloneFromId=${baseSeason.id}`}>
+              <Button
+                size="sm"
+                variant="secondary"
+                className="font-bold text-xs"
+              >
+                <HugeiconsIcon icon={Add01Icon} size={14} />
+                Agregar Turno
+              </Button>
+            </Link>
+          </div>
+          <div className="flex flex-col">
+            {courseSeasons.map(renderShift)}
+          </div>
+        </div>
       </div>
     </Card>
   );
