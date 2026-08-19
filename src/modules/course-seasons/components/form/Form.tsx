@@ -23,6 +23,7 @@ import {
   BillingFrequency,
   IShiftOption,
 } from "@/modules/course-seasons";
+import { addShiftAction } from "@/modules/course-seasons/actions/add-shift";
 import { STATUS_TEXT_MAP } from "../../constants/course-seasons.constants";
 
 interface Props {
@@ -52,14 +53,17 @@ export const FormCourseSeason = ({
   const formRef = useRef<HTMLFormElement | null>(null);
 
   // form params
+  const [name, setName] = useState<string>(
+    courseSeason?.name || "Regular"
+  );
   const [description, setDescription] = useState<string | null>(
     courseSeason?.description || null,
   );
   const [maxMembers, setMaxMembers] = useState<number | null>(
-    courseSeason?.maxMembers || null,
+    courseSeason?.shifts?.[0]?.maxMembers || null,
   );
   const [minMembers, setMinMembers] = useState<number | null>(
-    courseSeason?.minMembers || null,
+    courseSeason?.shifts?.[0]?.minMembers || null,
   );
   const [minBirthYear, setMinBirthYear] = useState<number | null>(
     courseSeason?.minBirthYear || null,
@@ -77,7 +81,7 @@ export const FormCourseSeason = ({
     courseSeason?.season.id || null,
   );
   const [shiftIds, setShiftIds] = useState<string[]>(
-    courseSeason?.shift?.id && !isClone ? [courseSeason.shift.id] : [],
+    courseSeason?.shifts?.length && !isClone ? courseSeason.shifts.map(s => s.shiftId) : [],
   );
   const [gender, setGender] = useState<Gender | null>(
     courseSeason?.gender || null,
@@ -151,10 +155,10 @@ export const FormCourseSeason = ({
     console.log("submit", course.id);
     // setErrors({});
     const newErrors: Record<string, string> = {};
-    if (maxMembers === null) {
+    if (!isEditMode && maxMembers === null) {
       newErrors.maxMembers = "Debe ingresar el número máximo de miembros";
     }
-    if (minMembers === null) {
+    if (!isEditMode && minMembers === null) {
       newErrors.minMembers = "Debe ingresar el número mínimo de miembros";
     }
     if (categoryId === null) {
@@ -167,7 +171,7 @@ export const FormCourseSeason = ({
     if (seasonId === null) {
       newErrors.seasonId = "Debe ingresar la temporada";
     }
-    if (shiftIds.length === 0) {
+    if (!isEditMode && shiftIds.length === 0) {
       newErrors.shiftIds = "Debe seleccionar al menos un turno";
     }
     if (gender === null) {
@@ -212,9 +216,9 @@ export const FormCourseSeason = ({
     }
     setIsLoading?.(true);
     const baseData = {
+      name,
       description: description!,
-      maxMembers: maxMembers!,
-      minMembers: minMembers!,
+      ...( !isEditMode && { maxMembers: maxMembers!, minMembers: minMembers! } ),
       minBirthYear: minBirthYear,
       maxBirthYear: maxBirthYear,
       validateAge,
@@ -247,18 +251,8 @@ export const FormCourseSeason = ({
     };
 
     if (courseSeason && !isClone) {
-      // Modo edición: solo hay un turno
-      const data = { ...baseData, shiftId: shiftIds[0] };
-      const configData = {
-        registrationFee: Number(registrationFee) || 0,
-        recurringFee: Number(recurringFee) || 0,
-        seasonFee: Number(seasonFee) || 0,
-        billingType,
-        billingFrequency,
-        billingDay,
-        prorateFirstRecurringFee,
-      };
-      const res = await editCourseSeason({ id: courseSeason.id, data });
+      // Modo edición: omitimos los turnos y capacidades
+      const res = await editCourseSeason({ id: courseSeason.id, data: baseData });
       setIsLoading?.(false);
       
       if (res.error) {
@@ -279,39 +273,59 @@ export const FormCourseSeason = ({
       router.push(urlRedirect);
       
     } else {
-      // Modo creación: puede haber múltiples turnos
-      const results = await Promise.allSettled(
-        shiftIds.map(shiftId => addCourseSeason({ ...baseData, shiftId }))
-      );
+      // Modo creación: la Oferta se crea con el primer turno, los demás se agregan como turnos adicionales
+      const firstShiftId = shiftIds[0];
+      const res = await addCourseSeason({ ...baseData, shiftId: firstShiftId } as any);
+      
+      if (res.error) {
+        let errorDescription = res.message;
+        if (res.errors) {
+          errorDescription = Object.entries(res.errors)
+            .map(([field, messages]) => {
+              const msgList = Array.isArray(messages) ? messages.join(", ") : messages;
+              return `${field}: ${msgList}`;
+            }).join("\n");
+        }
+        toast.danger("Error", { description: errorDescription });
+        if (res.errors) setErrors(res.errors);
+        setIsLoading?.(false);
+        return;
+      }
+
+      const newSeasonId = res.data.id;
+      const additionalShifts = shiftIds.slice(1);
+      
+      let successes = 1; // El primer turno
+      let failures = 0;
+      let lastErrorMessage = "";
+
+      if (additionalShifts.length > 0) {
+        const results = await Promise.allSettled(
+          additionalShifts.map(shiftId => addShiftAction(newSeasonId, { shiftId, maxMembers: baseData.maxMembers as number, minMembers: baseData.minMembers as number }))
+        );
+        
+        results.forEach((r) => {
+          if (r.status === 'fulfilled' && !r.value.error) {
+            successes++;
+          } else {
+            failures++;
+            if (r.status === 'fulfilled' && r.value.message) {
+              lastErrorMessage = r.value.message;
+            }
+          }
+        });
+      }
       
       setIsLoading?.(false);
       
-      let successes = 0;
-      let failures = 0;
-      let lastErrorMessage = "";
-      const successfulShiftIds: string[] = [];
-      
-      results.forEach((r, idx) => {
-        if (r.status === 'fulfilled' && !r.value.error) {
-          successes++;
-          successfulShiftIds.push(shiftIds[idx]);
-        } else {
-          failures++;
-          if (r.status === 'fulfilled' && r.value.message) {
-            lastErrorMessage = r.value.message;
-          }
-        }
-      });
-      
       if (failures > 0) {
         toast.danger("Error parcial", { 
-          description: `Se crearon ${successes} turnos. ${failures} fallaron. ${lastErrorMessage}` 
+          description: `La Oferta se creó, pero ${failures} turnos adicionales fallaron. ${lastErrorMessage}` 
         });
-        // Remove successful ones so user can retry failures
-        setShiftIds(prev => prev.filter(id => !successfulShiftIds.includes(id)));
+        router.push(urlRedirect);
       } else {
-        toast.success("¡Temporada creada!", { 
-          description: `Se crearon ${successes} turnos exitosamente.` 
+        toast.success("¡Oferta Comercial Creada!", { 
+          description: `Se creó exitosamente la oferta con ${successes} turno(s).` 
         });
         router.push(urlRedirect);
       }
@@ -325,6 +339,15 @@ export const FormCourseSeason = ({
         onSubmit={handleSubmit}
         className="grid grid-cols-1 lg:grid-cols-12 gap-6"
       >
+        <div className="lg:col-span-12 bg-surface-container rounded-2xl p-6 border border-border/50">
+          <label className="text-sm font-bold mb-2 block">Nombre de la Oferta Comercial</label>
+          <input
+            className="w-full bg-surface border border-border/50 rounded-lg p-3 text-sm"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Ej. Regular, Premium, Intensivo..."
+          />
+        </div>
         {(isStructuralDisabled || isFinancialDisabled) && (
           <div className="lg:col-span-12 mb-2">
             <Alert status="warning">
@@ -374,6 +397,7 @@ export const FormCourseSeason = ({
             errors={errors}
             handleRemoveError={handleRemoveError}
             isStructuralDisabled={isStructuralDisabled}
+            isEditMode={isEditMode}
           />
           <DelayPoliciesCard
             billingFrequency={billingFrequency}
@@ -416,14 +440,16 @@ export const FormCourseSeason = ({
             isFinancialDisabled={isFinancialDisabled}
           />
           {/* <!-- Capacity Card --> */}
-          <CapacityCard
-            maxMembers={maxMembers}
-            setMaxMembers={setMaxMembers}
-            minMembers={minMembers}
-            setMinMembers={setMinMembers}
-            errors={errors}
-            handleRemoveError={handleRemoveError}
-          />
+          {!isEditMode && (
+            <CapacityCard
+              maxMembers={maxMembers}
+              setMaxMembers={setMaxMembers}
+              minMembers={minMembers}
+              setMinMembers={setMinMembers}
+              errors={errors}
+              handleRemoveError={handleRemoveError}
+            />
+          )}
         </div>
         {/* <!-- Section 3: Políticas de Mora (Full Width Bottom) --> */}
         <div className="lg:col-span-12"></div>

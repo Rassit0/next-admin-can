@@ -6,13 +6,18 @@ import { useRouter } from "next/navigation";
 
 interface Props {
   courseSeasonId: string;
+  shiftId?: string;
   urlBase: string;
 }
 
-export const ButtonMemberships = ({ courseSeasonId, urlBase }: Props) => {
+export const ButtonMemberships = ({ courseSeasonId, shiftId, urlBase }: Props) => {
   const router = useRouter();
   const handleNavigate = () => {
-    router.push(`${urlBase}/${courseSeasonId}/student-memberships`);
+    let url = `${urlBase}/${courseSeasonId}/student-memberships`;
+    if (shiftId) {
+      url += `?shiftId=${shiftId}`;
+    }
+    router.push(url);
   };
   return (
     <Button

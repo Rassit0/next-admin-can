@@ -11,6 +11,7 @@ interface SearchParams {
   per_page?: string;
   page?: string;
   courseSeasonId?: string;
+  shiftId?: string;
   status?: string;
   studentId?: string;
   paymentPlanId?: string;
@@ -31,6 +32,7 @@ export const getStudentMemberships = async ({
   per_page = "10",
   page = "1",
   courseSeasonId,
+  shiftId,
   status,
   studentId,
   paymentPlanId,
@@ -44,6 +46,7 @@ export const getStudentMemberships = async ({
     if (studentId) params.set("studentId", studentId);
     if (paymentPlanId) params.set("paymentPlanId", paymentPlanId);
     if (courseSeasonId) params.set("courseSeasonId", courseSeasonId);
+    if (shiftId) params.set("courseSeasonShiftId", shiftId);
 
     const res = await api.get<IStudentMembershipResponse>(
       `student-memberships?${params.toString()}`,

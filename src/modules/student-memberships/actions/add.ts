@@ -8,6 +8,7 @@ import { IStudentMembership } from "@/modules/student-memberships";
 export interface AddStudentMembershipData {
   studentId: string;
   courseSeasonId: string;
+  courseSeasonShiftId: string;
   paymentPlanId: string;
   startedAt: string;
   isMigrated: boolean;

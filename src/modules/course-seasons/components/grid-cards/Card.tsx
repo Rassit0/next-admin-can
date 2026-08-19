@@ -57,16 +57,21 @@ export const CardCourseOffering = ({ courseSeason }: Props) => {
         </div>
       </Card.Header>
       <div className="pb-3">
-        <ProgressMembers
-          maxMembers={courseSeason.maxMembers}
-          minMembers={courseSeason.minMembers}
-          value={0}
-          label="Cupos Ocupados"
-        />
+        <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-2">Turnos</h4>
+        <div className="flex flex-col gap-2">
+          {courseSeason.shifts?.map((shiftItem) => (
+            <div key={shiftItem.id} className="flex justify-between items-center bg-surface-container-low p-2 rounded border border-border/50">
+              <span className="text-xs font-medium">{shiftItem.shift.name}</span>
+              <span className="text-[10px] bg-surface px-2 py-0.5 rounded-full border border-border/50">
+                {shiftItem._count?.studentMemberships || 0} / {shiftItem.maxMembers}
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
 
       {(() => {
-        const primaryStaff = courseSeason.courseSeasonStaffs?.find((s) => s.isPrimary)?.staff.person || courseSeason.courseSeasonStaffs?.[0]?.staff.person;
+        const primaryStaff = courseSeason.shifts?.flatMap(s => s.courseSeasonStaffs || []).find((s) => s.isPrimary)?.staff.person;
         if (!primaryStaff) return null;
         return (
           <div className="flex items-center gap-3 mb-4 bg-surface-container-low p-2 rounded-lg border border-border/50">

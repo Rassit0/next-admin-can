@@ -39,9 +39,7 @@ export const TransferShiftDrawer = ({
   const [isLoadingSeasons, setIsLoadingSeasons] = useState(false);
 
   // Form state
-  const [targetCourseSeasonId, setTargetCourseSeasonId] = useState<
-    string | null
-  >(null);
+  const [targetCourseSeasonShiftId, setTargetCourseSeasonShiftId] = useState<string | null>(null);
   const [effectiveDate, setEffectiveDate] = useState<any>(
     today(getLocalTimeZone()),
   );
@@ -49,7 +47,7 @@ export const TransferShiftDrawer = ({
   useEffect(() => {
     if (isOpen) {
       loadCourseSeasons();
-      setTargetCourseSeasonId(null);
+      setTargetCourseSeasonShiftId(null);
       setEffectiveDate(today(getLocalTimeZone()));
     }
   }, [isOpen]);
@@ -66,12 +64,11 @@ export const TransferShiftDrawer = ({
       if (!res.error) {
         // Filtrar los que pertenecen al mismo nombre de curso (asumiendo courseSeason.course.name)
         // El backend realiza validación estricta, pero esto ayuda a UX
+        // Filtrar Ofertas del mismo curso
         const sameCourseSeasons = res.data.data.filter(
           (cs) =>
             cs.course.name === membership.courseSeason.course.name &&
-            cs.id !== membership.courseSeasonId &&
-            cs.status === "ACTIVE" &&
-            cs.isRegistrationOpen === true,
+            cs.status === "ACTIVE"
         );
         setCourseSeasons(sameCourseSeasons);
       }
@@ -83,7 +80,7 @@ export const TransferShiftDrawer = ({
   };
 
   const handleSubmit = async () => {
-    if (!targetCourseSeasonId) {
+    if (!targetCourseSeasonShiftId) {
       toast.error("Debe seleccionar un turno de destino");
       return;
     }
@@ -93,12 +90,19 @@ export const TransferShiftDrawer = ({
       return;
     }
 
+    const selectedShiftObj = courseSeasons
+      .flatMap(cs => cs.shifts?.map(s => ({ ...s, courseSeason: cs })) || [])
+      .find(s => s.id === targetCourseSeasonShiftId);
+
+    if (!selectedShiftObj) return;
+
     setIsSubmitting(true);
     try {
       const isoDate = new Date(effectiveDate.toString()).toISOString();
 
       const res = await transferShift(membership.id, {
-        targetCourseSeasonId,
+        targetCourseSeasonId: selectedShiftObj.courseSeason.id,
+        targetCourseSeasonShiftId,
         effectiveDate: isoDate,
       });
 
@@ -141,14 +145,26 @@ export const TransferShiftDrawer = ({
                     </strong>{" "}
                     hacia un nuevo turno.
                   </p>
-                  <ul className="list-disc pl-5">
-                    <li>
-                      Los ciclos futuros serán trasladados al nuevo turno.
-                    </li>
-                    <li>
-                      Los cargos y pagos existentes{" "}
-                      <strong>no serán modificados</strong>.
-                    </li>
+                  
+                  {targetCourseSeasonShiftId && (
+                    <div className="mt-4 mb-2">
+                      {courseSeasons
+                        .flatMap(cs => cs.shifts?.map(s => ({ ...s, courseSeason: cs })) || [])
+                        .find(s => s.id === targetCourseSeasonShiftId)?.courseSeason.id === membership.courseSeasonId ? (
+                        <div className="bg-success-100 text-success-800 p-2 rounded text-sm border border-success-200 font-medium">
+                          🔄 Cambio de turno logístico (no afecta precios ni configuración comercial).
+                        </div>
+                      ) : (
+                        <div className="bg-warning-100 text-warning-800 p-2 rounded text-sm border border-warning-200 font-medium">
+                          ⚠️ Cambio de Oferta Comercial: Esto aplicará las reglas de facturación de la nueva oferta para los cobros futuros (ej. nuevos montos). Los cargos históricos permanecerán intactos.
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  <ul className="list-disc pl-5 mt-2">
+                    <li>Los ciclos futuros serán trasladados al nuevo turno.</li>
+                    <li>Los cargos y pagos existentes <strong>no serán modificados</strong>.</li>
                     <li>La capacidad será evaluada por el sistema.</li>
                   </ul>
                 </Alert.Description>
@@ -158,19 +174,18 @@ export const TransferShiftDrawer = ({
             <div className="flex flex-col gap-2 p-3 bg-muted/30 rounded-lg">
               <p className="text-sm font-semibold text-muted">Turno Actual</p>
               <p className="text-md font-medium">
-                {membership.courseSeason.shift.name} -{" "}
-                {membership.courseSeason.season.name}
+                {membership.courseSeason.name} - {membership.courseSeasonShift?.shift?.name}
               </p>
               <p className="text-sm text-muted">
-                {membership.courseSeason.course.name}
+                {membership.courseSeason.course.name} ({membership.courseSeason.season.name})
               </p>
             </div>
 
             <div className="flex flex-col gap-2">
               <Select
-                value={targetCourseSeasonId}
+                value={targetCourseSeasonShiftId}
                 onChange={(key) =>
-                  setTargetCourseSeasonId(key ? String(key) : null)
+                  setTargetCourseSeasonShiftId(key ? String(key) : null)
                 }
                 isDisabled={isLoadingSeasons}
                 placeholder={
@@ -186,16 +201,21 @@ export const TransferShiftDrawer = ({
                 </Select.Trigger>
                 <Select.Popover>
                   <ListBox>
-                    {courseSeasons.map((cs) => (
-                      <ListBox.Item
-                        key={cs.id}
-                        id={cs.id}
-                        textValue={`${cs.shift.name} - ${cs.season.name}`}
-                      >
-                        {cs.shift.name} - {cs.season.name} ({cs.category?.name})
-                        <ListBox.ItemIndicator />
-                      </ListBox.Item>
-                    ))}
+                    {courseSeasons.flatMap((cs) => 
+                      (cs.shifts || []).filter(s => s.id !== membership.courseSeasonShiftId).map(shiftItem => (
+                        <ListBox.Item
+                          key={shiftItem.id}
+                          id={shiftItem.id}
+                          textValue={`${cs.name} - ${shiftItem.shift.name}`}
+                        >
+                          <div className="flex flex-col">
+                            <span className="font-bold">{cs.name} - {shiftItem.shift.name}</span>
+                            <span className="text-xs text-muted">{cs.season.name}</span>
+                          </div>
+                          <ListBox.ItemIndicator />
+                        </ListBox.Item>
+                      ))
+                    )}
                   </ListBox>
                 </Select.Popover>
               </Select>

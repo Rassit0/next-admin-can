@@ -1,6 +1,7 @@
 import { FieldError, Label, ListBox, Select } from "@heroui/react";
 import { Dispatch, SetStateAction } from "react";
 import { IShiftOption } from "@/modules/course-seasons";
+import { AddModal } from "@/modules/shifts/components/modal/AddModal";
 
 interface Props {
   isRequired?: boolean;
@@ -38,7 +39,10 @@ export const SelectShift = ({
         handleRemoveError("shiftIds");
       }}
     >
-      <Label>{label}</Label>
+      <div className="flex w-full items-center justify-between">
+        <Label>{label}</Label>
+        <AddModal isIcon label="Nuevo turno" />
+      </div>
       <Select.Trigger>
         <Select.Value />
         <Select.Indicator />

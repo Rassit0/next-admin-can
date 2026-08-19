@@ -14,8 +14,10 @@ export * from "./actions/extend";
 export * from "./actions/finalize";
 export * from "./actions/toggle-registration";
 export * from "./actions/get-shifts-options";
+export * from "./actions/get-course-season-shifts-options";
 
 // Components
+export * from "./components/filters/ShiftSelectFilter";
 export * from "./components/grid-cards/GridCards";
 export * from "./components/metrics-panel/MetricsPanel";
 export * from "./components/form/Form";
@@ -27,6 +29,8 @@ export * from "./components/table/ButtonAdd";
 export * from "./components/form/ButtonsSubmit";
 export * from "./components/modal/CancelModal";
 export * from "./components/modal/DeleteModal";
+export * from "./components/modal/ManageShiftsModal";
+export * from "./components/modal/ViewShiftsModal";
 export * from "./components/modal/ExtendModal";
 export * from "./components/modal/FinalizeModal";
 export * from "./components/list-cards/ListCards";

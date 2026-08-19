@@ -64,6 +64,9 @@ export const EnrollMembershipDrawer = ({
 }: Props) => {
   const [loading, setLoading] = useState(false);
   const [studentKey, setStudentKey] = useState<string | null>(null);
+  const [shiftKey, setShiftKey] = useState<string | null>(
+    courseSeason.shifts?.[0]?.id ?? null,
+  );
   const [planKey, setPlanKey] = useState<string | null>(
     paymentPlans.find((p) => p.isDefault)?.id ?? null,
   );
@@ -110,6 +113,7 @@ export const EnrollMembershipDrawer = ({
       .substring(0, 10);
 
     if (!studentKey) err.studentKey = "Seleccione un atleta.";
+    if (!shiftKey) err.shiftKey = "Seleccione un turno.";
     if (!planKey) err.planKey = "Seleccione un plan de pago.";
     if (!startedAt) err.startedAt = "Debe ingresar una fecha de inicio.";
     else if (startedAt < sStartStr || startedAt > sEndStr) {
@@ -271,6 +275,7 @@ export const EnrollMembershipDrawer = ({
     const res = await addStudentMembership({
       studentId: studentKey!,
       courseSeasonId: courseSeason.id,
+      courseSeasonShiftId: shiftKey!,
       paymentPlanId: planKey!,
       startedAt: toLocalIso(startedAt)!,
       isMigrated,
@@ -432,6 +437,42 @@ export const EnrollMembershipDrawer = ({
                   label="Atleta"
                   errors={errors}
                 />
+
+                {/* Shift picker */}
+                <ComboBox
+                  className="w-full"
+                  variant="secondary"
+                  menuTrigger="focus"
+                  selectedKey={shiftKey}
+                  onSelectionChange={(key) =>
+                    setShiftKey(key ? String(key) : null)
+                  }
+                  isInvalid={!!errors.shiftKey || undefined}
+                >
+                  <Label className="text-sm font-semibold flex items-center">
+                    Turno / Horario
+                  </Label>
+                  <ComboBox.InputGroup>
+                    <Input variant="secondary" placeholder="Selecciona el turno" />
+                    <ComboBox.Trigger />
+                  </ComboBox.InputGroup>
+                  <ComboBox.Popover>
+                    <ListBox>
+                      {(courseSeason.shifts || []).map((shiftItem) => (
+                        <ListBox.Item
+                          key={shiftItem.id}
+                          id={shiftItem.id}
+                          textValue={shiftItem.shift.name}
+                        >
+                          {shiftItem.shift.name} ({shiftItem.shift.startTime} - {shiftItem.shift.endTime})
+                        </ListBox.Item>
+                      ))}
+                    </ListBox>
+                  </ComboBox.Popover>
+                  {errors.shiftKey && (
+                    <FieldError>{errors.shiftKey}</FieldError>
+                  )}
+                </ComboBox>
 
                 {/* Payment plan picker */}
                 <ComboBox

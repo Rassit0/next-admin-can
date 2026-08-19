@@ -14,7 +14,7 @@ export const generateAdvanceCharges = async (
 ): Promise<ServiceResponse<any>> => {
   return handleServerAction(async () => {
     const response = await api.post<any>(
-      `student-charges/advance/${membershipId}/generate`,
+      `student-charges/advance/${membershipId}/purchase`,
       data,
     );
 

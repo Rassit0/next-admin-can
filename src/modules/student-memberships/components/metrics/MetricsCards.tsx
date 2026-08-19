@@ -60,20 +60,16 @@ export const MetricsCards = ({
   pendingMembers = 0,
   totalBilled = 0,
 }: Props) => {
-  const occupancy =
-    courseSeason.maxMembers > 0
-      ? Math.min(100, Math.round((totalItems / courseSeason.maxMembers) * 100))
-      : 0;
+  const occupancy = 0; // Se gestiona por turno
 
   const cards = [
     {
       label: "Atletas inscritos",
       value: String(totalItems),
-      hint: `Total de atletas registrados en esta temporada. Capacidad configurada: entre ${courseSeason.minMembers} y ${courseSeason.maxMembers} cupos.`,
+      hint: `Total de atletas registrados en esta oferta. La capacidad se gestiona en los turnos individuales.`,
       icon: UserGroupIcon,
       tone: "text-accent",
       bg: "bg-accent-soft",
-      progress: occupancy,
     },
     {
       label: "Membresías activas",
@@ -168,18 +164,6 @@ export const MetricsCards = ({
                 <HugeiconsIcon icon={card.icon} size={22} />
               </span>
             </div>
-            {typeof card.progress === "number" && (
-              <div className="mt-4">
-                <ProgressBar value={card.progress} className="w-full">
-                  <ProgressBar.Track className="bg-surface-secondary">
-                    <ProgressBar.Fill />
-                  </ProgressBar.Track>
-                </ProgressBar>
-                <p className="mt-2 text-xs font-medium text-muted">
-                  {card.progress}% ocupación
-                </p>
-              </div>
-            )}
           </Card>
         </motion.div>
       ))}

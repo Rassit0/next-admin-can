@@ -6,7 +6,8 @@ import { updateTag } from "next/cache";
 
 export interface TransferShiftInput {
   targetCourseSeasonId: string;
-  effectiveDate: string;
+  targetCourseSeasonShiftId: string;
+  effectiveDate?: string;
 }
 
 export const transferShift = async (

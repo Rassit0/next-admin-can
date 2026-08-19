@@ -7,7 +7,7 @@ import { handleServerAction } from "@/utils";
 
 interface Props {
   id: string;
-  data: IPostCourseSeason;
+  data: Partial<IPostCourseSeason>;
 }
 
 export const editCourseSeason = async ({

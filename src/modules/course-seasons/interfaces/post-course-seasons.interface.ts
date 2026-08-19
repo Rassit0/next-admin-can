@@ -6,6 +6,7 @@ import {
 } from "./course-season.interface";
 
 export interface IPostCourseSeason {
+  name?: string;
   description: string | null;
   maxMembers: number;
   minMembers: number;

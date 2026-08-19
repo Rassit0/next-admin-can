@@ -35,17 +35,16 @@ export interface ICourseSeason {
   course: Category;
   category: Category;
   season: Season;
-  shift: Shift;
+  name: string;
+  imageUrl?: string | null;
   description: string | null;
-  maxMembers: number;
-  minMembers: number;
   minBirthYear?: number | null;
   maxBirthYear?: number | null;
   validateAge: boolean;
+  shifts: ICourseSeasonShift[];
   status: StatusCourseSeason;
   isRegistrationOpen: boolean;
   billingConfig?: ICourseSeasonBillingConfig;
-  courseSeasonStaffs?: any[];
   _count: {
     studentMemberships: number;
   };
@@ -71,6 +70,22 @@ export interface Season {
 export interface Shift {
   id: string;
   name: string;
+  startTime?: string;
+  endTime?: string;
+}
+
+export interface ICourseSeasonShift {
+  id: string;
+  courseSeasonId: string;
+  shiftId: string;
+  shift: Shift;
+  maxMembers: number;
+  minMembers: number;
+  isActive: boolean;
+  _count?: {
+    studentMemberships: number;
+  };
+  courseSeasonStaffs?: any[];
 }
 
 export interface Meta {

@@ -33,7 +33,10 @@ export interface IStudentMembership {
   id: string;
   studentId: string;
   courseSeasonId: string;
+  courseSeasonShiftId: string;
   courseSeason: {
+    id: string;
+    name: string;
     course: {
       name: string;
     };
@@ -43,6 +46,9 @@ export interface IStudentMembership {
     season: {
       name: string;
     };
+  };
+  courseSeasonShift?: {
+    id: string;
     shift: {
       name: string;
     };
