@@ -152,7 +152,7 @@ export const TableMemberships = ({
                           {courseSeason?.course?.name ?? "—"}
                         </span>
                         <span className="text-xs text-muted truncate">
-                          {courseSeason?.category?.name ?? "—"} •{" "}
+                          {Array.from(new Set(courseSeason?.shifts?.map((s) => s.category?.name).filter(Boolean))).join(' · ') || "—"} •{" "}
                           {courseSeason?.season?.name ?? "—"}
                         </span>
                       </div>

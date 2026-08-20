@@ -31,16 +31,11 @@ export type BillingFrequency = "MONTHLY" | "WEEKLY" | "BIWEEKLY" | "SINGLE";
 
 export interface ICourseSeason {
   id: string;
-  gender: Gender;
   course: Category;
-  category: Category;
   season: Season;
   name: string;
   imageUrl?: string | null;
   description: string | null;
-  minBirthYear?: number | null;
-  maxBirthYear?: number | null;
-  validateAge: boolean;
   shifts: ICourseSeasonShift[];
   status: StatusCourseSeason;
   isRegistrationOpen: boolean;
@@ -78,7 +73,13 @@ export interface ICourseSeasonShift {
   id: string;
   courseSeasonId: string;
   shiftId: string;
+  categoryId: string;
+  gender: Gender;
+  minBirthYear?: number | null;
+  maxBirthYear?: number | null;
+  validateAge: boolean;
   shift: Shift;
+  category?: Category;
   maxMembers: number;
   minMembers: number;
   isActive: boolean;

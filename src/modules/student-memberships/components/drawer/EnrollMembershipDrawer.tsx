@@ -93,7 +93,7 @@ export const EnrollMembershipDrawer = ({
   );
 
   const selectedPlan = paymentPlans.find((p) => p.id === planKey) ?? null;
-
+  const selectedShift = courseSeason.shifts?.find((s) => s.id === shiftKey) ?? null;
   const [breakdown, setBreakdown] = useState<IPreviewChargesResponse | null>(
     null,
   );
@@ -400,20 +400,21 @@ export const EnrollMembershipDrawer = ({
                   </Alert.Content>
                 </Alert>
 
-                <Alert status="accent" className="mb-2">
-                  <Alert.Indicator />
-                  <Alert.Content>
-                    <Alert.Title>
-                      Categoría: {courseSeason.category.name} (
-                      {courseSeason.category.minAge} a{" "}
-                      {courseSeason.category.maxAge || "Sin límite"} años)
-                    </Alert.Title>
-                    <Alert.Description>
-                      <p className="mb-1">
-                        {courseSeason.minBirthYear || courseSeason.maxBirthYear
-                          ? `Años de nacimiento permitidos: ${courseSeason.minBirthYear || "Cualquiera"} al ${courseSeason.maxBirthYear || "Cualquiera"}`
-                          : `El atleta debe tener ${courseSeason.category.maxAge ? `entre ${courseSeason.category.minAge} y ${courseSeason.category.maxAge} años` : `${courseSeason.category.minAge} años en adelante`} en el año actual.`}
-                      </p>
+                {selectedShift && (
+                  <Alert status="accent" className="mb-2">
+                    <Alert.Indicator />
+                    <Alert.Content>
+                      <Alert.Title>
+                        Categoría: {selectedShift.category?.name} (
+                        {selectedShift.category?.minAge} a{" "}
+                        {selectedShift.category?.maxAge || "Sin límite"} años)
+                      </Alert.Title>
+                      <Alert.Description>
+                        <p className="mb-1">
+                          {selectedShift.minBirthYear || selectedShift.maxBirthYear
+                            ? `Años de nacimiento permitidos: ${selectedShift.minBirthYear || "Cualquiera"} al ${selectedShift.maxBirthYear || "Cualquiera"}`
+                            : `El atleta debe tener ${selectedShift.category?.maxAge ? `entre ${selectedShift.category?.minAge} y ${selectedShift.category?.maxAge} años` : `${selectedShift.category?.minAge} años en adelante`} en el año actual.`}
+                        </p>
                       <p>
                         <strong>Duración de la temporada:</strong>{" "}
                         {new Date(
@@ -424,9 +425,10 @@ export const EnrollMembershipDrawer = ({
                           courseSeason.season.endDate,
                         ).toLocaleDateString()}
                       </p>
-                    </Alert.Description>
-                  </Alert.Content>
-                </Alert>
+                      </Alert.Description>
+                    </Alert.Content>
+                  </Alert>
+                )}
 
                 {/* Student picker */}
                 <SelectOrCreateStudent

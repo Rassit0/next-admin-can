@@ -11,6 +11,7 @@ import React from "react";
 import { ICourseSeason, ICourseSeasonShift, AddMembershipDrawer } from "@/modules/course-seasons";
 import { ButtonMemberships } from "../list-cards/ButtonMemberships";
 import { ButtonEdit } from "../list-cards/ButtonEdit";
+import { EditShiftModal } from "./EditShiftModal";
 
 interface Props {
   courseSeason: ICourseSeason;
@@ -30,6 +31,7 @@ export const ViewShiftsModal = ({ courseSeason, urlBase }: Props) => {
               {shiftItem._count?.studentMemberships || 0} / {shiftItem.maxMembers}
             </div>
           </div>
+          <EditShiftModal courseSeasonId={courseSeason.id} urlBase={urlBase} shift={shiftItem} />
         </div>
         
         {courseSeason.status === "ACTIVE" && (

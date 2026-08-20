@@ -4,6 +4,7 @@ import { BasicInfoCard } from "./BasicInfoCard";
 import { CapacityCard } from "./CapacityCard";
 import { DelayPoliciesCard } from "./DelayPoliciesCard";
 import { FinancialStructureCard } from "./FinancialStructureCard";
+import { ShiftConfigBlock, IShiftConfigForm } from "./ShiftConfigBlock";
 import { ICourse } from "@/modules/courses";
 import { useCallback, useRef, useState } from "react";
 
@@ -59,32 +60,66 @@ export const FormCourseSeason = ({
   const [description, setDescription] = useState<string | null>(
     courseSeason?.description || null,
   );
-  const [maxMembers, setMaxMembers] = useState<number | null>(
-    courseSeason?.shifts?.[0]?.maxMembers || null,
-  );
-  const [minMembers, setMinMembers] = useState<number | null>(
-    courseSeason?.shifts?.[0]?.minMembers || null,
-  );
-  const [minBirthYear, setMinBirthYear] = useState<number | null>(
-    courseSeason?.minBirthYear || null,
-  );
-  const [maxBirthYear, setMaxBirthYear] = useState<number | null>(
-    courseSeason?.maxBirthYear || null,
-  );
-  const [validateAge, setValidateAge] = useState<boolean>(
-    courseSeason?.validateAge ?? true,
-  );
-  const [categoryId, setCategoryId] = useState<string | null>(
-    courseSeason?.category.id || null,
-  );
+  // === SHIFTS CONFIGURATION (Only for Creation Mode) ===
+  const generateId = () => Math.random().toString(36).substring(2, 9);
+  
+  const [shifts, setShifts] = useState<IShiftConfigForm[]>([
+    {
+      key: generateId(),
+      shiftId: "",
+      categoryId: "",
+      gender: null,
+      validateAge: true,
+      minBirthYear: null,
+      maxBirthYear: null,
+      minMembers: 5,
+      maxMembers: 20
+    }
+  ]);
+
+  const handleShiftChange = useCallback((index: number, field: keyof IShiftConfigForm, value: any) => {
+    setShifts((prev) => {
+      const newShifts = [...prev];
+      newShifts[index] = { ...newShifts[index], [field]: value };
+      return newShifts;
+    });
+    handleRemoveError(`shift_${index}_${field}`);
+  }, []);
+
+  const handleAddShift = () => {
+    setShifts((prev) => [
+      ...prev,
+      {
+        key: generateId(),
+        shiftId: "",
+        categoryId: "",
+        gender: null,
+        validateAge: true,
+        minBirthYear: null,
+        maxBirthYear: null,
+        minMembers: 5,
+        maxMembers: 20
+      }
+    ]);
+  };
+
+  const handleRemoveShift = (index: number) => {
+    setShifts((prev) => prev.filter((_, i) => i !== index));
+    // Clean up errors related to this shift
+    setErrors((prevErrors) => {
+      const newErrors = { ...prevErrors };
+      Object.keys(newErrors).forEach((key) => {
+        if (key.startsWith(`shift_${index}_`)) {
+          delete newErrors[key];
+        }
+      });
+      return newErrors;
+    });
+  };
+  // ====================================================
+
   const [seasonId, setSeasonId] = useState<string | null>(
     courseSeason?.season.id || null,
-  );
-  const [shiftIds, setShiftIds] = useState<string[]>(
-    courseSeason?.shifts?.length && !isClone ? courseSeason.shifts.map(s => s.shiftId) : [],
-  );
-  const [gender, setGender] = useState<Gender | null>(
-    courseSeason?.gender || null,
   );
 
   const [registrationFee, setRegistrationFee] = useState<string | null>(
@@ -155,28 +190,34 @@ export const FormCourseSeason = ({
     console.log("submit", course.id);
     // setErrors({});
     const newErrors: Record<string, string> = {};
-    if (!isEditMode && maxMembers === null) {
-      newErrors.maxMembers = "Debe ingresar el número máximo de miembros";
-    }
-    if (!isEditMode && minMembers === null) {
-      newErrors.minMembers = "Debe ingresar el número mínimo de miembros";
-    }
-    if (categoryId === null) {
-      newErrors.categoryId = "Debe ingresar la categoría";
-    }
-    if (minBirthYear && maxBirthYear && minBirthYear > maxBirthYear) {
-      newErrors.minBirthYear = "El año mínimo no puede ser mayor al máximo";
-      newErrors.maxBirthYear = "El año máximo no puede ser menor al mínimo";
-    }
     if (seasonId === null) {
       newErrors.seasonId = "Debe ingresar la temporada";
     }
-    if (!isEditMode && shiftIds.length === 0) {
-      newErrors.shiftIds = "Debe seleccionar al menos un turno";
+    
+    if (!isEditMode) {
+      if (shifts.length === 0) {
+        newErrors.shifts = "Debe agregar al menos un turno";
+      } else {
+        shifts.forEach((shift, index) => {
+          if (!shift.shiftId) newErrors[`shift_${index}_shiftId`] = "Debe seleccionar un turno";
+          if (!shift.categoryId) newErrors[`shift_${index}_categoryId`] = "Debe seleccionar una categoría";
+          if (!shift.gender) newErrors[`shift_${index}_gender`] = "Debe seleccionar el género";
+          if (!shift.minMembers) newErrors[`shift_${index}_minMembers`] = "Debe ingresar cupo mínimo";
+          if (!shift.maxMembers) newErrors[`shift_${index}_maxMembers`] = "Debe ingresar cupo máximo";
+          if (shift.validateAge && shift.minBirthYear && shift.maxBirthYear && shift.minBirthYear > shift.maxBirthYear) {
+             newErrors[`shift_${index}_minBirthYear`] = "Año min > max";
+             newErrors[`shift_${index}_maxBirthYear`] = "Año max < min";
+          }
+          
+          // Prevenir turnos duplicados
+          const isDuplicate = shifts.some((s, i) => i !== index && s.shiftId === shift.shiftId && s.shiftId !== "");
+          if (isDuplicate) {
+            newErrors[`shift_${index}_shiftId`] = "Este turno ya fue agregado en otro bloque";
+          }
+        });
+      }
     }
-    if (gender === null) {
-      newErrors.gender = "Debe ingresar el género";
-    }
+
     if (billingType !== "SINGLE_ONLY") {
       if (!recurringFee) {
         newErrors.recurringFee = "Debe ingresar el valor de la cuota mensual";
@@ -218,14 +259,8 @@ export const FormCourseSeason = ({
     const baseData = {
       name,
       description: description!,
-      ...( !isEditMode && { maxMembers: maxMembers!, minMembers: minMembers! } ),
-      minBirthYear: minBirthYear,
-      maxBirthYear: maxBirthYear,
-      validateAge,
       courseId: course.id,
-      categoryId: categoryId!,
       seasonId: seasonId!,
-      gender: gender!,
       billingConfig: {
         billingDay: 1,
         registrationFee:
@@ -274,8 +309,18 @@ export const FormCourseSeason = ({
       
     } else {
       // Modo creación: la Oferta se crea con el primer turno, los demás se agregan como turnos adicionales
-      const firstShiftId = shiftIds[0];
-      const res = await addCourseSeason({ ...baseData, shiftId: firstShiftId } as any);
+      const firstShift = shifts[0];
+      const res = await addCourseSeason({ 
+        ...baseData, 
+        shiftId: firstShift.shiftId,
+        categoryId: firstShift.categoryId,
+        gender: firstShift.gender!,
+        validateAge: firstShift.validateAge,
+        minBirthYear: firstShift.minBirthYear,
+        maxBirthYear: firstShift.maxBirthYear,
+        maxMembers: firstShift.maxMembers,
+        minMembers: firstShift.minMembers
+      } as any);
       
       if (res.error) {
         let errorDescription = res.message;
@@ -293,7 +338,7 @@ export const FormCourseSeason = ({
       }
 
       const newSeasonId = res.data.id;
-      const additionalShifts = shiftIds.slice(1);
+      const additionalShifts = shifts.slice(1);
       
       let successes = 1; // El primer turno
       let failures = 0;
@@ -301,7 +346,16 @@ export const FormCourseSeason = ({
 
       if (additionalShifts.length > 0) {
         const results = await Promise.allSettled(
-          additionalShifts.map(shiftId => addShiftAction(newSeasonId, { shiftId, maxMembers: baseData.maxMembers as number, minMembers: baseData.minMembers as number }))
+          additionalShifts.map(shift => addShiftAction(newSeasonId, { 
+            shiftId: shift.shiftId, 
+            categoryId: shift.categoryId,
+            gender: shift.gender!,
+            validateAge: shift.validateAge,
+            minBirthYear: shift.minBirthYear,
+            maxBirthYear: shift.maxBirthYear,
+            maxMembers: shift.maxMembers, 
+            minMembers: shift.minMembers 
+          }))
         );
         
         results.forEach((r) => {
@@ -309,8 +363,13 @@ export const FormCourseSeason = ({
             successes++;
           } else {
             failures++;
-            if (r.status === 'fulfilled' && r.value.message) {
-              lastErrorMessage = r.value.message;
+            if (r.status === 'fulfilled') {
+              if (r.value.error && r.value.errors) {
+                const details = Object.values(r.value.errors).flat().join(", ");
+                lastErrorMessage = `${r.value.message}: ${details}`;
+              } else if (r.value.message) {
+                lastErrorMessage = r.value.message;
+              }
             }
           }
         });
@@ -375,25 +434,11 @@ export const FormCourseSeason = ({
         <div className="lg:col-span-7 space-y-6">
           {/* <!-- Basic Info Card --> */}
           <BasicInfoCard
-            categoriesOptions={categoriesOptions}
             seasonsOptions={seasonsOptions}
-            shiftsOptions={shiftsOptions}
-            categoryId={categoryId}
-            setCategoryId={setCategoryId}
             seasonId={seasonId}
             setSeasonId={setSeasonId}
-            shiftIds={shiftIds}
-            setShiftIds={setShiftIds}
-            gender={gender}
-            setGender={setGender}
             description={description}
             setDescription={setDescription}
-            minBirthYear={minBirthYear}
-            setMinBirthYear={setMinBirthYear}
-            maxBirthYear={maxBirthYear}
-            setMaxBirthYear={setMaxBirthYear}
-            validateAge={validateAge}
-            setValidateAge={setValidateAge}
             errors={errors}
             handleRemoveError={handleRemoveError}
             isStructuralDisabled={isStructuralDisabled}
@@ -439,19 +484,40 @@ export const FormCourseSeason = ({
             handleRemoveError={handleRemoveError}
             isFinancialDisabled={isFinancialDisabled}
           />
-          {/* <!-- Capacity Card --> */}
-          {!isEditMode && (
-            <CapacityCard
-              maxMembers={maxMembers}
-              setMaxMembers={setMaxMembers}
-              minMembers={minMembers}
-              setMinMembers={setMinMembers}
-              errors={errors}
-              handleRemoveError={handleRemoveError}
-            />
-          )}
         </div>
-        {/* <!-- Section 3: Políticas de Mora (Full Width Bottom) --> */}
+        
+        {/* <!-- Section 3: Configuración de Turnos (Solo en Creación) --> */}
+        {!isEditMode && (
+          <div className="lg:col-span-12 space-y-4">
+            <div className="flex justify-between items-center mb-2">
+              <h3 className="text-lg font-bold">Turnos de la Oferta</h3>
+            </div>
+            
+            {shifts.map((shift, index) => (
+              <ShiftConfigBlock
+                key={shift.key}
+                index={index}
+                shift={shift}
+                categoriesOptions={categoriesOptions}
+                shiftsOptions={shiftsOptions}
+                onChange={handleShiftChange}
+                onRemove={handleRemoveShift}
+                errors={errors}
+                canRemove={shifts.length > 1}
+              />
+            ))}
+            
+            <Button
+              className="w-full bg-surface-container border border-dashed border-border/50 text-muted"
+              variant="secondary"
+              onPress={handleAddShift}
+            >
+              + Añadir Otro Turno
+            </Button>
+          </div>
+        )}
+
+        {/* <!-- Section 4: Políticas de Mora (Full Width Bottom) --> */}
         <div className="lg:col-span-12"></div>
         {/* <!-- Section 4: Estado Final (Floating Sticky-ish bottom or separate block) --> */}
         <div className="lg:col-span-12 flex justify-end items-center gap-8 p-4 lg:p-8 bg-surface-container-low rounded-full">

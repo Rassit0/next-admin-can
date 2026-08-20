@@ -75,12 +75,12 @@ export const TableCourseSeasons = ({ courseSeasons, urlBase }: Props) => {
 
             <Table.Column allowsSorting id="categoryName">
               <SortableColumnHeader id="categoryName">
-                CATEGORÍA
+                CATEGORÍAS
               </SortableColumnHeader>
             </Table.Column>
 
-            <Table.Column allowsSorting id="gender">
-              GÉNERO
+            <Table.Column allowsSorting id="shifts">
+              TURNOS
             </Table.Column>
 
             <Table.Column allowsSorting id="createdAt">
@@ -132,10 +132,12 @@ export const TableCourseSeasons = ({ courseSeasons, urlBase }: Props) => {
                     day: "numeric",
                   })}
                 </Table.Cell>
-                <Table.Cell>{courseSeason.category.name}</Table.Cell>
                 <Table.Cell>
-                  <Chip size="sm" className={genderClassMap[courseSeason.gender]}>
-                    {genderMap[courseSeason.gender]}
+                  {Array.from(new Set(courseSeason.shifts?.map((s) => s.category?.name).filter(Boolean))).join(' · ') || "-"}
+                </Table.Cell>
+                <Table.Cell>
+                  <Chip size="sm" color="default" variant="secondary">
+                    {courseSeason.shifts?.length || 0} turnos
                   </Chip>
                 </Table.Cell>
                 <Table.Cell>

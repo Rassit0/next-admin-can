@@ -7,34 +7,31 @@ import {
   useOverlayState,
   ListBox,
   Label,
+  Switch,
 } from "@heroui/react";
-import { Add01Icon, Time02Icon } from "@hugeicons/core-free-icons";
+import { Edit02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import React, { useEffect, useState } from "react";
-import { ICourseSeason, IShiftOption } from "@/modules/course-seasons";
-import { getShiftsOptions } from "@/modules/course-seasons/actions/get-shifts-options";
-import { addShiftAction } from "@/modules/course-seasons/actions/add-shift";
+import { ICourseSeason, ICourseSeasonShift } from "@/modules/course-seasons";
+import { editShiftAction } from "@/modules/course-seasons/actions/edit-shift";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 import { getCategoriesByDisciplineOptions } from "@/modules/course-seasons/actions/get-categories-options";
 import { ICategoryOption, Gender } from "@/modules/course-seasons";
 import { SelectCategory } from "../form/SelectCategory";
 
 interface Props {
-  courseSeason: ICourseSeason;
+  courseSeasonId: string;
   urlBase: string;
+  shift: ICourseSeasonShift;
 }
 
-export const ManageShiftsModal = ({ courseSeason, urlBase }: Props) => {
+export const EditShiftModal = ({ courseSeasonId, urlBase, shift }: Props) => {
   const state = useOverlayState();
   const [loading, setLoading] = useState(false);
-  const [shiftsOptions, setShiftsOptions] = useState<IShiftOption[]>([]);
-  const [selectedShiftId, setSelectedShiftId] = useState<string>("");
 
   const [maxMembers, setMaxMembers] = useState<number>(20);
   const [minMembers, setMinMembers] = useState<number>(5);
 
-  // Independent configuration for this new shift
   const [categoryId, setCategoryId] = useState<string | null>(null);
   const [gender, setGender] = useState<Gender | null>(null);
   const [minBirthYear, setMinBirthYear] = useState<number | null>(null);
@@ -47,12 +44,17 @@ export const ManageShiftsModal = ({ courseSeason, urlBase }: Props) => {
 
   useEffect(() => {
     if (state.isOpen) {
-      getShiftsOptions().then((res) => {
-        if (!res.error && res.data) {
-          setShiftsOptions(res.data.data);
-        }
-      });
-      // urlBase example: /admin/courses/disciplineId/schoolId/courseId/course-seasons...
+      // Pre-fill state when opening
+      setCategoryId(shift.categoryId || null);
+      setGender(shift.gender || null);
+      setMinBirthYear(shift.minBirthYear || null);
+      setMaxBirthYear(shift.maxBirthYear || null);
+      setValidateAge(shift.validateAge ?? true);
+      setMinMembers(shift.minMembers ?? 5);
+      setMaxMembers(shift.maxMembers ?? 20);
+      setErrors({});
+
+      // Fetch categories
       const disciplineId = urlBase.split("/")[3];
       if (disciplineId) {
         getCategoriesByDisciplineOptions(disciplineId).then((res) => {
@@ -62,33 +64,27 @@ export const ManageShiftsModal = ({ courseSeason, urlBase }: Props) => {
         });
       }
     }
-  }, [state.isOpen, urlBase]);
+  }, [state.isOpen, shift, urlBase]);
 
-  // Filtrar los turnos que ya están asignados a esta temporada
-  const assignedShiftIds =
-    courseSeason.shifts?.map((s) => s.shift?.id).filter(Boolean) || [];
-  const availableShifts = shiftsOptions.filter(
-    (opt) => !assignedShiftIds.includes(opt.id),
-  );
-
-  const handleAddShift = async () => {
+  const handleEditShift = async () => {
     const newErrors: Record<string, string> = {};
-    if (!selectedShiftId) newErrors.selectedShiftId = "Seleccione un turno";
     if (!categoryId) newErrors.categoryId = "Seleccione una categoría";
     if (!gender) newErrors.gender = "Seleccione un género";
     if (minBirthYear && maxBirthYear && minBirthYear > maxBirthYear) {
       newErrors.minBirthYear = "Error en rango de años";
     }
+    if (minMembers > maxMembers) {
+      newErrors.minMembers = "Mínimo no puede ser mayor que el máximo";
+    }
 
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) {
-      toast.error("Complete los campos obligatorios");
+      toast.error("Existen errores en el formulario");
       return;
     }
 
     setLoading(true);
-    const res = await addShiftAction(courseSeason.id, {
-      shiftId: selectedShiftId,
+    const res = await editShiftAction(courseSeasonId, shift.id, {
       categoryId: categoryId!,
       gender: gender!,
       validateAge,
@@ -104,34 +100,27 @@ export const ManageShiftsModal = ({ courseSeason, urlBase }: Props) => {
     } else {
       toast.success(res.message);
       state.close();
-      setSelectedShiftId("");
     }
   };
 
   return (
     <Modal>
-      <Button
-        size="sm"
-        variant="secondary"
-        className="font-bold text-xs w-full"
-        onPress={() => state.open()}
+      <button
+        onClick={() => state.open()}
+        className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-surface-container-high transition-colors"
+        title="Editar Configuración"
       >
-        <HugeiconsIcon icon={Add01Icon} size={14} />
-        Agregar Turno
-      </Button>
+        <HugeiconsIcon
+          icon={Edit02Icon}
+          size={18}
+          className="text-muted-foreground"
+        />
+      </button>
 
       <Modal.Backdrop
         isOpen={state.isOpen}
         onOpenChange={(isOpen) => {
           if (!isOpen) {
-            setSelectedShiftId("");
-            setCategoryId(null);
-            setGender(null);
-            setMinBirthYear(null);
-            setMaxBirthYear(null);
-            setValidateAge(true);
-            setMinMembers(5);
-            setMaxMembers(20);
             setErrors({});
           }
           state.setOpen(isOpen);
@@ -142,59 +131,15 @@ export const ManageShiftsModal = ({ courseSeason, urlBase }: Props) => {
             <Modal.CloseTrigger />
             <Modal.Header>
               <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
-                <HugeiconsIcon icon={Time02Icon} />
+                <HugeiconsIcon icon={Edit02Icon} />
               </Modal.Icon>
-              <Modal.Heading>Agregar Turno Adicional</Modal.Heading>
+              <Modal.Heading>Editar Configuración de Turno</Modal.Heading>
               <p className="mt-1.5 text-sm leading-5 text-muted">
-                Agrega una nueva opción logística (horario) para esta oferta.
+                Turno: <span className="font-bold">{shift.shift?.name}</span>
               </p>
             </Modal.Header>
             <Modal.Body className="p-0 md:p-6">
               <div className="flex flex-col gap-4 mt-2 mb-4">
-                <Select
-                  placeholder="Elija un turno disponible..."
-                  variant="secondary"
-                  className="w-full"
-                  value={selectedShiftId || ""}
-                  onChange={(e) => {
-                    setSelectedShiftId(e ? (e as string) : "");
-                  }}
-                  isDisabled={loading || availableShifts.length === 0}
-                >
-                  <Label className="text-sm font-bold mb-1 block">
-                    Seleccionar Turno
-                  </Label>
-                  <Select.Trigger>
-                    <Select.Value />
-                    <Select.Indicator />
-                  </Select.Trigger>
-                  <Select.Popover>
-                    <ListBox>
-                      {availableShifts.map((shift) => (
-                        <ListBox.Item
-                          key={shift.id}
-                          id={shift.id}
-                          textValue={shift.name}
-                        >
-                          <div className="flex flex-col">
-                            <span className="font-semibold">{shift.name}</span>
-                          </div>
-                          <ListBox.ItemIndicator />
-                        </ListBox.Item>
-                      ))}
-                      {availableShifts.length === 0 && (
-                        <ListBox.Item
-                          key="empty"
-                          id="empty"
-                          textValue="No hay turnos disponibles"
-                          isDisabled
-                        >
-                          No hay turnos adicionales disponibles
-                        </ListBox.Item>
-                      )}
-                    </ListBox>
-                  </Select.Popover>
-                </Select>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="col-span-2">
                     <SelectCategory
@@ -250,6 +195,22 @@ export const ManageShiftsModal = ({ courseSeason, urlBase }: Props) => {
                       </Select.Popover>
                     </Select>
                   </div>
+
+                  <div className="col-span-2">
+                    <Switch
+                      isSelected={validateAge}
+                      onChange={setValidateAge}
+                      isDisabled={loading}
+                    >
+                      <Switch.Content>
+                        <Switch.Control>
+                          <Switch.Thumb />
+                        </Switch.Control>
+                        Validar edad al inscribir
+                      </Switch.Content>
+                    </Switch>
+                  </div>
+
                   <div className="col-span-1">
                     <label className="text-xs font-bold mb-1 block">
                       Año Nacimiento Min (Opcional)
@@ -265,6 +226,11 @@ export const ManageShiftsModal = ({ courseSeason, urlBase }: Props) => {
                       }
                       disabled={loading}
                     />
+                    {errors.minBirthYear && (
+                      <span className="text-xs text-danger mt-1">
+                        {errors.minBirthYear}
+                      </span>
+                    )}
                   </div>
                   <div className="col-span-1">
                     <label className="text-xs font-bold mb-1 block">
@@ -305,6 +271,11 @@ export const ManageShiftsModal = ({ courseSeason, urlBase }: Props) => {
                       onChange={(e) => setMinMembers(Number(e.target.value))}
                       disabled={loading}
                     />
+                    {errors.minMembers && (
+                      <span className="text-xs text-danger mt-1">
+                        {errors.minMembers}
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -319,11 +290,10 @@ export const ManageShiftsModal = ({ courseSeason, urlBase }: Props) => {
               </Button>
               <Button
                 variant="primary"
-                onPress={handleAddShift}
+                onPress={handleEditShift}
                 isPending={loading}
-                isDisabled={!selectedShiftId}
               >
-                Agregar Turno
+                Guardar Cambios
               </Button>
             </Modal.Footer>
           </Modal.Dialog>

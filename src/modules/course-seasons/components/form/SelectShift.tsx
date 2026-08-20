@@ -12,6 +12,7 @@ interface Props {
   setShiftIds: Dispatch<SetStateAction<string[]>>;
   errors: Record<string, string>;
   handleRemoveError: (fieldName: string) => void;
+  selectionMode?: "single" | "multiple";
 }
 
 export const SelectShift = ({
@@ -23,41 +24,50 @@ export const SelectShift = ({
   setShiftIds,
   errors,
   handleRemoveError,
+  selectionMode = "multiple",
 }: Props) => {
   return (
-    <Select
-      variant="secondary"
-      isRequired={isRequired}
-      isDisabled={isDisabled}
-      isInvalid={!!errors.shiftIds || undefined}
-      className="w-full"
-      name="shiftIds"
-      selectionMode="multiple"
-      value={shiftIds}
-      onChange={(keys: any) => {
-        setShiftIds(Array.from(keys) as string[]);
-        handleRemoveError("shiftIds");
-      }}
-    >
+    <div className="flex flex-col gap-2 w-full">
       <div className="flex w-full items-center justify-between">
         <Label>{label}</Label>
         <AddModal isIcon label="Nuevo turno" />
       </div>
-      <Select.Trigger>
-        <Select.Value />
-        <Select.Indicator />
-      </Select.Trigger>
-      <Select.Popover>
-        <ListBox>
-          {shiftsOptions.map((shift) => (
-            <ListBox.Item key={shift.id} id={shift.id} textValue={shift.name}>
-              {shift.name}
-              <ListBox.ItemIndicator />
-            </ListBox.Item>
-          ))}
-        </ListBox>
-      </Select.Popover>
-      <FieldError children={errors.shiftIds && <p>{errors.shiftIds}</p>} />
-    </Select>
+      <Select
+        variant="secondary"
+        isRequired={isRequired}
+        isDisabled={isDisabled}
+        isInvalid={!!errors.shiftIds || undefined}
+        className="w-full"
+        name="shiftIds"
+        selectionMode={selectionMode}
+        value={selectionMode === "multiple" ? shiftIds : shiftIds[0] || ""}
+        onChange={(e) => {
+          if (!e) {
+            setShiftIds([]);
+          } else if (Array.isArray(e)) {
+            setShiftIds(e.map(String));
+          } else {
+            setShiftIds([String(e)]);
+          }
+          handleRemoveError("shiftIds");
+        }}
+      >
+        <Select.Trigger>
+          <Select.Value />
+          <Select.Indicator />
+        </Select.Trigger>
+        <Select.Popover>
+          <ListBox>
+            {shiftsOptions.map((shift) => (
+              <ListBox.Item key={shift.id} id={shift.id} textValue={shift.name}>
+                {shift.name}
+                <ListBox.ItemIndicator />
+              </ListBox.Item>
+            ))}
+          </ListBox>
+        </Select.Popover>
+        <FieldError children={errors.shiftIds && <p>{errors.shiftIds}</p>} />
+      </Select>
+    </div>
   );
 };

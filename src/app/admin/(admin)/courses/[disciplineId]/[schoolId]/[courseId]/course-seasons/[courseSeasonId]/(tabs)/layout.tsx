@@ -15,11 +15,6 @@ interface LayoutProps {
   }>;
 }
 
-const GENDER_MAP: Record<string, string> = {
-  MALE: "Masculino",
-  FEMALE: "Femenino",
-  MIXED: "Mixto",
-};
 
 export default async function CourseSeasonDetailLayout({
   children,
@@ -52,7 +47,7 @@ export default async function CourseSeasonDetailLayout({
   return (
     <>
       <HeaderPage
-        title={`${courseSeason.category.name} (${GENDER_MAP[courseSeason.gender] || courseSeason.gender}) · ${courseSeason.season.name}`}
+        title={`${courseSeason.name || courseSeason.course.name} · ${courseSeason.season.name}`}
         description={`Curso: ${courseSeason.course.name} · Detalle de la temporada`}
         action={
           <CourseSeasonActions courseSeason={courseSeason} baseUrl={actionsBaseUrl} />

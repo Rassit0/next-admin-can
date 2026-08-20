@@ -22,25 +22,11 @@ import { SelectSeason } from "./SelectSeason";
 import { SelectShift } from "./SelectShift";
 
 interface Props {
-  categoriesOptions: ICategoryOption[];
   seasonsOptions: ISeasonOption[];
-  shiftsOptions: IShiftOption[];
-  categoryId: string | null;
-  setCategoryId: Dispatch<SetStateAction<string | null>>;
   seasonId: string | null;
   setSeasonId: Dispatch<SetStateAction<string | null>>;
-  shiftIds: string[];
-  setShiftIds: Dispatch<SetStateAction<string[]>>;
-  gender: Gender | null;
-  setGender: Dispatch<SetStateAction<Gender | null>>;
   description: string | null;
   setDescription: Dispatch<SetStateAction<string | null>>;
-  minBirthYear: number | null;
-  setMinBirthYear: Dispatch<SetStateAction<number | null>>;
-  maxBirthYear: number | null;
-  setMaxBirthYear: Dispatch<SetStateAction<number | null>>;
-  validateAge: boolean;
-  setValidateAge: Dispatch<SetStateAction<boolean>>;
   errors: Record<string, string>;
   handleRemoveError: (fieldName: string) => void;
   isStructuralDisabled?: boolean;
@@ -48,25 +34,11 @@ interface Props {
 }
 
 export const BasicInfoCard = ({
-  categoriesOptions,
   seasonsOptions,
-  shiftsOptions,
-  categoryId,
-  setCategoryId,
   seasonId,
   setSeasonId,
-  shiftIds,
-  setShiftIds,
-  gender,
-  setGender,
   description,
   setDescription,
-  minBirthYear,
-  setMinBirthYear,
-  maxBirthYear,
-  setMaxBirthYear,
-  validateAge,
-  setValidateAge,
   errors,
   handleRemoveError,
   isStructuralDisabled = false,
@@ -83,16 +55,6 @@ export const BasicInfoCard = ({
         </Card.Title>
       </Card.Header>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <SelectCategory
-          label="Categoria"
-          categoriesOptions={categoriesOptions}
-          categoryId={categoryId}
-          setCategoryId={setCategoryId}
-          errors={errors}
-          handleRemoveError={handleRemoveError}
-          isRequired
-          isDisabled={isStructuralDisabled}
-        />
         <SelectSeason
           label="Temporada"
           seasonsOptions={seasonsOptions}
@@ -103,148 +65,6 @@ export const BasicInfoCard = ({
           isRequired
           isDisabled={isStructuralDisabled}
         />
-        {!isEditMode && (
-          <SelectShift
-            label="Turnos"
-            shiftsOptions={shiftsOptions}
-            shiftIds={shiftIds}
-            setShiftIds={setShiftIds}
-            errors={errors}
-            handleRemoveError={handleRemoveError}
-            isDisabled={isStructuralDisabled}
-            isRequired
-          />
-        )}
-        <Select
-          isRequired
-          isDisabled={isStructuralDisabled}
-          className="w-full"
-          name="gender"
-          placeholder="Seleccione un genero"
-          variant="secondary"
-          isInvalid={!!errors.gender || undefined}
-          value={gender}
-          onChange={(e) => {
-            setGender((e?.toString() as Gender) || null);
-            handleRemoveError("gender");
-          }}
-        >
-          <Label>Rama</Label>
-          <Select.Trigger>
-            <Select.Value />
-            <Select.Indicator />
-          </Select.Trigger>
-          <Select.Popover>
-            <ListBox>
-              <ListBox.Item id="MALE" textValue="MALE">
-                Masculino
-                <ListBox.ItemIndicator />
-              </ListBox.Item>
-              <ListBox.Item id="FEMALE" textValue="FEMALE">
-                Femenino
-                <ListBox.ItemIndicator />
-              </ListBox.Item>
-              <ListBox.Item id="MIXED" textValue="MIXED">
-                Mixto
-                <ListBox.ItemIndicator />
-              </ListBox.Item>
-            </ListBox>
-          </Select.Popover>
-          <FieldError children={errors.gender && <> {errors.gender}</>} />
-        </Select>
-
-        <div className="col-span-full">
-          <div className="flex items-center justify-between mb-4">
-            <Switch isSelected={validateAge} onChange={setValidateAge}>
-              <Switch.Control>
-                <Switch.Thumb />
-              </Switch.Control>
-              <Switch.Content>
-                Validar edad al inscribir
-              </Switch.Content>
-            </Switch>
-          </div>
-          {!validateAge && (
-            <Alert status="warning">
-              <Alert.Indicator />
-              <Alert.Content>
-                <Alert.Title>Validación de edad desactivada</Alert.Title>
-                <Alert.Description>
-                  Los estudiantes podrán inscribirse sin importar su edad o si
-                  no tienen fecha de nacimiento registrada. Útil durante la
-                  migración de datos.
-                </Alert.Description>
-              </Alert.Content>
-            </Alert>
-          )}
-          {validateAge && (
-            <Alert status="accent">
-              <Alert.Indicator />
-              <Alert.Content>
-                <Alert.Title>
-                  Anulación de Edades de Categoría (Opcional)
-                </Alert.Title>
-                <Alert.Description>
-                  Por defecto, el sistema valida la edad de los atletas usando el
-                  rango de edades configurado en la Categoría y comparándolo
-                  contra su{" "}
-                  <strong>
-                    edad deportiva actual (Año actual - Año de Nacimiento)
-                  </strong>
-                  . Si deseas sobrescribir ese cálculo para esta oferta en
-                  específico, completa los siguientes campos.
-                </Alert.Description>
-              </Alert.Content>
-            </Alert>
-          )}
-        </div>
-
-        <TextField
-          variant="secondary"
-          className="w-full"
-          name="minBirthYear"
-          type="number"
-          isInvalid={!!errors.minBirthYear || undefined}
-          isDisabled={!validateAge}
-        >
-          <Label>Año de nacimiento min. (opcional)</Label>
-          <Input
-            min={1900}
-            placeholder="Ej: 2015"
-            type="number"
-            value={minBirthYear || ""}
-            onChange={(e) => {
-              setMinBirthYear(e.target.value ? Number(e.target.value) : null);
-              handleRemoveError("minBirthYear");
-            }}
-          />
-          <FieldError
-            children={errors.minBirthYear && <> {errors.minBirthYear}</>}
-          />
-        </TextField>
-        <TextField
-          variant="secondary"
-          className="w-full"
-          name="maxBirthYear"
-          type="number"
-          isInvalid={!!errors.maxBirthYear || undefined}
-          isDisabled={!validateAge}
-        >
-          <Label>Año de nacimiento max. (opcional)</Label>
-          <Input
-            min={1900}
-            placeholder="Ej: 2016"
-            type="number"
-            value={maxBirthYear || ""}
-            onChange={(e) => {
-              setMaxBirthYear(e.target.value ? Number(e.target.value) : null);
-              handleRemoveError("maxBirthYear");
-            }}
-          />
-          <FieldError
-            children={errors.maxBirthYear && <> {errors.maxBirthYear}</>}
-          />
-        </TextField>
         <TextField
           className="w-full col-span-full"
           name="description"

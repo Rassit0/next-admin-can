@@ -100,7 +100,7 @@ export default async function CourseSeasonDashboardPage({ params }: Props) {
       <Card className="p-6 shadow-[0px_4px_12px_rgba(0,0,0,0.06)] border border-border flex flex-col gap-5 bg-surface-container-lowest">
         <div className="flex items-center justify-between">
           <h3 className="font-headline font-bold text-lg">
-            Resumen Financiero y Reglas
+            Resumen Financiero
           </h3>
           <div className="flex items-center gap-2">
             <Chip
@@ -110,14 +110,6 @@ export default async function CourseSeasonDashboardPage({ params }: Props) {
               className="font-semibold tracking-wide uppercase"
             >
               {courseSeason.isRegistrationOpen ? "Inscripciones Abiertas" : "Inscripciones Cerradas"}
-            </Chip>
-            <Chip
-              color="accent"
-              variant="soft"
-              size="sm"
-              className="font-semibold tracking-wide uppercase"
-            >
-              Género: {GENDER_MAP[courseSeason.gender] || courseSeason.gender}
             </Chip>
           </div>
         </div>
@@ -218,17 +210,38 @@ export default async function CourseSeasonDashboardPage({ params }: Props) {
           </div>
         </div>
 
-        <Alert status="accent">
-          <Alert.Indicator />
-          <Alert.Content>
-            <Alert.Title>Edades Permitidas</Alert.Title>
-            <Alert.Description>
-              {courseSeason.minBirthYear || courseSeason.maxBirthYear
-                ? `Se han restringido los años de nacimiento permitidos desde ${courseSeason.minBirthYear || "Cualquiera"} hasta ${courseSeason.maxBirthYear || "Cualquiera"}.`
-                : `Los atletas deben tener una edad deportiva entre ${courseSeason.category.minAge} y ${courseSeason.category.maxAge} años.`}
-            </Alert.Description>
-          </Alert.Content>
-        </Alert>
+      </Card>
+
+      <Card className="p-6 shadow-[0px_4px_12px_rgba(0,0,0,0.06)] border border-border flex flex-col gap-5 bg-surface-container-lowest">
+        <div className="flex items-center justify-between">
+          <h3 className="font-headline font-bold text-lg">
+            Turnos y Reglas de Participación
+          </h3>
+        </div>
+        <hr className="border-border" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {courseSeason.shifts?.map((shiftItem) => (
+            <div key={shiftItem.id} className="flex flex-col gap-2 p-4 rounded-xl border border-border/50 bg-surface-container-low">
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-base">{shiftItem.shift?.name || "Turno"}</span>
+                <Chip size="sm" color="accent" variant="soft" className="font-semibold tracking-wide uppercase">{GENDER_MAP[shiftItem.gender] || shiftItem.gender}</Chip>
+              </div>
+              <div className="flex flex-col text-sm text-muted-foreground mt-2 space-y-1">
+                <span><strong className="text-foreground">Categoría:</strong> {shiftItem.category?.name}</span>
+                <span>
+                  <strong className="text-foreground">Edades:</strong>{" "}
+                  {shiftItem.minBirthYear || shiftItem.maxBirthYear
+                    ? `${shiftItem.minBirthYear || "Cualquiera"} al ${shiftItem.maxBirthYear || "Cualquiera"}`
+                    : `${shiftItem.category?.minAge} a ${shiftItem.category?.maxAge || "Sin límite"} años`}
+                </span>
+                <span><strong className="text-foreground">Capacidad:</strong> {shiftItem.minMembers} min - {shiftItem.maxMembers} max</span>
+              </div>
+            </div>
+          ))}
+          {(!courseSeason.shifts || courseSeason.shifts.length === 0) && (
+            <p className="text-sm text-muted-foreground italic col-span-full">No hay turnos configurados para esta temporada.</p>
+          )}
+        </div>
       </Card>
 
       <MetricsCards

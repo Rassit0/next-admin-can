@@ -20,7 +20,7 @@ export async function getStudentMembershipHistories(
 ): Promise<ServiceResponse<IStudentMembershipHistory[]>> {
   return handleServerAction(async () => {
     const response = await api.get<{ data: IStudentMembershipHistory[] }>(
-      `/student-memberships/${id}/histories`,
+      `student-memberships/${id}/histories`,
     );
 
     const parsedData = response.data.map(parseHistory);
