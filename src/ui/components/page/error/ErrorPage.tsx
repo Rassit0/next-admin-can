@@ -2,6 +2,7 @@
 
 import { Button } from "@heroui/react";
 import { useRouter } from "next/navigation";
+import { OfflineGame } from "@/modules/offline";
 
 interface Props {
   message: string;
@@ -16,7 +17,8 @@ export const ErrorPage = ({ message, path }: Props) => {
     <div className="flex items-center justify-center h-screen">
       <div className="flex flex-col items-center justify-center gap-4">
         <h1 className="text-4xl font-bold">Error</h1>
-        <p className="text-lg">{message}</p>
+        <p className="text-lg text-center max-w-lg">{message}</p>
+        <OfflineGame />
         {path && (
           <Button variant="primary" onPress={() => router.push(path.href)}>
             {path.label}

@@ -11,7 +11,16 @@ import {
   Input,
   FieldError,
   toast,
+  DatePicker,
+  DateField,
+  Calendar,
 } from "@heroui/react";
+import type { DateValue } from "@internationalized/date";
+import {
+  getLocalTimeZone,
+  today,
+  toCalendarDateTime,
+} from "@internationalized/date";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
   Wallet01Icon,
@@ -67,7 +76,9 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
   };
 
   const [splits, setSplits] = useState<SplitItem[]>([]);
-  const [transactionDate, setTransactionDate] = useState<string>(getLocalDatetime());
+  const [transactionDate, setTransactionDate] = useState<DateValue | null>(
+    today(getLocalTimeZone()),
+  );
   const [notes, setNotes] = useState<string>("");
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -85,7 +96,7 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
 
   useEffect(() => {
     if (isOpen) {
-      setTransactionDate(getLocalDatetime());
+      setTransactionDate(today(getLocalTimeZone()));
       setNotes("");
 
       const defaultAcc = financialAccounts.find((a) => a.isDefault);
@@ -113,9 +124,11 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
         0,
       );
 
-      const hasInvalidMethod = splits.some(s => !s.paymentMethod);
+      const hasInvalidMethod = splits.some((s) => !s.paymentMethod);
       if (hasInvalidMethod) {
-        toast.danger("Debe seleccionar un método de pago válido para cada cuenta.");
+        toast.danger(
+          "Debe seleccionar un método de pago válido para cada cuenta.",
+        );
         setIsLoading(false);
         return;
       }
@@ -152,7 +165,9 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
         paymentMethod: splits[0].paymentMethod as "CASH" | "TRANSFER" | "QR",
         financialAccountId: splits[0].financialAccountId,
         notes,
-        transactionDate: new Date(transactionDate).toISOString(),
+        transactionDate: transactionDate
+          ? transactionDate.toDate(getLocalTimeZone()).toISOString()
+          : new Date().toISOString(),
         description: `Pago para: ${charge.description}`,
         chargeId: charge.id,
         splitTransactions: splits.map((s) => ({
@@ -288,9 +303,18 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
                         onChange={(value) => {
                           const newSplits = [...splits];
                           newSplits[index].financialAccountId = value as string;
-                          const selectedAcc = financialAccounts.find(a => a.id === value);
-                          if (selectedAcc && (!selectedAcc.allowedPaymentMethods || !selectedAcc.allowedPaymentMethods.includes(newSplits[index].paymentMethod))) {
-                            newSplits[index].paymentMethod = selectedAcc.allowedPaymentMethods?.[0] || "";
+                          const selectedAcc = financialAccounts.find(
+                            (a) => a.id === value,
+                          );
+                          if (
+                            selectedAcc &&
+                            (!selectedAcc.allowedPaymentMethods ||
+                              !selectedAcc.allowedPaymentMethods.includes(
+                                newSplits[index].paymentMethod,
+                              ))
+                          ) {
+                            newSplits[index].paymentMethod =
+                              selectedAcc.allowedPaymentMethods?.[0] || "";
                           }
                           setSplits(newSplits);
                         }}
@@ -332,8 +356,13 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       {(() => {
-                        const selectedAcc = financialAccounts.find(a => a.id === split.financialAccountId);
-                        const hasMethods = selectedAcc && selectedAcc.allowedPaymentMethods && selectedAcc.allowedPaymentMethods.length > 0;
+                        const selectedAcc = financialAccounts.find(
+                          (a) => a.id === split.financialAccountId,
+                        );
+                        const hasMethods =
+                          selectedAcc &&
+                          selectedAcc.allowedPaymentMethods &&
+                          selectedAcc.allowedPaymentMethods.length > 0;
                         return (
                           <div className="w-full">
                             <Select
@@ -344,7 +373,8 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
                               isDisabled={!hasMethods}
                               onChange={(value) => {
                                 const newSplits = [...splits];
-                                newSplits[index].paymentMethod = value as string;
+                                newSplits[index].paymentMethod =
+                                  value as string;
                                 setSplits(newSplits);
                               }}
                             >
@@ -355,8 +385,16 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
                               </Select.Trigger>
                               <Select.Popover>
                                 <ListBox>
-                                  {(selectedAcc?.allowedPaymentMethods || []).map((method) => (
-                                    <ListBox.Item key={method} id={method} textValue={PAYMENT_METHOD_LABELS[method] || method}>
+                                  {(
+                                    selectedAcc?.allowedPaymentMethods || []
+                                  ).map((method) => (
+                                    <ListBox.Item
+                                      key={method}
+                                      id={method}
+                                      textValue={
+                                        PAYMENT_METHOD_LABELS[method] || method
+                                      }
+                                    >
                                       {PAYMENT_METHOD_LABELS[method] || method}
                                       <ListBox.ItemIndicator />
                                     </ListBox.Item>
@@ -403,21 +441,74 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
                 <Button
                   variant="primary"
                   onPress={() => {
-                      const defaultAcc = financialAccounts.find((a) => a.isDefault);
-                      setSplits([
-                        ...splits,
-                        {
-                          id: Math.random().toString(),
-                          amount: "",
-                          paymentMethod: defaultAcc?.allowedPaymentMethods?.[0] || "",
-                          financialAccountId: defaultAcc?.id || "",
-                          reference: "",
-                        },
-                      ])
+                    const defaultAcc = financialAccounts.find(
+                      (a) => a.isDefault,
+                    );
+                    setSplits([
+                      ...splits,
+                      {
+                        id: Math.random().toString(),
+                        amount: "",
+                        paymentMethod:
+                          defaultAcc?.allowedPaymentMethods?.[0] || "",
+                        financialAccountId: defaultAcc?.id || "",
+                        reference: "",
+                      },
+                    ]);
                   }}
                 >
                   + Agregar Método de Pago
                 </Button>
+
+                <div className="w-full">
+                  <DatePicker
+                    className="w-full"
+                    name="date"
+                    value={transactionDate}
+                    onChange={setTransactionDate}
+                  >
+                    <Label>Fecha de Recepción (Comprobante)</Label>
+                    <DateField.Group fullWidth>
+                      <DateField.Input>
+                        {(segment) => <DateField.Segment segment={segment} />}
+                      </DateField.Input>
+                      <DateField.Suffix>
+                        <DatePicker.Trigger>
+                          <DatePicker.TriggerIndicator />
+                        </DatePicker.Trigger>
+                      </DateField.Suffix>
+                    </DateField.Group>
+                    <DatePicker.Popover>
+                      <Calendar aria-label="Event date">
+                        <Calendar.Header>
+                          <Calendar.YearPickerTrigger>
+                            <Calendar.YearPickerTriggerHeading />
+                            <Calendar.YearPickerTriggerIndicator />
+                          </Calendar.YearPickerTrigger>
+                          <Calendar.NavButton slot="previous" />
+                          <Calendar.NavButton slot="next" />
+                        </Calendar.Header>
+                        <Calendar.Grid>
+                          <Calendar.GridHeader>
+                            {(day) => (
+                              <Calendar.HeaderCell>{day}</Calendar.HeaderCell>
+                            )}
+                          </Calendar.GridHeader>
+                          <Calendar.GridBody>
+                            {(date) => <Calendar.Cell date={date} />}
+                          </Calendar.GridBody>
+                        </Calendar.Grid>
+                        <Calendar.YearPickerGrid>
+                          <Calendar.YearPickerGridBody>
+                            {({ year }) => (
+                              <Calendar.YearPickerCell year={year} />
+                            )}
+                          </Calendar.YearPickerGridBody>
+                        </Calendar.YearPickerGrid>
+                      </Calendar>
+                    </DatePicker.Popover>
+                  </DatePicker>
+                </div>
 
                 <TextField
                   className="w-full"
