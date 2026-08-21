@@ -2,6 +2,7 @@ import { ErrorPage, HeaderPage } from "@/ui";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { getTeamSeasonById } from "@/modules/team-seasons";
+import { TeamSeasonPaymentsMatrix } from "@/modules/reports/components/TeamSeasonPaymentsMatrix";
 
 interface Props {
   params: Promise<{
@@ -59,8 +60,8 @@ export default async function PaymentsPage({ params }: Props) {
         </Link>
       </div>
 
-      <div className="bg-surface border border-border rounded-lg p-6 text-center text-muted">
-        <p>Módulo de Pagos - Próximamente</p>
+      <div className="mt-6">
+        <TeamSeasonPaymentsMatrix teamSeasonId={teamSeasonId} />
       </div>
     </>
   );
