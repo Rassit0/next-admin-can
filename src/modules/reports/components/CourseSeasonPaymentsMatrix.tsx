@@ -37,7 +37,11 @@ export function CourseSeasonPaymentsMatrix({ shifts }: CourseSeasonPaymentsMatri
     getCourseSeasonShiftMatrix(selectedShiftId)
       .then((res) => {
         if (isMounted) {
-          setData(res);
+          if (res.error) {
+            setError(res.message || 'Error al cargar la matriz');
+          } else {
+            setData(res.data || null);
+          }
           setIsLoading(false);
         }
       })

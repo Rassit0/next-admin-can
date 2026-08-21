@@ -22,7 +22,11 @@ export function TeamSeasonPaymentsMatrix({ teamSeasonId }: TeamSeasonPaymentsMat
     getTeamSeasonMatrix(teamSeasonId)
       .then((res) => {
         if (isMounted) {
-          setData(res);
+          if (res.error) {
+            setError(res.message || 'Error al cargar la matriz');
+          } else {
+            setData(res.data || null);
+          }
           setIsLoading(false);
         }
       })

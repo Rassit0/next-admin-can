@@ -41,6 +41,7 @@ export default async function CourseSeasonDetailLayout({
     { value: "/student-memberships", title: "Matrículas" },
     { value: "/payment-plans", title: "Planes de Pago" },
     { value: "/payments", title: "Transacciones" },
+    { value: "/pagos", title: "Control de Pagos" },
     { value: "/horarios", title: "Horarios" },
   ];
 

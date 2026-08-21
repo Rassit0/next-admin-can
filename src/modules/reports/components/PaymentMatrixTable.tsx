@@ -12,6 +12,7 @@ import { HugeiconsIcon } from '@hugeicons/react';
 import { PaymentsMatrixResponse } from '../types/payments-matrix.type';
 import { downloadMatrixAction } from '../actions/download-matrix.action';
 import { toast } from 'sonner';
+import { formatCurrency } from '@/utils/constants';
 
 interface PaymentMatrixTableProps {
   data: PaymentsMatrixResponse | null;
@@ -108,46 +109,50 @@ export function PaymentMatrixTable({ data, isLoading, error }: PaymentMatrixTabl
 
       <div className="overflow-x-auto">
         <Table aria-label="Matriz de pagos" className="min-w-max">
-          <Table.Header>
-            <Table.Column className="min-w-[200px]">Estudiante</Table.Column>
-            {periods.map(period => (
-              <Table.Column key={period.key} className="text-center min-w-[100px]">
-                {period.label}
-              </Table.Column>
-            ))}
-          </Table.Header>
-          <Table.Body>
-            {students.map(student => (
-              <Table.Row key={student.id} id={student.id}>
-                <Table.Cell className="font-medium">{student.name}</Table.Cell>
-                {periods.map(period => {
-                  const periodData = student.paymentsByPeriod[period.key];
-                  if (!periodData || periodData.totalPaid === 0) {
-                    return (
-                      <Table.Cell key={period.key} className="text-center text-default-300">
-                      </Table.Cell>
-                    );
-                  }
+          <Table.ScrollContainer>
+            <Table.Content>
+              <Table.Header>
+                <Table.Column className="min-w-[200px]">Estudiante</Table.Column>
+                {periods.map(period => (
+                  <Table.Column key={period.key} className="text-center min-w-[100px]">
+                    {period.label}
+                  </Table.Column>
+                ))}
+              </Table.Header>
+              <Table.Body>
+                {students.map(student => (
+                  <Table.Row key={student.id} id={student.id}>
+                    <Table.Cell className="font-medium">{student.name}</Table.Cell>
+                    {periods.map(period => {
+                      const periodData = student.paymentsByPeriod[period.key];
+                      if (!periodData || periodData.totalPaid === 0) {
+                        return (
+                          <Table.Cell key={period.key} className="text-center text-default-300">
+                          </Table.Cell>
+                        );
+                      }
 
-                  const lastPayment = periodData.payments[periodData.payments.length - 1];
-                  const formattedDate = lastPayment 
-                    ? new Date(lastPayment.date).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit' }) 
-                    : '';
+                      const lastPayment = periodData.payments[periodData.payments.length - 1];
+                      const formattedDate = lastPayment 
+                        ? new Date(lastPayment.date).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit' }) 
+                        : '';
 
-                  return (
-                    <Table.Cell key={period.key} className="text-center">
-                      <div className="flex flex-col items-center">
-                        <span className="font-semibold">${periodData.totalPaid}</span>
-                        {formattedDate && (
-                          <span className="text-xs text-default-400">{formattedDate}</span>
-                        )}
-                      </div>
-                    </Table.Cell>
-                  );
-                })}
-              </Table.Row>
-            ))}
-          </Table.Body>
+                      return (
+                        <Table.Cell key={period.key} className="text-center">
+                          <div className="flex flex-col items-center">
+                            <span className="font-semibold">{formatCurrency(periodData.totalPaid)}</span>
+                            {formattedDate && (
+                              <span className="text-xs text-default-400">{formattedDate}</span>
+                            )}
+                          </div>
+                        </Table.Cell>
+                      );
+                    })}
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table.Content>
+          </Table.ScrollContainer>
         </Table>
       </div>
     </div>

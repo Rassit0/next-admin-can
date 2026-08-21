@@ -40,6 +40,7 @@ export default async function TeamSeasonDetailLayout({
     { value: "/player-memberships", title: "Membresías" },
     { value: "/payment-plans", title: "Planes de Pago" },
     { value: "/payments", title: "Transacciones" },
+    { value: "/pagos", title: "Control de Pagos" },
     { value: "/horarios", title: "Horarios" },
   ];
 
