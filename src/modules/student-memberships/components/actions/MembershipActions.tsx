@@ -34,6 +34,9 @@ import {
   removeStudentMembership,
 } from "@/modules/student-memberships";
 import { TransferShiftDrawer } from "../drawer/TransferShiftDrawer";
+import { isMembershipInGap } from "@/modules/student-memberships/helpers/domain";
+import { reactivateStudentMembership } from "@/modules/student-memberships/actions/reactivate";
+import { generateAdvanceCharges } from "@/modules/student-memberships/actions/generate-advance-charges";
 
 interface Props {
   membership: IStudentMembership;
@@ -47,34 +50,35 @@ interface ActionDef {
   danger?: boolean;
 }
 
-const ACTIONS_BY_STATUS: Record<IStudentMembership["status"], ActionDef[]> = {
-  ACTIVE: [
-    { key: "transfer", label: "Transferir turno", icon: Calendar01Icon },
-    { key: "pause", label: "Programar pausa", icon: Calendar01Icon },
-    { key: "suspend", label: "Suspender", icon: PauseIcon },
-    { key: "finish", label: "Finalizar", icon: CheckmarkCircle02Icon },
-    { key: "withdraw", label: "Dar de baja", icon: Logout01Icon, danger: true },
-  ],
-  SUSPENDED: [
-    { key: "reactivate", label: "Reactivar", icon: PlayIcon },
-    { key: "finish", label: "Finalizar", icon: CheckmarkCircle02Icon },
-    { key: "withdraw", label: "Dar de baja", icon: Logout01Icon, danger: true },
-  ],
-  WITHDRAWN: [{ key: "reactivate", label: "Reactivar", icon: PlayIcon }],
-  FINISHED: [],
-  PENDING_ACTIVE: [
-    { key: "transfer", label: "Transferir turno", icon: Calendar01Icon },
-    { key: "pause", label: "Programar pausa", icon: Calendar01Icon },
-    { key: "activate", label: "Activar", icon: PlayIcon },
-    { key: "withdraw", label: "Dar de baja", icon: Logout01Icon, danger: true },
-  ],
-};
-
 export const MembershipActions = ({ membership, origin }: Props) => {
   const router = useRouter();
   const params = useParams();
   const [loading, setLoading] = useState(false);
-  const statusActions = ACTIONS_BY_STATUS[membership.status] ?? [];
+
+  const isGap = isMembershipInGap(membership);
+  const statusActions: ActionDef[] = [];
+
+  if (membership.status === "ACTIVE") {
+    statusActions.push({ key: "transfer", label: "Transferir turno", icon: Calendar01Icon });
+    statusActions.push({ key: "pause", label: "Programar pausa", icon: Calendar01Icon });
+    if (isGap) {
+      statusActions.push({ key: "advance", label: "Comprar ciclo", icon: PlayIcon });
+    }
+    statusActions.push({ key: "suspend", label: "Suspender", icon: PauseIcon });
+    statusActions.push({ key: "finish", label: "Finalizar", icon: CheckmarkCircle02Icon });
+    statusActions.push({ key: "withdraw", label: "Dar de baja", icon: Logout01Icon, danger: true });
+  } else if (membership.status === "SUSPENDED") {
+    statusActions.push({ key: "reentry", label: "Reingresar al curso", icon: PlayIcon });
+    statusActions.push({ key: "finish", label: "Finalizar", icon: CheckmarkCircle02Icon });
+    statusActions.push({ key: "withdraw", label: "Dar de baja", icon: Logout01Icon, danger: true });
+  } else if (membership.status === "WITHDRAWN") {
+    statusActions.push({ key: "reentry", label: "Reingresar al curso", icon: PlayIcon });
+  } else if (membership.status === "PENDING_ACTIVE") {
+    statusActions.push({ key: "transfer", label: "Transferir turno", icon: Calendar01Icon });
+    statusActions.push({ key: "pause", label: "Programar pausa", icon: Calendar01Icon });
+    statusActions.push({ key: "activate", label: "Activar", icon: PlayIcon });
+    statusActions.push({ key: "withdraw", label: "Dar de baja", icon: Logout01Icon, danger: true });
+  }
 
   const confirmState = useOverlayState();
   const transferState = useOverlayState();
@@ -139,7 +143,32 @@ export const MembershipActions = ({ membership, origin }: Props) => {
 
     let res;
 
-    if (action === "remove") {
+    if (action === "reentry") {
+      const quantity = parseInt(formData.get("quantity") as string, 10);
+      const reentryDate = formData.get("reentryDate") as string;
+
+      if (isNaN(quantity) || quantity < 1) {
+        toast.error("La cantidad de ciclos debe ser al menos 1");
+        setLoading(false);
+        return;
+      }
+
+      res = await reactivateStudentMembership({
+        membershipId: membership.id,
+        quantity,
+        reentryDate: reentryDate ? new Date(reentryDate).toISOString() : undefined,
+      });
+    } else if (action === "advance") {
+      const quantity = parseInt(formData.get("quantity") as string, 10);
+
+      if (isNaN(quantity) || quantity < 1) {
+        toast.error("La cantidad de ciclos debe ser al menos 1");
+        setLoading(false);
+        return;
+      }
+
+      res = await generateAdvanceCharges(membership.id, { quantity });
+    } else if (action === "remove") {
       res = await removeStudentMembership(membership.id);
     } else if (action === "pause") {
       const startDate = formData.get("startDate") as string;
@@ -337,6 +366,62 @@ export const MembershipActions = ({ membership, origin }: Props) => {
                   </div>
                 )}
 
+                {selectedAction?.key === "reentry" && (
+                  <div className="flex flex-col gap-4 w-full">
+                    <TextField name="quantity" isRequired className="w-full" defaultValue="1">
+                      <Label className="text-sm font-semibold">Cantidad de ciclos a adquirir</Label>
+                      <InputGroup>
+                        <InputGroup.Input type="number" min="1" placeholder="Ej. 1" />
+                      </InputGroup>
+                    </TextField>
+
+                    <DatePicker name="reentryDate" className="w-full">
+                      <Label className="text-sm font-semibold">Fecha de reingreso (Opcional)</Label>
+                      <DateField.Group variant="secondary">
+                        <DateField.Input>
+                          {(segment) => <DateField.Segment segment={segment} />}
+                        </DateField.Input>
+                        <DateField.Suffix>
+                          <DatePicker.Trigger>
+                            <DatePicker.TriggerIndicator />
+                          </DatePicker.Trigger>
+                        </DateField.Suffix>
+                      </DateField.Group>
+                      <DatePicker.Popover>
+                        <Calendar aria-label="Fecha de reingreso">
+                          <Calendar.Header>
+                            <Calendar.YearPickerTrigger>
+                              <Calendar.YearPickerTriggerHeading />
+                              <Calendar.YearPickerTriggerIndicator />
+                            </Calendar.YearPickerTrigger>
+                            <Calendar.NavButton slot="previous" />
+                            <Calendar.NavButton slot="next" />
+                          </Calendar.Header>
+                          <Calendar.Grid>
+                            <Calendar.GridHeader>
+                              {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
+                            </Calendar.GridHeader>
+                            <Calendar.GridBody>
+                              {(date) => <Calendar.Cell date={date} />}
+                            </Calendar.GridBody>
+                          </Calendar.Grid>
+                        </Calendar>
+                      </DatePicker.Popover>
+                    </DatePicker>
+                  </div>
+                )}
+
+                {selectedAction?.key === "advance" && (
+                  <div className="flex flex-col gap-4 w-full">
+                    <TextField name="quantity" isRequired className="w-full" defaultValue="1">
+                      <Label className="text-sm font-semibold">Cantidad de ciclos a comprar</Label>
+                      <InputGroup>
+                        <InputGroup.Input type="number" min="1" placeholder="Ej. 1" />
+                      </InputGroup>
+                    </TextField>
+                  </div>
+                )}
+
                 {selectedAction?.key === "remove" && (
                   <TextField name="confirmDelete" isRequired className="w-full">
                     <Label className="text-sm font-semibold">
@@ -348,7 +433,7 @@ export const MembershipActions = ({ membership, origin }: Props) => {
                   </TextField>
                 )}
 
-                {selectedAction?.key !== "remove" && (
+                {selectedAction?.key !== "remove" && selectedAction?.key !== "reentry" && selectedAction?.key !== "advance" && (
                   <TextField
                     name="reason"
                     className="w-full"

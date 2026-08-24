@@ -31,10 +31,16 @@ export const addTransaction = async (
   ServiceResponse<{ transaction: ITransaction; paymentData: any }>
 > => {
   return handleServerAction(async () => {
+    const sanitizedData: any = { ...data };
+    if (!sanitizedData.payerPersonId) delete sanitizedData.payerPersonId;
+    if (!sanitizedData.reference) delete sanitizedData.reference;
+    if (!sanitizedData.notes) delete sanitizedData.notes;
+    if (!sanitizedData.chargeId) delete sanitizedData.chargeId;
+
     const response = await api.post<{
       message: string;
       data: { transaction: ITransaction; paymentData: any };
-    }>(`transactions`, data);
+    }>(`transactions`, sanitizedData);
 
     updateTag("transactions");
     updateTag("charges");

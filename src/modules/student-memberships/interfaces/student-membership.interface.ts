@@ -5,6 +5,23 @@ export type StudentMembershipStatus =
   | "WITHDRAWN"
   | "FINISHED";
 
+export type StudentMembershipSuspensionReason =
+  | "PAUSE"
+  | "MANUAL";
+
+export type CycleEnrollmentStatus =
+  | "PENDING"
+  | "CONFIRMED"
+  | "CANCELLED";
+
+export interface ICycleEnrollment {
+  id: string;
+  cycleStartDate: string;
+  cycleEndDate: string;
+  status: CycleEnrollmentStatus;
+  createdAt: string;
+}
+
 export interface IMembershipPerson {
   id: string;
   name: string;
@@ -63,6 +80,8 @@ export interface IStudentMembership {
   updatedAt: Date;
   totalPendingAmount: number;
   totalPaidAmount: number;
+  suspensionReason: StudentMembershipSuspensionReason | null;
+  cycleEnrollments: ICycleEnrollment[];
   pauses?: IStudentMembershipPause[];
 }
 

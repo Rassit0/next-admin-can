@@ -1,7 +1,7 @@
 "use server";
 
 import { api } from "@/utils/api";
-import { revalidateTag, updateTag } from "next/cache";
+import { updateTag } from "next/cache";
 import { ICreateSchedulePayload } from "../interfaces/schedule.interface";
 import { handleServerAction } from "@/utils";
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Button, Modal } from "@heroui/react";
 import { EventApi } from "@fullcalendar/core";
 import { 
@@ -7,6 +8,7 @@ import {
   IMatchCalendarMetadata, 
   IGeneralEventCalendarMetadata 
 } from "../interfaces/calendar.interface";
+import { SessionAttendanceDrawer } from "../../attendance/components/SessionAttendanceDrawer";
 
 interface Props {
   state: {
@@ -17,6 +19,8 @@ interface Props {
 }
 
 export const EventDetailModal = ({ state, event }: Props) => {
+  const [isAttendanceOpen, setIsAttendanceOpen] = useState(false);
+
   if (!event) return null;
 
   const type = event.extendedProps.type;
@@ -77,6 +81,11 @@ export const EventDetailModal = ({ state, event }: Props) => {
               </div>
             </Modal.Body>
             <Modal.Footer>
+              {type === "SESSION" && (metadata as ISessionCalendarMetadata).courses?.length > 0 && (
+                <Button variant="primary" onPress={() => setIsAttendanceOpen(true)}>
+                  Asistencia
+                </Button>
+              )}
               <Button variant="danger-soft" onPress={() => state.setOpen(false)}>
                 Cerrar
               </Button>
@@ -84,6 +93,16 @@ export const EventDetailModal = ({ state, event }: Props) => {
           </Modal.Dialog>
         </Modal.Container>
       </Modal.Backdrop>
+
+      {type === "SESSION" && (metadata as ISessionCalendarMetadata).courses?.length > 0 && event.start && (
+        <SessionAttendanceDrawer
+          isOpen={isAttendanceOpen}
+          onOpenChange={setIsAttendanceOpen}
+          sessionId={event.id}
+          courseSeasonId={(metadata as ISessionCalendarMetadata).courses[0].id}
+          sessionStartDate={event.start.toISOString()}
+        />
+      )}
     </Modal>
   );
 };

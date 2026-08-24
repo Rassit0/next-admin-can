@@ -7,6 +7,7 @@ import { SortableColumnHeader } from "@/ui";
 import { ICourseSeason } from "@/modules/course-seasons";
 import { IStudentMembership } from "@/modules/student-memberships";
 import { StatusChip } from "@/modules/student-memberships/components/status/StatusChip";
+import { ParticipationChip } from "@/modules/student-memberships/components/status/ParticipationChip";
 import { MembershipActions } from "@/modules/student-memberships/components/actions/MembershipActions";
 import {
   formatCurrency,
@@ -90,9 +91,14 @@ export const TableMemberships = ({
             <Table.Column allowsSorting id="status">
               <SortableColumnHeader id="status">
                 <span className="text-xs font-semibold uppercase tracking-wide">
-                  Estado
+                  Membresía
                 </span>
               </SortableColumnHeader>
+            </Table.Column>
+            <Table.Column id="participation">
+              <span className="text-xs font-semibold uppercase tracking-wide">
+                Participación
+              </span>
             </Table.Column>
             <Table.Column className="text-center">
               <span className="text-xs font-semibold uppercase tracking-wide">
@@ -177,7 +183,10 @@ export const TableMemberships = ({
                     {membership.startedAt.toLocaleDateString("es-BO")}
                   </Table.Cell>
                   <Table.Cell className="py-3">
-                    <StatusChip status={membership.status} />
+                    <StatusChip status={membership.status} suspensionReason={membership.suspensionReason} />
+                  </Table.Cell>
+                  <Table.Cell className="py-3">
+                    <ParticipationChip membership={membership} />
                   </Table.Cell>
                   <Table.Cell className="py-3">
                     <div className="flex items-center justify-center">

@@ -97,9 +97,15 @@ export default async function StudentMembershipInfoPage({
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground mb-1">
-                  Estado Actual
+                  Membresía
                 </p>
-                <StatusChip status={membership.status} />
+                <StatusChip status={membership.status} suspensionReason={membership.suspensionReason} />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-muted-foreground mb-1">
+                  Participación
+                </p>
+                <ParticipationChip membership={membership} />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -141,4 +147,5 @@ import { resolvePageData } from "@/utils/resolvePageData";
 import {
   getStudentMembershipById,
   StatusChip,
+  ParticipationChip,
 } from "@/modules/student-memberships";

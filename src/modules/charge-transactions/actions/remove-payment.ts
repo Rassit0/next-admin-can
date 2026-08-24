@@ -1,10 +1,10 @@
 "use server";
-import { revalidateTag } from "next/cache";
 import { api } from "@/utils/api";
 import { ServiceResponse } from "@/types/api";
 import { handleServerAction } from "@/utils";
 import { IChargePayment } from "../interfaces/payments.interface";
 import { auth } from "@/auth";
+import { updateTag } from "next/cache";
 
 export const removePayment = async (
   id: string,
@@ -29,11 +29,11 @@ export const removePayment = async (
     );
 
     // @ts-ignore - Next 16 requires 2 args for some reason
-    revalidateTag("payments");
+    updateTag("payments");
     // @ts-ignore
-    revalidateTag("transactions");
+    updateTag("transactions");
     // @ts-ignore
-    revalidateTag("charges");
+    updateTag("charges");
 
     return {
       error: false,

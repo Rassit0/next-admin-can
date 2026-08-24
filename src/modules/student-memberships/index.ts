@@ -10,15 +10,18 @@ export * from "./actions/add-massive-manual-charge";
 export * from "./actions/remove";
 export * from "./actions/pauses";
 export * from "./actions/transfer-shift";
+export * from "./actions/reactivate";
 
 // Helpers
 export * from "./helpers/initial-charges";
+export * from "./helpers/domain";
 
 // Constants
 export * from "./constants/status";
 
 // Components
 export * from "./components/status/StatusChip";
+export * from "./components/status/ParticipationChip";
 export * from "./components/invoice/InvoicePreview";
 export * from "./components/drawer/EnrollMembershipDrawer";
 export * from "./components/drawer/CreateManualChargeDrawer";
