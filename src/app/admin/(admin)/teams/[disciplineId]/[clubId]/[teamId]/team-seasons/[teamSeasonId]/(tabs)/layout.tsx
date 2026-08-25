@@ -12,11 +12,6 @@ interface LayoutProps {
   }>;
 }
 
-const GENDER_MAP: Record<string, string> = {
-  MALE: "Masculino",
-  FEMALE: "Femenino",
-  MIXED: "Mixto",
-};
 
 export default async function TeamSeasonDetailLayout({
   children,
@@ -47,7 +42,7 @@ export default async function TeamSeasonDetailLayout({
   return (
     <>
       <HeaderPage
-        title={`${teamSeason.category.name} (${GENDER_MAP[teamSeason.gender] || teamSeason.gender}) · ${teamSeason.season.name}`}
+        title={`Temporada: ${teamSeason.season.name}`}
         description={`Equipo: ${teamSeason.team.name} · Detalle de la temporada`}
         action={
           <TeamSeasonActions teamSeason={teamSeason} baseUrl={basePath} />

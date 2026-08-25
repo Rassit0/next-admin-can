@@ -31,25 +31,34 @@ export type BillingFrequency = "MONTHLY" | "WEEKLY" | "BIWEEKLY" | "SINGLE";
 
 export interface ITeamSeason {
   id: string;
-  gender: Gender;
-  team: Category;
-  category: Category;
+  team: Team;
   season: Season;
   description: string | null;
-  maxMembers: number;
-  minMembers: number;
-  minBirthYear?: number | null;
-  maxBirthYear?: number | null;
-  validateAge: boolean;
   status: StatusTeamSeason;
   isRegistrationOpen: boolean;
   billingConfig?: ITeamSeasonBillingConfig;
   teamSeasonStaffs?: any[];
+  teamSeasonCategories: ITeamSeasonCategory[];
   _count: {
     playerMemberships: number;
   };
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface ITeamSeasonCategory {
+  id: string;
+  category: Category;
+  gender: Gender;
+  minBirthYear?: number | null;
+  maxBirthYear?: number | null;
+  minMembers?: number | null;
+  maxMembers?: number | null;
+  validateAge: boolean;
+  isActive: boolean;
+  _count?: {
+    player_membership: number;
+  };
 }
 
 export interface Category {

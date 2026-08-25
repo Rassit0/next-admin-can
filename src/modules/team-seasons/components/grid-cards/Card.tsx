@@ -57,12 +57,9 @@ export const CardTeamOffering = ({ teamSeason }: Props) => {
         </div>
       </Card.Header>
       <div className="pb-3">
-        <ProgressMembers
-          maxMembers={teamSeason.maxMembers}
-          minMembers={teamSeason.minMembers}
-          value={0}
-          label="Cupos Ocupados"
-        />
+        <div className="text-sm font-semibold text-primary">
+          {teamSeason._count?.playerMemberships || 0} Atletas Inscritos
+        </div>
       </div>
       
       {(() => {

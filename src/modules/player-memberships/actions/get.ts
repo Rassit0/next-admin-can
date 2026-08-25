@@ -13,6 +13,7 @@ interface SearchParams {
   per_page?: string;
   page?: string;
   teamSeasonId?: string;
+  teamSeasonCategoryId?: string;
   status?: string;
   playerId?: string;
   paymentPlanId?: string;
@@ -31,6 +32,7 @@ export const getPlayerMemberships = async ({
   per_page = "10",
   page = "1",
   teamSeasonId,
+  teamSeasonCategoryId,
   status,
   playerId,
   paymentPlanId,
@@ -44,6 +46,7 @@ export const getPlayerMemberships = async ({
     if (playerId) params.set("playerId", playerId);
     if (paymentPlanId) params.set("paymentPlanId", paymentPlanId);
     if (teamSeasonId) params.set("teamSeasonId", teamSeasonId);
+    if (teamSeasonCategoryId) params.set("teamSeasonCategoryId", teamSeasonCategoryId);
 
     const res = await api.get<IPlayerMembershipResponse>(
       `player-memberships?${params.toString()}`,

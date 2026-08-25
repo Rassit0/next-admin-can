@@ -1,7 +1,6 @@
 "use client";
 import { HeaderPage } from "@/ui";
 import { BasicInfoCard } from "./BasicInfoCard";
-import { CapacityCard } from "./CapacityCard";
 import { DelayPoliciesCard } from "./DelayPoliciesCard";
 import { FinancialStructureCard } from "./FinancialStructureCard";
 import { useCallback, useRef, useState } from "react";
@@ -12,8 +11,6 @@ import clsx from "clsx";
 import {
   addTeamSeason,
   editTeamSeason,
-  Gender,
-  ICategoryOption,
   ISeasonOption,
   ITeamSeason,
   StatusTeamSeason,
@@ -28,7 +25,6 @@ interface Props {
   formId: string;
   team: Team;
   teamSeason?: ITeamSeason;
-  categoriesOptions: ICategoryOption[];
   seasonsOptions: ISeasonOption[];
   urlRedirect: string;
 }
@@ -37,7 +33,6 @@ export const FormTeamSeason = ({
   formId,
   team,
   teamSeason,
-  categoriesOptions,
   seasonsOptions,
   urlRedirect,
 }: Props) => {
@@ -50,29 +45,8 @@ export const FormTeamSeason = ({
   const [description, setDescription] = useState<string | null>(
     teamSeason?.description || null,
   );
-  const [maxMembers, setMaxMembers] = useState<number | null>(
-    teamSeason?.maxMembers || null,
-  );
-  const [minMembers, setMinMembers] = useState<number | null>(
-    teamSeason?.minMembers || null,
-  );
-  const [minBirthYear, setMinBirthYear] = useState<number | null>(
-    teamSeason?.minBirthYear || null,
-  );
-  const [maxBirthYear, setMaxBirthYear] = useState<number | null>(
-    teamSeason?.maxBirthYear || null,
-  );
-  const [validateAge, setValidateAge] = useState<boolean>(
-    teamSeason?.validateAge ?? true,
-  );
-  const [categoryId, setCategoryId] = useState<string | null>(
-    teamSeason?.category.id || null,
-  );
   const [seasonId, setSeasonId] = useState<string | null>(
     teamSeason?.season.id || null,
-  );
-  const [gender, setGender] = useState<Gender | null>(
-    teamSeason?.gender || null,
   );
   const [billingDay, setBillingDay] = useState<number | null>(
     teamSeason?.billingConfig?.billingDay || null,
@@ -147,24 +121,8 @@ export const FormTeamSeason = ({
     console.log("submit", team.id);
     // setErrors({});
     const newErrors: Record<string, string> = {};
-    if (maxMembers === null) {
-      newErrors.maxMembers = "Debe ingresar el número máximo de miembros";
-    }
-    if (minMembers === null) {
-      newErrors.minMembers = "Debe ingresar el número mínimo de miembros";
-    }
-    if (categoryId === null) {
-      newErrors.categoryId = "Debe ingresar la categoría";
-    }
-    if (minBirthYear && maxBirthYear && minBirthYear > maxBirthYear) {
-      newErrors.minBirthYear = "El año mínimo no puede ser mayor al máximo";
-      newErrors.maxBirthYear = "El año máximo no puede ser menor al mínimo";
-    }
     if (seasonId === null) {
       newErrors.seasonId = "Debe ingresar la temporada";
-    }
-    if (gender === null) {
-      newErrors.gender = "Debe ingresar el género";
     }
     if (billingType !== "SINGLE_ONLY") {
       if (!recurringFee) {
@@ -230,16 +188,9 @@ export const FormTeamSeason = ({
     setIsLoading?.(true);
     let res;
     const data: IPostTeamSeason = {
-      description: description!,
-      maxMembers: maxMembers!,
-      minMembers: minMembers!,
-      minBirthYear: minBirthYear,
-      maxBirthYear: maxBirthYear,
-      validateAge,
+      description: description || null,
       teamId: team.id,
-      categoryId: categoryId!,
       seasonId: seasonId!,
-      gender: gender!,
       billingConfig: {
         billingDay:
           billingType === "SINGLE_ONLY" || billingFrequency !== "MONTHLY"
@@ -332,26 +283,15 @@ export const FormTeamSeason = ({
             </Alert>
           </div>
         )}
-        {/* <!-- Section 1: Información Básica & Capacidad --> */}
+        {/* <!-- Section 1: Información Básica --> */}
         <div className="lg:col-span-7 space-y-6">
           {/* <!-- Basic Info Card --> */}
           <BasicInfoCard
-            categoriesOptions={categoriesOptions}
             seasonsOptions={seasonsOptions}
-            categoryId={categoryId}
-            setCategoryId={setCategoryId}
             seasonId={seasonId}
             setSeasonId={setSeasonId}
-            gender={gender}
-            setGender={setGender}
             description={description}
             setDescription={setDescription}
-            minBirthYear={minBirthYear}
-            setMinBirthYear={setMinBirthYear}
-            maxBirthYear={maxBirthYear}
-            setMaxBirthYear={setMaxBirthYear}
-            validateAge={validateAge}
-            setValidateAge={setValidateAge}
             errors={errors}
             handleRemoveError={handleRemoveError}
             isStructuralDisabled={isStructuralDisabled}
@@ -396,15 +336,6 @@ export const FormTeamSeason = ({
             errors={errors}
             handleRemoveError={handleRemoveError}
             isFinancialDisabled={isFinancialDisabled}
-          />
-          {/* <!-- Capacity Card --> */}
-          <CapacityCard
-            maxMembers={maxMembers}
-            setMaxMembers={setMaxMembers}
-            minMembers={minMembers}
-            setMinMembers={setMinMembers}
-            errors={errors}
-            handleRemoveError={handleRemoveError}
           />
         </div>
         {/* <!-- Section 3: Políticas de Mora (Full Width Bottom) --> */}

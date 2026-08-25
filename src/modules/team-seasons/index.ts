@@ -22,7 +22,6 @@ export * from "./components/grid-cards/GridCards";
 export * from "./components/metrics-panel/MetricsPanel";
 export * from "./components/form/Form";
 export * from "./components/table/Table";
-export * from "./components/form/SelectCategory";
 export * from "./components/form/SelectSeason";
 export * from "./components/table/ButtonOfferings";
 export * from "./components/table/ButtonAdd";
@@ -44,3 +43,9 @@ export * from "./interfaces/post-team-seasons.interface";
 // Constants
 export * from "./constants/team-seasons.constants";
 export * from "./actions/pauses";
+
+export * from "./actions/categories.actions";
+export * from "./components/categories/ListCardsCategories";
+export * from "./components/filters/CategorySelectFilter";
+export * from "./components/modal/ViewCategoriesModal";
+export * from "./components/modal/ManageCategoryButton";

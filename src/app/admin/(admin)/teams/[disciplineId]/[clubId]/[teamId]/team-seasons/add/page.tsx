@@ -14,9 +14,8 @@ interface Props {
 
 export default async function AddTeamSeasonPage({ params }: Props) {
   const { disciplineId, clubId, teamId } = await params;
-  const [teamResponse, categoriesOptions, seasonsOptions] = await Promise.all([
+  const [teamResponse, seasonsOptions] = await Promise.all([
     getTeamContext({ id: teamId }),
-    getCategoriesByDisciplineOptions(disciplineId),
     getSeasonsByDisciplineOptions(disciplineId),
   ]);
 
@@ -37,17 +36,7 @@ export default async function AddTeamSeasonPage({ params }: Props) {
     );
   }
 
-  if (categoriesOptions.error) {
-    return (
-      <ErrorPage
-        message={categoriesOptions.message}
-        path={{
-          href: `/clubs/${teamResponse.data.club.id}/manage`,
-          label: "Volver a la lista de equipos",
-        }}
-      />
-    );
-  }
+
 
   if (seasonsOptions.error) {
     return (
@@ -88,7 +77,6 @@ export default async function AddTeamSeasonPage({ params }: Props) {
       <FormTeamSeason
         formId="form-team-season"
         team={teamResponse.data}
-        categoriesOptions={categoriesOptions.data.data}
         seasonsOptions={seasonsOptions.data.data}
         urlRedirect={`/admin/teams/${disciplineId}/${clubId}/${teamId}/team-seasons`}
       />

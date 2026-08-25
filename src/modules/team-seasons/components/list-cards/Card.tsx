@@ -3,6 +3,8 @@ import {
   ITeamSeason,
   STATUS_BG_MAP,
   TeamSeasonActions,
+  ViewCategoriesModal,
+  ManageCategoryButton
 } from "@/modules/team-seasons";
 import { Avatar, Button, Card } from "@heroui/react";
 import {
@@ -34,16 +36,7 @@ export const CardTeamSeason = ({ teamSeason, urlBase }: Props) => {
       <>
         <div className="space-y-4 mb-8">
           <div>
-            <div className="flex justify-between text-[10px] font-label-sm mb-1 uppercase text-outline">
-              Ocupación del Clan
-            </div>
-            <div className="w-full h-2.5 bg-surface rounded-full overflow-hidden relative">
-              <div
-                className={`absolute inset-y-0 left-0 shimmer-bar rounded-full w-[${(teamSeason._count.playerMemberships / teamSeason.maxMembers) * 100}%]`}
-              ></div>
-            </div>
             <div className="flex justify-between text-[10px] mt-1 font-label-sm text-on-surface-variant">
-              <span>Capacidad: {teamSeason.maxMembers}</span>
               <span className="text-primary font-bold">
                 {teamSeason._count.playerMemberships} Atletas
               </span>
@@ -184,7 +177,7 @@ export const CardTeamSeason = ({ teamSeason, urlBase }: Props) => {
       </div>
       <div className="p-6 flex-1 flex flex-col">
         <h3 className="font-display font-bold text-headline-md text-primary mb-1">
-          {teamSeason.category.name}
+          {teamSeason.season.name}
         </h3>
         <p className="text-on-surface-variant text-sm mb-4 italic opacity-80">
           {teamSeason.description}
@@ -218,14 +211,26 @@ export const CardTeamSeason = ({ teamSeason, urlBase }: Props) => {
           );
         })()}
 
-        {teamSeason.status === "ACTIVE" &&
-          teamSeason._count.playerMemberships < teamSeason.maxMembers && (
-            <ContentActive />
-          )}
-        {teamSeason.status === "ACTIVE" &&
-          teamSeason._count.playerMemberships >= teamSeason.maxMembers && (
-            <ContentActiveCompleted />
-          )}
+        <div className="mt-2">
+          <div className="flex flex-col gap-2 mb-3">
+            <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+              Categorías
+            </h4>
+            <div className="flex flex-wrap gap-2 w-full">
+              <div className="flex-1 min-w-35">
+                <ViewCategoriesModal
+                  teamSeason={teamSeason}
+                  urlBase={urlBase}
+                />
+              </div>
+              <div className="flex-1 min-w-35">
+                <ManageCategoryButton teamSeason={teamSeason} urlBase={urlBase} />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {teamSeason.status === "ACTIVE" && <ContentActive />}
         {teamSeason.status === "DRAFT" && <ContentDraft />}
         {teamSeason.status === "FINISHED" && <ContentFinished />}
       </div>

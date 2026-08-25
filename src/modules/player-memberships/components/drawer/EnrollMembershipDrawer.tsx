@@ -399,34 +399,6 @@ export const EnrollMembershipDrawer = ({
                   </Alert.Content>
                 </Alert>
 
-                <Alert status="accent" className="mb-2">
-                  <Alert.Indicator />
-                  <Alert.Content>
-                    <Alert.Title>
-                      Categoría: {teamSeason.category.name} (
-                      {teamSeason.category.minAge} a{" "}
-                      {teamSeason.category.maxAge || "Sin límite"} años)
-                    </Alert.Title>
-                    <Alert.Description>
-                      <p className="mb-1">
-                        {teamSeason.minBirthYear || teamSeason.maxBirthYear
-                          ? `Años de nacimiento permitidos: ${teamSeason.minBirthYear || "Cualquiera"} al ${teamSeason.maxBirthYear || "Cualquiera"}`
-                          : `El atleta debe tener ${teamSeason.category.maxAge ? `entre ${teamSeason.category.minAge} y ${teamSeason.category.maxAge} años` : `${teamSeason.category.minAge} años en adelante`} en el año actual.`}
-                      </p>
-                      <p>
-                        <strong>Duración de la temporada:</strong>{" "}
-                        {new Date(
-                          teamSeason.season.startDate,
-                        ).toLocaleDateString()}{" "}
-                        -{" "}
-                        {new Date(
-                          teamSeason.season.endDate,
-                        ).toLocaleDateString()}
-                      </p>
-                    </Alert.Description>
-                  </Alert.Content>
-                </Alert>
-
                 {/* Player picker */}
                 <SelectOrCreatePlayer
                   playerId={playerKey}

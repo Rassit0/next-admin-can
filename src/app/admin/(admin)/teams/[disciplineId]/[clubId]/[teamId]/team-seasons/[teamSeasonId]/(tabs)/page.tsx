@@ -2,6 +2,9 @@ import { ErrorPage } from "@/ui";
 import {
   getTeamSeasonById,
   getTeamSeasonSummary,
+  getTeamSeasonCategories,
+  getCategoriesByDisciplineOptions,
+  ListCardsCategories
 } from "@/modules/team-seasons";
 import { MetricsCards } from "@/modules/player-memberships";
 import { Avatar, Button, Card, Alert, Chip, Popover } from "@heroui/react";
@@ -42,9 +45,11 @@ interface Props {
 export default async function TeamSeasonDashboardPage({ params }: Props) {
   const { teamSeasonId } = await params;
 
-  const [teamSeasonResponse, summaryResponse] = await Promise.all([
+  const [teamSeasonResponse, summaryResponse, categoriesResponse, categoriesOptionsResponse] = await Promise.all([
     getTeamSeasonById({ id: teamSeasonId }),
     getTeamSeasonSummary({ id: teamSeasonId }),
+    getTeamSeasonCategories(teamSeasonId),
+    getCategoriesByDisciplineOptions((await params).disciplineId),
   ]);
 
   if (teamSeasonResponse.error || !teamSeasonResponse.data) {
@@ -53,12 +58,9 @@ export default async function TeamSeasonDashboardPage({ params }: Props) {
 
   const teamSeason = teamSeasonResponse.data;
   const summary = summaryResponse.data?.data;
+  const categories = categoriesResponse.data || [];
+  const categoriesOptions = categoriesOptionsResponse.data?.data || [];
 
-  const GENDER_MAP: Record<string, string> = {
-    MALE: "Masculino",
-    FEMALE: "Femenino",
-    MIXED: "Mixto",
-  };
 
   return (
     <div className="flex flex-col gap-6">
@@ -71,7 +73,7 @@ export default async function TeamSeasonDashboardPage({ params }: Props) {
           </div>
           <hr className="border-border" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {teamSeason.teamSeasonStaffs.map((staffAssignment) => (
+            {teamSeason.teamSeasonStaffs.map((staffAssignment: any) => (
               <div key={staffAssignment.id} className="flex items-center gap-3 bg-surface-container-low p-3 rounded-xl border border-border/50">
                 <Avatar size="md">
                   {staffAssignment.staff.person.imageUrl && (
@@ -109,14 +111,7 @@ export default async function TeamSeasonDashboardPage({ params }: Props) {
                 ? "Inscripciones Abiertas"
                 : "Inscripciones Cerradas"}
             </Chip>
-            <Chip
-              color="accent"
-              variant="soft"
-              size="sm"
-              className="font-semibold tracking-wide uppercase"
-            >
-              Género: {GENDER_MAP[teamSeason.gender] || teamSeason.gender}
-            </Chip>
+
           </div>
         </div>
         <hr className="border-border" />
@@ -222,15 +217,19 @@ export default async function TeamSeasonDashboardPage({ params }: Props) {
         <Alert status="accent">
           <Alert.Indicator />
           <Alert.Content>
-            <Alert.Title>Edades Permitidas</Alert.Title>
+            <Alert.Title>Arquitectura Multi-Categoría</Alert.Title>
             <Alert.Description>
-              {teamSeason.minBirthYear || teamSeason.maxBirthYear
-                ? `Se han restringido los años de nacimiento permitidos desde ${teamSeason.minBirthYear || "Cualquiera"} hasta ${teamSeason.maxBirthYear || "Cualquiera"}.`
-                : `Los atletas deben tener una edad deportiva entre ${teamSeason.category.minAge} y ${teamSeason.category.maxAge} años.`}
+              Esta temporada es un contenedor global comercial y financiero. Las restricciones de edades, cupos y género se definen individualmente en cada Categoría de esta temporada.
             </Alert.Description>
           </Alert.Content>
         </Alert>
       </Card>
+
+      <ListCardsCategories
+        teamSeasonId={teamSeasonId}
+        categories={categories}
+        categoriesOptions={categoriesOptions}
+      />
 
       <MetricsCards
         teamSeason={teamSeason}

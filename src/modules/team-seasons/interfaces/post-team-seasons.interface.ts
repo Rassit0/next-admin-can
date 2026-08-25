@@ -2,15 +2,8 @@ import { StatusTeamSeason, Gender, SeasonBillingType, BillingFrequency } from ".
 
 export interface IPostTeamSeason {
   description: string | null;
-  maxMembers: number;
-  minMembers: number;
-  minBirthYear?: number | null;
-  maxBirthYear?: number | null;
-  validateAge?: boolean;
   teamId: string;
-  categoryId: string;
   seasonId: string;
-  gender: Gender;
   billingConfig: {
     billingDay: number; // Dia de facturacion
     registrationFee?: string | null; // Precio de la matricula
@@ -29,4 +22,18 @@ export interface IPostTeamSeason {
   };
   status: StatusTeamSeason; // Estado de la oferta
   isRegistrationOpen?: boolean;
+}
+
+export interface IPostTeamSeasonCategory {
+  categoryId: string;
+  gender: "MALE" | "FEMALE" | "MIXED";
+  minBirthYear?: number | null;
+  maxBirthYear?: number | null;
+  minMembers: number;
+  maxMembers: number;
+  validateAge?: boolean;
+}
+
+export interface IUpdateTeamSeasonCategory extends Partial<IPostTeamSeasonCategory> {
+  isActive?: boolean;
 }

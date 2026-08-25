@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { getPaymentPlans } from "@/modules/payment-plans";
 import { getPlayers } from "@/modules/players";
-import { getTeamSeasonById } from "@/modules/team-seasons";
+import { getTeamSeasonById, getTeamSeasonCategories, CategorySelectFilter } from "@/modules/team-seasons";
 import {
   EnrollMembershipDrawer,
   getPlayerMemberships,
@@ -44,6 +44,7 @@ interface Props {
     per_page?: string;
     page?: string;
     status?: string;
+    teamSeasonCategoryId?: string;
   }>;
   params: Promise<{
     disciplineId: string;
@@ -57,14 +58,15 @@ export default async function PlayerMembershipsPage({
   searchParams,
   params,
 }: Props) {
-  const { search, page, per_page, status } = await searchParams;
+  const { search, page, per_page, status, teamSeasonCategoryId } = await searchParams;
   const { disciplineId, clubId, teamId, teamSeasonId } = await params;
 
-  const [membershipsResponse, teamSeasonResponse, paymentPlansResponse] =
+  const [membershipsResponse, teamSeasonResponse, paymentPlansResponse, categoriesResponse] =
     await resolvePageData([
-      getPlayerMemberships({ search, page, per_page, teamSeasonId, status }),
+      getPlayerMemberships({ search, page, per_page, teamSeasonId, teamSeasonCategoryId, status }),
       getTeamSeasonById({ id: teamSeasonId }),
       getPaymentPlans({ per_page: "100", teamSeasonId }),
+      getTeamSeasonCategories(teamSeasonId),
     ]);
 
   const teamSeason = teamSeasonResponse.data;
@@ -73,6 +75,7 @@ export default async function PlayerMembershipsPage({
   const paymentPlans = paymentPlansResponse.error
     ? []
     : paymentPlansResponse.data.data;
+  const categories = categoriesResponse.data || [];
 
   const GENDER_MAP: Record<string, string> = {
     MALE: "Masculino",
@@ -101,7 +104,14 @@ export default async function PlayerMembershipsPage({
             }
             showButtonBack={false}
           />
-          <SectionFilters />
+          <SectionFilters>
+            <CategorySelectFilter
+              categories={categories.map((c: any) => ({
+                id: c.id,
+                name: c.category.name,
+              }))}
+            />
+          </SectionFilters>
           <TableMemberships
             memberships={memberships}
             showTeamSeasonDetail={false}

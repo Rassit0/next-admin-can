@@ -7,7 +7,7 @@ import { ButtonGestion } from "./ButtonGestion";
 import { SortableColumnHeader } from "@/ui";
 import { DeleteModal } from "../modal/DeleteModal";
 import { iconMap } from "@/utils";
-import { ButtonOfferings, Gender, ITeamSeason } from "@/modules/team-seasons";
+import { ButtonOfferings, ITeamSeason } from "@/modules/team-seasons";
 
 interface Props {
   teamSeasons: ITeamSeason[];
@@ -25,18 +25,6 @@ export const TableTeamSeasons = ({ teamSeasons, urlBase }: Props) => {
   if (!isClient) {
     return null; // O un esqueleto de carga (Skeleton)
   }
-
-  const genderMap: Record<Gender, string> = {
-    MALE: "Masculino",
-    FEMALE: "Femenino",
-    MIXED: "Mixto",
-  };
-
-  const genderClassMap: Record<Gender, string> = {
-    MALE: "bg-blue-400 text-blue-50",
-    FEMALE: "bg-pink-400 text-pink-50",
-    MIXED: "bg-orange-400 text-orange-50",
-  };
 
   return (
     <Table>
@@ -73,14 +61,8 @@ export const TableTeamSeasons = ({ teamSeasons, urlBase }: Props) => {
               </SortableColumnHeader>
             </Table.Column>
 
-            <Table.Column allowsSorting id="categoryName">
-              <SortableColumnHeader id="categoryName">
-                CATEGORÍA
-              </SortableColumnHeader>
-            </Table.Column>
-
-            <Table.Column allowsSorting id="gender">
-              GÉNERO
+            <Table.Column allowsSorting id="categories">
+              CATEGORÍAS
             </Table.Column>
 
             <Table.Column allowsSorting id="createdAt">
@@ -132,10 +114,9 @@ export const TableTeamSeasons = ({ teamSeasons, urlBase }: Props) => {
                     day: "numeric",
                   })}
                 </Table.Cell>
-                <Table.Cell>{teamSeason.category.name}</Table.Cell>
                 <Table.Cell>
-                  <Chip size="sm" className={genderClassMap[teamSeason.gender]}>
-                    {genderMap[teamSeason.gender]}
+                  <Chip size="sm" variant="tertiary">
+                    {teamSeason.teamSeasonCategories?.length || 0}
                   </Chip>
                 </Table.Cell>
                 <Table.Cell>

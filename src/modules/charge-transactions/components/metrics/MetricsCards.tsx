@@ -36,20 +36,14 @@ export const MetricsCards = ({
     0,
   );
 
-  const occupancy =
-    teamSeason.maxMembers > 0
-      ? Math.min(100, Math.round((totalItems / teamSeason.maxMembers) * 100))
-      : 0;
-
   const cards = [
     {
       label: "Atletas inscritos",
       value: String(totalItems),
-      hint: `${teamSeason.maxMembers} cupos · mín. ${teamSeason.minMembers}`,
+      hint: `Atletas inscritos en total`,
       icon: UserGroupIcon,
       tone: "text-accent",
       bg: "bg-accent-soft",
-      progress: occupancy,
     },
     {
       label: "Membresías activas",
@@ -119,20 +113,7 @@ export const MetricsCards = ({
                 <HugeiconsIcon icon={card.icon} size={22} />
               </span>
             </div>
-            {typeof card.progress === "number" ? (
-              <div className="mt-4">
-                <ProgressBar value={card.progress} className="w-full">
-                  <ProgressBar.Track className="bg-surface-secondary">
-                    <ProgressBar.Fill />
-                  </ProgressBar.Track>
-                </ProgressBar>
-                <p className="mt-2 text-xs font-medium text-muted">
-                  {card.progress}% ocupación
-                </p>
-              </div>
-            ) : (
-              <p className="mt-4 text-xs text-muted">{card.hint}</p>
-            )}
+            <p className="mt-4 text-xs text-muted">{card.hint}</p>
           </Card>
         </motion.div>
       ))}

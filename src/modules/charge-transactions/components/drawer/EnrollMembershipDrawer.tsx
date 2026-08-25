@@ -360,33 +360,6 @@ export const EnrollMembershipDrawer = ({
 
             <Drawer.Body className="gap-5">
               <Surface variant="transparent" className="flex flex-col gap-5">
-                <Alert status="accent" className="mb-2">
-                  <Alert.Indicator />
-                  <Alert.Content>
-                    <Alert.Title>
-                      Categoría: {teamSeason.category.name} (
-                      {teamSeason.category.minAge} -{" "}
-                      {teamSeason.category.maxAge} años)
-                    </Alert.Title>
-                    <Alert.Description>
-                      <p className="mb-1">
-                        {teamSeason.minBirthYear || teamSeason.maxBirthYear
-                          ? `Años de nacimiento permitidos: ${teamSeason.minBirthYear || "Cualquiera"} al ${teamSeason.maxBirthYear || "Cualquiera"}`
-                          : `El atleta debe tener entre ${teamSeason.category.minAge} y ${teamSeason.category.maxAge} años en el año actual.`}
-                      </p>
-                      <p>
-                        <strong>Duración de la temporada:</strong>{" "}
-                        {new Date(
-                          teamSeason.season.startDate,
-                        ).toLocaleDateString()}{" "}
-                        -{" "}
-                        {new Date(
-                          teamSeason.season.endDate,
-                        ).toLocaleDateString()}
-                      </p>
-                    </Alert.Description>
-                  </Alert.Content>
-                </Alert>
 
                 {/* Player picker */}
                 <SelectOrCreatePlayer

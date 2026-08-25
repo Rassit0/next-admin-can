@@ -4,8 +4,6 @@ import { getPlayers } from "@/modules/players";
 
 import {
   ButtonAdd,
-  Gender,
-  getCategoriesByDisciplineOptions,
   getSeasonsByDisciplineOptions,
   getTeamContext,
   getTeamSeasons,
@@ -25,20 +23,18 @@ interface Props {
     search?: string;
     per_page?: string;
     page?: string;
-    gender?: Gender;
   }>;
   params: Promise<{ disciplineId: string; clubId: string; teamId: string }>;
 }
 
 export default async function TeamSeasonsPage({ searchParams, params }: Props) {
-  const [{ search, page, per_page, gender }, { disciplineId, clubId, teamId }] =
+  const [{ search, page, per_page }, { disciplineId, clubId, teamId }] =
     await Promise.all([searchParams, params]);
 
-  const [teamSeasonsResponse, teamResponse, categoriesOptions, seasonsOptions] =
+  const [teamSeasonsResponse, teamResponse, seasonsOptions] =
     await Promise.all([
-      getTeamSeasons({ search, page, per_page, teamId, gender }),
+      getTeamSeasons({ search, page, per_page, teamId }),
       getTeamContext({ id: teamId }),
-      getCategoriesByDisciplineOptions(disciplineId),
       getSeasonsByDisciplineOptions(disciplineId),
     ]);
 
@@ -76,17 +72,6 @@ export default async function TeamSeasonsPage({ searchParams, params }: Props) {
     );
   }
 
-  if (categoriesOptions.error) {
-    return (
-      <ErrorPage
-        message={categoriesOptions.message}
-        path={{
-          href: `/clubs/${teamResponse.data.club.id}/manage`,
-          label: "Volver a la lista de equipos",
-        }}
-      />
-    );
-  }
 
   if (seasonsOptions.error) {
     return (
