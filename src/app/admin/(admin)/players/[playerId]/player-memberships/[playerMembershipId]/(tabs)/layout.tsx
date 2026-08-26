@@ -40,7 +40,7 @@ export default async function TeamSeasonDetailLayout({
             ? `Membresía - ${membership.player.person.name} ${membership.player.person.lastName} ${membership.player.person.secondLastName || ""}`
             : "Membresía del Atleta"
         }
-        description={`Equipo: ${membership.teamSeason.team.name} · Categoría: ${membership.teamSeason.category.name} · Temporada: ${membership.teamSeason.season.name}`}
+        description={`Equipo: ${membership.teamSeason.team.name} · Categoría: ${membership.teamSeasonCategories?.category?.name || 'N/A'} · Temporada: ${membership.teamSeason.season.name}`}
         // breadcrumb={[
         //   { label: "Membresías", href: `/admin/player-memberships` },
         //   {

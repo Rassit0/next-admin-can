@@ -151,7 +151,7 @@ export const TableMemberships = ({
                           {membership.teamSeason?.team?.name ?? "—"}
                         </span>
                         <span className="text-xs text-muted truncate">
-                          {membership.teamSeason?.category?.name ?? "—"} •{" "}
+                          {membership.teamSeasonCategories?.category?.name ?? "—"} •{" "}
                           {membership.teamSeason?.season?.name ?? "—"}
                         </span>
                       </div>
