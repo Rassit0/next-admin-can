@@ -10,6 +10,7 @@ export * from "./actions/add-massive-manual-charge";
 export * from "./actions/remove";
 export * from "./actions/pauses";
 export * from "./actions/get-team-season-context";
+export * from "./actions/get-team-season-categories";
 
 // Helpers
 export * from "./helpers/initial-charges";

@@ -13,17 +13,20 @@ import {
   useOverlayState,
   Alert,
   FieldError,
+  Popover,
 } from "@heroui/react";
-import { Add01Icon, UserAdd01Icon } from "@hugeicons/core-free-icons";
+import { Add01Icon, UserAdd01Icon, InformationCircleIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ITeamSeason } from "@/modules/team-seasons";
+import { useSearchParams } from "next/navigation";
+import { ITeamSeason, ITeamSeasonCategory } from "@/modules/team-seasons";
 import { IPaymentPlan } from "@/modules/payment-plans";
 import { IPlayer } from "@/modules/players";
 import {
   addPlayerMembership,
   getPreviewCharges,
+  getTeamSeasonCategories,
   IPlayerOption,
   IPreviewChargesResponse,
 } from "@/modules/player-memberships";
@@ -58,10 +61,39 @@ export const EnrollMembershipDrawer = ({
   const state = useOverlayState();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+
+  const InfoTooltip = ({ text }: { text: string }) => (
+    <Popover>
+      <Button
+        isIconOnly
+        variant="ghost"
+        size="sm"
+        className="h-5 w-5 min-w-5 text-muted-foreground ml-2"
+      >
+        <HugeiconsIcon icon={InformationCircleIcon} size={14} />
+      </Button>
+      <Popover.Content placement="top">
+        <Popover.Dialog className="max-w-50 px-3 py-2">
+          <Popover.Arrow />
+          <p className="text-xs font-normal normal-case tracking-normal text-foreground">
+            {text}
+          </p>
+        </Popover.Dialog>
+      </Popover.Content>
+    </Popover>
+  );
+
   const [playerKey, setPlayerKey] = useState<string | null>(null);
   const [planKey, setPlanKey] = useState<string | null>(
     paymentPlans.find((p) => p.isDefault)?.id ?? null,
   );
+  const searchParams = useSearchParams();
+  const currentCategory = searchParams?.get("teamSeasonCategoryId");
+
+  const [categories, setCategories] = useState<ITeamSeasonCategory[]>([]);
+  const [loadingCategories, setLoadingCategories] = useState(false);
+
+  const [categoryKey, setCategoryKey] = useState<string | null>(null);
   const [startedAt, setStartedAt] = useState<string>(() =>
     getInitialDate(teamSeason.season.startDate),
   );
@@ -97,6 +129,7 @@ export const EnrollMembershipDrawer = ({
       .substring(0, 10);
 
     if (!playerKey) err.playerKey = "Seleccione un atleta.";
+    if (!categoryKey) err.categoryKey = "Seleccione una categoría.";
     if (!planKey) err.planKey = "Seleccione un plan de pago.";
     if (!startedAt) err.startedAt = "Debe ingresar una fecha de inicio.";
     else if (startedAt < sStartStr || startedAt > sEndStr) {
@@ -165,12 +198,28 @@ export const EnrollMembershipDrawer = ({
     discountType,
     discountReason,
     teamSeason,
+    hasDiscount,
+    discountEndDate,
+    regDiscountPercent,
+    recDiscountPercent,
+    seasonDiscountPercent,
+    discountType,
+    discountReason,
+    teamSeason,
     selectedPlan,
+    categoryKey,
   ]);
 
   const reset = () => {
     setPlayerKey(null);
     setPlanKey(paymentPlans.find((p) => p.isDefault)?.id ?? null);
+    if (currentCategory && categories.some(c => c.id === currentCategory)) {
+      setCategoryKey(currentCategory);
+    } else if (categories.length > 0) {
+      setCategoryKey(categories[0].id);
+    } else {
+      setCategoryKey(null);
+    }
     setStartedAt(getInitialDate(teamSeason.season.startDate));
     setIsMigrated(false);
     setHasDiscount(false);
@@ -184,11 +233,35 @@ export const EnrollMembershipDrawer = ({
   };
 
   useEffect(() => {
-    if (!playerKey || !planKey || !startedAt) return;
+    let active = true;
+    const fetchCategories = async () => {
+      setLoadingCategories(true);
+      const res = await getTeamSeasonCategories(teamSeason.id);
+      if (active) {
+        if (!res.error && res.data) {
+          setCategories(res.data);
+          if (currentCategory && res.data.some(c => c.id === currentCategory)) {
+            setCategoryKey(currentCategory);
+          } else if (res.data.length > 0) {
+            setCategoryKey(res.data[0].id);
+          }
+        }
+        setLoadingCategories(false);
+      }
+    };
+    fetchCategories();
+    return () => {
+      active = false;
+    };
+  }, [teamSeason.id, currentCategory]);
+
+  useEffect(() => {
+    if (!playerKey || !planKey || !categoryKey || !startedAt) return;
     handlePreview();
   }, [
     playerKey,
     planKey,
+    categoryKey,
     startedAt,
     isMigrated,
     hasDiscount,
@@ -198,7 +271,7 @@ export const EnrollMembershipDrawer = ({
   ]);
 
   const handlePreview = async () => {
-    if (!playerKey || !planKey || !startedAt) {
+    if (!playerKey || !planKey || !categoryKey || !startedAt) {
       return;
     }
 
@@ -287,9 +360,9 @@ export const EnrollMembershipDrawer = ({
 
     setLoading(true);
     const res = await addPlayerMembership({
-      playerId: playerKey,
-      teamSeasonId: teamSeason.id,
-      paymentPlanId: planKey,
+      playerId: playerKey!,
+      teamSeasonCategoryId: categoryKey!,
+      paymentPlanId: planKey!,
       startedAt: toLocalIso(startedAt)!,
       isMigrated,
       ...(hasDiscount && {
@@ -421,6 +494,51 @@ export const EnrollMembershipDrawer = ({
                                 : `Insc. -${plan.registrationDiscountPercent}% • Mens. -${plan.recurringDiscountPercent}%`}
                             </span>
                           </div>
+                        </ListBox.Item>
+                      ))}
+                    </ListBox>
+                  </ComboBox.Popover>
+                </ComboBox>
+
+                {/* Categoría */}
+                <ComboBox
+                  className="w-full"
+                  variant="secondary"
+                  menuTrigger="focus"
+                  aria-label="Seleccionar Categoría"
+                  selectedKey={categoryKey}
+                  onSelectionChange={(key) =>
+                    setCategoryKey(key ? String(key) : null)
+                  }
+                  isDisabled={loadingCategories || categories.length === 0}
+                  isInvalid={!!errors.categoryKey || undefined}
+                >
+                  <Label className="text-sm font-semibold flex items-center">
+                    Categoría
+                    <InfoTooltip text="La categoría en la que el jugador será inscrito." />
+                  </Label>
+                  <ComboBox.InputGroup>
+                    <Input
+                      variant="secondary"
+                      placeholder={
+                        loadingCategories
+                          ? "Cargando categorías..."
+                          : categories.length === 0
+                            ? "No hay categorías disponibles"
+                            : "Selecciona una categoría"
+                      }
+                    />
+                    <ComboBox.Trigger />
+                  </ComboBox.InputGroup>
+                  <ComboBox.Popover>
+                    <ListBox>
+                      {categories.map((tsc) => (
+                        <ListBox.Item
+                          key={tsc.id}
+                          id={tsc.id}
+                          textValue={tsc.category.name}
+                        >
+                          {tsc.category.name} ({tsc.gender})
                         </ListBox.Item>
                       ))}
                     </ListBox>

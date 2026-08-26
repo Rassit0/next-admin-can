@@ -16,6 +16,8 @@ import { createAccountCharge } from "@/modules/account-charges/actions/create";
 import { useRouter } from "next/navigation";
 import { FileUploader } from "@/ui/components/file-uploader/FileUploader";
 import { useStorage } from "@/hooks/useStorage";
+import { SelectOrCreatePerson } from "./SelectOrCreatePerson";
+import { IPersonOption } from "@/modules/charge-transactions";
 
 import { FinancialAccount } from "@/modules/financial-accounts/interfaces/financial-account.interface";
 
@@ -46,6 +48,12 @@ export const DirectTransactionDrawer = ({
   const router = useRouter();
   const { uploadFiles, isUploading } = useStorage();
 
+  const [personId, setPersonId] = useState<string | null>(null);
+  const [selectedPerson, setSelectedPerson] = useState<IPersonOption | null>(null);
+
+  const [payerPersonId, setPayerPersonId] = useState<string | null>(null);
+  const [selectedPayerPerson, setSelectedPayerPerson] = useState<IPersonOption | null>(null);
+
   useEffect(() => {
     if (isOpen) {
       setConcept("");
@@ -54,6 +62,10 @@ export const DirectTransactionDrawer = ({
       setFinancialAccountId("");
       setPaymentMethod("CASH");
       setFiles([]);
+      setPersonId(null);
+      setSelectedPerson(null);
+      setPayerPersonId(null);
+      setSelectedPayerPerson(null);
     }
   }, [isOpen]);
 
@@ -88,7 +100,9 @@ export const DirectTransactionDrawer = ({
           paymentMethod,
           financialAccountId,
           ...(attachmentIds.length > 0 && { attachmentIds }),
+          ...(payerPersonId && { payerPersonId }),
         },
+        ...(personId && { personId }),
       });
 
       if (res.error) {
@@ -144,6 +158,22 @@ export const DirectTransactionDrawer = ({
                 variant="secondary"
               />
             </TextField>
+
+            <SelectOrCreatePerson
+              isRequired={false}
+              label="Beneficiario (Opcional)"
+              personId={personId}
+              setPersonId={setPersonId}
+              setSelectedPerson={setSelectedPerson}
+            />
+
+            <SelectOrCreatePerson
+              isRequired={false}
+              label="Pagador (Opcional)"
+              personId={payerPersonId}
+              setPersonId={setPayerPersonId}
+              setSelectedPerson={setSelectedPayerPerson}
+            />
 
             <ComboBox
               className="w-full"

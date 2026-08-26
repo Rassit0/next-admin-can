@@ -7,7 +7,7 @@ import { IPlayerMembership } from "@/modules/player-memberships";
 
 export interface AddPlayerMembershipData {
   playerId: string;
-  teamSeasonId: string;
+  teamSeasonCategoryId: string;
   paymentPlanId: string;
   startedAt: string;
   isMigrated: boolean;

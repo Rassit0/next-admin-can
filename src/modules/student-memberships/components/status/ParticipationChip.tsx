@@ -1,7 +1,7 @@
 "use client";
 import { Chip } from "@heroui/react";
 import { IStudentMembership } from "@/modules/student-memberships";
-import { getCurrentCycle, getPendingCurrentCycle, getUpcomingCycles, isMembershipInGap } from "@/modules/student-memberships/helpers/domain";
+import { getCurrentCycle, getPendingCurrentCycle, getUpcomingCycles, isMembershipInGap, getPastCycles } from "@/modules/student-memberships/helpers/domain";
 
 interface Props {
   membership: IStudentMembership;
@@ -78,6 +78,18 @@ export const ParticipationChip = ({ membership, size = "sm" }: Props) => {
     const monthName = monthFormatter.format(startDate);
     const capitalizedMonth = monthName.charAt(0).toUpperCase() + monthName.slice(1);
     
+    const pastCycles = getPastCycles(membership.cycleEnrollments);
+    if (pastCycles.length === 0) {
+      return (
+        <div className="flex flex-col gap-1 items-start">
+          <Chip color="accent" variant="soft" size={size}>
+            <span className="size-1.5 rounded-full bg-accent" aria-hidden />
+            <Chip.Label>Próximo: {capitalizedMonth}</Chip.Label>
+          </Chip>
+        </div>
+      );
+    }
+
     return (
       <div className="flex flex-col gap-1 items-start">
         <Chip color="warning" variant="soft" size={size}>

@@ -98,7 +98,6 @@ export const itemsNavigation: NavItem[] = [
     action: "schools",
     subject: "SCHOOLS",
     icon: <HugeiconsIcon icon={Mortarboard02Icon} size={20} />,
-    mobile: { priority: 8 },
   },
   {
     label: "Cursos",
@@ -106,6 +105,7 @@ export const itemsNavigation: NavItem[] = [
     action: "courses",
     subject: "COURSES",
     icon: <HugeiconsIcon icon={BookOpen01Icon} size={20} />,
+    mobile: { priority: 8 },
   },
   {
     label: "Estudiantes",

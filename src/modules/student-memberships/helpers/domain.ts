@@ -87,6 +87,22 @@ export const getUpcomingCycles = (cycles?: ICycleEnrollment[]): ICycleEnrollment
 };
 
 /**
+ * Returns all past CONFIRMED cycles.
+ */
+export const getPastCycles = (cycles?: ICycleEnrollment[]): ICycleEnrollment[] => {
+  if (!cycles || cycles.length === 0) return [];
+  
+  const now = new Date();
+  
+  return cycles.filter(cycle => {
+    if (cycle.status !== "CONFIRMED") return false;
+    
+    const end = new Date(cycle.cycleEndDate);
+    return end <= now;
+  });
+};
+
+/**
  * Determines if the membership has participation currently (ACTIVE + active cycle).
  */
 export const hasActiveParticipation = (membership: IStudentMembership): boolean => {
