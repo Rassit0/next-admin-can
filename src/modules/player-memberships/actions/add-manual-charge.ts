@@ -9,6 +9,7 @@ export interface AddManualChargeData {
   description: string;
   amount: number;
   dueDate: string;
+  categoryId: string;
 }
 
 export const addManualCharge = async (

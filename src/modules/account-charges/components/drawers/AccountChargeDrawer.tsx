@@ -11,7 +11,14 @@ import {
   TextField,
   Tabs,
   Switch,
+  Autocomplete,
+  SearchField,
+  Spinner,
+  cn,
 } from "@heroui/react";
+import { useAsyncList } from "@react-stately/data";
+import { getPersonsOptions } from "../../actions/get-persons-options";
+import { IPersonOption } from "@/modules/students";
 import { Cancel01Icon, FloppyDiskIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { IAccountCharge } from "../../interfaces/charge.interface";
@@ -55,6 +62,22 @@ export const AccountChargeDrawer = ({
   );
   const [externalEntity, setExternalEntity] = useState("");
   const [personId, setPersonId] = useState("");
+
+  const list = useAsyncList<IPersonOption>({
+    async load({ cursor: page = "1", filterText, signal }) {
+      const res = await getPersonsOptions({ search: filterText, page }, signal);
+      if (!res || res.error) {
+        return {
+          cursor: undefined,
+          items: [],
+        };
+      }
+      return {
+        cursor: res.data?.meta.nextPage?.toString() || undefined,
+        items: res.data?.data || [],
+      };
+    },
+  });
 
   const isReceivable = direction === "RECEIVABLE";
   const drawerTitle = charge
@@ -172,7 +195,12 @@ export const AccountChargeDrawer = ({
           externalEntity:
             entityType === "EXTERNAL" ? externalEntity : undefined,
           personId: entityType === "PERSON" ? personId : undefined,
-          immediatePayment: isImmediate ? { paymentMethod } : undefined,
+          immediatePayment: isImmediate
+            ? {
+                paymentMethod,
+                payerPersonId: entityType === "PERSON" ? personId : undefined,
+              }
+            : undefined,
         };
         const res = await createAccountCharge(data);
         if (res.error) toast.error(res.message);
@@ -347,17 +375,69 @@ export const AccountChargeDrawer = ({
                   />
                 </Tabs.Panel>
                 <Tabs.Panel key="PERSON" id="PERSON">
-                  <Input
-                    placeholder="ID de la persona (Temporalmente)"
-                    value={personId}
-                    onChange={(e) => setPersonId(e.target.value)}
+                  <Autocomplete
+                    allowsEmptyCollection
                     variant="secondary"
-                    className="mt-2"
-                  />
-                  <span className="text-xs text-default-400 mt-1 inline-block">
-                    El selector avanzado de personas se implementará
-                    próximamente.
-                  </span>
+                    className="mt-2 w-full"
+                    placeholder="Buscar por nombre o documento..."
+                    selectionMode="single"
+                    value={personId}
+                    onChange={(key) => {
+                      setPersonId(key?.toString() || "");
+                    }}
+                  >
+                    <Label className="text-sm font-semibold">Beneficiario / Estudiante (Opcional)</Label>
+                    <Autocomplete.Trigger>
+                      <Autocomplete.Value />
+                      <Autocomplete.ClearButton />
+                      <Autocomplete.Indicator />
+                    </Autocomplete.Trigger>
+                    <Autocomplete.Popover>
+                      <Autocomplete.Filter
+                        inputValue={list.filterText}
+                        onInputChange={list.setFilterText}
+                      >
+                        <SearchField
+                          autoFocus
+                          aria-label="Buscar personas"
+                          className="sticky top-0 z-10"
+                          name="search"
+                          variant="secondary"
+                        >
+                          <SearchField.Group>
+                            <SearchField.SearchIcon />
+                            <SearchField.Input placeholder="Buscar beneficiario..." />
+                            <Spinner
+                              size="sm"
+                              className={cn("absolute top-1/2 right-2 -translate-y-1/2", {
+                                "pointer-events-none opacity-0": !list.isLoading,
+                              })}
+                            />
+                          </SearchField.Group>
+                        </SearchField>
+                      </Autocomplete.Filter>
+                      <ListBox
+                        aria-label="Lista de personas"
+                        className="max-h-64 overflow-y-auto"
+                        items={list.items}
+                      >
+                        {(item: IPersonOption) => (
+                          <ListBox.Item
+                            id={item.id}
+                            key={item.id}
+                            textValue={item.fullName}
+                          >
+                            <div className="flex flex-col">
+                              <span className="font-semibold">{item.fullName}</span>
+                              <span className="text-sm text-default-400">
+                                {item.documentNumber || "Sin documento"}
+                              </span>
+                            </div>
+                          </ListBox.Item>
+                        )}
+                      </ListBox>
+                    </Autocomplete.Popover>
+                  </Autocomplete>
                 </Tabs.Panel>
               </Tabs>
             </div>

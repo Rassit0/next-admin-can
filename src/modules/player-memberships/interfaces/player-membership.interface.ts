@@ -37,10 +37,12 @@ export interface IPlayerMembership {
     team: {
       name: string;
     };
-    category: {
+    season: {
       name: string;
     };
-    season: {
+  };
+  teamSeasonCategories?: {
+    category: {
       name: string;
     };
   };

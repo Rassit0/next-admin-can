@@ -7,6 +7,7 @@ export * from "./actions/get-by-id";
 export * from "./actions/create";
 export * from "./actions/update";
 export * from "./actions/cancel";
+export * from "./actions/get-persons-options";
 
 // Components
 export * from "./components";

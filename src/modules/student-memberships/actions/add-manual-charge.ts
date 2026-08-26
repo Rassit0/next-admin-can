@@ -9,6 +9,7 @@ export interface AddManualChargeData {
   description: string;
   amount: number;
   dueDate: string;
+  categoryId: string;
 }
 
 export const addManualCharge = async (
@@ -18,7 +19,7 @@ export const addManualCharge = async (
     const response = await api.post<{
       message: string;
       data: any;
-    }>(`membership-charges/manual`, data);
+    }>(`student-charges/manual`, data);
 
     updateTag("charges");
     return {

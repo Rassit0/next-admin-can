@@ -21,6 +21,10 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { addManualCharge } from "../../actions/add-manual-charge";
+import { getAccountCategories } from "@/modules/account-categories/actions/get";
+import { IAccountCategory } from "@/modules/account-categories/interfaces/category.interface";
+import { useEffect } from "react";
+import { ComboBox, ListBox } from "@heroui/react";
 
 interface Props {
   isOpen: boolean;
@@ -35,6 +39,16 @@ export const CreateManualChargeDrawer = ({
 }: Props) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [categories, setCategories] = useState<IAccountCategory[]>([]);
+  const [categoryId, setCategoryId] = useState("");
+
+  useEffect(() => {
+    if (isOpen) {
+      getAccountCategories({ per_page: "100", type: "RECEIVABLE" }).then(res => {
+        if (!res.error && res.data) setCategories(res.data.data || []);
+      });
+    }
+  }, [isOpen]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -55,6 +69,7 @@ export const CreateManualChargeDrawer = ({
         membershipId: playerMembershipId,
         amount,
         description,
+        categoryId,
         dueDate: new Date(dueDate).toISOString(),
       });
 
@@ -91,6 +106,33 @@ export const CreateManualChargeDrawer = ({
             </Drawer.Header>
 
             <Drawer.Body className="flex flex-col gap-5 pt-6">
+              <ComboBox
+                className="w-full"
+                variant="secondary"
+                menuTrigger="focus"
+                selectedKey={categoryId}
+                onSelectionChange={(key) => {
+                  if (key) setCategoryId(String(key));
+                }}
+                isRequired
+              >
+                <Label className="text-sm font-semibold">Categoría Contable</Label>
+                <ComboBox.InputGroup>
+                  <InputGroup.Input
+                    placeholder="Seleccione una categoría"
+                  />
+                  <ComboBox.Trigger />
+                </ComboBox.InputGroup>
+                <ComboBox.Popover>
+                  <ListBox>
+                    {categories.map((cat) => (
+                      <ListBox.Item key={cat.id} id={cat.id} textValue={cat.name}>
+                        {cat.name}
+                      </ListBox.Item>
+                    ))}
+                  </ListBox>
+                </ComboBox.Popover>
+              </ComboBox>
               <TextField
                 name="description"
                 isRequired
