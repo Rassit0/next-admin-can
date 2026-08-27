@@ -35,6 +35,9 @@ export const CashFlowTable = ({ transactions }: Props) => {
                   Fecha
                 </SortableColumnHeader>
               </Table.Column>
+              <Table.Column id="receipt">
+                <div className="font-semibold">Comprobante</div>
+              </Table.Column>
               <Table.Column id="concept">
                 <div className="font-semibold">Concepto</div>
               </Table.Column>
@@ -49,6 +52,12 @@ export const CashFlowTable = ({ transactions }: Props) => {
               </Table.Column>
               <Table.Column>Origen</Table.Column>
               <Table.Column>Cuenta Financiera</Table.Column>
+              <Table.Column id="pagador">
+                <div className="font-semibold">Pagador</div>
+              </Table.Column>
+              <Table.Column id="beneficiario">
+                <div className="font-semibold">Beneficiario</div>
+              </Table.Column>
               <Table.Column allowsSorting id="amount">
                 <div className="text-right">
                   <SortableColumnHeader id="amount" className="justify-end">
@@ -85,6 +94,15 @@ export const CashFlowTable = ({ transactions }: Props) => {
                       {new Date(transaction.transactionDate).toLocaleString(
                         "es-BO",
                       )}
+                    </span>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <span className="font-mono text-sm text-default-700 whitespace-nowrap">
+                      {transaction.receiptSeries && transaction.receiptNumber
+                        ? `${transaction.receiptSeries}-${transaction.receiptNumber}`
+                        : transaction.receiptNumber
+                          ? `${transaction.receiptNumber}`
+                          : "—"}
                     </span>
                   </Table.Cell>
                   <Table.Cell>
@@ -138,13 +156,35 @@ export const CashFlowTable = ({ transactions }: Props) => {
                     </span>
                   </Table.Cell>
                   <Table.Cell>
-                    <span className="text-default-600 font-medium">
+                    <span className="text-default-700 text-sm">
                       {transaction.financialAccountName || (
                         <span className="text-default-400 italic">
                           Sin asignar
                         </span>
                       )}
                     </span>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <div className="flex flex-col">
+                      <span className="text-sm text-default-700 max-w-37.5 truncate">
+                        {transaction.payerPerson ? (
+                          `${transaction.payerPerson.name} ${transaction.payerPerson.lastName || ""}`
+                        ) : (
+                          <span className="text-default-400">—</span>
+                        )}
+                      </span>
+                    </div>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <div className="flex flex-col">
+                      <span className="text-sm text-default-700 max-w-37.5 truncate">
+                        {transaction.thirdParty ? (
+                          transaction.thirdParty.name
+                        ) : (
+                          <span className="text-default-400">—</span>
+                        )}
+                      </span>
+                    </div>
                   </Table.Cell>
                   <Table.Cell>
                     <div className="text-right font-medium">

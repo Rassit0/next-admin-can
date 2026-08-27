@@ -18,6 +18,7 @@ import { FileUploader } from "@/ui/components/file-uploader/FileUploader";
 import { useStorage } from "@/hooks/useStorage";
 import { SelectOrCreatePerson } from "./SelectOrCreatePerson";
 import { IPersonOption } from "@/modules/charge-transactions";
+import { PrintReportDialog } from "@/modules/charge-transactions/components/dialog/PrintReportDialog";
 
 import { FinancialAccount } from "@/modules/financial-accounts/interfaces/financial-account.interface";
 
@@ -47,6 +48,9 @@ export const DirectTransactionDrawer = ({
   const [files, setFiles] = useState<File[]>([]);
   const router = useRouter();
   const { uploadFiles, isUploading } = useStorage();
+
+  const [printTransactionId, setPrintTransactionId] = useState<string | null>(null);
+  const [showPrintDialog, setShowPrintDialog] = useState(false);
 
   const [personId, setPersonId] = useState<string | null>(null);
   const [selectedPerson, setSelectedPerson] = useState<IPersonOption | null>(null);
@@ -111,6 +115,13 @@ export const DirectTransactionDrawer = ({
         toast.success("Movimiento registrado exitosamente");
         // Refrescar lista de transacciones
         router.refresh();
+        
+        if (res.data?.immediateTransaction?.data?.transaction?.id) {
+          setPrintTransactionId(res.data.immediateTransaction.data.transaction.id);
+          setShowPrintDialog(true);
+          return;
+        }
+
         onOpenChange(false);
         onSuccess?.();
       }
@@ -122,8 +133,9 @@ export const DirectTransactionDrawer = ({
   };
 
   return (
-    <Drawer.Backdrop isOpen={isOpen} onOpenChange={onOpenChange}>
-      <Drawer.Content placement="right">
+    <>
+      <Drawer.Backdrop isOpen={isOpen} onOpenChange={onOpenChange}>
+        <Drawer.Content placement="right">
         <Drawer.Dialog className="w-full sm:max-w-md">
           <Drawer.CloseTrigger />
           <Drawer.Header className="border-b border-border">
@@ -310,5 +322,16 @@ export const DirectTransactionDrawer = ({
         </Drawer.Dialog>
       </Drawer.Content>
     </Drawer.Backdrop>
+
+      <PrintReportDialog
+        transactionId={printTransactionId}
+        isOpen={showPrintDialog}
+        onOpenChange={setShowPrintDialog}
+        onSuccess={() => {
+          onOpenChange(false);
+          onSuccess?.();
+        }}
+      />
+    </>
   );
 };

@@ -8,7 +8,7 @@ interface Props {
 }
 export const Header = ({ organization }: Props) => {
   return (
-    <Link href="/" className="px-4 lg:px-6 mb-8 flex items-center gap-3">
+    <Link href="/" className="px-4 lg:px-6 flex items-center gap-3">
       <span className="text-neon drop-shadow-[0_0_10px_var(--accent)]">
         <Crest className="h-12 w-10" />
       </span>

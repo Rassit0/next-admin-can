@@ -116,7 +116,7 @@ export const TableTeamSeasons = ({ teamSeasons, urlBase }: Props) => {
                 </Table.Cell>
                 <Table.Cell>
                   <Chip size="sm" variant="tertiary">
-                    {teamSeason.teamSeasonCategories?.length || 0}
+                    {teamSeason.categories?.length || 0}
                   </Chip>
                 </Table.Cell>
                 <Table.Cell>

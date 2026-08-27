@@ -14,6 +14,17 @@ export interface ITransaction {
   receiptNumber: number;
   reference: string | null;
   financialAccountName: string | null;
+  thirdParty: {
+    id: string;
+    name: string;
+    documentNumber: string | null;
+  } | null;
+  payerPerson: {
+    id: string;
+    name: string;
+    lastName: string | null;
+    documentNumber: string | null;
+  } | null;
   createdAt: Date | string;
 }
 

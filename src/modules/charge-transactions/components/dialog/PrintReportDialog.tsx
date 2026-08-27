@@ -93,55 +93,55 @@ export const PrintReportDialog = ({
   return (
     <AlertDialog.Backdrop isOpen={isOpen} onOpenChange={onOpenChange}>
       <AlertDialog.Container>
-        <AlertDialog.Dialog className="sm:max-w-sm">
-          <AlertDialog.CloseTrigger />
-          <AlertDialog.Header>
-            <AlertDialog.Icon status="accent" />
-            <AlertDialog.Heading>Recibo de Pago</AlertDialog.Heading>
-          </AlertDialog.Header>
-          <AlertDialog.Body>
-            <p className="text-sm text-muted">
-              El pago se registró exitosamente. ¿Qué deseas hacer con el recibo?
-            </p>
-          </AlertDialog.Body>
-          <AlertDialog.Footer className="flex flex-col gap-2 sm:flex-row">
-            <Button
-              variant="tertiary"
-              onPress={() => onOpenChange(false)}
-              isDisabled={isLoading}
-              className="w-full sm:w-auto"
-            >
-              Cerrar
-            </Button>
-            <Button
-              variant="secondary"
-              onPress={() => openPdf("download")}
-              isDisabled={isLoading}
-              className="w-full sm:w-auto"
-            >
-              {isLoading ? (
-                <Spinner color="current" size="sm" />
-              ) : (
-                <HugeiconsIcon icon={Download04Icon} size={18} />
-              )}
-              Descargar PDF
-            </Button>
-            <Button
-              variant="primary"
-              onPress={() => openPdf("print")}
-              isDisabled={isLoading}
-              className="w-full sm:w-auto"
-            >
-              {isLoading ? (
-                <Spinner color="current" size="sm" />
-              ) : (
-                <HugeiconsIcon icon={PrinterIcon} size={18} />
-              )}
-              Imprimir
-            </Button>
-          </AlertDialog.Footer>
-        </AlertDialog.Dialog>
-      </AlertDialog.Container>
+          <AlertDialog.Dialog className="sm:max-w-sm">
+            <AlertDialog.CloseTrigger />
+            <AlertDialog.Header>
+              <AlertDialog.Icon status="accent" />
+              <AlertDialog.Heading>Recibo de Pago</AlertDialog.Heading>
+            </AlertDialog.Header>
+            <AlertDialog.Body>
+              <p className="text-sm text-muted">
+                El pago se registró exitosamente. ¿Qué deseas hacer con el recibo?
+              </p>
+            </AlertDialog.Body>
+            <AlertDialog.Footer className="flex flex-col gap-2 sm:flex-row">
+              <Button
+                variant="tertiary"
+                onPress={() => onOpenChange(false)}
+                isDisabled={isLoading}
+                className="w-full sm:w-auto"
+              >
+                Cerrar
+              </Button>
+              <Button
+                variant="secondary"
+                onPress={() => openPdf("download")}
+                isDisabled={isLoading}
+                className="w-full sm:w-auto"
+              >
+                {isLoading ? (
+                  <Spinner color="current" size="sm" />
+                ) : (
+                  <HugeiconsIcon icon={Download04Icon} size={18} />
+                )}
+                Descargar PDF
+              </Button>
+              <Button
+                variant="primary"
+                onPress={() => openPdf("print")}
+                isDisabled={isLoading}
+                className="w-full sm:w-auto"
+              >
+                {isLoading ? (
+                  <Spinner color="current" size="sm" />
+                ) : (
+                  <HugeiconsIcon icon={PrinterIcon} size={18} />
+                )}
+                Imprimir
+              </Button>
+            </AlertDialog.Footer>
+          </AlertDialog.Dialog>
+        </AlertDialog.Container>
     </AlertDialog.Backdrop>
   );
 };

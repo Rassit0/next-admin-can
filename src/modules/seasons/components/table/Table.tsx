@@ -1,6 +1,6 @@
 "use client";
 import { Avatar, Button, Checkbox, Chip, Table } from "@heroui/react";
-import { EyeIcon , Search01Icon } from "@hugeicons/core-free-icons";
+import { EyeIcon, Search01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useEffect, useState } from "react";
 import { ButtonGestion } from "./ButtonGestion";
@@ -69,16 +69,16 @@ export const TableSeasons = ({
           }
         >
           <Table.Header>
-            <Table.Column
+            {/* <Table.Column
               allowsSorting
               isRowHeader
               className="after:hidden"
               id="id"
             >
               ID
-            </Table.Column>
+            </Table.Column> */}
 
-            <Table.Column allowsSorting id="name">
+            <Table.Column allowsSorting isRowHeader id="name">
               <SortableColumnHeader id="name">TEMPORADA</SortableColumnHeader>
             </Table.Column>
 
@@ -115,15 +115,12 @@ export const TableSeasons = ({
           >
             {seasons.map((season) => (
               <Table.Row key={season.id} id={season.id}>
-                <Table.Cell>{season.id}</Table.Cell>
+                {/* <Table.Cell>{season.id}</Table.Cell> */}
                 <Table.Cell>{season.name}</Table.Cell>
                 <Table.Cell>{season.startDate.toLocaleDateString()}</Table.Cell>
                 <Table.Cell>{season.endDate.toLocaleDateString()}</Table.Cell>
                 <Table.Cell>
-                  <Chip
-                    className={statusBgMap[season.status]}
-                    size="sm"
-                  >
+                  <Chip className={statusBgMap[season.status]} size="sm">
                     {statusTextMap[season.status]}
                   </Chip>
                 </Table.Cell>

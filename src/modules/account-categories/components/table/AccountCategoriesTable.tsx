@@ -28,10 +28,11 @@ export const AccountCategoriesTable = ({
             <Table.Column allowsSorting id="name" isRowHeader>
               <SortableColumnHeader id="name">Nombre</SortableColumnHeader>
             </Table.Column>
+            <Table.Column allowsSorting id="code">
+              <SortableColumnHeader id="code">Código</SortableColumnHeader>
+            </Table.Column>
             <Table.Column allowsSorting id="description">
-              <SortableColumnHeader id="description">
-                Descripción
-              </SortableColumnHeader>
+              Descripción
             </Table.Column>
             <Table.Column allowsSorting id="type">
               <SortableColumnHeader id="type">Tipo</SortableColumnHeader>
@@ -59,7 +60,8 @@ export const AccountCategoriesTable = ({
             {categories.map((category) => (
               <Table.Row key={category.id} id={category.id}>
                 <Table.Cell className="font-medium">{category.name}</Table.Cell>
-                <Table.Cell className="text-default-500 max-w-[300px] truncate">
+                <Table.Cell className="font-medium">{category.code}</Table.Cell>
+                <Table.Cell className="text-default-500 max-w-75 truncate">
                   {category.description || "-"}
                 </Table.Cell>
                 <Table.Cell>

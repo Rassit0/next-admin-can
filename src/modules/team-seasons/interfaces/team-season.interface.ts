@@ -38,7 +38,7 @@ export interface ITeamSeason {
   isRegistrationOpen: boolean;
   billingConfig?: ITeamSeasonBillingConfig;
   teamSeasonStaffs?: any[];
-  teamSeasonCategories: ITeamSeasonCategory[];
+  categories: ITeamSeasonCategory[];
   _count: {
     playerMemberships: number;
   };

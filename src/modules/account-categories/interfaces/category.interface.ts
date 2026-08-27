@@ -1,6 +1,7 @@
 export interface IAccountCategory {
   id: string;
   name: string;
+  code: string;
   description?: string;
   type: "RECEIVABLE" | "PAYABLE";
   createdAt: Date;

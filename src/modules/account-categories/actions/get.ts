@@ -13,6 +13,8 @@ interface SearchParams {
   per_page?: string;
   page?: string;
   type?: string;
+  sortField?: string;
+  orderBy?: string;
 }
 
 const parseCategory = (category: IAccountCategory): IAccountCategory => ({
@@ -26,6 +28,8 @@ export const getAccountCategories = async ({
   per_page = "10",
   page = "1",
   type,
+  sortField,
+  orderBy,
 }: SearchParams): Promise<ServiceResponse<IAccountCategoriesResponse>> => {
   return handleServerAction(async () => {
     const params = new URLSearchParams();
@@ -33,6 +37,8 @@ export const getAccountCategories = async ({
     if (per_page) params.set("per_page", per_page);
     if (page) params.set("page", page);
     if (type) params.set("type", type);
+    if (sortField) params.set("sortField", sortField);
+    if (orderBy) params.set("orderBy", orderBy);
 
     const res = await api.get<IAccountCategoriesResponse>(
       `account-categories?${params.toString()}`,

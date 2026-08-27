@@ -63,16 +63,16 @@ export const TableLocations = ({ locations }: Props) => {
           }
         >
           <Table.Header>
-            <Table.Column
+            {/* <Table.Column
               allowsSorting
               isRowHeader
               className="after:hidden"
               id="id"
             >
               <SortableColumnHeader id="id">ID</SortableColumnHeader>
-            </Table.Column>
+            </Table.Column> */}
 
-            <Table.Column allowsSorting id="name">
+            <Table.Column allowsSorting isRowHeader id="name">
               <SortableColumnHeader id="name">INSTALACIÓN</SortableColumnHeader>
             </Table.Column>
 
@@ -127,7 +127,7 @@ export const TableLocations = ({ locations }: Props) => {
           >
             {locations.map((location) => (
               <Table.Row key={location.id} id={location.id}>
-                <Table.Cell>{location.id}</Table.Cell>
+                {/* <Table.Cell>{location.id}</Table.Cell> */}
                 <Table.Cell>{location.name}</Table.Cell>
                 <Table.Cell>{location.address}</Table.Cell>
                 <Table.Cell>{location.description || "-"}</Table.Cell>

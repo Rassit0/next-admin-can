@@ -42,21 +42,17 @@ export const TableStudents = ({ students }: Props) => {
           className="min-w-200"
         >
           <Table.Header>
-            <Table.Column
+            {/* <Table.Column
               allowsSorting
               isRowHeader
               className="after:hidden"
               id="id"
             >
               <SortableColumnHeader id="id">ID</SortableColumnHeader>
-            </Table.Column>
+            </Table.Column> */}
 
-            <Table.Column allowsSorting id="image">
+            <Table.Column allowsSorting isRowHeader id="image">
               IMAGEN
-            </Table.Column>
-
-            <Table.Column allowsSorting id="name">
-              <SortableColumnHeader id="name">JUGADOR</SortableColumnHeader>
             </Table.Column>
 
             <Table.Column allowsSorting id="lastName">
@@ -69,6 +65,10 @@ export const TableStudents = ({ students }: Props) => {
               <SortableColumnHeader id="secondLastName">
                 Segundo Apellido
               </SortableColumnHeader>
+            </Table.Column>
+
+            <Table.Column allowsSorting id="name">
+              <SortableColumnHeader id="name">Nombre(s)</SortableColumnHeader>
             </Table.Column>
 
             <Table.Column allowsSorting id="documentNumber">
@@ -115,7 +115,7 @@ export const TableStudents = ({ students }: Props) => {
           >
             {students.map((student) => (
               <Table.Row key={student.id} id={student.id}>
-                <Table.Cell className="font-medium">
+                {/* <Table.Cell className="font-medium">
                   <div className="flex items-center gap-2">
                     {student.id}{" "}
                     <Button
@@ -130,7 +130,7 @@ export const TableStudents = ({ students }: Props) => {
                       <HugeiconsIcon icon={Copy01Icon} />
                     </Button>
                   </div>
-                </Table.Cell>
+                </Table.Cell> */}
                 <Table.Cell>
                   <Avatar size="sm">
                     <Avatar.Image src={student.person.imageUrl || undefined} />
@@ -140,13 +140,34 @@ export const TableStudents = ({ students }: Props) => {
                     </Avatar.Fallback>
                   </Avatar>
                 </Table.Cell>
-                <Table.Cell>
-                  {student.person.name}
-                  <HugeiconsIcon icon={LinkSquare02Icon} />
-                </Table.Cell>
                 <Table.Cell>{student.person.lastName}</Table.Cell>
                 <Table.Cell>{student.person.secondLastName || "-"}</Table.Cell>
-                <Table.Cell>{student.person.documentNumber}</Table.Cell>
+                <Table.Cell>
+                  {student.person.name}
+                  {/* <HugeiconsIcon icon={LinkSquare02Icon} /> */}
+                </Table.Cell>
+                <Table.Cell>
+                  <div className="flex items-center gap-2">
+                    {student.person.documentNumber}{" "}
+                    {student.person.documentNumber && (
+                      <Button
+                        isIconOnly
+                        size="sm"
+                        variant="ghost"
+                        onPress={() => {
+                          navigator.clipboard.writeText(
+                            student.person.documentNumber!.toString(),
+                          );
+                          toast.success(
+                            `${student.person.documentType} copiado`,
+                          );
+                        }}
+                      >
+                        <HugeiconsIcon icon={Copy01Icon} />
+                      </Button>
+                    )}
+                  </div>
+                </Table.Cell>
                 <Table.Cell>
                   {student.person.birthDate?.toLocaleDateString() || "-"}
                 </Table.Cell>
@@ -161,9 +182,15 @@ export const TableStudents = ({ students }: Props) => {
                   <Chip
                     size="sm"
                     variant="soft"
-                    className={student.person.gender ? genderClassMap[student.person.gender] : ""}
+                    className={
+                      student.person.gender
+                        ? genderClassMap[student.person.gender]
+                        : ""
+                    }
                   >
-                    {student.person.gender ? genderMap[student.person.gender] : "-"}
+                    {student.person.gender
+                      ? genderMap[student.person.gender]
+                      : "-"}
                   </Chip>
                 </Table.Cell>
                 <Table.Cell>

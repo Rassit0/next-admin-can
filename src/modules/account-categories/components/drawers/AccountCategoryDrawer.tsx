@@ -34,6 +34,7 @@ export const AccountCategoryDrawer = ({
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [type, setType] = useState<"RECEIVABLE" | "PAYABLE">("PAYABLE");
+  const [code, setCode] = useState("");
 
   useEffect(() => {
     if (isOpen) {
@@ -41,10 +42,12 @@ export const AccountCategoryDrawer = ({
         setName(category.name);
         setDescription(category.description || "");
         setType(category.type);
+        setCode(category.code || "");
       } else {
         setName("");
         setDescription("");
         setType("PAYABLE");
+        setCode("");
       }
     }
   }, [isOpen, category]);
@@ -61,6 +64,7 @@ export const AccountCategoryDrawer = ({
         name,
         description: description || undefined,
         type,
+        code: code.trim() || undefined,
       };
 
       const res = category
@@ -98,6 +102,16 @@ export const AccountCategoryDrawer = ({
                 placeholder="Ej. Mantenimiento, Sueldos, etc."
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                variant="secondary"
+              />
+            </TextField>
+
+            <TextField className="w-full">
+              <Label className="text-sm font-semibold">Código / Serie</Label>
+              <Input
+                placeholder="Ej. MAT (Se genera automático si se deja vacío)"
+                value={code}
+                onChange={(e) => setCode(e.target.value.toUpperCase())}
                 variant="secondary"
               />
             </TextField>

@@ -23,6 +23,13 @@ export interface IAccountCharge {
     name: string;
     lastName: string;
   };
+  immediateTransaction?: {
+    data?: {
+      transaction?: {
+        id: string;
+      };
+    };
+  };
 }
 
 export interface IAccountChargesResponse {

@@ -1,6 +1,6 @@
 "use client";
 import { Avatar, Button, Checkbox, Chip, Table } from "@heroui/react";
-import { EyeIcon , Search01Icon } from "@hugeicons/core-free-icons";
+import { EyeIcon, Search01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useEffect, useState } from "react";
 import { ButtonGestion } from "./ButtonGestion";
@@ -47,17 +47,17 @@ export const TableCourses = ({ courses, urlBase }: Props) => {
           className="min-w-200"
         >
           <Table.Header>
-            <Table.Column
+            {/* <Table.Column
               allowsSorting
               isRowHeader
               className="after:hidden"
               id="id"
             >
               ID
-            </Table.Column>
+            </Table.Column> */}
 
-            <Table.Column allowsSorting id="name">
-              <SortableColumnHeader id="name">EQUIPO</SortableColumnHeader>
+            <Table.Column allowsSorting isRowHeader id="name">
+              <SortableColumnHeader id="name">CURSO</SortableColumnHeader>
             </Table.Column>
 
             <Table.Column allowsSorting id="description">
@@ -85,7 +85,7 @@ export const TableCourses = ({ courses, urlBase }: Props) => {
           >
             {courses.map((course) => (
               <Table.Row key={course.id} id={course.id}>
-                <Table.Cell>{course.id}</Table.Cell>
+                {/* <Table.Cell>{course.id}</Table.Cell> */}
                 <Table.Cell>{course.name}</Table.Cell>
                 <Table.Cell>{course.description}</Table.Cell>
                 <Table.Cell>

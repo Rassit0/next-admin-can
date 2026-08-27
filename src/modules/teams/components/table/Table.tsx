@@ -1,6 +1,12 @@
 "use client";
 import { Avatar, Button, Checkbox, Chip, Table } from "@heroui/react";
-import { EyeIcon, Search01Icon, Calendar02Icon, Edit03Icon, Delete01Icon } from "@hugeicons/core-free-icons";
+import {
+  EyeIcon,
+  Search01Icon,
+  Calendar02Icon,
+  Edit03Icon,
+  Delete01Icon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useEffect, useState } from "react";
 import { EditModal } from "../modal/EditModal";
@@ -16,7 +22,7 @@ interface Props {
 
 export const TableTeams = ({ teams, urlBase }: Props) => {
   const [isClient, setIsClient] = useState(false);
-  
+
   // Estado para los modales centralizados
   const [selectedTeam, setSelectedTeam] = useState<ITeam | null>(null);
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -51,16 +57,16 @@ export const TableTeams = ({ teams, urlBase }: Props) => {
           className="min-w-200"
         >
           <Table.Header>
-            <Table.Column
+            {/* <Table.Column
               allowsSorting
               isRowHeader
               className="after:hidden"
               id="id"
             >
               ID
-            </Table.Column>
+            </Table.Column> */}
 
-            <Table.Column allowsSorting id="name">
+            <Table.Column allowsSorting isRowHeader id="name">
               <SortableColumnHeader id="name">EQUIPO</SortableColumnHeader>
             </Table.Column>
 
@@ -123,7 +129,7 @@ export const TableTeams = ({ teams, urlBase }: Props) => {
 
               return (
                 <Table.Row key={team.id} id={team.id}>
-                  <Table.Cell>{team.id}</Table.Cell>
+                  {/* <Table.Cell>{team.id}</Table.Cell> */}
                   <Table.Cell>{team.name}</Table.Cell>
                   <Table.Cell>{team.description}</Table.Cell>
                   <Table.Cell className="text-center">

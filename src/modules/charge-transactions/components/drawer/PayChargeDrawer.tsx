@@ -182,7 +182,8 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
         toast.danger(res.message);
       } else {
         toast.success(res.message);
-        onOpenChange(false);
+
+        console.log("PAYMENT RESPONSE DATA:", res.data);
 
         // Mostrar diálogo de impresión con el ID de la transacción creada
         if (res.data?.transaction?.id) {
@@ -190,6 +191,8 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
           setShowPrintDialog(true);
           return;
         }
+
+        onOpenChange(false);
       }
     } catch (error) {
       toast.danger("Ocurrió un error inesperado al registrar el pago.");

@@ -50,21 +50,17 @@ export const TablePlayers = ({ players }: Props) => {
           className="min-w-200"
         >
           <Table.Header>
-            <Table.Column
+            {/* <Table.Column
               allowsSorting
               isRowHeader
               className="after:hidden"
               id="id"
             >
               <SortableColumnHeader id="id">ID</SortableColumnHeader>
-            </Table.Column>
+            </Table.Column> */}
 
-            <Table.Column allowsSorting id="image">
+            <Table.Column allowsSorting isRowHeader id="image">
               IMAGEN
-            </Table.Column>
-
-            <Table.Column allowsSorting id="name">
-              <SortableColumnHeader id="name">JUGADOR</SortableColumnHeader>
             </Table.Column>
 
             <Table.Column allowsSorting id="lastName">
@@ -77,6 +73,10 @@ export const TablePlayers = ({ players }: Props) => {
               <SortableColumnHeader id="secondLastName">
                 Segundo Apellido
               </SortableColumnHeader>
+            </Table.Column>
+
+            <Table.Column allowsSorting id="name">
+              <SortableColumnHeader id="name">Nombre(s)</SortableColumnHeader>
             </Table.Column>
 
             <Table.Column allowsSorting id="documentNumber">
@@ -123,22 +123,6 @@ export const TablePlayers = ({ players }: Props) => {
           >
             {players.map((player) => (
               <Table.Row key={player.id} id={player.id}>
-                <Table.Cell className="font-medium">
-                  <div className="flex items-center gap-2">
-                    {player.id}{" "}
-                    <Button
-                      isIconOnly
-                      size="sm"
-                      variant="ghost"
-                      onPress={() => {
-                        navigator.clipboard.writeText(player.id);
-                        toast.success("ID copiado");
-                      }}
-                    >
-                      <HugeiconsIcon icon={Copy01Icon} />
-                    </Button>
-                  </div>
-                </Table.Cell>
                 <Table.Cell>
                   <Avatar size="sm">
                     <Avatar.Image src={player.person.imageUrl || undefined} />
@@ -154,7 +138,28 @@ export const TablePlayers = ({ players }: Props) => {
                 </Table.Cell>
                 <Table.Cell>{player.person.lastName}</Table.Cell>
                 <Table.Cell>{player.person.secondLastName || "-"}</Table.Cell>
-                <Table.Cell>{player.person.documentNumber}</Table.Cell>
+                <Table.Cell className="font-medium">
+                  <div className="flex items-center gap-2">
+                    {player.person.documentNumber}{" "}
+                    {player.person.documentNumber && (
+                      <Button
+                        isIconOnly
+                        size="sm"
+                        variant="ghost"
+                        onPress={() => {
+                          navigator.clipboard.writeText(
+                            player.person.documentNumber!.toString(),
+                          );
+                          toast.success(
+                            `${player.person.documentType} copiado`,
+                          );
+                        }}
+                      >
+                        <HugeiconsIcon icon={Copy01Icon} />
+                      </Button>
+                    )}
+                  </div>
+                </Table.Cell>
                 <Table.Cell>
                   {player.person.birthDate?.toLocaleDateString() || "-"}
                 </Table.Cell>
@@ -169,9 +174,15 @@ export const TablePlayers = ({ players }: Props) => {
                   <Chip
                     size="sm"
                     variant="soft"
-                    className={player.person.gender ? genderClassMap[player.person.gender] : ""}
+                    className={
+                      player.person.gender
+                        ? genderClassMap[player.person.gender]
+                        : ""
+                    }
                   >
-                    {player.person.gender ? genderMap[player.person.gender] : "-"}
+                    {player.person.gender
+                      ? genderMap[player.person.gender]
+                      : "-"}
                   </Chip>
                 </Table.Cell>
                 <Table.Cell>

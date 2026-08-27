@@ -16,6 +16,8 @@ export default async function CategoriesPage({
     page?: string;
     per_page?: string;
     type?: string;
+    sortField?: string;
+    orderBy?: string;
   }>;
 }) {
   const resolvedSearchParams = await searchParams;
@@ -23,12 +25,16 @@ export default async function CategoriesPage({
   const page = resolvedSearchParams?.page || "1";
   const per_page = resolvedSearchParams?.per_page || "10";
   const type = resolvedSearchParams?.type;
+  const sortField = resolvedSearchParams?.sortField;
+  const orderBy = resolvedSearchParams?.orderBy;
 
   const res = await getAccountCategories({
     search,
     page,
     per_page,
     type,
+    sortField,
+    orderBy,
   });
 
   if (res.error) {

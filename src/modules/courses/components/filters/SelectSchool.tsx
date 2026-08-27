@@ -9,7 +9,11 @@ interface Props {
   schoolId?: string;
 }
 
-export const SelectSchoolOptions = ({ schoolOptions, urlBase, schoolId }: Props) => {
+export const SelectSchoolOptions = ({
+  schoolOptions,
+  urlBase,
+  schoolId,
+}: Props) => {
   const router = useRouter();
 
   return (
@@ -23,15 +27,19 @@ export const SelectSchoolOptions = ({ schoolOptions, urlBase, schoolId }: Props)
         router.push(`${urlBase}/${key}`);
       }}
     >
-      <Label>School</Label>
+      <Label>Escuela</Label>
       <ComboBox.InputGroup>
-        <Input placeholder="Buscar school..." />
+        <Input placeholder="Buscar escuela..." />
         <ComboBox.Trigger />
       </ComboBox.InputGroup>
       <ComboBox.Popover>
         <ListBox>
           {schoolOptions.map((school) => (
-            <ListBox.Item key={school.id} id={school.id} textValue={school.name}>
+            <ListBox.Item
+              key={school.id}
+              id={school.id}
+              textValue={school.name}
+            >
               {school.name}
               <ListBox.ItemIndicator />
             </ListBox.Item>

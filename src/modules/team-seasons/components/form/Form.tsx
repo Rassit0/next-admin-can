@@ -3,6 +3,7 @@ import { HeaderPage } from "@/ui";
 import { BasicInfoCard } from "./BasicInfoCard";
 import { DelayPoliciesCard } from "./DelayPoliciesCard";
 import { FinancialStructureCard } from "./FinancialStructureCard";
+import { CategoryConfigBlock, ICategoryConfigForm } from "./CategoryConfigBlock";
 import { useCallback, useRef, useState } from "react";
 
 import { Alert, Button, Form, toast } from "@heroui/react";
@@ -12,6 +13,7 @@ import {
   addTeamSeason,
   editTeamSeason,
   ISeasonOption,
+  ICategoryOption,
   ITeamSeason,
   StatusTeamSeason,
   IPostTeamSeason,
@@ -26,6 +28,7 @@ interface Props {
   team: Team;
   teamSeason?: ITeamSeason;
   seasonsOptions: ISeasonOption[];
+  categoriesOptions?: ICategoryOption[];
   urlRedirect: string;
 }
 
@@ -34,6 +37,7 @@ export const FormTeamSeason = ({
   team,
   teamSeason,
   seasonsOptions,
+  categoriesOptions = [],
   urlRedirect,
 }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -101,7 +105,63 @@ export const FormTeamSeason = ({
   const [status, setStatus] = useState<StatusTeamSeason>(
     teamSeason?.status || "DRAFT",
   );
+
+  const generateId = () => Math.random().toString(36).substring(2, 9);
+
+  const [categories, setCategories] = useState<ICategoryConfigForm[]>(
+    teamSeason && teamSeason.status === "DRAFT" && teamSeason.categories?.length
+      ? teamSeason.categories.map((c) => ({
+          key: generateId(),
+          categoryId: c.category.id,
+          gender: c.gender,
+          validateAge: c.validateAge,
+          minBirthYear: c.minBirthYear ?? null,
+          maxBirthYear: c.maxBirthYear ?? null,
+          minMembers: c.minMembers ?? 5,
+          maxMembers: c.maxMembers ?? 20,
+        }))
+      : [
+          {
+            key: generateId(),
+            categoryId: "",
+            gender: null,
+            validateAge: true,
+            minBirthYear: null,
+            maxBirthYear: null,
+            minMembers: 5,
+            maxMembers: 20,
+          },
+        ]
+  );
   // fin form params
+
+  const handleCategoryChange = useCallback((index: number, field: keyof ICategoryConfigForm, value: any) => {
+    setCategories((prev) => {
+      const newCategories = [...prev];
+      newCategories[index] = { ...newCategories[index], [field]: value };
+      return newCategories;
+    });
+  }, []);
+
+  const handleRemoveCategory = useCallback((index: number) => {
+    setCategories((prev) => prev.filter((_, i) => i !== index));
+  }, []);
+
+  const handleAddCategory = useCallback(() => {
+    setCategories((prev) => [
+      ...prev,
+      {
+        key: generateId(),
+        categoryId: "",
+        gender: null,
+        validateAge: true,
+        minBirthYear: null,
+        maxBirthYear: null,
+        minMembers: 5,
+        maxMembers: 20,
+      },
+    ]);
+  }, []);
 
   const isEditMode = !!teamSeason;
   const isStructuralDisabled = isEditMode && teamSeason.status === "ACTIVE";
@@ -180,6 +240,50 @@ export const FormTeamSeason = ({
     if (status === null) {
       newErrors.status = "Debe ingresar el estado";
     }
+
+    if (!teamSeason || teamSeason.status === "DRAFT") {
+      if (categories.length === 0) {
+        newErrors.categories = "Debe agregar al menos una categoría";
+      } else {
+        categories.forEach((cat, index) => {
+          if (!cat.categoryId)
+            newErrors[`category_${index}_categoryId`] =
+              "Debe seleccionar una categoría";
+          if (!cat.gender)
+            newErrors[`category_${index}_gender`] =
+              "Debe seleccionar el género";
+          if (!cat.minMembers)
+            newErrors[`category_${index}_minMembers`] =
+              "Debe ingresar cupo mínimo";
+          if (!cat.maxMembers)
+            newErrors[`category_${index}_maxMembers`] =
+              "Debe ingresar cupo máximo";
+          if (
+            cat.validateAge &&
+            cat.minBirthYear &&
+            cat.maxBirthYear &&
+            cat.minBirthYear > cat.maxBirthYear
+          ) {
+            newErrors[`category_${index}_minBirthYear`] = "Año min > max";
+            newErrors[`category_${index}_maxBirthYear`] = "Año max < min";
+          }
+
+          // Prevenir categorías duplicadas (misma categoría y mismo género)
+          const isDuplicate = categories.some(
+            (c, i) =>
+              i !== index &&
+              c.categoryId === cat.categoryId &&
+              c.gender === cat.gender &&
+              c.categoryId !== "",
+          );
+          if (isDuplicate) {
+            newErrors[`category_${index}_categoryId`] =
+              "Esta categoría con este género ya fue agregada";
+          }
+        });
+      }
+    }
+
     setErrors(newErrors);
     console.log(newErrors);
     if (Object.keys(newErrors).length > 0) {
@@ -187,7 +291,7 @@ export const FormTeamSeason = ({
     }
     setIsLoading?.(true);
     let res;
-    const data: IPostTeamSeason = {
+    const baseData = {
       description: description || null,
       teamId: team.id,
       seasonId: seasonId!,
@@ -215,13 +319,46 @@ export const FormTeamSeason = ({
         lateFeePerDay: lateFeeEnabled ? lateFeePerDay! : "0",
         graceDays: lateFeeEnabled ? graceDays! : 0,
       },
-      status,
     };
+
     if (teamSeason) {
-      res = await editTeamSeason({ id: teamSeason.id, data });
+      // Modo edición
+      const { teamId, seasonId, ...restBaseData } = baseData;
+      const baseEditData = {
+        ...restBaseData,
+        status,
+      };
+
+      if (teamSeason.status === "DRAFT") {
+        (baseEditData as any).categories = categories.map((c) => ({
+          categoryId: c.categoryId,
+          gender: c.gender!,
+          validateAge: c.validateAge,
+          minBirthYear: c.minBirthYear,
+          maxBirthYear: c.maxBirthYear,
+          minMembers: c.minMembers,
+          maxMembers: c.maxMembers,
+        }));
+      }
+
+      res = await editTeamSeason({ id: teamSeason.id, data: baseEditData as IPostTeamSeason });
     } else {
+      const data: IPostTeamSeason = {
+        ...baseData,
+        status,
+        categories: categories.map((c) => ({
+          categoryId: c.categoryId,
+          gender: c.gender!,
+          minBirthYear: c.minBirthYear,
+          maxBirthYear: c.maxBirthYear,
+          minMembers: c.minMembers,
+          maxMembers: c.maxMembers,
+          validateAge: c.validateAge,
+        })),
+      };
       res = await addTeamSeason(data);
     }
+
     setIsLoading?.(false);
     if (res.error) {
       let errorDescription = res.message;
@@ -338,9 +475,47 @@ export const FormTeamSeason = ({
             isFinancialDisabled={isFinancialDisabled}
           />
         </div>
-        {/* <!-- Section 3: Políticas de Mora (Full Width Bottom) --> */}
+        
+        {/* <!-- Section 3: Configuraciones de Categoría --> */}
+        {(!teamSeason || teamSeason.status === "DRAFT") && (
+          <div className="lg:col-span-12">
+            <div className="rounded-xl border border-border bg-card overflow-hidden">
+              <div className="px-6 py-4 border-b border-border bg-surface-container/50">
+                <h3 className="text-lg font-bold">Categorías y Cupos</h3>
+                <p className="text-on-surface-variant text-sm mt-1">
+                  Agregue las categorías que estarán disponibles para esta
+                  temporada.
+                </p>
+              </div>
+            
+            {categories.map((category, index) => (
+              <CategoryConfigBlock
+                key={category.key}
+                index={index}
+                category={category}
+                categoriesOptions={categoriesOptions}
+                onChange={handleCategoryChange}
+                onRemove={handleRemoveCategory}
+                errors={errors}
+                canRemove={categories.length > 1}
+              />
+            ))}
+            <div className="p-4 bg-surface-container-low border-t border-border">
+              <Button
+                className="w-full bg-surface-container border border-dashed border-border/50 text-muted"
+                size="lg"
+                onPress={handleAddCategory}
+              >
+                + Agregar Categoría
+              </Button>
+            </div>
+            </div>
+          </div>
+        )}
+
+        {/* <!-- Section 4: Políticas de Mora (Full Width Bottom) --> */}
         <div className="lg:col-span-12"></div>
-        {/* <!-- Section 4: Estado Final (Floating Sticky-ish bottom or separate block) --> */}
+        {/* <!-- Section 5: Estado Final (Floating Sticky-ish bottom or separate block) --> */}
         <div className="lg:col-span-12 flex justify-end items-center gap-8 p-4 lg:p-8 bg-surface-container-low rounded-full">
           <div className="flex items-center gap-4">
             <span className="text-sm font-bold text-on-surface-variant">

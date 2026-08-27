@@ -1,6 +1,6 @@
 "use client";
 import { Avatar, Button, Checkbox, Chip, Table } from "@heroui/react";
-import { EyeIcon , Search01Icon } from "@hugeicons/core-free-icons";
+import { EyeIcon, Search01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useEffect, useState } from "react";
 import { ButtonGestion } from "./ButtonGestion";
@@ -42,16 +42,16 @@ export const TableClubs = ({ clubs, disciplineId }: Props) => {
           className="min-w-200"
         >
           <Table.Header>
-            <Table.Column
+            {/* <Table.Column
               allowsSorting
               isRowHeader
               className="after:hidden"
               id="id"
             >
               ID
-            </Table.Column>
+            </Table.Column> */}
 
-            <Table.Column allowsSorting id="name">
+            <Table.Column allowsSorting isRowHeader id="name">
               <SortableColumnHeader id="name">CLUB</SortableColumnHeader>
             </Table.Column>
 
@@ -76,7 +76,7 @@ export const TableClubs = ({ clubs, disciplineId }: Props) => {
           >
             {clubs.map((club) => (
               <Table.Row key={club.id} id={club.id}>
-                <Table.Cell>{club.id}</Table.Cell>
+                {/* <Table.Cell>{club.id}</Table.Cell> */}
                 <Table.Cell>{club.name}</Table.Cell>
 
                 <Table.Cell>

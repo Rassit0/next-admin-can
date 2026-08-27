@@ -1,6 +1,7 @@
 import {
   ButtonsSubmit,
   FormTeamSeason,
+  getCategoriesByDisciplineOptions,
   getSeasonsByDisciplineOptions,
   getTeamContext,
   getTeamSeasonById,
@@ -21,10 +22,11 @@ interface Props {
 
 export default async function EditTeamSeasonPage({ params }: Props) {
   const { disciplineId, clubId, teamId, teamSeasonId } = await params;
-  const [teamResponse, seasonsOptions, teamSeasonResponse] =
+  const [teamResponse, seasonsOptions, categoriesOptions, teamSeasonResponse] =
     await Promise.all([
       getTeamContext({ id: teamId }),
       getSeasonsByDisciplineOptions(disciplineId),
+      getCategoriesByDisciplineOptions(disciplineId),
       getTeamSeasonById({ id: teamSeasonId }),
     ]);
 
@@ -92,8 +94,8 @@ export default async function EditTeamSeasonPage({ params }: Props) {
         formId="form-edit-team-season"
         teamSeason={teamSeasonResponse.data}
         team={teamResponse.data}
-
         seasonsOptions={seasonsOptions.data.data}
+        categoriesOptions={categoriesOptions.data?.data || []}
         urlRedirect={`/admin/teams/${disciplineId}/${clubId}/${teamId}/team-seasons`}
       />
     </>

@@ -8,6 +8,7 @@ import { updateTag } from "next/cache";
 interface CreateAccountCategoryDto {
   name: string;
   description?: string;
+  code?: string;
   type: "RECEIVABLE" | "PAYABLE";
 }
 

@@ -32,4 +32,3 @@ export const getAllShifts = async (): Promise<ServiceResponse<IShift[]>> => {
     };
   });
 };
-

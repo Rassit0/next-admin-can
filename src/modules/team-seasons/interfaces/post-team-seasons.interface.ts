@@ -22,6 +22,7 @@ export interface IPostTeamSeason {
   };
   status: StatusTeamSeason; // Estado de la oferta
   isRegistrationOpen?: boolean;
+  categories?: IPostTeamSeasonCategory[]; // Requerido en creacion, omitido en edicion
 }
 
 export interface IPostTeamSeasonCategory {
