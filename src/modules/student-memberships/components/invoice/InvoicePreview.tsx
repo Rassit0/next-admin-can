@@ -153,7 +153,7 @@ export const InvoicePreview = ({
                     <span className="font-medium text-success tabular-nums">
                       -{line.discountPercent}% (
                       {formatCurrency(
-                        line.discountAmount,
+                        line.adjustmentAmount,
                         breakdown.data.breakdown.currency,
                       )}
                       )
@@ -180,13 +180,13 @@ export const InvoicePreview = ({
                   )}
                 </span>
               </div>
-              {breakdown.data.breakdown.totalDiscount > 0 ? (
-                <div className="flex items-center justify-between text-success">
-                  <span>Descuentos</span>
+              {breakdown.data.breakdown.totalDiscount !== 0 ? (
+                <div className={`flex items-center justify-between ${breakdown.data.breakdown.totalDiscount < 0 ? 'text-success' : 'text-danger'}`}>
+                  <span>{breakdown.data.breakdown.totalDiscount < 0 ? 'Descuentos' : 'Recargos'}</span>
                   <span className="tabular-nums">
-                    -
+                    {breakdown.data.breakdown.totalDiscount > 0 ? '+' : '-'}
                     {formatCurrency(
-                      breakdown.data.breakdown.totalDiscount,
+                      Math.abs(breakdown.data.breakdown.totalDiscount),
                       breakdown.data.breakdown.currency,
                     )}
                   </span>
@@ -212,7 +212,7 @@ export const InvoicePreview = ({
 
             {(() => {
               const flags: ChargeFlag[] = [];
-              if (breakdown.data.breakdown.totalDiscount > 0) {
+              if (breakdown.data.breakdown.totalDiscount < 0) {
                 flags.push({
                   type: "success",
                   label: "Descuentos aplicados",

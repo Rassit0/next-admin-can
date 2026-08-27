@@ -177,23 +177,23 @@ export const TableCharges = ({
                   </Table.Cell>
                   <Table.Cell className="py-3 text-right">
                     <span
-                      className={`font-medium ${Number(charge.discountAmount) > 0 ? "text-muted line-through" : "text-foreground"}`}
+                      className={`font-medium ${Number(charge.adjustmentAmount) !== 0 ? "text-muted line-through" : "text-foreground"}`}
                     >
                       {formatCurrency(charge.amount)}
                     </span>
                   </Table.Cell>
                   <Table.Cell className="py-3 text-right">
-                    {Number(charge.discountAmount) > 0 ? (
+                    {Number(charge.adjustmentAmount) !== 0 ? (
                       <div className="flex flex-col items-end gap-0.5">
-                        <span className="inline-flex items-center px-1.5 py-0.5 rounded bg-success-50 text-success-700 border border-success-200 text-xs font-bold shadow-sm">
-                          -{formatCurrency(Number(charge.discountAmount))}
+                        <span className={`inline-flex items-center px-1.5 py-0.5 rounded border text-xs font-bold shadow-sm ${Number(charge.adjustmentAmount) < 0 ? "bg-success-50 text-success-700 border-success-200" : "bg-danger-50 text-danger-700 border-danger-200"}`}>
+                          {Number(charge.adjustmentAmount) > 0 ? "+" : "-"}{formatCurrency(Math.abs(Number(charge.adjustmentAmount)))}
                         </span>
-                        {charge.discountReason && (
+                        {charge.adjustmentReason && (
                           <span
                             className="text-[10px] text-muted-foreground italic truncate max-w-30"
-                            title={charge.discountReason}
+                            title={charge.adjustmentReason}
                           >
-                            "{charge.discountReason}"
+                            "{charge.adjustmentReason}"
                           </span>
                         )}
                       </div>

@@ -6,7 +6,7 @@ import { handleServerAction } from "@/utils";
 import { ICharge } from "../interfaces/charges.interface";
 import { auth } from "@/auth";
 
-export const removeChargeDiscount = async (
+export const removeChargeAdjustment = async (
   id: string,
 ): Promise<ServiceResponse<ICharge>> => {
   const session = await auth();
@@ -22,7 +22,7 @@ export const removeChargeDiscount = async (
     const response = await api.delete<{
       message: string;
       data: ICharge;
-    }>(`charges/${id}/discount`, {
+    }>(`charges/${id}/adjustment`, {
       headers: {
         Authorization: `Bearer ${session.user.token}`,
       },

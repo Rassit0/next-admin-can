@@ -223,17 +223,19 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-primary-600">Monto Base</span>
                     <span
-                      className={`font-semibold ${Number(charge.discountAmount) > 0 ? "line-through text-primary-400" : "text-primary-700"}`}
+                      className={`font-semibold ${Number(charge.adjustmentAmount) !== 0 ? "line-through text-primary-400" : "text-primary-700"}`}
                     >
                       {Number(charge.amount).toFixed(2)} Bs
                     </span>
                   </div>
-                  {Number(charge.discountAmount) > 0 && (
+                  {Number(charge.adjustmentAmount) !== 0 && (
                     <>
                       <div className="flex justify-between items-center text-sm">
-                        <span className="text-primary-600">Descuento</span>
-                        <span className="font-semibold text-success-600">
-                          -{Number(charge.discountAmount).toFixed(2)} Bs
+                        <span className="text-primary-600">
+                          {Number(charge.adjustmentAmount) < 0 ? "Descuento" : "Recargo"}
+                        </span>
+                        <span className={`font-semibold ${Number(charge.adjustmentAmount) < 0 ? "text-success-600" : "text-danger-600"}`}>
+                          {Number(charge.adjustmentAmount) > 0 ? "+" : "-"}{Math.abs(Number(charge.adjustmentAmount)).toFixed(2)} Bs
                         </span>
                       </div>
                       <div className="flex justify-between items-center text-sm border-t border-primary-200 border-dashed pt-2 mt-1">
@@ -242,8 +244,8 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
                         </span>
                         <span className="font-bold text-primary-700">
                           {(
-                            Number(charge.amount) -
-                            Number(charge.discountAmount)
+                            Number(charge.amount) +
+                            Number(charge.adjustmentAmount)
                           ).toFixed(2)}{" "}
                           Bs
                         </span>
@@ -251,8 +253,8 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
                     </>
                   )}
 
-                  {Number(charge.amount) -
-                    Number(charge.discountAmount || 0) -
+                  {Number(charge.amount) +
+                    Number(charge.adjustmentAmount || 0) -
                     pendingAmount >
                     0 && (
                     <div className="flex justify-between items-center text-sm text-warning-600">
@@ -260,8 +262,8 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
                       <span className="font-semibold text-warning-600">
                         -
                         {(
-                          Number(charge.amount) -
-                          Number(charge.discountAmount || 0) -
+                          Number(charge.amount) +
+                          Number(charge.adjustmentAmount || 0) -
                           pendingAmount
                         ).toFixed(2)}{" "}
                         Bs

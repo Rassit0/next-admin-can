@@ -20,7 +20,7 @@ export interface Charge {
   description: string;
   amount: number;
   baseAmount: number;
-  discountAmount: number;
+  adjustmentAmount: number;
   discountPercent: number;
   dueDate: Date;
   billingYear: number;

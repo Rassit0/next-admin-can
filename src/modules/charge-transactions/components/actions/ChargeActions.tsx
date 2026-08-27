@@ -22,8 +22,8 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ICharge } from "../../interfaces/charges.interface";
-import { addChargeDiscount } from "../../actions/add-discount";
-import { removeChargeDiscount } from "../../actions/remove-discount";
+import { addChargeAdjustment } from "../../actions/add-adjustment";
+import { removeChargeAdjustment } from "../../actions/remove-adjustment";
 import { updateCharge } from "../../actions/update";
 import { removeCharge } from "../../actions/remove";
 import { applyLateFee } from "../../actions/apply-late-fee";
@@ -49,8 +49,8 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
   const [selectedAction, setSelectedAction] = useState<ActionDef | null>(null);
   
   // State for Add Discount form
-  const [discountAmount, setDiscountAmount] = useState(charge.discountAmount ? charge.discountAmount.toString() : "");
-  const [discountReason, setDiscountReason] = useState(charge.discountReason || "");
+  const [adjustmentAmount, setAdjustmentAmount] = useState(charge.adjustmentAmount ? charge.adjustmentAmount.toString() : "");
+  const [adjustmentReason, setDiscountReason] = useState(charge.adjustmentReason || "");
 
   // State for Edit Charge form
   const [chargeDescription, setChargeDescription] = useState(charge.description);
@@ -62,7 +62,7 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [lateFeePreview, setLateFeePreview] = useState<ILateFeePreview | null>(null);
 
-  const hasDiscount = Number(charge.discountAmount) > 0;
+  const hasAdjustment = Number(charge.adjustmentAmount) !== 0;
   
   const isManual = 
     charge.membershipCharges?.[0]?.type === 'MANUAL' || 
@@ -113,14 +113,14 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
     ? charge.payments
         .filter((p) => p.status === "COMPLETED")
         .reduce((sum, p) => sum + Number(p.amount), 0)
-    : Number(charge.amount) - Number(charge.discountAmount || 0) - Number(charge.pendingAmount || 0);
+    : (Number(charge.amount) + Number(charge.adjustmentAmount || 0)) - Number(charge.pendingAmount || 0);
   const isFullyPaidWithMoney = paidAmount >= Number(charge.amount);
 
   // We allow adding/editing discounts if the charge is not cancelled and not fully paid with money.
   if (charge.status !== "CANCELLED" && !isFullyPaidWithMoney) {
     allActions.push({
-      key: "add-discount",
-      label: hasDiscount ? "Editar Descuento" : "Aplicar Descuento",
+      key: "add-adjustment",
+      label: hasAdjustment ? "Editar Ajuste (Descuento/Recargo)" : "Aplicar Ajuste (Descuento/Recargo)",
       icon: Tag01Icon,
     });
   }
@@ -135,9 +135,9 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
 
   // We allow removing discount as long as it has a discount and is not cancelled.
   // (If it has a discount, it couldn't have been fully paid with money alone).
-  if (hasDiscount && charge.status !== "CANCELLED") {
+  if (hasAdjustment && charge.status !== "CANCELLED") {
     allActions.push({
-      key: "remove-discount",
+      key: "remove-adjustment",
       label: "Remover Descuento",
       icon: Logout01Icon,
       danger: true,
@@ -178,9 +178,9 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
       }
 
       // Reset form on open
-      if (key === "add-discount") {
-        setDiscountAmount(charge.discountAmount ? charge.discountAmount.toString() : "");
-        setDiscountReason(charge.discountReason || "");
+      if (key === "add-adjustment") {
+        setAdjustmentAmount(charge.adjustmentAmount ? charge.adjustmentAmount.toString() : "");
+        setDiscountReason(charge.adjustmentReason || "");
         setErrors({});
       } else if (key === "edit-charge") {
         setChargeDescription(charge.description);
@@ -204,37 +204,37 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
 
     if (action === "apply-late-fee") {
       res = await applyLateFee(charge.id);
-    } else if (action === "remove-discount") {
-      res = await removeChargeDiscount(charge.id);
+    } else if (action === "remove-adjustment") {
+      res = await removeChargeAdjustment(charge.id);
     } else if (action === "delete-charge") {
       res = await removeCharge(charge.id);
-    } else if (action === "add-discount") {
-      const amountNum = Number(discountAmount);
+    } else if (action === "add-adjustment") {
+      const amountNum = Number(adjustmentAmount);
       const chargeAmountNum = Number(charge.amount);
       
-      if (amountNum <= 0 || amountNum > chargeAmountNum) {
-        setErrors({ discountAmount: "El monto debe ser mayor a 0 y no exceder el monto original del cargo." });
+      if (amountNum < 0 && Math.abs(amountNum) > chargeAmountNum) {
+        setErrors({ adjustmentAmount: "El monto del descuento no puede exceder el monto original del cargo." });
         setLoading(false);
         return;
       }
       
-      if (!discountReason.trim()) {
-        setErrors({ discountReason: "El motivo es obligatorio." });
+      if (!adjustmentReason.trim()) {
+        setErrors({ adjustmentReason: "El motivo es obligatorio." });
         setLoading(false);
         return;
       }
 
-      res = await addChargeDiscount({
+      res = await addChargeAdjustment({
         id: charge.id,
-        discountAmount: amountNum,
-        discountReason,
+        adjustmentAmount: amountNum,
+        adjustmentReason,
       });
     } else if (action === "edit-charge") {
       const amountNum = Number(chargeAmount);
-      const discountNum = Number(charge.discountAmount || 0);
+      const adjustmentNum = Number(charge.adjustmentAmount || 0);
 
-      if (amountNum < discountNum) {
-        setErrors({ chargeAmount: "El nuevo monto base no puede ser menor al descuento ya aplicado." });
+      if (amountNum + adjustmentNum < 0) {
+        setErrors({ chargeAmount: "El nuevo monto base sumado al ajuste no puede ser negativo." });
         setLoading(false);
         return;
       }
@@ -325,9 +325,9 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
                 </AlertDialog.Heading>
               </AlertDialog.Header>
               <AlertDialog.Body className="gap-4 p-2">
-                {(selectedAction?.key === "remove-discount" || selectedAction?.key === "delete-charge") && (
+                {(selectedAction?.key === "remove-adjustment" || selectedAction?.key === "delete-charge") && (
                   <p>
-                    {selectedAction?.key === "remove-discount" 
+                    {selectedAction?.key === "remove-adjustment" 
                       ? "¿Estás seguro de que deseas remover el descuento de este cargo? El saldo pendiente se ajustará automáticamente."
                       : "¿Estás seguro de que deseas eliminar este cargo manualmente? Esta acción no se puede deshacer."}
                   </p>
@@ -433,40 +433,38 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
                   </>
                 )}
 
-                {selectedAction?.key === "add-discount" && (
+                {selectedAction?.key === "add-adjustment" && (
                   <>
                     <p className="text-sm text-muted-foreground mb-2">
                       Monto Original del Cargo: <strong>{Number(charge.amount).toFixed(2)} Bs</strong>
                     </p>
                     
                     <TextField
-                      name="discountAmount"
+                      name="adjustmentAmount"
                       isRequired
                       className="w-full"
-                      isInvalid={!!errors.discountAmount || undefined}
+                      isInvalid={!!errors.adjustmentAmount || undefined}
                     >
-                      <Label className="text-sm font-semibold">Monto del Descuento (Bs)</Label>
+                      <Label>Monto (Bs) - Negativo para descuento, positivo para recargo</Label>
                       <Input
                         variant="secondary"
                         type="number"
                         step="0.01"
-                        min="0.01"
-                        max={Number(charge.amount)}
-                        value={discountAmount}
+                        value={adjustmentAmount}
                         onChange={(e) => {
-                          setDiscountAmount(e.target.value);
+                          setAdjustmentAmount(e.target.value);
                           setErrors({});
                         }}
                         placeholder="0.00"
                       />
-                      <FieldError children={errors.discountAmount && <> {errors.discountAmount}</>} />
+                      <FieldError children={errors.adjustmentAmount && <> {errors.adjustmentAmount}</>} />
                     </TextField>
 
                     <TextField 
-                      name="discountReason" 
+                      name="adjustmentReason" 
                       className="w-full"
                       isRequired
-                      isInvalid={!!errors.discountReason || undefined}
+                      isInvalid={!!errors.adjustmentReason || undefined}
                     >
                       <Label className="text-sm font-semibold">
                         Motivo u Observación
@@ -481,7 +479,7 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
                         </InputGroup.Prefix>
                         <Input
                           variant="secondary"
-                          value={discountReason}
+                          value={adjustmentReason}
                           onChange={(e) => {
                             setDiscountReason(e.target.value);
                             setErrors({});
@@ -489,7 +487,7 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
                           placeholder="Ej. Beca, Hermano, etc."
                         />
                       </InputGroup>
-                      <FieldError children={errors.discountReason && <> {errors.discountReason}</>} />
+                      <FieldError children={errors.adjustmentReason && <> {errors.adjustmentReason}</>} />
                     </TextField>
                   </>
                 )}

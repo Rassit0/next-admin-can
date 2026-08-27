@@ -7,7 +7,7 @@ export interface ChargeLine {
   description: string;
   gross: number;
   discountPercent: number;
-  discountAmount: number;
+  adjustmentAmount: number;
   net: number;
 }
 
@@ -73,7 +73,7 @@ export const calculateInitialCharges = (
       description: "Cargo único al momento de la inscripción",
       gross: registrationGross,
       discountPercent: registrationDiscountPercent,
-      discountAmount: registrationDiscount,
+      adjustmentAmount: -registrationDiscount,
       net: registrationNet,
     },
     {
@@ -82,13 +82,13 @@ export const calculateInitialCharges = (
       description: "Cuota correspondiente al primer mes",
       gross: monthlyGross,
       discountPercent: recurringDiscountPercent,
-      discountAmount: monthlyDiscount,
+      adjustmentAmount: -monthlyDiscount,
       net: monthlyNet,
     },
   ];
 
   const subtotal = round2(registrationGross + monthlyGross);
-  const totalDiscount = round2(registrationDiscount + monthlyDiscount);
+  const totalDiscount = -round2(registrationDiscount + monthlyDiscount);
   const total = round2(registrationNet + monthlyNet);
 
   const flags: ChargeFlag[] = [];

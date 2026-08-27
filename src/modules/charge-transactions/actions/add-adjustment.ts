@@ -6,14 +6,14 @@ import { handleServerAction } from "@/utils";
 import { ICharge } from "../interfaces/charges.interface";
 import { auth } from "@/auth";
 
-export interface AddDiscountData {
+export interface AddAdjustmentData {
   id: string;
-  discountAmount: number;
-  discountReason?: string;
+  adjustmentAmount: number;
+  adjustmentReason?: string;
 }
 
-export const addChargeDiscount = async (
-  data: AddDiscountData,
+export const addChargeAdjustment = async (
+  data: AddAdjustmentData,
 ): Promise<ServiceResponse<ICharge>> => {
   const session = await auth();
 
@@ -29,7 +29,7 @@ export const addChargeDiscount = async (
     const response = await api.patch<{
       message: string;
       data: ICharge;
-    }>(`charges/${id}/discount`, payload, {
+    }>(`charges/${id}/adjustment`, payload, {
       headers: {
         Authorization: `Bearer ${session.user.token}`,
       },

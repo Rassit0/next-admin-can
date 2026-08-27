@@ -26,8 +26,8 @@ export const ChargeSummaryCard = ({ charge }: Props) => {
   const statusIcon = isPaid ? Tick02Icon : isPartial ? Time02Icon : Alert02Icon;
 
   const amountNum = Number(charge.amount);
-  const discountNum = Number(charge.discountAmount || 0);
-  const finalTotal = amountNum - discountNum;
+  const adjustmentNum = Number(charge.adjustmentAmount || 0);
+  const finalTotal = amountNum + adjustmentNum;
 
   return (
     <Card className="w-full bg-linear-to-br from-background to-default-50 border-default-200 border p-6">
@@ -60,24 +60,24 @@ export const ChargeSummaryCard = ({ charge }: Props) => {
             <div className="flex flex-col gap-1 text-right border-r border-default-200 pr-4">
               <p className="text-sm text-default-500">Monto Base</p>
               <p
-                className={`text-lg font-mono ${discountNum > 0 ? "line-through text-default-400" : "font-bold text-foreground"}`}
+                className={`text-lg font-mono ${adjustmentNum !== 0 ? "line-through text-default-400" : "font-bold text-foreground"}`}
               >
                 {amountNum.toFixed(2)} Bs
               </p>
             </div>
 
-            {discountNum > 0 && (
+            {adjustmentNum !== 0 && (
               <div className="flex flex-col gap-1 text-right border-r border-default-200 pr-4">
-                <p className="text-sm text-default-500">Descuento</p>
-                <p className="text-lg font-bold font-mono text-success">
-                  -{discountNum.toFixed(2)} Bs
+                <p className="text-sm text-default-500">{adjustmentNum > 0 ? "Descuento" : "Recargo"}</p>
+                <p className={`text-lg font-bold font-mono ${adjustmentNum > 0 ? "text-success" : "text-danger"}`}>
+                  {adjustmentNum > 0 ? "-" : "+"}{Math.abs(adjustmentNum).toFixed(2)} Bs
                 </p>
-                {charge.discountReason && (
+                {charge.adjustmentReason && (
                   <p
                     className="text-xs text-default-400 max-w-37.5 truncate"
-                    title={charge.discountReason}
+                    title={charge.adjustmentReason}
                   >
-                    ({charge.discountReason})
+                    ({charge.adjustmentReason})
                   </p>
                 )}
               </div>
