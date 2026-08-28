@@ -11,6 +11,7 @@ export * from "./actions/remove";
 export * from "./actions/pauses";
 export * from "./actions/get-team-season-context";
 export * from "./actions/get-team-season-categories";
+export * from "./actions/update";
 
 // Helpers
 export * from "./helpers/initial-charges";

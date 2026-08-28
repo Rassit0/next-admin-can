@@ -10,14 +10,12 @@ import {
   AddModal,
   getDisciplinesOptions,
   getSeasons,
-  GridCards,
   SelectDisciplineOptions,
   TableSeasons,
 } from "@/modules/seasons";
 import { Card } from "@heroui/react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Structure04FreeIcons } from "@hugeicons/core-free-icons";
-import { getCurrentInstitutionId } from "@/lib/current-institution";
 import { getInstitutions } from "@/modules/organizations";
 
 interface Props {
@@ -40,6 +38,7 @@ export default async function SeasonsPage({ searchParams, params }: Props) {
       per_page,
       sortField,
       orderBy,
+      disciplineId,
     }),
     getDisciplinesOptions(),
   ]);

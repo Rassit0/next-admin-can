@@ -10,8 +10,9 @@ import {
   DatePicker,
   DateField,
   Calendar,
+  Alert,
 } from "@heroui/react";
-import { getLocalTimeZone, today } from "@internationalized/date";
+import { getLocalTimeZone, today, fromDate, toCalendarDate, parseDate } from "@internationalized/date";
 import { toast } from "sonner";
 import {
   MoreVerticalSquare01Icon,
@@ -32,6 +33,7 @@ import {
   updateMembershipLifecycle,
   createMembershipPause,
   removeMembership,
+  updatePlayerMembership,
 } from "@/modules/player-memberships";
 
 interface Props {
@@ -48,12 +50,14 @@ interface ActionDef {
 
 const ACTIONS_BY_STATUS: Record<IPlayerMembership["status"], ActionDef[]> = {
   ACTIVE: [
+    { key: "edit_start_date", label: "Modificar inicio", icon: Calendar01Icon },
     { key: "pause", label: "Programar pausa", icon: Calendar01Icon },
     { key: "suspend", label: "Suspender", icon: PauseIcon },
     { key: "finish", label: "Finalizar", icon: CheckmarkCircle02Icon },
     { key: "withdraw", label: "Dar de baja", icon: Logout01Icon, danger: true },
   ],
   SUSPENDED: [
+    { key: "edit_start_date", label: "Modificar inicio", icon: Calendar01Icon },
     { key: "reactivate", label: "Reactivar", icon: PlayIcon },
     { key: "finish", label: "Finalizar", icon: CheckmarkCircle02Icon },
     { key: "withdraw", label: "Dar de baja", icon: Logout01Icon, danger: true },
@@ -61,6 +65,7 @@ const ACTIONS_BY_STATUS: Record<IPlayerMembership["status"], ActionDef[]> = {
   WITHDRAWN: [{ key: "reactivate", label: "Reactivar", icon: PlayIcon }],
   FINISHED: [],
   PENDING_ACTIVE: [
+    { key: "edit_start_date", label: "Modificar inicio", icon: Calendar01Icon },
     { key: "pause", label: "Programar pausa", icon: Calendar01Icon },
     { key: "activate", label: "Activar", icon: PlayIcon },
     { key: "withdraw", label: "Dar de baja", icon: Logout01Icon, danger: true },
@@ -75,6 +80,10 @@ export const MembershipActions = ({ membership, origin }: Props) => {
 
   const confirmState = useOverlayState();
   const [selectedAction, setSelectedAction] = useState<ActionDef | null>(null);
+
+  const localStartedAt = membership.startedAt
+    ? toCalendarDate(fromDate(new Date(membership.startedAt), getLocalTimeZone()))
+    : today(getLocalTimeZone());
 
   const allActions: ActionDef[] = [
     { key: "manage", label: "Gestionar", icon: Settings01Icon },
@@ -122,7 +131,7 @@ export const MembershipActions = ({ membership, origin }: Props) => {
       return;
     }
 
-    if (action !== "remove" && action !== "activate" && !reason?.trim()) {
+    if (action !== "remove" && action !== "activate" && action !== "edit_start_date" && !reason?.trim()) {
       toast.error("El motivo es obligatorio para esta acción");
       setLoading(false);
       return;
@@ -132,6 +141,19 @@ export const MembershipActions = ({ membership, origin }: Props) => {
 
     if (action === "remove") {
       res = await removeMembership(membership.id);
+    } else if (action === "edit_start_date") {
+      const startDate = formData.get("startDate") as string;
+      if (!startDate) {
+        toast.error("Debes seleccionar la fecha de inicio");
+        setLoading(false);
+        return;
+      }
+      
+      const localMidnightDate = parseDate(startDate).toDate(getLocalTimeZone());
+      
+      res = await updatePlayerMembership(membership.id, {
+        startedAt: localMidnightDate.toISOString(),
+      });
     } else if (action === "pause") {
       const startDate = formData.get("startDate") as string;
       const endDate = formData.get("endDate") as string;
@@ -225,6 +247,69 @@ export const MembershipActions = ({ membership, origin }: Props) => {
                   <strong>{selectedAction?.label.toLowerCase()}</strong> para
                   esta membresía?
                 </p>
+
+                {selectedAction?.key === "edit_start_date" && (
+                  <div className="flex flex-col gap-4 w-full">
+                    <Alert status="warning">
+                      <Alert.Indicator />
+                      <Alert.Content>
+                        <Alert.Description>
+                          Esta acción afectará los cargos que se puedan regularizar. Solo se permiten fechas pasadas para evitar desajustes con cargos ya cobrados.
+                        </Alert.Description>
+                      </Alert.Content>
+                    </Alert>
+                    <DatePicker
+                      name="startDate"
+                      isRequired
+                      className="w-full"
+                      maxValue={localStartedAt}
+                      defaultValue={localStartedAt}
+                    >
+                      <Label className="text-sm font-semibold">
+                        Nueva fecha de inicio
+                      </Label>
+                      <DateField.Group variant="secondary">
+                        <DateField.Input>
+                          {(segment) => <DateField.Segment segment={segment} />}
+                        </DateField.Input>
+                        <DateField.Suffix>
+                          <DatePicker.Trigger>
+                            <DatePicker.TriggerIndicator />
+                          </DatePicker.Trigger>
+                        </DateField.Suffix>
+                      </DateField.Group>
+                      <DatePicker.Popover>
+                        <Calendar aria-label="Fecha inicio">
+                          <Calendar.Header>
+                            <Calendar.YearPickerTrigger>
+                              <Calendar.YearPickerTriggerHeading />
+                              <Calendar.YearPickerTriggerIndicator />
+                            </Calendar.YearPickerTrigger>
+                            <Calendar.NavButton slot="previous" />
+                            <Calendar.NavButton slot="next" />
+                          </Calendar.Header>
+                          <Calendar.Grid>
+                            <Calendar.GridHeader>
+                              {(day) => (
+                                <Calendar.HeaderCell>{day}</Calendar.HeaderCell>
+                              )}
+                            </Calendar.GridHeader>
+                            <Calendar.GridBody>
+                              {(date) => <Calendar.Cell date={date} />}
+                            </Calendar.GridBody>
+                          </Calendar.Grid>
+                          <Calendar.YearPickerGrid>
+                            <Calendar.YearPickerGridBody>
+                              {({ year }) => (
+                                <Calendar.YearPickerCell year={year} />
+                              )}
+                            </Calendar.YearPickerGridBody>
+                          </Calendar.YearPickerGrid>
+                        </Calendar>
+                      </DatePicker.Popover>
+                    </DatePicker>
+                  </div>
+                )}
 
                 {selectedAction?.key === "pause" && (
                   <div className="flex gap-4 w-full">
@@ -339,7 +424,7 @@ export const MembershipActions = ({ membership, origin }: Props) => {
                   </TextField>
                 )}
 
-                {selectedAction?.key !== "remove" && (
+                {selectedAction?.key !== "remove" && selectedAction?.key !== "edit_start_date" && (
                   <TextField
                     name="reason"
                     className="w-full"

@@ -11,6 +11,7 @@ interface SearchParams {
   sortField?: "name" | "startDate" | "endDate" | "createdAt" | "updatedAt";
   orderBy?: "asc" | "desc";
   callbackUrl?: string;
+  disciplineId?: string;
 }
 
 export const getSeasons = async ({
@@ -19,6 +20,7 @@ export const getSeasons = async ({
   page = "1",
   sortField = "name",
   orderBy = "asc",
+  disciplineId,
 }: SearchParams): Promise<ServiceResponse<ISeasonsResponse>> => {
   return handleServerAction(async () => {
     const params = new URLSearchParams();
@@ -27,6 +29,7 @@ export const getSeasons = async ({
     if (page) params.set("page", page);
     if (sortField) params.set("sortField", sortField);
     if (orderBy) params.set("orderBy", orderBy);
+    if (disciplineId) params.set("disciplineId", disciplineId);
 
     const res = await api.get<ISeasonsResponse>(
       `seasons?${params.toString()}`,
