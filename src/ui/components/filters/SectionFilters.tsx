@@ -9,7 +9,7 @@ export const SectionFilters = ({ actions, children }: SectionFiltersProps) => {
   return (
     <div className="flex flex-wrap flex-row gap-2 justify-between items-end w-full">
       {/* Contenedor izquierdo: Search + Filtros */}
-      <div className="flex flex-1 gap-1 md:gap-2 items-center">
+      <div className="flex flex-wrap flex-1 gap-2 items-center">
         <Filters>{children}</Filters>
         <PerPage />
       </div>

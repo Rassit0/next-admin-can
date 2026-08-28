@@ -43,7 +43,7 @@ export const Filters = ({
   };
 
   return (
-    <div className="flex gap-4 items-center w-full">
+    <div className="flex flex-wrap gap-2 md:gap-4 items-center w-full">
       {/* Si showSearch es true, renderiza el estándar */}
       {showSearch && (
         <SearchField

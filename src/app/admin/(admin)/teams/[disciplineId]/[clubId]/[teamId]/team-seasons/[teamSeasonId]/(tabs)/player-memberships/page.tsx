@@ -3,7 +3,11 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { getPaymentPlans } from "@/modules/payment-plans";
 import { getPlayers } from "@/modules/players";
-import { getTeamSeasonById, getTeamSeasonCategories, CategorySelectFilter } from "@/modules/team-seasons";
+import {
+  getTeamSeasonById,
+  getTeamSeasonCategories,
+  CategorySelectFilter,
+} from "@/modules/team-seasons";
 import {
   EnrollMembershipDrawer,
   getPlayerMemberships,
@@ -58,16 +62,28 @@ export default async function PlayerMembershipsPage({
   searchParams,
   params,
 }: Props) {
-  const { search, page, per_page, status, teamSeasonCategoryId } = await searchParams;
+  const { search, page, per_page, status, teamSeasonCategoryId } =
+    await searchParams;
   const { disciplineId, clubId, teamId, teamSeasonId } = await params;
 
-  const [membershipsResponse, teamSeasonResponse, paymentPlansResponse, categoriesResponse] =
-    await resolvePageData([
-      getPlayerMemberships({ search, page, per_page, teamSeasonId, teamSeasonCategoryId, status }),
-      getTeamSeasonById({ id: teamSeasonId }),
-      getPaymentPlans({ per_page: "100", teamSeasonId }),
-      getTeamSeasonCategories(teamSeasonId),
-    ]);
+  const [
+    membershipsResponse,
+    teamSeasonResponse,
+    paymentPlansResponse,
+    categoriesResponse,
+  ] = await resolvePageData([
+    getPlayerMemberships({
+      search,
+      page,
+      per_page,
+      teamSeasonId,
+      teamSeasonCategoryId,
+      status,
+    }),
+    getTeamSeasonById({ id: teamSeasonId }),
+    getPaymentPlans({ per_page: "100", teamSeasonId }),
+    getTeamSeasonCategories(teamSeasonId),
+  ]);
 
   const teamSeason = teamSeasonResponse.data;
   const memberships = membershipsResponse.data.data;
