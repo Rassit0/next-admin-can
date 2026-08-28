@@ -22,6 +22,7 @@ export interface CreateAccountChargeDto {
     financialAccountId?: string;
     attachmentIds?: string[];
     payerPersonId?: string;
+    transactionDate?: string;
   };
 }
 

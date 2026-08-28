@@ -8,7 +8,12 @@ import {
   ListBox,
   Label,
   TextField,
+  DatePicker,
+  DateField,
+  Calendar,
 } from "@heroui/react";
+import type { DateValue } from "@internationalized/date";
+import { getLocalTimeZone, today } from "@internationalized/date";
 import { Cancel01Icon, FloppyDiskIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { toast } from "sonner";
@@ -58,6 +63,10 @@ export const DirectTransactionDrawer = ({
   const [payerPersonId, setPayerPersonId] = useState<string | null>(null);
   const [selectedPayerPerson, setSelectedPayerPerson] = useState<IPersonOption | null>(null);
 
+  const [transactionDate, setTransactionDate] = useState<DateValue | null>(
+    today(getLocalTimeZone()),
+  );
+
   useEffect(() => {
     if (isOpen) {
       setConcept("");
@@ -70,6 +79,7 @@ export const DirectTransactionDrawer = ({
       setSelectedPerson(null);
       setPayerPersonId(null);
       setSelectedPayerPerson(null);
+      setTransactionDate(today(getLocalTimeZone()));
     }
   }, [isOpen]);
 
@@ -103,6 +113,9 @@ export const DirectTransactionDrawer = ({
         immediatePayment: {
           paymentMethod,
           financialAccountId,
+          transactionDate: transactionDate
+            ? transactionDate.toDate(getLocalTimeZone()).toISOString()
+            : new Date().toISOString(),
           ...(attachmentIds.length > 0 && { attachmentIds }),
           ...(payerPersonId && { payerPersonId }),
         },
@@ -170,6 +183,56 @@ export const DirectTransactionDrawer = ({
                 variant="secondary"
               />
             </TextField>
+
+            <div className="w-full">
+              <DatePicker
+                className="w-full"
+                name="date"
+                value={transactionDate}
+                onChange={setTransactionDate}
+              >
+                <Label className="text-sm font-semibold">Fecha de Comprobante</Label>
+                <DateField.Group fullWidth>
+                  <DateField.Input>
+                    {(segment) => <DateField.Segment segment={segment} />}
+                  </DateField.Input>
+                  <DateField.Suffix>
+                    <DatePicker.Trigger>
+                      <DatePicker.TriggerIndicator />
+                    </DatePicker.Trigger>
+                  </DateField.Suffix>
+                </DateField.Group>
+                <DatePicker.Popover>
+                  <Calendar aria-label="Event date">
+                    <Calendar.Header>
+                      <Calendar.YearPickerTrigger>
+                        <Calendar.YearPickerTriggerHeading />
+                      </Calendar.YearPickerTrigger>
+                      <Calendar.YearPickerTriggerIndicator />
+                    </Calendar.Header>
+                    <Calendar.Grid>
+                      <Calendar.GridHeader>
+                        {(day) => (
+                          <Calendar.HeaderCell>
+                            {day}
+                          </Calendar.HeaderCell>
+                        )}
+                      </Calendar.GridHeader>
+                      <Calendar.GridBody>
+                        {(date) => <Calendar.Cell date={date} />}
+                      </Calendar.GridBody>
+                    </Calendar.Grid>
+                    <Calendar.YearPickerGrid>
+                      <Calendar.YearPickerGridBody>
+                        {({ year }) => (
+                          <Calendar.YearPickerCell year={year} />
+                        )}
+                      </Calendar.YearPickerGridBody>
+                    </Calendar.YearPickerGrid>
+                  </Calendar>
+                </DatePicker.Popover>
+              </DatePicker>
+            </div>
 
             <SelectOrCreatePerson
               isRequired={false}

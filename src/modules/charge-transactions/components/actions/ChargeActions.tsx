@@ -61,6 +61,7 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [lateFeePreview, setLateFeePreview] = useState<ILateFeePreview | null>(null);
+  const [customLateFeeAmount, setCustomLateFeeAmount] = useState<string>("");
 
   const hasAdjustment = Number(charge.adjustmentAmount) !== 0;
   
@@ -126,10 +127,10 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
     });
   }
 
-  if ((isStudentCharge || isMembershipCharge) && !isLateFee && isPastDue && (charge.status === "PENDING" || charge.status === "PARTIAL")) {
+  if ((isStudentCharge || isMembershipCharge) && !isLateFee && charge.status !== "CANCELLED") {
     allActions.push({
       key: "apply-late-fee",
-      label: "Aplicar Mora",
+      label: "Generar Mora",
       icon: Note01Icon,
     });
   }
@@ -173,6 +174,7 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
              return;
           }
           setLateFeePreview(res.data!);
+          setCustomLateFeeAmount(res.data!.totalLateFeeAmount.toString());
           confirmState.open();
         });
         return;
@@ -204,7 +206,13 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
     let res;
 
     if (action === "apply-late-fee") {
-      res = await applyLateFee(charge.id, isMembershipCharge ? 'membership' : 'student');
+      const parsedAmount = Number(customLateFeeAmount);
+      if (isNaN(parsedAmount) || parsedAmount <= 0) {
+        setErrors({ customLateFeeAmount: "El monto debe ser mayor a 0." });
+        setLoading(false);
+        return;
+      }
+      res = await applyLateFee(charge.id, isMembershipCharge ? 'membership' : 'student', parsedAmount);
     } else if (action === "remove-adjustment") {
       res = await removeChargeAdjustment(charge.id);
     } else if (action === "delete-charge") {
@@ -360,9 +368,28 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
                         <span className="text-muted-foreground">Recargo por día:</span>
                         <span className="font-semibold">{lateFeePreview.lateFeePerDay} Bs</span>
                       </div>
-                      <div className="border-t border-border mt-2 pt-2 flex justify-between font-bold text-base">
-                        <span>Total Mora a Aplicar:</span>
-                        <span className="text-danger">{lateFeePreview.totalLateFeeAmount} Bs</span>
+                      <div className="border-t border-border mt-2 pt-2 flex justify-between font-bold text-base items-center">
+                        <span>Total Mora a Aplicar (Bs):</span>
+                        <div className="w-1/3">
+                          <TextField
+                            name="customLateFeeAmount"
+                            isRequired
+                            isInvalid={!!errors.customLateFeeAmount || undefined}
+                          >
+                            <Input
+                              variant="secondary"
+                              type="number"
+                              step="0.01"
+                              min="0.01"
+                              value={customLateFeeAmount}
+                              onChange={(e) => {
+                                setCustomLateFeeAmount(e.target.value);
+                                setErrors({});
+                              }}
+                            />
+                            <FieldError children={errors.customLateFeeAmount && <> {errors.customLateFeeAmount}</>} />
+                          </TextField>
+                        </div>
                       </div>
                     </div>
                   </>

@@ -78,8 +78,8 @@ export const calculateInitialCharges = (
     },
     {
       key: "monthly",
-      label: "Primera mensualidad",
-      description: "Cuota correspondiente al primer mes",
+      label: "Mes",
+      description: "Cuota correspondiente al mes de inicio",
       gross: monthlyGross,
       discountPercent: recurringDiscountPercent,
       adjustmentAmount: -monthlyDiscount,

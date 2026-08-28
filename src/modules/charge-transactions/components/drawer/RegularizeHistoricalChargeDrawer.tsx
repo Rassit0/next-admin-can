@@ -254,8 +254,12 @@ export const RegularizeHistoricalChargeDrawer = ({
                     <div className="mt-4 border-t border-border pt-4 text-sm">
                       <p className="font-semibold mb-2">Resumen de la acción:</p>
                       <p className="text-muted">
-                        Se generará un cargo PENDIENTE correspondiente al ciclo{" "}
-                        <strong className="text-foreground">{selectedCycle.year} - Mes {selectedCycle.month}</strong>{" "}
+                        Se generará un cargo PENDIENTE correspondiente{" "}
+                        {selectedCycle.cycleId === "REGISTRATION" ? (
+                          <>a la <strong className="text-foreground">Matrícula de inscripción</strong></>
+                        ) : (
+                          <>al ciclo <strong className="text-foreground">{selectedCycle.year} - Mes {selectedCycle.month}</strong></>
+                        )}{" "}
                         por el importe de{" "}
                         <strong className="text-foreground">
                           Bs {hasOverridePermission && useOverride && overrideAmount !== "" ? Number(overrideAmount).toFixed(2) : Number(selectedCycle.amount).toFixed(2)}
