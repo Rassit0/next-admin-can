@@ -26,6 +26,33 @@ interface Props {
   payments: IChargePayment[];
 }
 
+const PAYMENT_METHOD_MAP: Record<string, { label: string; className: string }> = {
+  CASH: {
+    label: "Efectivo",
+    className: "bg-success-soft text-success",
+  },
+  TRANSFER: {
+    label: "Transferencia",
+    className: "bg-default text-default-foreground",
+  },
+  QR: {
+    label: "QR",
+    className: "bg-success-soft text-success",
+  },
+  CHEQUE: {
+    label: "Cheque",
+    className: "bg-default text-default-foreground",
+  },
+  CARD: {
+    label: "Tarjeta",
+    className: "bg-default text-default-foreground",
+  },
+  OTHER: {
+    label: "Otro",
+    className: "bg-default text-default-foreground",
+  },
+};
+
 export const TablePayments = ({ payments }: Props) => {
   const [paymentToVoid, setPaymentToVoid] = useState<string | null>(null);
   const [paymentToView, setPaymentToView] = useState<IChargePayment | null>(null);
@@ -51,27 +78,7 @@ export const TablePayments = ({ payments }: Props) => {
   };
 
   const getMethodChip = (method: string) => {
-    const methodMap: Record<
-      string,
-      {
-        label: string;
-        className: string;
-      }
-    > = {
-      CASH: {
-        label: "Efectivo",
-        className: "bg-success-soft text-success",
-      },
-      TRANSFER: {
-        label: "Transferencia",
-        className: "bg-default text-default-foreground",
-      },
-      QR: {
-        label: "QR",
-        className: "bg-success-soft text-success",
-      },
-    };
-    const m = methodMap[method] || {
+    const m = PAYMENT_METHOD_MAP[method] || {
       label: method,
       className: "bg-default text-default-foreground",
     };
@@ -131,11 +138,11 @@ export const TablePayments = ({ payments }: Props) => {
                   <Table.Row
                     key={item.id}
                     id={item.id}
-                    className="border-b border-border last:border-b-0 hover:bg-surface-secondary/40"
+                    className={`border-b border-border last:border-b-0 hover:bg-surface-secondary/40 ${item.status === 'CANCELLED' ? 'opacity-60 bg-danger-50/20' : ''}`}
                   >
                     <Table.Cell className="py-3">
                       <div className="flex flex-col">
-                        <span className="font-semibold text-foreground">
+                        <span className={`font-semibold ${item.status === 'CANCELLED' ? 'text-danger' : 'text-foreground'}`}>
                           {item.receiptSeries}-{item.receiptNumber}
                         </span>
                       </div>
@@ -164,12 +171,17 @@ export const TablePayments = ({ payments }: Props) => {
                       </div>
                     </Table.Cell>
                     <Table.Cell className="py-3">
-                      <span className="font-mono font-bold text-foreground">
+                      <span className={`font-mono font-bold ${item.status === 'CANCELLED' ? 'text-danger line-through' : 'text-foreground'}`}>
                         {Number(item.amount).toFixed(2)} Bs
                       </span>
                     </Table.Cell>
                     <Table.Cell className="py-3">
                       <div className="flex flex-wrap gap-1">
+                        {item.status === 'CANCELLED' && (
+                          <Chip size="sm" variant="soft" className="bg-danger-soft text-danger">
+                            Anulado
+                          </Chip>
+                        )}
                         {methods.map((m) => getMethodChip(m))}
                       </div>
                     </Table.Cell>
@@ -203,20 +215,24 @@ export const TablePayments = ({ payments }: Props) => {
                                 <HugeiconsIcon icon={ViewIcon} />
                                 <Label>Ver Detalles</Label>
                               </Dropdown.Item>
-                              <Dropdown.Item
-                                id="print"
-                                textValue="Imprimir Recibo"
-                              >
-                                <HugeiconsIcon icon={Invoice01Icon} />
-                                <Label>Imprimir Recibo</Label>
-                              </Dropdown.Item>
-                              <Dropdown.Item id="void" textValue="Anular Pago">
-                                <HugeiconsIcon
-                                  icon={Delete02Icon}
-                                  className="text-danger"
-                                />
-                                <Label className="text-danger">Anular Pago</Label>
-                              </Dropdown.Item>
+                              {item.status !== "CANCELLED" && (
+                                <Dropdown.Item
+                                  id="print"
+                                  textValue="Imprimir Recibo"
+                                >
+                                  <HugeiconsIcon icon={Invoice01Icon} />
+                                  <Label>Imprimir Recibo</Label>
+                                </Dropdown.Item>
+                              )}
+                              {item.status !== "CANCELLED" && (
+                                <Dropdown.Item id="void" textValue="Anular Pago">
+                                  <HugeiconsIcon
+                                    icon={Delete02Icon}
+                                    className="text-danger"
+                                  />
+                                  <Label className="text-danger">Anular Pago</Label>
+                                </Dropdown.Item>
+                              )}
                             </Dropdown.Menu>
                           </Dropdown.Popover>
                         </Dropdown>
@@ -243,9 +259,7 @@ export const TablePayments = ({ payments }: Props) => {
             </AlertDialog.Header>
             <AlertDialog.Body>
               <p>
-                ¿Estás seguro de que deseas anular este pago? Se anulará el recibo
-                completo y el monto total será devuelto al saldo pendiente de la
-                cuota, revirtiendo todas las distribuciones en las cuentas financieras.
+                ¿Anular este pago? Esta operación revertirá el efecto financiero del pago, pero el comprobante permanecerá registrado como "Anulado" para fines de auditoría.
               </p>
             </AlertDialog.Body>
             <AlertDialog.Footer>
@@ -303,7 +317,7 @@ export const TablePayments = ({ payments }: Props) => {
                         <div key={t.id || idx} className="p-3 flex justify-between items-center bg-background">
                           <div className="flex flex-col">
                             <span className="font-medium">{t.financialAccountName || "Cuenta Desconocida"}</span>
-                            <span className="text-xs text-default-500">{t.paymentMethod}</span>
+                            <span className="text-xs text-default-500">{PAYMENT_METHOD_MAP[t.paymentMethod]?.label || t.paymentMethod}</span>
                           </div>
                           <span className="font-mono">{Number(t.amount).toFixed(2)} Bs</span>
                         </div>
