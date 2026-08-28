@@ -69,7 +69,8 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
     charge.studentCharges?.[0]?.type === 'MANUAL';
 
   const isStudentCharge = charge.studentCharges && charge.studentCharges.length > 0;
-  const isLateFee = charge.studentCharges?.[0]?.type === 'LATE_FEE';
+  const isMembershipCharge = charge.membershipCharges && charge.membershipCharges.length > 0;
+  const isLateFee = charge.studentCharges?.[0]?.type === 'LATE_FEE' || charge.membershipCharges?.[0]?.type === 'LATE_FEE';
   const isPastDue = new Date(charge.dueDate) < new Date();
 
   const allActions: ActionDef[] = [];
@@ -125,7 +126,7 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
     });
   }
 
-  if (isStudentCharge && !isLateFee && isPastDue && (charge.status === "PENDING" || charge.status === "PARTIAL")) {
+  if ((isStudentCharge || isMembershipCharge) && !isLateFee && isPastDue && (charge.status === "PENDING" || charge.status === "PARTIAL")) {
     allActions.push({
       key: "apply-late-fee",
       label: "Aplicar Mora",
@@ -161,7 +162,7 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
       
       if (key === "apply-late-fee") {
         setLoading(true);
-        previewLateFee(charge.id).then((res) => {
+        previewLateFee(charge.id, isMembershipCharge ? 'membership' : 'student').then((res) => {
           setLoading(false);
           if (res.error) {
             toast.error(res.message);
@@ -203,7 +204,7 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
     let res;
 
     if (action === "apply-late-fee") {
-      res = await applyLateFee(charge.id);
+      res = await applyLateFee(charge.id, isMembershipCharge ? 'membership' : 'student');
     } else if (action === "remove-adjustment") {
       res = await removeChargeAdjustment(charge.id);
     } else if (action === "delete-charge") {

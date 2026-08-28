@@ -18,7 +18,8 @@ export interface ILateFeePreview {
 }
 
 export const previewLateFee = async (
-  chargeId: string
+  chargeId: string,
+  type: 'student' | 'membership' = 'student'
 ): Promise<ServiceResponse<ILateFeePreview>> => {
   const session = await auth();
 
@@ -30,9 +31,9 @@ export const previewLateFee = async (
     };
 
   return handleServerAction(async () => {
-    // Note: The endpoint is /student-charges/:id/late-fee/preview
+    const endpointPrefix = type === 'membership' ? 'membership-charges' : 'student-charges';
     const res = await api.post<{ data: ILateFeePreview; message?: string }>(
-      `student-charges/${chargeId}/late-fee/preview`,
+      `${endpointPrefix}/${chargeId}/late-fee/preview`,
       {},
       {
         headers: {

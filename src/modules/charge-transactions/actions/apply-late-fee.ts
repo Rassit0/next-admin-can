@@ -5,7 +5,8 @@ import { handleServerAction } from "@/utils";
 import { auth } from "@/auth";
 
 export const applyLateFee = async (
-  chargeId: string
+  chargeId: string,
+  type: 'student' | 'membership' = 'student'
 ): Promise<ServiceResponse<boolean>> => {
   const session = await auth();
 
@@ -17,9 +18,9 @@ export const applyLateFee = async (
     };
 
   return handleServerAction(async () => {
-    // Note: The endpoint is /student-charges/:id/late-fee/apply
+    const endpointPrefix = type === 'membership' ? 'membership-charges' : 'student-charges';
     const res = await api.post<any>(
-      `student-charges/${chargeId}/late-fee/apply`,
+      `${endpointPrefix}/${chargeId}/late-fee/apply`,
       {},
       {
         headers: {
