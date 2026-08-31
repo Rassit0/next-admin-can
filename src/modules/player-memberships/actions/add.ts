@@ -34,6 +34,7 @@ export const addPlayerMembership = async (
     }>(`player-memberships`, data);
 
     updateTag("player-memberships");
+    updateTag("team-seasons");
     return {
       error: false,
       data: response.data,

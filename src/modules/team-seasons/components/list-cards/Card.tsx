@@ -1,5 +1,4 @@
 import {
-  AddMembershipDrawer,
   ITeamSeason,
   STATUS_BG_MAP,
   TeamSeasonActions,
@@ -44,7 +43,6 @@ export const CardTeamSeason = ({ teamSeason, urlBase }: Props) => {
           </div>
         </div>
         <div className="mt-auto space-y-3">
-          <AddMembershipDrawer teamSeasonId={teamSeason.id} />
           {/* <EnrollMembershipDrawer teamSeason={teamSeason} size="md" /> */}
 
           <div className="grid grid-cols-2 gap-2">

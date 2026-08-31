@@ -84,3 +84,22 @@ export const getTeamSeasonCategories = async (
     return { error: false as const, data: res.data, message: res.message };
   });
 };
+
+export const finalizeTeamSeasonCategory = async (
+  teamSeasonId: string,
+  categoryId: string,
+  notes: string
+): Promise<ServiceResponse<ITeamSeasonCategory>> => {
+  return handleServerAction(async () => {
+    const res = await api.post<{ message: string; data: ITeamSeasonCategory }>(
+      `team-seasons/${teamSeasonId}/categories/${categoryId}/finish-early`,
+      { notes }
+    );
+
+    // Usa updateTag como prefiere el usuario
+    const { updateTag } = await import("next/cache");
+    updateTag("team-seasons");
+    return { error: false as const, data: res.data, message: res.message };
+  });
+};
+

@@ -7,6 +7,7 @@ import {
   getTeamSeasonById,
   getTeamSeasonCategories,
   CategorySelectFilter,
+  ITeamSeasonCategory,
 } from "@/modules/team-seasons";
 import {
   EnrollMembershipDrawer,
@@ -122,9 +123,9 @@ export default async function PlayerMembershipsPage({
           />
           <SectionFilters>
             <CategorySelectFilter
-              categories={categories.map((c: any) => ({
+              categories={categories.map((c: ITeamSeasonCategory) => ({
                 id: c.id,
-                name: c.category.name,
+                name: `${c.category.name} - ${GENDER_MAP[c.gender] || c.gender}`,
               }))}
             />
           </SectionFilters>

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Modal, useOverlayState } from "@heroui/react";
+import { Button, Modal, useOverlayState, Chip } from "@heroui/react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
   UserGroupIcon,
@@ -20,7 +20,7 @@ import {
 } from "@/modules/team-seasons/actions/categories.actions";
 import { getCategoriesByDisciplineOptions } from "@/modules/team-seasons/actions/get-categories-options";
 import { DrawerCategory } from "../categories/DrawerCategory";
-import { AddMembershipDrawer } from "@/modules/team-seasons";
+import { FinalizeCategoryModal } from "@/modules/team-seasons";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
@@ -28,6 +28,21 @@ interface Props {
   teamSeason: ITeamSeason;
   urlBase: string;
 }
+
+const GENDER_MAP: Record<
+  string,
+  {
+    label: string;
+    className:
+      | "bg-primary text-background"
+      | "bg-accent text-background"
+      | "bg-success text-background";
+  }
+> = {
+  MALE: { label: "Masculino", className: "bg-primary text-background" },
+  FEMALE: { label: "Femenino", className: "bg-accent text-background" },
+  MIXED: { label: "Mixto", className: "bg-success text-background" },
+};
 
 export const ViewCategoriesModal = ({ teamSeason, urlBase }: Props) => {
   const state = useOverlayState();
@@ -102,13 +117,27 @@ export const ViewCategoriesModal = ({ teamSeason, urlBase }: Props) => {
               {category.category.name}
             </span>
             <div className="flex gap-2 items-center mt-1">
-              <span className="text-[10px] text-muted-foreground uppercase">
-                {category.gender}
-              </span>
-              <span
-                className={`text-[10px] px-1.5 py-0.5 rounded-sm font-bold ${category.isActive ? "bg-success/20 text-success" : "bg-danger/20 text-danger"}`}
+              <Chip
+                size="sm"
+                variant="soft"
+                className={GENDER_MAP[category.gender]?.className}
               >
-                {category.isActive ? "Activa" : "Inactiva"}
+                {GENDER_MAP[category.gender]?.label || category.gender}
+              </Chip>
+              <span
+                className={`text-[10px] px-1.5 py-0.5 rounded-sm font-bold ${
+                  category.status === "FINISHED"
+                    ? "bg-warning/20 text-warning"
+                    : category.isActive
+                      ? "bg-success/20 text-success"
+                      : "bg-danger/20 text-danger"
+                }`}
+              >
+                {category.status === "FINISHED"
+                  ? "Finalizada"
+                  : category.isActive
+                    ? "Activa"
+                    : "Inactiva"}
               </span>
             </div>
           </div>
@@ -139,12 +168,7 @@ export const ViewCategoriesModal = ({ teamSeason, urlBase }: Props) => {
           </span>
         </div>
 
-        <div className="flex items-center gap-2 mt-3 pt-3 border-t border-border/50">
-          {category.isActive && teamSeason.status === "ACTIVE" && (
-            <div className="flex-1">
-              <AddMembershipDrawer teamSeasonId={teamSeason.id} size="sm" />
-            </div>
-          )}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 mt-3 pt-3 border-t border-border/50">
           <Button
             size="sm"
             variant="secondary"
@@ -162,11 +186,17 @@ export const ViewCategoriesModal = ({ teamSeason, urlBase }: Props) => {
           <Button
             size="sm"
             variant={category.isActive ? "danger-soft" : "primary"}
-            className="font-bold text-[10px]"
+            className="font-bold text-[10px] flex-1"
             onPress={() => handleToggleStatus(category)}
+            isDisabled={category.status === "FINISHED"}
           >
             {category.isActive ? "Desactivar" : "Activar"}
           </Button>
+          <FinalizeCategoryModal
+            teamSeasonId={teamSeason.id}
+            category={category}
+            onSuccess={loadData}
+          />
         </div>
       </div>
     );
@@ -177,26 +207,22 @@ export const ViewCategoriesModal = ({ teamSeason, urlBase }: Props) => {
       <Button
         size="sm"
         variant="secondary"
-        className="font-bold text-xs w-full justify-between px-4"
+        className="font-bold text-xs w-full justify-start px-4"
         onPress={() => state.open()}
       >
         <span className="flex items-center gap-2">
           <HugeiconsIcon
             icon={Search01Icon}
             size={16}
-            className="text-accent"
+            className="text-accent shrink-0"
           />
-          Categorías Disponibles
-        </span>
-        <span className="bg-surface-container-highest px-2 py-0.5 rounded-full text-[10px]">
-          {teamSeason._count?.playerMemberships || 0} Atletas{" "}
-          {/* Show something useful since we don't have categories count on teamSeason */}
+          <span>Categorías</span>
         </span>
       </Button>
 
       <Modal.Backdrop isOpen={state.isOpen} onOpenChange={state.setOpen}>
         <Modal.Container placement="auto" scroll="inside">
-          <Modal.Dialog className="sm:max-w-md bg-background-tertiary">
+          <Modal.Dialog className="sm:max-w-xl bg-background-tertiary">
             <Modal.CloseTrigger />
             <Modal.Header>
               <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">

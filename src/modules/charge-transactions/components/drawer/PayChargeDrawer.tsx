@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import {
   Drawer,
@@ -14,6 +14,7 @@ import {
   DatePicker,
   DateField,
   Calendar,
+  Card,
 } from "@heroui/react";
 import type { DateValue } from "@internationalized/date";
 import {
@@ -54,7 +55,7 @@ export interface SplitItem {
 const PAYMENT_METHOD_LABELS: Record<string, string> = {
   CASH: "Efectivo",
   TRANSFER: "Transferencia",
-  QR: "CÃ³digo QR",
+  QR: "Código QR",
 };
 
 export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
@@ -82,7 +83,7 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
   const [notes, setNotes] = useState<string>("");
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  // Estado para el diÃ¡logo de impresiÃ³n de recibo
+  // Estado para el diálogo de impresión de recibo
   const [printTransactionId, setPrintTransactionId] = useState<string | null>(
     null,
   );
@@ -127,7 +128,7 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
       const hasInvalidMethod = splits.some((s) => !s.paymentMethod);
       if (hasInvalidMethod) {
         toast.danger(
-          "Debe seleccionar un mÃ©todo de pago vÃ¡lido para cada cuenta.",
+          "Debe seleccionar un método de pago válido para cada cuenta.",
         );
         setIsLoading(false);
         return;
@@ -185,7 +186,7 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
 
         console.log("PAYMENT RESPONSE DATA:", res.data);
 
-        // Mostrar diÃ¡logo de impresiÃ³n con el ID de la transacciÃ³n creada
+        // Mostrar diálogo de impresión con el ID de la transacción creada
         if (res.data?.transaction?.id) {
           setPrintTransactionId(res.data.transaction.id);
           setShowPrintDialog(true);
@@ -195,7 +196,7 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
         onOpenChange(false);
       }
     } catch (error) {
-      toast.danger("OcurriÃ³ un error inesperado al registrar el pago.");
+      toast.danger("Ocurrió un error inesperado al registrar el pago.");
     } finally {
       setIsLoading(false);
     }
@@ -219,7 +220,8 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
               </Drawer.Header>
 
               <Drawer.Body className="gap-6 pt-6">
-                <div className="bg-primary-50 p-4 rounded-xl border border-primary-100 flex flex-col gap-2">
+                <Card className="border border-outline-variant/30 shadow-none bg-surface-container-low mb-2">
+                  <div className="p-4 flex flex-col gap-2">
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-primary-600">Monto Base</span>
                     <span
@@ -279,6 +281,7 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
                     </span>
                   </div>
                 </div>
+                </Card>
 
                 <SelectOrCreatePerson
                   personId={personId}
@@ -290,10 +293,11 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
                 />
 
                 {splits.map((split, index) => (
-                  <div
+                  <Card
                     key={split.id}
-                    className="flex flex-col gap-4 p-4 border border-primary-200 rounded-lg bg-background relative"
+                    className="border border-outline-variant/30 shadow-none bg-surface-container-low"
                   >
+                    <div className="flex flex-col gap-4 p-4 relative">
                     {splits.length > 1 && (
                       <div className="absolute top-2 right-2 text-xs font-semibold text-primary-500">
                         Pago #{index + 1}
@@ -383,7 +387,7 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
                                 setSplits(newSplits);
                               }}
                             >
-                              <Label>MÃ©todo de Pago</Label>
+                              <Label>Método de Pago</Label>
                               <Select.Trigger>
                                 <Select.Value />
                                 <Select.Indicator />
@@ -441,6 +445,7 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
                       </Button>
                     )}
                   </div>
+                  </Card>
                 ))}
 
                 <Button
@@ -462,7 +467,7 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
                     ]);
                   }}
                 >
-                  + Agregar MÃ©todo de Pago
+                  + Agregar Método de Pago
                 </Button>
 
                 <div className="w-full">
@@ -472,7 +477,7 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
                     value={transactionDate}
                     onChange={setTransactionDate}
                   >
-                    <Label>Fecha de RecepciÃ³n (Comprobante)</Label>
+                    <Label>Fecha de Recepción (Comprobante)</Label>
                     <DateField.Group fullWidth>
                       <DateField.Input>
                         {(segment) => <DateField.Segment segment={segment} />}

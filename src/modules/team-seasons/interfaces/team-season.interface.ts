@@ -56,6 +56,7 @@ export interface ITeamSeasonCategory {
   maxMembers?: number | null;
   validateAge: boolean;
   isActive: boolean;
+  status?: string;
   _count?: {
     player_membership: number;
   };

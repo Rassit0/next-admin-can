@@ -49,3 +49,4 @@ export * from "./components/categories/ListCardsCategories";
 export * from "./components/filters/CategorySelectFilter";
 export * from "./components/modal/ViewCategoriesModal";
 export * from "./components/modal/ManageCategoryButton";
+export * from "./components/modal/FinalizeCategoryModal";
