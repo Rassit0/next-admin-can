@@ -14,7 +14,7 @@ import {
   Collection,
   Avatar,
 } from "@heroui/react";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { useAsyncList } from "@react-stately/data";
 import {
   getPersonsOptions,
@@ -31,6 +31,7 @@ interface Props {
   setSelectedPerson: Dispatch<SetStateAction<IPersonOption | null>>;
   errors?: Record<string, string>;
   handleRemoveError?: (fieldName: string) => void;
+  defaultPerson?: IPersonOption | null;
 }
 
 interface ICharacter {
@@ -53,6 +54,7 @@ export const SelectOrCreatePerson = ({
   setSelectedPerson,
   errors,
   handleRemoveError,
+  defaultPerson,
 }: Props) => {
   const list = useAsyncList<IPersonOption>({
     async load({ cursor: page = "1", filterText, signal }) {
@@ -64,12 +66,27 @@ export const SelectOrCreatePerson = ({
           items: [],
         };
       }
+      let items = res.data?.data || [];
+      if (defaultPerson && page === "1" && !filterText) {
+        const exists = items.find(p => p.id === defaultPerson.id);
+        if (!exists) {
+          items = [defaultPerson, ...items];
+        }
+      }
+
       return {
         cursor: res.data?.meta.nextPage?.toString() || undefined,
-        items: res.data?.data || [],
+        items,
       };
     },
   });
+  
+  useEffect(() => {
+    if (defaultPerson && !personId) {
+      setPersonId(defaultPerson.id);
+      setSelectedPerson(defaultPerson);
+    }
+  }, [defaultPerson, personId, setPersonId, setSelectedPerson]);
 
   return (
     <div className="flex items-end gap-4 w-full">

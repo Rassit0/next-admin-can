@@ -158,7 +158,7 @@ export const DirectTransactionDrawer = ({
     <>
       <Drawer.Backdrop isOpen={isOpen} onOpenChange={onOpenChange}>
         <Drawer.Content placement="right">
-        <Drawer.Dialog className="w-full sm:max-w-md">
+        <Drawer.Dialog className="w-full sm:max-w-md" aria-label={type === "INCOME" ? "Registrar Ingreso Directo" : "Registrar Gasto Directo"}>
           <Drawer.CloseTrigger />
           <Drawer.Header className="border-b border-border">
             <Drawer.Heading className="text-lg font-bold">

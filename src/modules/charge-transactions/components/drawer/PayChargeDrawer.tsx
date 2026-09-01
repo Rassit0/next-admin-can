@@ -202,11 +202,40 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
     }
   };
 
+  let defaultPersonOption: IPersonOption | undefined = undefined;
+  if (charge.membershipCharges?.[0]?.playerMembership?.player?.person) {
+    const person = charge.membershipCharges[0].playerMembership.player.person;
+    defaultPersonOption = {
+      id: person.id,
+      name: person.name,
+      lastName: person.lastName,
+      secondLastName: person.secondLastName || null,
+      documentNumber: person.documentNumber || null,
+      gender: person.gender || null,
+      birthDate: person.birthDate || null,
+      imageUrl: person.imageUrl || null,
+      fullName: `${person.name} ${person.lastName}`.trim(),
+    } as IPersonOption;
+  } else if (charge.studentCharges?.[0]?.studentMembership?.student?.person) {
+    const person = charge.studentCharges[0].studentMembership.student.person;
+    defaultPersonOption = {
+      id: person.id,
+      name: person.name,
+      lastName: person.lastName,
+      secondLastName: person.secondLastName || null,
+      documentNumber: person.documentNumber || null,
+      gender: person.gender || null,
+      birthDate: person.birthDate || null,
+      imageUrl: person.imageUrl || null,
+      fullName: `${person.name} ${person.lastName}`.trim(),
+    } as IPersonOption;
+  }
+
   return (
     <>
       <Drawer.Backdrop isOpen={isOpen} onOpenChange={onOpenChange}>
         <Drawer.Content placement="right">
-          <Drawer.Dialog className="w-full sm:max-w-md">
+          <Drawer.Dialog className="w-full sm:max-w-md" aria-label="Registrar Pago">
             <Drawer.CloseTrigger />
             <form onSubmit={handleSubmit} className="flex flex-col h-full">
               <Drawer.Header className="flex flex-col gap-1 border-b border-border">
@@ -287,6 +316,7 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
                   personId={personId}
                   setPersonId={setPersonId}
                   setSelectedPerson={setSelectedPerson}
+                  defaultPerson={defaultPersonOption}
                   // isDisabled={noPlayers}
                   label="Pagador"
                   errors={errors}

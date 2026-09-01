@@ -93,7 +93,7 @@ export const PrintReportDialog = ({
   return (
     <AlertDialog.Backdrop isOpen={isOpen} onOpenChange={onOpenChange}>
       <AlertDialog.Container>
-          <AlertDialog.Dialog className="sm:max-w-sm">
+          <AlertDialog.Dialog className="sm:max-w-sm" aria-label="Imprimir Recibo de Pago">
             <AlertDialog.CloseTrigger />
             <AlertDialog.Header>
               <AlertDialog.Icon status="accent" />

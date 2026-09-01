@@ -61,7 +61,12 @@ export interface Person {
   id: string;
   name: string;
   lastName: string;
-  email: null;
+  secondLastName?: string | null;
+  documentNumber?: string | null;
+  gender?: string | null;
+  birthDate?: string | Date | null;
+  imageUrl?: string | null;
+  email: string | null;
 }
 
 export interface Meta {
