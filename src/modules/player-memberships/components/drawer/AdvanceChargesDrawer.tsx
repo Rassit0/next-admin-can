@@ -9,10 +9,7 @@ import {
   NumberField,
 } from "@heroui/react";
 import { HugeiconsIcon } from "@hugeicons/react";
-import {
-  Money01Icon,
-  Alert01Icon,
-} from "@hugeicons/core-free-icons";
+import { Money01Icon, Alert01Icon } from "@hugeicons/core-free-icons";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -37,8 +34,9 @@ export const AdvanceChargesDrawer = ({
   const [debouncedQuantity] = useDebounce(quantity, 500);
 
   const [isLoadingPreview, setIsLoadingPreview] = useState(false);
-  const [previewData, setPreviewData] =
-    useState<IPreviewChargesResponse["data"] | null>(null);
+  const [previewData, setPreviewData] = useState<
+    IPreviewChargesResponse["data"] | null
+  >(null);
   const [previewError, setPreviewError] = useState<string | null>(null);
 
   const [isGenerating, setIsGenerating] = useState(false);
@@ -148,7 +146,8 @@ export const AdvanceChargesDrawer = ({
                     <strong>{previewData?.charges.length} cuotas</strong> por un
                     total de{" "}
                     <strong>
-                      {previewData && formatCurrency(previewData.breakdown.totalNetAmount)}
+                      {previewData &&
+                        formatCurrency(previewData.breakdown.totalNetAmount)}
                     </strong>
                     .
                   </p>
@@ -191,7 +190,11 @@ export const AdvanceChargesDrawer = ({
                     </div>
                   ) : previewError ? (
                     <div className="bg-danger/10 text-danger p-4 rounded-xl text-sm flex gap-3">
-                      <HugeiconsIcon icon={Alert01Icon} size={18} className="shrink-0 mt-0.5" />
+                      <HugeiconsIcon
+                        icon={Alert01Icon}
+                        size={18}
+                        className="shrink-0 mt-0.5"
+                      />
                       <p>{previewError}</p>
                     </div>
                   ) : previewData?.charges.length ? (
@@ -203,9 +206,12 @@ export const AdvanceChargesDrawer = ({
                             className="flex justify-between items-center text-sm border-b border-border/50 pb-2 last:border-0 last:pb-0"
                           >
                             <div className="flex flex-col">
-                              <span className="font-medium">{charge.description}</span>
+                              <span className="font-medium">
+                                {charge.description}
+                              </span>
                               <span className="text-xs text-muted">
-                                Vence: {new Date(charge.dueDate).toLocaleDateString()}
+                                Vence:{" "}
+                                {new Date(charge.dueDate).toLocaleDateString()}
                               </span>
                             </div>
                             <span className="font-semibold text-foreground">
@@ -219,21 +225,30 @@ export const AdvanceChargesDrawer = ({
                         <div className="flex justify-between items-center text-sm">
                           <span className="text-muted">Subtotal:</span>
                           <span className="font-medium text-foreground">
-                            {formatCurrency(previewData.breakdown.totalBaseAmount)}
+                            {formatCurrency(
+                              previewData.breakdown.totalBaseAmount,
+                            )}
                           </span>
                         </div>
                         {previewData.breakdown.totalDiscount > 0 && (
                           <div className="flex justify-between items-center text-sm text-success">
                             <span>Descuentos:</span>
                             <span className="font-medium">
-                              -{formatCurrency(previewData.breakdown.totalDiscount)}
+                              -
+                              {formatCurrency(
+                                previewData.breakdown.totalDiscount,
+                              )}
                             </span>
                           </div>
                         )}
                         <div className="flex justify-between items-center pt-2 border-t border-border/50">
-                          <span className="font-bold text-foreground">Total:</span>
+                          <span className="font-bold text-foreground">
+                            Total:
+                          </span>
                           <span className="font-bold text-primary">
-                            {formatCurrency(previewData.breakdown.totalNetAmount)}
+                            {formatCurrency(
+                              previewData.breakdown.totalNetAmount,
+                            )}
                           </span>
                         </div>
                       </div>

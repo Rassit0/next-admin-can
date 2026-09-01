@@ -42,6 +42,7 @@ interface Props {
   courseSeason: ICourseSeason;
   paymentPlans: IPaymentPlan[];
   size?: "lg" | "md" | "sm";
+  defaultShiftId?: string;
 }
 
 const today = () => new Date().toISOString().slice(0, 10);
@@ -61,11 +62,12 @@ export const EnrollMembershipDrawer = ({
   courseSeason,
   paymentPlans,
   size = "md",
+  defaultShiftId,
 }: Props) => {
   const [loading, setLoading] = useState(false);
   const [studentKey, setStudentKey] = useState<string | null>(null);
   const [shiftKey, setShiftKey] = useState<string | null>(
-    courseSeason.shifts?.[0]?.id ?? null,
+    defaultShiftId ?? courseSeason.shifts?.[0]?.id ?? null,
   );
   const [planKey, setPlanKey] = useState<string | null>(
     paymentPlans.find((p) => p.isDefault)?.id ?? null,

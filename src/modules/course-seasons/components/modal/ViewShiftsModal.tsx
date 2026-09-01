@@ -8,7 +8,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Time02Icon, Delete01Icon } from "@hugeicons/core-free-icons";
 import React from "react";
-import { ICourseSeason, ICourseSeasonShift, AddMembershipDrawer } from "@/modules/course-seasons";
+import { ICourseSeason, ICourseSeasonShift } from "@/modules/course-seasons";
 import { ButtonMemberships } from "../list-cards/ButtonMemberships";
 import { ButtonEdit } from "../list-cards/ButtonEdit";
 import { EditShiftModal } from "./EditShiftModal";
@@ -36,14 +36,9 @@ export const ViewShiftsModal = ({ courseSeason, urlBase }: Props) => {
         
         {courseSeason.status === "ACTIVE" && (
           <div className="flex items-center gap-2 mt-2">
-            {(shiftItem._count?.studentMemberships || 0) < shiftItem.maxMembers ? (
-              <div className="flex-1">
-                <AddMembershipDrawer courseSeasonId={courseSeason.id} />
-              </div>
-            ) : (
-              <Button size="sm" className="flex-1 py-1 bg-outline-variant/40 text-on-surface-variant/50 rounded-full font-extrabold text-[10px] cursor-not-allowed border border-outline-variant/20">Lleno</Button>
-            )}
-            <ButtonMemberships courseSeasonId={courseSeason.id} shiftId={shiftItem.id} urlBase={urlBase} />
+            <div className="flex-1">
+              <ButtonMemberships courseSeasonId={courseSeason.id} shiftId={shiftItem.id} urlBase={urlBase} />
+            </div>
           </div>
         )}
         {courseSeason.status === "DRAFT" && (

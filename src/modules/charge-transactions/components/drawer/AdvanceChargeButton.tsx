@@ -19,7 +19,7 @@ export const AdvanceChargeButton = ({
     <>
       <Button variant="secondary" onPress={() => setIsOpen(true)}>
         <HugeiconsIcon icon={Money01Icon} size={18} />
-        Adelantar Cuotas
+        {studentMembershipId ? "Inscribir a Ciclo" : "Adelantar Cuota"}
       </Button>
       {playerMembershipId && (
         <AdvanceChargesDrawerPlayer

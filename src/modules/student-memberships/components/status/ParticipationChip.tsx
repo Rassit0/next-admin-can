@@ -94,7 +94,7 @@ export const ParticipationChip = ({ membership, size = "sm" }: Props) => {
       <div className="flex flex-col gap-1 items-start">
         <Chip color="warning" variant="soft" size={size}>
           <span className="size-1.5 rounded-full bg-warning" aria-hidden />
-          <Chip.Label>GAP</Chip.Label>
+          <Chip.Label>En pausa</Chip.Label>
         </Chip>
         <span className="text-[10px] text-muted">Próximo: {capitalizedMonth}</span>
       </div>
@@ -106,7 +106,7 @@ export const ParticipationChip = ({ membership, size = "sm" }: Props) => {
       <div className="flex flex-col gap-1 items-start">
         <Chip color="warning" variant="soft" size={size}>
           <span className="size-1.5 rounded-full bg-warning" aria-hidden />
-          <Chip.Label>GAP</Chip.Label>
+          <Chip.Label>En pausa</Chip.Label>
         </Chip>
         <span className="text-[10px] text-muted">Sin ciclo vigente</span>
       </div>

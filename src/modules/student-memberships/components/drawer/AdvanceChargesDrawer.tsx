@@ -7,6 +7,7 @@ import {
   Label,
   InputGroup,
   NumberField,
+  Alert,
 } from "@heroui/react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
@@ -125,10 +126,10 @@ export const AdvanceChargesDrawer = ({
             <div>
               <Drawer.Heading className="text-lg font-bold flex items-center gap-2">
                 <HugeiconsIcon icon={Money01Icon} />
-                Comprar Ciclos Adelantados
+                Inscripción a Ciclo
               </Drawer.Heading>
               <p className="mt-1 text-xs font-medium text-muted">
-                Permite comprar por adelantado los próximos ciclos de esta colegiatura.
+                Inscribe al estudiante en el siguiente ciclo (mes) de esta colegiatura.
               </p>
             </div>
           </Drawer.Header>
@@ -141,10 +142,10 @@ export const AdvanceChargesDrawer = ({
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-foreground">
-                    ¿Confirmar adelanto?
+                    ¿Confirmar inscripción?
                   </h3>
                   <p className="text-sm text-muted mt-2">
-                    Estás a punto de comprar{" "}
+                    Estás a punto de inscribir{" "}
                     <strong>{previewData?.charges.length} ciclos</strong> por un
                     total de{" "}
                     <strong>
@@ -160,6 +161,16 @@ export const AdvanceChargesDrawer = ({
               </div>
             ) : (
               <>
+                <Alert status="accent" className="mb-2">
+                  <Alert.Indicator />
+                  <Alert.Content>
+                    <Alert.Title>Acerca de la Inscripción</Alert.Title>
+                    <Alert.Description>
+                      Esta acción buscará el siguiente mes (ciclo) disponible de la temporada al que aún no estás inscrito y te generará la cuota correspondiente. Úsalo para continuar en el curso.
+                    </Alert.Description>
+                  </Alert.Content>
+                </Alert>
+
                 <NumberField
                   name="quantity"
                   isRequired
@@ -281,7 +292,7 @@ export const AdvanceChargesDrawer = ({
                   !previewData?.charges.length
                 }
               >
-                Comprar Ciclos
+                Inscribir
               </Button>
             )}
           </Drawer.Footer>

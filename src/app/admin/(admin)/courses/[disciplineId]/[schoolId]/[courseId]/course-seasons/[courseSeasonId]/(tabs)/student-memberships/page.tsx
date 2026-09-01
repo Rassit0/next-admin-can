@@ -107,6 +107,7 @@ export default async function StudentMembershipsPage({
                   courseSeason={courseSeason}
                   paymentPlans={paymentPlans}
                   size="md"
+                  defaultShiftId={shiftId}
                 />
               </div>
             }

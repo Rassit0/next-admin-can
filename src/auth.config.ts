@@ -127,5 +127,8 @@ export const authConfig = {
       return session;
     },
   },
+  session: {
+    maxAge: 10 * 60 * 60, // 10 horas
+  },
   providers: [],
 } satisfies NextAuthConfig;
