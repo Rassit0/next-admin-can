@@ -27,6 +27,12 @@ import { PrintReportDialog } from "@/modules/charge-transactions/components/dial
 
 import { FinancialAccount } from "@/modules/financial-accounts/interfaces/financial-account.interface";
 
+const PAYMENT_METHOD_LABELS: Record<string, string> = {
+  CASH: "Efectivo",
+  TRANSFER: "Transferencia",
+  QR: "Código QR",
+};
+
 interface Props {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
@@ -72,8 +78,11 @@ export const DirectTransactionDrawer = ({
       setConcept("");
       setAmount("");
       setCategoryId("");
-      setFinancialAccountId("");
-      setPaymentMethod("CASH");
+      
+      const defaultAcc = financialAccounts.find((a) => a.isDefault);
+      setFinancialAccountId(defaultAcc ? defaultAcc.id : "");
+      setPaymentMethod(defaultAcc?.allowedPaymentMethods?.[0] || "CASH");
+      
       setFiles([]);
       setPersonId(null);
       setSelectedPerson(null);
@@ -282,43 +291,21 @@ export const DirectTransactionDrawer = ({
             <ComboBox
               className="w-full"
               variant="secondary"
-              menuTrigger="focus"
-              selectedKey={paymentMethod}
-              onSelectionChange={(key) => {
-                if (key) setPaymentMethod(key as string);
-              }}
-              isRequired
-            >
-              <Label className="text-sm font-semibold">Método de Pago</Label>
-              <ComboBox.InputGroup>
-                <Input
-                  variant="secondary"
-                  placeholder="Seleccione el método de pago"
-                />
-                <ComboBox.Trigger />
-              </ComboBox.InputGroup>
-              <ComboBox.Popover>
-                <ListBox>
-                  <ListBox.Item id="CASH" textValue="Efectivo">
-                    Efectivo
-                  </ListBox.Item>
-                  <ListBox.Item id="TRANSFER" textValue="Transferencia">
-                    Transferencia Bancaria
-                  </ListBox.Item>
-                  <ListBox.Item id="QR" textValue="Código QR">
-                    Código QR
-                  </ListBox.Item>
-                </ListBox>
-              </ComboBox.Popover>
-            </ComboBox>
-            <ComboBox
-              className="w-full"
-              variant="secondary"
               aria-label="Seleccionar cuenta financiera"
               menuTrigger="focus"
               selectedKey={financialAccountId}
               onSelectionChange={(key) => {
-                if (key) setFinancialAccountId(key as string);
+                if (key) {
+                  setFinancialAccountId(key as string);
+                  const selectedAcc = financialAccounts.find((a) => a.id === key);
+                  if (selectedAcc && selectedAcc.allowedPaymentMethods && selectedAcc.allowedPaymentMethods.length > 0) {
+                    if (!selectedAcc.allowedPaymentMethods.includes(paymentMethod)) {
+                      setPaymentMethod(selectedAcc.allowedPaymentMethods[0]);
+                    }
+                  } else {
+                    setPaymentMethod("");
+                  }
+                }
               }}
               isRequired
             >
@@ -348,6 +335,60 @@ export const DirectTransactionDrawer = ({
                 </ListBox>
               </ComboBox.Popover>
             </ComboBox>
+
+            {(() => {
+              const selectedAcc = financialAccounts.find(
+                (a) => a.id === financialAccountId,
+              );
+              const hasMethods =
+                selectedAcc &&
+                selectedAcc.allowedPaymentMethods &&
+                selectedAcc.allowedPaymentMethods.length > 0;
+              return (
+                <div className="w-full">
+                  <ComboBox
+                    className="w-full"
+                    variant="secondary"
+                    menuTrigger="focus"
+                    selectedKey={paymentMethod}
+                    isDisabled={!hasMethods}
+                    onSelectionChange={(key) => {
+                      if (key) setPaymentMethod(key as string);
+                    }}
+                    isRequired
+                  >
+                    <Label className="text-sm font-semibold">Método de Pago</Label>
+                    <ComboBox.InputGroup>
+                      <Input
+                        variant="secondary"
+                        placeholder="Seleccione el método de pago"
+                      />
+                      <ComboBox.Trigger />
+                    </ComboBox.InputGroup>
+                    <ComboBox.Popover>
+                      <ListBox>
+                        {(selectedAcc?.allowedPaymentMethods || []).map(
+                          (method) => (
+                            <ListBox.Item
+                              key={method}
+                              id={method}
+                              textValue={PAYMENT_METHOD_LABELS[method] || method}
+                            >
+                              {PAYMENT_METHOD_LABELS[method] || method}
+                            </ListBox.Item>
+                          ),
+                        )}
+                      </ListBox>
+                    </ComboBox.Popover>
+                  </ComboBox>
+                  {!hasMethods && financialAccountId && (
+                    <p className="text-xs text-danger mt-1">
+                      Esta cuenta no puede recibir pagos.
+                    </p>
+                  )}
+                </div>
+              );
+            })()}
 
             {type === "EXPENSE" && (
               <div className="w-full flex flex-col gap-2 mt-2">
