@@ -29,7 +29,7 @@ export default async function ChargeTransactionsPage({
   searchParams,
   params,
 }: Props) {
-  const { search, page, per_page } = await searchParams;
+  const { search, page, per_page = "5" } = await searchParams;
   const { playerMembershipId, chargeId } = await params;
 
   const [membershipResponse, chargeResponse, paymentsResponse] =

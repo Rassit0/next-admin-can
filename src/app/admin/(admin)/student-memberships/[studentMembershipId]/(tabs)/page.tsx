@@ -23,7 +23,7 @@ export default async function StudentMembershipInfoPage({
   searchParams,
   params,
 }: Props) {
-  const { search, page, per_page, status } = await searchParams;
+  const { search, page, per_page = "5", status } = await searchParams;
   const { studentMembershipId } = await params;
 
   const [membershipRes] = await resolvePageData([
@@ -99,7 +99,10 @@ export default async function StudentMembershipInfoPage({
                 <p className="text-sm font-medium text-muted-foreground mb-1">
                   Membresía
                 </p>
-                <StatusChip status={membership.status} suspensionReason={membership.suspensionReason} />
+                <StatusChip
+                  status={membership.status}
+                  suspensionReason={membership.suspensionReason}
+                />
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground mb-1">

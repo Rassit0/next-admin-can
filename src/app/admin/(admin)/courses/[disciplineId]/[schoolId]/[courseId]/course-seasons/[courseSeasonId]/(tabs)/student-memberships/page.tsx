@@ -3,7 +3,10 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { getPaymentPlans } from "@/modules/payment-plans";
 import { getStudents } from "@/modules/students";
-import { getCourseSeasonById, ShiftSelectFilter } from "@/modules/course-seasons";
+import {
+  getCourseSeasonById,
+  ShiftSelectFilter,
+} from "@/modules/course-seasons";
 import {
   EnrollMembershipDrawer,
   getStudentMemberships,
@@ -58,12 +61,19 @@ export default async function StudentMembershipsPage({
   searchParams,
   params,
 }: Props) {
-  const { search, page, per_page, status, shiftId } = await searchParams;
+  const { search, page, per_page = "5", status, shiftId } = await searchParams;
   const { disciplineId, schoolId, courseId, courseSeasonId } = await params;
 
   const [membershipsResponse, courseSeasonResponse, paymentPlansResponse] =
     await resolvePageData([
-      getStudentMemberships({ search, page, per_page, courseSeasonId, status, shiftId }),
+      getStudentMemberships({
+        search,
+        page,
+        per_page,
+        courseSeasonId,
+        status,
+        shiftId,
+      }),
       getCourseSeasonById({ id: courseSeasonId }),
       getPaymentPlans({ per_page: "100", courseSeasonId }),
     ]);

@@ -18,8 +18,8 @@ interface Props {
 }
 
 export default async function DisciplinesPage({ searchParams }: Props) {
-  const { search, page, per_page } = await searchParams;
-  
+  const { search, page, per_page = "5" } = await searchParams;
+
   // Usamos resolvePageData para extraer la data directamente.
   // Si hay un error, Next.js capturará la excepción y mostrará `app/admin/error.tsx`.
   // Si es 401, nos redirigirá automáticamente a `/api/logout`.
@@ -30,7 +30,6 @@ export default async function DisciplinesPage({ searchParams }: Props) {
 
   const categories = categoriesRes.data;
   const disciplinesOptions = disciplinesOptionsRes.data;
-
 
   return (
     <>

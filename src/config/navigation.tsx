@@ -135,4 +135,11 @@ export const itemsNavigation: NavItem[] = [
     subject: "home",
     icon: <HugeiconsIcon icon={Time02Icon} size={20} />,
   },
+  {
+    label: "Usuarios",
+    href: "users/usuarios",
+    action: "users",
+    subject: "USERS",
+    icon: <HugeiconsIcon icon={UserIcon} size={20} />,
+  },
 ];

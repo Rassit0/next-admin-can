@@ -1,11 +1,16 @@
-import { getAccountCategories, AccountCategoriesClient, CreateCategoryButton } from "@/modules/account-categories";
+import {
+  getAccountCategories,
+  AccountCategoriesClient,
+  CreateCategoryButton,
+} from "@/modules/account-categories";
 import { ErrorPage, PaginationSection, HeaderPage, SectionFilters } from "@/ui";
 import { Card } from "@heroui/react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Categorías Contables | Gestión CAN",
-  description: "Categorías para organizar los ingresos y egresos de la institución",
+  description:
+    "Categorías para organizar los ingresos y egresos de la institución",
 };
 
 export default async function CategoriesPage({
@@ -23,7 +28,7 @@ export default async function CategoriesPage({
   const resolvedSearchParams = await searchParams;
   const search = resolvedSearchParams?.search || "";
   const page = resolvedSearchParams?.page || "1";
-  const per_page = resolvedSearchParams?.per_page || "10";
+  const per_page = resolvedSearchParams?.per_page || "5";
   const type = resolvedSearchParams?.type;
   const sortField = resolvedSearchParams?.sortField;
   const orderBy = resolvedSearchParams?.orderBy;
@@ -54,13 +59,13 @@ export default async function CategoriesPage({
             action={<CreateCategoryButton />}
           />
           <SectionFilters />
-          
+
           <AccountCategoriesClient categories={data} />
-          
-          <PaginationSection 
-            totalPages={meta.totalPages} 
-            itemsPerPage={meta.itemsPerPage} 
-            totalItems={meta.totalItems} 
+
+          <PaginationSection
+            totalPages={meta.totalPages}
+            itemsPerPage={meta.itemsPerPage}
+            totalItems={meta.totalItems}
           />
         </Card>
       </div>

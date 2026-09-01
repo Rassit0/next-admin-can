@@ -20,7 +20,11 @@ import {
   File02Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { getCharges, TableCharges, AdvanceChargeButton } from "@/modules/charge-transactions";
+import {
+  getCharges,
+  TableCharges,
+  AdvanceChargeButton,
+} from "@/modules/charge-transactions";
 import { CreateManualChargeButton } from "@/modules/charge-transactions/components/drawer/CreateManualChargeButton";
 import { RegularizeHistoricalChargeButton } from "@/modules/charge-transactions/components/drawer/RegularizeHistoricalChargeButton";
 import { resolvePageData } from "@/utils/resolvePageData";
@@ -41,7 +45,7 @@ export default async function PlayerMembershipChargesPage({
   searchParams,
   params,
 }: Props) {
-  const { search, page, per_page, status } = await searchParams;
+  const { search, page, per_page = "5", status } = await searchParams;
   const { studentMembershipId } = await params;
 
   const [chargesRes] = await resolvePageData([

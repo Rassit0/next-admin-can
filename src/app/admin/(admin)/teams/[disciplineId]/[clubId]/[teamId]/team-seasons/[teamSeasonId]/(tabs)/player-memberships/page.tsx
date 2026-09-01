@@ -63,8 +63,13 @@ export default async function PlayerMembershipsPage({
   searchParams,
   params,
 }: Props) {
-  const { search, page, per_page, status, teamSeasonCategoryId } =
-    await searchParams;
+  const {
+    search,
+    page,
+    per_page = "5",
+    status,
+    teamSeasonCategoryId,
+  } = await searchParams;
   const { disciplineId, clubId, teamId, teamSeasonId } = await params;
 
   const [

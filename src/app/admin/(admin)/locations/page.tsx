@@ -10,7 +10,7 @@ interface Props {
   }>;
 }
 export default async function LocationsPage({ searchParams }: Props) {
-  const { search, page, per_page } = await searchParams;
+  const { search, page, per_page = "5" } = await searchParams;
   const result = await getLocations({
     search,
     page,

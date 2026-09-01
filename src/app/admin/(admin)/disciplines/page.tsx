@@ -11,7 +11,7 @@ interface Props {
   }>;
 }
 export default async function DisciplinesPage({ searchParams }: Props) {
-  const { search, page, per_page } = await searchParams;
+  const { search, page, per_page = "5" } = await searchParams;
   const result = await getDisciplines({
     search,
     page,

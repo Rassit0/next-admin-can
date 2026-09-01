@@ -1,4 +1,8 @@
-import { getAccountCharges, AccountChargesClient, CreateChargeButton } from "@/modules/account-charges";
+import {
+  getAccountCharges,
+  AccountChargesClient,
+  CreateChargeButton,
+} from "@/modules/account-charges";
 import { ErrorPage, PaginationSection, HeaderPage, SectionFilters } from "@/ui";
 import { Card } from "@heroui/react";
 import { Metadata } from "next";
@@ -21,7 +25,7 @@ export default async function AccountsReceivablePage({
   const resolvedSearchParams = await searchParams;
   const search = resolvedSearchParams?.search || "";
   const page = resolvedSearchParams?.page || "1";
-  const per_page = resolvedSearchParams?.per_page || "10";
+  const per_page = resolvedSearchParams?.per_page || "5";
   const status = resolvedSearchParams?.status || ["PENDING", "PARTIAL"];
 
   const res = await getAccountCharges({
@@ -49,13 +53,13 @@ export default async function AccountsReceivablePage({
             action={<CreateChargeButton direction="RECEIVABLE" />}
           />
           <SectionFilters />
-          
+
           <AccountChargesClient charges={data} direction="RECEIVABLE" />
-          
-          <PaginationSection 
-            totalPages={meta.totalPages} 
-            itemsPerPage={meta.itemsPerPage} 
-            totalItems={meta.totalItems} 
+
+          <PaginationSection
+            totalPages={meta.totalPages}
+            itemsPerPage={meta.itemsPerPage}
+            totalItems={meta.totalItems}
           />
         </Card>
       </div>

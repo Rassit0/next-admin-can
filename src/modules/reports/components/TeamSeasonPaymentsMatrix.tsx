@@ -7,9 +7,10 @@ import { PaymentMatrixTable } from './PaymentMatrixTable';
 
 interface TeamSeasonPaymentsMatrixProps {
   teamSeasonId: string;
+  teamSeasonCategoryId?: string;
 }
 
-export function TeamSeasonPaymentsMatrix({ teamSeasonId }: TeamSeasonPaymentsMatrixProps) {
+export function TeamSeasonPaymentsMatrix({ teamSeasonId, teamSeasonCategoryId }: TeamSeasonPaymentsMatrixProps) {
   const [data, setData] = useState<PaymentsMatrixResponse | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -19,7 +20,7 @@ export function TeamSeasonPaymentsMatrix({ teamSeasonId }: TeamSeasonPaymentsMat
     setIsLoading(true);
     setError(null);
 
-    getTeamSeasonMatrix(teamSeasonId)
+    getTeamSeasonMatrix(teamSeasonId, teamSeasonCategoryId)
       .then((res) => {
         if (isMounted) {
           if (res.error) {
@@ -41,7 +42,7 @@ export function TeamSeasonPaymentsMatrix({ teamSeasonId }: TeamSeasonPaymentsMat
     return () => {
       isMounted = false;
     };
-  }, [teamSeasonId]);
+  }, [teamSeasonId, teamSeasonCategoryId]);
 
   return (
     <div className="flex flex-col gap-6 w-full">

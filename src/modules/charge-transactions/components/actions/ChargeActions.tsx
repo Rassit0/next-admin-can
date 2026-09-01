@@ -221,6 +221,12 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
       const amountNum = Number(adjustmentAmount);
       const chargeAmountNum = Number(charge.amount);
       
+      if (isNaN(amountNum) || adjustmentAmount === "") {
+        setErrors({ adjustmentAmount: "Monto inválido." });
+        setLoading(false);
+        return;
+      }
+
       if (amountNum < 0 && Math.abs(amountNum) > chargeAmountNum) {
         setErrors({ adjustmentAmount: "El monto del descuento no puede exceder el monto original del cargo." });
         setLoading(false);
@@ -476,11 +482,13 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
                       <Label>Monto (Bs) - Negativo para descuento, positivo para recargo</Label>
                       <Input
                         variant="secondary"
-                        type="number"
-                        step="0.01"
+                        type="text"
+                        inputMode="text"
                         value={adjustmentAmount}
                         onChange={(e) => {
-                          setAdjustmentAmount(e.target.value);
+                          // Permitir números, punto y signo menos
+                          const val = e.target.value.replace(/[^0-9.-]/g, '');
+                          setAdjustmentAmount(val);
                           setErrors({});
                         }}
                         placeholder="0.00"

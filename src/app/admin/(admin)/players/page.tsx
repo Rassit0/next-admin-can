@@ -21,7 +21,13 @@ interface Props {
   }>;
 }
 export default async function PlayersPage({ searchParams }: Props) {
-  const { search, page, per_page, sortField, orderBy } = await searchParams;
+  const {
+    search,
+    page,
+    per_page = "5",
+    sortField,
+    orderBy,
+  } = await searchParams;
   const playersResponse = await getPlayers({
     search,
     page,

@@ -38,7 +38,7 @@ export default async function CourseSeasonsPage({
   params,
 }: Props) {
   const [
-    { search, page, per_page, gender },
+    { search, page, per_page = "5", gender },
     { disciplineId, schoolId, courseId },
   ] = await Promise.all([searchParams, params]);
 

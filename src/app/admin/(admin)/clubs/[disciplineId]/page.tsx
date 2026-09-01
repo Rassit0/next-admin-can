@@ -28,7 +28,13 @@ interface Props {
   params: Promise<{ disciplineId: string }>;
 }
 export default async function ClubsPage({ searchParams, params }: Props) {
-  const { search, page, per_page, sortField, orderBy } = await searchParams;
+  const {
+    search,
+    page,
+    per_page = "5",
+    sortField,
+    orderBy,
+  } = await searchParams;
   const { disciplineId } = await params;
   const [clubsResponse, disciplinesOptionsResponse] = await Promise.all([
     getClubs({

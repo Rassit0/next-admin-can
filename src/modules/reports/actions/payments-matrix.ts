@@ -19,9 +19,13 @@ export const getCourseSeasonShiftMatrix = async (shiftId: string): Promise<Servi
   });
 };
 
-export const getTeamSeasonMatrix = async (teamSeasonId: string): Promise<ServiceResponse<PaymentsMatrixResponse>> => {
+export const getTeamSeasonMatrix = async (teamSeasonId: string, teamSeasonCategoryId?: string): Promise<ServiceResponse<PaymentsMatrixResponse>> => {
   return handleServerAction(async () => {
-    const res = await api.get<PaymentsMatrixResponse>(`reports/payments-matrix/team-seasons/${teamSeasonId}`, {
+    const params = new URLSearchParams();
+    if (teamSeasonCategoryId) params.append('teamSeasonCategoryId', teamSeasonCategoryId);
+    const queryString = params.toString() ? `?${params.toString()}` : '';
+
+    const res = await api.get<PaymentsMatrixResponse>(`reports/payments-matrix/team-seasons/${teamSeasonId}${queryString}`, {
       cache: 'no-store'
     });
     

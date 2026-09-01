@@ -16,25 +16,39 @@ export default async function CashFlowPage({
   searchParams: Promise<Record<string, string>>;
 }) {
   const resolvedSearchParams = await searchParams;
-  const { search, page, per_page, sortField, orderBy, type, paymentMethod, startDate, endDate, origin, categoryId } = resolvedSearchParams;
+  const {
+    search,
+    page,
+    per_page = "5",
+    sortField,
+    orderBy,
+    type,
+    paymentMethod,
+    startDate,
+    endDate,
+    origin,
+    categoryId,
+  } = resolvedSearchParams;
 
-  const [response, categoriesRes, financialAccountsRes] = await resolvePageData([
-    getTransactions({
-      search,
-      page,
-      per_page,
-      sortField,
-      orderBy,
-      type,
-      paymentMethod,
-      startDate,
-      endDate,
-      origin,
-      categoryId
-    }),
-    getAccountCategories({ per_page: "100" }),
-    getFinancialAccounts(),
-  ]);
+  const [response, categoriesRes, financialAccountsRes] = await resolvePageData(
+    [
+      getTransactions({
+        search,
+        page,
+        per_page,
+        sortField,
+        orderBy,
+        type,
+        paymentMethod,
+        startDate,
+        endDate,
+        origin,
+        categoryId,
+      }),
+      getAccountCategories({ per_page: "100" }),
+      getFinancialAccounts(),
+    ],
+  );
 
   const financialAccounts = financialAccountsRes.data || [];
 
@@ -47,9 +61,9 @@ export default async function CashFlowPage({
         </p>
       </div>
 
-      <CashFlowClient 
-        response={response.data!} 
-        categories={categoriesRes.data?.data || []} 
+      <CashFlowClient
+        response={response.data!}
+        categories={categoriesRes.data?.data || []}
         financialAccounts={financialAccounts || []}
       />
     </div>

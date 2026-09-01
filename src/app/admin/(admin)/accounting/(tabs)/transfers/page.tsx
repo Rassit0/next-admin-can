@@ -7,13 +7,34 @@ import { resolvePageData } from "@/utils/resolvePageData";
 export default async function TransfersPage({
   searchParams,
 }: {
-  searchParams: Promise<{ page?: string; per_page?: string; sourceAccountId?: string; destinationAccountId?: string; startDate?: string; endDate?: string; }>;
+  searchParams: Promise<{
+    page?: string;
+    per_page?: string;
+    sourceAccountId?: string;
+    destinationAccountId?: string;
+    startDate?: string;
+    endDate?: string;
+  }>;
 }) {
   const resolvedSearchParams = await searchParams;
-  const { page, per_page, sourceAccountId, destinationAccountId, startDate, endDate } = resolvedSearchParams;
+  const {
+    page,
+    per_page = "5",
+    sourceAccountId,
+    destinationAccountId,
+    startDate,
+    endDate,
+  } = resolvedSearchParams;
 
   const [transfersRes, accountsRes] = await resolvePageData([
-    getInternalTransfers({ page, per_page, sourceAccountId, destinationAccountId, startDate, endDate }),
+    getInternalTransfers({
+      page,
+      per_page,
+      sourceAccountId,
+      destinationAccountId,
+      startDate,
+      endDate,
+    }),
     getFinancialAccounts(),
   ]);
 
@@ -23,11 +44,11 @@ export default async function TransfersPage({
   return (
     <>
       <InternalTransfersClient transfers={data} accounts={accounts} />
-      
-      <PaginationSection 
-        totalPages={meta.totalPages} 
-        itemsPerPage={meta.itemsPerPage} 
-        totalItems={meta.totalItems} 
+
+      <PaginationSection
+        totalPages={meta.totalPages}
+        itemsPerPage={meta.itemsPerPage}
+        totalItems={meta.totalItems}
       />
     </>
   );

@@ -32,7 +32,7 @@ export default async function ChargeTransactionsPage({
   searchParams,
   params,
 }: Props) {
-  const { search, page, per_page } = await searchParams;
+  const { search, page, per_page = "5" } = await searchParams;
   const {
     disciplineId,
     clubId,
@@ -106,9 +106,7 @@ export default async function ChargeTransactionsPage({
         <div className="flex flex-col gap-4">
           <div className="flex justify-between items-center">
             <h3 className="text-xl font-bold">Historial de Pagos</h3>
-            {charge.status !== "PAID" && (
-              <PayChargeButton charge={charge} />
-            )}
+            {charge.status !== "PAID" && <PayChargeButton charge={charge} />}
           </div>
 
           <SectionFilters />

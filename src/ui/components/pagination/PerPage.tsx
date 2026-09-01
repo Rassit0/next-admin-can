@@ -30,8 +30,8 @@ export const PerPage = () => {
         <Select.Indicator />
       </Select.Trigger>
       <Select.Popover className="bg-default">
-        <ListBox>
-          {PER_PAGE.map((item) => (
+        <ListBox items={PER_PAGE}>
+          {(item) => (
             <ListBox.Item
               key={item.value}
               id={item.value}
@@ -41,7 +41,7 @@ export const PerPage = () => {
               {item.label}
               <ListBox.ItemIndicator />
             </ListBox.Item>
-          ))}
+          )}
         </ListBox>
       </Select.Popover>
     </Select>

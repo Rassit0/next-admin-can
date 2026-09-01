@@ -132,7 +132,13 @@ export const TableMemberships = ({
                         <div className="flex flex-col min-w-0">
                           <span className="font-medium text-foreground truncate">
                             {person
-                              ? [person.lastName, person.secondLastName, person.name].filter(Boolean).join(" ")
+                              ? [
+                                  person.lastName,
+                                  person.secondLastName,
+                                  person.name,
+                                ]
+                                  .filter(Boolean)
+                                  .join(" ")
                               : "Atleta"}
                           </span>
                           {person ? (
@@ -151,8 +157,9 @@ export const TableMemberships = ({
                           {membership.teamSeason?.team?.name ?? "—"}
                         </span>
                         <span className="text-xs text-muted truncate">
-                          {membership.teamSeasonCategories?.category?.name ?? "—"} •{" "}
-                          {membership.teamSeason?.season?.name ?? "—"}
+                          {membership.teamSeasonCategories?.category?.name ??
+                            "—"}{" "}
+                          • {membership.teamSeason?.season?.name ?? "—"}
                         </span>
                       </div>
                     </Table.Cell>

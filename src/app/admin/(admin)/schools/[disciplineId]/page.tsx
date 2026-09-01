@@ -28,7 +28,13 @@ interface Props {
   params: Promise<{ disciplineId: string }>;
 }
 export default async function SchoolsPage({ searchParams, params }: Props) {
-  const { search, page, per_page, sortField, orderBy } = await searchParams;
+  const {
+    search,
+    page,
+    per_page = "5",
+    sortField,
+    orderBy,
+  } = await searchParams;
   const { disciplineId } = await params;
   const [schoolsResponse, disciplinesOptionsResponse] = await Promise.all([
     getSchools({
@@ -97,7 +103,10 @@ export default async function SchoolsPage({ searchParams, params }: Props) {
       {/* <!-- Search and Filter Bar (Tonal Architecture) --> */}
       <SectionFilters />
       {/* <!-- Main Member Table --> */}
-      <TableSchools schools={schoolsResponse.data.data} disciplineId={disciplineId} />
+      <TableSchools
+        schools={schoolsResponse.data.data}
+        disciplineId={disciplineId}
+      />
       <PaginationSection
         totalPages={schoolsResponse.data.meta.totalPages}
         itemsPerPage={schoolsResponse.data.meta.itemsPerPage}

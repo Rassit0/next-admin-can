@@ -20,7 +20,13 @@ interface Props {
 }
 
 export default async function StaffPage({ searchParams }: Props) {
-  const { search, page, per_page, sortField, orderBy } = await searchParams;
+  const {
+    search,
+    page,
+    per_page = "5",
+    sortField,
+    orderBy,
+  } = await searchParams;
   const staffResponse = await getStaff({
     search,
     page,
@@ -45,7 +51,7 @@ export default async function StaffPage({ searchParams }: Props) {
           description="Gestión del personal."
           action={<CreateStaffModal />}
         />
-        
+
         {/* <!-- Filters Bento --> */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-default/50 p-4 rounded-xl flex items-center gap-4">
@@ -68,7 +74,9 @@ export default async function StaffPage({ searchParams }: Props) {
         {/* <!-- Data Table Section --> */}
         <div className="bg-default/50 rounded-xl overflow-hidden shadow-sm border border-default-200">
           <div className="border-b border-default-200 p-4 bg-white/50 dark:bg-default-100/50 flex justify-between items-center">
-            <h2 className="text-lg font-bold font-headline">Lista de Personal</h2>
+            <h2 className="text-lg font-bold font-headline">
+              Lista de Personal
+            </h2>
           </div>
           <div className="p-0">
             <StaffTable staffs={staffResponse.data?.data || []} />

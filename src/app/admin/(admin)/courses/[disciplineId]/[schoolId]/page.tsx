@@ -28,7 +28,7 @@ interface Props {
 }
 
 export default async function CoursesPage({ searchParams, params }: Props) {
-  const { search, page, per_page } = await searchParams;
+  const { search, page, per_page = "5" } = await searchParams;
   const { disciplineId, schoolId } = await params;
 
   const [

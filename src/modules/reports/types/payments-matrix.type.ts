@@ -8,6 +8,10 @@ export interface PaymentMatrixPeriod {
 export interface PaymentMatrixPaymentDetail {
   amount: number;
   date: string;
+  chargeType: string;
+  receiptSeries?: string;
+  receiptNumber?: string;
+  description?: string;
 }
 
 export interface PaymentMatrixPeriodData {
@@ -18,6 +22,7 @@ export interface PaymentMatrixPeriodData {
 export interface PaymentMatrixStudent {
   id: string;
   name: string;
+  registration?: PaymentMatrixPeriodData;
   paymentsByPeriod: Record<string, PaymentMatrixPeriodData>;
 }
 

@@ -30,8 +30,10 @@ export default async function BidManagementPage({
   searchParams,
   params,
 }: Props) {
-  const [{ search, page, per_page, status }, { disciplineId, clubId, teamId }] =
-    await Promise.all([searchParams, params]);
+  const [
+    { search, page, per_page = "5", status },
+    { disciplineId, clubId, teamId },
+  ] = await Promise.all([searchParams, params]);
 
   const [teamSeasonsResponse, teamResponse, clubResponse] = await Promise.all([
     getTeamSeasons({ search, page, per_page, teamId, status }),

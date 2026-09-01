@@ -8,6 +8,30 @@ import { PaymentsMatrixResponse } from "../types/payments-matrix.type";
 import { downloadMatrixAction } from "../actions/download-matrix.action";
 import { toast } from "sonner";
 import { formatCurrency } from "@/utils/constants";
+import { useSearchParams } from "next/navigation";
+
+const getChargeLabel = (type: string) => {
+  switch (type) {
+    case "RECURRING_FEE":
+      return "Cuota";
+    case "LATE_FEE":
+      return "Mora";
+    case "REGISTRATION":
+      return "Matrícula";
+    case "MANUAL":
+      return "Manual";
+    default:
+      return type;
+  }
+};
+
+const formatUTCDate = (isoDateString: string) => {
+  const d = new Date(isoDateString);
+  const day = d.getUTCDate().toString().padStart(2, "0");
+  const month = (d.getUTCMonth() + 1).toString().padStart(2, "0");
+  const year = d.getUTCFullYear().toString().slice(-2);
+  return `${day}/${month}/${year}`;
+};
 
 interface PaymentMatrixTableProps {
   data: PaymentsMatrixResponse | null;
@@ -20,6 +44,8 @@ export function PaymentMatrixTable({
   isLoading,
   error,
 }: PaymentMatrixTableProps) {
+  const searchParams = useSearchParams();
+  const teamSeasonCategoryId = searchParams.get("teamSeasonCategoryId");
   const [isDownloading, setIsDownloading] = useState(false);
 
   if (isLoading) {
@@ -62,7 +88,7 @@ export function PaymentMatrixTable({
       const isCourse = group.type === "COURSE_SEASON_SHIFT";
       const endpoint = isCourse
         ? `reports/payments-matrix/course-season-shifts/${group.id}/pdf`
-        : `reports/payments-matrix/team-seasons/${group.id}/pdf`;
+        : `reports/payments-matrix/team-seasons/${group.id}/pdf${teamSeasonCategoryId ? `?teamSeasonCategoryId=${teamSeasonCategoryId}` : ""}`;
 
       const result = await downloadMatrixAction(endpoint);
 
@@ -117,57 +143,131 @@ export function PaymentMatrixTable({
           <Table.ScrollContainer>
             <Table.Content>
               <Table.Header>
-                <Table.Column className="min-w-50">Estudiante</Table.Column>
+                <Table.Column
+                  isRowHeader
+                  className="min-w-50 border-x border-default-200 bg-default-100"
+                >
+                  Estudiante
+                </Table.Column>
+                <Table.Column className="text-center min-w-25 border-x border-default-200 bg-default-100">
+                  Matrícula
+                </Table.Column>
                 {periods.map((period) => (
                   <Table.Column
                     key={period.key}
-                    className="text-center min-w-25"
+                    className="text-center min-w-25 border-x border-default-200 bg-default-100"
                   >
                     {period.label}
                   </Table.Column>
                 ))}
+                <Table.Column className="text-center min-w-25 font-bold border-x border-default-200 bg-default-100">
+                  Total General
+                </Table.Column>
               </Table.Header>
               <Table.Body>
                 {students.map((student) => (
                   <Table.Row key={student.id} id={student.id}>
-                    <Table.Cell className="font-medium">
+                    <Table.Cell className="font-medium border-x border-b border-default-200 align-top py-3">
                       {student.name}
                     </Table.Cell>
+                    
+                    {!student.registration || student.registration.totalPaid === 0 ? (
+                      <Table.Cell className="text-center text-default-300 border-x border-b border-default-200 align-top py-3"></Table.Cell>
+                    ) : (
+                      <Table.Cell className="text-center min-w-30 border-x border-b border-default-200 align-top py-3">
+                        <div className="flex flex-col h-full">
+                          <div className="font-semibold text-center border-b border-default-200 pb-2 mb-2">
+                            {formatCurrency(student.registration.totalPaid)}
+                          </div>
+                          <div className="flex flex-col gap-3 flex-1">
+                            {student.registration.payments.map((p, idx) => {
+                              const uniqueKey = idx;
+                              let receiptLine = p.receiptNumber || "";
+                              if (p.date) {
+                                if (receiptLine) receiptLine += " · ";
+                                receiptLine += formatUTCDate(p.date);
+                              }
+                              return (
+                                <div key={uniqueKey} className="flex flex-col text-xs text-center">
+                                  <span className="font-medium text-default-700">
+                                    {formatCurrency(p.amount)} {getChargeLabel(p.chargeType)}
+                                  </span>
+                                  {receiptLine && (
+                                    <span className="text-default-500 mt-0.5">{receiptLine}</span>
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </Table.Cell>
+                    )}
                     {periods.map((period) => {
                       const periodData = student.paymentsByPeriod[period.key];
                       if (!periodData || periodData.totalPaid === 0) {
                         return (
                           <Table.Cell
                             key={period.key}
-                            className="text-center text-default-300"
+                            className="text-center text-default-300 border-x border-b border-default-200 align-top py-3"
                           ></Table.Cell>
                         );
                       }
 
-                      const lastPayment =
-                        periodData.payments[periodData.payments.length - 1];
-                      const formattedDate = lastPayment
-                        ? new Date(lastPayment.date).toLocaleDateString(
-                            "es-ES",
-                            { day: "2-digit", month: "2-digit" },
-                          )
-                        : "";
-
                       return (
-                        <Table.Cell key={period.key} className="text-center">
-                          <div className="flex flex-col items-center">
-                            <span className="font-semibold">
+                        <Table.Cell
+                          key={period.key}
+                          className="text-center min-w-30 border-x border-b border-default-200 align-top py-3"
+                        >
+                          <div className="flex flex-col h-full">
+                            <div className="font-semibold text-center border-b border-default-200 pb-2 mb-2">
                               {formatCurrency(periodData.totalPaid)}
-                            </span>
-                            {formattedDate && (
-                              <span className="text-xs text-default-400">
-                                {formattedDate}
-                              </span>
-                            )}
+                            </div>
+
+                            <div className="flex flex-col gap-3 flex-1">
+                              {periodData.payments.map((p, idx) => {
+                                // Fallback a index si no hay ID, aunque idealmente debería haber un ID.
+                                // Si en el futuro backend añade ID, se puede usar p.id.
+                                const uniqueKey = idx;
+
+                                let receiptLine = p.receiptNumber || "";
+                                if (p.date) {
+                                  if (receiptLine) receiptLine += " · ";
+                                  receiptLine += formatUTCDate(p.date);
+                                }
+
+                                return (
+                                  <div
+                                    key={uniqueKey}
+                                    className="flex flex-col text-xs text-center"
+                                  >
+                                    <span className="font-medium text-default-700">
+                                      {formatCurrency(p.amount)}{" "}
+                                      {getChargeLabel(p.chargeType)}
+                                    </span>
+                                    {receiptLine && (
+                                      <span className="text-default-500 mt-0.5">
+                                        {receiptLine}
+                                      </span>
+                                    )}
+                                  </div>
+                                );
+                              })}
+                            </div>
                           </div>
                         </Table.Cell>
                       );
                     })}
+                    <Table.Cell className="text-center border-x border-b border-default-200 align-top py-3">
+                      <span className="font-bold text-success-600">
+                        {formatCurrency(
+                          (student.registration?.totalPaid ?? 0) +
+                          Object.values(student.paymentsByPeriod).reduce(
+                            (sum, periodData) => sum + periodData.totalPaid,
+                            0,
+                          ),
+                        )}
+                      </span>
+                    </Table.Cell>
                   </Table.Row>
                 ))}
               </Table.Body>

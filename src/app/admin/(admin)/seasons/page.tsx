@@ -30,7 +30,13 @@ interface Props {
 export default async function SelectDisciplineSeasonsPage({
   searchParams,
 }: Props) {
-  const { search, page, per_page, sortField, orderBy } = await searchParams;
+  const {
+    search,
+    page,
+    per_page = "5",
+    sortField,
+    orderBy,
+  } = await searchParams;
   const [disciplinesOptionsResponse] = await Promise.all([
     getDisciplinesOptions(),
   ]);

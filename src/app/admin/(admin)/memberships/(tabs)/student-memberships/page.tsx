@@ -26,7 +26,13 @@ interface Props {
 }
 
 export default async function StudentMembershipsPage({ searchParams }: Props) {
-  const { search, page, per_page, status, courseSeasonId } = await searchParams;
+  const {
+    search,
+    page,
+    per_page = "5",
+    status,
+    courseSeasonId,
+  } = await searchParams;
 
   const [membershipsRes, paymentPlansRes] = await resolvePageData([
     getStudentMemberships({

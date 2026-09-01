@@ -38,7 +38,7 @@ export default async function PlayerMembershipInfoPage({
   searchParams,
   params,
 }: Props) {
-  const { search, page, per_page, status } = await searchParams;
+  const { search, page, per_page = "5", status } = await searchParams;
   const { playerMembershipId } = await params;
 
   const [membershipRes] = await resolvePageData([

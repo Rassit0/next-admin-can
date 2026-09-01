@@ -50,7 +50,13 @@ interface Props {
 }
 
 export default async function PlayerMembershipsPage({ searchParams }: Props) {
-  const { search, page, per_page, status, teamSeasonId } = await searchParams;
+  const {
+    search,
+    page,
+    per_page = "5",
+    status,
+    teamSeasonId,
+  } = await searchParams;
 
   const [membershipsRes, paymentPlansRes] = await resolvePageData([
     getPlayerMemberships({
