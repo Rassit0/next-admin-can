@@ -5,7 +5,10 @@ import { handleServerAction } from "@/utils";
 import { IPreviewChargesResponse } from "@/modules/player-memberships";
 
 export interface PreviewAdvanceChargesData {
-  quantity: number;
+  cycles: {
+    cycleStartDate: string;
+    enrollmentDate?: string;
+  }[];
 }
 
 export const previewAdvanceCharges = async (

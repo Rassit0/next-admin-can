@@ -18,6 +18,7 @@ export interface GetPreviewChargesData {
   isMigrated: boolean;
   chargeRegistrationOnMigration?: boolean;
   chargeCurrentMonthOnMigration?: boolean;
+  forceFullCycleFee?: boolean;
 }
 
 export const getPreviewCharges = async (

@@ -136,7 +136,6 @@ export default async function PlayerMembershipsPage({
           </SectionFilters>
           <TableMemberships
             memberships={memberships}
-            showTeamSeasonDetail={false}
             origin="teams"
           />
           <PaginationSection

@@ -21,8 +21,8 @@ export const PerPage = () => {
       variant="secondary"
       className="md:w-20"
       placeholder="Ver"
-      value={currentPerPage as Key}
-      onChange={(value) => handlePerPageChange(value?.toString() || "5")}
+      selectedKey={currentPerPage}
+      onSelectionChange={(key) => handlePerPageChange(key?.toString() || "5")}
     >
       <Label>Ver</Label>
       <Select.Trigger>

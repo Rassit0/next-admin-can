@@ -30,6 +30,7 @@ export * from "./components/table/Table";
 export * from "./components/metrics/MetricsCards";
 export * from "./components/drawer/CreateMassiveManualChargeDrawer";
 export * from "./components/actions/CreateMassiveManualChargeButton";
+export * from "./components/modal/CycleCapacityModal";
 
 // Interfaces
 export * from "./interfaces/student-membership.interface";

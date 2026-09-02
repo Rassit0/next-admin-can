@@ -3,6 +3,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { Search01Icon } from "@hugeicons/core-free-icons";
 import { Avatar, Table } from "@heroui/react";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { SortableColumnHeader } from "@/ui";
 import { ICourseSeason } from "@/modules/course-seasons";
 import { IStudentMembership } from "@/modules/student-memberships";
@@ -154,13 +155,42 @@ export const TableMemberships = ({
                   {showCourseSeasonDetail && (
                     <Table.Cell className="py-3">
                       <div className="flex flex-col min-w-0">
-                        <span className="font-medium text-foreground truncate">
-                          {courseSeason?.course?.name ?? "—"}
-                        </span>
-                        <span className="text-xs text-muted truncate">
-                          {Array.from(new Set(courseSeason?.shifts?.map((s) => s.category?.name).filter(Boolean))).join(' · ') || "—"} •{" "}
-                          {courseSeason?.season?.name ?? "—"}
-                        </span>
+                        {(() => {
+                          const courseObj = courseSeason?.course ?? membership.courseSeason?.course;
+                          const url = courseObj && 'school' in courseObj && courseObj.school 
+                            ? `/admin/courses/${courseObj.school.disciplineId}/${courseObj.schoolId}/${courseObj.id}/course-seasons/${membership.courseSeasonId}/student-memberships?shiftId=${membership.courseSeasonShiftId}` 
+                            : "#";
+                          
+                          const innerContent = (
+                            <>
+                              <span className="font-medium text-foreground truncate group-hover:text-primary transition-colors">
+                                {courseSeason?.course?.name ?? membership.courseSeason?.course?.name ?? "—"}
+                              </span>
+                              <span className="text-xs text-muted truncate group-hover:text-primary/80 transition-colors">
+                                {courseSeason 
+                                  ? (Array.from(new Set(courseSeason.shifts?.map((s) => s.category?.name).filter(Boolean))).join(' · ') || "—")
+                                  : (
+                                      [
+                                        membership.courseSeasonShift?.category?.name ?? membership.courseSeason?.category?.name,
+                                        membership.courseSeasonShift?.shift?.name
+                                      ].filter(Boolean).join(" · ") || "—"
+                                    )
+                                } •{" "}
+                                {courseSeason?.season?.name ?? membership.courseSeason?.season?.name ?? "—"}
+                              </span>
+                            </>
+                          );
+
+                          return courseSeason ? (
+                            <div className="flex flex-col min-w-0">
+                              {innerContent}
+                            </div>
+                          ) : (
+                            <Link href={url} className="group flex flex-col min-w-0 hover:opacity-80 transition-opacity">
+                              {innerContent}
+                            </Link>
+                          );
+                        })()}
                       </div>
                     </Table.Cell>
                   )}

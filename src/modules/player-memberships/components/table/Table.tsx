@@ -3,6 +3,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { Search01Icon } from "@hugeicons/core-free-icons";
 import { Avatar, Table } from "@heroui/react";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { SortableColumnHeader } from "@/ui";
 import { ITeamSeason } from "@/modules/team-seasons";
 import { IPlayerMembership } from "@/modules/player-memberships";
@@ -153,14 +154,32 @@ export const TableMemberships = ({
                   {showTeamSeasonDetail && (
                     <Table.Cell className="py-3">
                       <div className="flex flex-col min-w-0">
-                        <span className="font-medium text-foreground truncate">
-                          {membership.teamSeason?.team?.name ?? "—"}
-                        </span>
-                        <span className="text-xs text-muted truncate">
-                          {membership.teamSeasonCategories?.category?.name ??
-                            "—"}{" "}
-                          • {membership.teamSeason?.season?.name ?? "—"}
-                        </span>
+                        {(() => {
+                          const teamObj = membership.teamSeason?.team;
+                          const url = teamObj && 'club' in teamObj && teamObj.club 
+                            ? `/admin/teams/${teamObj.club.disciplineId}/${teamObj.clubId}/${teamObj.id}/team-seasons/${membership.teamSeasonId}/player-memberships?teamSeasonCategoryId=${membership.teamSeasonCategoryId}` 
+                            : "#";
+                          const innerContent = (
+                            <>
+                              <span className="font-medium text-foreground truncate group-hover:text-primary transition-colors">
+                                {teamObj?.name ?? "—"}
+                              </span>
+                              <span className="text-xs text-muted truncate group-hover:text-primary/80 transition-colors">
+                                {membership.teamSeasonCategories?.category?.name ?? "—"} • {membership.teamSeason?.season?.name ?? "—"}
+                              </span>
+                            </>
+                          );
+
+                          return origin === "teams" ? (
+                            <div className="flex flex-col min-w-0">
+                              {innerContent}
+                            </div>
+                          ) : (
+                            <Link href={url} className="group flex flex-col min-w-0 hover:opacity-80 transition-opacity">
+                              {innerContent}
+                            </Link>
+                          );
+                        })()}
                       </div>
                     </Table.Cell>
                   )}

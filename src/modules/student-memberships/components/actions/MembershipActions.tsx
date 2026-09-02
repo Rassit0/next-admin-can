@@ -158,16 +158,7 @@ export const MembershipActions = ({ membership, origin }: Props) => {
         quantity,
         reentryDate: reentryDate ? new Date(reentryDate).toISOString() : undefined,
       });
-    } else if (action === "advance") {
-      const quantity = parseInt(formData.get("quantity") as string, 10);
 
-      if (isNaN(quantity) || quantity < 1) {
-        toast.error("La cantidad de ciclos debe ser al menos 1");
-        setLoading(false);
-        return;
-      }
-
-      res = await generateAdvanceCharges(membership.id, { quantity });
     } else if (action === "remove") {
       res = await removeStudentMembership(membership.id);
     } else if (action === "pause") {
@@ -411,16 +402,7 @@ export const MembershipActions = ({ membership, origin }: Props) => {
                   </div>
                 )}
 
-                {selectedAction?.key === "advance" && (
-                  <div className="flex flex-col gap-4 w-full">
-                    <TextField name="quantity" isRequired className="w-full" defaultValue="1">
-                      <Label className="text-sm font-semibold">Cantidad de ciclos a comprar</Label>
-                      <InputGroup>
-                        <InputGroup.Input type="number" min="1" placeholder="Ej. 1" />
-                      </InputGroup>
-                    </TextField>
-                  </div>
-                )}
+
 
                 {selectedAction?.key === "remove" && (
                   <TextField name="confirmDelete" isRequired className="w-full">

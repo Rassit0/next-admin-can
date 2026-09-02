@@ -23,6 +23,7 @@ export interface AddStudentMembershipData {
     type: string;
     reason?: string;
   }[];
+  forceFullCycleFee?: boolean;
 }
 
 export const addStudentMembership = async (

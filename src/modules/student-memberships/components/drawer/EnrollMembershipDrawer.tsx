@@ -16,6 +16,7 @@ import {
   Popover,
   Toast,
   CloseButton,
+  Checkbox,
 } from "@heroui/react";
 import {
   Add01Icon,
@@ -34,6 +35,7 @@ import {
   IStudentOption,
   IPreviewChargesResponse,
 } from "@/modules/student-memberships";
+import { getCycleCapacity, CycleCapacity } from "@/modules/course-seasons/actions/get-cycle-capacity";
 import { calculateInitialCharges } from "@/modules/student-memberships/helpers/initial-charges";
 import { InvoicePreview } from "@/modules/student-memberships/components/invoice/InvoicePreview";
 import { SelectOrCreateStudent } from "./SelectOrCreateStudent";
@@ -80,6 +82,7 @@ export const EnrollMembershipDrawer = ({
     useState(false);
   const [chargeCurrentMonthOnMigration, setChargeCurrentMonthOnMigration] =
     useState(false);
+  const [forceFullCycleFee, setForceFullCycleFee] = useState(false);
 
   const [hasDiscount, setHasDiscount] = useState(false);
   const [regDiscountPercent, setRegDiscountPercent] = useState<string>("");
@@ -103,6 +106,62 @@ export const EnrollMembershipDrawer = ({
     title: string;
     description: string;
   } | null>(null);
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Capacity state
+  const [cycleCapacities, setCycleCapacities] = useState<CycleCapacity[]>([]);
+  const [isLoadingCapacity, setIsLoadingCapacity] = useState(false);
+  const [capacityError, setCapacityError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let active = true;
+    const fetchCapacity = async () => {
+      if (!isOpen || !courseSeason.id || !shiftKey) {
+        setCycleCapacities([]);
+        setCapacityError(null);
+        return;
+      }
+
+      setIsLoadingCapacity(true);
+      setCapacityError(null);
+
+      const res = await getCycleCapacity(courseSeason.id, shiftKey);
+      
+      if (!active) return;
+
+      if (!res.error && res.data) {
+        setCycleCapacities(res.data);
+      } else {
+        setCapacityError(res.message || "Error al obtener disponibilidad de cupos.");
+        setCycleCapacities([]);
+      }
+      setIsLoadingCapacity(false);
+    };
+
+    fetchCapacity();
+    return () => {
+      active = false;
+    };
+  }, [isOpen, courseSeason.id, shiftKey]);
+
+  const currentCapacity = useMemo(() => {
+    if (!startedAt || cycleCapacities.length === 0) return null;
+    
+    // Normalizar la fecha seleccionada a UTC para matchear con los ciclos
+    const startedAtDate = new Date(`${startedAt}T00:00:00Z`);
+    
+    const match = cycleCapacities.find((c) => {
+      const cycleStart = new Date(c.cycleStartDate);
+      const cycleEnd = new Date(c.cycleEndDate);
+      return startedAtDate >= cycleStart && startedAtDate < cycleEnd;
+    });
+
+    return match || null;
+  }, [startedAt, cycleCapacities]);
+
+  const isCapacityFull = currentCapacity?.status === "FULL";
+  const isUnknownCapacity = !isLoadingCapacity && !capacityError && startedAt && !currentCapacity && cycleCapacities.length > 0;
 
   // Validaciones en tiempo real
   const errors = useMemo(() => {
@@ -171,6 +230,15 @@ export const EnrollMembershipDrawer = ({
         }
       }
     }
+
+    if (isCapacityFull) {
+      err.capacity = "El ciclo seleccionado no tiene cupos disponibles.";
+    } else if (isUnknownCapacity) {
+      err.capacity = "No se pudo verificar la disponibilidad del ciclo para la fecha seleccionada.";
+    } else if (capacityError) {
+      err.capacity = capacityError;
+    }
+
     return err;
   }, [
     studentKey,
@@ -185,6 +253,9 @@ export const EnrollMembershipDrawer = ({
     discountReason,
     courseSeason,
     selectedPlan,
+    isCapacityFull,
+    isUnknownCapacity,
+    capacityError,
   ]);
 
   const reset = () => {
@@ -219,6 +290,7 @@ export const EnrollMembershipDrawer = ({
     regDiscountPercent,
     recDiscountPercent,
     discountEndDate,
+    forceFullCycleFee,
   ]);
 
   const handlePreview = async () => {
@@ -231,6 +303,7 @@ export const EnrollMembershipDrawer = ({
       paymentPlanId: planKey,
       startDate: toLocalIso(startedAt)!,
       isMigrated,
+      forceFullCycleFee,
       ...(isMigrated && {
         chargeRegistrationOnMigration,
         chargeCurrentMonthOnMigration,
@@ -281,6 +354,7 @@ export const EnrollMembershipDrawer = ({
       paymentPlanId: planKey!,
       startedAt: toLocalIso(startedAt)!,
       isMigrated,
+      forceFullCycleFee,
       ...(isMigrated && {
         chargeRegistrationOnMigration,
         chargeCurrentMonthOnMigration,
@@ -310,6 +384,16 @@ export const EnrollMembershipDrawer = ({
           ? Object.values(res.errors).flat().join(", ")
           : res.message,
       });
+      // Refresh capacity if it failed due to concurrency
+      const refreshCapacity = async () => {
+        if (courseSeason.id && shiftKey) {
+          const capRes = await getCycleCapacity(courseSeason.id, shiftKey);
+          if (!capRes.error && capRes.data) {
+            setCycleCapacities(capRes.data);
+          }
+        }
+      };
+      refreshCapacity();
       return;
     }
     setApiError(null);
@@ -324,8 +408,6 @@ export const EnrollMembershipDrawer = ({
   };
 
   const noPlans = paymentPlans.length === 0;
-
-  const [isOpen, setIsOpen] = useState(false);
 
   const InfoTooltip = ({ text }: { text: string }) => (
     <Popover>
@@ -538,25 +620,88 @@ export const EnrollMembershipDrawer = ({
                 </ComboBox>
 
                 {/* Start date */}
-                <TextField
-                  className="w-full"
-                  name="startedAt"
-                  isInvalid={!!errors.startedAt || undefined}
-                >
-                  <Label className="text-sm font-semibold flex items-center">
-                    Fecha de inicio
-                    <InfoTooltip text="Fecha en la que el sistema se basa para cobrar. Si la fecha cae a la mitad de un ciclo mensual (y el prorrateo está activo), el cobro será parcial." />
-                  </Label>
-                  <Input
-                    variant="secondary"
-                    type="date"
-                    value={startedAt}
-                    onChange={(e) => setStartedAt(e.target.value)}
-                  />
-                  {errors.startedAt && (
-                    <FieldError>{errors.startedAt}</FieldError>
-                  )}
-                </TextField>
+                <div className="flex flex-col gap-2">
+                  <TextField
+                    className="w-full"
+                    name="startedAt"
+                    isInvalid={!!errors.startedAt || !!errors.capacity || undefined}
+                  >
+                    <Label className="text-sm font-semibold flex items-center">
+                      Fecha de inicio
+                      <InfoTooltip text="Fecha en la que el sistema se basa para cobrar. Si la fecha cae a la mitad de un ciclo mensual (y el prorrateo está activo), el cobro será parcial." />
+                    </Label>
+                    <Input
+                      variant="secondary"
+                      type="date"
+                      value={startedAt}
+                      onChange={(e) => setStartedAt(e.target.value)}
+                    />
+                    {errors.startedAt && (
+                      <FieldError>{errors.startedAt}</FieldError>
+                    )}
+                  </TextField>
+
+                  {/* Capacidad / Cupos Alert */}
+                  {isLoadingCapacity ? (
+                    <div className="text-xs text-muted flex items-center gap-2 px-1">
+                      <span className="h-3 w-3 animate-spin rounded-full border-2 border-accent border-t-transparent" />
+                      Verificando cupos...
+                    </div>
+                  ) : currentCapacity?.status === "AVAILABLE" ? (
+                    <div className="text-xs text-success font-medium flex items-center gap-1.5 px-1">
+                      <div className="h-1.5 w-1.5 rounded-full bg-success"></div>
+                      Hay cupos disponibles para esta fecha
+                    </div>
+                  ) : isCapacityFull ? (
+                    <Alert status="danger" className="py-2">
+                      <Alert.Indicator />
+                      <Alert.Content>
+                        <Alert.Title className="text-sm">Sin cupos disponibles</Alert.Title>
+                        <Alert.Description className="text-xs">
+                          El ciclo al que pertenece esta fecha se encuentra lleno.
+                        </Alert.Description>
+                      </Alert.Content>
+                    </Alert>
+                  ) : capacityError ? (
+                    <Alert status="warning" className="py-2">
+                      <Alert.Indicator />
+                      <Alert.Content>
+                        <Alert.Title className="text-sm">Error al verificar cupos</Alert.Title>
+                        <Alert.Description className="text-xs">
+                          {capacityError}
+                        </Alert.Description>
+                      </Alert.Content>
+                      <Button size="sm" variant="ghost" className="h-6 mt-1" onPress={() => setStartedAt(startedAt)}>Reintentar</Button>
+                    </Alert>
+                  ) : isUnknownCapacity ? (
+                    <Alert status="warning" className="py-2">
+                      <Alert.Indicator />
+                      <Alert.Content>
+                        <Alert.Title className="text-sm">Fecha fuera de ciclos</Alert.Title>
+                        <Alert.Description className="text-xs">
+                          No se pudo determinar el ciclo para la fecha seleccionada.
+                        </Alert.Description>
+                      </Alert.Content>
+                    </Alert>
+                  ) : null}
+                </div>
+
+                <div className="flex items-center gap-2 px-1">
+                  <Checkbox 
+                    isSelected={forceFullCycleFee} 
+                    onChange={setForceFullCycleFee}
+                  >
+                    <Checkbox.Content>
+                      <Checkbox.Control>
+                        <Checkbox.Indicator />
+                      </Checkbox.Control>
+                      <Label className="text-sm font-semibold flex items-center">
+                        Cobrar ciclo completo (Sin prorrateo)
+                        <InfoTooltip text="Si se marca, se cobrará la cuota completa sin importar la fecha de inicio en el ciclo actual." />
+                      </Label>
+                    </Checkbox.Content>
+                  </Checkbox>
+                </div>
 
                 {/* Switch for migration */}
                 <div className="flex flex-col gap-4">

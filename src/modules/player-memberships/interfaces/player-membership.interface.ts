@@ -33,9 +33,15 @@ export interface IPlayerMembership {
   id: string;
   playerId: string;
   teamSeasonId: string;
+  teamSeasonCategoryId: string;
   teamSeason: {
     team: {
+      id: string;
       name: string;
+      clubId: string;
+      club: {
+        disciplineId: string;
+      }
     };
     season: {
       name: string;
@@ -43,6 +49,7 @@ export interface IPlayerMembership {
   };
   teamSeasonCategories?: {
     category: {
+      id: string;
       name: string;
     };
   };

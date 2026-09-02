@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { getTransactions } from "@/modules/accounting-cash-flow/actions/get";
+import { getTransactions, getPaymentMethods } from "@/modules/accounting-cash-flow/actions/get";
 import { CashFlowClient } from "@/modules/accounting-cash-flow/components/CashFlowClient";
 import { getAccountCategories } from "@/modules/account-categories/actions/get";
 import { getFinancialAccounts } from "@/modules/financial-accounts/actions/get-all";
@@ -23,14 +23,15 @@ export default async function CashFlowPage({
     sortField = "transactionDate",
     orderBy = "desc",
     type,
-    paymentMethod,
-    startDate,
-    endDate,
+    paymentMethods,
+    financialAccountIds,
+    start,
+    end,
     origin,
     categoryId,
   } = resolvedSearchParams;
 
-  const [response, categoriesRes, financialAccountsRes] = await resolvePageData(
+  const [response, categoriesRes, financialAccountsRes, paymentMethodsRes] = await resolvePageData(
     [
       getTransactions({
         search,
@@ -39,14 +40,16 @@ export default async function CashFlowPage({
         sortField,
         orderBy,
         type,
-        paymentMethod,
-        startDate,
-        endDate,
+        paymentMethods,
+        financialAccountIds,
+        startDate: start,
+        endDate: end,
         origin,
         categoryId,
       }),
       getAccountCategories({ per_page: "100" }),
       getFinancialAccounts(),
+      getPaymentMethods(),
     ],
   );
 
@@ -65,6 +68,7 @@ export default async function CashFlowPage({
         response={response.data!}
         categories={categoriesRes.data?.data || []}
         financialAccounts={financialAccounts || []}
+        allPaymentMethods={paymentMethodsRes.data?.data || []}
       />
     </div>
   );

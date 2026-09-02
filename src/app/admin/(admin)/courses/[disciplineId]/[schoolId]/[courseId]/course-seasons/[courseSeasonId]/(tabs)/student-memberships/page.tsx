@@ -12,6 +12,7 @@ import {
   getStudentMemberships,
   MetricsCards,
   TableMemberships,
+  CycleCapacityModal,
 } from "@/modules/student-memberships";
 import { Button, Card, Alert, Chip, Popover } from "@heroui/react";
 import {
@@ -100,6 +101,7 @@ export default async function StudentMembershipsPage({
             description="Asigna membresías y revisa los cargos iniciales generados"
             action={
               <div className="w-full flex gap-2 justify-end">
+                <CycleCapacityModal courseSeasonId={courseSeasonId} />
                 <CreateMassiveManualChargeButton
                   courseSeasonId={courseSeasonId}
                 />

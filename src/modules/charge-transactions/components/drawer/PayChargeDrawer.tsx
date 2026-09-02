@@ -338,10 +338,11 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
                         className="w-full"
                         variant="secondary"
                         placeholder="Caja/Banco"
-                        value={split.financialAccountId}
-                        onChange={(value) => {
+                        selectedKey={split.financialAccountId}
+                        onSelectionChange={(key) => {
+                          const value = key as string;
                           const newSplits = [...splits];
-                          newSplits[index].financialAccountId = value as string;
+                          newSplits[index].financialAccountId = value;
                           const selectedAcc = financialAccounts.find(
                             (a) => a.id === value,
                           );
@@ -408,12 +409,12 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
                               isRequired
                               className="w-full"
                               variant="secondary"
-                              value={split.paymentMethod}
+                              selectedKey={split.paymentMethod}
                               isDisabled={!hasMethods}
-                              onChange={(value) => {
+                              onSelectionChange={(key) => {
+                                const value = key as string;
                                 const newSplits = [...splits];
-                                newSplits[index].paymentMethod =
-                                  value as string;
+                                newSplits[index].paymentMethod = value;
                                 setSplits(newSplits);
                               }}
                             >

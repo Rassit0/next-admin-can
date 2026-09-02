@@ -28,8 +28,10 @@ export async function handleServerAction<T>(
         const referer = headersList.get("referer");
 
         // Next.js envía este header exclusivamente cuando se ejecuta un Server Action
-        const isServerAction = headersList.has("next-action") || headersList.has("next-router-state-tree");
-        
+        const isServerAction =
+          headersList.has("next-action") ||
+          headersList.has("next-router-state-tree");
+
         const finalRedirectTo = callbackUrl || referer || undefined;
 
         if (isServerAction) {
@@ -37,7 +39,9 @@ export async function handleServerAction<T>(
           await logoutAction(finalRedirectTo);
         } else {
           // Si estamos en un Server Component (ej. cargando la página), NO podemos modificar cookies
-          redirect(`/login?expired=true&redirectTo=${encodeURIComponent(finalRedirectTo || "/")}`);
+          redirect(
+            `/login?expired=true&redirectTo=${encodeURIComponent(finalRedirectTo || "/")}`,
+          );
         }
       }
 

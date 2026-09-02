@@ -5,7 +5,10 @@ import { handleServerAction } from "@/utils";
 import { revalidatePath } from "next/cache";
 
 export interface GenerateAdvanceChargesData {
-  quantity: number;
+  cycles: {
+    cycleStartDate: string;
+    enrollmentDate?: string;
+  }[];
 }
 
 export const generateAdvanceCharges = async (

@@ -9,7 +9,8 @@ interface SearchParams {
   per_page?: string;
   page?: string;
   type?: string;
-  paymentMethod?: string;
+  paymentMethods?: string;
+  financialAccountIds?: string;
   startDate?: string;
   endDate?: string;
   origin?: string;
@@ -30,7 +31,8 @@ export const getTransactions = async ({
   per_page = "10",
   page = "1",
   type,
-  paymentMethod,
+  paymentMethods,
+  financialAccountIds,
   startDate,
   endDate,
   origin,
@@ -45,7 +47,8 @@ export const getTransactions = async ({
     if (per_page) params.set("per_page", per_page);
     if (page) params.set("page", page);
     if (type) params.set("type", type);
-    if (paymentMethod) params.set("paymentMethod", paymentMethod);
+    if (paymentMethods) params.set("paymentMethods", paymentMethods);
+    if (financialAccountIds) params.set("financialAccountIds", financialAccountIds);
     if (startDate) params.set("startDate", startDate);
     if (endDate) params.set("endDate", endDate);
     if (origin) params.set("origin", origin);
@@ -70,6 +73,17 @@ export const getTransactions = async ({
       error: false,
       data: { ...res, data } as ITransactionsResponse,
       message: res.message || "Transacciones obtenidas exitosamente",
+    };
+  });
+};
+
+export const getPaymentMethods = async (): Promise<ServiceResponse<{ data: string[] }>> => {
+  return handleServerAction(async () => {
+    const res = await api.get<{ data: string[] }>("transactions/payment-methods");
+    return {
+      error: false,
+      data: res,
+      message: "Métodos de pago obtenidos",
     };
   });
 };
