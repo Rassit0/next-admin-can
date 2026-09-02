@@ -84,8 +84,14 @@ export const CashFlowTable = ({ transactions }: Props) => {
                 </div>
               )}
             >
-              {transactions.map((transaction) => (
-                <Table.Row key={transaction.id} id={transaction.id}>
+              {transactions.map((transaction) => {
+                const isCancelled = transaction.status === "CANCELLED";
+                return (
+                <Table.Row 
+                  key={transaction.id} 
+                  id={transaction.id}
+                  className={isCancelled ? 'opacity-60 bg-danger-50/20' : ''}
+                >
                   <Table.Cell>
                     <span
                       className="whitespace-nowrap text-default-600"
@@ -97,7 +103,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
                     </span>
                   </Table.Cell>
                   <Table.Cell>
-                    <span className="font-mono text-sm text-default-700 whitespace-nowrap">
+                    <span className={`font-mono text-sm whitespace-nowrap ${isCancelled ? 'text-danger' : 'text-default-700'}`}>
                       {transaction.receiptSeries && transaction.receiptNumber
                         ? `${transaction.receiptSeries}-${transaction.receiptNumber}`
                         : transaction.receiptNumber
@@ -107,7 +113,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
                   </Table.Cell>
                   <Table.Cell>
                     <span
-                      className="font-medium max-w-62.5 truncate block"
+                      className={`font-medium max-w-62.5 truncate block ${isCancelled ? 'text-danger' : ''}`}
                       title={transaction.concept}
                     >
                       {transaction.concept}
@@ -134,13 +140,20 @@ export const CashFlowTable = ({ transactions }: Props) => {
                     </Chip>
                   </Table.Cell>
                   <Table.Cell>
-                    <span className="text-default-600 text-sm">
-                      {transaction.paymentMethod === "CASH"
-                        ? "Efectivo"
-                        : transaction.paymentMethod === "TRANSFER"
-                          ? "Transferencia"
-                          : "QR"}
-                    </span>
+                    <div className="flex flex-wrap gap-1 items-center">
+                      {isCancelled && (
+                        <Chip size="sm" variant="soft" className="bg-danger-soft text-danger font-bold">
+                          Anulado
+                        </Chip>
+                      )}
+                      <span className="text-default-600 text-sm">
+                        {transaction.paymentMethod === "CASH"
+                          ? "Efectivo"
+                          : transaction.paymentMethod === "TRANSFER"
+                            ? "Transferencia"
+                            : "QR"}
+                      </span>
+                    </div>
                   </Table.Cell>
                   <Table.Cell>
                     <span className="text-default-500 text-xs">
@@ -187,7 +200,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
                     </div>
                   </Table.Cell>
                   <Table.Cell>
-                    <div className="text-right font-medium">
+                    <div className={`text-right font-medium ${isCancelled ? 'text-danger line-through' : ''}`}>
                       {transaction.type === "INCOME" ? "+" : "-"} Bs{" "}
                       {transaction.amount.toFixed(2)}
                     </div>
@@ -226,7 +239,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
                     </div>
                   </Table.Cell>
                 </Table.Row>
-              ))}
+              )})}
             </Table.Body>
           </Table.Content>
         </Table.ScrollContainer>
