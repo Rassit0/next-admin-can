@@ -44,7 +44,46 @@ export const TableTransactions = ({ transactions }: Props) => {
   const [showPrintDialog, setShowPrintDialog] = useState(false);
   const [selectedKeys, setSelectedKeys] = useState<any>(new Set([]));
 
-  const [printReportType, setPrintReportType] = useState<"payment" | "transaction">("transaction");
+  const groupedTransactions = useMemo(() => {
+    const groups = new Map<string, ITransaction>();
+    const result: ITransaction[] = [];
+
+    for (const t of transactions) {
+      if (t.paymentId) {
+        if (groups.has(t.paymentId)) {
+          const group = groups.get(t.paymentId)!;
+          group.amount += t.amount;
+          group._isGrouped = true; // Solo es agrupado si hay más de 1
+          group._groupedDetails!.push({
+            method: t.paymentMethod,
+            account: t.financialAccountName || "Sin asignar",
+            amount: t.amount,
+          });
+        } else {
+          const newGroup: ITransaction = {
+            ...t,
+            _isGrouped: false, // Inicialmente falso, es una transacción normal
+            _groupedDetails: [
+              {
+                method: t.paymentMethod,
+                account: t.financialAccountName || "Sin asignar",
+                amount: t.amount,
+              },
+            ],
+          };
+          groups.set(t.paymentId, newGroup);
+          result.push(newGroup);
+        }
+      } else {
+        result.push(t);
+      }
+    }
+    return result;
+  }, [transactions]);
+
+  const [printReportType, setPrintReportType] = useState<
+    "payment" | "transaction"
+  >("transaction");
 
   const handleConfirmVoid = async () => {
     if (!transactionToVoid) return;
@@ -68,8 +107,8 @@ export const TableTransactions = ({ transactions }: Props) => {
       new Set(
         transactions
           .filter((t) => selectedKeys.has(t.id))
-          .map((t) => t.paymentId || t.id)
-      )
+          .map((t) => t.paymentId || t.id),
+      ),
     );
   }, [transactions, selectedKeys]);
 
@@ -126,7 +165,8 @@ export const TableTransactions = ({ transactions }: Props) => {
             className="flex items-center gap-2"
           >
             <HugeiconsIcon icon={Invoice01Icon} size={16} />
-            Imprimir seleccionados ({selectedKeys === "all" ? transactions.length : selectedKeys.size})
+            Imprimir seleccionados (
+            {selectedKeys === "all" ? transactions.length : selectedKeys.size})
           </Button>
         </div>
       )}
@@ -171,7 +211,17 @@ export const TableTransactions = ({ transactions }: Props) => {
               </Table.Column>
               <Table.Column>
                 <span className="text-xs font-semibold uppercase tracking-wide">
+                  Concepto
+                </span>
+              </Table.Column>
+              <Table.Column>
+                <span className="text-xs font-semibold uppercase tracking-wide">
                   Monto
+                </span>
+              </Table.Column>
+              <Table.Column>
+                <span className="text-xs font-semibold uppercase tracking-wide">
+                  Balance
                 </span>
               </Table.Column>
               <Table.Column>
@@ -197,11 +247,11 @@ export const TableTransactions = ({ transactions }: Props) => {
                 </div>
               )}
             >
-              {transactions.map((item) => (
+              {groupedTransactions.map((item) => (
                 <Table.Row
-                  key={item.id}
-                  id={item.id}
-                  className="border-b border-border last:border-b-0 hover:bg-surface-secondary/40"
+                  key={item.paymentId || item.id}
+                  id={item.paymentId || item.id}
+                  className={`border-b border-border last:border-b-0 hover:bg-surface-secondary/40 ${item.status === "CANCELLED" ? "opacity-60 bg-danger-50/10" : ""} ${item.reversesId ? "bg-warning-50/10" : ""}`}
                 >
                   <Table.Cell className="pe-0 w-10">
                     <Checkbox
@@ -227,7 +277,9 @@ export const TableTransactions = ({ transactions }: Props) => {
                     <div className="flex flex-col">
                       <span className="font-medium text-foreground">
                         {item.payerPerson?.name
-                          ? `${item.payerPerson.lastName || ""} ${(item.payerPerson as any).secondLastName || ""} ${item.payerPerson.name}`.replace(/\s+/g, ' ').trim()
+                          ? `${item.payerPerson.lastName || ""} ${(item.payerPerson as any).secondLastName || ""} ${item.payerPerson.name}`
+                              .replace(/\s+/g, " ")
+                              .trim()
                           : "-"}
                       </span>
                     </div>
@@ -260,12 +312,96 @@ export const TableTransactions = ({ transactions }: Props) => {
                     </div>
                   </Table.Cell>
                   <Table.Cell className="py-3">
-                    <span className="font-mono font-bold text-foreground">
-                      {Number(item.amount).toFixed(2)} Bs
-                    </span>
+                    <div className="flex flex-col">
+                      <span
+                        className="text-sm font-medium line-clamp-2 max-w-50"
+                        title={item.description}
+                      >
+                        {item.description}
+                      </span>
+                    </div>
                   </Table.Cell>
                   <Table.Cell className="py-3">
-                    {getMethodChip(item.paymentMethod)}
+                    <div className="flex flex-col gap-1 items-start">
+                      <span
+                        className={`font-mono font-bold ${item.status === "CANCELLED" ? "line-through text-default-400" : "text-foreground"}`}
+                      >
+                        {Number(item.amount).toFixed(2)} Bs
+                      </span>
+                      {item.reversesId && (
+                        <Chip
+                          size="sm"
+                          color="warning"
+                          variant="soft"
+                          className="h-5 text-[10px]"
+                        >
+                          Reverso
+                        </Chip>
+                      )}
+                      {item.status === "CANCELLED" && (
+                        <Chip
+                          size="sm"
+                          color="danger"
+                          variant="soft"
+                          className="h-5 text-[10px]"
+                        >
+                          Anulado
+                        </Chip>
+                      )}
+                    </div>
+                  </Table.Cell>
+                  <Table.Cell className="py-3">
+                    {item._isGrouped ? (
+                      <div className="flex flex-col">
+                        <span className="text-default-400 text-xs italic">
+                          N/A (Múltiples)
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="flex flex-col">
+                        <span className="font-mono text-xs text-default-500">
+                          Anterior:{" "}
+                          {item.balanceBefore != null
+                            ? `${Number(item.balanceBefore).toFixed(2)} Bs`
+                            : "-"}
+                        </span>
+                        <span className="font-mono text-xs font-medium text-foreground">
+                          Nuevo:{" "}
+                          {item.balanceAfter != null
+                            ? `${Number(item.balanceAfter).toFixed(2)} Bs`
+                            : "-"}
+                        </span>
+                      </div>
+                    )}
+                  </Table.Cell>
+                  <Table.Cell className="py-3">
+                    {item._isGrouped ? (
+                      <div className="flex flex-col gap-1 items-start">
+                        <Chip
+                          size="sm"
+                          variant="soft"
+                          color="default"
+                          className="font-medium"
+                        >
+                          Múltiples
+                        </Chip>
+                        {item._groupedDetails?.map((d, idx) => (
+                          <span
+                            key={idx}
+                            className="text-default-500 text-xs whitespace-nowrap"
+                          >
+                            {d.method === "CASH"
+                              ? "Efectivo"
+                              : d.method === "TRANSFER"
+                                ? "Transf."
+                                : "QR"}{" "}
+                            ({d.amount} Bs)
+                          </span>
+                        ))}
+                      </div>
+                    ) : (
+                      getMethodChip(item.paymentMethod)
+                    )}
                   </Table.Cell>
                   <Table.Cell className="py-3">
                     <div className="flex flex-col">

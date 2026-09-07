@@ -44,7 +44,7 @@ export default async function MemberPage({
     return <ErrorComponent />;
   }
 
-  const response = await findPersonById({ id: Number(id) });
+  const response = await findPersonById({ id: id });
 
   if ((response.error && response.statusCode !== 200) || !response.data) {
     return <ErrorComponent />;

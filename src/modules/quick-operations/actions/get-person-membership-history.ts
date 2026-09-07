@@ -1,4 +1,4 @@
-﻿"use server";
+"use server";
 
 import { api } from "@/utils/api";
 import { ServiceResponse } from "@/types/api";
@@ -61,6 +61,8 @@ export const getPersonMembershipHistory = async ({
               teamName: m.teamSeason?.team?.name,
               categoryName: m.teamSeasonCategories?.category?.name,
               seasonName: m.teamSeason?.season?.name,
+              totalPendingAmount: m.totalPendingAmount,
+              totalPaidAmount: m.totalPaidAmount,
             }));
             allItems = [...allItems, ...mapped];
           }
@@ -111,6 +113,7 @@ export const getPersonMembershipHistory = async ({
               institutionName: m.courseSeason?.course?.school?.name || m.courseSeason?.season?.institution?.name,
               shiftName: m.courseSeasonShift?.shift?.name,
               seasonName: m.courseSeason?.season?.name,
+              cycleEnrollments: m.cycleEnrollments,
             }));
             allItems = [...allItems, ...mapped];
           }

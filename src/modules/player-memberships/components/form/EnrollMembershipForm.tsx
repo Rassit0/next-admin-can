@@ -35,6 +35,7 @@ import {
   getTeamSeasonCategories,
   IPlayerOption,
   IPreviewChargesResponse,
+  AddPlayerMembershipData,
 } from "@/modules/player-memberships";
 import { calculateInitialCharges } from "@/modules/player-memberships/helpers/initial-charges";
 import { InvoicePreview } from "@/modules/player-memberships/components/invoice/InvoicePreview";
@@ -77,7 +78,9 @@ export const EnrollMembershipForm = ({
   headerNode,
 }: Props) => {
   const [loading, setLoading] = useState(false);
-  const [playerKey, setPlayerKey] = useState<string | null>(defaultPlayer?.id ?? null);
+  const [playerKey, setPlayerKey] = useState<string | null>(
+    defaultPlayer?.id ?? null,
+  );
   const [planKey, setPlanKey] = useState<string | null>(
     paymentPlans.find((p) => p.isDefault)?.id ?? null,
   );
@@ -237,11 +240,15 @@ export const EnrollMembershipForm = ({
       if (active) {
         if (!res.error && res.data) {
           setCategories(res.data);
-          if (currentCategory && res.data.some(c => c.id === currentCategory)) {
+          if (
+            currentCategory &&
+            res.data.some((c) => c.id === currentCategory)
+          ) {
             setCategoryKey(currentCategory);
           } else if (res.data.length > 0) {
             setCategoryKey((prev) => {
-              const isCurrentValid = prev && res.data.some((c) => c.id === prev);
+              const isCurrentValid =
+                prev && res.data.some((c) => c.id === prev);
               if (!isCurrentValid) {
                 return res.data[0].id;
               }
@@ -331,31 +338,7 @@ export const EnrollMembershipForm = ({
 
     setLoading(true);
 
-    let realPlayerId = playerKey;
-    
-    // Si el jugador no existe y estamos en contexto Person360, lo creamos
-    if (realPlayerId === "NEW" && selectedPlayer) {
-      const playerResponse = await addPlayer({
-        data: {
-          personId: selectedPlayer.person.id,
-          isActive: true,
-        }
-      });
-
-      if (playerResponse.error || !playerResponse.data) {
-        setLoading(false);
-        setApiError({
-          title: "Error al crear perfil",
-          description: playerResponse.message || "Error al crear el perfil de Atleta",
-        });
-        return;
-      }
-
-      realPlayerId = playerResponse.data.id;
-    }
-
-    const res = await addPlayerMembership({
-      playerId: realPlayerId!,
+    const payload: AddPlayerMembershipData = {
       teamSeasonCategoryId: categoryKey!,
       paymentPlanId: planKey!,
       startedAt: toLocalIso(startedAt)!,
@@ -379,7 +362,15 @@ export const EnrollMembershipForm = ({
           },
         ],
       }),
-    });
+    };
+
+    if (playerKey === "NEW" && selectedPlayer) {
+      payload.personIdToCreateProfile = selectedPlayer.person.id;
+    } else {
+      payload.playerId = playerKey ?? undefined;
+    }
+
+    const res = await addPlayerMembership(payload);
     setLoading(false);
 
     if (res.error) {
@@ -429,103 +420,275 @@ export const EnrollMembershipForm = ({
       <Drawer.Body>
         {headerNode}
         <Surface variant="transparent" className="flex flex-col gap-5 mt-2">
-                {apiError && (
-                  <Alert status="danger" className="mb-2">
-                    <Alert.Indicator />
-                    <Alert.Content>
-                      <Alert.Title>{apiError.title}</Alert.Title>
-                      <Alert.Description>
-                        {apiError.description}
-                      </Alert.Description>
-                    </Alert.Content>
-                    <CloseButton onPress={() => setApiError(null)} />
-                  </Alert>
-                )}
+          {apiError && (
+            <Alert status="danger" className="mb-2">
+              <Alert.Indicator />
+              <Alert.Content>
+                <Alert.Title>{apiError.title}</Alert.Title>
+                <Alert.Description>{apiError.description}</Alert.Description>
+              </Alert.Content>
+              <CloseButton onPress={() => setApiError(null)} />
+            </Alert>
+          )}
 
-                {/* Player picker */}
-                {!isFromPerson360 && (
-                  <SelectOrCreatePlayer
-                    playerId={playerKey}
-                    setPlayerId={setPlayerKey}
-                    setSelectedPlayer={setSelectedPlayer}
-                    // isDisabled={noPlayers}
-                    label="Atleta"
-                    errors={errors}
-                  />
-                )}
+          {/* Player picker */}
+          {!isFromPerson360 && (
+            <SelectOrCreatePlayer
+              playerId={playerKey}
+              setPlayerId={setPlayerKey}
+              setSelectedPlayer={setSelectedPlayer}
+              // isDisabled={noPlayers}
+              label="Atleta"
+              errors={errors}
+            />
+          )}
 
-                {/* Payment plan picker */}
-                <Select
-                  className="w-full"
-                  variant="secondary"
-                  value={planKey}
-                  onChange={(key: any) =>
-                    setPlanKey(key ? String(key) : null)
-                  }
-                  isDisabled={noPlans}
-                  isInvalid={!!errors.planKey || undefined}
-                >
+          {/* Payment plan picker */}
+          <Select
+            className="w-full"
+            variant="secondary"
+            value={planKey}
+            onChange={(key: any) => setPlanKey(key ? String(key) : null)}
+            isDisabled={noPlans}
+            isInvalid={!!errors.planKey || undefined}
+          >
+            <Label className="text-sm font-semibold flex items-center">
+              Plan de pago
+              <InfoTooltip text="Los planes definen si se cobra de forma adelantada, recurrente, y sus respectivos descuentos aplicables." />
+            </Label>
+            <Select.Trigger>
+              <Select.Value />
+              <Select.Indicator />
+            </Select.Trigger>
+            <Select.Popover>
+              <ListBox>
+                {paymentPlans.map((plan) => (
+                  <ListBox.Item
+                    key={plan.id}
+                    id={plan.id}
+                    textValue={plan.name}
+                  >
+                    <div className="flex flex-col">
+                      <span className="font-medium flex items-center gap-2">
+                        {plan.name}
+                        {plan.isDefault && (
+                          <span className="bg-primary/10 text-primary text-[9px] px-1.5 py-0.5 rounded-full font-bold uppercase tracking-wide">
+                            Default
+                          </span>
+                        )}
+                      </span>
+                      <span className="text-[11px] text-muted">
+                        {plan.isSinglePayment
+                          ? teamSeason.billingConfig?.billingType ===
+                            "MONTHLY_ONLY"
+                            ? `Pago Único (Adelantado) • -${plan.recurringDiscountPercent}% (Mensualidades)`
+                            : `Pago Único • -${plan.seasonFeeDiscountPercent}% (Temporada)`
+                          : `Insc. -${plan.registrationDiscountPercent}% • Mens. -${plan.recurringDiscountPercent}%`}
+                      </span>
+                    </div>
+                  </ListBox.Item>
+                ))}
+              </ListBox>
+            </Select.Popover>
+          </Select>
+
+          {/* Categoría */}
+          <Select
+            className="w-full"
+            variant="secondary"
+            aria-label="Seleccionar Categoría"
+            value={categoryKey}
+            onChange={(key: any) => setCategoryKey(key ? String(key) : null)}
+            isDisabled={loadingCategories || categories.length === 0}
+            isInvalid={!!errors.categoryKey || undefined}
+          >
+            <Label className="text-sm font-semibold flex items-center">
+              Categoría
+              {selectedCategoryData ? (
+                <InfoTooltip
+                  text={`Categoría: ${selectedCategoryData.category.name}. Edades: ${selectedCategoryData.category.minAge} a ${selectedCategoryData.category.maxAge || "Sin l�mite"} a�os. Temporada: ${new Date(teamSeason.season.startDate).toLocaleDateString()} - ${new Date(teamSeason.season.endDate).toLocaleDateString()}.`}
+                />
+              ) : (
+                <InfoTooltip text="La categor�a en la que el jugador ser� inscrito." />
+              )}
+            </Label>
+            <Select.Trigger>
+              <Select.Value />
+              <Select.Indicator />
+            </Select.Trigger>
+            <Select.Popover>
+              <ListBox>
+                {categories.map((tsc) => (
+                  <ListBox.Item
+                    key={tsc.id}
+                    id={tsc.id}
+                    textValue={tsc.category.name}
+                  >
+                    {tsc.category.name} (
+                    {tsc.gender === "MALE"
+                      ? "Masculino"
+                      : tsc.gender === "FEMALE"
+                        ? "Femenino"
+                        : tsc.gender === "MIXED"
+                          ? "Mixto"
+                          : tsc.gender}
+                    )
+                  </ListBox.Item>
+                ))}
+              </ListBox>
+            </Select.Popover>
+          </Select>
+
+          {/* Start date */}
+          <TextField
+            className="w-full"
+            name="startedAt"
+            isInvalid={!!errors.startedAt || undefined}
+          >
+            <Label className="text-sm font-semibold flex items-center">
+              Fecha de inicio
+              <InfoTooltip text="Fecha en la que el sistema se basa para cobrar. Si la fecha cae a la mitad de un ciclo mensual (y el prorrateo está activo), el cobro será parcial." />
+            </Label>
+            <Input
+              variant="secondary"
+              type="date"
+              value={startedAt}
+              onChange={(e) => setStartedAt(e.target.value)}
+            />
+            {errors.startedAt && <FieldError>{errors.startedAt}</FieldError>}
+          </TextField>
+
+          {/* Switch for migration */}
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-2 px-1">
+              <Switch isSelected={hasDiscount} onChange={setHasDiscount}>
+                <Switch.Content>
+                  <Switch.Control>
+                    <Switch.Thumb />
+                  </Switch.Control>
                   <Label className="text-sm font-semibold flex items-center">
-                    Plan de pago
-                    <InfoTooltip text="Los planes definen si se cobra de forma adelantada, recurrente, y sus respectivos descuentos aplicables." />
+                    Aplicar Descuento Excepcional
+                    <InfoTooltip text="Estos descuentos se sumarán a los que ya otorga el plan elegido (el total acumulado no puede exceder el 100%)." />
                   </Label>
-                  <Select.Trigger>
-                    <Select.Value />
-                    <Select.Indicator />
-                  </Select.Trigger>
-                  <Select.Popover>
-                    <ListBox>
-                      {paymentPlans.map((plan) => (
-                        <ListBox.Item
-                          key={plan.id}
-                          id={plan.id}
-                          textValue={plan.name}
-                        >
-                          <div className="flex flex-col">
-                            <span className="font-medium flex items-center gap-2">
-                              {plan.name}
-                              {plan.isDefault && (
-                                <span className="bg-primary/10 text-primary text-[9px] px-1.5 py-0.5 rounded-full font-bold uppercase tracking-wide">
-                                  Default
-                                </span>
-                              )}
-                            </span>
-                            <span className="text-[11px] text-muted">
-                              {plan.isSinglePayment
-                                ? teamSeason.billingConfig?.billingType ===
-                                  "MONTHLY_ONLY"
-                                  ? `Pago Único (Adelantado) • -${plan.recurringDiscountPercent}% (Mensualidades)`
-                                  : `Pago Único • -${plan.seasonFeeDiscountPercent}% (Temporada)`
-                                : `Insc. -${plan.registrationDiscountPercent}% • Mens. -${plan.recurringDiscountPercent}%`}
-                            </span>
-                          </div>
-                        </ListBox.Item>
-                      ))}
-                    </ListBox>
-                  </Select.Popover>
-                </Select>
+                </Switch.Content>
+              </Switch>
+            </div>
 
-                {/* Categoría */}
-                <Select
-                  className="w-full"
-                  variant="secondary"
-                  aria-label="Seleccionar Categoría"
-                  value={categoryKey}
-                  onChange={(key: any) =>
-                    setCategoryKey(key ? String(key) : null)
-                  }
-                  isDisabled={loadingCategories || categories.length === 0}
-                  isInvalid={!!errors.categoryKey || undefined}
-                >
-                  <Label className="text-sm font-semibold flex items-center">
-                    Categor�a
-                    {selectedCategoryData ? (
-                      <InfoTooltip
-                        text={`Categor�a: ${selectedCategoryData.category.name}. Edades: ${selectedCategoryData.category.minAge} a ${selectedCategoryData.category.maxAge || "Sin l�mite"} a�os. Temporada: ${new Date(teamSeason.season.startDate).toLocaleDateString()} - ${new Date(teamSeason.season.endDate).toLocaleDateString()}.`}
+            {hasDiscount && (
+              <div className="flex flex-col gap-4 pl-4 border-l-2 border-border mb-2">
+                <div className="flex flex-wrap gap-4">
+                  {selectedPlan?.isSinglePayment ? (
+                    <TextField
+                      className="w-full"
+                      isInvalid={
+                        !!errors.seasonDiscountPercent ||
+                        !!errors.discountPercent ||
+                        undefined
+                      }
+                    >
+                      <Label className="text-sm font-semibold">
+                        Desc. Temporada (%)
+                      </Label>
+                      <Input
+                        variant="secondary"
+                        type="number"
+                        placeholder="Ej. 15"
+                        value={seasonDiscountPercent}
+                        onChange={(e) =>
+                          setSeasonDiscountPercent(e.target.value)
+                        }
                       />
-                    ) : (
-                      <InfoTooltip text="La categor�a en la que el jugador ser� inscrito." />
-                    )}
+                      <p className="text-xs text-muted mt-1 leading-tight">
+                        Se aplica sobre el monto total de la temporada.
+                      </p>
+                      {(errors.seasonDiscountPercent ||
+                        errors.discountPercent) && (
+                        <FieldError>
+                          {errors.seasonDiscountPercent ||
+                            errors.discountPercent}
+                        </FieldError>
+                      )}
+                    </TextField>
+                  ) : (
+                    <>
+                      <TextField
+                        className="w-full"
+                        isInvalid={
+                          !!errors.regDiscountPercent ||
+                          !!errors.discountPercent ||
+                          undefined
+                        }
+                      >
+                        <Label className="text-sm font-semibold">
+                          Desc. Matrícula (%)
+                        </Label>
+                        <Input
+                          variant="secondary"
+                          type="number"
+                          placeholder="Ej. 50"
+                          value={regDiscountPercent}
+                          onChange={(e) =>
+                            setRegDiscountPercent(e.target.value)
+                          }
+                        />
+                        <p className="text-xs text-muted mt-1 leading-tight">
+                          Dejar vacío si no aplica.
+                        </p>
+                        {(errors.regDiscountPercent ||
+                          errors.discountPercent) && (
+                          <FieldError>
+                            {errors.regDiscountPercent ||
+                              errors.discountPercent}
+                          </FieldError>
+                        )}
+                      </TextField>
+                      <TextField
+                        className="w-full"
+                        isInvalid={
+                          !!errors.recDiscountPercent ||
+                          !!errors.discountPercent ||
+                          undefined
+                        }
+                      >
+                        <Label className="text-sm font-semibold">
+                          Desc. Mensualidad (%)
+                        </Label>
+                        <Input
+                          variant="secondary"
+                          type="number"
+                          placeholder="Ej. 10"
+                          value={recDiscountPercent}
+                          onChange={(e) =>
+                            setRecDiscountPercent(e.target.value)
+                          }
+                        />
+                        <p className="text-xs text-muted mt-1 leading-tight">
+                          Dejar vacío si no aplica.
+                        </p>
+                        {(errors.recDiscountPercent ||
+                          (errors.discountPercent &&
+                            !errors.regDiscountPercent)) && (
+                          <FieldError>
+                            {errors.recDiscountPercent ||
+                              errors.discountPercent}
+                          </FieldError>
+                        )}
+                      </TextField>
+                    </>
+                  )}
+                </div>
+
+                <Select
+                  className="w-full"
+                  variant="secondary"
+                  value={discountType}
+                  onChange={(key: any) =>
+                    setDiscountType(key ? String(key) : "SPECIAL_DISCOUNT")
+                  }
+                  isInvalid={!!errors.discountType || undefined}
+                >
+                  <Label className="text-sm font-semibold">
+                    Tipo de Descuento
                   </Label>
                   <Select.Trigger>
                     <Select.Value />
@@ -533,319 +696,134 @@ export const EnrollMembershipForm = ({
                   </Select.Trigger>
                   <Select.Popover>
                     <ListBox>
-                      {categories.map((tsc) => (
-                        <ListBox.Item
-                          key={tsc.id}
-                          id={tsc.id}
-                          textValue={tsc.category.name}
-                        >
-                          {tsc.category.name} (
-                          {tsc.gender === "MALE"
-                            ? "Masculino"
-                            : tsc.gender === "FEMALE"
-                              ? "Femenino"
-                              : tsc.gender === "MIXED"
-                                ? "Mixto"
-                                : tsc.gender}
-                          )
-                        </ListBox.Item>
-                      ))}
+                      <ListBox.Item id="SCHOLARSHIP" textValue="Beca">
+                        Beca
+                      </ListBox.Item>
+                      <ListBox.Item
+                        id="SPECIAL_DISCOUNT"
+                        textValue="Descuento especial"
+                      >
+                        Descuento especial
+                      </ListBox.Item>
+                      <ListBox.Item
+                        id="FINANCIAL_AID"
+                        textValue="Ayuda económica"
+                      >
+                        Ayuda económica
+                      </ListBox.Item>
+                      <ListBox.Item id="AGREEMENT" textValue="Convenio">
+                        Convenio
+                      </ListBox.Item>
+                      <ListBox.Item id="EXEMPTION" textValue="Exoneración">
+                        Exoneración
+                      </ListBox.Item>
+                      <ListBox.Item id="OTHER" textValue="Otro">
+                        Otro
+                      </ListBox.Item>
                     </ListBox>
                   </Select.Popover>
                 </Select>
 
-                {/* Start date */}
                 <TextField
                   className="w-full"
-                  name="startedAt"
-                  isInvalid={!!errors.startedAt || undefined}
+                  isInvalid={!!errors.discountReason || undefined}
                 >
-                  <Label className="text-sm font-semibold flex items-center">
-                    Fecha de inicio
-                    <InfoTooltip text="Fecha en la que el sistema se basa para cobrar. Si la fecha cae a la mitad de un ciclo mensual (y el prorrateo está activo), el cobro será parcial." />
+                  <Label className="text-sm font-semibold">
+                    Razón / Justificación
+                  </Label>
+                  <Input
+                    variant="secondary"
+                    placeholder="Ej. Convenio con la municipalidad"
+                    value={discountReason}
+                    onChange={(e) => setDiscountReason(e.target.value)}
+                  />
+                  <p className="text-xs text-muted mt-1 leading-tight">
+                    Opcional, salvo que el tipo sea "Otro".
+                  </p>
+                  {errors.discountReason && (
+                    <FieldError>{errors.discountReason}</FieldError>
+                  )}
+                </TextField>
+
+                <TextField
+                  className="w-full"
+                  isInvalid={!!errors.discountEndDate || undefined}
+                >
+                  <Label className="text-sm font-semibold">
+                    Fecha Fin del Descuento (Opcional)
                   </Label>
                   <Input
                     variant="secondary"
                     type="date"
-                    value={startedAt}
-                    onChange={(e) => setStartedAt(e.target.value)}
+                    value={discountEndDate}
+                    onChange={(e) => setDiscountEndDate(e.target.value)}
                   />
-                  {errors.startedAt && (
-                    <FieldError>{errors.startedAt}</FieldError>
+                  <p className="text-xs text-muted mt-1 leading-tight">
+                    Si se deja en blanco, el descuento será permanente hasta que
+                    termine la temporada.
+                  </p>
+                  {errors.discountEndDate && (
+                    <FieldError>{errors.discountEndDate}</FieldError>
                   )}
                 </TextField>
+              </div>
+            )}
+          </div>
 
-                {/* Switch for migration */}
-                <div className="flex flex-col gap-4">
-                  <div className="flex items-center gap-2 px-1">
-                    <Switch isSelected={hasDiscount} onChange={setHasDiscount}>
-                      <Switch.Content>
-                        <Switch.Control>
-                          <Switch.Thumb />
-                        </Switch.Control>
-                        <Label className="text-sm font-semibold flex items-center">
-                          Aplicar Descuento Excepcional
-                          <InfoTooltip text="Estos descuentos se sumarán a los que ya otorga el plan elegido (el total acumulado no puede exceder el 100%)." />
-                        </Label>
-                      </Switch.Content>
-                    </Switch>
-                  </div>
-
-                  {hasDiscount && (
-                    <div className="flex flex-col gap-4 pl-4 border-l-2 border-border mb-2">
-                      <div className="flex flex-wrap gap-4">
-                        {selectedPlan?.isSinglePayment ? (
-                          <TextField
-                            className="w-full"
-                            isInvalid={
-                              !!errors.seasonDiscountPercent ||
-                              !!errors.discountPercent ||
-                              undefined
-                            }
-                          >
-                            <Label className="text-sm font-semibold">
-                              Desc. Temporada (%)
-                            </Label>
-                            <Input
-                              variant="secondary"
-                              type="number"
-                              placeholder="Ej. 15"
-                              value={seasonDiscountPercent}
-                              onChange={(e) =>
-                                setSeasonDiscountPercent(e.target.value)
-                              }
-                            />
-                            <p className="text-xs text-muted mt-1 leading-tight">
-                              Se aplica sobre el monto total de la temporada.
-                            </p>
-                            {(errors.seasonDiscountPercent ||
-                              errors.discountPercent) && (
-                              <FieldError>
-                                {errors.seasonDiscountPercent ||
-                                  errors.discountPercent}
-                              </FieldError>
-                            )}
-                          </TextField>
-                        ) : (
-                          <>
-                            <TextField
-                              className="w-full"
-                              isInvalid={
-                                !!errors.regDiscountPercent ||
-                                !!errors.discountPercent ||
-                                undefined
-                              }
-                            >
-                              <Label className="text-sm font-semibold">
-                                Desc. Matrícula (%)
-                              </Label>
-                              <Input
-                                variant="secondary"
-                                type="number"
-                                placeholder="Ej. 50"
-                                value={regDiscountPercent}
-                                onChange={(e) =>
-                                  setRegDiscountPercent(e.target.value)
-                                }
-                              />
-                              <p className="text-xs text-muted mt-1 leading-tight">
-                                Dejar vacío si no aplica.
-                              </p>
-                              {(errors.regDiscountPercent ||
-                                errors.discountPercent) && (
-                                <FieldError>
-                                  {errors.regDiscountPercent ||
-                                    errors.discountPercent}
-                                </FieldError>
-                              )}
-                            </TextField>
-                            <TextField
-                              className="w-full"
-                              isInvalid={
-                                !!errors.recDiscountPercent ||
-                                !!errors.discountPercent ||
-                                undefined
-                              }
-                            >
-                              <Label className="text-sm font-semibold">
-                                Desc. Mensualidad (%)
-                              </Label>
-                              <Input
-                                variant="secondary"
-                                type="number"
-                                placeholder="Ej. 10"
-                                value={recDiscountPercent}
-                                onChange={(e) =>
-                                  setRecDiscountPercent(e.target.value)
-                                }
-                              />
-                              <p className="text-xs text-muted mt-1 leading-tight">
-                                Dejar vacío si no aplica.
-                              </p>
-                              {(errors.recDiscountPercent ||
-                                (errors.discountPercent &&
-                                  !errors.regDiscountPercent)) && (
-                                <FieldError>
-                                  {errors.recDiscountPercent ||
-                                    errors.discountPercent}
-                                </FieldError>
-                              )}
-                            </TextField>
-                          </>
-                        )}
-                      </div>
-
-                      <Select
-                        className="w-full"
-                        variant="secondary"
-                        value={discountType}
-                        onChange={(key: any) =>
-                          setDiscountType(
-                            key ? String(key) : "SPECIAL_DISCOUNT",
-                          )
-                        }
-                        isInvalid={!!errors.discountType || undefined}
-                      >
-                        <Label className="text-sm font-semibold">
-                          Tipo de Descuento
-                        </Label>
-                        <Select.Trigger>
-                          <Select.Value />
-                          <Select.Indicator />
-                        </Select.Trigger>
-                        <Select.Popover>
-                          <ListBox>
-                            <ListBox.Item id="SCHOLARSHIP" textValue="Beca">
-                              Beca
-                            </ListBox.Item>
-                            <ListBox.Item
-                              id="SPECIAL_DISCOUNT"
-                              textValue="Descuento especial"
-                            >
-                              Descuento especial
-                            </ListBox.Item>
-                            <ListBox.Item
-                              id="FINANCIAL_AID"
-                              textValue="Ayuda económica"
-                            >
-                              Ayuda económica
-                            </ListBox.Item>
-                            <ListBox.Item id="AGREEMENT" textValue="Convenio">
-                              Convenio
-                            </ListBox.Item>
-                            <ListBox.Item
-                              id="EXEMPTION"
-                              textValue="Exoneración"
-                            >
-                              Exoneración
-                            </ListBox.Item>
-                            <ListBox.Item id="OTHER" textValue="Otro">
-                              Otro
-                            </ListBox.Item>
-                          </ListBox>
-                        </Select.Popover>
-                      </Select>
-
-                      <TextField
-                        className="w-full"
-                        isInvalid={!!errors.discountReason || undefined}
-                      >
-                        <Label className="text-sm font-semibold">
-                          Razón / Justificación
-                        </Label>
-                        <Input
-                          variant="secondary"
-                          placeholder="Ej. Convenio con la municipalidad"
-                          value={discountReason}
-                          onChange={(e) => setDiscountReason(e.target.value)}
-                        />
-                        <p className="text-xs text-muted mt-1 leading-tight">
-                          Opcional, salvo que el tipo sea "Otro".
-                        </p>
-                        {errors.discountReason && (
-                          <FieldError>{errors.discountReason}</FieldError>
-                        )}
-                      </TextField>
-
-                      <TextField
-                        className="w-full"
-                        isInvalid={!!errors.discountEndDate || undefined}
-                      >
-                        <Label className="text-sm font-semibold">
-                          Fecha Fin del Descuento (Opcional)
-                        </Label>
-                        <Input
-                          variant="secondary"
-                          type="date"
-                          value={discountEndDate}
-                          onChange={(e) => setDiscountEndDate(e.target.value)}
-                        />
-                        <p className="text-xs text-muted mt-1 leading-tight">
-                          Si se deja en blanco, el descuento será permanente
-                          hasta que termine la temporada.
-                        </p>
-                        {errors.discountEndDate && (
-                          <FieldError>{errors.discountEndDate}</FieldError>
-                        )}
-                      </TextField>
-                    </div>
-                  )}
+          {/* Switch for migration */}
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-2 px-1">
+              <Switch isSelected={isMigrated} onChange={setIsMigrated}>
+                <Switch.Content>
+                  <Switch.Control>
+                    <Switch.Thumb />
+                  </Switch.Control>
+                  <Label className="text-sm flex items-center">
+                    Es Migración (omitir cargos anteriores)
+                    <InfoTooltip text="Activa esta opción si el jugador ya inició su temporada en otro sistema, y sólo deseas facturarle desde el mes actual en adelante. Ignorarácuotas de meses previos." />
+                  </Label>
+                </Switch.Content>
+              </Switch>
+            </div>
+            {isMigrated && (
+              <div className="flex flex-col gap-4 pl-4 border-l-2 border-border mb-2">
+                <div className="flex items-center gap-2 px-1">
+                  <Switch
+                    isSelected={chargeRegistrationOnMigration}
+                    onChange={setChargeRegistrationOnMigration}
+                  >
+                    <Switch.Content>
+                      <Switch.Control>
+                        <Switch.Thumb />
+                      </Switch.Control>
+                      <Label className="text-sm flex items-center">
+                        Cobrar Matrícula (Opcional)
+                        <InfoTooltip text="Fuerza la creación de la factura por inscripción/matrícula a pesar de ser migrado, en caso de que aún deba la inscripción." />
+                      </Label>
+                    </Switch.Content>
+                  </Switch>
                 </div>
-
-                {/* Switch for migration */}
-                <div className="flex flex-col gap-4">
-                  <div className="flex items-center gap-2 px-1">
-                    <Switch isSelected={isMigrated} onChange={setIsMigrated}>
-                      <Switch.Content>
-                        <Switch.Control>
-                          <Switch.Thumb />
-                        </Switch.Control>
-                        <Label className="text-sm flex items-center">
-                          Es Migración (omitir cargos anteriores)
-                          <InfoTooltip text="Activa esta opción si el jugador ya inició su temporada en otro sistema, y sólo deseas facturarle desde el mes actual en adelante. Ignorarácuotas de meses previos." />
-                        </Label>
-                      </Switch.Content>
-                    </Switch>
-                  </div>
-                  {isMigrated && (
-                    <div className="flex flex-col gap-4 pl-4 border-l-2 border-border mb-2">
-                      <div className="flex items-center gap-2 px-1">
-                        <Switch
-                          isSelected={chargeRegistrationOnMigration}
-                          onChange={setChargeRegistrationOnMigration}
-                        >
-                          <Switch.Content>
-                            <Switch.Control>
-                              <Switch.Thumb />
-                            </Switch.Control>
-                            <Label className="text-sm flex items-center">
-                              Cobrar Matrícula (Opcional)
-                              <InfoTooltip text="Fuerza la creación de la factura por inscripción/matrícula a pesar de ser migrado, en caso de que aún deba la inscripción." />
-                            </Label>
-                          </Switch.Content>
-                        </Switch>
-                      </div>
-                      <div className="flex items-center gap-2 px-1">
-                        <Switch
-                          isSelected={chargeCurrentMonthOnMigration}
-                          onChange={setChargeCurrentMonthOnMigration}
-                        >
-                          <Switch.Content>
-                            <Switch.Control>
-                              <Switch.Thumb />
-                            </Switch.Control>
-                            <Label className="text-sm flex items-center">
-                              Cobrar Mes Actual (Opcional)
-                              <InfoTooltip text="Por defecto la migración asume que este mes ya está pagado. Si activas esto, se generarála cuota del mes correspondiente a la fecha de inicio seleccionada." />
-                            </Label>
-                          </Switch.Content>
-                        </Switch>
-                      </div>
-                    </div>
-                  )}
+                <div className="flex items-center gap-2 px-1">
+                  <Switch
+                    isSelected={chargeCurrentMonthOnMigration}
+                    onChange={setChargeCurrentMonthOnMigration}
+                  >
+                    <Switch.Content>
+                      <Switch.Control>
+                        <Switch.Thumb />
+                      </Switch.Control>
+                      <Label className="text-sm flex items-center">
+                        Cobrar Mes Actual (Opcional)
+                        <InfoTooltip text="Por defecto la migración asume que este mes ya está pagado. Si activas esto, se generarála cuota del mes correspondiente a la fecha de inicio seleccionada." />
+                      </Label>
+                    </Switch.Content>
+                  </Switch>
                 </div>
+              </div>
+            )}
+          </div>
 
-                {/* {JSON.stringify({
+          {/* {JSON.stringify({
                   teamSeasonId: teamSeason.id,
                   playerKey,
                   planKey,
@@ -853,52 +831,48 @@ export const EnrollMembershipForm = ({
                   // breakdown,
                 })} */}
 
-                {/* {JSON.stringify({ breakdown })} */}
+          {/* {JSON.stringify({ breakdown })} */}
 
-                {/* Error de API */}
-                {apiError && (
-                  <Alert status="danger">
-                    <Alert.Indicator />
-                    <Alert.Content>
-                      <Alert.Title>{apiError.title}</Alert.Title>
-                      <Alert.Description>
-                        {apiError.description}
-                      </Alert.Description>
-                    </Alert.Content>
-                    <CloseButton onPress={() => setApiError(null)} />
-                  </Alert>
-                )}
+          {/* Error de API */}
+          {apiError && (
+            <Alert status="danger">
+              <Alert.Indicator />
+              <Alert.Content>
+                <Alert.Title>{apiError.title}</Alert.Title>
+                <Alert.Description>{apiError.description}</Alert.Description>
+              </Alert.Content>
+              <CloseButton onPress={() => setApiError(null)} />
+            </Alert>
+          )}
 
-                {/* Errores globales */}
-                {Object.keys(errors).length > 0 && (
-                  <Alert status="danger">
-                    <Alert.Indicator />
-                    <Alert.Content>
-                      <Alert.Title>
-                        Formulario incompleto o inválido
-                      </Alert.Title>
-                      <Alert.Description>
-                        <ul className="list-disc pl-5 mt-1 text-sm space-y-1">
-                          {Object.entries(errors).map(([field, msg]) => (
-                            <li key={field}>{msg}</li>
-                          ))}
-                        </ul>
-                      </Alert.Description>
-                    </Alert.Content>
-                  </Alert>
-                )}
+          {/* Errores globales */}
+          {Object.keys(errors).length > 0 && (
+            <Alert status="danger">
+              <Alert.Indicator />
+              <Alert.Content>
+                <Alert.Title>Formulario incompleto o inválido</Alert.Title>
+                <Alert.Description>
+                  <ul className="list-disc pl-5 mt-1 text-sm space-y-1">
+                    {Object.entries(errors).map(([field, msg]) => (
+                      <li key={field}>{msg}</li>
+                    ))}
+                  </ul>
+                </Alert.Description>
+              </Alert.Content>
+            </Alert>
+          )}
 
-                {/* Live invoice preview */}
-                {breakdown?.data && (
-                  <InvoicePreview
-                    breakdown={breakdown}
-                    planName={selectedPlan?.name}
-                    playerName={
-                      selectedPlayer ? selectedPlayer.person.fullName : null
-                    }
-                  />
-                )}
-              </Surface>
+          {/* Live invoice preview */}
+          {breakdown?.data && (
+            <InvoicePreview
+              breakdown={breakdown}
+              planName={selectedPlan?.name}
+              playerName={
+                selectedPlayer ? selectedPlayer.person.fullName : null
+              }
+            />
+          )}
+        </Surface>
       </Drawer.Body>
       <Drawer.Footer className="border-t border-border">
         <Button

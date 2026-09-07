@@ -67,9 +67,9 @@ export const SelectOrCreatePerson = ({
         };
       }
       let items = res.data?.data || [];
-      if (defaultPerson && page === "1" && !filterText) {
-        const exists = items.find(p => p.id === defaultPerson.id);
-        if (!exists) {
+      if (defaultPerson) {
+        items = items.filter(p => p.id !== defaultPerson.id);
+        if (page === "1" && !filterText) {
           items = [defaultPerson, ...items];
         }
       }
@@ -200,7 +200,7 @@ export const SelectOrCreatePerson = ({
         onSubmited={(person) => {
           if (person) {
             // Agregar la playera a la lista localmente para que se pueda seleccionar
-            list.append({
+            const newPersonOption = {
               id: person.id,
               name: person.name,
               lastName: person.lastName,
@@ -210,10 +210,12 @@ export const SelectOrCreatePerson = ({
               gender: person.gender,
               birthDate: person.birthDate,
               imageUrl: person.imageUrl,
-              fullName: `${person.name} ${person.lastName}`,
-            });
+              fullName: `${person.lastName} ${person.secondLastName || ""} ${person.name}`.replace(/\s+/g, " ").trim(),
+            };
+            list.append(newPersonOption);
             list.setSelectedKeys(new Set([person.id]));
             setPersonId(person.id);
+            setSelectedPerson?.(newPersonOption);
           }
         }}
       />

@@ -13,10 +13,13 @@ export interface IMembershipHistoryItem {
   categoryName?: string;
   disciplineName?: string;
   seasonName?: string;
+  totalPendingAmount?: number;
+  totalPaidAmount?: number;
 
   // Detalles para Course
   courseName?: string;
   institutionName?: string;
   shiftName?: string;
+  cycleEnrollments?: any[];
 }
 

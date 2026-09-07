@@ -59,9 +59,13 @@ export const TransactionHistoryDrawer = ({
 
   return (
     <Drawer.Backdrop isOpen={isOpen} onOpenChange={onOpenChange}>
-      <Drawer.Content placement="right">
-        <Drawer.Dialog aria-label="Historial de Pagos" className="w-full sm:max-w-4xl overflow-y-hidden flex flex-col h-full">
+      <Drawer.Content placement="bottom">
+        <Drawer.Dialog
+          aria-label="Historial de Pagos"
+          className="w-full sm:max-w-6xl mx-auto overflow-y-hidden flex flex-col h-[85vh]"
+        >
           <Drawer.CloseTrigger />
+          <Drawer.Handle />
           <Drawer.Header className="border-b border-border shrink-0">
             <Drawer.Heading className="text-xl font-bold flex items-center gap-2">
               <i className="ri-history-line text-default-500"></i> Historial de

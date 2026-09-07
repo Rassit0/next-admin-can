@@ -107,7 +107,7 @@ export const PendingChargesCard = ({
 
   return (
     <Card className="h-full shadow-sm flex flex-col">
-      <Card.Header className="flex justify-between items-center bg-danger/5 border-b border-danger/10">
+      <Card.Header className="flex justify-between items-center bg-danger/5 border-b border-danger/10 rounded-t-2xl">
         <div className="flex items-center gap-3">
           <h3 className="font-semibold text-lg flex items-center gap-2 text-danger">
             <i className="ri-money-dollar-circle-line"></i> Cargos Pendientes
@@ -153,77 +153,77 @@ export const PendingChargesCard = ({
                     <Checkbox
                       variant="secondary"
                       value={charge.id}
-                  isSelected={isSelected}
-                  onChange={() => {
-                    if (onChargeToggle && isSelectable) {
-                      onChargeToggle(charge.id);
-                    }
-                  }}
-                  isDisabled={!isSelectable}
-                  className={`w-full max-w-full m-0 p-4 transition-all border-l-4 ${isSelected ? "bg-primary/10 border-l-primary" : "border-l-transparent hover:bg-default-50"}`}
-                >
-                  <Checkbox.Content className="w-full flex items-start gap-3">
-                    {isSelectable && (
-                      <Checkbox.Control className="mt-1 shrink-0">
-                        <Checkbox.Indicator />
-                      </Checkbox.Control>
-                    )}
+                      isSelected={isSelected}
+                      onChange={() => {
+                        if (onChargeToggle && isSelectable) {
+                          onChargeToggle(charge.id);
+                        }
+                      }}
+                      isDisabled={!isSelectable}
+                      className={`w-full max-w-full m-0 p-4 transition-all border-l-4 ${isSelected ? "bg-primary/10 border-l-primary" : "border-l-transparent hover:bg-default-50"}`}
+                    >
+                      <Checkbox.Content className="w-full flex items-start gap-3">
+                        {isSelectable && (
+                          <Checkbox.Control className="mt-1 shrink-0">
+                            <Checkbox.Indicator />
+                          </Checkbox.Control>
+                        )}
 
-                    <div className="flex-1 flex flex-col gap-2 w-full">
-                      <div className="flex justify-between items-start gap-4">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-1">
-                            <Chip
-                              size="sm"
-                              color={getChargeTypeColor(charge.type) as any}
-                              variant="soft"
-                            >
-                              {getChargeTypeLabel(charge.type)}
-                            </Chip>
-                            <span className="text-xs font-semibold text-default-500 line-clamp-1">
-                              {charge.originName}
+                        <div className="flex-1 flex flex-col gap-2 w-full">
+                          <div className="flex justify-between items-start gap-4">
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2 mb-1">
+                                <Chip
+                                  size="sm"
+                                  color={getChargeTypeColor(charge.type) as any}
+                                  variant="soft"
+                                >
+                                  {getChargeTypeLabel(charge.type)}
+                                </Chip>
+                                <span className="text-xs font-semibold text-default-500 line-clamp-1">
+                                  {charge.originName}
+                                </span>
+                              </div>
+                              <h4 className="font-medium text-sm leading-tight text-default-800">
+                                {charge.description || "Cargo sin descripción"}
+                              </h4>
+                            </div>
+                            <div className="flex flex-col items-end gap-1 shrink-0">
+                              <div className="flex items-center gap-2">
+                                <div className="flex flex-col items-end">
+                                  <span className="font-bold text-sm text-danger">
+                                    {formatCurrency(charge.pendingAmount)}
+                                  </span>
+                                  <span className="text-xs text-default-400 line-through">
+                                    {formatCurrency(charge.amount)}
+                                  </span>
+                                </div>
+                                <div
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                  }}
+                                >
+                                  <ChargeActions
+                                    charge={charge as unknown as ICharge}
+                                    onSuccess={onSuccess}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex justify-between items-end mt-2">
+                            <span className="text-xs text-default-500 flex items-center gap-1">
+                              <i className="ri-calendar-event-line"></i> Vence:{" "}
+                              {new Date(charge.dueDate).toLocaleDateString()}
                             </span>
-                          </div>
-                          <h4 className="font-medium text-sm leading-tight text-default-800">
-                            {charge.description || "Cargo sin descripción"}
-                          </h4>
-                        </div>
-                        <div className="flex flex-col items-end gap-1 shrink-0">
-                          <div className="flex items-center gap-2">
-                            <div className="flex flex-col items-end">
-                              <span className="font-bold text-sm text-danger">
-                                {formatCurrency(charge.pendingAmount)}
-                              </span>
-                              <span className="text-xs text-default-400 line-through">
-                                {formatCurrency(charge.amount)}
-                              </span>
-                            </div>
-                            <div
-                              onClick={(e) => {
-                                e.stopPropagation();
-                              }}
-                            >
-                              <ChargeActions
-                                charge={charge as unknown as ICharge}
-                                onSuccess={onSuccess}
-                              />
-                            </div>
+                            {renderStatusChip(charge.status)}
                           </div>
                         </div>
-                      </div>
-                      <div className="flex justify-between items-end mt-2">
-                        <span className="text-xs text-default-500 flex items-center gap-1">
-                          <i className="ri-calendar-event-line"></i> Vence:{" "}
-                          {new Date(charge.dueDate).toLocaleDateString()}
-                        </span>
-                        {renderStatusChip(charge.status)}
-                      </div>
-                    </div>
-                  </Checkbox.Content>
-                </Checkbox>
-              </motion.div>
-            );
-          })}
+                      </Checkbox.Content>
+                    </Checkbox>
+                  </motion.div>
+                );
+              })}
             </AnimatePresence>
           </div>
         )}

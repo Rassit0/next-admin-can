@@ -5,7 +5,7 @@ import { IPerson } from "@/modules/persons";
 import { handleServerAction } from "@/utils";
 
 interface SearchParams {
-  id: number;
+  id: string;
 }
 
 export const findPersonById = async ({

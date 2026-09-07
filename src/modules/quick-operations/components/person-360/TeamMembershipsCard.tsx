@@ -10,6 +10,7 @@ import {
 import { MembershipActions } from "@/modules/player-memberships/components/actions/MembershipActions";
 import { IPlayerMembership } from "@/modules/player-memberships";
 import { revalidatePersonSummaryCache } from "../../actions/revalidate-summary";
+import { formatCurrency } from "@/utils";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { listItemTransition } from "@/ui/animations/transitions";
 
@@ -58,9 +59,22 @@ export const TeamMembershipsCard = ({ memberships, personId, onSuccess }: Props)
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <PlayerStatusChip
-                      status={membership.status as PlayerMembershipStatus}
-                    />
+                    <div className="flex flex-col items-end gap-1">
+                      <PlayerStatusChip
+                        status={membership.status as PlayerMembershipStatus}
+                      />
+                      {membership.status !== "CANCELLED" && membership.status !== "WITHDRAWN" && membership.totalPendingAmount !== undefined && (
+                        membership.totalPendingAmount > 0 ? (
+                          <div className="text-[10px] font-medium bg-warning-50 text-warning-600 px-1.5 py-0.5 rounded border border-warning-200 h-fit">
+                            Deuda: {formatCurrency(membership.totalPendingAmount)}
+                          </div>
+                        ) : (
+                          <div className="text-[10px] font-medium bg-success-50 text-success-600 px-1.5 py-0.5 rounded border border-success-200 h-fit">
+                            Al día
+                          </div>
+                        )
+                      )}
+                    </div>
                     <MembershipActions
                       membership={membership as unknown as IPlayerMembership}
                       origin="person-360"

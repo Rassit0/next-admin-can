@@ -26,42 +26,49 @@ interface Props {
   payments: IChargePayment[];
 }
 
-const PAYMENT_METHOD_MAP: Record<string, { label: string; className: string }> = {
-  CASH: {
-    label: "Efectivo",
-    className: "bg-success-soft text-success",
-  },
-  TRANSFER: {
-    label: "Transferencia",
-    className: "bg-default text-default-foreground",
-  },
-  QR: {
-    label: "QR",
-    className: "bg-success-soft text-success",
-  },
-  CHEQUE: {
-    label: "Cheque",
-    className: "bg-default text-default-foreground",
-  },
-  CARD: {
-    label: "Tarjeta",
-    className: "bg-default text-default-foreground",
-  },
-  OTHER: {
-    label: "Otro",
-    className: "bg-default text-default-foreground",
-  },
-};
+const PAYMENT_METHOD_MAP: Record<string, { label: string; className: string }> =
+  {
+    CASH: {
+      label: "Efectivo",
+      className: "bg-success-soft text-success",
+    },
+    TRANSFER: {
+      label: "Transferencia",
+      className: "bg-default text-default-foreground",
+    },
+    QR: {
+      label: "QR",
+      className: "bg-success-soft text-success",
+    },
+    CHEQUE: {
+      label: "Cheque",
+      className: "bg-default text-default-foreground",
+    },
+    CARD: {
+      label: "Tarjeta",
+      className: "bg-default text-default-foreground",
+    },
+    OTHER: {
+      label: "Otro",
+      className: "bg-default text-default-foreground",
+    },
+  };
 
 export const TablePayments = ({ payments }: Props) => {
   const [paymentToVoid, setPaymentToVoid] = useState<string | null>(null);
-  const [paymentToView, setPaymentToView] = useState<IChargePayment | null>(null);
+  const [paymentToView, setPaymentToView] = useState<IChargePayment | null>(
+    null,
+  );
   const [isLoading, setIsLoading] = useState(false);
 
   // Estado para el diálogo de impresión de recibo
-  const [printTransactionId, setPrintTransactionId] = useState<string | null>(null);
+  const [printTransactionId, setPrintTransactionId] = useState<string | null>(
+    null,
+  );
   const [showPrintDialog, setShowPrintDialog] = useState(false);
-  const [printReportType, setPrintReportType] = useState<"payment" | "transaction">("payment");
+  const [printReportType, setPrintReportType] = useState<
+    "payment" | "transaction"
+  >("payment");
 
   const handleConfirmVoid = async () => {
     if (!paymentToVoid) return;
@@ -138,11 +145,13 @@ export const TablePayments = ({ payments }: Props) => {
                   <Table.Row
                     key={item.id}
                     id={item.id}
-                    className={`border-b border-border last:border-b-0 hover:bg-surface-secondary/40 ${item.status === 'CANCELLED' ? 'opacity-60 bg-danger-50/20' : ''}`}
+                    className={`border-b border-border last:border-b-0 hover:bg-surface-secondary/40 ${item.status === "CANCELLED" ? "opacity-60 bg-danger-50/20" : ""}`}
                   >
                     <Table.Cell className="py-3">
                       <div className="flex flex-col">
-                        <span className={`font-semibold ${item.status === 'CANCELLED' ? 'text-danger' : 'text-foreground'}`}>
+                        <span
+                          className={`font-semibold ${item.status === "CANCELLED" ? "text-danger" : "text-foreground"}`}
+                        >
                           {item.receiptSeries}-{item.receiptNumber}
                         </span>
                       </div>
@@ -171,14 +180,20 @@ export const TablePayments = ({ payments }: Props) => {
                       </div>
                     </Table.Cell>
                     <Table.Cell className="py-3">
-                      <span className={`font-mono font-bold ${item.status === 'CANCELLED' ? 'text-danger line-through' : 'text-foreground'}`}>
+                      <span
+                        className={`font-mono font-bold ${item.status === "CANCELLED" ? "text-danger line-through" : "text-foreground"}`}
+                      >
                         {Number(item.amount).toFixed(2)} Bs
                       </span>
                     </Table.Cell>
                     <Table.Cell className="py-3">
                       <div className="flex flex-wrap gap-1">
-                        {item.status === 'CANCELLED' && (
-                          <Chip size="sm" variant="soft" className="bg-danger-soft text-danger">
+                        {item.status === "CANCELLED" && (
+                          <Chip
+                            size="sm"
+                            variant="soft"
+                            className="bg-danger-soft text-danger"
+                          >
                             Anulado
                           </Chip>
                         )}
@@ -225,12 +240,17 @@ export const TablePayments = ({ payments }: Props) => {
                                 </Dropdown.Item>
                               )}
                               {item.status !== "CANCELLED" && (
-                                <Dropdown.Item id="void" textValue="Anular Pago">
+                                <Dropdown.Item
+                                  id="void"
+                                  textValue="Anular Pago"
+                                >
                                   <HugeiconsIcon
                                     icon={Delete02Icon}
                                     className="text-danger"
                                   />
-                                  <Label className="text-danger">Anular Pago</Label>
+                                  <Label className="text-danger">
+                                    Anular Pago
+                                  </Label>
                                 </Dropdown.Item>
                               )}
                             </Dropdown.Menu>
@@ -259,7 +279,9 @@ export const TablePayments = ({ payments }: Props) => {
             </AlertDialog.Header>
             <AlertDialog.Body>
               <p>
-                ¿Anular este pago? Esta operación revertirá el efecto financiero del pago, pero el comprobante permanecerá registrado como "Anulado" para fines de auditoría.
+                ¿Anular este pago? Esta operación revertirá el efecto financiero
+                del pago, pero el comprobante permanecerá registrado como
+                "Anulado" para fines de auditoría.
               </p>
             </AlertDialog.Body>
             <AlertDialog.Footer>
@@ -302,29 +324,82 @@ export const TablePayments = ({ payments }: Props) => {
                   <div className="flex justify-between items-center bg-surface-secondary p-3 rounded-lg">
                     <div>
                       <p className="text-sm text-default-500">Recibo</p>
-                      <p className="font-semibold">{paymentToView.receiptSeries}-{paymentToView.receiptNumber}</p>
+                      <p className="font-semibold">
+                        {paymentToView.receiptSeries}-
+                        {paymentToView.receiptNumber}
+                      </p>
                     </div>
                     <div className="text-right">
                       <p className="text-sm text-default-500">Total</p>
-                      <p className="font-semibold text-lg">{Number(paymentToView.amount).toFixed(2)} Bs</p>
+                      <p className="font-semibold text-lg">
+                        {Number(paymentToView.amount).toFixed(2)} Bs
+                      </p>
                     </div>
                   </div>
 
                   <div>
-                    <h3 className="text-sm font-semibold mb-2">Distribución Financiera</h3>
+                    <h3 className="text-sm font-semibold mb-2">
+                      Distribución Financiera
+                    </h3>
                     <div className="border border-border rounded-lg divide-y divide-border overflow-hidden">
                       {paymentToView.transactions?.map((t, idx) => (
-                        <div key={t.id || idx} className="p-3 flex justify-between items-center bg-background">
-                          <div className="flex flex-col">
-                            <span className="font-medium">{t.financialAccountName || "Cuenta Desconocida"}</span>
-                            <span className="text-xs text-default-500">{PAYMENT_METHOD_MAP[t.paymentMethod]?.label || t.paymentMethod}</span>
+                        <div
+                          key={t.id || idx}
+                          className={`p-3 flex justify-between items-center bg-background ${t.status === "CANCELLED" ? "opacity-60" : ""}`}
+                        >
+                          <div className="flex flex-col gap-1 items-start">
+                            <span className="font-medium flex items-center gap-2">
+                              {t.financialAccountName || "Cuenta Desconocida"}
+                              {t.status === "CANCELLED" && (
+                                <Chip
+                                  size="sm"
+                                  color="danger"
+                                  variant="soft"
+                                  className="h-4 text-[9px] px-1"
+                                >
+                                  Anulado
+                                </Chip>
+                              )}
+                              {t.reversesId && (
+                                <Chip
+                                  size="sm"
+                                  color="warning"
+                                  variant="soft"
+                                  className="h-4 text-[9px] px-1"
+                                >
+                                  Reverso
+                                </Chip>
+                              )}
+                            </span>
+                            <span className="text-xs text-default-500">
+                              {PAYMENT_METHOD_MAP[t.paymentMethod]?.label ||
+                                t.paymentMethod}
+                            </span>
                           </div>
-                          <span className="font-mono">{Number(t.amount).toFixed(2)} Bs</span>
+                          <div className="flex flex-col items-end">
+                            <span
+                              className={`font-mono ${t.status === "CANCELLED" ? "line-through text-default-400" : "font-semibold"}`}
+                            >
+                              {Number(t.amount).toFixed(2)} Bs
+                            </span>
+                            <span className="text-[10px] text-default-400 font-mono">
+                              Anterior:{" "}
+                              {t.balanceBefore != null
+                                ? Number(t.balanceBefore).toFixed(2)
+                                : "-"}{" "}
+                              / Nuevo:{" "}
+                              {t.balanceAfter != null
+                                ? Number(t.balanceAfter).toFixed(2)
+                                : "-"}
+                            </span>
+                          </div>
                         </div>
                       ))}
                       <div className="p-3 flex justify-between items-center bg-surface-secondary font-semibold">
                         <span>Total distribuido:</span>
-                        <span>{Number(paymentToView.amount).toFixed(2)} Bs</span>
+                        <span>
+                          {Number(paymentToView.amount).toFixed(2)} Bs
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -332,7 +407,9 @@ export const TablePayments = ({ payments }: Props) => {
               )}
             </AlertDialog.Body>
             <AlertDialog.Footer>
-              <Button slot="close" onPress={() => setPaymentToView(null)}>Cerrar</Button>
+              <Button slot="close" onPress={() => setPaymentToView(null)}>
+                Cerrar
+              </Button>
             </AlertDialog.Footer>
           </AlertDialog.Dialog>
         </AlertDialog.Container>

@@ -24,6 +24,8 @@ import { useStorage } from "@/hooks/useStorage";
 import { SelectOrCreatePerson } from "./SelectOrCreatePerson";
 import { IPersonOption } from "@/common/actions/get-persons-options";
 import { PrintReportDialog } from "@/modules/charge-transactions/components/dialog/PrintReportDialog";
+import { SplitItem } from "@/modules/charge-transactions/components/drawer/PayChargeDrawer";
+import { PaymentDistributionsList } from "@/modules/charge-transactions/components/drawer/PaymentDistributionsList";
 
 import { FinancialAccount } from "@/modules/financial-accounts/interfaces/financial-account.interface";
 
@@ -56,6 +58,8 @@ export const DirectTransactionDrawer = ({
   const [categoryId, setCategoryId] = useState("");
   const [financialAccountId, setFinancialAccountId] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("CASH");
+  const [isSplitPayment, setIsSplitPayment] = useState(false);
+  const [splits, setSplits] = useState<SplitItem[]>([]);
   const [files, setFiles] = useState<File[]>([]);
   const router = useRouter();
   const { uploadFiles, isUploading } = useStorage();
@@ -82,6 +86,16 @@ export const DirectTransactionDrawer = ({
       const defaultAcc = financialAccounts.find((a) => a.isDefault);
       setFinancialAccountId(defaultAcc ? defaultAcc.id : "");
       setPaymentMethod(defaultAcc?.allowedPaymentMethods?.[0] || "CASH");
+      setIsSplitPayment(false);
+      setSplits([
+        {
+          id: Math.random().toString(),
+          amount: "",
+          paymentMethod: defaultAcc?.allowedPaymentMethods?.[0] || "CASH",
+          financialAccountId: defaultAcc ? defaultAcc.id : "",
+          reference: "",
+        },
+      ]);
       
       setFiles([]);
       setPersonId(null);
@@ -93,15 +107,44 @@ export const DirectTransactionDrawer = ({
   }, [isOpen]);
 
   const handleSubmit = async () => {
-    if (
-      !concept ||
-      !amount ||
-      !categoryId ||
-      !paymentMethod ||
-      !financialAccountId
-    ) {
+    if (!concept || !amount || !categoryId) {
       toast.error("Por favor complete todos los campos requeridos");
       return;
+    }
+
+    if (isSplitPayment) {
+      if (splits.length === 0) {
+        toast.error("Debe existir al menos una distribución");
+        return;
+      }
+      let totalSplits = 0;
+      for (let i = 0; i < splits.length; i++) {
+        const s = splits[i];
+        if (!s.financialAccountId) {
+          toast.error(`Debe seleccionar una cuenta financiera en la fila ${i + 1}`);
+          return;
+        }
+        if (!s.paymentMethod) {
+          toast.error(`Debe seleccionar un método de pago en la fila ${i + 1}`);
+          return;
+        }
+        const sAmount = Number(s.amount);
+        if (sAmount <= 0) {
+          toast.error(`El monto debe ser mayor a 0 en la fila ${i + 1}`);
+          return;
+        }
+        totalSplits += sAmount;
+      }
+      
+      if (Number(totalSplits.toFixed(2)) !== Number(Number(amount).toFixed(2))) {
+        toast.error(`La suma de las distribuciones (${totalSplits}) no coincide con el monto total (${amount})`);
+        return;
+      }
+    } else {
+      if (!paymentMethod || !financialAccountId) {
+        toast.error("Por favor complete todos los campos de pago requeridos");
+        return;
+      }
     }
 
     setIsLoading(true);
@@ -120,11 +163,22 @@ export const DirectTransactionDrawer = ({
         categoryId,
         dueDate: new Date().toISOString(),
         immediatePayment: {
-          paymentMethod,
-          financialAccountId,
           transactionDate: transactionDate
             ? transactionDate.toDate(getLocalTimeZone()).toISOString()
             : new Date().toISOString(),
+          ...(isSplitPayment
+            ? {
+                splitTransactions: splits.map((s) => ({
+                  amount: Number(s.amount),
+                  paymentMethod: s.paymentMethod as "CASH" | "TRANSFER" | "QR",
+                  financialAccountId: s.financialAccountId,
+                  reference: s.reference || undefined,
+                })),
+              }
+            : {
+                paymentMethod: paymentMethod as "CASH" | "TRANSFER" | "QR",
+                financialAccountId,
+              }),
           ...(attachmentIds.length > 0 && { attachmentIds }),
           ...(payerPersonId && { payerPersonId }),
         },
@@ -288,107 +342,172 @@ export const DirectTransactionDrawer = ({
               </ComboBox.Popover>
             </ComboBox>
 
-            <ComboBox
-              className="w-full"
-              variant="secondary"
-              aria-label="Seleccionar cuenta financiera"
-              menuTrigger="focus"
-              selectedKey={financialAccountId}
-              onSelectionChange={(key) => {
-                if (key) {
-                  setFinancialAccountId(key as string);
-                  const selectedAcc = financialAccounts.find((a) => a.id === key);
-                  if (selectedAcc && selectedAcc.allowedPaymentMethods && selectedAcc.allowedPaymentMethods.length > 0) {
-                    if (!selectedAcc.allowedPaymentMethods.includes(paymentMethod)) {
-                      setPaymentMethod(selectedAcc.allowedPaymentMethods[0]);
-                    }
-                  } else {
-                    setPaymentMethod("");
+            <div className="flex items-center gap-2 mb-2">
+              <input
+                type="checkbox"
+                id="split-payment-toggle"
+                className="w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary"
+                checked={isSplitPayment}
+                onChange={(e) => {
+                  setIsSplitPayment(e.target.checked);
+                  if (e.target.checked && splits.length === 0) {
+                    const defaultAcc = financialAccounts.find((a) => a.isDefault);
+                    setSplits([
+                      {
+                        id: Math.random().toString(),
+                        amount: amount || "",
+                        paymentMethod: defaultAcc?.allowedPaymentMethods?.[0] || "CASH",
+                        financialAccountId: defaultAcc ? defaultAcc.id : "",
+                        reference: "",
+                      },
+                    ]);
+                  } else if (e.target.checked && splits.length === 1 && splits[0].amount === "") {
+                    setSplits([
+                      {
+                        ...splits[0],
+                        amount: amount || "",
+                      }
+                    ]);
                   }
-                }
-              }}
-              isRequired
-            >
-              <Label className="mb-1 text-sm font-semibold">
-                Cuenta Financiera
+                }}
+              />
+              <Label htmlFor="split-payment-toggle" className="text-sm font-semibold cursor-pointer">
+                Pago dividido (múltiples métodos o cuentas)
               </Label>
-              <ComboBox.InputGroup>
-                <Input variant="secondary" placeholder="Seleccione cuenta" />
-                <ComboBox.Trigger />
-              </ComboBox.InputGroup>
-              <ComboBox.Popover>
-                <ListBox items={financialAccounts}>
-                  {(item: FinancialAccount) => (
-                    <ListBox.Item
-                      key={item.id}
-                      id={item.id}
-                      textValue={item.name}
-                    >
-                      <div className="flex flex-col">
-                        <span className="text-small">{item.name}</span>
-                        <span className="text-tiny text-default-400">
-                          {item.type} • {item.currency}
-                        </span>
-                      </div>
-                    </ListBox.Item>
-                  )}
-                </ListBox>
-              </ComboBox.Popover>
-            </ComboBox>
+            </div>
 
-            {(() => {
-              const selectedAcc = financialAccounts.find(
-                (a) => a.id === financialAccountId,
-              );
-              const hasMethods =
-                selectedAcc &&
-                selectedAcc.allowedPaymentMethods &&
-                selectedAcc.allowedPaymentMethods.length > 0;
-              return (
-                <div className="w-full">
-                  <ComboBox
-                    className="w-full"
-                    variant="secondary"
-                    menuTrigger="focus"
-                    selectedKey={paymentMethod}
-                    isDisabled={!hasMethods}
-                    onSelectionChange={(key) => {
-                      if (key) setPaymentMethod(key as string);
-                    }}
-                    isRequired
-                  >
-                    <Label className="text-sm font-semibold">Método de Pago</Label>
-                    <ComboBox.InputGroup>
-                      <Input
+            {isSplitPayment ? (
+              <div className="w-full flex flex-col gap-3">
+                <PaymentDistributionsList
+                  splits={splits}
+                  setSplits={setSplits}
+                  financialAccounts={financialAccounts}
+                />
+                <Button
+                  variant="outline"
+                  className="w-full border-dashed"
+                  onPress={() => {
+                    const defaultAcc = financialAccounts.find((a) => a.isDefault);
+                    setSplits([
+                      ...splits,
+                      {
+                        id: Math.random().toString(),
+                        amount: "",
+                        paymentMethod: defaultAcc?.allowedPaymentMethods?.[0] || "CASH",
+                        financialAccountId: defaultAcc ? defaultAcc.id : "",
+                        reference: "",
+                      },
+                    ]);
+                  }}
+                >
+                  + Agregar Cuenta
+                </Button>
+              </div>
+            ) : (
+              <>
+                <ComboBox
+                  className="w-full"
+                  variant="secondary"
+                  aria-label="Seleccionar cuenta financiera"
+                  menuTrigger="focus"
+                  selectedKey={financialAccountId}
+                  onSelectionChange={(key) => {
+                    if (key) {
+                      setFinancialAccountId(key as string);
+                      const selectedAcc = financialAccounts.find((a) => a.id === key);
+                      if (selectedAcc && selectedAcc.allowedPaymentMethods && selectedAcc.allowedPaymentMethods.length > 0) {
+                        if (!selectedAcc.allowedPaymentMethods.includes(paymentMethod)) {
+                          setPaymentMethod(selectedAcc.allowedPaymentMethods[0]);
+                        }
+                      } else {
+                        setPaymentMethod("");
+                      }
+                    }
+                  }}
+                  isRequired
+                >
+                  <Label className="mb-1 text-sm font-semibold">
+                    Cuenta Financiera
+                  </Label>
+                  <ComboBox.InputGroup>
+                    <Input variant="secondary" placeholder="Seleccione cuenta" />
+                    <ComboBox.Trigger />
+                  </ComboBox.InputGroup>
+                  <ComboBox.Popover>
+                    <ListBox items={financialAccounts}>
+                      {(item: FinancialAccount) => (
+                        <ListBox.Item
+                          key={item.id}
+                          id={item.id}
+                          textValue={item.name}
+                        >
+                          <div className="flex flex-col">
+                            <span className="text-small">{item.name}</span>
+                            <span className="text-tiny text-default-400">
+                              {item.type} • {item.currency}
+                            </span>
+                          </div>
+                        </ListBox.Item>
+                      )}
+                    </ListBox>
+                  </ComboBox.Popover>
+                </ComboBox>
+
+                {(() => {
+                  const selectedAcc = financialAccounts.find(
+                    (a) => a.id === financialAccountId,
+                  );
+                  const hasMethods =
+                    selectedAcc &&
+                    selectedAcc.allowedPaymentMethods &&
+                    selectedAcc.allowedPaymentMethods.length > 0;
+                  return (
+                    <div className="w-full">
+                      <ComboBox
+                        className="w-full"
                         variant="secondary"
-                        placeholder="Seleccione el método de pago"
-                      />
-                      <ComboBox.Trigger />
-                    </ComboBox.InputGroup>
-                    <ComboBox.Popover>
-                      <ListBox>
-                        {(selectedAcc?.allowedPaymentMethods || []).map(
-                          (method) => (
-                            <ListBox.Item
-                              key={method}
-                              id={method}
-                              textValue={PAYMENT_METHOD_LABELS[method] || method}
-                            >
-                              {PAYMENT_METHOD_LABELS[method] || method}
-                            </ListBox.Item>
-                          ),
-                        )}
-                      </ListBox>
-                    </ComboBox.Popover>
-                  </ComboBox>
-                  {!hasMethods && financialAccountId && (
-                    <p className="text-xs text-danger mt-1">
-                      Esta cuenta no puede recibir pagos.
-                    </p>
-                  )}
-                </div>
-              );
-            })()}
+                        menuTrigger="focus"
+                        selectedKey={paymentMethod}
+                        isDisabled={!hasMethods}
+                        onSelectionChange={(key) => {
+                          if (key) setPaymentMethod(key as string);
+                        }}
+                        isRequired
+                      >
+                        <Label className="text-sm font-semibold">Método de Pago</Label>
+                        <ComboBox.InputGroup>
+                          <Input
+                            variant="secondary"
+                            placeholder="Seleccione el método de pago"
+                          />
+                          <ComboBox.Trigger />
+                        </ComboBox.InputGroup>
+                        <ComboBox.Popover>
+                          <ListBox>
+                            {(selectedAcc?.allowedPaymentMethods || []).map(
+                              (method) => (
+                                <ListBox.Item
+                                  key={method}
+                                  id={method}
+                                  textValue={PAYMENT_METHOD_LABELS[method] || method}
+                                >
+                                  {PAYMENT_METHOD_LABELS[method] || method}
+                                </ListBox.Item>
+                              ),
+                            )}
+                          </ListBox>
+                        </ComboBox.Popover>
+                      </ComboBox>
+                      {!hasMethods && financialAccountId && (
+                        <p className="text-xs text-danger mt-1">
+                          Esta cuenta no puede recibir pagos.
+                        </p>
+                      )}
+                    </div>
+                  );
+                })()}
+              </>
+            )}
 
             {type === "EXPENSE" && (
               <div className="w-full flex flex-col gap-2 mt-2">

@@ -6,6 +6,7 @@ import {
   StatusChip as StudentStatusChip,
   StudentMembershipStatus,
 } from "@/modules/student-memberships";
+import { ParticipationChip } from "@/modules/student-memberships/components/status/ParticipationChip";
 
 import { MembershipActions } from "@/modules/student-memberships/components/actions/MembershipActions";
 import { IStudentMembership } from "@/modules/student-memberships";
@@ -58,9 +59,19 @@ export const CourseMembershipsCard = ({ memberships, personId, onSuccess }: Prop
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <StudentStatusChip
-                      status={membership.status as StudentMembershipStatus}
-                    />
+                    <div className="flex flex-col items-end gap-1">
+                      <StudentStatusChip
+                        status={membership.status as StudentMembershipStatus}
+                      />
+                      {membership.cycleEnrollments &&
+                        membership.status !== "CANCELLED" &&
+                        membership.status !== "WITHDRAWN" && (
+                          <ParticipationChip
+                            membership={membership as any}
+                            size="sm"
+                          />
+                        )}
+                    </div>
                     <MembershipActions
                       membership={membership as unknown as IStudentMembership}
                       origin="person-360"

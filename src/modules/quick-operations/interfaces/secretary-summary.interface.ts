@@ -21,6 +21,8 @@ export interface IPlayerMembershipSummary {
   teamName: string;
   status: string;
   startedAt: string;
+  totalPendingAmount?: number;
+  totalPaidAmount?: number;
 }
 
 export interface IStudentMembershipSummary {
@@ -32,6 +34,7 @@ export interface IStudentMembershipSummary {
   shiftName?: string | null;
   shiftStartTime?: string | null;
   shiftEndTime?: string | null;
+  cycleEnrollments?: any[];
 }
 
 export interface IPersonProfileSummary {

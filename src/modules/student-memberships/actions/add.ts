@@ -6,7 +6,8 @@ import { handleServerAction } from "@/utils";
 import { IStudentMembership } from "@/modules/student-memberships";
 
 export interface AddStudentMembershipData {
-  studentId: string;
+  studentId?: string;
+  personIdToCreateProfile?: string;
   courseSeasonId: string;
   courseSeasonShiftId: string;
   paymentPlanId: string;

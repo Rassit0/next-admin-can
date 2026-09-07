@@ -6,7 +6,8 @@ import { handleServerAction } from "@/utils";
 import { IPlayerMembership } from "@/modules/player-memberships";
 
 export interface AddPlayerMembershipData {
-  playerId: string;
+  playerId?: string;
+  personIdToCreateProfile?: string;
   teamSeasonCategoryId: string;
   paymentPlanId: string;
   startedAt: string;

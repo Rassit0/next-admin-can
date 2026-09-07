@@ -18,8 +18,14 @@ export interface CreateAccountChargeDto {
   externalEntity?: string;
   referenceNumber?: string;
   immediatePayment?: {
-    paymentMethod: string;
+    paymentMethod?: string;
     financialAccountId?: string;
+    splitTransactions?: {
+      amount: number;
+      paymentMethod: string;
+      financialAccountId: string;
+      reference?: string;
+    }[];
     attachmentIds?: string[];
     payerPersonId?: string;
     transactionDate?: string;

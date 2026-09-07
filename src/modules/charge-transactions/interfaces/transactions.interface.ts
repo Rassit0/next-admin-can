@@ -9,9 +9,12 @@ export interface ITransaction {
   description: string;
   type: "INCOME" | "EXPENSE";
   paymentMethod: "CASH" | "TRANSFER" | "QR";
-  status: "PENDING" | "PAID" | "FAILED" | "VOIDED";
+  status: "PENDING" | "PAID" | "COMPLETED" | "CANCELLED" | "FAILED" | "VOIDED";
   reference?: string;
   notes?: string;
+  reversesId?: string | null;
+  balanceBefore?: number | null;
+  balanceAfter?: number | null;
   financialAccountName?: string | null;
   receiptUrls?: string[];
   createdAt: Date | string;
@@ -27,6 +30,14 @@ export interface ITransaction {
     lastName: string | null;
     documentNumber: string | null;
   } | null;
+
+  // Frontend grouping fields
+  _isGrouped?: boolean;
+  _groupedDetails?: {
+    method: string;
+    account: string;
+    amount: number;
+  }[];
 }
 
 export interface ITransactionsResponse {

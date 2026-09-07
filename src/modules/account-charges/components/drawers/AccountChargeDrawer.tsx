@@ -134,7 +134,7 @@ export const AccountChargeDrawer = ({
   const resetForm = () => {
     setTitle("");
     setAmount("");
-    setDueDate("");
+    setDueDate(new Date().toISOString().split("T")[0]);
     setCategoryId("");
     setDescription("");
     setReferenceNumber("");
@@ -159,7 +159,7 @@ export const AccountChargeDrawer = ({
       return;
     }
 
-    if (!isImmediate && !dueDate) {
+    if (!isImmediate && !dueDate && !defaultPerson) {
       toast.error("Por favor ingrese la fecha de vencimiento");
       return;
     }
@@ -204,7 +204,7 @@ export const AccountChargeDrawer = ({
           categoryId,
           dueDate: isImmediate
             ? new Date().toISOString()
-            : new Date(dueDate).toISOString(),
+            : (dueDate ? new Date(dueDate).toISOString() : new Date().toISOString()),
           description: description || undefined,
           referenceNumber: referenceNumber || undefined,
           externalEntity:
@@ -284,7 +284,7 @@ export const AccountChargeDrawer = ({
               </div>
             )}
 
-            {isImmediate && !charge ? (
+            {isImmediate && !charge && (
               <ComboBox
                 className="w-full"
                 variant="secondary"
@@ -314,7 +314,9 @@ export const AccountChargeDrawer = ({
                   </ListBox>
                 </ComboBox.Popover>
               </ComboBox>
-            ) : (
+            )}
+
+            {!defaultPerson && (!isImmediate || charge) && (
               <TextField className="w-full" isRequired={!isImmediate}>
                 <Label className="text-sm font-semibold">
                   Fecha de Vencimiento
@@ -458,17 +460,19 @@ export const AccountChargeDrawer = ({
               </Tabs>
             </div>
 
-            <TextField className="w-full">
-              <Label className="text-sm font-semibold">
-                Número de Referencia
-              </Label>
-              <Input
-                placeholder="Ej. Factura #12345"
-                value={referenceNumber}
-                onChange={(e) => setReferenceNumber(e.target.value)}
-                variant="secondary"
-              />
-            </TextField>
+            {!defaultPerson && (
+              <TextField className="w-full">
+                <Label className="text-sm font-semibold">
+                  Número de Referencia
+                </Label>
+                <Input
+                  placeholder="Ej. Factura #12345"
+                  value={referenceNumber}
+                  onChange={(e) => setReferenceNumber(e.target.value)}
+                  variant="secondary"
+                />
+              </TextField>
+            )}
 
             <TextField className="w-full">
               <Label className="text-sm font-semibold">Descripción</Label>

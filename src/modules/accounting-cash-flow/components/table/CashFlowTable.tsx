@@ -1,5 +1,12 @@
 "use client";
-import { Chip, Table, Dropdown, Button, Label, AlertDialog } from "@heroui/react";
+import {
+  Chip,
+  Table,
+  Dropdown,
+  Button,
+  Label,
+  AlertDialog,
+} from "@heroui/react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
   Search01Icon,
@@ -23,8 +30,47 @@ export const CashFlowTable = ({ transactions }: Props) => {
     null,
   );
   const [showPrintDialog, setShowPrintDialog] = useState(false);
-  const [voidTransactionId, setVoidTransactionId] = useState<string | null>(null);
+  const [voidTransactionId, setVoidTransactionId] = useState<string | null>(
+    null,
+  );
   const [isVoiding, setIsVoiding] = useState(false);
+
+  const groupedTransactions = React.useMemo(() => {
+    const groups = new Map<string, ITransaction>();
+    const result: ITransaction[] = [];
+
+    for (const t of transactions) {
+      if (t.paymentId) {
+        if (groups.has(t.paymentId)) {
+          const group = groups.get(t.paymentId)!;
+          group.amount += t.amount;
+          group._isGrouped = true; // Solo es agrupado si hay más de 1
+          group._groupedDetails!.push({
+            method: t.paymentMethod,
+            account: t.financialAccountName || "Sin asignar",
+            amount: t.amount,
+          });
+        } else {
+          const newGroup: ITransaction = {
+            ...t,
+            _isGrouped: false, // Inicialmente falso, es una transacción normal
+            _groupedDetails: [
+              {
+                method: t.paymentMethod,
+                account: t.financialAccountName || "Sin asignar",
+                amount: t.amount,
+              },
+            ],
+          };
+          groups.set(t.paymentId, newGroup);
+          result.push(newGroup);
+        }
+      } else {
+        result.push(t);
+      }
+    }
+    return result;
+  }, [transactions]);
 
   const handleVoid = async () => {
     if (!voidTransactionId) return;
@@ -88,6 +134,9 @@ export const CashFlowTable = ({ transactions }: Props) => {
                   </SortableColumnHeader>
                 </div>
               </Table.Column>
+              <Table.Column>
+                <div className="text-right">Balance</div>
+              </Table.Column>
               <Table.Column>Acciones</Table.Column>
             </Table.Header>
             <Table.Body
@@ -107,174 +156,263 @@ export const CashFlowTable = ({ transactions }: Props) => {
                 </div>
               )}
             >
-              {transactions.map((transaction) => {
+              {groupedTransactions.map((transaction) => {
                 const isCancelled = transaction.status === "CANCELLED";
                 return (
-                <Table.Row 
-                  key={transaction.id} 
-                  id={transaction.id}
-                  className={isCancelled ? 'opacity-60 bg-danger-50/20' : ''}
-                >
-                  <Table.Cell>
-                    <span
-                      className="whitespace-nowrap text-default-600"
-                      suppressHydrationWarning
-                    >
-                      {new Date(transaction.transactionDate).toLocaleString(
-                        "es-BO",
-                      )}
-                    </span>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <span className={`font-mono text-sm whitespace-nowrap ${isCancelled ? 'text-danger' : 'text-default-700'}`}>
-                      {transaction.receiptSeries && transaction.receiptNumber
-                        ? `${transaction.receiptSeries}-${transaction.receiptNumber}`
-                        : transaction.receiptNumber
-                          ? `${transaction.receiptNumber}`
-                          : "—"}
-                    </span>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <span
-                      className={`font-medium max-w-62.5 truncate block ${isCancelled ? 'text-danger' : ''}`}
-                      title={transaction.concept}
-                    >
-                      {transaction.concept}
-                    </span>
-                  </Table.Cell>
-                  <Table.Cell>
-                    {transaction.category ? (
-                      <Chip size="sm" variant="soft">
-                        {transaction.category}
-                      </Chip>
-                    ) : (
-                      <span className="text-default-400">-</span>
-                    )}
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Chip
-                      size="sm"
-                      variant="soft"
-                      color={
-                        transaction.type === "INCOME" ? "success" : "danger"
-                      }
-                    >
-                      {transaction.type === "INCOME" ? "Ingreso" : "Egreso"}
-                    </Chip>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <div className="flex flex-wrap gap-1 items-center">
-                      {isCancelled && (
-                        <Chip size="sm" variant="soft" className="bg-danger-soft text-danger font-bold">
-                          Anulado
-                        </Chip>
-                      )}
-                      <span className="text-default-600 text-sm">
-                        {transaction.paymentMethod === "CASH"
-                          ? "Efectivo"
-                          : transaction.paymentMethod === "TRANSFER"
-                            ? "Transferencia"
-                            : "QR"}
+                  <Table.Row
+                    key={transaction.id}
+                    id={transaction.id}
+                    className={`${isCancelled ? "opacity-60 bg-danger-50/20" : ""} ${transaction.reversesId ? "bg-warning-50/20" : ""}`}
+                  >
+                    <Table.Cell>
+                      <span
+                        className="whitespace-nowrap text-default-600"
+                        suppressHydrationWarning
+                      >
+                        {new Date(transaction.transactionDate).toLocaleString(
+                          "es-BO",
+                        )}
                       </span>
-                    </div>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <span className="text-default-500 text-xs">
-                      {transaction.origin === "ACCOUNT_CHARGE"
-                        ? "Administrativo"
-                        : transaction.origin === "MEMBERSHIP"
-                          ? "Membresía"
-                          : transaction.origin === "STUDENT"
-                            ? "Academia"
-                            : transaction.origin === "BOOKING"
-                              ? "Reserva"
-                              : "General"}
-                    </span>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <span className="text-default-700 text-sm">
-                      {transaction.financialAccountName || (
-                        <span className="text-default-400 italic">
-                          Sin asignar
+                    </Table.Cell>
+                    <Table.Cell>
+                      <span
+                        className={`font-mono text-sm whitespace-nowrap ${isCancelled ? "text-danger" : "text-default-700"}`}
+                      >
+                        {transaction.receiptSeries && transaction.receiptNumber
+                          ? `${transaction.receiptSeries}-${transaction.receiptNumber}`
+                          : transaction.receiptNumber
+                            ? `${transaction.receiptNumber}`
+                            : "—"}
+                      </span>
+                    </Table.Cell>
+                    <Table.Cell>
+                      <span
+                        className={`font-medium max-w-62.5 truncate block ${isCancelled ? "text-danger" : ""}`}
+                        title={transaction.concept}
+                      >
+                        {transaction.concept}
+                      </span>
+                    </Table.Cell>
+                    <Table.Cell>
+                      {transaction.category ? (
+                        <Chip size="sm" variant="soft">
+                          {transaction.category}
+                        </Chip>
+                      ) : (
+                        <span className="text-default-400">-</span>
+                      )}
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Chip
+                        size="sm"
+                        variant="soft"
+                        color={
+                          transaction.type === "INCOME" ? "success" : "danger"
+                        }
+                      >
+                        {transaction.type === "INCOME" ? "Ingreso" : "Egreso"}
+                      </Chip>
+                    </Table.Cell>
+                    <Table.Cell>
+                      <div className="flex flex-wrap gap-1 items-center">
+                        {isCancelled && (
+                          <Chip
+                            size="sm"
+                            variant="soft"
+                            className="bg-danger-soft text-danger font-bold"
+                          >
+                            Anulado
+                          </Chip>
+                        )}
+                        {transaction.reversesId && (
+                          <Chip
+                            size="sm"
+                            color="warning"
+                            variant="soft"
+                            className="font-bold"
+                          >
+                            Reverso
+                          </Chip>
+                        )}
+                        {transaction._isGrouped ? (
+                          <div className="flex flex-col gap-1">
+                            <Chip
+                              size="sm"
+                              variant="soft"
+                              color="default"
+                              className="font-medium"
+                            >
+                              Múltiples
+                            </Chip>
+                            {transaction._groupedDetails?.map((d, idx) => (
+                              <span
+                                key={idx}
+                                className="text-default-500 text-xs whitespace-nowrap"
+                              >
+                                {d.method === "CASH"
+                                  ? "Efectivo"
+                                  : d.method === "TRANSFER"
+                                    ? "Transf."
+                                    : "QR"}{" "}
+                                ({d.amount} Bs)
+                              </span>
+                            ))}
+                          </div>
+                        ) : (
+                          <span className="text-default-600 text-sm">
+                            {transaction.paymentMethod === "CASH"
+                              ? "Efectivo"
+                              : transaction.paymentMethod === "TRANSFER"
+                                ? "Transferencia"
+                                : "QR"}
+                          </span>
+                        )}
+                      </div>
+                    </Table.Cell>
+                    <Table.Cell>
+                      <span className="text-default-500 text-xs">
+                        {transaction.origin === "ACCOUNT_CHARGE"
+                          ? "Administrativo"
+                          : transaction.origin === "MEMBERSHIP"
+                            ? "Membresía"
+                            : transaction.origin === "STUDENT"
+                              ? "Academia"
+                              : transaction.origin === "BOOKING"
+                                ? "Reserva"
+                                : "General"}
+                      </span>
+                    </Table.Cell>
+                    <Table.Cell>
+                      {transaction._isGrouped ? (
+                        <div className="flex flex-col gap-1">
+                          {transaction._groupedDetails?.map((d, idx) => (
+                            <span
+                              key={idx}
+                              className="text-default-700 text-xs whitespace-nowrap truncate max-w-32"
+                            >
+                              {d.account}
+                            </span>
+                          ))}
+                        </div>
+                      ) : (
+                        <span className="text-default-700 text-sm">
+                          {transaction.financialAccountName || (
+                            <span className="text-default-400 italic">
+                              Sin asignar
+                            </span>
+                          )}
                         </span>
                       )}
-                    </span>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <div className="flex flex-col">
-                      <span className="text-sm text-default-700 max-w-37.5 truncate">
-                        {transaction.payerPerson ? (
-                          `${transaction.payerPerson.lastName || ""} ${transaction.payerPerson.secondLastName || ""} ${transaction.payerPerson.name}`.replace(/\s+/g, ' ').trim()
-                        ) : (
-                          <span className="text-default-400">—</span>
-                        )}
-                      </span>
-                    </div>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <div className="flex flex-col">
-                      <span className="text-sm text-default-700 max-w-37.5 truncate">
-                        {transaction.thirdParty ? (
-                          transaction.thirdParty.name
-                        ) : (
-                          <span className="text-default-400">—</span>
-                        )}
-                      </span>
-                    </div>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <div className={`text-right font-medium ${isCancelled ? 'text-danger line-through' : ''}`}>
-                      {transaction.type === "INCOME" ? "+" : "-"} Bs{" "}
-                      {transaction.amount.toFixed(2)}
-                    </div>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <div className="relative flex justify-end items-center gap-2">
-                      <Dropdown>
-                        <Button
-                          aria-label="Acciones"
-                          isIconOnly
-                          size="sm"
-                          variant="ghost"
-                        >
-                          <HugeiconsIcon icon={MoreVerticalIcon} />
-                        </Button>
-                        <Dropdown.Popover>
-                          <Dropdown.Menu
-                            aria-label="Acciones de Transacción"
-                            onAction={(key) => {
-                              if (key === "print") {
-                                setPrintTransactionId(transaction.id);
-                                setShowPrintDialog(true);
-                              } else if (key === "void") {
-                                setVoidTransactionId(transaction.id);
-                              }
-                            }}
+                    </Table.Cell>
+                    <Table.Cell>
+                      <div className="flex flex-col">
+                        <span className="text-sm text-default-700 max-w-37.5 truncate">
+                          {transaction.payerPerson ? (
+                            `${transaction.payerPerson.lastName || ""} ${transaction.payerPerson.secondLastName || ""} ${transaction.payerPerson.name}`
+                              .replace(/\s+/g, " ")
+                              .trim()
+                          ) : (
+                            <span className="text-default-400">—</span>
+                          )}
+                        </span>
+                      </div>
+                    </Table.Cell>
+                    <Table.Cell>
+                      <div className="flex flex-col">
+                        <span className="text-sm text-default-700 max-w-37.5 truncate">
+                          {transaction.thirdParty ? (
+                            transaction.thirdParty.name
+                          ) : (
+                            <span className="text-default-400">—</span>
+                          )}
+                        </span>
+                      </div>
+                    </Table.Cell>
+                    <Table.Cell>
+                      <div
+                        className={`text-right font-medium ${isCancelled ? "text-danger line-through" : ""}`}
+                      >
+                        {transaction.type === "INCOME" ? "+" : "-"} Bs{" "}
+                        {transaction.amount.toFixed(2)}
+                      </div>
+                    </Table.Cell>
+                    <Table.Cell>
+                      {transaction._isGrouped ? (
+                        <div className="flex flex-col items-end text-right">
+                          <span className="text-default-400 text-xs italic">
+                            N/A (Múltiples)
+                          </span>
+                        </div>
+                      ) : (
+                        <div className="flex flex-col items-end text-right">
+                          <span className="font-mono text-xs text-default-500">
+                            Anterior:{" "}
+                            {transaction.balanceBefore != null
+                              ? `${Number(transaction.balanceBefore).toFixed(2)} Bs`
+                              : "-"}
+                          </span>
+                          <span className="font-mono text-xs font-medium text-foreground">
+                            Nuevo:{" "}
+                            {transaction.balanceAfter != null
+                              ? `${Number(transaction.balanceAfter).toFixed(2)} Bs`
+                              : "-"}
+                          </span>
+                        </div>
+                      )}
+                    </Table.Cell>
+                    <Table.Cell>
+                      <div className="relative flex justify-end items-center gap-2">
+                        <Dropdown>
+                          <Button
+                            aria-label="Acciones"
+                            isIconOnly
+                            size="sm"
+                            variant="ghost"
                           >
-                            <Dropdown.Item
-                              id="print"
-                              textValue="Imprimir Recibo"
+                            <HugeiconsIcon icon={MoreVerticalIcon} />
+                          </Button>
+                          <Dropdown.Popover>
+                            <Dropdown.Menu
+                              aria-label="Acciones de Transacción"
+                              onAction={(key) => {
+                                if (key === "print") {
+                                  setPrintTransactionId(transaction.id);
+                                  setShowPrintDialog(true);
+                                } else if (key === "void") {
+                                  setVoidTransactionId(transaction.id);
+                                }
+                              }}
                             >
-                              <HugeiconsIcon icon={Invoice01Icon} />
-                              <Label>Imprimir Recibo</Label>
-                            </Dropdown.Item>
-                            {transaction.status !== "CANCELLED" && (
                               <Dropdown.Item
-                                id="void"
-                                textValue="Anular Pago"
-                                className="text-danger"
+                                id="print"
+                                textValue="Imprimir Recibo"
                               >
-                                <HugeiconsIcon icon={Cancel01Icon} className="text-danger" />
-                                <Label className="text-danger">Anular Pago</Label>
+                                <HugeiconsIcon icon={Invoice01Icon} />
+                                <Label>Imprimir Recibo</Label>
                               </Dropdown.Item>
-                            )}
-                          </Dropdown.Menu>
-                        </Dropdown.Popover>
-                      </Dropdown>
-                    </div>
-                  </Table.Cell>
-                </Table.Row>
-              )})}
+                              {transaction.status !== "CANCELLED" && (
+                                <Dropdown.Item
+                                  id="void"
+                                  textValue="Anular Pago"
+                                  className="text-danger"
+                                >
+                                  <HugeiconsIcon
+                                    icon={Cancel01Icon}
+                                    className="text-danger"
+                                  />
+                                  <Label className="text-danger">
+                                    Anular Pago
+                                  </Label>
+                                </Dropdown.Item>
+                              )}
+                            </Dropdown.Menu>
+                          </Dropdown.Popover>
+                        </Dropdown>
+                      </div>
+                    </Table.Cell>
+                  </Table.Row>
+                );
+              })}
             </Table.Body>
           </Table.Content>
         </Table.ScrollContainer>
@@ -297,13 +435,15 @@ export const CashFlowTable = ({ transactions }: Props) => {
             <AlertDialog.CloseTrigger />
             <AlertDialog.Header>
               <AlertDialog.Icon status="danger" />
-              <AlertDialog.Heading>Anular Pago / Transacción</AlertDialog.Heading>
+              <AlertDialog.Heading>
+                Anular Pago / Transacción
+              </AlertDialog.Heading>
             </AlertDialog.Header>
             <AlertDialog.Body>
               <p>
                 ¿Estás seguro que deseas anular esta transacción? Esta acción
-                reversará el saldo aplicado a los cargos asociados y devolverá la
-                transacción a su estado anterior.
+                reversará el saldo aplicado a los cargos asociados y devolverá
+                la transacción a su estado anterior.
               </p>
               <p className="mt-2 text-sm text-default-500">
                 Esta acción no se puede deshacer.

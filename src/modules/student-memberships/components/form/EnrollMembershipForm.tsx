@@ -34,6 +34,7 @@ import {
   getPreviewCharges,
   IStudentOption,
   IPreviewChargesResponse,
+  AddStudentMembershipData,
 } from "@/modules/student-memberships";
 import {
   getCycleCapacity,
@@ -390,32 +391,7 @@ export const EnrollMembershipForm = ({
 
     setLoading(true);
 
-    let realStudentId = studentKey;
-
-    // Si el estudiante no existe y estamos en contexto Person360, lo creamos
-    if (realStudentId === "NEW" && selectedStudent) {
-      const studentResponse = await addStudent({
-        data: {
-          personId: selectedStudent.person.id,
-          isActive: true,
-        },
-      });
-
-      if (studentResponse.error || !studentResponse.data) {
-        setLoading(false);
-        setApiError({
-          title: "Error al crear perfil",
-          description:
-            studentResponse.message || "Error al crear el perfil de Estudiante",
-        });
-        return;
-      }
-
-      realStudentId = studentResponse.data.id;
-    }
-
-    const res = await addStudentMembership({
-      studentId: realStudentId!,
+    const payload: AddStudentMembershipData = {
       courseSeasonId: courseSeason.id,
       courseSeasonShiftId: shiftKey!,
       paymentPlanId: planKey!,
@@ -441,7 +417,16 @@ export const EnrollMembershipForm = ({
           },
         ],
       }),
-    });
+    };
+
+    if (studentKey === "NEW" && selectedStudent) {
+      payload.personIdToCreateProfile = selectedStudent.person.id;
+    } else {
+      payload.studentId = studentKey ?? undefined;
+    }
+
+    const res = await addStudentMembership(payload);
+
     setLoading(false);
 
     if (res.error) {
