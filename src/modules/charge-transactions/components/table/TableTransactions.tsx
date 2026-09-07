@@ -9,6 +9,7 @@ import {
   AlertDialog,
   toast,
   Spinner,
+  Checkbox,
 } from "@heroui/react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
@@ -21,7 +22,7 @@ import { ITransaction } from "../../interfaces/transactions.interface";
 import { useFormStatus } from "react-dom";
 import { removeTransaction } from "../../actions/remove-transaction";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { PrintReportDialog } from "../dialog/PrintReportDialog";
 
 interface Props {
@@ -39,7 +40,9 @@ export const TableTransactions = ({ transactions }: Props) => {
   const [printTransactionId, setPrintTransactionId] = useState<string | null>(
     null,
   );
+  const [printPaymentIds, setPrintPaymentIds] = useState<string[]>([]);
   const [showPrintDialog, setShowPrintDialog] = useState(false);
+  const [selectedKeys, setSelectedKeys] = useState<any>(new Set([]));
 
   const [printReportType, setPrintReportType] = useState<"payment" | "transaction">("transaction");
 
@@ -55,6 +58,25 @@ export const TableTransactions = ({ transactions }: Props) => {
     } else {
       toast.success(res.message);
     }
+  };
+
+  const selectedPaymentIds = useMemo(() => {
+    if (selectedKeys === "all") {
+      return Array.from(new Set(transactions.map((t) => t.paymentId || t.id)));
+    }
+    return Array.from(
+      new Set(
+        transactions
+          .filter((t) => selectedKeys.has(t.id))
+          .map((t) => t.paymentId || t.id)
+      )
+    );
+  }, [transactions, selectedKeys]);
+
+  const handlePrintSelected = () => {
+    setPrintTransactionId(null);
+    setPrintPaymentIds(selectedPaymentIds);
+    setShowPrintDialog(true);
   };
 
   const getMethodChip = (method: string) => {
@@ -93,14 +115,53 @@ export const TableTransactions = ({ transactions }: Props) => {
   };
 
   return (
-    <>
-      <Table aria-label="Tabla de Transacciones">
+    <div className="flex flex-col gap-3">
+      {((selectedKeys === "all" && transactions.length > 0) ||
+        (selectedKeys !== "all" && selectedKeys.size > 0)) && (
+        <div className="flex justify-end mb-2">
+          <Button
+            variant="primary"
+            size="sm"
+            onPress={handlePrintSelected}
+            className="flex items-center gap-2"
+          >
+            <HugeiconsIcon icon={Invoice01Icon} size={16} />
+            Imprimir seleccionados ({selectedKeys === "all" ? transactions.length : selectedKeys.size})
+          </Button>
+        </div>
+      )}
+      <Table>
         <Table.ScrollContainer>
-          <Table.Content className="min-w-200">
+          <Table.Content
+            aria-label="Tabla de Transacciones"
+            className="min-w-200"
+            selectionMode="multiple"
+            selectedKeys={selectedKeys}
+            onSelectionChange={setSelectedKeys}
+          >
             <Table.Header className="bg-surface-secondary">
+              <Table.Column className="pe-0 w-10">
+                <Checkbox aria-label="Seleccionar todos" slot="selection">
+                  <Checkbox.Content>
+                    <Checkbox.Control>
+                      <Checkbox.Indicator />
+                    </Checkbox.Control>
+                  </Checkbox.Content>
+                </Checkbox>
+              </Table.Column>
               <Table.Column isRowHeader>
                 <span className="text-xs font-semibold uppercase tracking-wide">
                   N° Recibo
+                </span>
+              </Table.Column>
+              <Table.Column>
+                <span className="text-xs font-semibold uppercase tracking-wide">
+                  Pagador
+                </span>
+              </Table.Column>
+              <Table.Column>
+                <span className="text-xs font-semibold uppercase tracking-wide">
+                  Beneficiario
                 </span>
               </Table.Column>
               <Table.Column>
@@ -142,10 +203,39 @@ export const TableTransactions = ({ transactions }: Props) => {
                   id={item.id}
                   className="border-b border-border last:border-b-0 hover:bg-surface-secondary/40"
                 >
+                  <Table.Cell className="pe-0 w-10">
+                    <Checkbox
+                      aria-label={`Seleccionar recibo ${item.receiptSeries}-${item.receiptNumber}`}
+                      slot="selection"
+                      variant="secondary"
+                    >
+                      <Checkbox.Content>
+                        <Checkbox.Control>
+                          <Checkbox.Indicator />
+                        </Checkbox.Control>
+                      </Checkbox.Content>
+                    </Checkbox>
+                  </Table.Cell>
                   <Table.Cell className="py-3">
                     <div className="flex flex-col">
                       <span className="font-semibold text-foreground">
                         {item.receiptSeries}-{item.receiptNumber}
+                      </span>
+                    </div>
+                  </Table.Cell>
+                  <Table.Cell className="py-3">
+                    <div className="flex flex-col">
+                      <span className="font-medium text-foreground">
+                        {item.payerPerson?.name
+                          ? `${item.payerPerson.lastName || ""} ${(item.payerPerson as any).secondLastName || ""} ${item.payerPerson.name}`.replace(/\s+/g, ' ').trim()
+                          : "-"}
+                      </span>
+                    </div>
+                  </Table.Cell>
+                  <Table.Cell className="py-3">
+                    <div className="flex flex-col">
+                      <span className="font-medium text-foreground">
+                        {item.thirdParty?.name || "-"}
                       </span>
                     </div>
                   </Table.Cell>
@@ -206,6 +296,7 @@ export const TableTransactions = ({ transactions }: Props) => {
                             aria-label="Acciones de Transacción"
                             onAction={(key) => {
                               if (key === "print") {
+                                setPrintPaymentIds([]);
                                 if (item.paymentId) {
                                   setPrintTransactionId(item.paymentId);
                                   setPrintReportType("payment");
@@ -287,10 +378,11 @@ export const TableTransactions = ({ transactions }: Props) => {
 
       <PrintReportDialog
         transactionId={printTransactionId}
+        paymentIds={printPaymentIds}
         reportType={printReportType}
         isOpen={showPrintDialog}
         onOpenChange={setShowPrintDialog}
       />
-    </>
+    </div>
   );
 };

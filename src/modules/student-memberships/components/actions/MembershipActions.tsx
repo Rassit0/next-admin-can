@@ -37,10 +37,13 @@ import { TransferShiftDrawer } from "../drawer/TransferShiftDrawer";
 import { isMembershipInGap } from "@/modules/student-memberships/helpers/domain";
 import { reactivateStudentMembership } from "@/modules/student-memberships/actions/reactivate";
 import { generateAdvanceCharges } from "@/modules/student-memberships/actions/generate-advance-charges";
+import { AdvanceChargesDrawer as AdvanceChargesDrawerStudent } from "../drawer/AdvanceChargesDrawer";
+import { RegularizeHistoricalChargeDrawer } from "@/modules/charge-transactions/components/drawer/RegularizeHistoricalChargeDrawer";
 
 interface Props {
   membership: IStudentMembership;
   origin?: string;
+  onSuccess?: () => void;
 }
 
 interface ActionDef {
@@ -50,7 +53,7 @@ interface ActionDef {
   danger?: boolean;
 }
 
-export const MembershipActions = ({ membership, origin }: Props) => {
+export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
   const router = useRouter();
   const params = useParams();
   const [loading, setLoading] = useState(false);
@@ -61,9 +64,8 @@ export const MembershipActions = ({ membership, origin }: Props) => {
   if (membership.status === "ACTIVE") {
     statusActions.push({ key: "transfer", label: "Transferir turno", icon: Calendar01Icon });
     statusActions.push({ key: "pause", label: "Programar pausa", icon: Calendar01Icon });
-    if (isGap) {
-      statusActions.push({ key: "advance", label: "Comprar ciclo", icon: PlayIcon });
-    }
+    statusActions.push({ key: "advance", label: "Inscribir a Ciclo", icon: PlayIcon });
+    statusActions.push({ key: "regularize", label: "Regularizar Histórico", icon: Note01Icon });
     statusActions.push({ key: "suspend", label: "Suspender", icon: PauseIcon });
     statusActions.push({ key: "finish", label: "Finalizar", icon: CheckmarkCircle02Icon });
     statusActions.push({ key: "withdraw", label: "Dar de baja", icon: Logout01Icon, danger: true });
@@ -82,6 +84,8 @@ export const MembershipActions = ({ membership, origin }: Props) => {
 
   const confirmState = useOverlayState();
   const transferState = useOverlayState();
+  const advanceState = useOverlayState();
+  const regularizeState = useOverlayState();
   const [selectedAction, setSelectedAction] = useState<ActionDef | null>(null);
 
   const allActions: ActionDef[] = [
@@ -109,6 +113,16 @@ export const MembershipActions = ({ membership, origin }: Props) => {
 
     if (key === "transfer") {
       transferState.open();
+      return;
+    }
+
+    if (key === "advance") {
+      advanceState.open();
+      return;
+    }
+
+    if (key === "regularize") {
+      regularizeState.open();
       return;
     }
 
@@ -195,6 +209,7 @@ export const MembershipActions = ({ membership, origin }: Props) => {
     confirmState.close();
     setLoading(false);
     router.refresh();
+    onSuccess?.();
   };
 
   return (
@@ -462,7 +477,22 @@ export const MembershipActions = ({ membership, origin }: Props) => {
       <TransferShiftDrawer
         isOpen={transferState.isOpen}
         onOpenChange={transferState.setOpen}
-        membership={membership}
+        membershipId={membership.id}
+      />
+
+      <AdvanceChargesDrawerStudent
+        isOpen={advanceState.isOpen}
+        onOpenChange={advanceState.setOpen}
+        studentMembershipId={membership.id}
+        onSuccess={onSuccess}
+      />
+
+      <RegularizeHistoricalChargeDrawer
+        isOpen={regularizeState.isOpen}
+        onOpenChange={regularizeState.setOpen}
+        membershipId={membership.id}
+        type="student"
+        onSuccess={onSuccess}
       />
     </>
   );

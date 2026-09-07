@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import {
   MoreVerticalSquare01Icon,
   Ticket01Icon,
+  Ticket02Icon,
   Tag01Icon,
   Logout01Icon,
   Note01Icon,
@@ -33,6 +34,7 @@ interface Props {
   charge: ICharge;
   onPay?: (charge: ICharge) => void;
   detailsHref?: string;
+  onSuccess?: () => void;
 }
 
 interface ActionDef {
@@ -42,7 +44,7 @@ interface ActionDef {
   danger?: boolean;
 }
 
-export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
+export const ChargeActions = ({ charge, onPay, detailsHref, onSuccess }: Props) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const confirmState = useOverlayState();
@@ -135,13 +137,13 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
     });
   }
 
-  // We allow removing discount as long as it has a discount and is not cancelled.
-  // (If it has a discount, it couldn't have been fully paid with money alone).
+  // We allow removing adjustment as long as it has an adjustment and is not cancelled.
+  // (If it has an adjustment, it couldn't have been fully paid with money alone).
   if (hasAdjustment && charge.status !== "CANCELLED") {
     allActions.push({
       key: "remove-adjustment",
-      label: "Remover Descuento",
-      icon: Logout01Icon,
+      label: "Remover Ajuste",
+      icon: Ticket02Icon,
       danger: true,
     });
   }
@@ -228,7 +230,7 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
       }
 
       if (amountNum < 0 && Math.abs(amountNum) > chargeAmountNum) {
-        setErrors({ adjustmentAmount: "El monto del descuento no puede exceder el monto original del cargo." });
+        setErrors({ adjustmentAmount: "El monto del ajuste (si es descuento) no puede exceder el monto original del cargo." });
         setLoading(false);
         return;
       }
@@ -283,6 +285,7 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
     toast.success(res?.message, { description: res?.message });
     confirmState.close();
     setLoading(false);
+    if (onSuccess) onSuccess();
     router.refresh();
   };
 
@@ -330,6 +333,10 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
             <form
               onSubmit={executeAction}
               className="flex flex-col h-full w-full"
+              onPointerDown={(e) => e.stopPropagation()}
+              onMouseDown={(e) => e.stopPropagation()}
+              onClick={(e) => e.stopPropagation()}
+              onKeyDown={(e) => e.stopPropagation()}
             >
               <AlertDialog.Header>
                 <AlertDialog.Icon
@@ -343,8 +350,8 @@ export const ChargeActions = ({ charge, onPay, detailsHref }: Props) => {
                 {(selectedAction?.key === "remove-adjustment" || selectedAction?.key === "delete-charge") && (
                   <p>
                     {selectedAction?.key === "remove-adjustment" 
-                      ? "¿Estás seguro de que deseas remover el descuento de este cargo? El saldo pendiente se ajustará automáticamente."
-                      : "¿Estás seguro de que deseas eliminar este cargo manualmente? Esta acción no se puede deshacer."}
+                      ? "¿Estás seguro de que deseas remover el ajuste de este cargo? El saldo pendiente se actualizará automáticamente."
+                      : "¿Estás seguro de que deseas eliminar este cargo permanentemente? Esta acción no se puede deshacer."}
                   </p>
                 )}
 

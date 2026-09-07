@@ -31,6 +31,7 @@ interface Props {
   onOpenChange: (isOpen: boolean) => void;
   membershipId: string;
   type: "membership" | "student";
+  onSuccess?: () => void;
 }
 
 export const RegularizeHistoricalChargeDrawer = ({
@@ -38,6 +39,7 @@ export const RegularizeHistoricalChargeDrawer = ({
   onOpenChange,
   membershipId,
   type,
+  onSuccess,
 }: Props) => {
   const router = useRouter();
   const permissions = usePermissions();
@@ -123,6 +125,7 @@ export const RegularizeHistoricalChargeDrawer = ({
         }
       } else {
         toast.success(res.message || "Regularización histórica creada exitosamente.");
+        if (onSuccess) onSuccess();
         router.refresh();
         onOpenChange(false);
       }

@@ -17,4 +17,3 @@ export * from "./actions/add";
 export * from "./actions/edit";
 export * from "./actions/delete";
 export * from "./actions/find-by-id";
-export * from "./actions/get-persons-options";

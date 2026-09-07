@@ -100,7 +100,7 @@ export default async function StudentMembershipsPage({
             title="Atletas inscritos"
             description="Asigna membresías y revisa los cargos iniciales generados"
             action={
-              <div className="w-full flex gap-2 justify-end">
+              <>
                 <CycleCapacityModal courseSeasonId={courseSeasonId} />
                 <CreateMassiveManualChargeButton
                   courseSeasonId={courseSeasonId}
@@ -111,7 +111,7 @@ export default async function StudentMembershipsPage({
                   size="md"
                   defaultShiftId={shiftId}
                 />
-              </div>
+              </>
             }
             showButtonBack={false}
           />

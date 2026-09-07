@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { toast } from "sonner";
 import { iconMap } from "@/utils/iconMap";
 import {
@@ -20,7 +20,7 @@ import {
   Select,
   Button,
 } from "@heroui/react";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
   Add01Icon,
@@ -86,6 +86,36 @@ export const FormPerson = ({
     initialBirthDate,
   );
   const [image, setImage] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(person?.imageUrl || null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    return () => {
+      if (previewUrl && previewUrl !== person?.imageUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
+  }, [previewUrl, person?.imageUrl]);
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (!file.type.startsWith("image/")) {
+        toast.error("Formato inválido", { description: "Por favor, seleccione un archivo de imagen válido." });
+        return;
+      }
+      setImage(file);
+      if (previewUrl && previewUrl !== person?.imageUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+      setPreviewUrl(URL.createObjectURL(file));
+    }
+    // Reseteamos el value del input para permitir seleccionar la misma imagen de nuevo si se cancela
+    if (e.target) {
+      e.target.value = "";
+    }
+  };
+
   const [documentType, setDocumentType] = useState<TDocumentType | null>(
     person?.documentType || null,
   );
@@ -120,6 +150,7 @@ export const FormPerson = ({
     setSurName(person?.secondLastName || null);
     setBirthDate(initialBirthDate);
     setImage(null);
+    setPreviewUrl(person?.imageUrl || null);
     setDocumentType(person?.documentType || null);
     setDocumentNumber(person?.documentNumber || null);
     setPhone(person?.phone || null);
@@ -228,15 +259,28 @@ export const FormPerson = ({
           {/* Sección de Foto (Compacta pero llamativa) */}
           <div className="flex flex-col sm:flex-row items-center gap-6 bg-surface-container-low p-6 rounded-2xl border border-outline-variant/30">
             <div className="relative group shrink-0">
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                ref={fileInputRef}
+                onChange={handleImageChange}
+              />
               <div className="w-24 h-24 rounded-full bg-background border-4 border-background shadow-inner flex items-center justify-center overflow-hidden">
-                <HugeiconsIcon
-                  icon={UserIcon}
-                  className="h-12 w-12 text-on-surface-variant"
-                />
+                {previewUrl ? (
+                  <img src={previewUrl} alt="Preview" className="w-full h-full object-cover" />
+                ) : (
+                  <HugeiconsIcon
+                    icon={UserIcon}
+                    className="h-12 w-12 text-on-surface-variant"
+                  />
+                )}
               </div>
               <button
                 className="absolute bottom-0 right-0 bg-primary text-on-primary p-2 rounded-full shadow-lg hover:scale-105 active:scale-95 transition-all"
                 type="button"
+                onClick={() => fileInputRef.current?.click()}
+                title="Cambiar foto"
               >
                 <HugeiconsIcon icon={CameraAdd01Icon} className="h-4 w-4" />
               </button>
@@ -586,3 +630,4 @@ export const FormPerson = ({
     </Surface>
   );
 };
+

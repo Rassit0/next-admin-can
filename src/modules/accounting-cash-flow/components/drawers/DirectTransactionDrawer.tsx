@@ -22,7 +22,7 @@ import { useRouter } from "next/navigation";
 import { FileUploader } from "@/ui/components/file-uploader/FileUploader";
 import { useStorage } from "@/hooks/useStorage";
 import { SelectOrCreatePerson } from "./SelectOrCreatePerson";
-import { IPersonOption } from "@/modules/charge-transactions";
+import { IPersonOption } from "@/common/actions/get-persons-options";
 import { PrintReportDialog } from "@/modules/charge-transactions/components/dialog/PrintReportDialog";
 
 import { FinancialAccount } from "@/modules/financial-accounts/interfaces/financial-account.interface";

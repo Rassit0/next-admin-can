@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { getTransactions, getPaymentMethods } from "@/modules/accounting-cash-flow/actions/get";
-import { CashFlowClient } from "@/modules/accounting-cash-flow/components/CashFlowClient";
+import { CashFlowView } from "@/modules/accounting-cash-flow/components/CashFlowView";
 import { getAccountCategories } from "@/modules/account-categories/actions/get";
 import { getFinancialAccounts } from "@/modules/financial-accounts/actions/get-all";
 import { resolvePageData } from "@/utils/resolvePageData";
@@ -64,7 +64,7 @@ export default async function CashFlowPage({
         </p>
       </div>
 
-      <CashFlowClient
+      <CashFlowView
         response={response.data!}
         categories={categoriesRes.data?.data || []}
         financialAccounts={financialAccounts || []}

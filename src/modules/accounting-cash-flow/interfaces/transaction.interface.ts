@@ -23,6 +23,7 @@ export interface ITransaction {
     id: string;
     name: string;
     lastName: string | null;
+    secondLastName?: string | null;
     documentNumber: string | null;
   } | null;
   createdAt: Date | string;

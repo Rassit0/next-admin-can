@@ -35,10 +35,13 @@ import {
   removeMembership,
   updatePlayerMembership,
 } from "@/modules/player-memberships";
+import { AdvanceChargesDrawer } from "../drawer/AdvanceChargesDrawer";
+import { RegularizeHistoricalChargeDrawer } from "@/modules/charge-transactions/components/drawer/RegularizeHistoricalChargeDrawer";
 
 interface Props {
   membership: IPlayerMembership;
   origin?: string;
+  onSuccess?: () => void;
 }
 
 interface ActionDef {
@@ -52,6 +55,8 @@ const ACTIONS_BY_STATUS: Record<IPlayerMembership["status"], ActionDef[]> = {
   ACTIVE: [
     { key: "edit_start_date", label: "Modificar inicio", icon: Calendar01Icon },
     { key: "pause", label: "Programar pausa", icon: Calendar01Icon },
+    { key: "advance", label: "Adelantar cuota", icon: PlayIcon },
+    { key: "regularize", label: "Regularizar Histórico", icon: Note01Icon },
     { key: "suspend", label: "Suspender", icon: PauseIcon },
     { key: "finish", label: "Finalizar", icon: CheckmarkCircle02Icon },
     { key: "withdraw", label: "Dar de baja", icon: Logout01Icon, danger: true },
@@ -72,13 +77,15 @@ const ACTIONS_BY_STATUS: Record<IPlayerMembership["status"], ActionDef[]> = {
   ],
 };
 
-export const MembershipActions = ({ membership, origin }: Props) => {
+export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
   const router = useRouter();
   const params = useParams();
   const [loading, setLoading] = useState(false);
   const statusActions = ACTIONS_BY_STATUS[membership.status] ?? [];
 
   const confirmState = useOverlayState();
+  const advanceState = useOverlayState();
+  const regularizeState = useOverlayState();
   const [selectedAction, setSelectedAction] = useState<ActionDef | null>(null);
 
   const localStartedAt = membership.startedAt
@@ -105,6 +112,16 @@ export const MembershipActions = ({ membership, origin }: Props) => {
         ? `/admin/player-memberships/${membership.id}?from=${origin}`
         : `/admin/player-memberships/${membership.id}`;
       router.push(manageUrl);
+      return;
+    }
+
+    if (key === "advance") {
+      advanceState.open();
+      return;
+    }
+
+    if (key === "regularize") {
+      regularizeState.open();
       return;
     }
 
@@ -188,6 +205,7 @@ export const MembershipActions = ({ membership, origin }: Props) => {
     confirmState.close();
     setLoading(false);
     router.refresh();
+    onSuccess?.();
   };
 
   return (
@@ -467,6 +485,21 @@ export const MembershipActions = ({ membership, origin }: Props) => {
           </AlertDialog.Dialog>
         </AlertDialog.Container>
       </AlertDialog.Backdrop>
+
+      <AdvanceChargesDrawer
+        isOpen={advanceState.isOpen}
+        onOpenChange={advanceState.setOpen}
+        playerMembershipId={membership.id}
+        onSuccess={onSuccess}
+      />
+
+      <RegularizeHistoricalChargeDrawer
+        isOpen={regularizeState.isOpen}
+        onOpenChange={regularizeState.setOpen}
+        membershipId={membership.id}
+        type="membership"
+        onSuccess={onSuccess}
+      />
     </>
   );
 };

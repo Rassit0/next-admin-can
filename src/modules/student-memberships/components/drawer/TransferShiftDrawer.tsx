@@ -21,17 +21,18 @@ import { getLocalTimeZone, today } from "@internationalized/date";
 import { transferShift } from "../../actions/transfer-shift";
 import { getCourseSeasons, ICourseSeason } from "@/modules/course-seasons";
 import { IStudentMembership } from "../../interfaces/student-membership.interface";
+import { getStudentMembershipById } from "../../actions/get-by-id";
 
 interface Props {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
-  membership: IStudentMembership;
+  membershipId: string;
 }
 
 export const TransferShiftDrawer = ({
   isOpen,
   onOpenChange,
-  membership,
+  membershipId,
 }: Props) => {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -44,15 +45,41 @@ export const TransferShiftDrawer = ({
     today(getLocalTimeZone()),
   );
 
+  const [membership, setMembership] = useState<IStudentMembership | null>(null);
+  const [isLoadingMembership, setIsLoadingMembership] = useState(false);
+  const [membershipError, setMembershipError] = useState<string | null>(null);
+
   useEffect(() => {
     if (isOpen) {
-      loadCourseSeasons();
+      loadMembershipData();
       setTargetCourseSeasonShiftId(null);
       setEffectiveDate(today(getLocalTimeZone()));
+    } else {
+      setMembership(null);
+      setMembershipError(null);
+      setCourseSeasons([]);
     }
   }, [isOpen]);
 
-  const loadCourseSeasons = async () => {
+  const loadMembershipData = async () => {
+    setIsLoadingMembership(true);
+    setMembershipError(null);
+    try {
+      const res = await getStudentMembershipById({ id: membershipId });
+      if (res.error || !res.data) {
+        setMembershipError(res.message || "Error al cargar la membresía");
+      } else {
+        setMembership(res.data);
+        await loadCourseSeasons(res.data);
+      }
+    } catch (error) {
+      setMembershipError("Ocurrió un error al obtener la membresía");
+    } finally {
+      setIsLoadingMembership(false);
+    }
+  };
+
+  const loadCourseSeasons = async (loadedMembership: IStudentMembership) => {
     setIsLoadingSeasons(true);
     try {
       // Filtrar por el mismo curso en base a la membresía actual para simplificar la selección
@@ -67,7 +94,7 @@ export const TransferShiftDrawer = ({
         // Filtrar Ofertas del mismo curso
         const sameCourseSeasons = res.data.data.filter(
           (cs) =>
-            cs.course.name === membership.courseSeason.course.name &&
+            cs.course.name === loadedMembership.courseSeason.course.name &&
             cs.status === "ACTIVE"
         );
         setCourseSeasons(sameCourseSeasons);
@@ -100,7 +127,7 @@ export const TransferShiftDrawer = ({
     try {
       const isoDate = new Date(effectiveDate.toString()).toISOString();
 
-      const res = await transferShift(membership.id, {
+      const res = await transferShift(membershipId, {
         targetCourseSeasonId: selectedShiftObj.courseSeason.id,
         targetCourseSeasonShiftId,
         effectiveDate: isoDate,
@@ -130,6 +157,23 @@ export const TransferShiftDrawer = ({
           </Drawer.Header>
           
           <Drawer.Body className="gap-6 py-5">
+            {isLoadingMembership ? (
+              <div className="flex flex-col items-center justify-center flex-1 min-h-[300px]">
+                <Spinner size="lg" />
+                <p className="mt-4 text-sm text-muted">Cargando datos de membresía...</p>
+              </div>
+            ) : membershipError ? (
+              <Alert status="danger">
+                <Alert.Indicator>
+                  <HugeiconsIcon icon={InformationCircleIcon} />
+                </Alert.Indicator>
+                <Alert.Content>
+                  <Alert.Title>Error</Alert.Title>
+                  <Alert.Description>{membershipError}</Alert.Description>
+                </Alert.Content>
+              </Alert>
+            ) : membership ? (
+              <>
             <Alert status="accent">
               <Alert.Indicator>
                 <HugeiconsIcon icon={InformationCircleIcon} />
@@ -269,6 +313,8 @@ export const TransferShiftDrawer = ({
                 ¿Desde qué fecha el alumno ocupará un cupo en el turno destino?
               </p>
             </div>
+            </>
+            ) : null}
           </Drawer.Body>
 
           <Drawer.Footer className="border-t border-border">
@@ -280,7 +326,7 @@ export const TransferShiftDrawer = ({
             >
               Cancelar
             </Button>
-            <Button onPress={handleSubmit} isDisabled={isSubmitting}>
+            <Button onPress={handleSubmit} isDisabled={isSubmitting || !targetCourseSeasonShiftId || !effectiveDate || isLoadingSeasons || isLoadingMembership || !!membershipError}>
               {isSubmitting && <Spinner size="sm" className="text-current" />}
               {isSubmitting ? "Transfiriendo..." : "Confirmar Transferencia"}
             </Button>

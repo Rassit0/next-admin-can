@@ -16,6 +16,17 @@ export interface ITransaction {
   receiptUrls?: string[];
   createdAt: Date | string;
   updatedAt: Date | string;
+  thirdParty?: {
+    id: string;
+    name: string;
+    documentNumber: string | null;
+  } | null;
+  payerPerson?: {
+    id: string;
+    name: string;
+    lastName: string | null;
+    documentNumber: string | null;
+  } | null;
 }
 
 export interface ITransactionsResponse {

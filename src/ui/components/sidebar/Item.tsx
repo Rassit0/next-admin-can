@@ -9,6 +9,7 @@ interface Props {
     label: string;
     href: string;
     icon?: React.ReactNode;
+    highlight?: boolean;
   };
   index: number;
   urlBase?: string;
@@ -34,15 +35,21 @@ export const Item = ({ item, index, urlBase }: Props) => {
 
   // Si el primer segmento efectivo es igual al primer segmento del item, el item esta activo
   const isActive = effectiveSegment === itemSegment;
+  
+  const isHighlight = item.highlight;
+  
   return (
     <Link
       key={index}
       className={clsx(
         "flex items-center justify-center lg:justify-start gap-3 px-3 py-3 rounded-xl transition-all duration-150",
         {
-          " hover:bg-background-tertiary": !isActive,
-          "text-sky-700 dark:text-sky-400 font-bold border-l-4 border-sky-600 bg-background-tertiary":
-            isActive,
+          " hover:bg-background-tertiary": !isActive && !isHighlight,
+          "text-sky-700 dark:text-sky-400 font-bold border-l-4 border-sky-600 bg-background-tertiary": isActive && !isHighlight,
+          
+          // Highlight styles
+          "bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 font-semibold border-l-4 border-transparent hover:border-indigo-400": isHighlight && !isActive,
+          "bg-indigo-100 dark:bg-indigo-900/60 text-indigo-800 dark:text-indigo-200 font-bold border-l-4 border-indigo-600": isHighlight && isActive,
         },
       )}
       href={urlBase ? `${urlBase}/${item.href}` : item.href}
@@ -50,7 +57,9 @@ export const Item = ({ item, index, urlBase }: Props) => {
       {item.icon && (
         <span
           className={clsx({
-            "text-foreground/80": pathname !== item.href,
+            "text-foreground/80": !isActive && !isHighlight,
+            "text-indigo-500": isHighlight && !isActive,
+            "text-indigo-700 dark:text-indigo-300": isHighlight && isActive,
           })}
         >
           {item.icon}

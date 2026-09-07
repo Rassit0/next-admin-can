@@ -2,7 +2,9 @@ export const PER_PAGE = [
   { label: "5", value: "5" },
   { label: "10", value: "10" },
   { label: "15", value: "15" },
-  //   { label: "20", value: "20" },
+  { label: "20", value: "20" },
+  { label: "50", value: "50" },
+  { label: "100", value: "100" },
 ];
 
 export const PERMISSIONS = [
@@ -214,7 +216,7 @@ export const formatCurrency = (amount: number) => {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(amount);
-  
+
   return `Bs. ${formatted}`;
 };
 

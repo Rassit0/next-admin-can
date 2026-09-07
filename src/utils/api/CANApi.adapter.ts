@@ -36,6 +36,11 @@ export interface HttpAdapter {
   ): Promise<T>;
   delete<T>(endpoint: string, options?: HttpRequestOptions): Promise<T>;
   getBlob(endpoint: string, options?: HttpRequestOptions): Promise<Blob>;
+  postBlob(
+    endpoint: string,
+    data?: any,
+    options?: HttpRequestOptions,
+  ): Promise<Blob>;
 }
 
 const ERROR_MESSAGES: Readonly<Record<number, string>> = {
@@ -220,6 +225,20 @@ export class CANApiAdapter implements HttpAdapter {
    */
   async getBlob(endpoint: string, options?: HttpRequestOptions): Promise<Blob> {
     const response = await this.requestRaw(endpoint, "GET", undefined, options);
+
+    if (!response.ok) {
+      await this.handleResponse<never>(response, endpoint);
+    }
+
+    return response.blob();
+  }
+
+  async postBlob(
+    endpoint: string,
+    data?: any,
+    options?: HttpRequestOptions,
+  ): Promise<Blob> {
+    const response = await this.requestRaw(endpoint, "POST", data, options);
 
     if (!response.ok) {
       await this.handleResponse<never>(response, endpoint);

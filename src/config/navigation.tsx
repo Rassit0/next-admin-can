@@ -18,24 +18,35 @@ import {
   StudentIcon,
   TaskDone01Icon,
   UserGroupIcon,
-  UserIcon,
-  UserMultipleIcon,
-  Time02Icon,
-  Invoice01Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-
-export const itemsNavigation: NavItem[] = [
-  {
-    label: "Dashboard",
-    href: "dashboard",
-    action: "dashboard",
-    subject: "home",
-    icon: <HugeiconsIcon icon={DashboardSquare02Icon} size={20} />,
-    mobile: { priority: 10 },
-  },
-  {
-    label: "Disciplinas",
+    UserIcon,
+    UserMultipleIcon,
+    Time02Icon,
+    Invoice01Icon,
+    FlashIcon,
+  } from "@hugeicons/core-free-icons";
+  import { HugeiconsIcon } from "@hugeicons/react";
+  
+  export const itemsNavigation: NavItem[] = [
+    {
+      label: "Operaciones Rápidas",
+      href: "quick-operations",
+      action: "quick-operations",
+      subject: "home",
+      icon: <HugeiconsIcon icon={FlashIcon} size={20} />,
+      highlight: true,
+      hiddenInSidebar: true,
+      mobile: { priority: 1 },
+    },
+    {
+      label: "Dashboard",
+      href: "dashboard",
+      action: "dashboard",
+      subject: "home",
+      icon: <HugeiconsIcon icon={DashboardSquare02Icon} size={20} />,
+      mobile: { priority: 10 },
+    },
+    {
+      label: "Disciplinas",
     href: "disciplines",
     action: "disciplines",
     subject: "DISCIPLINES",

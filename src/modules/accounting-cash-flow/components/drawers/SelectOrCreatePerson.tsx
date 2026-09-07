@@ -18,8 +18,8 @@ import { Dispatch, SetStateAction } from "react";
 import { useAsyncList } from "@react-stately/data";
 import {
   getPersonsOptions,
-} from "@/modules/account-charges/actions/get-persons-options";
-import { IPersonOption } from "@/modules/charge-transactions";
+  IPersonOption,
+} from "@/common/actions/get-persons-options";
 import { AddModal } from "@/modules/persons";
 
 interface Props {
@@ -188,6 +188,7 @@ export const SelectOrCreatePerson = ({
               name: person.name,
               lastName: person.lastName,
               secondLastName: person.secondLastName,
+              documentType: person.documentType || null,
               documentNumber: person.documentNumber,
               gender: person.gender,
               birthDate: person.birthDate,

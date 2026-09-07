@@ -41,7 +41,7 @@ export interface IPlayerMembership {
       clubId: string;
       club: {
         disciplineId: string;
-      }
+      };
     };
     season: {
       name: string;

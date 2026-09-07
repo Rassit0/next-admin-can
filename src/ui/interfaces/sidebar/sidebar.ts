@@ -22,4 +22,6 @@ export interface NavItem {
     position?: number;
     featured?: boolean;
   };
+  highlight?: boolean;
+  hiddenInSidebar?: boolean;
 }

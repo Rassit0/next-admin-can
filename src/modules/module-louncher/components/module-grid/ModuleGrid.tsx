@@ -18,6 +18,13 @@ export const ModuleGrid = () => {
         description="Gestiona las noticias, publicaciones, anuncios, historia e información de 'Nosotros' en el portal web del club."
         tagText="CMS y Portales"
       />
+      <CardLouncher
+        href="/admin/quick-operations"
+        icon={DashboardCircleEditIcon}
+        title="Operaciones Rápidas"
+        description="Gestión unificada de secretaría, operaciones y flujo de caja."
+        tagText="Secretaría"
+      />
     </div>
   );
 };

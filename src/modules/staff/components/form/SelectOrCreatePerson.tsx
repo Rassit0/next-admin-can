@@ -14,7 +14,7 @@ import {
 } from "@heroui/react";
 import { Dispatch, SetStateAction } from "react";
 import { useAsyncList } from "@react-stately/data";
-import { getPersonsOptions, IPersonOption } from "@/modules/staff";
+import { getPersonsOptions, IPersonOption } from "@/common/actions/get-persons-options";
 import { AddModal } from "@/modules/persons";
 
 interface Props {
@@ -38,7 +38,7 @@ export const SelectOrCreatePerson = ({
 }: Props) => {
   const list = useAsyncList<IPersonOption>({
     async load({ cursor: page = "1", filterText, signal }) {
-      const res = await getPersonsOptions({ search: filterText, page }, signal);
+      const res = await getPersonsOptions({ search: filterText, page, excludeRole: "STAFF" }, signal);
       if (!res || res.error) {
         return {
           cursor: undefined,
@@ -156,6 +156,7 @@ export const SelectOrCreatePerson = ({
               name: person.name,
               lastName: person.lastName,
               secondLastName: person.secondLastName,
+              documentType: person.documentType || null,
               documentNumber: person.documentNumber,
               gender: person.gender,
               birthDate: person.birthDate as Date,

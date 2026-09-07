@@ -22,12 +22,14 @@ interface Props {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
   playerMembershipId: string;
+  onSuccess?: () => void;
 }
 
 export const AdvanceChargesDrawer = ({
   isOpen,
   onOpenChange,
   playerMembershipId,
+  onSuccess,
 }: Props) => {
   const router = useRouter();
   const [quantity, setQuantity] = useState<number>(1);
@@ -92,6 +94,7 @@ export const AdvanceChargesDrawer = ({
         setQuantity(1);
         setShowConfirm(false);
         onOpenChange(false);
+        onSuccess?.();
       }
     } catch (error) {
       toast.error("Ocurrió un error inesperado al generar los cargos.");

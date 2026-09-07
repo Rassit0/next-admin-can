@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import { getPermissionsArray } from "@/modules/roles";
 import { PermissionsProvider } from "@/shared/providers/PermissionsProvider";
+import { Header } from "@/ui";
 import { SessionProvider } from "next-auth/react";
 import { redirect } from "next/navigation";
 

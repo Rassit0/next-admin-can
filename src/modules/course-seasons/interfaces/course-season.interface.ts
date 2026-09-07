@@ -52,6 +52,10 @@ export interface Category {
   name: string;
   minAge: number;
   maxAge: number;
+  schoolId?: string;
+  school?: {
+    disciplineId: string;
+  };
 }
 
 export interface Season {

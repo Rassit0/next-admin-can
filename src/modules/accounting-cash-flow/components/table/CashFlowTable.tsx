@@ -1,15 +1,18 @@
 "use client";
-import { Chip, Table, Dropdown, Button, Label } from "@heroui/react";
+import { Chip, Table, Dropdown, Button, Label, AlertDialog } from "@heroui/react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
   Search01Icon,
   MoreVerticalIcon,
   Invoice01Icon,
+  Cancel01Icon,
 } from "@hugeicons/core-free-icons";
 import { SortableColumnHeader } from "@/ui";
 import { ITransaction } from "../../interfaces/transaction.interface";
 import React, { useState } from "react";
 import { PrintReportDialog } from "@/modules/charge-transactions/components/dialog/PrintReportDialog";
+import { toast } from "sonner";
+import { deleteTransaction } from "../../actions/delete-transaction";
 
 interface Props {
   transactions: ITransaction[];
@@ -20,6 +23,26 @@ export const CashFlowTable = ({ transactions }: Props) => {
     null,
   );
   const [showPrintDialog, setShowPrintDialog] = useState(false);
+  const [voidTransactionId, setVoidTransactionId] = useState<string | null>(null);
+  const [isVoiding, setIsVoiding] = useState(false);
+
+  const handleVoid = async () => {
+    if (!voidTransactionId) return;
+    setIsVoiding(true);
+    try {
+      const res = await deleteTransaction(voidTransactionId);
+      if (res.error) {
+        toast.error(res.message);
+      } else {
+        toast.success(res.message);
+        setVoidTransactionId(null);
+      }
+    } catch (error) {
+      toast.error("Ocurrió un error al anular el pago");
+    } finally {
+      setIsVoiding(false);
+    }
+  };
 
   return (
     <>
@@ -181,7 +204,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
                     <div className="flex flex-col">
                       <span className="text-sm text-default-700 max-w-37.5 truncate">
                         {transaction.payerPerson ? (
-                          `${transaction.payerPerson.name} ${transaction.payerPerson.lastName || ""}`
+                          `${transaction.payerPerson.lastName || ""} ${transaction.payerPerson.secondLastName || ""} ${transaction.payerPerson.name}`.replace(/\s+/g, ' ').trim()
                         ) : (
                           <span className="text-default-400">—</span>
                         )}
@@ -223,6 +246,8 @@ export const CashFlowTable = ({ transactions }: Props) => {
                               if (key === "print") {
                                 setPrintTransactionId(transaction.id);
                                 setShowPrintDialog(true);
+                              } else if (key === "void") {
+                                setVoidTransactionId(transaction.id);
                               }
                             }}
                           >
@@ -233,6 +258,16 @@ export const CashFlowTable = ({ transactions }: Props) => {
                               <HugeiconsIcon icon={Invoice01Icon} />
                               <Label>Imprimir Recibo</Label>
                             </Dropdown.Item>
+                            {transaction.status !== "CANCELLED" && (
+                              <Dropdown.Item
+                                id="void"
+                                textValue="Anular Pago"
+                                className="text-danger"
+                              >
+                                <HugeiconsIcon icon={Cancel01Icon} className="text-danger" />
+                                <Label className="text-danger">Anular Pago</Label>
+                              </Dropdown.Item>
+                            )}
                           </Dropdown.Menu>
                         </Dropdown.Popover>
                       </Dropdown>
@@ -250,6 +285,49 @@ export const CashFlowTable = ({ transactions }: Props) => {
         isOpen={showPrintDialog}
         onOpenChange={setShowPrintDialog}
       />
+
+      <AlertDialog.Backdrop
+        isOpen={!!voidTransactionId}
+        onOpenChange={(isOpen) => {
+          if (!isOpen && !isVoiding) setVoidTransactionId(null);
+        }}
+      >
+        <AlertDialog.Container>
+          <AlertDialog.Dialog className="sm:max-w-md">
+            <AlertDialog.CloseTrigger />
+            <AlertDialog.Header>
+              <AlertDialog.Icon status="danger" />
+              <AlertDialog.Heading>Anular Pago / Transacción</AlertDialog.Heading>
+            </AlertDialog.Header>
+            <AlertDialog.Body>
+              <p>
+                ¿Estás seguro que deseas anular esta transacción? Esta acción
+                reversará el saldo aplicado a los cargos asociados y devolverá la
+                transacción a su estado anterior.
+              </p>
+              <p className="mt-2 text-sm text-default-500">
+                Esta acción no se puede deshacer.
+              </p>
+            </AlertDialog.Body>
+            <AlertDialog.Footer>
+              <Button
+                variant="tertiary"
+                onPress={() => setVoidTransactionId(null)}
+                isDisabled={isVoiding}
+              >
+                Cancelar
+              </Button>
+              <Button
+                variant="danger"
+                onPress={handleVoid}
+                isPending={isVoiding}
+              >
+                Sí, Anular
+              </Button>
+            </AlertDialog.Footer>
+          </AlertDialog.Dialog>
+        </AlertDialog.Container>
+      </AlertDialog.Backdrop>
     </>
   );
 };

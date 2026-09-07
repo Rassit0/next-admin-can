@@ -42,12 +42,14 @@ interface Props {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
   studentMembershipId: string;
+  onSuccess?: () => void;
 }
 
 export const AdvanceChargesDrawer = ({
   isOpen,
   onOpenChange,
   studentMembershipId,
+  onSuccess,
 }: Props) => {
   const router = useRouter();
 
@@ -233,6 +235,9 @@ export const AdvanceChargesDrawer = ({
         setShowConfirm(false);
         // Refresh cycles and capacities after successful purchase
         loadCycles();
+        if (onSuccess) {
+          onSuccess();
+        }
         // Return without closing if we want to stay open, or we can close it
         // The original logic closed it, we will keep it closing:
         onOpenChange(false);

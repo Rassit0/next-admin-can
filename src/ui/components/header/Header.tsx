@@ -9,12 +9,14 @@ import { ThemeButton } from "./ThemeButton";
 import React, { useState } from "react";
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { Button } from "@heroui/react";
+import { Crest } from "../crest";
 
 interface HeaderProps {
   title?: React.ReactNode;
   actions?: React.ReactNode;
+  showLogo?: boolean;
 }
-export const Header = ({ title, actions }: HeaderProps) => {
+export const Header = ({ title, actions, showLogo }: HeaderProps) => {
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
 
@@ -64,6 +66,11 @@ export const Header = ({ title, actions }: HeaderProps) => {
         <Button className="md:hidden" isIconOnly variant="ghost">
           <HugeiconsIcon icon={SidebarLeftIcon} />
         </Button>
+        {showLogo && (
+          <div className="hidden md:flex items-center justify-center mr-2">
+            <Crest className="w-10 h-10 object-contain" />
+          </div>
+        )}
         <span className="hidden md:block text-3xl font-semibold text-on-surface font-headline leading-tight">
           {title || "Buen día, Mauricio"}
         </span>

@@ -3,16 +3,18 @@ import { api } from "@/utils/api";
 import { ServiceResponse } from "@/types/api";
 import { handleServerAction } from "@/utils";
 import { auth } from "@/auth";
+import { TGender } from "@/modules/persons";
 
 export interface IPersonOption {
   id: string;
   fullName: string;
-  documentNumber: string;
+  documentType: string | null;
+  documentNumber: string | null;
   imageUrl: string | null;
   name: string;
   lastName: string;
   secondLastName: string | null;
-  gender: string;
+  gender: TGender | null;
   birthDate: Date | null;
 }
 
@@ -34,10 +36,12 @@ interface SearchParams {
   per_page?: string;
   page?: string;
   orderBy?: string;
+  excludeRole?: "PLAYER" | "STUDENT" | "STAFF" | "USER";
+  gender?: string;
 }
 
 export const getPersonsOptions = async (
-  { search, per_page = "10", page = "1", orderBy = "asc" }: SearchParams,
+  { search, per_page = "10", page = "1", orderBy = "asc", excludeRole, gender }: SearchParams,
   signal?: AbortSignal,
 ): Promise<ServiceResponse<IPersonsOptionsResponse>> => {
   const session = await auth();
@@ -52,11 +56,13 @@ export const getPersonsOptions = async (
   return handleServerAction(async () => {
     const params = new URLSearchParams();
     if (search) params.set("search", search);
-    if (per_page) params.set("limit", per_page); // Users API uses limit
+    if (per_page) params.set("per_page", per_page);
     if (page) params.set("page", page);
+    if (excludeRole) params.set("excludeRole", excludeRole);
+    if (gender) params.set("gender", gender);
 
     const res = await api.get<IPersonsOptionsResponse>(
-      `users/persons/options?${params.toString()}`,
+      `persons/options?${params.toString()}`,
       {
         next: {
           tags: ["persons-options"],

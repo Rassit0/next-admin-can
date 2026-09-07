@@ -1,5 +1,4 @@
 export * from "./actions/create";
-export * from "./actions/get-persons-options";
 export * from "./actions/get";
 export * from "./interfaces";
 export * from "./components/form/SelectOrCreatePerson";

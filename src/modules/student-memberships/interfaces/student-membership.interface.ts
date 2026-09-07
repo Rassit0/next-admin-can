@@ -5,14 +5,9 @@ export type StudentMembershipStatus =
   | "WITHDRAWN"
   | "FINISHED";
 
-export type StudentMembershipSuspensionReason =
-  | "PAUSE"
-  | "MANUAL";
+export type StudentMembershipSuspensionReason = "PAUSE" | "MANUAL";
 
-export type CycleEnrollmentStatus =
-  | "PENDING"
-  | "CONFIRMED"
-  | "CANCELLED";
+export type CycleEnrollmentStatus = "PENDING" | "CONFIRMED" | "CANCELLED";
 
 export interface ICycleEnrollment {
   id: string;

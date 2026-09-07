@@ -38,7 +38,7 @@ export const getTeamSeasons = async ({
       `team-seasons?${params.toString()}`,
       {
         next: {
-          tags: ["team-seasons"],
+          tags: ["team-seasons", "team-seasons-v2"],
           revalidate: 3600,
         },
       },

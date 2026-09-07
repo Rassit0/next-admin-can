@@ -14,3 +14,5 @@ export * from "./actions/add-person";
 export * from "./actions/edit-person";
 export * from "./actions/delete-person";
 export * from "./actions/find-by-id";
+export * from "./interfaces/person-contact.interface";
+export * from "./actions/get-person-contacts";

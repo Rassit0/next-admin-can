@@ -17,8 +17,7 @@ import {
   cn,
 } from "@heroui/react";
 import { useAsyncList } from "@react-stately/data";
-import { getPersonsOptions } from "../../actions/get-persons-options";
-import { IPersonOption } from "@/modules/students";
+import { getPersonsOptions, IPersonOption } from "@/common/actions/get-persons-options";
 import { Cancel01Icon, FloppyDiskIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { IAccountCharge } from "../../interfaces/charge.interface";
@@ -36,6 +35,7 @@ interface Props {
   charge?: IAccountCharge | null;
   direction: "RECEIVABLE" | "PAYABLE";
   onSuccess?: () => void;
+  defaultPerson?: IPersonOption | null;
 }
 
 export const AccountChargeDrawer = ({
@@ -44,6 +44,7 @@ export const AccountChargeDrawer = ({
   charge,
   direction,
   onSuccess,
+  defaultPerson,
 }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [categories, setCategories] = useState<IAccountCategory[]>([]);
@@ -65,6 +66,12 @@ export const AccountChargeDrawer = ({
 
   const list = useAsyncList<IPersonOption>({
     async load({ cursor: page = "1", filterText, signal }) {
+      if (defaultPerson && !filterText) {
+        return {
+          cursor: undefined,
+          items: [defaultPerson],
+        };
+      }
       const res = await getPersonsOptions({ search: filterText, page }, signal);
       if (!res || res.error) {
         return {
@@ -131,9 +138,17 @@ export const AccountChargeDrawer = ({
     setCategoryId("");
     setDescription("");
     setReferenceNumber("");
-    setEntityType("EXTERNAL");
-    setExternalEntity("");
-    setPersonId("");
+    
+    if (defaultPerson) {
+      setEntityType("PERSON");
+      setPersonId(defaultPerson.id);
+      setExternalEntity("");
+    } else {
+      setEntityType("EXTERNAL");
+      setExternalEntity("");
+      setPersonId("");
+    }
+    
     setIsImmediate(false);
     setPaymentMethod("CASH");
   };
@@ -381,8 +396,9 @@ export const AccountChargeDrawer = ({
                     className="mt-2 w-full"
                     placeholder="Buscar por nombre o documento..."
                     selectionMode="single"
-                    value={personId}
-                    onChange={(key) => {
+                    selectedKey={personId}
+                    isDisabled={!!defaultPerson}
+                    onSelectionChange={(key) => {
                       setPersonId(key?.toString() || "");
                     }}
                   >
