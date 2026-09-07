@@ -99,7 +99,7 @@ export const SelectOrCreatePerson = ({
         selectionMode="single"
         selectedKey={personId}
         onSelectionChange={(key) => {
-          setPersonId(key ? key.toString() : "");
+          setPersonId(key ? key.toString() : null);
           const selectedPlayer = list.items.find((player) => player.id === key);
           if (selectedPlayer) {
             setSelectedPerson(selectedPlayer);
