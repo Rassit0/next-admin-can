@@ -39,12 +39,15 @@ export const PrintReportDialog = ({
 
   const openPdf = useCallback(
     async (action: "print" | "download") => {
-      if (!transactionId && (!paymentIds || paymentIds.length === 0)) return;
+      if (!transactionId && (!paymentIds || paymentIds.length === 0)) {
+        toast.danger("No hay pagos seleccionados o el ID es inválido.");
+        return;
+      }
       setIsLoading(true);
 
       try {
         let res;
-        
+
         if (paymentIds && paymentIds.length > 0) {
           res = await getBulkTransactionReport(paymentIds);
         } else if (transactionId) {
@@ -81,9 +84,10 @@ export const PrintReportDialog = ({
         } else {
           const link = document.createElement("a");
           link.href = url;
-          const fileName = paymentIds && paymentIds.length > 0 
-            ? `recibos-multiples.pdf` 
-            : `recibo-${transactionId?.slice(0, 8) || "pago"}.pdf`;
+          const fileName =
+            paymentIds && paymentIds.length > 0
+              ? `recibos-multiples.pdf`
+              : `recibo-${transactionId?.slice(0, 8) || "pago"}.pdf`;
           link.download = fileName;
           document.body.appendChild(link);
           link.click();
@@ -106,57 +110,68 @@ export const PrintReportDialog = ({
   return (
     <AlertDialog.Backdrop isOpen={isOpen} onOpenChange={onOpenChange}>
       <AlertDialog.Container>
-          <AlertDialog.Dialog className="sm:max-w-sm" aria-label={paymentIds && paymentIds.length > 0 ? "Imprimir Recibo Múltiple" : "Imprimir Recibo de Pago"}>
-            <AlertDialog.CloseTrigger />
-            <AlertDialog.Header>
-              <AlertDialog.Icon status="accent" />
-              <AlertDialog.Heading>{paymentIds && paymentIds.length > 0 ? "Recibo Múltiple" : "Recibo de Pago"}</AlertDialog.Heading>
-            </AlertDialog.Header>
-            <AlertDialog.Body>
-              <p className="text-sm text-muted">
-                {paymentIds && paymentIds.length > 0 
-                  ? "Los pagos se registraron exitosamente. ¿Qué deseas hacer con el recibo múltiple consolidado?" 
-                  : "El pago se registró exitosamente. ¿Qué deseas hacer con el recibo?"}
-              </p>
-            </AlertDialog.Body>
-            <AlertDialog.Footer className="flex flex-col gap-2 sm:flex-row">
-              <Button
-                variant="tertiary"
-                onPress={() => onOpenChange(false)}
-                isDisabled={isLoading}
-                className="w-full sm:w-auto"
-              >
-                Cerrar
-              </Button>
-              <Button
-                variant="secondary"
-                onPress={() => openPdf("download")}
-                isDisabled={isLoading}
-                className="w-full sm:w-auto"
-              >
-                {isLoading ? (
-                  <Spinner color="current" size="sm" />
-                ) : (
-                  <HugeiconsIcon icon={Download04Icon} size={18} />
-                )}
-                Descargar PDF
-              </Button>
-              <Button
-                variant="primary"
-                onPress={() => openPdf("print")}
-                isDisabled={isLoading}
-                className="w-full sm:w-auto"
-              >
-                {isLoading ? (
-                  <Spinner color="current" size="sm" />
-                ) : (
-                  <HugeiconsIcon icon={PrinterIcon} size={18} />
-                )}
-                Imprimir
-              </Button>
-            </AlertDialog.Footer>
-          </AlertDialog.Dialog>
-        </AlertDialog.Container>
+        <AlertDialog.Dialog
+          className="sm:max-w-sm"
+          aria-label={
+            paymentIds && paymentIds.length > 0
+              ? "Imprimir Recibo Múltiple"
+              : "Imprimir Recibo de Pago"
+          }
+        >
+          <AlertDialog.CloseTrigger />
+          <AlertDialog.Header>
+            <AlertDialog.Icon status="accent" />
+            <AlertDialog.Heading>
+              {paymentIds && paymentIds.length > 0
+                ? "Recibo Múltiple"
+                : "Recibo de Pago"}
+            </AlertDialog.Heading>
+          </AlertDialog.Header>
+          <AlertDialog.Body>
+            <p className="text-sm text-muted">
+              {paymentIds && paymentIds.length > 0
+                ? "Los pagos se registraron exitosamente. ¿Qué deseas hacer con el recibo múltiple consolidado?"
+                : "El pago se registró exitosamente. ¿Qué deseas hacer con el recibo?"}
+            </p>
+          </AlertDialog.Body>
+          <AlertDialog.Footer className="flex flex-col gap-2 sm:flex-row">
+            <Button
+              variant="tertiary"
+              onPress={() => onOpenChange(false)}
+              isDisabled={isLoading}
+              className="w-full sm:w-auto"
+            >
+              Cerrar
+            </Button>
+            <Button
+              variant="secondary"
+              onPress={() => openPdf("download")}
+              isDisabled={isLoading}
+              className="w-full sm:w-auto"
+            >
+              {isLoading ? (
+                <Spinner color="current" size="sm" />
+              ) : (
+                <HugeiconsIcon icon={Download04Icon} size={18} />
+              )}
+              Descargar PDF
+            </Button>
+            <Button
+              variant="primary"
+              onPress={() => openPdf("print")}
+              isDisabled={isLoading}
+              className="w-full sm:w-auto"
+            >
+              {isLoading ? (
+                <Spinner color="current" size="sm" />
+              ) : (
+                <HugeiconsIcon icon={PrinterIcon} size={18} />
+              )}
+              Imprimir
+            </Button>
+          </AlertDialog.Footer>
+        </AlertDialog.Dialog>
+      </AlertDialog.Container>
     </AlertDialog.Backdrop>
   );
 };

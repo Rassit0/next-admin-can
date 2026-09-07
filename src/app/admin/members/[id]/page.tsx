@@ -1,4 +1,4 @@
-import { findPersonById } from "@/modules/persons";
+import { findPersonById } from "@/modules/persons/actions/find-by-id";
 import { HeaderPage } from "@/ui";
 import { Button, Card, Switch } from "@heroui/react";
 import {

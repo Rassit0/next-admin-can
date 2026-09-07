@@ -88,6 +88,7 @@ export const QuickOperationsClient = () => {
           personId={personId}
           setPersonId={setPersonId}
           setSelectedPerson={setSelectedPerson}
+          isRequired={false}
           defaultPerson={selectedPerson}
         />
       </div>

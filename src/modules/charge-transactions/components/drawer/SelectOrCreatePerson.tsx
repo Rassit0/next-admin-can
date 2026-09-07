@@ -97,12 +97,14 @@ export const SelectOrCreatePerson = ({
         className="flex-1"
         placeholder="Buscar..."
         selectionMode="single"
-        value={personId}
-        onChange={(key) => {
-          setPersonId(key?.toString() || "");
+        selectedKey={personId}
+        onSelectionChange={(key) => {
+          setPersonId(key ? key.toString() : "");
           const selectedPlayer = list.items.find((player) => player.id === key);
           if (selectedPlayer) {
             setSelectedPerson(selectedPlayer);
+          } else {
+            setSelectedPerson(null);
           }
           handleRemoveError?.("personId");
         }}

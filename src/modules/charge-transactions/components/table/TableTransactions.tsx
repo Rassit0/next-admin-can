@@ -103,10 +103,13 @@ export const TableTransactions = ({ transactions }: Props) => {
     if (selectedKeys === "all") {
       return Array.from(new Set(transactions.map((t) => t.paymentId || t.id)));
     }
+    const selectedKeysArray = Array.from(selectedKeys).map(String);
     return Array.from(
       new Set(
         transactions
-          .filter((t) => selectedKeys.has(t.id))
+          .filter((t) =>
+            selectedKeysArray.includes(String(t.paymentId || t.id)),
+          )
           .map((t) => t.paymentId || t.id),
       ),
     );

@@ -1,7 +1,7 @@
 "use server";
 import { api } from "@/utils/api";
 import { ServiceResponse } from "@/types/api";
-import { IPerson } from "@/modules/persons";
+import { IPerson } from "../interfaces/person.interface";
 import { handleServerAction } from "@/utils";
 
 interface SearchParams {
