@@ -3,6 +3,7 @@ import { File01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { DateRangeFilter } from "@/ui";
 import { DownloadReportButton } from "@/modules/reports/components/DownloadReportButton";
+import { DownloadMonthlyAccountingButton } from "@/modules/reports/components/DownloadMonthlyAccountingButton";
 
 export const metadata = {
   title: "Reportes | Contabilidad",
@@ -41,29 +42,22 @@ export default async function ReportsPage({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* Tarjeta: Reporte General de Contabilidad */}
-        {/* <div className="flex flex-col bg-white dark:bg-zinc-900 rounded-xl border border-default-200 shadow-sm overflow-hidden">
+        {/* Tarjeta: Informe Mensual Contable (Excel) */}
+        <div className="flex flex-col bg-white dark:bg-zinc-900 rounded-xl border border-default-200 shadow-sm overflow-hidden">
           <div className="flex flex-col gap-3 p-6 pb-4">
             <div className="flex items-center gap-2">
               <HugeiconsIcon icon={File01Icon} className="text-primary" />
-              <p className="text-md font-bold">Reporte General</p>
+              <p className="text-md font-bold">Informe Mensual Contable</p>
             </div>
             <p className="text-sm text-default-500">
-              Resumen ejecutivo de ingresos, egresos, saldos de cuentas y deuda viva. Ideal para control gerencial.
+              Reporte contable gerencial en Excel. Resumen de flujos, distribución contable y sábana detallada para reconciliación.
             </p>
           </div>
           <div className="h-px bg-default-200 w-full" />
-          <div className="flex-1 space-y-4 p-6">
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Período de análisis</label>
-              <DateRangeFilter startKey="general_start" endKey="general_end" />
-            </div>
+          <div className="p-6">
+            <DownloadMonthlyAccountingButton />
           </div>
-          <div className="h-px bg-default-200 w-full" />
-          <div className="p-6 pt-4">
-            <DownloadReportButton reportId="accounting.general" start={general_start} end={general_end} />
-          </div>
-        </div> */}
+        </div>
 
         {/* Tarjeta: Informe de Arqueos de Caja */}
         <div className="flex flex-col bg-white dark:bg-zinc-900 rounded-xl border border-default-200 shadow-sm overflow-hidden">

@@ -7,6 +7,7 @@ import { ICourseSeasonStaff } from "@/modules/course-season-staff";
 
 export interface AddCourseSeasonStaffData {
   courseSeasonId: string;
+  courseSeasonShiftId: string;
   staffId: string;
   role: string;
   customRole?: string | null;

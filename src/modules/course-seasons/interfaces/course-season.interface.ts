@@ -84,13 +84,13 @@ export interface ICourseSeasonShift {
   validateAge: boolean;
   shift: Shift;
   category?: Category;
+  courseSeasonStaffs?: any[];
   maxMembers: number;
   minMembers: number;
   isActive: boolean;
   _count?: {
     studentMemberships: number;
   };
-  courseSeasonStaffs?: any[];
 }
 
 export interface Meta {

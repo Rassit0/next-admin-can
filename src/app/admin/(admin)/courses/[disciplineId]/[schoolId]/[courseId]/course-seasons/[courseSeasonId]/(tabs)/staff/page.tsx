@@ -38,7 +38,7 @@ export default async function CourseSeasonStaffPage({ params }: Props) {
           </p>
         </div>
         <div className="w-full sm:w-auto">
-          <AssignStaffDrawer courseSeason={courseSeason} />
+          <AssignStaffDrawer courseSeason={courseSeason} shifts={courseSeason.shifts || []} />
         </div>
       </Card.Header>
 

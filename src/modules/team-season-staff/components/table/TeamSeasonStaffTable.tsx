@@ -84,6 +84,11 @@ export const TeamSeasonStaffTable = ({ staffList, teamSeason }: Props) => {
                 </span>
               </SortableColumnHeader>
             </Table.Column>
+            <Table.Column id="category">
+              <span className="text-xs font-semibold uppercase tracking-wide">
+                Categoría
+              </span>
+            </Table.Column>
             <Table.Column allowsSorting id="startedAt">
               <SortableColumnHeader id="startedAt">
                 <span className="text-xs font-semibold uppercase tracking-wide">
@@ -149,8 +154,14 @@ export const TeamSeasonStaffTable = ({ staffList, teamSeason }: Props) => {
                     </span>
                   </Table.Cell>
                   <Table.Cell>
-                    <span className="text-sm font-medium text-foreground">
+                    <span className="text-sm">
                       {formatRole(item.role, item.customRole)}
+                    </span>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <span className="text-sm">
+                      {item.teamSeasonCategory?.category?.name || "-"}
+                      {item.teamSeasonCategory?.gender ? ` (${item.teamSeasonCategory.gender})` : ""}
                     </span>
                   </Table.Cell>
                   <Table.Cell>

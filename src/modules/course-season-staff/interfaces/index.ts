@@ -17,10 +17,9 @@ export interface ICourseSeasonStaff {
   notes: string | null;
   createdAt: string;
   updatedAt: string;
-  courseSeason: {
+  courseSeasonShift: {
     id: string;
-    course: {
-      id: string;
+    shift: {
       name: string;
     };
   };

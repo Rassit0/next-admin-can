@@ -7,6 +7,7 @@ import { ITeamSeasonStaff } from "@/modules/team-season-staff";
 
 export interface AddTeamSeasonStaffData {
   teamSeasonId: string;
+  teamSeasonCategoryId: string;
   staffId: string;
   role: string;
   customRole?: string | null;

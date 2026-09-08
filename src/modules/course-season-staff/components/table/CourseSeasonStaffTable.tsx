@@ -83,6 +83,11 @@ export const CourseSeasonStaffTable = ({ staffList, courseSeason }: Props) => {
                 </span>
               </SortableColumnHeader>
             </Table.Column>
+            <Table.Column id="shift">
+              <span className="text-xs font-semibold uppercase tracking-wide">
+                Turno
+              </span>
+            </Table.Column>
             <Table.Column allowsSorting id="startedAt">
               <SortableColumnHeader id="startedAt">
                 <span className="text-xs font-semibold uppercase tracking-wide">
@@ -150,6 +155,11 @@ export const CourseSeasonStaffTable = ({ staffList, courseSeason }: Props) => {
                   <Table.Cell>
                     <span className="text-sm font-medium text-foreground">
                       {formatRole(item.role, item.customRole)}
+                    </span>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <span className="text-sm">
+                      {item.courseSeasonShift?.shift?.name || "-"}
                     </span>
                   </Table.Cell>
                   <Table.Cell>

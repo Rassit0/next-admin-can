@@ -1,5 +1,5 @@
 import { Card } from "@heroui/react";
-import { getTeamSeasonById } from "@/modules/team-seasons";
+import { getTeamSeasonById, getTeamSeasonCategories } from "@/modules/team-seasons";
 import {
   getTeamSeasonStaff,
   AssignStaffDrawer,
@@ -15,9 +15,10 @@ interface Props {
 export default async function TeamSeasonStaffPage({ params }: Props) {
   const { teamSeasonId } = await params;
 
-  const [teamSeasonRes, staffRes] = await Promise.all([
+  const [teamSeasonRes, staffRes, categoriesRes] = await Promise.all([
     getTeamSeasonById({ id: teamSeasonId }),
     getTeamSeasonStaff({ teamSeasonId, per_page: "100" }),
+    getTeamSeasonCategories(teamSeasonId),
   ]);
 
   if (teamSeasonRes.error || !teamSeasonRes.data) {
@@ -26,6 +27,7 @@ export default async function TeamSeasonStaffPage({ params }: Props) {
 
   const teamSeason = teamSeasonRes.data;
   const staffList = staffRes.data?.data || [];
+  const categories = categoriesRes.data || [];
 
   return (
     <Card className="flex-1 rounded-t-none bg-surface p-1 shadow-sm md:p-4">
@@ -38,7 +40,7 @@ export default async function TeamSeasonStaffPage({ params }: Props) {
           </p>
         </div>
         <div className="w-full sm:w-auto">
-          <AssignStaffDrawer teamSeason={teamSeason} />
+          <AssignStaffDrawer teamSeason={teamSeason} categories={categories} />
         </div>
       </Card.Header>
 

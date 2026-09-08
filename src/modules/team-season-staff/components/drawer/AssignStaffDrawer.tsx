@@ -14,6 +14,7 @@ import {
   FieldError,
   CloseButton,
   Popover,
+  Select,
 } from "@heroui/react";
 import {
   Add01Icon,
@@ -22,12 +23,13 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useEffect, useMemo, useState } from "react";
-import { ITeamSeason } from "@/modules/team-seasons";
+import { ITeamSeason, ITeamSeasonCategory } from "@/modules/team-seasons";
 import { addTeamSeasonStaff, IStaffOption } from "@/modules/team-season-staff";
 import { SelectOrCreateStaff } from "../form/SelectOrCreateStaff";
 
 interface Props {
   teamSeason: ITeamSeason;
+  categories: ITeamSeasonCategory[];
   size?: "lg" | "md" | "sm";
 }
 
@@ -38,12 +40,13 @@ const toLocalIso = (dateStr: string) => {
   return new Date(`${dateStr}T00:00:00`).toISOString();
 };
 
-export const AssignStaffDrawer = ({ teamSeason, size = "md" }: Props) => {
+export const AssignStaffDrawer = ({ teamSeason, categories, size = "md" }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const [staffId, setStaffId] = useState<string | null>(null);
   const [selectedStaff, setSelectedStaff] = useState<IStaffOption | null>(null);
+  const [teamSeasonCategoryId, setTeamSeasonCategoryId] = useState<string>("");
   
   const [role, setRole] = useState<string>("HEAD_COACH");
   const [customRole, setCustomRole] = useState<string>("");
@@ -61,6 +64,7 @@ export const AssignStaffDrawer = ({ teamSeason, size = "md" }: Props) => {
     const err: Record<string, string> = {};
 
     if (!staffId) err.staffId = "Debe seleccionar a un miembro del personal.";
+    if (!teamSeasonCategoryId) err.teamSeasonCategoryId = "La categoría es obligatoria.";
     if (!role) err.role = "El rol es obligatorio.";
     if (role === "OTHER" && !customRole.trim()) {
       err.customRole = "Debe especificar el rol si seleccionó 'Otro'.";
@@ -72,11 +76,12 @@ export const AssignStaffDrawer = ({ teamSeason, size = "md" }: Props) => {
     }
 
     return err;
-  }, [staffId, role, customRole, startedAt, endedAt]);
+  }, [staffId, teamSeasonCategoryId, role, customRole, startedAt, endedAt]);
 
   const reset = () => {
     setStaffId(null);
     setSelectedStaff(null);
+    setTeamSeasonCategoryId("");
     setRole("HEAD_COACH");
     setCustomRole("");
     setStartedAt(today());
@@ -93,6 +98,7 @@ export const AssignStaffDrawer = ({ teamSeason, size = "md" }: Props) => {
     setLoading(true);
     const res = await addTeamSeasonStaff({
       teamSeasonId: teamSeason.id,
+      teamSeasonCategoryId: teamSeasonCategoryId,
       staffId: staffId!,
       role,
       customRole: role === "OTHER" ? customRole : undefined,
@@ -192,6 +198,32 @@ export const AssignStaffDrawer = ({ teamSeason, size = "md" }: Props) => {
                   errors={errors}
                   handleRemoveError={handleRemoveError}
                 />
+
+                <Select
+                  className="w-full"
+                  variant="secondary"
+                  selectedKey={teamSeasonCategoryId}
+                  onSelectionChange={(key) => {
+                    setTeamSeasonCategoryId(key ? String(key) : "");
+                    handleRemoveError("teamSeasonCategoryId");
+                  }}
+                  isInvalid={!!errors.teamSeasonCategoryId || undefined}
+                >
+                  <Label className="text-sm font-semibold flex items-center">
+                    Categoría
+                  </Label>
+                  <Select.Trigger />
+                  <Select.Popover>
+                    <ListBox>
+                      {categories.map((c) => (
+                        <ListBox.Item id={c.id} textValue={`${c.category.name} (${c.gender})`}>
+                          {c.category.name} ({c.gender})
+                        </ListBox.Item>
+                      ))}
+                    </ListBox>
+                  </Select.Popover>
+                </Select>
+                {errors.teamSeasonCategoryId && <FieldError>{errors.teamSeasonCategoryId}</FieldError>}
 
                 <ComboBox
                   className="w-full"

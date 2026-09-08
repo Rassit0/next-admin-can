@@ -61,10 +61,11 @@ export default async function TeamSeasonDashboardPage({ params }: Props) {
   const categories = categoriesResponse.data || [];
   const categoriesOptions = categoriesOptionsResponse.data?.data || [];
 
+  const allStaffs = categories.flatMap((c: any) => c.teamSeasonStaffs || []);
 
   return (
     <div className="flex flex-col gap-6">
-      {teamSeason.teamSeasonStaffs && teamSeason.teamSeasonStaffs.length > 0 && (
+      {allStaffs.length > 0 && (
         <Card className="p-6 shadow-[0px_4px_12px_rgba(0,0,0,0.06)] border border-border flex flex-col gap-5 bg-surface-container-lowest">
           <div className="flex items-center justify-between">
             <h3 className="font-headline font-bold text-lg">
@@ -73,7 +74,7 @@ export default async function TeamSeasonDashboardPage({ params }: Props) {
           </div>
           <hr className="border-border" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {teamSeason.teamSeasonStaffs.map((staffAssignment: any) => (
+            {allStaffs.map((staffAssignment: any) => (
               <div key={staffAssignment.id} className="flex items-center gap-3 bg-surface-container-low p-3 rounded-xl border border-border/50">
                 <Avatar size="md">
                   {staffAssignment.staff.person.imageUrl && (

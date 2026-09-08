@@ -3,6 +3,7 @@ import { File01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { DateRangeFilter } from "@/ui";
 import { DownloadReportButton } from "@/modules/reports/components/DownloadReportButton";
+import { DownloadMonthlyAccountingButton } from "@/modules/reports/components/DownloadMonthlyAccountingButton";
 
 export const metadata = {
   title: "Reportes | Operaciones Rápidas",
@@ -41,6 +42,22 @@ export default async function QuickOperationsReportsPage({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Tarjeta: Informe Mensual Contable (Excel) */}
+        <div className="flex flex-col bg-white dark:bg-zinc-900 rounded-xl border border-default-200 shadow-sm overflow-hidden">
+          <div className="flex flex-col gap-3 p-6 pb-4">
+            <div className="flex items-center gap-2">
+              <HugeiconsIcon icon={File01Icon} className="text-primary" />
+              <p className="text-md font-bold">Informe Mensual Contable</p>
+            </div>
+            <p className="text-sm text-default-500">
+              Reporte contable gerencial en Excel. Resumen de flujos, distribución contable y sábana detallada para reconciliación.
+            </p>
+          </div>
+          <div className="h-px bg-default-200 w-full" />
+          <div className="p-6">
+            <DownloadMonthlyAccountingButton />
+          </div>
+        </div>
         {/* Tarjeta: Informe de Arqueos de Caja */}
         <div className="flex flex-col bg-white dark:bg-zinc-900 rounded-xl border border-default-200 shadow-sm overflow-hidden">
           <div className="flex flex-col gap-3 p-6 pb-4">

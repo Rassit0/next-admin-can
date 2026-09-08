@@ -11,10 +11,10 @@ export interface ITeamSeasonStaff {
   notes: string | null;
   createdAt: string;
   updatedAt: string;
-  teamSeason: {
+  teamSeasonCategory: {
     id: string;
-    team: {
-      id: string;
+    gender: string;
+    category: {
       name: string;
     };
   };

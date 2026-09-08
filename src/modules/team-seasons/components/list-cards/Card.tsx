@@ -182,9 +182,10 @@ export const CardTeamSeason = ({ teamSeason, urlBase }: Props) => {
         </p>
 
         {(() => {
+          const allStaffs = teamSeason.categories?.flatMap(c => c.teamSeasonStaffs || []);
           const primaryStaff =
-            teamSeason.teamSeasonStaffs?.find((s) => s.isPrimary)?.staff
-              .person || teamSeason.teamSeasonStaffs?.[0]?.staff.person;
+            allStaffs?.find((s) => s.isPrimary)?.staff
+              .person || allStaffs?.[0]?.staff.person;
           if (!primaryStaff) return null;
           return (
             <div className="flex items-center gap-3 mb-6 bg-surface-container-low p-2 rounded-lg border border-border/50">

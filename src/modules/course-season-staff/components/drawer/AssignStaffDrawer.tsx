@@ -14,6 +14,7 @@ import {
   FieldError,
   CloseButton,
   Popover,
+  Select,
 } from "@heroui/react";
 import {
   Add01Icon,
@@ -22,12 +23,13 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useEffect, useMemo, useState } from "react";
-import { ICourseSeason } from "@/modules/course-seasons";
+import { ICourseSeason, ICourseSeasonShift } from "@/modules/course-seasons";
 import { addCourseSeasonStaff, IStaffOption } from "@/modules/course-season-staff";
 import { SelectOrCreateCourseStaff } from "../form/SelectOrCreateCourseStaff";
 
 interface Props {
   courseSeason: ICourseSeason;
+  shifts: ICourseSeasonShift[];
   size?: "lg" | "md" | "sm";
 }
 
@@ -38,12 +40,13 @@ const toLocalIso = (dateStr: string) => {
   return new Date(`${dateStr}T00:00:00`).toISOString();
 };
 
-export const AssignStaffDrawer = ({ courseSeason, size = "md" }: Props) => {
+export const AssignStaffDrawer = ({ courseSeason, shifts, size = "md" }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const [staffId, setStaffId] = useState<string | null>(null);
   const [selectedStaff, setSelectedStaff] = useState<IStaffOption | null>(null);
+  const [courseSeasonShiftId, setCourseSeasonShiftId] = useState<string>("");
   
   const [role, setRole] = useState<string>("HEAD_COACH");
   const [customRole, setCustomRole] = useState<string>("");
@@ -61,6 +64,7 @@ export const AssignStaffDrawer = ({ courseSeason, size = "md" }: Props) => {
     const err: Record<string, string> = {};
 
     if (!staffId) err.staffId = "Debe seleccionar a un miembro del personal.";
+    if (!courseSeasonShiftId) err.courseSeasonShiftId = "El turno es obligatorio.";
     if (!role) err.role = "El rol es obligatorio.";
     if (role === "OTHER" && !customRole.trim()) {
       err.customRole = "Debe especificar el rol si seleccionó 'Otro'.";
@@ -72,11 +76,12 @@ export const AssignStaffDrawer = ({ courseSeason, size = "md" }: Props) => {
     }
 
     return err;
-  }, [staffId, role, customRole, startedAt, endedAt]);
+  }, [staffId, courseSeasonShiftId, role, customRole, startedAt, endedAt]);
 
   const reset = () => {
     setStaffId(null);
     setSelectedStaff(null);
+    setCourseSeasonShiftId("");
     setRole("HEAD_COACH");
     setCustomRole("");
     setStartedAt(today());
@@ -98,6 +103,7 @@ export const AssignStaffDrawer = ({ courseSeason, size = "md" }: Props) => {
     setLoading(true);
     const res = await addCourseSeasonStaff({
       courseSeasonId: courseSeason.id,
+      courseSeasonShiftId,
       staffId: staffId!,
       role,
       customRole: role === "OTHER" ? customRole : undefined,
@@ -197,6 +203,32 @@ export const AssignStaffDrawer = ({ courseSeason, size = "md" }: Props) => {
                   errors={errors}
                   handleRemoveError={handleRemoveError}
                 />
+
+                <Select
+                  className="w-full"
+                  variant="secondary"
+                  selectedKey={courseSeasonShiftId}
+                  onSelectionChange={(key) => {
+                    setCourseSeasonShiftId(key ? String(key) : "");
+                    handleRemoveError("courseSeasonShiftId");
+                  }}
+                  isInvalid={!!errors.courseSeasonShiftId || undefined}
+                >
+                  <Label className="text-sm font-semibold flex items-center">
+                    Turno
+                  </Label>
+                  <Select.Trigger />
+                  <Select.Popover>
+                    <ListBox>
+                      {shifts.map((s) => (
+                        <ListBox.Item id={s.id} key={s.id} textValue={s.shift.name}>
+                          {s.shift.name}
+                        </ListBox.Item>
+                      ))}
+                    </ListBox>
+                  </Select.Popover>
+                </Select>
+                {errors.courseSeasonShiftId && <FieldError>{errors.courseSeasonShiftId}</FieldError>}
 
                 <ComboBox
                   className="w-full"
