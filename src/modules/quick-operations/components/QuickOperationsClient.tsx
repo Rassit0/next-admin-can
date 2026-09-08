@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { SelectOrCreatePerson } from "@/modules/charge-transactions";
+import { SelectOrCreatePerson } from "@/modules/persons";
 import { IPersonOption } from "@/common/actions/get-persons-options";
 import { Person360Container } from "./Person360Container";
 import { findPersonById } from "@/modules/persons/actions/find-by-id";

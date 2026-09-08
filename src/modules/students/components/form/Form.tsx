@@ -21,7 +21,7 @@ import {
 } from "@/modules/students";
 import { IStudent } from "@/modules/students";
 import { useEffect, useState } from "react";
-import { SelectOrCreatePerson } from "./SelectOrCreatePerson";
+import { SelectOrCreatePerson } from "@/modules/persons";
 import { toast } from "sonner";
 
 interface Props {

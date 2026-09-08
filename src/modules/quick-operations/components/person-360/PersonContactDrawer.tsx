@@ -16,7 +16,7 @@ import {
 import { toast } from "sonner";
 import { addPersonContact } from "@/modules/persons/actions/add-person-contact";
 import { editPersonContact } from "@/modules/persons/actions/edit-person-contact";
-import { SelectOrCreatePerson } from "@/modules/charge-transactions";
+import { SelectOrCreatePerson } from "@/modules/persons";
 import { IPersonOption } from "@/common/actions/get-persons-options";
 import { IPersonContact, ContactRelationshipLabels, ContactRelationship } from "@/modules/persons/interfaces/person-contact.interface";
 import { revalidatePersonContactsCache } from "../../actions/revalidate-contacts";

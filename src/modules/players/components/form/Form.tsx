@@ -17,7 +17,7 @@ import {
 import { addPlayer, editPlayer, PostPlayerInterface } from "@/modules/players";
 import { IPlayer } from "@/modules/players";
 import { useEffect, useState } from "react";
-import { SelectOrCreatePerson } from "./SelectOrCreatePerson";
+import { SelectOrCreatePerson } from "@/modules/persons";
 import { toast } from "sonner";
 
 interface Props {

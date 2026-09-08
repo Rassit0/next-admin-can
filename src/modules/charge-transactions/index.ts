@@ -28,7 +28,6 @@ export * from "./components/drawer/PayChargeDrawer";
 export * from "./components/table/TableTransactions";
 export * from "./components/table/Table";
 export * from "./components/actions/ChargeActions";
-export * from "./components/drawer/SelectOrCreatePerson";
 export * from "./components/dialog/PrintReportDialog";
 export * from "./components/drawer/AdvanceChargeButton";
 export * from "./components/drawer/BulkPaymentDrawer";

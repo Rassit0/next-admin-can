@@ -28,18 +28,17 @@ import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { ITeamSeason, ITeamSeasonCategory } from "@/modules/team-seasons";
 import { IPaymentPlan } from "@/modules/payment-plans";
-import { IPlayer, addPlayer } from "@/modules/players";
 import {
   addPlayerMembership,
   getPreviewCharges,
   getTeamSeasonCategories,
-  IPlayerOption,
   IPreviewChargesResponse,
   AddPlayerMembershipData,
 } from "@/modules/player-memberships";
 import { calculateInitialCharges } from "@/modules/player-memberships/helpers/initial-charges";
 import { InvoicePreview } from "@/modules/player-memberships/components/invoice/InvoicePreview";
-import { SelectOrCreatePlayer } from "../drawer/SelectOrCreatePlayer";
+import { SelectOrCreatePerson } from "@/modules/persons";
+import { IPersonOption } from "@/common/actions/get-persons-options";
 
 interface Props {
   teamSeason: ITeamSeason;
@@ -48,7 +47,7 @@ interface Props {
   isFromPerson360?: boolean;
   onCancel?: () => void;
   trigger?: React.ReactNode | null;
-  defaultPlayer?: IPlayerOption;
+  defaultPerson?: IPersonOption;
   onSuccess?: () => void;
   headerNode?: React.ReactNode;
 }
@@ -73,13 +72,13 @@ export const EnrollMembershipForm = ({
   isFromPerson360 = false,
   onCancel,
   trigger,
-  defaultPlayer,
+  defaultPerson,
   onSuccess,
   headerNode,
 }: Props) => {
   const [loading, setLoading] = useState(false);
-  const [playerKey, setPlayerKey] = useState<string | null>(
-    defaultPlayer?.id ?? null,
+  const [personKey, setPersonKey] = useState<string | null>(
+    defaultPerson?.id ?? null,
   );
   const [planKey, setPlanKey] = useState<string | null>(
     paymentPlans.find((p) => p.isDefault)?.id ?? null,
@@ -110,8 +109,8 @@ export const EnrollMembershipForm = ({
   const [discountReason, setDiscountReason] = useState("");
   const [discountEndDate, setDiscountEndDate] = useState<string>("");
 
-  const [selectedPlayer, setSelectedPlayer] = useState<IPlayerOption | null>(
-    defaultPlayer ?? null,
+  const [selectedPerson, setSelectedPerson] = useState<IPersonOption | null>(
+    defaultPerson ?? null,
   );
 
   const selectedPlan = paymentPlans.find((p) => p.id === planKey) ?? null;
@@ -134,7 +133,7 @@ export const EnrollMembershipForm = ({
       .toISOString()
       .substring(0, 10);
 
-    if (!playerKey) err.playerKey = "Seleccione un atleta.";
+    if (!personKey) err.personKey = "Seleccione una persona.";
     if (!categoryKey) err.categoryKey = "Seleccione una categoría.";
     if (!planKey) err.planKey = "Seleccione un plan de pago.";
     if (!startedAt) err.startedAt = "Debe ingresar una fecha de inicio.";
@@ -193,7 +192,7 @@ export const EnrollMembershipForm = ({
     }
     return err;
   }, [
-    playerKey,
+    personKey,
     planKey,
     startedAt,
     hasDiscount,
@@ -215,7 +214,7 @@ export const EnrollMembershipForm = ({
   ]);
 
   const reset = () => {
-    setPlayerKey(null);
+    setPersonKey(null);
     setPlanKey(paymentPlans.find((p) => p.isDefault)?.id ?? null);
     setStartedAt(getInitialDate(teamSeason.season.startDate));
     setIsMigrated(false);
@@ -268,10 +267,10 @@ export const EnrollMembershipForm = ({
   }, [teamSeason.id, currentCategory]);
 
   useEffect(() => {
-    if (!playerKey || !planKey || !categoryKey || !startedAt) return;
+    if (!personKey || !planKey || !categoryKey || !startedAt) return;
     handlePreview();
   }, [
-    playerKey,
+    personKey,
     planKey,
     categoryKey,
     startedAt,
@@ -285,7 +284,7 @@ export const EnrollMembershipForm = ({
   ]);
 
   const handlePreview = async () => {
-    if (!playerKey || !planKey || !categoryKey || !startedAt) {
+    if (!personKey || !planKey || !categoryKey || !startedAt) {
       return;
     }
 
@@ -364,11 +363,7 @@ export const EnrollMembershipForm = ({
       }),
     };
 
-    if (playerKey === "NEW" && selectedPlayer) {
-      payload.personIdToCreateProfile = selectedPlayer.person.id;
-    } else {
-      payload.playerId = playerKey ?? undefined;
-    }
+    payload.personIdToCreateProfile = personKey ?? undefined;
 
     const res = await addPlayerMembership(payload);
     setLoading(false);
@@ -386,8 +381,8 @@ export const EnrollMembershipForm = ({
     onCancel?.();
     onSuccess?.();
     toast.success(res.message, {
-      description: selectedPlayer
-        ? `${selectedPlayer?.person?.fullName} fue inscrito en la temporada.`
+      description: selectedPerson
+        ? `${selectedPerson?.fullName} fue inscrito en la temporada.`
         : undefined,
     });
   };
@@ -433,13 +428,16 @@ export const EnrollMembershipForm = ({
 
           {/* Player picker */}
           {!isFromPerson360 && (
-            <SelectOrCreatePlayer
-              playerId={playerKey}
-              setPlayerId={setPlayerKey}
-              setSelectedPlayer={setSelectedPlayer}
-              // isDisabled={noPlayers}
-              label="Atleta"
+            <SelectOrCreatePerson
+              label="Buscar persona..."
+              personId={personKey}
+              setPersonId={setPersonKey}
+              setSelectedPerson={setSelectedPerson}
+              defaultPerson={defaultPerson}
+              isDisabled={!!defaultPerson || isFromPerson360}
+              isRequired
               errors={errors}
+              handleRemoveError={(f) => {}}
             />
           )}
 
@@ -825,7 +823,7 @@ export const EnrollMembershipForm = ({
 
           {/* {JSON.stringify({
                   teamSeasonId: teamSeason.id,
-                  playerKey,
+                  personKey,
                   planKey,
                   startedAt,
                   // breakdown,
@@ -868,7 +866,7 @@ export const EnrollMembershipForm = ({
               breakdown={breakdown}
               planName={selectedPlan?.name}
               playerName={
-                selectedPlayer ? selectedPlayer.person.fullName : null
+                selectedPerson ? selectedPerson.fullName : null
               }
             />
           )}

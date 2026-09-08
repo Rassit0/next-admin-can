@@ -114,20 +114,18 @@ export const Person360EnrollPlayerDrawer = ({
     }
   }, [selectedTeamSeasonId]);
 
-  const defaultPlayer = {
-    id: profile.playerId || "NEW",
-    person: {
-      id: profile.id,
-      fullName:
-        `${profile.name} ${profile.lastName} ${profile.secondLastName || ""}`.trim(),
-      name: profile.name,
-      lastName: profile.lastName,
-      secondLastName: profile.secondLastName || null,
-      gender: null,
-      documentNumber: profile.documentNumber || null,
-      birthDate: null,
-      imageUrl: profile.imageUrl || null,
-    },
+  const defaultPerson = {
+    id: profile.id,
+    fullName:
+      `${profile.name} ${profile.lastName} ${profile.secondLastName || ""}`.trim(),
+    name: profile.name,
+    lastName: profile.lastName,
+    secondLastName: profile.secondLastName || null,
+    gender: null,
+    documentType: null,
+    documentNumber: profile.documentNumber || null,
+    birthDate: null,
+    imageUrl: profile.imageUrl || null,
   };
 
   const handleSuccess = () => {
@@ -170,8 +168,8 @@ export const Person360EnrollPlayerDrawer = ({
           <Drawer.Dialog className="w-full sm:max-w-md">
             <Drawer.CloseTrigger />
             <Drawer.Header className="border-b border-border">
-              <Drawer.Heading className="text-lg font-bold">
-                Inscripci├│n de Jugador
+              <Drawer.Heading slot="title" className="text-lg font-bold">
+                Inscripción de Jugador
               </Drawer.Heading>
               <p className="mt-1 text-xs text-muted">
                 Selecciona la disciplina y el equipo para inscribir a la
@@ -189,7 +187,7 @@ export const Person360EnrollPlayerDrawer = ({
                 isFromPerson360
                 teamSeason={teamSeasonData}
                 paymentPlans={paymentPlansData}
-                defaultPlayer={defaultPlayer}
+                defaultPerson={defaultPerson}
                 headerNode={(<div className="flex flex-col gap-4 mb-4">
                   <Select
                     placeholder="Seleccione..."

@@ -32,7 +32,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ICharge } from "../../interfaces/charges.interface";
 import { addTransaction } from "../../actions/add-transaction";
-import { SelectOrCreatePerson } from "./SelectOrCreatePerson";
+import { SelectOrCreatePerson } from "@/modules/persons";
 import { IPersonOption } from "@/common/actions/get-persons-options";
 import { getFinancialAccounts } from "@/modules/financial-accounts/actions/get-all";
 import { FinancialAccount } from "@/modules/financial-accounts/interfaces/financial-account.interface";

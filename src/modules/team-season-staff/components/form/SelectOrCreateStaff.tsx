@@ -60,6 +60,7 @@ export const SelectOrCreateStaff = ({
       };
     },
   });
+  const uniqueItems = Array.from(new Map(list.items.map(item => [item.id, item])).values());
 
   return (
     <div className="flex items-end gap-4 w-full">
@@ -120,12 +121,12 @@ export const SelectOrCreateStaff = ({
             <ListBox
               aria-label="Lista de personal"
               className="max-h-105 overflow-y-auto"
-              items={list.items}
+              items={uniqueItems}
               renderEmptyState={() => <EmptyState>No se encontró personal disponible</EmptyState>}
             >
-              <Collection items={list.items}>
+              <Collection items={uniqueItems}>
                 {(item) => (
-                  <ListBox.Item id={item.id} textValue={item.fullName}>
+                  <ListBox.Item key={item.id} id={item.id} textValue={item.fullName}>
                     <div className="flex items-center gap-3 w-full">
                       <Avatar className="shrink-0" size="sm">
                         <Avatar.Image

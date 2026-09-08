@@ -1,6 +1,8 @@
 "use client";
 import {
+  ComboBox,
   FieldError,
+  Input,
   Label,
   ListBox,
   SearchField,
@@ -12,9 +14,12 @@ import {
   Collection,
   Avatar,
 } from "@heroui/react";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { useAsyncList } from "@react-stately/data";
-import { getPersonsOptions, IPersonOption } from "@/common/actions/get-persons-options";
+import {
+  getPersonsOptions,
+  IPersonOption,
+} from "@/common/actions/get-persons-options";
 import { AddModal } from "@/modules/persons";
 
 interface Props {
@@ -23,9 +28,19 @@ interface Props {
   label: string;
   personId: string | null;
   setPersonId: Dispatch<SetStateAction<string | null>>;
-  errors: Record<string, string>;
-  handleRemoveError: (fieldName: string) => void;
+  setSelectedPerson?: Dispatch<SetStateAction<IPersonOption | null>>;
+  errors?: Record<string, string>;
+  handleRemoveError?: (fieldName: string) => void;
+  defaultPerson?: IPersonOption | null;
+  excludeRole?: "STUDENT" | "PLAYER" | "STAFF" | "USER";
 }
+
+const calculateAge = (birthDateString: Date | string | null) => {
+  if (!birthDateString) return null;
+  const birthDate = new Date(birthDateString);
+  const today = new Date();
+  return today.getFullYear() - birthDate.getFullYear();
+};
 
 export const SelectOrCreatePerson = ({
   isRequired = true,
@@ -33,38 +48,64 @@ export const SelectOrCreatePerson = ({
   label,
   personId,
   setPersonId,
+  setSelectedPerson,
   errors,
   handleRemoveError,
+  defaultPerson,
+  excludeRole,
 }: Props) => {
   const list = useAsyncList<IPersonOption>({
     async load({ cursor: page = "1", filterText, signal }) {
-      const res = await getPersonsOptions({ search: filterText, page, excludeRole: "STAFF" }, signal);
-      if (!res || res.error) {
+      const res = await getPersonsOptions({ search: filterText, page, excludeRole });
+      if (!res) {
         return {
           cursor: undefined,
           items: [],
         };
       }
+      let items = res.data?.data || [];
+      if (defaultPerson) {
+        items = items.filter(p => p.id !== defaultPerson.id);
+        if (page === "1" && !filterText) {
+          items = [defaultPerson, ...items];
+        }
+      }
+
       return {
         cursor: res.data?.meta.nextPage?.toString() || undefined,
-        items: res.data?.data || [],
+        items,
       };
     },
   });
+  
+  const uniqueItems = Array.from(new Map(list.items.map(item => [item.id, item])).values());
+
+  useEffect(() => {
+    if (defaultPerson && !personId) {
+      setPersonId(defaultPerson.id);
+      setSelectedPerson?.(defaultPerson);
+    }
+  }, [defaultPerson, personId, setPersonId, setSelectedPerson]);
 
   return (
     <div className="flex items-end gap-4 w-full">
       <Autocomplete
+        isRequired={isRequired}
         allowsEmptyCollection
         variant="secondary"
         className="flex-1"
         placeholder="Buscar..."
         selectionMode="single"
         selectedKey={personId}
-        isDisabled={isDisabled}
         onSelectionChange={(key) => {
-          setPersonId(key?.toString() || "");
-          handleRemoveError("personId");
+          setPersonId(key ? key.toString() : null);
+          const selectedPlayer = list.items.find((player) => player.id === key);
+          if (selectedPlayer) {
+            setSelectedPerson?.(selectedPlayer);
+          } else {
+            setSelectedPerson?.(null);
+          }
+          handleRemoveError?.("personId");
         }}
       >
         <Label>{label}</Label>
@@ -87,7 +128,7 @@ export const SelectOrCreatePerson = ({
             >
               <SearchField.Group>
                 <SearchField.SearchIcon />
-                <SearchField.Input placeholder="Buscar por nombre o documento..." />
+                <SearchField.Input placeholder="Buscar..." />
                 <Spinner
                   size="sm"
                   className={cn("absolute top-1/2 right-2 -translate-y-1/2", {
@@ -104,15 +145,15 @@ export const SelectOrCreatePerson = ({
             <ListBox
               aria-label="Lista de personas"
               className="max-h-105 overflow-y-auto"
-              items={list.items}
-              renderEmptyState={() => <EmptyState>No se encontraron personas</EmptyState>}
+              items={uniqueItems}
+              renderEmptyState={() => <EmptyState>No results found</EmptyState>}
             >
-              <Collection items={list.items}>
+              <Collection items={uniqueItems}>
                 {(item) => (
-                  <ListBox.Item id={item.id} textValue={item.fullName}>
+                  <ListBox.Item key={item.id} id={item.id} textValue={item.fullName}>
                     <div className="flex items-center gap-3 w-full">
                       <Avatar className="shrink-0" size="sm">
-                        <Avatar.Image
+                         <Avatar.Image
                           alt={item.fullName}
                           src={item.imageUrl ?? undefined}
                         />
@@ -124,9 +165,17 @@ export const SelectOrCreatePerson = ({
                         <span className="text-sm font-medium truncate">
                           {item.fullName}
                         </span>
-                        <span className="text-xs text-default-500 truncate">
-                          DNI: {item.documentNumber}
-                        </span>
+                        <div className="flex items-center gap-1">
+                          <span className="text-xs text-default-500 truncate">
+                            DNI: {item.documentNumber}
+                          </span>
+                          {item.birthDate && (
+                            <span className="text-xs text-default-500 truncate">
+                              • Edad deportiva: {calculateAge(item.birthDate)}{" "}
+                              años
+                            </span>
+                          )}
+                        </div>
                       </div>
                       <ListBox.ItemIndicator />
                     </div>
@@ -139,19 +188,20 @@ export const SelectOrCreatePerson = ({
               >
                 <div className="flex items-center justify-center gap-2 py-2">
                   <Spinner size="sm" />
-                  <span className="muted text-sm">Cargando más...</span>
+                  <span className="muted text-sm">Loading more...</span>
                 </div>
               </ListBoxLoadMoreItem>
             </ListBox>
           </Autocomplete.Filter>
         </Autocomplete.Popover>
-        <FieldError children={errors.personId && <p>{errors.personId}</p>} />
+        <FieldError children={errors?.personId && <p>{errors.personId}</p>} />
       </Autocomplete>
       <AddModal
         isIcon
         onSubmited={(person) => {
           if (person) {
-            list.append({
+            // Agregar la persona a la lista localmente para que se pueda seleccionar
+            const newPersonOption = {
               id: person.id,
               name: person.name,
               lastName: person.lastName,
@@ -159,12 +209,14 @@ export const SelectOrCreatePerson = ({
               documentType: person.documentType || null,
               documentNumber: person.documentNumber,
               gender: person.gender,
-              birthDate: person.birthDate as Date,
-              fullName: `${person.name} ${person.lastName} ${person.secondLastName || ""}`.trim(),
+              birthDate: person.birthDate,
               imageUrl: person.imageUrl,
-            });
+              fullName: `${person.lastName} ${person.secondLastName || ""} ${person.name}`.replace(/\s+/g, " ").trim(),
+            };
+            list.append(newPersonOption);
             list.setSelectedKeys(new Set([person.id]));
             setPersonId(person.id);
+            setSelectedPerson?.(newPersonOption);
           }
         }}
       />

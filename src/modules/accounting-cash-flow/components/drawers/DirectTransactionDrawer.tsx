@@ -21,7 +21,7 @@ import { createAccountCharge } from "@/modules/account-charges/actions/create";
 import { useRouter } from "next/navigation";
 import { FileUploader } from "@/ui/components/file-uploader/FileUploader";
 import { useStorage } from "@/hooks/useStorage";
-import { SelectOrCreatePerson } from "./SelectOrCreatePerson";
+import { SelectOrCreatePerson } from "@/modules/persons";
 import { IPersonOption } from "@/common/actions/get-persons-options";
 import { PrintReportDialog } from "@/modules/charge-transactions/components/dialog/PrintReportDialog";
 import { SplitItem } from "@/modules/charge-transactions/components/drawer/PayChargeDrawer";

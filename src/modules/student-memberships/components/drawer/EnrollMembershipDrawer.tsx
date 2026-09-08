@@ -2,7 +2,7 @@
 import { Button, Drawer } from "@heroui/react";
 import { ICourseSeason } from "@/modules/course-seasons";
 import { IPaymentPlan } from "@/modules/payment-plans";
-import { IStudentOption } from "@/modules/student-memberships";
+import { IPersonOption } from "@/common/actions/get-persons-options";
 import { EnrollMembershipForm } from "../form/EnrollMembershipForm";
 import { useState } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -16,7 +16,7 @@ interface Props {
   isOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
   trigger?: React.ReactNode | null;
-  defaultStudent?: IStudentOption;
+  defaultPerson?: IPersonOption;
   onSuccess?: () => void;
 }
 
@@ -28,7 +28,7 @@ export const EnrollMembershipDrawer = ({
   isOpen: externalIsOpen,
   onOpenChange: externalOnOpenChange,
   trigger,
-  defaultStudent,
+  defaultPerson,
   onSuccess,
 }: Props) => {
   const [internalIsOpen, setInternalIsOpen] = useState(false);
@@ -52,7 +52,7 @@ export const EnrollMembershipDrawer = ({
             <Drawer.CloseTrigger />
             <Drawer.Header className="border-b border-border">
                 <div>
-                  <Drawer.Heading className="text-lg font-bold">
+                  <Drawer.Heading slot="title" className="text-lg font-bold">
                     Inscribir estudiante
                   </Drawer.Heading>
                   <p className="mt-1 text-xs font-medium text-muted">
@@ -65,7 +65,7 @@ export const EnrollMembershipDrawer = ({
                 courseSeason={courseSeason}
                 paymentPlans={paymentPlans}
                 defaultShiftId={defaultShiftId}
-                defaultStudent={defaultStudent}
+                defaultPerson={defaultPerson}
                 onSuccess={() => {
                   onSuccess?.();
                   setIsOpen(false);

@@ -3,6 +3,7 @@ export type * from "./interfaces/person.interface";
 export * from "./interfaces/post.person.interface";
 
 // Components
+export * from "./components/form/SelectOrCreatePerson";
 export * from "./components/form/Form";
 export * from "./components/modal/AddModal";
 export * from "./components/modal/EditModal";

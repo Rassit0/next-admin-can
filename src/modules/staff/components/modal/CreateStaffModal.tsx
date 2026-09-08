@@ -4,7 +4,7 @@ import {
   Modal,
 } from "@heroui/react";
 import { useState } from "react";
-import { SelectOrCreatePerson } from "../form/SelectOrCreatePerson";
+import { SelectOrCreatePerson } from "@/modules/persons";
 import { createStaff, IStaff } from "@/modules/staff";
 import { toast } from "@heroui/react";
 import { Add01Icon } from "@hugeicons/core-free-icons";

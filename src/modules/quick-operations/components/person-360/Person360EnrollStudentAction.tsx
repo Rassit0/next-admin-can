@@ -93,19 +93,17 @@ export const Person360EnrollStudentAction = ({ profile }: Props) => {
     }
   };
 
-  const defaultStudent = {
-    id: profile.studentId || "NEW", // If new, the drawer won't match an existing one, but we pass the data.
-    person: {
-      id: profile.id,
-      fullName: `${profile.name} ${profile.lastName} ${profile.secondLastName || ''}`.trim(),
-      name: profile.name,
-      lastName: profile.lastName,
-      secondLastName: profile.secondLastName || null,
-      gender: null,
-      documentNumber: profile.documentNumber || null,
-      birthDate: null,
-      imageUrl: profile.imageUrl || null,
-    }
+  const defaultPerson = {
+    id: profile.id,
+    fullName: `${profile.name} ${profile.lastName} ${profile.secondLastName || ''}`.trim(),
+    name: profile.name,
+    lastName: profile.lastName,
+    secondLastName: profile.secondLastName || null,
+    gender: null,
+    documentType: null,
+    documentNumber: profile.documentNumber || null,
+    birthDate: null,
+    imageUrl: profile.imageUrl || null,
   };
 
   return (
@@ -125,7 +123,7 @@ export const Person360EnrollStudentAction = ({ profile }: Props) => {
           <Modal.Container placement="center">
             <Modal.Dialog>
               <Modal.Header>
-                <Modal.Heading>Seleccionar Curso</Modal.Heading>
+                <Modal.Heading slot="title">Seleccionar Curso</Modal.Heading>
               </Modal.Header>
               <Modal.Body className="flex flex-col gap-4">
                 <Select
@@ -184,7 +182,7 @@ export const Person360EnrollStudentAction = ({ profile }: Props) => {
           trigger={null}
           isOpen={isDrawerOpen}
           onOpenChange={setIsDrawerOpen}
-          defaultStudent={profile.studentId ? defaultStudent : undefined}
+          defaultPerson={defaultPerson}
           onSuccess={async () => {
             await revalidatePersonSummaryCache(profile.id);
           }}

@@ -32,7 +32,6 @@ import { IStudent, addStudent } from "@/modules/students";
 import {
   addStudentMembership,
   getPreviewCharges,
-  IStudentOption,
   IPreviewChargesResponse,
   AddStudentMembershipData,
 } from "@/modules/student-memberships";
@@ -42,7 +41,8 @@ import {
 } from "@/modules/course-seasons/actions/get-cycle-capacity";
 import { calculateInitialCharges } from "@/modules/student-memberships/helpers/initial-charges";
 import { InvoicePreview } from "@/modules/student-memberships/components/invoice/InvoicePreview";
-import { SelectOrCreateStudent } from "../drawer/SelectOrCreateStudent";
+import { SelectOrCreatePerson } from "@/modules/persons";
+import { IPersonOption } from "@/common/actions/get-persons-options";
 
 interface Props {
   courseSeason: ICourseSeason;
@@ -52,7 +52,7 @@ interface Props {
   isFromPerson360?: boolean;
   onCancel?: () => void;
   trigger?: React.ReactNode | null;
-  defaultStudent?: IStudentOption;
+  defaultPerson?: IPersonOption;
   onSuccess?: () => void;
   headerNode?: React.ReactNode;
 }
@@ -78,13 +78,13 @@ export const EnrollMembershipForm = ({
   isFromPerson360 = false,
   onCancel,
   trigger,
-  defaultStudent,
+  defaultPerson,
   onSuccess,
   headerNode,
 }: Props) => {
   const [loading, setLoading] = useState(false);
-  const [studentKey, setStudentKey] = useState<string | null>(
-    defaultStudent?.id ?? null,
+  const [personKey, setPersonKey] = useState<string | null>(
+    defaultPerson?.id ?? null,
   );
   const [shiftKey, setShiftKey] = useState<string | null>(
     defaultShiftId ?? courseSeason.shifts?.[0]?.id ?? null,
@@ -129,8 +129,8 @@ export const EnrollMembershipForm = ({
   const [discountReason, setDiscountReason] = useState("");
   const [discountEndDate, setDiscountEndDate] = useState<string>("");
 
-  const [selectedStudent, setSelectedStudent] = useState<IStudentOption | null>(
-    defaultStudent ?? null,
+  const [selectedPerson, setSelectedPerson] = useState<IPersonOption | null>(
+    defaultPerson ?? null,
   );
 
   const selectedPlan = paymentPlans.find((p) => p.id === planKey) ?? null;
@@ -215,7 +215,7 @@ export const EnrollMembershipForm = ({
       .toISOString()
       .substring(0, 10);
 
-    if (!studentKey) err.studentKey = "Seleccione un atleta.";
+    if (!personKey) err.personKey = "Seleccione una persona.";
     if (!shiftKey) err.shiftKey = "Seleccione un turno.";
     if (!planKey) err.planKey = "Seleccione un plan de pago.";
     if (!startedAt) err.startedAt = "Debe ingresar una fecha de inicio.";
@@ -284,7 +284,7 @@ export const EnrollMembershipForm = ({
 
     return err;
   }, [
-    studentKey,
+    personKey,
     planKey,
     startedAt,
     hasDiscount,
@@ -302,7 +302,7 @@ export const EnrollMembershipForm = ({
   ]);
 
   const reset = () => {
-    setStudentKey(null);
+    setPersonKey(null);
     setPlanKey(paymentPlans.find((p) => p.isDefault)?.id ?? null);
     setStartedAt(getInitialDate(courseSeason.season.startDate));
     setIsMigrated(false);
@@ -320,10 +320,10 @@ export const EnrollMembershipForm = ({
   };
 
   useEffect(() => {
-    if (!studentKey || !planKey || !startedAt) return;
+    if (!personKey || !planKey || !startedAt) return;
     handlePreview();
   }, [
-    studentKey,
+    personKey,
     planKey,
     startedAt,
     isMigrated,
@@ -337,7 +337,7 @@ export const EnrollMembershipForm = ({
   ]);
 
   const handlePreview = async () => {
-    if (!studentKey || !planKey || !startedAt) {
+    if (!personKey || !planKey || !startedAt) {
       return;
     }
 
@@ -419,11 +419,7 @@ export const EnrollMembershipForm = ({
       }),
     };
 
-    if (studentKey === "NEW" && selectedStudent) {
-      payload.personIdToCreateProfile = selectedStudent.person.id;
-    } else {
-      payload.studentId = studentKey ?? undefined;
-    }
+    payload.personIdToCreateProfile = personKey ?? undefined;
 
     const res = await addStudentMembership(payload);
 
@@ -453,8 +449,8 @@ export const EnrollMembershipForm = ({
     onCancel?.();
     onSuccess?.();
     toast.success(res.message, {
-      description: selectedStudent
-        ? `${selectedStudent?.person?.fullName} fue inscrito en la temporada.`
+      description: selectedPerson
+        ? `${selectedPerson?.fullName} fue inscrito en la temporada.`
         : undefined,
     });
     reset();
@@ -501,13 +497,16 @@ export const EnrollMembershipForm = ({
 
           {/* Student picker */}
           {!isFromPerson360 && (
-            <SelectOrCreateStudent
-              studentId={studentKey}
-              setStudentId={setStudentKey}
-              setSelectedStudent={setSelectedStudent}
-              // isDisabled={noStudents}
-              label="Atleta"
+            <SelectOrCreatePerson
+              label="Buscar persona..."
+              personId={personKey}
+              setPersonId={setPersonKey}
+              setSelectedPerson={setSelectedPerson}
+              defaultPerson={defaultPerson}
+              isDisabled={!!defaultPerson || isFromPerson360}
+              isRequired
               errors={errors}
+              handleRemoveError={(f) => {}}
             />
           )}
 
@@ -963,7 +962,7 @@ export const EnrollMembershipForm = ({
 
           {/* {JSON.stringify({
                   courseSeasonId: courseSeason.id,
-                  studentKey,
+                  personKey,
                   planKey,
                   startedAt,
                   // breakdown,
@@ -1006,7 +1005,7 @@ export const EnrollMembershipForm = ({
               breakdown={breakdown}
               planName={selectedPlan?.name}
               studentName={
-                selectedStudent ? selectedStudent.person.fullName : null
+                selectedPerson ? selectedPerson.fullName : null
               }
             />
           )}
