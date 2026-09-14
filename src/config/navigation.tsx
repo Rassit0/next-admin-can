@@ -170,3 +170,27 @@ import {
     icon: <HugeiconsIcon icon={UserIcon} size={20} />,
   },
 ];
+
+export const itemsWebNavigation: NavItem[] = [
+  {
+    label: "Volver",
+    href: "../dashboard",
+    action: "dashboard",
+    subject: "home",
+    icon: <HugeiconsIcon icon={ArrowDataTransferHorizontalIcon} size={20} />,
+  },
+  {
+    label: "Noticias",
+    href: "news",
+    action: "web_news",
+    subject: "home",
+    icon: <HugeiconsIcon icon={BookOpen01Icon} size={20} />,
+  },
+  {
+    label: "Banners",
+    href: "banners",
+    action: "web_banners",
+    subject: "home",
+    icon: <HugeiconsIcon icon={Layers01Icon} size={20} />,
+  },
+];

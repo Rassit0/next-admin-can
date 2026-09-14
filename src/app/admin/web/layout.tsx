@@ -1,4 +1,4 @@
-import { itemsNavigation } from "@/config";
+import { itemsWebNavigation } from "@/config";
 import { getClubsOptions, SelectClub } from "@/modules/clubs";
 import { getOrganizationById, getInstitutions } from "@/modules/organizations";
 import { BottonNavBar, ErrorPage, Header, Sidebar } from "@/ui";
@@ -22,8 +22,8 @@ export default async function AdminLayout({
       {/* <!-- SideNavBar --> */}
       <Sidebar
         organization={institution}
-        items={itemsNavigation}
-        urlBase={`/admin`}
+        items={itemsWebNavigation}
+        urlBase={`/admin/web`}
       />
       {/* <!-- Main Content Area --> */}
       <div className="lg:ml-64 min-h-screen transition-all duration-300 pb-16 lg:pb-2">
@@ -38,7 +38,7 @@ export default async function AdminLayout({
           </main>
         </div>
         {/* <!-- Mobile BottomNavBar --> */}
-        <BottonNavBar items={itemsNavigation} urlBase={`/admin`} />
+        <BottonNavBar items={itemsWebNavigation} urlBase={`/admin/web`} />
       </div>
     </>
   );
