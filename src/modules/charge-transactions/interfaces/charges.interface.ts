@@ -23,6 +23,7 @@ export interface ICharge {
   membershipCharges: MembershipCharge[];
   studentCharges: StudentCharge[];
   payments?: { amount: string | number; status: string }[];
+  accountCharge?: { id: string } | null;
 }
 
 export interface StudentCharge {

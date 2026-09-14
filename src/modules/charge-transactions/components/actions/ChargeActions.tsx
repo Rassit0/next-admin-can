@@ -27,6 +27,7 @@ import { addChargeAdjustment } from "../../actions/add-adjustment";
 import { removeChargeAdjustment } from "../../actions/remove-adjustment";
 import { updateCharge } from "../../actions/update";
 import { removeCharge } from "../../actions/remove";
+import { updateChargeDueDate } from "../../actions/update-charge-due-date";
 import { applyLateFee } from "../../actions/apply-late-fee";
 import { previewLateFee, ILateFeePreview } from "../../actions/preview-late-fee";
 
@@ -61,6 +62,10 @@ export const ChargeActions = ({ charge, onPay, detailsHref, onSuccess }: Props) 
     charge.dueDate ? new Date(charge.dueDate).toISOString().split('T')[0] : ""
   );
 
+  const [updateDueDateValue, setUpdateDueDateValue] = useState(
+    charge.dueDate ? new Date(charge.dueDate).toISOString().split('T')[0] : ""
+  );
+
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [lateFeePreview, setLateFeePreview] = useState<ILateFeePreview | null>(null);
   const [customLateFeeAmount, setCustomLateFeeAmount] = useState<string>("");
@@ -69,7 +74,8 @@ export const ChargeActions = ({ charge, onPay, detailsHref, onSuccess }: Props) 
   
   const isManual = 
     charge.membershipCharges?.[0]?.type === 'MANUAL' || 
-    charge.studentCharges?.[0]?.type === 'MANUAL';
+    charge.studentCharges?.[0]?.type === 'MANUAL' ||
+    !!charge.accountCharge;
 
   const isStudentCharge = charge.studentCharges && charge.studentCharges.length > 0;
   const isMembershipCharge = charge.membershipCharges && charge.membershipCharges.length > 0;
@@ -126,6 +132,14 @@ export const ChargeActions = ({ charge, onPay, detailsHref, onSuccess }: Props) 
       key: "add-adjustment",
       label: hasAdjustment ? "Editar Ajuste (Descuento/Recargo)" : "Aplicar Ajuste (Descuento/Recargo)",
       icon: Tag01Icon,
+    });
+  }
+
+  if (charge.status !== "CANCELLED") {
+    allActions.push({
+      key: "update-due-date",
+      label: "Modificar Fecha Vencimiento",
+      icon: Note01Icon,
     });
   }
 
@@ -191,6 +205,9 @@ export const ChargeActions = ({ charge, onPay, detailsHref, onSuccess }: Props) 
         setChargeDescription(charge.description);
         setChargeAmount(charge.amount.toString());
         setChargeDueDate(charge.dueDate ? new Date(charge.dueDate).toISOString().split('T')[0] : "");
+        setErrors({});
+      } else if (key === "update-due-date") {
+        setUpdateDueDateValue(charge.dueDate ? new Date(charge.dueDate).toISOString().split('T')[0] : "");
         setErrors({});
       }
       
@@ -273,6 +290,26 @@ export const ChargeActions = ({ charge, onPay, detailsHref, onSuccess }: Props) 
         amount: amountNum,
         description: chargeDescription,
         dueDate: new Date(`${chargeDueDate}T00:00:00`).toISOString(),
+      });
+    } else if (action === "update-due-date") {
+      if (!updateDueDateValue) {
+        setErrors({ updateDueDateValue: "La fecha de vencimiento es obligatoria." });
+        setLoading(false);
+        return;
+      }
+      
+      const tz = process.env.NEXT_PUBLIC_APP_TIMEZONE || "America/La_Paz";
+      const safeDate = new Date(`${updateDueDateValue}T12:00:00Z`);
+      const tzDate = new Date(safeDate.toLocaleString('en-US', { timeZone: tz }));
+      const utcDate = new Date(safeDate.toLocaleString('en-US', { timeZone: 'UTC' }));
+      const offsetMinutes = Math.round((utcDate.getTime() - tzDate.getTime()) / 60000);
+      
+      const localMidnightUTC = new Date(`${updateDueDateValue}T00:00:00Z`);
+      localMidnightUTC.setUTCMinutes(localMidnightUTC.getUTCMinutes() + offsetMinutes);
+
+      res = await updateChargeDueDate({
+        id: charge.id,
+        dueDate: localMidnightUTC.toISOString(),
       });
     }
 
@@ -470,6 +507,34 @@ export const ChargeActions = ({ charge, onPay, detailsHref, onSuccess }: Props) 
                         }}
                       />
                       <FieldError children={errors.chargeDueDate && <> {errors.chargeDueDate}</>} />
+                    </TextField>
+                  </>
+                )}
+
+                {selectedAction?.key === "update-due-date" && (
+                  <>
+                    <p className="text-sm mb-4">
+                      Modificar la fecha de vencimiento de este cargo no afectará su estado contable.
+                    </p>
+                    <TextField 
+                      name="updateDueDateValue" 
+                      className="w-full"
+                      isRequired
+                      isInvalid={!!errors.updateDueDateValue || undefined}
+                    >
+                      <Label className="text-sm font-semibold">
+                        Nueva Fecha de Vencimiento
+                      </Label>
+                      <Input
+                        variant="secondary"
+                        type="date"
+                        value={updateDueDateValue}
+                        onChange={(e) => {
+                          setUpdateDueDateValue(e.target.value);
+                          setErrors({});
+                        }}
+                      />
+                      <FieldError children={errors.updateDueDateValue && <> {errors.updateDueDateValue}</>} />
                     </TextField>
                   </>
                 )}

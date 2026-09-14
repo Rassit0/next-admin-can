@@ -20,7 +20,7 @@ export default async function DisciplinesPage({ searchParams }: Props) {
 
   // 1. Manejo de error específico (Ej: 401 no autorizado)
   if (result.error && result.statusCode === 401) {
-    redirect("/login");
+    redirect("/admin/login");
   }
 
   // 2. Manejo de errores generales (400, 500, etc.)

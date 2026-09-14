@@ -1,5 +1,18 @@
 @import "tailwindcss";
 @import "@heroui/styles";
+@import "tw-animate-css";
+
+@theme inline {
+  --font-heading: var(--font-oswald), 'Geist Fallback';
+  --font-sans: var(--font-geist-sans), 'Geist Fallback';
+  --font-mono: var(--font-geist-mono), 'Geist Mono Fallback';
+
+  --color-neon: var(--neon);
+  --color-neon-strong: var(--neon-strong);
+  --color-oxford: var(--oxford);
+  --color-silver: var(--silver);
+  --color-silver-deep: var(--silver-deep);
+}
 
 /*
  * HeroUI Theme Customization
@@ -13,6 +26,13 @@
 .default,
 [data-theme="light"],
 [data-theme="default"] {
+  /* Portal Colors */
+  --neon: oklch(74.72% 0.1459 239.64);
+  --neon-strong: oklch(68% 0.17 239.64);
+  --oxford: #111827;
+  --silver: #f8f9fa;
+  --silver-deep: #e9ecef;
+
   /* Theme Colors (Light Mode) */
   --accent: oklch(74.72% 0.1459 239.64);
   --accent-foreground: oklch(15% 0.0292 239.64);
@@ -145,5 +165,80 @@
 
     --fc-today-bg-color: var(--surface-secondary);
     --fc-highlight-color: var(--surface-tertiary);
+  }
+}
+
+@layer utilities {
+  /* Neon glow text + box helpers */
+  .text-glow-neon {
+    text-shadow: 0 0 18px color-mix(in oklch, var(--neon) 60%, transparent);
+  }
+  .shadow-neon {
+    box-shadow:
+      0 0 0 1px color-mix(in oklch, var(--neon) 35%, transparent),
+      0 0 25px color-mix(in oklch, var(--neon) 35%, transparent);
+  }
+  .shadow-neon-soft {
+    box-shadow: 0 8px 40px -12px color-mix(in oklch, var(--neon) 45%, transparent);
+  }
+
+  /* Neon perimeter beam (conic light racing around a border) */
+  .neon-perimeter {
+    position: relative;
+    isolation: isolate;
+  }
+  .neon-perimeter::before {
+    content: '';
+    position: absolute;
+    inset: -1.5px;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: conic-gradient(
+      from var(--beam-angle, 0deg),
+      transparent 0deg,
+      transparent 250deg,
+      var(--neon) 320deg,
+      #ffffff 350deg,
+      transparent 360deg
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    animation: beam-spin 1.6s linear infinite;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .neon-perimeter:hover::before {
+    opacity: 1;
+  }
+  @keyframes beam-spin {
+    to {
+      --beam-angle: 360deg;
+    }
+  }
+  @property --beam-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  .bg-grid-faint {
+    background-image:
+      linear-gradient(to right, color-mix(in oklch, var(--oxford) 5%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in oklch, var(--oxford) 5%, transparent) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  .gloss {
+    background: linear-gradient(
+      105deg,
+      transparent 30%,
+      color-mix(in oklch, white 55%, transparent) 48%,
+      transparent 60%
+    );
   }
 }

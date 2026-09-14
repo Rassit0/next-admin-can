@@ -125,6 +125,7 @@ export const AccountChargeDrawer = ({
     const res = await getAccountCategories({
       per_page: "100",
       type: direction,
+      excludeSystem: "true",
     });
     if (!res.error) {
       setCategories(res.data?.data || []);

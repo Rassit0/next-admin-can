@@ -31,7 +31,7 @@ export default async function EditTeamSeasonPage({ params }: Props) {
     ]);
 
   if (teamResponse.error && teamResponse.statusCode === 401) {
-    redirect("/login");
+    redirect("/admin/login");
   }
 
   // 2. Manejo de errores generales (400, 500, etc.)

@@ -25,7 +25,7 @@ import { authenticate } from "@/modules/auth";
 export const LoginForm = () => {
   const [isVisible, setIsVisible] = useState(false);
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("redirectTo") || "/";
+  const callbackUrl = searchParams.get("redirectTo") || "/admin";
   const [errorMessage, formAction, isPending] = useActionState(
     authenticate,
     undefined,

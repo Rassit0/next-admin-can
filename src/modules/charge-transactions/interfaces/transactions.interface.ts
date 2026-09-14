@@ -6,7 +6,7 @@ export interface ITransaction {
   receiptNumber: number;
   amount: number;
   transactionDate: Date | string;
-  description: string;
+  concept: string;
   type: "INCOME" | "EXPENSE";
   paymentMethod: "CASH" | "TRANSFER" | "QR";
   status: "PENDING" | "PAID" | "COMPLETED" | "CANCELLED" | "FAILED" | "VOIDED";

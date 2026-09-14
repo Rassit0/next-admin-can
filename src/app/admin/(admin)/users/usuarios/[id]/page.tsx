@@ -14,7 +14,7 @@ export default async function UserProfilePage({ params }: Props) {
   const userResponse = await getUserById(id);
 
   if (userResponse.error && userResponse.statusCode === 401) {
-    redirect("/login");
+    redirect("/admin/login");
   }
 
   if (userResponse.error) {

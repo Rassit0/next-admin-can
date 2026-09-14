@@ -7,6 +7,6 @@ export async function logoutAction(callbackUrl?: string | FormData | any) {
   const url =
     typeof callbackUrl === "string" && callbackUrl.trim() !== ""
       ? `/login?redirectTo=${encodeURIComponent(callbackUrl)}`
-      : "/login";
+      : "/admin/login";
   await signOut({ redirectTo: url });
 }

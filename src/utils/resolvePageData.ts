@@ -24,7 +24,7 @@ export async function resolvePageData<T extends any[]>(
         // Por lo tanto, no podemos llamar a logoutAction() ni a signOut() aquí.
         // Simplemente redirigimos al login. El usuario tendrá que volver a iniciar sesión,
         // lo cual sobreescribirá su cookie actual.
-        redirect("/login?expired=true");
+        redirect("/admin/login?expired=true");
       }
       // Lanzar el error hará que Next.js renderice el archivo error.tsx más cercano
       const errorMessage = res.message || "Ocurrió un error al cargar los datos de la página";

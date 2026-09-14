@@ -36,7 +36,7 @@ export default async function StaffPage({ searchParams }: Props) {
   });
 
   if (staffResponse.error && staffResponse.statusCode === 401) {
-    redirect("/login");
+    redirect("/admin/login");
   }
 
   if (staffResponse.error) {

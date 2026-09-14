@@ -50,7 +50,7 @@ export default async function ClubsPage({ searchParams, params }: Props) {
 
   // 1. Manejo de error específico (Ej: 401 no autorizado)
   if (clubsResponse.error && clubsResponse.statusCode === 401) {
-    redirect("/login");
+    redirect("/admin/login");
   }
 
   // 2. Manejo de errores generales (400, 500, etc.)
@@ -68,7 +68,7 @@ export default async function ClubsPage({ searchParams, params }: Props) {
     disciplinesOptionsResponse.error &&
     disciplinesOptionsResponse.statusCode === 401
   ) {
-    redirect("/login");
+    redirect("/admin/login");
   }
 
   // 2. Manejo de errores generales (400, 500, etc.)

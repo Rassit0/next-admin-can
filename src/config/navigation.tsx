@@ -46,6 +46,22 @@ import {
       mobile: { priority: 10 },
     },
     {
+      label: "Noticias",
+      href: "web/news",
+      action: "web_news",
+      subject: "home",
+      icon: <HugeiconsIcon icon={BookOpen01Icon} size={20} />,
+      mobile: { priority: 11 },
+    },
+    {
+      label: "Banners",
+      href: "web/banners",
+      action: "web_banners",
+      subject: "home",
+      icon: <HugeiconsIcon icon={Layers01Icon} size={20} />,
+      mobile: { priority: 12 },
+    },
+    {
       label: "Disciplinas",
     href: "disciplines",
     action: "disciplines",

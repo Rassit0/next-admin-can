@@ -44,7 +44,7 @@ export const CreateManualChargeDrawer = ({
 
   useEffect(() => {
     if (isOpen) {
-      getAccountCategories({ per_page: "100", type: "RECEIVABLE" }).then(res => {
+      getAccountCategories({ per_page: "100", type: "RECEIVABLE", excludeSystem: "true" }).then(res => {
         if (!res.error && res.data) setCategories(res.data.data || []);
       });
     }

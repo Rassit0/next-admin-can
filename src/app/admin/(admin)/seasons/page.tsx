@@ -46,7 +46,7 @@ export default async function SelectDisciplineSeasonsPage({
     disciplinesOptionsResponse.error &&
     disciplinesOptionsResponse.statusCode === 401
   ) {
-    redirect("/login");
+    redirect("/admin/login");
   }
 
   if (disciplinesOptionsResponse.error) {

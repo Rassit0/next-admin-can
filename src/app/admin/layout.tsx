@@ -12,11 +12,8 @@ export default async function AdminLayout({
 }) {
   const session = await auth();
 
-  if (!session) {
-    redirect("/login");
-  }
   let resPermissionsArray: string[] = [];
-  if (session.user.roleId) {
+  if (session?.user?.roleId) {
     const data = await getPermissionsArray({
       roleId: session.user.roleId,
     });

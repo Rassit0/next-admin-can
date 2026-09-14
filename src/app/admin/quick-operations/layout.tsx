@@ -14,7 +14,7 @@ export default async function QuickOperationsLayout({ children }: LayoutProps) {
   const session = await auth();
 
   if (!session) {
-    redirect("/login");
+    redirect("/admin/login");
   }
 
   let userPermissions: string[] = [];
@@ -49,14 +49,11 @@ export default async function QuickOperationsLayout({ children }: LayoutProps) {
       <div className="max-w-400 mx-auto">
         {/* Container for ultra-wide screens */}
         {/* <!-- TopNavBar --> */}
-        <Header 
+        <Header
           showLogo={true}
           actions={
             <Link href="/admin/dashboard">
-              <Button 
-                variant="outline" 
-                size="sm"
-              >
+              <Button variant="outline" size="sm">
                 Administración
               </Button>
             </Link>

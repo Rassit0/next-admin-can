@@ -16,12 +16,25 @@ declare global {
 
 declare const self: ServiceWorkerGlobalScope;
 
-const serwist = new Serwist({
+import { NetworkOnly } from "serwist";
+
+// Prepend NetworkOnly rule for /admin routes
+const cachingRules: typeof defaultCache = [
+  {
+    matcher: ({ url }) => {
+      return url.pathname.startsWith("/admin");
+    },
+    handler: new NetworkOnly(),
+  },
+  ...defaultCache,
+];
+
+const serwistObj = new Serwist({
   precacheEntries: self.__SW_MANIFEST,
   skipWaiting: true,
   clientsClaim: true,
   navigationPreload: true,
-  runtimeCaching: defaultCache,
+  runtimeCaching: cachingRules,
   fallbacks: {
     entries: [
       {
@@ -34,4 +47,4 @@ const serwist = new Serwist({
   },
 });
 
-serwist.addEventListeners();
+serwistObj.addEventListeners();

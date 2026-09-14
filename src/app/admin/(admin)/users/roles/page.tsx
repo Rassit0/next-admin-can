@@ -7,7 +7,7 @@ export default async function RolesPage() {
   const rolesResponse = await getRoles({ per_page: "100" });
 
   if (rolesResponse.error && rolesResponse.statusCode === 401) {
-    redirect("/login");
+    redirect("/admin/login");
   }
 
   if (rolesResponse.error) {

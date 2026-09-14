@@ -20,7 +20,7 @@ export default async function ShiftsPage({ searchParams }: Props) {
   });
 
   if (shiftsResponse.error && shiftsResponse.statusCode === 401) {
-    redirect("/login");
+    redirect("/admin/login");
   }
 
   if (shiftsResponse.error) {

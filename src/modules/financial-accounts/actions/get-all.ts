@@ -10,7 +10,7 @@ export const getFinancialAccounts = async (): Promise<ServiceResponse<FinancialA
       `financial-accounts`,
       {
         next: {
-          tags: ["financial-accounts"],
+          tags: ["financial-accounts", "transactions"],
           revalidate: 3600,
         },
       },

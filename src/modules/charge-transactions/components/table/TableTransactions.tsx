@@ -318,9 +318,9 @@ export const TableTransactions = ({ transactions }: Props) => {
                     <div className="flex flex-col">
                       <span
                         className="text-sm font-medium line-clamp-2 max-w-50"
-                        title={item.description}
+                        title={item.concept}
                       >
-                        {item.description}
+                        {item.concept}
                       </span>
                     </div>
                   </Table.Cell>

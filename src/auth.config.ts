@@ -16,7 +16,7 @@ export const moduleAccessControl: {
   requiredModule: PermissionModule;
 }[] = [
   // Dashboard principal
-  { path: "/admin/dashboard", requiredModule: "DASHBOARD" },
+  { path: "/admin", requiredModule: "DASHBOARD" },
 
   // Administración de Accesos
   { path: "/admin/users", requiredModule: "USERS" },
@@ -52,19 +52,24 @@ export const moduleAccessControl: {
 
 export const authConfig = {
   pages: {
-    signIn: "/login",
+    signIn: "/admin/login",
   },
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
       const path = nextUrl.pathname;
+
+      if (path.startsWith("/admin/login") || path.startsWith("/admin/unauthorized")) {
+        return true;
+      }
+
       const isAdminRoute = path.startsWith("/admin");
 
       if (isAdminRoute) {
-        if (!isLoggedIn) return false; // Redirige a /login si no está autenticado
+        if (!isLoggedIn) return false; // Redirige a /admin/login si no está autenticado
         return true;
       }
-      // else if (isLoggedIn && path === "/login") {
+      // else if (isLoggedIn && path === "/admin/login") {
       //   return NextResponse.redirect(new URL(`/admin/dashboard`, nextUrl));
       // }
 

@@ -16,7 +16,7 @@ export default async function TeamsPage() {
     disciplinesOptionsResponse.error &&
     disciplinesOptionsResponse.statusCode === 401
   ) {
-    redirect("/login");
+    redirect("/admin/login");
   }
 
   // 2. Manejo de errores generales (400, 500, etc.)

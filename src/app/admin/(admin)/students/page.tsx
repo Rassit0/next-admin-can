@@ -37,7 +37,7 @@ export default async function StudentsPage({ searchParams }: Props) {
   });
 
   if (studentsResponse.error && studentsResponse.statusCode === 401) {
-    redirect("/login");
+    redirect("/admin/login");
   }
 
   // 2. Manejo de errores generales (400, 500, etc.)

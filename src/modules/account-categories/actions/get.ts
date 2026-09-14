@@ -15,6 +15,7 @@ interface SearchParams {
   type?: string;
   sortField?: string;
   orderBy?: string;
+  excludeSystem?: string;
 }
 
 const parseCategory = (category: IAccountCategory): IAccountCategory => ({
@@ -30,6 +31,7 @@ export const getAccountCategories = async ({
   type,
   sortField,
   orderBy,
+  excludeSystem,
 }: SearchParams): Promise<ServiceResponse<IAccountCategoriesResponse>> => {
   return handleServerAction(async () => {
     const params = new URLSearchParams();
@@ -39,6 +41,7 @@ export const getAccountCategories = async ({
     if (type) params.set("type", type);
     if (sortField) params.set("sortField", sortField);
     if (orderBy) params.set("orderBy", orderBy);
+    if (excludeSystem) params.set("excludeSystem", excludeSystem);
 
     const res = await api.get<IAccountCategoriesResponse>(
       `account-categories?${params.toString()}`,
