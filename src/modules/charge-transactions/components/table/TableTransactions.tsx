@@ -59,6 +59,10 @@ export const TableTransactions = ({ transactions }: Props) => {
             account: t.financialAccountName || "Sin asignar",
             amount: t.amount,
           });
+          // Fix: Si alguna transacción del grupo sigue completada, el recibo entero sigue activo
+          if (t.status === "COMPLETED") {
+            group.status = "COMPLETED";
+          }
         } else {
           const newGroup: ITransaction = {
             ...t,
