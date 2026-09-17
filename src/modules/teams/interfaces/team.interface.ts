@@ -9,6 +9,7 @@ export interface ITeam {
   name: string;
   shortName?: string | null;
   description: string | null;
+  imageUrl?: string | null;
   club: Club;
   createdAt: Date;
   updatedAt: Date;

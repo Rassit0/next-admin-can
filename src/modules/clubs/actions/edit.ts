@@ -7,20 +7,17 @@ import { handleServerAction } from "@/utils";
 
 interface Props {
   id: string;
-  data: {
-    name: string;
-    disciplineId: string;
-  };
+  formData: FormData;
 }
 
 export const editClub = async ({
   id,
-  data,
+  formData,
 }: Props): Promise<ServiceResponse<IClub>> => {
   return handleServerAction(async () => {
     const response = await api.patch<{ message: string; data: IClub }>(
       `clubs/${id}`,
-      data,
+      formData
     );
 
     updateTag("clubs");

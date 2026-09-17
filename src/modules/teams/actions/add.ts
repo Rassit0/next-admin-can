@@ -5,15 +5,13 @@ import { updateTag } from "next/cache";
 import { ITeam } from "@/modules/teams";
 import { handleServerAction } from "@/utils";
 
-export const addTeam = async (data: {
-  name: string;
-  description: string | null;
-  clubId: string;
-}): Promise<ServiceResponse<ITeam>> => {
+export const addTeam = async (
+  formData: FormData
+): Promise<ServiceResponse<ITeam>> => {
   return handleServerAction(async () => {
     const response = await api.post<{ message: string; data: ITeam }>(
       `teams`,
-      data,
+      formData
     );
 
     updateTag("teams");

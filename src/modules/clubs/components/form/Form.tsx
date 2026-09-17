@@ -8,11 +8,11 @@ import {
   Surface,
   TextField,
   toast,
-  ComboBox,
-  ListBox,
+  Switch,
 } from "@heroui/react";
 import React, { useState } from "react";
-import { addClub, editClub, IClub, IDisciplineOptions } from "@/modules/clubs";
+import { addClub, editClub, IClub } from "@/modules/clubs";
+import { FileUploader } from "@/ui/components/file-uploader/FileUploader";
 
 interface Props {
   club?: IClub;
@@ -32,6 +32,8 @@ export const FormClub = ({
 }: Props) => {
   const [name, setName] = useState(club?.name || "");
   const [shortName, setShortName] = useState(club?.shortName || "");
+  const [isExternal, setIsExternal] = useState(club?.isExternal || false);
+  const [files, setFiles] = useState<File[]>([]);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -51,15 +53,18 @@ export const FormClub = ({
     }
     setIsLoading?.(true);
     let res;
-    const data = {
-      name,
-      shortName: shortName || undefined,
-      disciplineId,
-    };
+    
+    const formData = new FormData();
+    formData.append("name", name);
+    if (shortName) formData.append("shortName", shortName);
+    formData.append("disciplineId", disciplineId);
+    formData.append("isExternal", isExternal.toString());
+    if (files.length > 0) formData.append("image", files[0]);
+
     if (club) {
-      res = await editClub({ id: club.id, data });
+      res = await editClub({ id: club.id, formData });
     } else {
-      res = await addClub(data);
+      res = await addClub(formData);
     }
     setIsLoading?.(false);
     if (res.error) {
@@ -125,6 +130,34 @@ export const FormClub = ({
           />
           <FieldError children={errors.shortName && <> {errors.shortName}</>} />
         </TextField>
+
+        <Switch
+          isSelected={isExternal}
+          onChange={setIsExternal}
+        >
+          <Switch.Control>
+            <Switch.Thumb />
+          </Switch.Control>
+          <Switch.Content>
+            Es un club externo
+          </Switch.Content>
+        </Switch>
+
+        <div className="flex flex-col gap-2">
+          <Label>Logo del Club</Label>
+          <FileUploader
+            files={files}
+            onFilesChange={setFiles}
+            maxFiles={1}
+            maxSizeMB={5}
+            accept="image/png, image/jpeg, image/webp"
+          />
+          {club?.imageUrl && files.length === 0 && (
+            <div className="mt-2 text-sm text-success">
+              ✓ Ya existe un logo asociado
+            </div>
+          )}
+        </div>
       </Form>
     </Surface>
   );

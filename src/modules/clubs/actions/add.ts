@@ -5,14 +5,13 @@ import { updateTag } from "next/cache";
 import { handleServerAction } from "@/utils";
 import { IClub } from "../interfaces/club.interface";
 
-export const addClub = async (data: {
-  name: string;
-  disciplineId: string;
-}): Promise<ServiceResponse<IClub>> => {
+export const addClub = async (
+  formData: FormData
+): Promise<ServiceResponse<IClub>> => {
   return handleServerAction(async () => {
     const response = await api.post<{ message: string; data: IClub }>(
       `clubs`,
-      data,
+      formData
     );
 
     updateTag("clubs");

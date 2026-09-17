@@ -9,8 +9,6 @@ export const CalendarWrapper = dynamic(
   () => import("./calendar-view").then((mod) => mod.CalendarView),
   {
     ssr: false,
-    loading: () => (
-      <Skeleton className="w-full h-[600px] rounded-xl" />
-    ),
-  }
+    loading: () => <Skeleton className="w-full h-150 rounded-xl" />,
+  },
 );

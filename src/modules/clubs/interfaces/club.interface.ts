@@ -8,6 +8,8 @@ export interface IClub {
   id: string;
   name: string;
   shortName?: string;
+  imageUrl?: string;
+  isExternal?: boolean;
   organization: Organization;
   // discipline: Discipline;
   createdAt: Date;
