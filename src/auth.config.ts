@@ -16,7 +16,7 @@ export const moduleAccessControl: {
   requiredModule: PermissionModule;
 }[] = [
   // Dashboard principal
-  { path: "/admin", requiredModule: "DASHBOARD" },
+  { path: "/admin/dashboard", requiredModule: "DASHBOARD" },
 
   // Administración de Accesos
   { path: "/admin/users", requiredModule: "USERS" },
@@ -56,10 +56,24 @@ export const authConfig = {
   },
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
-      const isLoggedIn = !!auth?.user;
+      // Verificamos que tenga token del backend para considerarlo autenticado
+      // Esto evita bucles infinitos cuando expira el token pero NextAuth mantiene un user genérico vacío
+      const isLoggedIn = !!(auth?.user && (auth.user as BackendUser).token);
       const path = nextUrl.pathname;
 
-      if (path.startsWith("/admin/login") || path.startsWith("/admin/unauthorized")) {
+      // Si ya está logueado e intenta acceder al login, lo redirigimos al dashboard
+      if (isLoggedIn && path.startsWith("/admin/login")) {
+        // Si viene con expired=true, permitimos que llegue al login para que el cliente ejecute signOut()
+        if (nextUrl.searchParams.get("expired") === "true") {
+          return true;
+        }
+        return NextResponse.redirect(new URL("/admin/dashboard", nextUrl));
+      }
+
+      if (
+        path.startsWith("/admin/login") ||
+        path.startsWith("/admin/unauthorized")
+      ) {
         return true;
       }
 
@@ -69,9 +83,6 @@ export const authConfig = {
         if (!isLoggedIn) return false; // Redirige a /admin/login si no está autenticado
         return true;
       }
-      // else if (isLoggedIn && path === "/admin/login") {
-      //   return NextResponse.redirect(new URL(`/admin/dashboard`, nextUrl));
-      // }
 
       return true;
     },

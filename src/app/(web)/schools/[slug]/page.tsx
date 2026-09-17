@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { CinematicLoader } from "@/modules/web/home/components/cinematic-loader";
-import { SiteHeader } from "@/modules/web/shared/components/site-header";
-import { ParticlesBackground } from "@/modules/web/home/components/particles-background";
+import { CinematicLoader } from "@/modules/portal/home/components/cinematic-loader";
+import { SiteHeader } from "@/modules/portal/shared/components/site-header";
+import { ParticlesBackground } from "@/modules/portal/home/components/particles-background";
 import { CourseDetailClient } from "./course-detail-client";
-import { findCourseBySlug, courseDetails } from "@/modules/web/core/constants/data";
+import { findCourseBySlug, courseDetails } from "@/modules/portal/core/constants/data";
 
 interface CourseDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -22,7 +22,7 @@ export default async function CourseDetailPage({
   const course = findCourseBySlug(slug);
 
   if (!course) {
-    const { getInstitution } = await import("@/modules/web/institutions/actions/institutions.action");
+    const { getInstitution } = await import("@/modules/portal/institutions/actions/institutions.action");
     const res = await getInstitution();
     if (!res.data) { return null; }
 

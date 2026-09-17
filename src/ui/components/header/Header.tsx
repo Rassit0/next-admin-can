@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import {
   Notification01Icon,
   Search01Icon,
@@ -63,14 +64,12 @@ export const Header = ({ title, actions, showLogo }: HeaderProps) => {
         </div>
       </div> */}
       <div className="flex items-center gap-4">
-        <Button className="md:hidden" isIconOnly variant="ghost">
-          <HugeiconsIcon icon={SidebarLeftIcon} />
-        </Button>
-        {showLogo && (
-          <div className="hidden md:flex items-center justify-center mr-2">
-            <Crest className="w-10 h-10 object-contain" />
-          </div>
-        )}
+        <Link
+          href="/admin"
+          className={`flex items-center justify-center mr-2 ${showLogo ? "" : "lg:hidden"}`}
+        >
+          <Crest className="w-9 h-9 md:w-10 md:h-10 object-contain" />
+        </Link>
         <span className="hidden md:block text-3xl font-semibold text-on-surface font-headline leading-tight">
           {title || "Buen día, Mauricio"}
         </span>

@@ -1,4 +1,4 @@
-import { InstitutionPrinciplesClient } from "@/modules/web/institutions/components/institution-principles-client";
+import { InstitutionPrinciplesClient } from "@/modules/portal/institutions/components/institution-principles-client";
 
 export const metadata = {
   title: "Nuestros Principios | Club Atlético Nacional",

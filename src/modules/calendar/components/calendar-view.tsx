@@ -6,17 +6,31 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { EventApi, PluginDef } from "@fullcalendar/core";
+
 import { useOverlayState } from "@heroui/react";
 import { toast } from "sonner";
 import { getCalendarEventsAction } from "../actions/get-calendar-events";
 import { mapBackendToCalendarEvent } from "../utils/calendar.mapper";
 import { EventDetailModal } from "./event-detail-modal";
+import { MatchFormModal } from "./match-form-modal";
+import { SessionFormModal } from "./session-form-modal";
+import { GeneralEventFormModal } from "./general-event-form-modal";
+import { IMatchCalendarMetadata, ISessionCalendarMetadata, IGeneralEventCalendarMetadata } from "../interfaces/calendar.interface";
 import esLocale from '@fullcalendar/core/locales/es';
 
 export const CalendarView = () => {
   const calendarRef = useRef<any>(null);
   const modalState = useOverlayState();
+  const createModalState = useOverlayState();
+  const editModalState = useOverlayState();
+  const sessionCreateModalState = useOverlayState();
+  const sessionEditModalState = useOverlayState();
+  const generalEventCreateModalState = useOverlayState();
+  const generalEventEditModalState = useOverlayState();
   const [selectedEvent, setSelectedEvent] = useState<EventApi | null>(null);
+  const [matchInitialData, setMatchInitialData] = useState<any>(null);
+  const [sessionInitialData, setSessionInitialData] = useState<any>(null);
+  const [generalEventInitialData, setGeneralEventInitialData] = useState<any>(null);
 
   // FullCalendar pass fetchInfo to events function
   const fetchEvents = useCallback((
@@ -60,17 +74,28 @@ export const CalendarView = () => {
         initialView="dayGridMonth"
         customButtons={{
           createEvent: {
+            text: 'Crear Partido',
+            click: function() {
+              createModalState.setOpen(true);
+            }
+          },
+          createSession: {
+            text: 'Crear Sesión',
+            click: function() {
+              sessionCreateModalState.setOpen(true);
+            }
+          },
+          createGeneralEvent: {
             text: 'Crear Evento',
             click: function() {
-              toast.info('Modal de creación pendiente de implementar');
-              // modalState.setOpen(true); -> here you would open create modal
+              generalEventCreateModalState.setOpen(true);
             }
           }
         }}
         headerToolbar={{
           left: "prev,next today",
           center: "title",
-          right: "createEvent dayGridMonth,timeGridWeek,timeGridDay",
+          right: "createGeneralEvent createSession createEvent dayGridMonth,timeGridWeek,timeGridDay",
         }}
         events={fetchEvents}
         eventClick={handleEventClick}
@@ -82,6 +107,112 @@ export const CalendarView = () => {
       <EventDetailModal 
         state={modalState} 
         event={selectedEvent} 
+        onDeleteSuccess={() => {
+          calendarRef.current?.getApi().refetchEvents();
+        }}
+        onEditMatch={() => {
+          if (selectedEvent && selectedEvent.extendedProps.type === "MATCH") {
+            const meta = selectedEvent.extendedProps.metadata as IMatchCalendarMetadata;
+            setMatchInitialData({
+              id: selectedEvent.id,
+              homeTeamId: meta.homeTeam.id,
+              awayTeamId: meta.awayTeam.id,
+              teamSeasonCategoryId: meta.category?.id || "",
+              locationId: selectedEvent.extendedProps.location?.id || null,
+              startDate: selectedEvent.start?.toISOString() || "",
+              endDate: selectedEvent.end?.toISOString() || "",
+              type: meta.matchType,
+              homeScore: meta.homeScore,
+              awayScore: meta.awayScore,
+            });
+            modalState.setOpen(false);
+            editModalState.setOpen(true);
+          }
+        }}
+        onEditSession={() => {
+          if (selectedEvent) {
+            const meta = selectedEvent.extendedProps as ISessionCalendarMetadata;
+            setSessionInitialData({
+              id: selectedEvent.id,
+              title: selectedEvent.title,
+              locationId: selectedEvent.extendedProps.location?.id,
+              startDate: selectedEvent.startStr,
+              durationMin: meta.durationMin,
+              teamSeasonCategoryIds: meta.teams?.map((t: any) => t.id) || [],
+              courseSeasonShiftIds: meta.courses?.map((c: any) => c.id) || [],
+              seriesId: selectedEvent.extendedProps.series?.id,
+              recurrenceRule: selectedEvent.extendedProps.series?.isRecurring ? "yes" : undefined,
+            });
+            modalState.setOpen(false);
+            sessionEditModalState.setOpen(true);
+          }
+        }}
+        onEditGeneralEvent={() => {
+          if (selectedEvent) {
+            const meta = selectedEvent.extendedProps as IGeneralEventCalendarMetadata;
+            setGeneralEventInitialData({
+              id: selectedEvent.id,
+              title: selectedEvent.title,
+              description: meta.description,
+              locationId: selectedEvent.extendedProps.location?.id,
+              startDate: selectedEvent.startStr,
+              endDate: selectedEvent.endStr || selectedEvent.startStr,
+              institutionId: meta.institutionId,
+              teamSeasonCategoryId: meta.teamSeasonCategoryId,
+              courseSeasonId: meta.courseSeasonId,
+              courseSeasonShiftId: meta.courseSeasonShiftId,
+              seriesId: selectedEvent.extendedProps.series?.id,
+              recurrenceRule: selectedEvent.extendedProps.series?.isRecurring ? "yes" : undefined,
+            });
+            modalState.setOpen(false);
+            generalEventEditModalState.setOpen(true);
+          }
+        }}
+      />
+      <MatchFormModal
+        state={createModalState}
+        mode="create"
+        onSuccess={() => {
+          calendarRef.current?.getApi().refetchEvents();
+        }}
+      />
+      <MatchFormModal
+        state={editModalState}
+        mode="edit"
+        initialData={matchInitialData}
+        onSuccess={() => {
+          calendarRef.current?.getApi().refetchEvents();
+        }}
+      />
+      <SessionFormModal
+        state={sessionCreateModalState}
+        mode="create"
+        onSuccess={() => {
+          calendarRef.current?.getApi().refetchEvents();
+        }}
+      />
+      <SessionFormModal
+        state={sessionEditModalState}
+        mode="edit"
+        initialData={sessionInitialData}
+        onSuccess={() => {
+          calendarRef.current?.getApi().refetchEvents();
+        }}
+      />
+      <GeneralEventFormModal
+        state={generalEventCreateModalState}
+        mode="create"
+        onSuccess={() => {
+          calendarRef.current?.getApi().refetchEvents();
+        }}
+      />
+      <GeneralEventFormModal
+        state={generalEventEditModalState}
+        mode="edit"
+        initialData={generalEventInitialData}
+        onSuccess={() => {
+          calendarRef.current?.getApi().refetchEvents();
+        }}
       />
     </div>
   );

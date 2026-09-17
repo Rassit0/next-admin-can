@@ -16,6 +16,7 @@ export default async function AdminLayout({
   if (session?.user?.roleId) {
     const data = await getPermissionsArray({
       roleId: session.user.roleId,
+      skip401Redirect: true,
     });
     if (data.error) {
       console.log(data.message);

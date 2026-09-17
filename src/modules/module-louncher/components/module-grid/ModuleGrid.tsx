@@ -1,5 +1,5 @@
 import { CardLouncher } from "@/modules/module-louncher";
-import { DashboardCircleEditIcon, GlobalIcon } from "@hugeicons/core-free-icons";
+import { DashboardCircleEditIcon, GlobalIcon, Calendar01Icon } from "@hugeicons/core-free-icons";
 
 export const ModuleGrid = () => {
   return (
@@ -24,6 +24,13 @@ export const ModuleGrid = () => {
         title="Operaciones Rápidas"
         description="Gestión unificada de secretaría, operaciones y flujo de caja."
         tagText="Secretaría"
+      />
+      <CardLouncher
+        href="/admin/calendar"
+        icon={Calendar01Icon}
+        title="Calendario Institucional"
+        description="Gestione y visualice todos los eventos, entrenamientos y partidos del club."
+        tagText="Organización"
       />
     </div>
   );

@@ -18,6 +18,7 @@ export * from "./components/filters/TabsTypeFilterQueryProps";
 
 export * from "./components/button-redirection/ButtonAdd";
 export * from "./components/button-redirection/ButtonEdit";
+export * from "./components/button-redirection/ButtonRedirect";
 
 export type * from "./interfaces/sidebar/sidebar";
 export * from "./components/navigation/TabsRouteNavigation";

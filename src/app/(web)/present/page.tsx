@@ -1,8 +1,8 @@
-import { CinematicLoader } from "@/modules/web/home/components/cinematic-loader";
-import { SiteHeader } from "@/modules/web/shared/components/site-header";
-import { ParticlesBackground } from "@/modules/web/home/components/particles-background";
-import NoticiasContent from "@/modules/web/news/components/noticias-content";
-import { getPublicNews } from "@/modules/web/news/actions/news.action";
+import { CinematicLoader } from "@/modules/portal/home/components/cinematic-loader";
+import { SiteHeader } from "@/modules/portal/shared/components/site-header";
+import { ParticlesBackground } from "@/modules/portal/home/components/particles-background";
+import NoticiasContent from "@/modules/portal/news/components/noticias-content";
+import { getPublicNews, getPublicNewsCategories } from "@/modules/portal/news/actions/news.action";
 
 export const metadata = {
   title: "Central de Anuncios y Noticias | Club Atlético Nacional",
@@ -13,11 +13,22 @@ export const metadata = {
   },
 };
 
-export default async function NoticiasPage() {
-  const newsResponse = await getPublicNews();
-  const initialNews = newsResponse?.data || [];
+interface Props {
+  searchParams: Promise<{
+    categoryId?: string;
+  }>;
+}
 
-  return (
-    <NoticiasContent initialNews={initialNews} />
-  );
+export default async function NoticiasPage({ searchParams }: Props) {
+  const { categoryId } = await searchParams;
+  // Obtenemos todas las noticias y categorías activas
+  const [newsResponse, categoriesResponse] = await Promise.all([
+    getPublicNews(undefined, categoryId), // Filtramos por categoryId en el backend si viene en los params (o removemos param para client-side)
+    getPublicNewsCategories()
+  ]);
+  
+  const initialNews = newsResponse?.data || [];
+  const categories = categoriesResponse?.data || [];
+
+  return <NoticiasContent initialNews={initialNews} categories={categories} initialCategoryId={categoryId} />;
 }

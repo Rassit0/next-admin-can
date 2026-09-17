@@ -31,10 +31,33 @@ const nextConfig: NextConfig = {
         port: "3001",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "pub-d9fd1557230b4f54993890de726c12af.r2.dev",
+        port: "",
+        pathname: "/**",
+      },
     ],
     dangerouslyAllowLocalIP: true,
   },
+  async redirects() {
+    return [
+      {
+        source: '/admin/web/promos/promo-1',
+        destination: '/admin/web/promotions',
+        permanent: true,
+      },
+      {
+        source: '/admin/web/promos/promo-2',
+        destination: '/admin/web/promotions',
+        permanent: true,
+      },
+    ];
+  },
   experimental: {
+    serverActions: {
+      bodySizeLimit: "10mb",
+    },
     cpus: 1,
     memoryBasedWorkersCount: true,
   },

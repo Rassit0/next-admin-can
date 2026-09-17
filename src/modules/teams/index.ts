@@ -24,3 +24,4 @@ export * from "./components/filters/SelectDiscipline";
 // Interfaces
 export type * from "./interfaces/team.interface";
 export type * from "./interfaces/options.team.interface";
+export * from "./actions/get-teams-options";

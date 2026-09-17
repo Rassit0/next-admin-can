@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowLeft, Calendar, Clock, User, Tag } from "lucide-react";
-import type { PublicNewsDetail } from "@/modules/web/news/actions/news.action";
+import type { PublicNewsDetail } from "@/modules/portal/news/actions/news.action";
 
 export function NewsDetailClient({ article }: { article: PublicNewsDetail }) {
   const publishDate = new Date(article.publishedAt);

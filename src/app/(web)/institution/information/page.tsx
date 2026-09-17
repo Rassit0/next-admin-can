@@ -1,8 +1,8 @@
-import { getInstitution } from "@/modules/web/institutions/actions/institutions.action";
-import { InstitutionHeader } from "@/modules/web/institutions/components/institution-header";
-import { InstitutionContacts } from "@/modules/web/institutions/components/institution-contacts";
-import { InstitutionPrograms } from "@/modules/web/institutions/components/institution-programs";
-import { InstitutionLocation } from "@/modules/web/institutions/components/institution-location";
+import { getInstitution } from "@/modules/portal/institutions/actions/institutions.action";
+import { InstitutionHeader } from "@/modules/portal/institutions/components/institution-header";
+import { InstitutionContacts } from "@/modules/portal/institutions/components/institution-contacts";
+import { InstitutionPrograms } from "@/modules/portal/institutions/components/institution-programs";
+import { InstitutionLocation } from "@/modules/portal/institutions/components/institution-location";
 
 export default async function InformationInstitutionPage() {
   const institutionRes = await getInstitution();

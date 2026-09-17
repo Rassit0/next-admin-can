@@ -1,7 +1,7 @@
-import { CinematicLoader } from "@/modules/web/home/components/cinematic-loader";
-import { SiteHeader } from "@/modules/web/shared/components/site-header";
-import { ParticlesBackground } from "@/modules/web/home/components/particles-background";
-import InstitucionContent from "@/modules/web/institutions/components/institucion-content";
+import { CinematicLoader } from "@/modules/portal/home/components/cinematic-loader";
+import { SiteHeader } from "@/modules/portal/shared/components/site-header";
+import { ParticlesBackground } from "@/modules/portal/home/components/particles-background";
+import InstitucionContent from "@/modules/portal/institutions/components/institucion-content";
 
 export const metadata = {
   title: "Nuestra Historia e Institución | Club Atlético Nacional",

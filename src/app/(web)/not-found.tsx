@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
-import { Magnetic } from "@/modules/web/shared/components/magnetic";
+import { Magnetic } from "@/modules/portal/shared/components/magnetic";
 
 export default function NotFound() {
   return (

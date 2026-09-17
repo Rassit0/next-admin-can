@@ -2,10 +2,10 @@ import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Oswald } from "next/font/google";
 
-import { CinematicLoader } from "@/modules/web/home/components/cinematic-loader";
-import { SiteHeader } from "@/modules/web/shared/components/site-header";
-import { ParticlesBackground } from "@/modules/web/home/components/particles-background";
-import { SiteFooter } from "@/modules/web/shared/components/site-footer";
+import { CinematicLoader } from "@/modules/portal/home/components/cinematic-loader";
+import { SiteHeader } from "@/modules/portal/shared/components/site-header";
+import { ParticlesBackground } from "@/modules/portal/home/components/particles-background";
+import { SiteFooter } from "@/modules/portal/shared/components/site-footer";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({
@@ -36,7 +36,7 @@ export const viewport: Viewport = {
   themeColor: "#ffffff",
 };
 
-import { getInstitution } from "@/modules/web/institutions/actions/institutions.action";
+import { getInstitution } from "@/modules/portal/institutions/actions/institutions.action";
 import { notFound } from "next/navigation";
 
 export default async function RootLayout({
@@ -45,7 +45,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const institutionRes = await getInstitution();
-  
+
   if (institutionRes.error || !institutionRes.data) {
     notFound();
   }
@@ -55,9 +55,10 @@ export default async function RootLayout({
 
   return (
     <div
-      className={`${geistSans.variable} ${geistMono.variable} ${oswald.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${oswald.variable} light`}
+      data-theme="light"
     >
-      <div className="font-sans antialiased bg-background">
+      <div className="font-sans antialiased bg-background text-foreground">
         <div className="relative min-h-screen bg-background">
           <CinematicLoader />
           <ParticlesBackground />

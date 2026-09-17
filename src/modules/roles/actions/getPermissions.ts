@@ -5,10 +5,12 @@ import { handleServerAction } from "@/utils";
 
 interface SearchParams {
   roleId?: string;
+  skip401Redirect?: boolean;
 }
 
 export const getPermissionsArray = async ({
   roleId,
+  skip401Redirect = false,
 }: SearchParams): Promise<ServiceResponse<string[]>> => {
   return handleServerAction(async () => {
     const params = new URLSearchParams();
@@ -28,5 +30,5 @@ export const getPermissionsArray = async ({
       data: res.data,
       message: res.message || "Permisos obtenidos exitosamente",
     };
-  });
+  }, undefined, skip401Redirect);
 };

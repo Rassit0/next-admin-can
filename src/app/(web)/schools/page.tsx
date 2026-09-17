@@ -1,8 +1,8 @@
-import { CinematicLoader } from "@/modules/web/home/components/cinematic-loader";
-import { SiteHeader } from "@/modules/web/shared/components/site-header";
-import { ParticlesBackground } from "@/modules/web/home/components/particles-background";
-import EscuelasContent from "@/modules/web/schools/components/escuelas-content";
-import { getPublicCourses } from "@/modules/web/schools/actions/schools.action";
+import { CinematicLoader } from "@/modules/portal/home/components/cinematic-loader";
+import { SiteHeader } from "@/modules/portal/shared/components/site-header";
+import { ParticlesBackground } from "@/modules/portal/home/components/particles-background";
+import EscuelasContent from "@/modules/portal/schools/components/escuelas-content";
+import { getPublicCourses } from "@/modules/portal/schools/actions/schools.action";
 
 export const metadata = {
   title: "Escuelas de Formación y Cursos | Club Atlético Nacional",

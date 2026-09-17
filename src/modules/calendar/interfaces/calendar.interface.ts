@@ -19,16 +19,29 @@ export interface ISessionCalendarMetadata extends IBaseCalendarMetadata {
 }
 
 export interface IMatchCalendarMetadata extends IBaseCalendarMetadata {
-  opponentName: string;
+  homeTeam: {
+    id: string;
+    name: string;
+  };
+  awayTeam: {
+    id: string;
+    name: string;
+  };
+  homeScore: number | null;
+  awayScore: number | null;
   matchType: string;
-  result: string;
-  team: { id: string; name: string } | null;
+  result: string | null;
+  category: {
+    id: string;
+    name: string;
+  } | null;
 }
 
 export interface IGeneralEventCalendarMetadata extends IBaseCalendarMetadata {
   institutionId: string | null;
-  teamSeasonId: string | null;
+  teamSeasonCategoryId: string | null;
   courseSeasonId: string | null;
+  courseSeasonShiftId: string | null;
 }
 
 export interface ICalendarEventResponse<T = IBaseCalendarMetadata> {

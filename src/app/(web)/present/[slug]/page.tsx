@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { NewsDetailClient } from "./news-detail-client";
-import { getPublicNewsBySlug } from "@/modules/web/news/actions/news.action";
+import { getPublicNewsBySlug } from "@/modules/portal/news/actions/news.action";
 
 interface NewsDetailPageProps {
   params: Promise<{ slug: string }>;

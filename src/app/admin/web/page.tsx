@@ -1,18 +1,5 @@
-import { HeaderPage } from "@/ui";
+import { redirect } from "next/navigation";
 
 export default function AdminWebPage() {
-  return (
-    <>
-      <HeaderPage
-        title="Web Pública"
-        description="Gestión del portal web público."
-        breadcrumb={[
-          { label: "Web Pública" },
-        ]}
-      />
-      <div>
-        <h1>Admin Web</h1>
-      </div>
-    </>
-  );
+  redirect("/admin/web/home");
 }

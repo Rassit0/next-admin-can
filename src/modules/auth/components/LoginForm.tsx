@@ -21,11 +21,15 @@ import {
 } from "./icons";
 import { useSearchParams } from "next/navigation";
 import { authenticate } from "@/modules/auth";
+import { signOut } from "next-auth/react";
 
 export const LoginForm = () => {
   const [isVisible, setIsVisible] = useState(false);
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("redirectTo") || "/admin";
+  const callbackUrl =
+    searchParams.get("redirectTo") ||
+    searchParams.get("callbackUrl") ||
+    "/admin";
   const [errorMessage, formAction, isPending] = useActionState(
     authenticate,
     undefined,
@@ -34,6 +38,13 @@ export const LoginForm = () => {
   const [rememberMe, setRememberMe] = useState(false);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
+
+  useEffect(() => {
+    // Si fuimos redirigidos aquí porque expiró la sesión, limpiamos la cookie local de NextAuth
+    if (searchParams.get("expired") === "true") {
+      signOut({ redirect: false });
+    }
+  }, [searchParams]);
 
   const containerVariants: Variants = {
     hidden: { opacity: 0, y: 15 },

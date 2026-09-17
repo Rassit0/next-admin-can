@@ -1,6 +1,6 @@
 import { Suspense } from "react";
-import TeamsContent from "@/modules/web/teams/components/teams-content";
-import { getPublicTeams } from "@/modules/web/teams/actions/teams.action";
+import TeamsContent from "@/modules/portal/teams/components/teams-content";
+import { getPublicTeams } from "@/modules/portal/teams/actions/teams.action";
 
 export const metadata = {
   title: "Equipos y Competición | Club Atlético Nacional",

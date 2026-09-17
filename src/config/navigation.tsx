@@ -18,51 +18,35 @@ import {
   StudentIcon,
   TaskDone01Icon,
   UserGroupIcon,
-    UserIcon,
-    UserMultipleIcon,
-    Time02Icon,
-    Invoice01Icon,
-    FlashIcon,
-  } from "@hugeicons/core-free-icons";
-  import { HugeiconsIcon } from "@hugeicons/react";
-  
-  export const itemsNavigation: NavItem[] = [
-    {
-      label: "Operaciones Rápidas",
-      href: "quick-operations",
-      action: "quick-operations",
-      subject: "home",
-      icon: <HugeiconsIcon icon={FlashIcon} size={20} />,
-      highlight: true,
-      hiddenInSidebar: true,
-      mobile: { priority: 1 },
-    },
-    {
-      label: "Dashboard",
-      href: "dashboard",
-      action: "dashboard",
-      subject: "home",
-      icon: <HugeiconsIcon icon={DashboardSquare02Icon} size={20} />,
-      mobile: { priority: 10 },
-    },
-    {
-      label: "Noticias",
-      href: "web/news",
-      action: "web_news",
-      subject: "home",
-      icon: <HugeiconsIcon icon={BookOpen01Icon} size={20} />,
-      mobile: { priority: 11 },
-    },
-    {
-      label: "Banners",
-      href: "web/banners",
-      action: "web_banners",
-      subject: "home",
-      icon: <HugeiconsIcon icon={Layers01Icon} size={20} />,
-      mobile: { priority: 12 },
-    },
-    {
-      label: "Disciplinas",
+  UserIcon,
+  UserMultipleIcon,
+  Time02Icon,
+  Invoice01Icon,
+  FlashIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+
+export const itemsNavigation: NavItem[] = [
+  {
+    label: "Operaciones Rápidas",
+    href: "quick-operations",
+    action: "quick-operations",
+    subject: "home",
+    icon: <HugeiconsIcon icon={FlashIcon} size={20} />,
+    highlight: true,
+    hiddenInSidebar: true,
+    mobile: { priority: 1 },
+  },
+  {
+    label: "Inicio",
+    href: "dashboard",
+    action: "dashboard",
+    subject: "home",
+    icon: <HugeiconsIcon icon={DashboardSquare02Icon} size={20} />,
+    mobile: { priority: 10 },
+  },
+  {
+    label: "Disciplinas",
     href: "disciplines",
     action: "disciplines",
     subject: "DISCIPLINES",
@@ -148,13 +132,13 @@ import {
     subject: ["ACCOUNT_CHARGES", "ACCOUNT_CATEGORIES"],
     icon: <HugeiconsIcon icon={Invoice01Icon} size={20} />,
   },
-  {
-    label: "Asistencia",
-    href: "/attendance",
-    action: "attendance",
-    subject: "home",
-    icon: <HugeiconsIcon icon={TaskDone01Icon} size={20} />,
-  },
+  // {
+  //   label: "Asistencia",
+  //   href: "/attendance",
+  //   action: "attendance",
+  //   subject: "home",
+  //   icon: <HugeiconsIcon icon={TaskDone01Icon} size={20} />,
+  // },
   {
     label: "Turnos",
     href: "shifts",
@@ -173,11 +157,25 @@ import {
 
 export const itemsWebNavigation: NavItem[] = [
   {
-    label: "Volver",
-    href: "../dashboard",
-    action: "dashboard",
+    label: "Inicio",
+    href: "home",
+    action: "web_home",
     subject: "home",
-    icon: <HugeiconsIcon icon={ArrowDataTransferHorizontalIcon} size={20} />,
+    icon: <HugeiconsIcon icon={DashboardSquare02Icon} size={20} />,
+  },
+  {
+    label: "Hero Banners",
+    href: "hero-banners",
+    action: "web_banners",
+    subject: "home",
+    icon: <HugeiconsIcon icon={Layers01Icon} size={20} />,
+  },
+  {
+    label: "Equipos/Escuela",
+    href: "home-disciplines",
+    action: "web_banners",
+    subject: "home",
+    icon: <HugeiconsIcon icon={Structure04FreeIcons} size={20} />,
   },
   {
     label: "Noticias",
@@ -186,11 +184,11 @@ export const itemsWebNavigation: NavItem[] = [
     subject: "home",
     icon: <HugeiconsIcon icon={BookOpen01Icon} size={20} />,
   },
-  {
-    label: "Banners",
-    href: "banners",
-    action: "web_banners",
-    subject: "home",
-    icon: <HugeiconsIcon icon={Layers01Icon} size={20} />,
-  },
+  // {
+  //   label: "Noticias Categorías",
+  //   href: "news-categories",
+  //   action: "web_news",
+  //   subject: "home",
+  //   icon: <HugeiconsIcon icon={BookOpen01Icon} size={20} />,
+  // },
 ];

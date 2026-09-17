@@ -4,10 +4,10 @@ import Link from "next/link";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, Clock, Users, DollarSign, Award } from "lucide-react";
-import { ContactSecretaryModal } from "@/modules/web/shared/components/contact-secretary-modal";
-import { Magnetic } from "@/modules/web/shared/components/magnetic";
-import { TiltCard } from "@/modules/web/shared/components/tilt-card";
-import { findCourseBySlug } from "@/modules/web/core/constants/data";
+import { ContactSecretaryModal } from "@/modules/portal/shared/components/contact-secretary-modal";
+import { Magnetic } from "@/modules/portal/shared/components/magnetic";
+import { TiltCard } from "@/modules/portal/shared/components/tilt-card";
+import { findCourseBySlug } from "@/modules/portal/core/constants/data";
 import { cn } from "@/lib/utils";
 
 interface CourseDetailClientProps {

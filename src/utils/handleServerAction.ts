@@ -40,7 +40,7 @@ export async function handleServerAction<T>(
         } else {
           // Si estamos en un Server Component (ej. cargando la página), NO podemos modificar cookies
           redirect(
-            `/login?expired=true&redirectTo=${encodeURIComponent(finalRedirectTo || "/")}`,
+            `/admin/login?expired=true&redirectTo=${encodeURIComponent(finalRedirectTo || "/")}`,
           );
         }
       }

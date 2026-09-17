@@ -1,5 +1,6 @@
-import { getNews, AddNewsModal, TableNews } from "@/modules/news";
-import { ErrorPage, HeaderPage } from "@/ui";
+import { getNews, AddNewsModal, TableNews } from "@/modules/cms/news";
+import { ButtonRedirect, HeaderPage } from "@/ui";
+import { resolvePageData } from "@/utils/resolvePageData";
 import {
   File01Icon,
   CheckmarkCircle02Icon,
@@ -7,25 +8,18 @@ import {
   UserGroupIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { redirect } from "next/navigation";
 
 export default async function NewsPage() {
-  const newsResponse = await getNews();
-
-  if (newsResponse.error && newsResponse.statusCode === 401) {
-    redirect("/admin/login");
-  }
-
-  if (newsResponse.error) {
-    return <ErrorPage message={newsResponse.message} />;
-  }
+  const [newsResponse] = await resolvePageData([getNews()]);
 
   const newsData = newsResponse.data;
-  
+
   // Stats calculations
-  const publishedCount = newsData.filter(n => n.status === "PUBLISHED").length;
-  const draftCount = newsData.filter(n => n.status === "DRAFT").length;
-  const archivedCount = newsData.filter(n => n.status === "ARCHIVED").length;
+  const publishedCount = newsData.filter(
+    (n) => n.status === "PUBLISHED",
+  ).length;
+  const draftCount = newsData.filter((n) => n.status === "DRAFT").length;
+  const archivedCount = newsData.filter((n) => n.status === "ARCHIVED").length;
   const totalCount = newsData.length;
 
   return (
@@ -34,14 +28,25 @@ export default async function NewsPage() {
         <HeaderPage
           title="Gestión de Noticias"
           description="Administra los artículos y comunicados del portal web."
-          action={<AddNewsModal buttonFloatingMobile />}
+          action={
+            <>
+              <ButtonRedirect
+                href="/admin/web/news/categories"
+                label="Categorías"
+              />
+              <AddNewsModal buttonFloatingMobile />
+            </>
+          }
         />
-        
+
         {/* <!-- Filters Bento --> */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="bg-default/50 p-4 rounded-xl flex items-center gap-4">
             <div className="bg-white dark:bg-default p-3 rounded-lg shadow-sm">
-              <HugeiconsIcon icon={CheckmarkCircle02Icon} className="text-success" />
+              <HugeiconsIcon
+                icon={CheckmarkCircle02Icon}
+                className="text-success"
+              />
             </div>
             <div>
               <p className="text-xs font-bold text-default-foreground/50 uppercase tracking-widest">
