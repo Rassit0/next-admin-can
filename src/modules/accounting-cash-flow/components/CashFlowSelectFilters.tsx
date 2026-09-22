@@ -1,7 +1,7 @@
 "use client";
 import { Select, ListBox, Label } from "@heroui/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { FinancialAccount } from "@/modules/financial-accounts/interfaces/financial-account.interface";
+import { FinancialAccountOption } from "@/modules/financial-accounts/actions/get-options";
 
 const PAYMENT_METHOD_LABELS: Record<string, string> = {
   CASH: "Efectivo",
@@ -13,7 +13,7 @@ const PAYMENT_METHOD_LABELS: Record<string, string> = {
 };
 
 interface Props {
-  financialAccounts: FinancialAccount[];
+  financialAccounts: FinancialAccountOption[];
   allPaymentMethods: string[];
 }
 

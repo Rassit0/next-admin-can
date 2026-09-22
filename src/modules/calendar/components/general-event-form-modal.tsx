@@ -22,7 +22,7 @@ import { updateGeneralEvent } from "../actions/update-general-event.action";
 import { getLocations, ILocation } from "@/modules/locations";
 import { getTeamSeasons } from "@/modules/team-seasons";
 import { getCourseSeasons } from "@/modules/course-seasons/actions/get";
-import { getInstitutions } from "@/modules/organizations";
+import { getInstitutionContext } from "@/modules/organizations/actions/get-context";
 import { buildCalendarRecurrenceRule } from "../utils/calendar-recurrence.utils";
 import { ICourseSeason } from "@/modules/course-seasons/interfaces/course-season.interface";
 
@@ -96,16 +96,16 @@ export const GeneralEventFormModal = ({
       try {
         const [locsRes, instRes, seasonsRes, courseRes] = await Promise.all([
           getLocations({ per_page: "100" }),
-          getInstitutions({}),
+          getInstitutionContext(),
           getTeamSeasons({ per_page: "100" }),
           getCourseSeasons({ per_page: "100" }),
         ]);
 
         if (!locsRes.error) setLocations(locsRes.data.data);
         if (!instRes.error && instRes.data) {
-          setInstitutions(instRes.data.data);
-          if (instRes.data.data.length > 0 && !institutionId) {
-            setInstitutionId(instRes.data.data[0].id);
+          setInstitutions([instRes.data]);
+          if (!institutionId) {
+            setInstitutionId(instRes.data.id);
           }
         }
         

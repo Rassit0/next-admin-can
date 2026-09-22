@@ -16,7 +16,7 @@ import {
 import { Card } from "@heroui/react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Structure04FreeIcons } from "@hugeicons/core-free-icons";
-import { getInstitutions } from "@/modules/organizations";
+import { getInstitutionContext } from "@/modules/organizations";
 
 interface Props {
   searchParams: Promise<{
@@ -63,12 +63,12 @@ export default async function SeasonsPage({ searchParams, params }: Props) {
     return <ErrorPage message={disciplinesOptionsResponse.message} />;
   }
 
-  const [institutionsResponse] = await Promise.all([getInstitutions({})]);
+  const [institutionsResponse] = await Promise.all([getInstitutionContext()]);
 
   if (institutionsResponse.error || !institutionsResponse.data) {
     return <ErrorPage message={institutionsResponse.message} />;
   }
-  const institution = institutionsResponse.data.data[0];
+  const institution = institutionsResponse.data;
 
   return (
     <>

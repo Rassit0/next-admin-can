@@ -1,6 +1,10 @@
 import { itemsWebNavigation } from "@/config";
+import { filterNavigation } from "@/shared/helpers/permissions";
+import { NavigationConfig } from "@/config/navigation";
+import { auth } from "@/auth";
+import { getPermissionsArray } from "@/modules/roles";
 import { getClubsOptions, SelectClub } from "@/modules/clubs";
-import { getOrganizationById, getInstitutions } from "@/modules/organizations";
+import { getInstitutionContext } from "@/modules/organizations";
 import { BottonNavBar, ErrorPage, Header, Sidebar } from "@/ui";
 import { iconMap } from "@/utils";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -10,19 +14,31 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const institutionsResponse = await getInstitutions({});
+  const session = await auth();
+  let userPermissions: string[] = [];
+
+  if (session?.user?.roleId) {
+    const permRes = await getPermissionsArray({ roleId: session.user.roleId });
+    if (!permRes.error && permRes.data) {
+      userPermissions = permRes.data;
+    }
+  }
+
+  const allowedItems = filterNavigation(itemsWebNavigation as NavigationConfig[], userPermissions);
+
+  const institutionsResponse = await getInstitutionContext();
 
   if (institutionsResponse.error || !institutionsResponse.data) {
     return <ErrorPage message={institutionsResponse.message} />;
   }
-  const institution = institutionsResponse.data.data[0];
+  const institution = institutionsResponse.data;
 
   return (
     <>
       {/* <!-- SideNavBar --> */}
       <Sidebar
         organization={institution}
-        items={itemsWebNavigation}
+        items={allowedItems}
         urlBase={`/admin/web`}
       />
       {/* <!-- Main Content Area --> */}
@@ -38,7 +54,7 @@ export default async function AdminLayout({
           </main>
         </div>
         {/* <!-- Mobile BottomNavBar --> */}
-        <BottonNavBar items={itemsWebNavigation} urlBase={`/admin/web`} />
+        <BottonNavBar items={allowedItems} urlBase={`/admin/web`} />
       </div>
     </>
   );

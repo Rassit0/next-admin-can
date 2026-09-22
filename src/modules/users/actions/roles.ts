@@ -96,8 +96,78 @@ export const getPermissions = async (
 
     const res = await api.get<any>(`roles/permissions?${params.toString()}`, {
       headers: { Authorization: `Bearer ${session.user.token}` },
+
       next: { tags: ["permissions"] },
     });
     return { error: false, data: res, message: "Permisos obtenidos" };
   });
 };
+
+export const getPermissionsArray = async ({
+  roleId,
+  skip401Redirect = false,
+}: {
+  roleId?: string;
+  skip401Redirect?: boolean;
+}): Promise<ServiceResponse<string[]>> => {
+  return handleServerAction(async () => {
+    const params = new URLSearchParams();
+    if (roleId) params.set("roleId", roleId);
+
+    const res = await api.get<{ message: string; data: string[] }>(
+      `roles/permissions/array?${params.toString()}`,
+      {
+        next: {
+          tags: ["roles", "permissions"],
+        },
+      },
+    );
+
+    return {
+      error: false,
+      data: res.data,
+      message: res.message || "Permisos obtenidos exitosamente",
+    };
+  }, undefined, skip401Redirect);
+};
+
+export type PermissionModule =
+  | "INSTITUTIONS"
+  | "LOCATIONS"
+  | "DISCIPLINES"
+  | "CATEGORIES"
+  | "ROLES"
+  | "PERMISSIONS"
+  | "USERS"
+  | "PERSONS"
+  | "CLUBS"
+  | "TEAMS"
+  | "PLAYERS"
+  | "TEAM_SEASONS"
+  | "STAFF"
+  | "TEAM_SEASON_STAFF"
+  | "SEASONS"
+  | "SCHOOLS"
+  | "COURSES"
+  | "COURSE_SEASONS"
+  | "COURSE_SEASON_STAFF"
+  | "STUDENTS"
+  | "PAYMENT_PLANS"
+  | "STUDENT_MEMBERSHIPS"
+  | "PLAYER_MEMBERSHIPS"
+  | "MEMBERSHIP_DISCOUNTS"
+  | "MEMBERSHIP_CHARGES"
+  | "STUDENT_CHARGES"
+  | "STUDENT_DISCOUNTS"
+  | "TRANSACTIONS"
+  | "SCHEDULES"
+  | "SESSIONS"
+  | "SESSION_BOOKINGS"
+  | "MATCHES"
+  | "MATCH_LINEUPS"
+  | "SESSION_INCIDENTS"
+  | "PROGRESS_EVALUATIONS"
+  | "AUDIT_LOGS"
+  | "DASHBOARD"
+  | "SHIFTS"
+  | "CHARGES";

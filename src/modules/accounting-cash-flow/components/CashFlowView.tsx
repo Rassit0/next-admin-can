@@ -1,14 +1,14 @@
 import { PaginationSection, SectionFilters, DateRangeFilter } from "@/ui";
 import { ITransactionsResponse } from "../interfaces/transaction.interface";
 import { CashFlowTable } from "./table/CashFlowTable";
-import { FinancialAccount } from "@/modules/financial-accounts/interfaces/financial-account.interface";
+import { FinancialAccountOption } from "@/modules/financial-accounts/actions/get-options";
 import { CashFlowActions } from "./CashFlowActions";
 import { CashFlowSelectFilters } from "./CashFlowSelectFilters";
 
 interface Props {
   response: ITransactionsResponse;
   categories: Array<{ id: string; name: string; type: string }>;
-  financialAccounts: FinancialAccount[];
+  financialAccounts: FinancialAccountOption[];
   allPaymentMethods: string[];
 }
 

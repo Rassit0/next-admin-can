@@ -4,14 +4,14 @@ import {
   HeaderPageLouncher,
   ModuleGrid,
 } from "@/modules/module-louncher";
-import { getInstitutions } from "@/modules/organizations";
+import { getInstitutionContext } from "@/modules/organizations";
 import { ErrorPage, Header } from "@/ui";
 import { resolvePageData } from "@/utils/resolvePageData";
 
 export default async function HomePage() {
-  const [institutionsResponse] = await resolvePageData([getInstitutions({})]);
+  const [institutionsResponse] = await resolvePageData([getInstitutionContext()]);
 
-  const institution = institutionsResponse.data.data[0];
+  const institution = institutionsResponse.data;
 
   return (
     <>

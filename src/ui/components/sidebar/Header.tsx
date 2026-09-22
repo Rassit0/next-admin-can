@@ -4,7 +4,7 @@ import React from "react";
 import { Crest } from "../crest";
 
 interface Props {
-  organization: IOrganization;
+  organization: Partial<IOrganization>;
 }
 export const Header = ({ organization }: Props) => {
   return (

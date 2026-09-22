@@ -16,6 +16,7 @@ export * from "./actions/delete";
 export * from "./actions/edit";
 export * from "./actions/get";
 export * from "./actions/get-by-id";
+export * from "./actions/get-context";
 
 // Interfaces
 export * from "./interfaces/organization.interface";

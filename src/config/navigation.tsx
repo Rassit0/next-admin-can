@@ -1,3 +1,4 @@
+import React from "react";
 import { NavItem } from "@/ui";
 import {
   ArrowDataTransferHorizontalIcon,
@@ -24,9 +25,29 @@ import {
   Invoice01Icon,
   FlashIcon,
 } from "@hugeicons/core-free-icons";
+import { PermissionRule } from "@/shared/helpers/permissions";
 import { HugeiconsIcon } from "@hugeicons/react";
 
-export const itemsNavigation: NavItem[] = [
+export interface NavigationConfig extends NavItem {
+  id?: string;
+  label: string;
+  href: string;
+  icon?: React.ReactNode;
+  description?: string;
+  tagText?: string;
+  showInLauncher?: boolean;
+  showInSidebar?: boolean;
+  showInTabs?: boolean;
+  requiredPermissions?: PermissionRule;
+  highlight?: boolean;
+  mobile?: {
+    priority?: number;
+  };
+  entryStrategy?: "firstAllowedChild" | "self";
+  routes?: NavigationConfig[];
+}
+
+export const itemsNavigation: NavigationConfig[] = [
   {
     label: "Operaciones Rápidas",
     href: "quick-operations",

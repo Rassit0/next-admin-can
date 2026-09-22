@@ -33,6 +33,7 @@ export const addPerson = async ({
     );
 
     updateTag("persons");
+    updateTag("persons-options");
     return {
       error: false,
       data: res.data,

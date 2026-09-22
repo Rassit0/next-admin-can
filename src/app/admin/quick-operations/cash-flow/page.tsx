@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { getTransactions, getPaymentMethods } from "@/modules/accounting-cash-flow/actions/get";
 import { CashFlowView } from "@/modules/accounting-cash-flow/components/CashFlowView";
 import { getAccountCategories } from "@/modules/account-categories/actions/get";
-import { getFinancialAccounts } from "@/modules/financial-accounts/actions/get-all";
+import { getFinancialAccountOptions } from "@/modules/financial-accounts/actions/get-options";
 import { resolvePageData } from "@/utils/resolvePageData";
 
 export const metadata: Metadata = {
@@ -48,7 +48,7 @@ export default async function QuickOperationsCashFlowPage({
         categoryId,
       }),
       getAccountCategories({ per_page: "100" }),
-      getFinancialAccounts(),
+      getFinancialAccountOptions(),
       getPaymentMethods(),
     ],
   );

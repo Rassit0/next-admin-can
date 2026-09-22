@@ -27,7 +27,7 @@ import { PrintReportDialog } from "@/modules/charge-transactions/components/dial
 import { SplitItem } from "@/modules/charge-transactions/components/drawer/PayChargeDrawer";
 import { PaymentDistributionsList } from "@/modules/charge-transactions/components/drawer/PaymentDistributionsList";
 
-import { FinancialAccount } from "@/modules/financial-accounts/interfaces/financial-account.interface";
+import { FinancialAccountOption } from "@/modules/financial-accounts/actions/get-options";
 
 const PAYMENT_METHOD_LABELS: Record<string, string> = {
   CASH: "Efectivo",
@@ -40,7 +40,7 @@ interface Props {
   onOpenChange: (isOpen: boolean) => void;
   type: "INCOME" | "EXPENSE";
   categories: Array<{ id: string; name: string }>;
-  financialAccounts: FinancialAccount[];
+  financialAccounts: FinancialAccountOption[];
   onSuccess?: () => void;
 }
 
@@ -435,7 +435,7 @@ export const DirectTransactionDrawer = ({
                   </ComboBox.InputGroup>
                   <ComboBox.Popover>
                     <ListBox items={financialAccounts}>
-                      {(item: FinancialAccount) => (
+                      {(item: FinancialAccountOption) => (
                         <ListBox.Item
                           key={item.id}
                           id={item.id}

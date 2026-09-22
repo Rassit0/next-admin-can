@@ -7,7 +7,7 @@ import { Item } from "./Item";
 
 
 interface Props {
-  organization: IOrganization;
+  organization: Partial<IOrganization>;
   items: NavItem[];
   urlBase?: string;
 }

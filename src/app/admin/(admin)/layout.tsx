@@ -1,6 +1,8 @@
 import { itemsNavigation } from "@/config";
+import { filterNavigation } from "@/shared/helpers/permissions";
+import { NavigationConfig } from "@/config/navigation";
 import { getClubsOptions, SelectClub } from "@/modules/clubs";
-import { getOrganizationById, getInstitutions } from "@/modules/organizations";
+import { getInstitutionContext } from "@/modules/organizations";
 import { BottonNavBar, ErrorPage, Header, Sidebar } from "@/ui";
 import { iconMap } from "@/utils";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -22,21 +24,14 @@ export default async function AdminLayout({
     }
   }
 
-  // Filtrar items basado en los permisos (requiere al menos un permiso para el módulo, o ser dashboard)
-  const allowedItems = itemsNavigation.filter((item) => {
-    if (item.action === "dashboard") return true;
-    if (item.subject === "home") return true; // Para los que aún no has migrado
+  const allowedItems = filterNavigation(itemsNavigation as NavigationConfig[], userPermissions);
 
-    const subjects = Array.isArray(item.subject) ? item.subject : [item.subject];
-    return userPermissions.some((p) => subjects.some((sub) => p.endsWith(`_${sub}`)));
-  });
-
-  const institutionsResponse = await getInstitutions({});
+  const institutionsResponse = await getInstitutionContext();
 
   if (institutionsResponse.error || !institutionsResponse.data) {
     return <ErrorPage message={institutionsResponse.message} />;
   }
-  const institution = institutionsResponse.data.data[0];
+  const institution = institutionsResponse.data;
 
   return (
     <>

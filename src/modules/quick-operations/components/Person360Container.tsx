@@ -23,11 +23,12 @@ import { staggerContainer, fadeInUp } from "@/ui/animations/transitions";
 interface Props {
   personId: string | null;
   selectedPerson: IPersonOption | null;
+  initialSummary?: ISecretarySummaryResponse["data"];
 }
 
-export const Person360Container = ({ personId, selectedPerson }: Props) => {
+export const Person360Container = ({ personId, selectedPerson, initialSummary }: Props) => {
   const prefersReducedMotion = useReducedMotion();
-  const [summary, setSummary] = useState<ISecretarySummaryResponse | null>(null);
+  const [summary, setSummary] = useState<{data: ISecretarySummaryResponse["data"]} | null>(initialSummary ? { data: initialSummary } : null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

@@ -9,7 +9,6 @@ import {
   Input,
   Card,
 } from "@heroui/react";
-import { FinancialAccount } from "@/modules/financial-accounts/interfaces/financial-account.interface";
 import { SplitItem } from "./PayChargeDrawer";
 
 const PAYMENT_METHOD_LABELS: Record<string, string> = {
@@ -18,10 +17,17 @@ const PAYMENT_METHOD_LABELS: Record<string, string> = {
   QR: "Código QR",
 };
 
+export interface IFinancialAccountMinimal {
+  id: string;
+  name: string;
+  allowedPaymentMethods?: string[];
+  isDefault?: boolean;
+}
+
 interface PaymentDistributionsListProps {
   splits: SplitItem[];
   setSplits: (splits: SplitItem[]) => void;
-  financialAccounts: FinancialAccount[];
+  financialAccounts: IFinancialAccountMinimal[];
 }
 
 export const PaymentDistributionsList = ({
