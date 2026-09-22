@@ -67,7 +67,7 @@ export function CinematicLoader() {
       </motion.div>
 
       <motion.p
-        className="mt-6 font-heading text-sm font-600 uppercase tracking-[0.5em] text-oxford"
+        className="mt-6 font-heading text-sm font-600 uppercase tracking-[0.5em] text-primary"
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1, duration: 0.5 }}

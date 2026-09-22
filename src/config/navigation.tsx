@@ -239,11 +239,33 @@ export const itemsNavigation: NavigationConfig[] = [
     icon: "shifts",
   },
   {
+    id: "users-management",
     label: "Usuarios",
-    href: "users/usuarios",
+    href: "users",
     action: "users",
-    subject: "USERS",
+    subject: ["USERS", "ROLES"],
     icon: "users",
+    entryStrategy: "firstAllowedChild",
+    routes: [
+      {
+        id: "users-list",
+        label: "Usuarios",
+        href: "/admin/users/usuarios",
+        action: "users",
+        subject: "USERS",
+        showInTabs: true,
+        requiredPermissions: { anyOf: ["READ_USERS"] },
+      },
+      {
+        id: "users-roles",
+        label: "Roles",
+        href: "/admin/users/roles",
+        action: "roles",
+        subject: "ROLES",
+        showInTabs: true,
+        requiredPermissions: { anyOf: ["READ_ROLES"] },
+      },
+    ],
   },
 ];
 

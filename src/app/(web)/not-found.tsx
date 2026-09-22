@@ -13,10 +13,10 @@ export default function NotFound() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h1 className="font-heading text-9xl font-700 tracking-tighter text-oxford/10">
+        <h1 className="font-heading text-9xl font-700 tracking-tighter text-primary/10">
           404
         </h1>
-        <h2 className="mt-4 font-heading text-3xl font-700 uppercase tracking-tight text-oxford sm:text-4xl">
+        <h2 className="mt-4 font-heading text-3xl font-700 uppercase tracking-tight text-primary sm:text-4xl">
           Página no encontrada
         </h2>
         <p className="mt-4 max-w-md text-muted-foreground text-pretty">
@@ -27,7 +27,7 @@ export default function NotFound() {
         <div className="mt-8 flex justify-center">
           <Link href="/">
             <Magnetic as="div">
-              <button className="neon-perimeter flex items-center gap-3 rounded-full bg-neon px-8 py-3.5 text-sm font-600 uppercase tracking-wide text-oxford transition-all hover:shadow-neon">
+              <button className="neon-perimeter flex items-center gap-3 rounded-full bg-neon px-8 py-3.5 text-sm font-600 uppercase tracking-wide text-primary transition-all hover:shadow-neon">
                 Volver al Inicio
                 <ChevronRight className="h-5 w-5" />
               </button>

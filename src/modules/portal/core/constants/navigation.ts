@@ -16,7 +16,9 @@ export const navLinks: NavLinkDef[] = [
     ],
   },
   { href: "/present", label: "Actualidad" },
-  {
+  { href: "/teams/basketball", label: "Básquetbol" },
+  { href: "/teams/volleyball", label: "Voleibol" },
+  /* {
     href: "/teams",
     label: "Equipos",
     subLinks: [
@@ -28,13 +30,13 @@ export const navLinks: NavLinkDef[] = [
   {
     href: "/schools",
     label: "Escuela",
-  },
+  }, */
   {
     href: "/contact",
     label: "Contacto",
   },
-  {
-    href: "/store",
-    label: "Tienda",
-  },
+  // {
+  //   href: "/store",
+  //   label: "Tienda",
+  // },
 ];

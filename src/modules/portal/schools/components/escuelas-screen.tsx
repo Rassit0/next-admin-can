@@ -33,7 +33,7 @@ export function Escuelas({ initialCourses }: { initialCourses: PublicCourse[] })
   return (
     <div className="mx-auto max-w-7xl px-4 pb-24 pt-28 sm:px-6 lg:px-8 lg:pt-36">
       <div className="mb-8">
-        <h1 className="font-heading text-5xl font-700 uppercase tracking-tight text-oxford sm:text-6xl">
+        <h1 className="font-heading text-5xl font-700 uppercase tracking-tight text-primary sm:text-6xl">
           Escuelas de{' '}
           <span className="text-neon text-glow-neon">Formación</span>
         </h1>
@@ -58,7 +58,7 @@ export function Escuelas({ initialCourses }: { initialCourses: PublicCourse[] })
               value={age}
               onChange={(e) => setAge(e.target.value)}
               placeholder="Ej. 8 años"
-              className="w-full rounded-full border border-border bg-background py-3.5 pl-12 pr-4 text-sm font-500 text-oxford outline-none transition-all focus:border-neon focus:shadow-neon-soft focus:ring-2 focus:ring-neon/30"
+              className="w-full rounded-full border border-border bg-background py-3.5 pl-12 pr-4 text-sm font-500 text-primary outline-none transition-all focus:border-neon focus:shadow-neon-soft focus:ring-2 focus:ring-neon/30"
             />
           </div>
         </label>
@@ -102,7 +102,7 @@ export function Escuelas({ initialCourses }: { initialCourses: PublicCourse[] })
                     </span>
                   </div>
 
-                  <h3 className="mt-4 font-heading text-xl font-700 uppercase leading-tight tracking-tight text-oxford text-balance">
+                  <h3 className="mt-4 font-heading text-xl font-700 uppercase leading-tight tracking-tight text-primary text-balance">
                     {course.name}
                   </h3>
 
@@ -124,8 +124,8 @@ export function Escuelas({ initialCourses }: { initialCourses: PublicCourse[] })
                       <motion.span
                         key={course.enrolled}
                         initial={{ scale: 1.4, color: 'var(--neon)' }}
-                        animate={{ scale: 1, color: 'var(--oxford)' }}
-                        className="text-oxford"
+                        animate={{ scale: 1, color: 'var(--primary)' }}
+                        className="text-primary"
                       >
                         {course.enrolled}/{course.capacity}
                       </motion.span>
@@ -134,7 +134,7 @@ export function Escuelas({ initialCourses }: { initialCourses: PublicCourse[] })
                       <motion.div
                         className={cn(
                           'h-full rounded-full',
-                          full ? 'bg-oxford' : 'bg-neon shadow-neon',
+                          full ? 'bg-primary' : 'bg-neon shadow-neon',
                         )}
                         animate={{ width: `${pct}%` }}
                         transition={{ type: 'spring', stiffness: 200, damping: 26 }}
@@ -143,7 +143,7 @@ export function Escuelas({ initialCourses }: { initialCourses: PublicCourse[] })
                   </div>
 
                   <div className="mt-5 flex items-center justify-between">
-                    <span className="font-heading text-lg font-700 text-oxford">
+                    <span className="font-heading text-lg font-700 text-primary">
                       ${course.monthlyFee}
                       <span className="text-xs font-500 text-muted-foreground">
                         {' '}
@@ -157,7 +157,7 @@ export function Escuelas({ initialCourses }: { initialCourses: PublicCourse[] })
                         'rounded-full px-5 py-2.5 text-sm font-700 uppercase tracking-wide transition-all',
                         full
                           ? 'cursor-not-allowed bg-secondary text-muted-foreground'
-                          : 'bg-oxford text-white hover:bg-neon hover:shadow-neon',
+                          : 'bg-primary text-white hover:bg-neon hover:shadow-neon',
                       )}
                     >
                       {full ? 'Completo' : 'Inscribirse'}

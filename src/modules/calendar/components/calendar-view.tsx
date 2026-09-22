@@ -114,7 +114,7 @@ export const CalendarView = () => {
           if (selectedEvent && selectedEvent.extendedProps.type === "MATCH") {
             const meta = selectedEvent.extendedProps.metadata as IMatchCalendarMetadata;
             setMatchInitialData({
-              id: selectedEvent.id,
+              id: meta.matchId || selectedEvent.id,
               homeTeamId: meta.homeTeam.id,
               awayTeamId: meta.awayTeam.id,
               teamSeasonCategoryId: meta.category?.id || "",
@@ -131,9 +131,9 @@ export const CalendarView = () => {
         }}
         onEditSession={() => {
           if (selectedEvent) {
-            const meta = selectedEvent.extendedProps as ISessionCalendarMetadata;
+            const meta = selectedEvent.extendedProps.metadata as ISessionCalendarMetadata;
             setSessionInitialData({
-              id: selectedEvent.id,
+              id: meta.sessionId || selectedEvent.id,
               title: selectedEvent.title,
               locationId: selectedEvent.extendedProps.location?.id,
               startDate: selectedEvent.startStr,
@@ -149,9 +149,9 @@ export const CalendarView = () => {
         }}
         onEditGeneralEvent={() => {
           if (selectedEvent) {
-            const meta = selectedEvent.extendedProps as IGeneralEventCalendarMetadata;
+            const meta = selectedEvent.extendedProps.metadata as IGeneralEventCalendarMetadata;
             setGeneralEventInitialData({
-              id: selectedEvent.id,
+              id: meta.generalEventId || selectedEvent.id,
               title: selectedEvent.title,
               description: meta.description,
               locationId: selectedEvent.extendedProps.location?.id,

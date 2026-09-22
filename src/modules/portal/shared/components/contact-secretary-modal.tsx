@@ -69,7 +69,7 @@ export function ContactSecretaryModal({
             {/* Close button */}
             <button
               onClick={onClose}
-              className="absolute right-4 top-4 text-oxford/40 transition-colors hover:text-oxford"
+              className="absolute right-4 top-4 text-primary/40 transition-colors hover:text-primary"
             >
               <X className="h-6 w-6" />
             </button>
@@ -78,10 +78,10 @@ export function ContactSecretaryModal({
             <div className="space-y-6">
               {/* Header */}
               <div>
-                <h2 className="font-oswald text-2xl font-bold text-oxford">
+                <h2 className="font-oswald text-2xl font-bold text-primary">
                   {title}
                 </h2>
-                <p className="mt-2 text-sm text-oxford/70">{message}</p>
+                <p className="mt-2 text-sm text-primary/70">{message}</p>
               </div>
 
               {/* Hours */}
@@ -89,11 +89,11 @@ export function ContactSecretaryModal({
                 <div className="flex items-start gap-3">
                   <Clock className="mt-1 h-5 w-5 flex-shrink-0 text-neon" />
                   <div>
-                    <p className="font-semibold text-oxford">Horarios de Atención</p>
-                    <p className="text-sm text-oxford/70">
+                    <p className="font-semibold text-primary">Horarios de Atención</p>
+                    <p className="text-sm text-primary/70">
                       Lunes a Viernes: {CLUB_CONTACT.hours.weekday}
                     </p>
-                    <p className="text-sm text-oxford/70">
+                    <p className="text-sm text-primary/70">
                       Sábados: {CLUB_CONTACT.hours.saturday}
                     </p>
                   </div>
@@ -105,12 +105,12 @@ export function ContactSecretaryModal({
                 {/* Phone */}
                 <a
                   href={getTelLink()}
-                  className="flex items-center gap-3 rounded-lg border border-oxford/10 bg-white px-4 py-3 transition-all duration-200 hover:border-neon/30 hover:bg-silver-deep/50 hover:shadow-md"
+                  className="flex items-center gap-3 rounded-lg border border-primary/10 bg-white px-4 py-3 transition-all duration-200 hover:border-neon/30 hover:bg-silver-deep/50 hover:shadow-md"
                 >
                   <Phone className="h-5 w-5 text-neon" />
                   <div>
-                    <p className="text-sm font-medium text-oxford">Llamar</p>
-                    <p className="text-sm text-oxford/70">{CLUB_CONTACT.phone}</p>
+                    <p className="text-sm font-medium text-primary">Llamar</p>
+                    <p className="text-sm text-primary/70">{CLUB_CONTACT.phone}</p>
                   </div>
                 </a>
 
@@ -121,24 +121,24 @@ export function ContactSecretaryModal({
                   )}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 rounded-lg border border-oxford/10 bg-white px-4 py-3 transition-all duration-200 hover:border-neon/30 hover:bg-silver-deep/50 hover:shadow-md"
+                  className="flex items-center gap-3 rounded-lg border border-primary/10 bg-white px-4 py-3 transition-all duration-200 hover:border-neon/30 hover:bg-silver-deep/50 hover:shadow-md"
                 >
                   <MessageCircle className="h-5 w-5 text-neon" />
                   <div>
-                    <p className="text-sm font-medium text-oxford">WhatsApp</p>
-                    <p className="text-sm text-oxford/70">{CLUB_CONTACT.whatsapp}</p>
+                    <p className="text-sm font-medium text-primary">WhatsApp</p>
+                    <p className="text-sm text-primary/70">{CLUB_CONTACT.whatsapp}</p>
                   </div>
                 </a>
 
                 {/* Email */}
                 <a
                   href={getEmailLink()}
-                  className="flex items-center gap-3 rounded-lg border border-oxford/10 bg-white px-4 py-3 transition-all duration-200 hover:border-neon/30 hover:bg-silver-deep/50 hover:shadow-md"
+                  className="flex items-center gap-3 rounded-lg border border-primary/10 bg-white px-4 py-3 transition-all duration-200 hover:border-neon/30 hover:bg-silver-deep/50 hover:shadow-md"
                 >
                   <Mail className="h-5 w-5 text-neon" />
                   <div>
-                    <p className="text-sm font-medium text-oxford">Email</p>
-                    <p className="text-sm text-oxford/70">{CLUB_CONTACT.email}</p>
+                    <p className="text-sm font-medium text-primary">Email</p>
+                    <p className="text-sm text-primary/70">{CLUB_CONTACT.email}</p>
                   </div>
                 </a>
 
@@ -147,12 +147,12 @@ export function ContactSecretaryModal({
                   href={`https://${CLUB_CONTACT.web}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 rounded-lg border border-oxford/10 bg-white px-4 py-3 transition-all duration-200 hover:border-neon/30 hover:bg-silver-deep/50 hover:shadow-md"
+                  className="flex items-center gap-3 rounded-lg border border-primary/10 bg-white px-4 py-3 transition-all duration-200 hover:border-neon/30 hover:bg-silver-deep/50 hover:shadow-md"
                 >
                   <Globe className="h-5 w-5 text-neon" />
                   <div>
-                    <p className="text-sm font-medium text-oxford">Sitio Web</p>
-                    <p className="text-sm text-oxford/70">{CLUB_CONTACT.web}</p>
+                    <p className="text-sm font-medium text-primary">Sitio Web</p>
+                    <p className="text-sm text-primary/70">{CLUB_CONTACT.web}</p>
                   </div>
                 </a>
               </div>

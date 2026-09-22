@@ -89,7 +89,7 @@ export function ParticlesBackground() {
     const container = containerRef.current;
     if (!container) return;
 
-    const COUNT = 28;
+    const COUNT = 80;
     const particles: Particle[] = [];
     const mouse = { x: -9999, y: -9999 };
     const rect = () => container.getBoundingClientRect();

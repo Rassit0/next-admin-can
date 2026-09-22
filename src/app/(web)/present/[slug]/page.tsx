@@ -18,8 +18,8 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
     // For 500 or network errors, show a simple error state
     return (
       <div className="mx-auto max-w-5xl px-4 py-32 sm:px-6 lg:px-8 text-center">
-        <h1 className="font-oswald text-4xl font-bold text-oxford mb-4">Servicio no disponible</h1>
-        <p className="text-oxford/70 text-lg">
+        <h1 className="font-oswald text-4xl font-bold text-primary mb-4">Servicio no disponible</h1>
+        <p className="text-primary/70 text-lg">
           No fue posible cargar esta noticia en este momento. Por favor, intenta más tarde.
         </p>
       </div>

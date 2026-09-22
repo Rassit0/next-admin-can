@@ -12,7 +12,7 @@ export function InstitutionLocation({ institution, locations }: Props) {
       <div className="container mx-auto px-6 max-w-6xl">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           <div className="lg:col-span-5 flex flex-col justify-center">
-            <h2 className="font-heading text-3xl font-700 uppercase text-oxford mb-6">
+            <h2 className="font-heading text-3xl font-700 uppercase text-primary mb-6">
               Nuestras Instalaciones
             </h2>
             <p className="text-muted-foreground mb-8 text-lg font-500 leading-relaxed">
@@ -24,7 +24,7 @@ export function InstitutionLocation({ institution, locations }: Props) {
             <div className="space-y-6">
               <div className="rounded-3xl border border-border bg-card p-8 shadow-neon-soft relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-neon to-transparent" />
-                <h3 className="font-heading text-2xl font-700 uppercase text-oxford mb-6 flex items-center gap-3">
+                <h3 className="font-heading text-2xl font-700 uppercase text-primary mb-6 flex items-center gap-3">
                   <MapPin className="text-neon h-6 w-6" /> Sede Principal
                 </h3>
                 <div className="flex items-start gap-3 text-sm font-500 text-muted-foreground">
@@ -35,7 +35,7 @@ export function InstitutionLocation({ institution, locations }: Props) {
                     href={institution.googleMapsUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="mt-6 inline-flex items-center gap-2 text-xs font-700 uppercase tracking-wide text-oxford bg-neon hover:bg-neon/90 hover:shadow-neon transition-all px-4 py-2 rounded-full"
+                    className="mt-6 inline-flex items-center gap-2 text-xs font-700 uppercase tracking-wide text-primary bg-neon hover:bg-neon/90 hover:shadow-neon transition-all px-4 py-2 rounded-full"
                   >
                     <Navigation className="w-4 h-4" /> Ver en Google Maps
                   </a>
@@ -48,7 +48,7 @@ export function InstitutionLocation({ institution, locations }: Props) {
                   className="rounded-3xl border border-border bg-card p-8 transition-all hover:shadow-neon-soft group relative overflow-hidden"
                 >
                   <div className="absolute top-0 left-0 w-full h-1 bg-transparent group-hover:bg-linear-to-r group-hover:from-neon group-hover:to-transparent transition-colors" />
-                  <h3 className="font-heading text-xl font-700 uppercase text-oxford mb-4 flex items-center gap-3">
+                  <h3 className="font-heading text-xl font-700 uppercase text-primary mb-4 flex items-center gap-3">
                     <MapPin className="text-muted-foreground h-5 w-5 group-hover:text-neon transition-colors" />{" "}
                     {loc.name}
                   </h3>
@@ -92,7 +92,7 @@ export function InstitutionLocation({ institution, locations }: Props) {
                 </div>
               )}
               {/* Optional overlay gradient for styling */}
-              <div className="absolute inset-0 bg-linear-to-tr from-oxford/40 to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-linear-to-tr from-primary/40 to-transparent pointer-events-none" />
             </div>
           </div>
         </div>

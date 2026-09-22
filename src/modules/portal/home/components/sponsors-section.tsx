@@ -19,7 +19,7 @@ export function SponsorsSection() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="rounded-4xl bg-linear-to-r from-oxford via-oxford/95 to-oxford p-8 sm:p-12 lg:p-16"
+        className="rounded-4xl bg-linear-to-r from-primary via-primary/95 to-primary p-8 sm:p-12 lg:p-16"
       >
         <div className="mb-10 text-center">
           <h3 className="font-heading text-xl font-700 uppercase tracking-widest text-white/90">

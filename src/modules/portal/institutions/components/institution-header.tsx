@@ -13,7 +13,7 @@ export function InstitutionHeader({ institution }: Props) {
       <motion.h1
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="font-heading text-5xl font-700 uppercase tracking-tight text-oxford sm:text-6xl"
+        className="font-heading text-5xl font-700 uppercase tracking-tight text-primary sm:text-6xl"
       >
         <span className="text-neon text-glow-neon">Club</span>{" "}
         {institution.name.replace("Club", "").trim()}

@@ -12,7 +12,7 @@ export function InstitutionContacts({ contacts }: Props) {
     <section className="py-16 bg-transparent relative z-10">
       <div className="container mx-auto px-6">
         <div className="text-center mb-12">
-          <h2 className="font-heading text-3xl font-700 uppercase text-oxford">
+          <h2 className="font-heading text-3xl font-700 uppercase text-primary">
             Directorio de Contactos
           </h2>
           <p className="mt-2 text-muted-foreground">
@@ -32,7 +32,7 @@ export function InstitutionContacts({ contacts }: Props) {
                     <CheckCircle2 className="h-3 w-3" /> Principal
                   </span>
                 )}
-                <h3 className="font-heading text-lg font-700 uppercase text-oxford group-hover:text-neon transition-colors">
+                <h3 className="font-heading text-lg font-700 uppercase text-primary group-hover:text-neon transition-colors">
                   {contact.department}
                 </h3>
                 {contact.contactName && (

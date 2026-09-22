@@ -73,7 +73,7 @@ export function NextMatchCountdown({ match }: NextMatchCountdownProps) {
             {match.homeTeam.imageUrl ? (
               <Image src={match.homeTeam.imageUrl} alt={match.homeTeam.name} fill className="object-contain p-2" />
             ) : (
-              <span className="font-heading text-2xl font-bold uppercase text-oxford/70 md:text-4xl">
+              <span className="font-heading text-2xl font-bold uppercase text-primary/70 md:text-4xl">
                 {getInitials(match.homeTeam.name)}
               </span>
             )}
@@ -143,7 +143,7 @@ export function NextMatchCountdown({ match }: NextMatchCountdownProps) {
             {match.awayTeam.imageUrl ? (
               <Image src={match.awayTeam.imageUrl} alt={match.awayTeam.name} fill className="object-contain p-2" />
             ) : (
-              <span className="font-heading text-2xl font-bold uppercase text-oxford/70 md:text-4xl">
+              <span className="font-heading text-2xl font-bold uppercase text-primary/70 md:text-4xl">
                 {getInitials(match.awayTeam.name)}
               </span>
             )}

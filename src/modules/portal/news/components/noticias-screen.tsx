@@ -47,7 +47,7 @@ export function Noticias({ initialNews = [], categories = [], initialCategoryId 
   return (
     <div className="mx-auto max-w-7xl px-4 pb-24 pt-28 sm:px-6 lg:px-8 lg:pt-36">
       <div className="mb-8">
-        <h1 className="font-heading text-5xl font-700 uppercase tracking-tight text-oxford sm:text-6xl">
+        <h1 className="font-heading text-5xl font-700 uppercase tracking-tight text-primary sm:text-6xl">
           Central de <span className="text-neon text-glow-neon">Anuncios</span>
         </h1>
         <p className="mt-3 max-w-xl text-muted-foreground text-pretty">
@@ -123,14 +123,14 @@ export function Noticias({ initialNews = [], categories = [], initialCategoryId 
                         sizes="(max-width: 768px) 100vw, 33vw"
                       />
                     ) : (
-                      <div className="absolute inset-0 bg-oxford/20 flex items-center justify-center">
-                        <span className="text-oxford/50">CAN</span>
+                      <div className="absolute inset-0 bg-primary/20 flex items-center justify-center">
+                        <span className="text-primary/50">CAN</span>
                       </div>
                     )}
                     <span
                       className={cn(
                         "absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-600 uppercase tracking-wide backdrop-blur-md",
-                        "bg-neon/90 text-oxford",
+                        "bg-neon/90 text-primary",
                       )}
                     >
                       {item.category || "Noticia"}
@@ -142,7 +142,7 @@ export function Noticias({ initialNews = [], categories = [], initialCategoryId 
                     </span>
                     <h3
                       className={cn(
-                        "mt-2 font-heading font-700 uppercase leading-tight tracking-tight text-oxford text-balance",
+                        "mt-2 font-heading font-700 uppercase leading-tight tracking-tight text-primary text-balance",
                         index === 0 ? "text-2xl sm:text-3xl" : "text-lg",
                       )}
                     >

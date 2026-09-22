@@ -46,56 +46,56 @@ export function CourseDetailClient({ course }: CourseDetailClientProps) {
               <span className="inline-block rounded-full bg-neon/10 px-3 py-1 font-mono text-xs font-600 text-neon uppercase">
                 {course.discipline}
               </span>
-              <span className="inline-block rounded-full bg-silver-deep px-3 py-1 font-mono text-xs font-600 text-oxford uppercase">
+              <span className="inline-block rounded-full bg-silver-deep px-3 py-1 font-mono text-xs font-600 text-primary uppercase">
                 {ageRange}
               </span>
             </div>
 
-            <h1 className="font-oswald text-5xl font-bold text-oxford leading-tight">
+            <h1 className="font-oswald text-5xl font-bold text-primary leading-tight">
               {course.name}
             </h1>
 
-            <p className="text-lg text-oxford/70">{course.description}</p>
+            <p className="text-lg text-primary/70">{course.description}</p>
           </div>
 
           {/* Details Grid */}
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             <div className="rounded-lg border border-silver-deep bg-white p-4">
               <Clock className="mb-2 h-5 w-5 text-neon" />
-              <p className="text-xs font-600 text-oxford/60 uppercase">
+              <p className="text-xs font-600 text-primary/60 uppercase">
                 Frecuencia
               </p>
-              <p className="font-oswald text-sm font-bold text-oxford">
+              <p className="font-oswald text-sm font-bold text-primary">
                 {course.frequencyPerWeek}x/semana
               </p>
             </div>
 
             <div className="rounded-lg border border-silver-deep bg-white p-4">
               <Users className="mb-2 h-5 w-5 text-neon" />
-              <p className="text-xs font-600 text-oxford/60 uppercase">
+              <p className="text-xs font-600 text-primary/60 uppercase">
                 Capacidad
               </p>
-              <p className="font-oswald text-sm font-bold text-oxford">
+              <p className="font-oswald text-sm font-bold text-primary">
                 {course.capacity} Cupos
               </p>
             </div>
 
             <div className="rounded-lg border border-silver-deep bg-white p-4">
               <DollarSign className="mb-2 h-5 w-5 text-neon" />
-              <p className="text-xs font-600 text-oxford/60 uppercase">
+              <p className="text-xs font-600 text-primary/60 uppercase">
                 Matrícula
               </p>
-              <p className="font-oswald text-sm font-bold text-oxford">
+              <p className="font-oswald text-sm font-bold text-primary">
                 ${course.registrationFee}
               </p>
             </div>
 
             <div className="rounded-lg border border-silver-deep bg-white p-4">
               <Award className="mb-2 h-5 w-5 text-neon" />
-              <p className="text-xs font-600 text-oxford/60 uppercase">
+              <p className="text-xs font-600 text-primary/60 uppercase">
                 Mensual
               </p>
-              <p className="font-oswald text-sm font-bold text-oxford">
+              <p className="font-oswald text-sm font-bold text-primary">
                 ${course.monthlyFee}
               </p>
             </div>
@@ -103,14 +103,14 @@ export function CourseDetailClient({ course }: CourseDetailClientProps) {
 
           {/* Schedule */}
           <div className="space-y-4">
-            <h2 className="font-oswald text-2xl font-bold text-oxford">
+            <h2 className="font-oswald text-2xl font-bold text-primary">
               Horarios
             </h2>
             <div className="grid gap-2 sm:grid-cols-2">
               {course.weeklySchedule?.map((schedule: string, idx: number) => (
                 <div
                   key={idx}
-                  className="rounded-lg border border-neon/20 bg-neon/5 px-4 py-3 font-mono text-sm text-oxford"
+                  className="rounded-lg border border-neon/20 bg-neon/5 px-4 py-3 font-mono text-sm text-primary"
                 >
                   {schedule}
                 </div>
@@ -120,7 +120,7 @@ export function CourseDetailClient({ course }: CourseDetailClientProps) {
 
           {/* Professors */}
           <div className="space-y-4">
-            <h2 className="font-oswald text-2xl font-bold text-oxford">
+            <h2 className="font-oswald text-2xl font-bold text-primary">
               Profesores
             </h2>
             <div className="grid gap-4 sm:grid-cols-2">
@@ -129,10 +129,10 @@ export function CourseDetailClient({ course }: CourseDetailClientProps) {
                   key={prof.id}
                   className="rounded-lg border border-silver-deep bg-white p-4"
                 >
-                  <p className="font-oswald text-sm font-bold text-oxford">
+                  <p className="font-oswald text-sm font-bold text-primary">
                     {prof.name}
                   </p>
-                  <p className="text-xs text-oxford/60">{prof.specialty}</p>
+                  <p className="text-xs text-primary/60">{prof.specialty}</p>
                 </div>
               ))}
             </div>
@@ -141,14 +141,14 @@ export function CourseDetailClient({ course }: CourseDetailClientProps) {
           {/* Requirements */}
           {course.requirements && course.requirements.length > 0 && (
             <div className="space-y-4">
-              <h2 className="font-oswald text-2xl font-bold text-oxford">
+              <h2 className="font-oswald text-2xl font-bold text-primary">
                 Requisitos
               </h2>
               <ul className="space-y-2">
                 {course.requirements.map((req: string, idx: number) => (
                   <li
                     key={idx}
-                    className="flex items-start gap-3 text-oxford/80"
+                    className="flex items-start gap-3 text-primary/80"
                   >
                     <span className="mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-neon/20 text-neon">
                       ✓
@@ -170,20 +170,20 @@ export function CourseDetailClient({ course }: CourseDetailClientProps) {
         >
           <TiltCard className="sticky top-40 space-y-6 rounded-xl border border-neon/20 bg-linear-to-br from-silver-deep to-white p-6 shadow-lg">
             <div>
-              <p className="text-xs font-600 text-oxford/60 uppercase">
+              <p className="text-xs font-600 text-primary/60 uppercase">
                 Precio Total
               </p>
               <p className="font-oswald text-3xl font-bold text-neon">
                 ${course.monthlyFee}
-                <span className="text-xs font-500 text-oxford/60">/mes</span>
+                <span className="text-xs font-500 text-primary/60">/mes</span>
               </p>
-              <p className="mt-1 text-xs text-oxford/50">
+              <p className="mt-1 text-xs text-primary/50">
                 + ${course.registrationFee} de matrícula inicial
               </p>
             </div>
 
             <div className="space-y-2">
-              <p className="text-xs font-600 text-oxford/60 uppercase">
+              <p className="text-xs font-600 text-primary/60 uppercase">
                 Disponibilidad
               </p>
               <div className="flex h-2 overflow-hidden rounded-full bg-silver-deep">
@@ -194,7 +194,7 @@ export function CourseDetailClient({ course }: CourseDetailClientProps) {
                   }}
                 />
               </div>
-              <p className="text-sm font-600 text-oxford">
+              <p className="text-sm font-600 text-primary">
                 {course.capacity - course.enrolled} cupos disponibles
               </p>
             </div>
@@ -216,7 +216,7 @@ export function CourseDetailClient({ course }: CourseDetailClientProps) {
               </button>
             </Magnetic>
 
-            <p className="text-xs text-center text-oxford/50">
+            <p className="text-xs text-center text-primary/50">
               Contacta con nuestra secretaría para inscribirte
             </p>
           </TiltCard>

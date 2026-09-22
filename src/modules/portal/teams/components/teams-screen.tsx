@@ -58,7 +58,7 @@ export function Teams({ teams }: { teams: Team[] }) {
   return (
     <div className="mx-auto max-w-7xl px-4 pb-24 pt-28 sm:px-6 lg:px-8 lg:pt-36">
       <div className="mb-8">
-        <h1 className="font-heading text-5xl font-700 uppercase tracking-tight text-oxford sm:text-6xl">
+        <h1 className="font-heading text-5xl font-700 uppercase tracking-tight text-primary sm:text-6xl">
           Equipos y{" "}
           <span className="text-neon text-glow-neon">Competición</span>
         </h1>
@@ -142,7 +142,7 @@ function FilterSelect({
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="rounded-lg border border-border bg-background px-3 py-2.5 text-sm font-500 text-oxford outline-none transition-colors focus:border-neon focus:ring-2 focus:ring-neon/30"
+        className="rounded-lg border border-border bg-background px-3 py-2.5 text-sm font-500 text-primary outline-none transition-colors focus:border-neon focus:ring-2 focus:ring-neon/30"
       >
         {options.map((o) => (
           <option key={o} value={o}>
@@ -187,7 +187,7 @@ function FlipCard({ team, onApply }: { team: Team; onApply: () => void }) {
                 {team.discipline}
               </span>
             </div>
-            <h3 className="mt-3 font-heading text-2xl font-700 uppercase leading-tight tracking-tight text-oxford text-balance">
+            <h3 className="mt-3 font-heading text-2xl font-700 uppercase leading-tight tracking-tight text-primary text-balance">
               {team.name}
             </h3>
             <div className="mt-3 flex items-center gap-1.5 text-sm text-muted-foreground">
@@ -202,7 +202,7 @@ function FlipCard({ team, onApply }: { team: Team; onApply: () => void }) {
               className={cn(
                 "mt-3 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-700 uppercase tracking-wide",
                 full
-                  ? "bg-oxford/10 text-oxford"
+                  ? "bg-primary/10 text-primary"
                   : lastSlots
                     ? "animate-pulse bg-neon text-white shadow-neon"
                     : "bg-neon/10 text-neon",
@@ -218,7 +218,7 @@ function FlipCard({ team, onApply }: { team: Team; onApply: () => void }) {
         </div>
 
         {/* Back — Membership card */}
-        <div className="absolute inset-0 flex flex-col justify-between overflow-hidden rounded-2xl border border-neon/50 bg-oxford p-6 text-white shadow-neon backface-hidden transform-[rotateY(180deg)]">
+        <div className="absolute inset-0 flex flex-col justify-between overflow-hidden rounded-2xl border border-neon/50 bg-primary p-6 text-white shadow-neon backface-hidden transform-[rotateY(180deg)]">
           <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-neon/20 blur-2xl" />
           <div>
             <span className="text-xs font-600 uppercase tracking-[0.22em] text-neon">
@@ -276,7 +276,7 @@ function MembershipModal({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="fixed inset-0 z-80 flex items-center justify-center bg-oxford/40 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-80 flex items-center justify-center bg-primary/40 p-4 backdrop-blur-sm"
         >
           <motion.div
             initial={{ scale: 0.8, y: 30, opacity: 0 }}
@@ -288,7 +288,7 @@ function MembershipModal({
           >
             <button
               onClick={onClose}
-              className="absolute right-4 top-4 rounded-full p-1.5 text-muted-foreground transition-colors hover:bg-secondary hover:text-oxford"
+              className="absolute right-4 top-4 rounded-full p-1.5 text-muted-foreground transition-colors hover:bg-secondary hover:text-primary"
               aria-label="Cerrar"
             >
               <X className="h-5 w-5" />
@@ -296,17 +296,17 @@ function MembershipModal({
             <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-neon/10 text-neon">
               <CheckCircle2 className="h-9 w-9" />
             </span>
-            <h3 className="mt-5 font-heading text-2xl font-700 uppercase tracking-wide text-oxford">
+            <h3 className="mt-5 font-heading text-2xl font-700 uppercase tracking-wide text-primary">
               Solicitud enviada
             </h3>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground text-pretty">
               Recibimos tu solicitud de membresía para{" "}
-              <span className="font-600 text-oxford">{team.name}</span>. Nuestro
+              <span className="font-600 text-primary">{team.name}</span>. Nuestro
               equipo se pondrá en contacto para coordinar la incorporación.
             </p>
             <button
               onClick={onClose}
-              className="mt-6 w-full rounded-full bg-oxford py-3 text-sm font-700 uppercase tracking-wide text-white transition-shadow hover:shadow-neon"
+              className="mt-6 w-full rounded-full bg-primary py-3 text-sm font-700 uppercase tracking-wide text-white transition-shadow hover:shadow-neon"
             >
               Entendido
             </button>

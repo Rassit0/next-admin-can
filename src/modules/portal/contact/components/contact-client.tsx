@@ -22,7 +22,7 @@ export function ContactClient({ institution }: ContactClientProps) {
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="font-heading text-5xl font-700 uppercase tracking-tight text-oxford sm:text-6xl"
+          className="font-heading text-5xl font-700 uppercase tracking-tight text-primary sm:text-6xl"
         >
           Ponte en <span className="text-neon text-glow-neon">Contacto</span>
         </motion.h1>
@@ -47,7 +47,7 @@ export function ContactClient({ institution }: ContactClientProps) {
         >
           <div className="rounded-3xl border border-border bg-card p-8 shadow-neon-soft relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-neon to-transparent" />
-            <h2 className="font-heading text-2xl font-700 uppercase text-oxford mb-6 flex items-center gap-3">
+            <h2 className="font-heading text-2xl font-700 uppercase text-primary mb-6 flex items-center gap-3">
               <MapPin className="text-neon h-6 w-6" /> Ubicación Principal
             </h2>
             <div className="space-y-4 text-muted-foreground">
@@ -89,7 +89,7 @@ export function ContactClient({ institution }: ContactClientProps) {
                       <CheckCircle2 className="h-3 w-3" /> Principal
                     </span>
                   )}
-                  <h3 className="font-heading text-lg font-700 uppercase text-oxford">
+                  <h3 className="font-heading text-lg font-700 uppercase text-primary">
                     {contact.department}
                   </h3>
                   {contact.contactName && (
@@ -135,7 +135,7 @@ export function ContactClient({ institution }: ContactClientProps) {
           transition={{ duration: 0.5 }}
           className="rounded-3xl border border-border bg-card p-8 md:p-10 shadow-xl"
         >
-          <h2 className="font-heading text-3xl font-700 uppercase text-oxford mb-8">
+          <h2 className="font-heading text-3xl font-700 uppercase text-primary mb-8">
             Envíanos un Mensaje
           </h2>
 
@@ -143,7 +143,7 @@ export function ContactClient({ institution }: ContactClientProps) {
             <div className="space-y-2">
               <label
                 htmlFor="name"
-                className="text-sm font-600 uppercase tracking-wide text-oxford"
+                className="text-sm font-600 uppercase tracking-wide text-primary"
               >
                 Nombre Completo
               </label>
@@ -158,7 +158,7 @@ export function ContactClient({ institution }: ContactClientProps) {
             <div className="space-y-2">
               <label
                 htmlFor="email"
-                className="text-sm font-600 uppercase tracking-wide text-oxford"
+                className="text-sm font-600 uppercase tracking-wide text-primary"
               >
                 Correo Electrónico
               </label>
@@ -173,7 +173,7 @@ export function ContactClient({ institution }: ContactClientProps) {
             <div className="space-y-2">
               <label
                 htmlFor="department"
-                className="text-sm font-600 uppercase tracking-wide text-oxford"
+                className="text-sm font-600 uppercase tracking-wide text-primary"
               >
                 Departamento a contactar
               </label>
@@ -193,7 +193,7 @@ export function ContactClient({ institution }: ContactClientProps) {
             <div className="space-y-2">
               <label
                 htmlFor="message"
-                className="text-sm font-600 uppercase tracking-wide text-oxford"
+                className="text-sm font-600 uppercase tracking-wide text-primary"
               >
                 Tu Mensaje
               </label>
@@ -207,7 +207,7 @@ export function ContactClient({ institution }: ContactClientProps) {
 
             <button
               type="submit"
-              className="group flex w-full items-center justify-center gap-2 rounded-xl bg-neon px-8 py-4 text-sm font-700 uppercase tracking-wider text-oxford transition-all hover:bg-neon/90 hover:shadow-neon"
+              className="group flex w-full items-center justify-center gap-2 rounded-xl bg-neon px-8 py-4 text-sm font-700 uppercase tracking-wider text-primary transition-all hover:bg-neon/90 hover:shadow-neon"
             >
               <span>Enviar Mensaje</span>
               <Send className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />

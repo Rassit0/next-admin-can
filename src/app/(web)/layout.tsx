@@ -58,8 +58,8 @@ export default async function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${oswald.variable} light`}
       data-theme="light"
     >
-      <div className="font-sans antialiased bg-background text-foreground">
-        <div className="relative min-h-screen bg-background">
+      <div className="font-sans antialiased bg-[var(--background-portal)] text-foreground">
+        <div className="relative min-h-screen bg-[var(--background-portal)]">
           <CinematicLoader />
           <ParticlesBackground />
           <SiteHeader institution={institutionRes.data} />

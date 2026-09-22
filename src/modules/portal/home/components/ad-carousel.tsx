@@ -12,12 +12,14 @@ interface AdCarouselProps {
   banners?: IHeroBanner[];
   autoPlayInterval?: number;
   onSlideChange?: (slide: IHeroBanner) => void;
+  fullWidth?: boolean;
 }
 
 export function AdCarousel({
   banners = [],
   autoPlayInterval = 8000,
   onSlideChange,
+  fullWidth = false,
 }: AdCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState<"left" | "right">("right");
@@ -89,7 +91,9 @@ export function AdCarousel({
 
   return (
     <div
-      className="relative w-full overflow-hidden rounded-3xl bg-oxford aspect-3/4 sm:aspect-square lg:aspect-video landscape:aspect-video max-h-[85vh]"
+      className={`relative w-full overflow-hidden bg-primary aspect-3/4 sm:aspect-square lg:aspect-video landscape:aspect-video max-h-[85vh] ${
+        fullWidth ? "rounded-none" : "rounded-lg"
+      }`}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
@@ -142,8 +146,8 @@ export function AdCarousel({
             priority
             className="hidden object-cover lg:block landscape:block"
           />
-          <div className="absolute inset-0 bg-linear-to-t from-oxford/90 via-oxford/50 to-transparent lg:hidden landscape:hidden" />
-          <div className="absolute inset-0 hidden lg:block landscape:block bg-linear-to-l from-oxford/90 via-oxford/60 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-primary/80 via-primary/40 to-primary/10 lg:hidden landscape:hidden" />
+          <div className="absolute inset-0 hidden lg:block landscape:block bg-linear-to-l from-primary/60 via-primary/40 to-primary/10" />
         </motion.div>
       </AnimatePresence>
 
@@ -197,7 +201,7 @@ export function AdCarousel({
                   className="w-fit inline-block"
                 >
                   <Magnetic as="div" className="w-fit">
-                    <button className="neon-perimeter flex items-center gap-2 sm:gap-3 rounded-full bg-neon px-6 py-2.5 sm:px-8 sm:py-3.5 text-xs sm:text-sm font-600 uppercase tracking-wide text-oxford transition-all hover:shadow-neon">
+                    <button className="neon-perimeter flex items-center gap-2 sm:gap-3 rounded-full bg-neon px-6 py-2.5 sm:px-8 sm:py-3.5 text-xs sm:text-sm font-600 uppercase tracking-wide text-primary transition-all hover:shadow-neon">
                       {current.ctaText}
                       <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
                     </button>

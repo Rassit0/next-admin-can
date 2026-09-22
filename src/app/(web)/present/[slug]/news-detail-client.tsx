@@ -46,7 +46,7 @@ export function NewsDetailClient({ article }: { article: PublicNewsDetail }) {
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="font-heading text-4xl font-700 uppercase leading-tight tracking-tight text-oxford sm:text-5xl lg:text-6xl"
+          className="font-heading text-4xl font-700 uppercase leading-tight tracking-tight text-primary sm:text-5xl lg:text-6xl"
         >
           {article.title}
         </motion.h1>
@@ -75,9 +75,9 @@ export function NewsDetailClient({ article }: { article: PublicNewsDetail }) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="prose prose-lg max-w-none text-muted-foreground prose-headings:font-heading prose-headings:font-700 prose-headings:uppercase prose-headings:text-oxford prose-a:text-neon prose-img:rounded-2xl prose-img:border prose-img:border-border"
+        className="prose prose-lg max-w-none text-muted-foreground prose-headings:font-heading prose-headings:font-700 prose-headings:uppercase prose-headings:text-primary prose-a:text-neon prose-img:rounded-2xl prose-img:border prose-img:border-border"
       >
-        <p className="text-xl font-500 leading-relaxed text-oxford/80">
+        <p className="text-xl font-500 leading-relaxed text-primary/80">
           {article.excerpt}
         </p>
         <div dangerouslySetInnerHTML={{ __html: article.content }} />
@@ -91,7 +91,7 @@ export function NewsDetailClient({ article }: { article: PublicNewsDetail }) {
           {article.tags.map((tag) => (
             <span
               key={tag}
-              className="rounded-full bg-secondary px-3 py-1 text-xs font-600 uppercase tracking-wide text-oxford"
+              className="rounded-full bg-secondary px-3 py-1 text-xs font-600 uppercase tracking-wide text-primary"
             >
               {tag}
             </span>

@@ -8,7 +8,10 @@ import { Menu, X, ChevronDown } from "lucide-react";
 import { Crest } from "./crest";
 import { cn } from "@/lib/utils";
 
-import { navLinks, type NavLinkDef } from "@/modules/portal/core/constants/navigation";
+import {
+  navLinks,
+  type NavLinkDef,
+} from "@/modules/portal/core/constants/navigation";
 
 function DesktopNavItem({
   link,
@@ -36,8 +39,8 @@ function DesktopNavItem({
         className={cn(
           "relative px-4 py-2 text-sm font-600 uppercase tracking-wide transition-colors flex items-center gap-1",
           isActuallyActive
-            ? "text-oxford"
-            : "text-muted-foreground hover:text-oxford",
+            ? "text-primary"
+            : "text-muted-foreground hover:text-primary",
         )}
       >
         {link.label}
@@ -58,7 +61,7 @@ function DesktopNavItem({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="absolute left-0 top-full mt-2 w-56 rounded-xl bg-background/95 backdrop-blur-md shadow-xl border border-border/60 overflow-hidden z-50"
+            className="absolute left-0 top-full mt-2 w-56 rounded-xl bg-white shadow-xl border border-border/60 overflow-hidden z-50"
           >
             <div className="p-2 flex flex-col gap-1">
               {link.subLinks!.map((sl) => {
@@ -71,7 +74,7 @@ function DesktopNavItem({
                       "block rounded-md px-4 py-3 text-sm font-500 transition-colors",
                       isChildActive
                         ? "bg-neon/10 text-neon"
-                        : "text-muted-foreground hover:bg-muted hover:text-oxford",
+                        : "text-muted-foreground hover:bg-muted hover:text-primary",
                     )}
                   >
                     {sl.label}
@@ -110,7 +113,7 @@ function MobileNavItem({
           "block rounded-md px-4 py-3 text-left text-sm font-600 uppercase tracking-wide transition-colors",
           isActuallyActive
             ? "bg-neon/10 text-neon"
-            : "text-oxford hover:bg-muted",
+            : "text-primary hover:bg-muted",
         )}
       >
         {link.label}
@@ -128,14 +131,14 @@ function MobileNavItem({
             "flex-1 rounded-md px-4 py-3 text-left text-sm font-600 uppercase tracking-wide transition-colors",
             isActuallyActive
               ? "bg-neon/10 text-neon"
-              : "text-oxford hover:bg-muted",
+              : "text-primary hover:bg-muted",
           )}
         >
           {link.label}
         </Link>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="p-3 text-oxford"
+          className="p-3 text-primary"
           aria-label="Toggle submenu"
         >
           <ChevronDown
@@ -167,7 +170,7 @@ function MobileNavItem({
                       "block rounded-md px-4 py-2 text-sm font-500 transition-colors",
                       isChildActive
                         ? "bg-neon/10 text-neon font-600"
-                        : "text-muted-foreground hover:bg-muted hover:text-oxford",
+                        : "text-muted-foreground hover:bg-muted hover:text-primary",
                     )}
                   >
                     {sl.label}
@@ -224,7 +227,7 @@ export function SiteHeader({ institution }: { institution: Institution }) {
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ delay: 2, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed inset-x-0 top-0 z-50 border-b border-border/60 bg-background/70 backdrop-blur-md"
+      className="fixed inset-x-0 top-0 z-50 border-b border-border/60 bg-white/80 backdrop-blur-md"
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-3" scroll={true}>
@@ -232,7 +235,7 @@ export function SiteHeader({ institution }: { institution: Institution }) {
             <Crest className="h-9 w-8" strokeWidth={5} />
           </span>
           <span className="flex flex-col items-start leading-none">
-            <span className="font-heading text-lg font-700 uppercase tracking-wide text-oxford">
+            <span className="font-heading text-lg font-700 uppercase tracking-wide text-primary">
               CAN
             </span>
             <span className="text-[10px] font-500 uppercase tracking-[0.25em] text-muted-foreground">
@@ -262,7 +265,7 @@ export function SiteHeader({ institution }: { institution: Institution }) {
         </nav>
 
         <button
-          className="rounded-md p-2 text-oxford lg:hidden"
+          className="rounded-md p-2 text-primary lg:hidden"
           onClick={() => setMobileOpen((v) => !v)}
           aria-label="Abrir menú"
         >
@@ -280,7 +283,7 @@ export function SiteHeader({ institution }: { institution: Institution }) {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="overflow-hidden border-t border-border/60 bg-background/95 lg:hidden"
+            className="overflow-hidden border-t border-border/60 bg-white/95 backdrop-blur-md lg:hidden"
           >
             <div className="flex flex-col p-2">
               {navLinks.map((link) => (

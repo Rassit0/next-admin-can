@@ -14,7 +14,7 @@ export function InstitutionPrograms({ clubs, schools }: Props) {
         
         {clubs?.length > 0 && (
           <div className="mb-16">
-            <h2 className="font-heading text-3xl font-700 uppercase text-oxford mb-8 flex items-center gap-3">
+            <h2 className="font-heading text-3xl font-700 uppercase text-primary mb-8 flex items-center gap-3">
               <span className="w-1.5 h-8 bg-neon rounded-full inline-block"></span>
               Nuestros Equipos Oficiales
             </h2>
@@ -23,7 +23,7 @@ export function InstitutionPrograms({ clubs, schools }: Props) {
                 <div key={club.id} className="flex items-center gap-4 rounded-2xl border border-border bg-card p-6 transition-all hover:shadow-neon-soft hover:-translate-y-1 group">
                   <div className="text-4xl group-hover:scale-110 transition-transform duration-300" aria-hidden="true" dangerouslySetInnerHTML={{ __html: club.discipline.icon || '🏆' }} />
                   <div>
-                    <h3 className="font-heading text-lg font-700 uppercase text-oxford group-hover:text-neon transition-colors">{club.name}</h3>
+                    <h3 className="font-heading text-lg font-700 uppercase text-primary group-hover:text-neon transition-colors">{club.name}</h3>
                     <p className="text-sm font-600 text-muted-foreground mt-1 uppercase tracking-wider flex items-center gap-1.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-neon inline-block"></span>
                       {club.discipline.name}
@@ -37,7 +37,7 @@ export function InstitutionPrograms({ clubs, schools }: Props) {
 
         {schools?.length > 0 && (
           <div>
-            <h2 className="font-heading text-3xl font-700 uppercase text-oxford mb-8 flex items-center gap-3">
+            <h2 className="font-heading text-3xl font-700 uppercase text-primary mb-8 flex items-center gap-3">
               <span className="w-1.5 h-8 bg-neon rounded-full inline-block"></span>
               Academias de Formación
             </h2>
@@ -46,7 +46,7 @@ export function InstitutionPrograms({ clubs, schools }: Props) {
                 <div key={school.id} className="flex items-center gap-4 rounded-2xl border border-border bg-card p-6 transition-all hover:shadow-neon-soft hover:-translate-y-1 group">
                   <div className="text-4xl group-hover:scale-110 transition-transform duration-300" aria-hidden="true" dangerouslySetInnerHTML={{ __html: school.discipline.icon || '🎓' }} />
                   <div>
-                    <h3 className="font-heading text-lg font-700 uppercase text-oxford group-hover:text-neon transition-colors">{school.name}</h3>
+                    <h3 className="font-heading text-lg font-700 uppercase text-primary group-hover:text-neon transition-colors">{school.name}</h3>
                     <p className="text-sm font-600 text-muted-foreground mt-1 uppercase tracking-wider flex items-center gap-1.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-neon inline-block"></span>
                       {school.discipline.name}

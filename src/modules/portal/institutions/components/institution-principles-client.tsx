@@ -48,7 +48,7 @@ export function InstitutionPrinciplesClient() {
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="font-heading text-5xl font-700 uppercase tracking-tight text-oxford sm:text-6xl"
+          className="font-heading text-5xl font-700 uppercase tracking-tight text-primary sm:text-6xl"
         >
           Nuestros <span className="text-neon text-glow-neon">Principios</span>
         </motion.h1>
@@ -75,7 +75,7 @@ export function InstitutionPrinciplesClient() {
             <div className="inline-flex items-center justify-center rounded-full bg-neon/10 p-4 text-neon mb-6">
               <p.icon className="w-8 h-8 group-hover:scale-110 transition-transform" />
             </div>
-            <h2 className="font-heading text-3xl font-700 uppercase text-oxford mb-4 group-hover:text-neon transition-colors">
+            <h2 className="font-heading text-3xl font-700 uppercase text-primary mb-4 group-hover:text-neon transition-colors">
               {p.title}
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed font-500">
@@ -90,7 +90,7 @@ export function InstitutionPrinciplesClient() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="font-heading text-3xl font-700 uppercase text-oxford mb-8 flex items-center gap-3 justify-center md:justify-start"
+          className="font-heading text-3xl font-700 uppercase text-primary mb-8 flex items-center gap-3 justify-center md:justify-start"
         >
           <span className="w-1.5 h-8 bg-neon rounded-full inline-block"></span>
           Nuestros Valores
@@ -106,7 +106,7 @@ export function InstitutionPrinciplesClient() {
               className="rounded-2xl border border-border bg-card p-6 transition-all hover:shadow-neon-soft hover:-translate-y-1 group"
             >
               <v.icon className="w-8 h-8 text-neon mb-4 group-hover:scale-110 transition-transform" />
-              <h3 className="font-heading text-xl font-700 uppercase text-oxford mb-2 group-hover:text-neon transition-colors">
+              <h3 className="font-heading text-xl font-700 uppercase text-primary mb-2 group-hover:text-neon transition-colors">
                 {v.name}
               </h3>
               <p className="text-sm font-500 text-muted-foreground">

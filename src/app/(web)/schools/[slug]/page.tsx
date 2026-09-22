@@ -31,7 +31,7 @@ export default async function CourseDetailPage({
         <SiteHeader institution={res.data} />
         <main className="relative">
           <div className="mx-auto max-w-2xl px-4 py-16 text-center">
-            <h1 className="font-oswald text-4xl font-bold text-oxford">
+            <h1 className="font-oswald text-4xl font-bold text-primary">
               Curso no encontrado
             </h1>
             <Link

@@ -21,7 +21,7 @@ interface InicioProps {
   disciplines?: string[];
 }
 
-export function Inicio({ 
+export function Inicio({
   heroBanners = [],
   promo1Banners = [],
   promo2Banners = [],
@@ -36,8 +36,8 @@ export function Inicio({
   return (
     <div className="flex flex-col">
       {/* 1. Web carrousel (Ad Carousel) */}
-      <section className="relative mx-auto w-full max-w-7xl px-4 pt-24 pb-8 sm:px-6 lg:px-8">
-        <AdCarousel banners={heroBanners} />
+      <section className="relative w-full pt-16">
+        <AdCarousel banners={heroBanners} fullWidth={true} />
       </section>
 
       {/* 2. Equipos y escuela */}
@@ -45,12 +45,13 @@ export function Inicio({
 
       {/* 3. Banner promocional 1 */}
       {promo1 && (
-        <PromoBanner 
+        <PromoBanner
           title={promo1.title}
           subtitle={"Promoción Especial"}
           image={promo1.image16x9}
           ctaText={promo1.ctaText || "Ver más"}
           ctaHref={promo1.redirectTo || "#"}
+          fullWidth
         />
       )}
 
@@ -62,11 +63,12 @@ export function Inicio({
 
       {/* 6. Banner promocional 2 */}
       {promo2 && (
-        <PromoBanner 
+        <PromoBanner
           title={promo2.title}
           subtitle={"Promoción Especial"}
           image={promo2.image16x9}
           className="pb-16"
+          fullWidth={true}
           ctaText={promo2.ctaText || "Ver más"}
           ctaHref={promo2.redirectTo || "#"}
         />

@@ -16,6 +16,8 @@ import { getRoles, IRole } from "../../actions/roles";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
+import { CredentialAlertDialog } from "./CredentialAlertDialog";
+
 interface Props {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
@@ -30,9 +32,22 @@ export const CreateUserModal: React.FC<Props> = ({ isOpen, onOpenChange, onSucce
   const [roles, setRoles] = useState<IRole[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  // Credential Alert Dialog state
+  const [credentialDialog, setCredentialDialog] = useState<{
+    isOpen: boolean;
+    email: string;
+    password?: string;
+  }>({ isOpen: false, email: "" });
+
   useEffect(() => {
     if (isOpen) {
       loadRoles();
+    } else {
+      // Clear credentials when modal closes if needed
+      setCredentialDialog({ isOpen: false, email: "" });
+      setEmail("");
+      setRoleId("");
+      setPersonId(null);
     }
   }, [isOpen]);
 
@@ -62,8 +77,11 @@ export const CreateUserModal: React.FC<Props> = ({ isOpen, onOpenChange, onSucce
     } else {
       toast.success("Usuario creado exitosamente");
       if (res.data?.tempPassword) {
-        // En un entorno real, enviaríamos un correo. Aquí mostramos un alert o toast extendido
-        alert(`La contraseña temporal es: ${res.data.tempPassword}\n\nPor favor, cópiela.`);
+        setCredentialDialog({
+          isOpen: true,
+          email: res.data.email,
+          password: res.data.tempPassword,
+        });
       }
       if (onSuccess) onSuccess();
       onClose();
@@ -72,71 +90,80 @@ export const CreateUserModal: React.FC<Props> = ({ isOpen, onOpenChange, onSucce
   };
 
   return (
-    <Modal>
-      <Modal.Backdrop isOpen={isOpen} onOpenChange={onOpenChange}>
-        <Modal.Container placement="auto" scroll="inside">
-          <Modal.Dialog className="sm:max-w-2xl bg-background-tertiary">
-            <Modal.CloseTrigger />
-            <Modal.Header>
-              <Modal.Heading>Crear Nuevo Usuario</Modal.Heading>
-            </Modal.Header>
-            <Modal.Body>
-              <div className="flex flex-col gap-4">
-                <PersonAutocomplete
-                  label="Vincular a una Persona (Opcional)"
-                  personId={personId}
-                  setPersonId={setPersonId}
-                  isRequired={false}
-                />
-                
-                <TextField isRequired variant="secondary" className="w-full">
-                  <Label>Correo Electrónico</Label>
-                  <Input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+    <>
+      <Modal>
+        <Modal.Backdrop isOpen={isOpen} onOpenChange={onOpenChange}>
+          <Modal.Container placement="auto" scroll="inside">
+            <Modal.Dialog className="sm:max-w-2xl bg-background-tertiary">
+              <Modal.CloseTrigger />
+              <Modal.Header>
+                <Modal.Heading>Crear Nuevo Usuario</Modal.Heading>
+              </Modal.Header>
+              <Modal.Body>
+                <div className="flex flex-col gap-4">
+                  <PersonAutocomplete
+                    label="Vincular a una Persona (Opcional)"
+                    personId={personId}
+                    setPersonId={setPersonId}
+                    isRequired={false}
                   />
-                </TextField>
+                  
+                  <TextField isRequired variant="secondary" className="w-full">
+                    <Label>Correo Electrónico</Label>
+                    <Input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </TextField>
 
-                <Select
-                  isRequired
-                  className="w-full"
-                  variant="secondary"
-                  value={roleId}
-                  onChange={(e) => setRoleId(e ? (e as string) : "")}
-                >
-                  <Label>Rol del Usuario</Label>
-                  <Select.Trigger>
-                    <Select.Value />
-                    <Select.Indicator />
-                  </Select.Trigger>
-                  <Select.Popover>
-                    <ListBox>
-                      {roles.map((role) => (
-                        <ListBox.Item id={role.id} key={role.id} textValue={role.name}>
-                          {role.name} {role.isSystem ? "(Sistema)" : ""}
-                        </ListBox.Item>
-                      ))}
-                    </ListBox>
-                  </Select.Popover>
-                </Select>
-                
-                <p className="text-xs text-default-500">
-                  La contraseña se generará automáticamente y se mostrará al finalizar la creación.
-                </p>
-              </div>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="ghost" className="text-danger" onPress={() => onOpenChange(false)}>
-                Cancelar
-              </Button>
-              <Button variant="primary" onPress={() => handleSubmit(() => onOpenChange(false))} isPending={isLoading}>
-                Crear Usuario
-              </Button>
-            </Modal.Footer>
-          </Modal.Dialog>
-        </Modal.Container>
-      </Modal.Backdrop>
-    </Modal>
+                  <Select
+                    isRequired
+                    className="w-full"
+                    variant="secondary"
+                    value={roleId}
+                    onChange={(e) => setRoleId(e ? (e as string) : "")}
+                  >
+                    <Label>Rol del Usuario</Label>
+                    <Select.Trigger>
+                      <Select.Value />
+                      <Select.Indicator />
+                    </Select.Trigger>
+                    <Select.Popover>
+                      <ListBox>
+                        {roles.map((role) => (
+                          <ListBox.Item id={role.id} key={role.id} textValue={role.name}>
+                            {role.name} {role.isSystem ? "(Sistema)" : ""}
+                          </ListBox.Item>
+                        ))}
+                      </ListBox>
+                    </Select.Popover>
+                  </Select>
+                  
+                  <p className="text-xs text-default-500">
+                    La contraseña se generará automáticamente y se mostrará al finalizar la creación.
+                  </p>
+                </div>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="ghost" className="text-danger" onPress={() => onOpenChange(false)}>
+                  Cancelar
+                </Button>
+                <Button variant="primary" onPress={() => handleSubmit(() => onOpenChange(false))} isPending={isLoading}>
+                  Crear Usuario
+                </Button>
+              </Modal.Footer>
+            </Modal.Dialog>
+          </Modal.Container>
+        </Modal.Backdrop>
+      </Modal>
+
+      <CredentialAlertDialog
+        isOpen={credentialDialog.isOpen}
+        onOpenChange={(open) => !open && setCredentialDialog({ isOpen: false, email: "" })}
+        email={credentialDialog.email}
+        password={credentialDialog.password}
+      />
+    </>
   );
 };

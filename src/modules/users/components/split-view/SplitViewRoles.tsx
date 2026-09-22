@@ -1,162 +1,145 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import {
-  IRole,
-  getPermissions,
-  updateRole,
-  createRole,
-  deleteRole,
-} from "../../actions/roles";
+
+import React, { useState } from "react";
 import {
   Button,
   Input,
-  TextField,
   Label,
-  ListBox,
-  ListBoxItem,
-  Chip,
+  Surface,
+  TextArea,
+  TextField,
   Checkbox,
-  Spinner,
+  CheckboxGroup,
 } from "@heroui/react";
 import {
-  PlusSignIcon,
-  FloppyDiskIcon,
+  Add01Icon,
+  CheckmarkBadge01Icon,
+  CheckmarkCircle01Icon,
   Delete01Icon,
-  Alert02Icon,
+  LockPasswordIcon,
+  PencilEdit01Icon,
+  SafeIcon,
+  SecurityPasswordIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { IRole, createRole, updateRole, deleteRole } from "../../actions/roles";
+import { ConfirmAlertDialog } from "../modal/ConfirmAlertDialog";
 
 interface Props {
   initialRoles: IRole[];
+  permissions: any[];
 }
 
-export const SplitViewRoles: React.FC<Props> = ({ initialRoles }) => {
+export const SplitViewRoles: React.FC<Props> = ({ initialRoles, permissions }) => {
   const router = useRouter();
-  const [roles, setRoles] = useState<IRole[]>(initialRoles);
   const [selectedRole, setSelectedRole] = useState<IRole | null>(null);
-  const [permissions, setPermissions] = useState<any[]>([]);
-  const [rolePermissions, setRolePermissions] = useState<Set<string>>(
-    new Set(),
-  );
-
+  const [isCreating, setIsCreating] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [editName, setEditName] = useState("");
-  const [editDesc, setEditDesc] = useState("");
+
+  // Confirm Alert Dialog state
+  const [confirmDialog, setConfirmDialog] = useState<{
+    isOpen: boolean;
+    title: string;
+    description: string;
+    onConfirm: () => void | Promise<void>;
+    status?: "danger" | "warning" | "success" | "accent";
+    confirmText?: string;
+  }>({
+    isOpen: false,
+    title: "",
+    description: "",
+    onConfirm: () => {},
+  });
+
+  // Form states
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [selectedPermissions, setSelectedPermissions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    loadPermissions();
-  }, []);
-
-  const loadPermissions = async () => {
-    const res = await getPermissions({ per_page: "500" });
-    if (!res.error && res.data) {
-      setPermissions(res.data.data);
-    }
+  // Handle select role
+  const handleSelect = (role: IRole) => {
+    setSelectedRole(role);
+    setIsCreating(false);
+    setIsEditing(false);
+    setName(role.name);
+    setDescription(role.description || "");
+    // @ts-ignore
+    setSelectedPermissions(role.permissions?.map((p: any) => p.permission.id) || []);
   };
 
-  const handleSelectRole = (roleId: string) => {
-    if (roleId === "new") {
-      setSelectedRole({
-        id: "new",
-        name: "Nuevo Rol",
-        description: "",
-        isSystem: false,
-        isSuperAdmin: false,
-      });
-      setEditName("");
-      setEditDesc("");
-      setRolePermissions(new Set());
-      setIsEditing(true);
-      return;
-    }
-
-    const role = roles.find((r) => r.id === roleId);
-    if (role) {
-      setSelectedRole(role);
-      setEditName(role.name);
-      setEditDesc(role.description);
-      // @ts-ignore
-      const permIds = role.permissions?.map((p: any) => p.permission.id) || [];
-      setRolePermissions(new Set(permIds));
-      setIsEditing(false);
-    }
+  // Handle create new
+  const handleCreateNew = () => {
+    setSelectedRole(null);
+    setIsCreating(true);
+    setIsEditing(true);
+    setName("");
+    setDescription("");
+    setSelectedPermissions([]);
   };
 
-  const handleTogglePermission = (permId: string) => {
-    if (!isEditing) return;
-    const newSet = new Set(rolePermissions);
-    if (newSet.has(permId)) {
-      newSet.delete(permId);
-    } else {
-      newSet.add(permId);
-    }
-    setRolePermissions(newSet);
-  };
-
-  const handleSave = async () => {
-    if (!editName) {
+  // Handle Save
+  const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!name) {
       toast.error("El nombre del rol es requerido");
       return;
     }
 
     setIsLoading(true);
     let res;
-    if (selectedRole?.id === "new") {
-      res = await createRole({
-        name: editName,
-        description: editDesc,
-        permissionIds: Array.from(rolePermissions),
-      });
+
+    if (isCreating) {
+      res = await createRole({ name, description, permissionIds: selectedPermissions });
     } else if (selectedRole) {
-      res = await updateRole(selectedRole.id, {
-        name: editName,
-        description: editDesc,
-        permissionIds: Array.from(rolePermissions),
-      });
+      res = await updateRole(selectedRole.id, { name, description, permissionIds: selectedPermissions });
     }
+
     setIsLoading(false);
 
     if (res?.error) {
       toast.error(res.message);
     } else {
-      toast.success(
-        selectedRole?.id === "new"
-          ? "Rol creado exitosamente"
-          : "Rol actualizado",
-      );
+      toast.success(isCreating ? "Rol creado exitosamente" : "Rol actualizado exitosamente");
+      setIsCreating(false);
       setIsEditing(false);
       router.refresh();
-      // Refetch local roles to update view
-      // Just a reload is fine
-      window.location.reload();
+      if (res?.data) {
+        handleSelect(res.data as IRole);
+      }
     }
   };
 
-  const handleDelete = async () => {
-    if (!selectedRole || selectedRole.id === "new") return;
-    if (
-      !confirm(
-        "¿Está seguro de eliminar este rol? Esta acción no se puede deshacer y fallará si hay usuarios asignados.",
-      )
-    )
-      return;
+  // Handle Delete
+  const handleDelete = () => {
+    if (!selectedRole || selectedRole.isSystem) return;
+    
+    setConfirmDialog({
+      isOpen: true,
+      title: "Eliminar Rol",
+      description: `¿Está seguro de eliminar el rol "${selectedRole.name}"? Esta acción fallará si hay usuarios asignados a él.`,
+      status: "danger",
+      confirmText: "Eliminar",
+      onConfirm: async () => {
+        setIsLoading(true);
+        const res = await deleteRole(selectedRole.id);
+        setIsLoading(false);
 
-    setIsLoading(true);
-    const res = await deleteRole(selectedRole.id);
-    setIsLoading(false);
-
-    if (res.error) {
-      toast.error(res.message);
-    } else {
-      toast.success("Rol eliminado");
-      window.location.reload();
-    }
+        if (res.error) {
+          toast.error(res.message);
+        } else {
+          toast.success("Rol eliminado exitosamente");
+          setSelectedRole(null);
+          setIsEditing(false);
+          router.refresh();
+        }
+      },
+    });
   };
 
-  // Agrupar permisos por módulo
+  // Group permissions by module
   const groupedPermissions = permissions.reduce((acc: any, perm: any) => {
     const mod = perm.module?.displayName || perm.module?.name || "Otros";
     if (!acc[mod]) acc[mod] = [];
@@ -165,205 +148,195 @@ export const SplitViewRoles: React.FC<Props> = ({ initialRoles }) => {
   }, {});
 
   return (
-    <div className="flex h-full gap-4">
-      {/* Lista de Roles */}
-      <div className="w-1/3 bg-content1 rounded-xl border border-divider flex flex-col overflow-hidden">
-        <div className="p-4 border-b border-divider flex justify-between items-center bg-content2/50">
+    <div className="flex h-full w-full gap-6 overflow-hidden">
+      {/* LEFT PANE: List */}
+      <Surface variant="default" className="w-[320px] flex-shrink-0 flex flex-col border border-border rounded-xl bg-surface-secondary/20">
+        <div className="p-4 border-b border-border bg-background flex items-center justify-between">
           <h3 className="font-semibold text-lg">Roles</h3>
-          <Button
-            size="sm"
-            variant="primary"
-            onPress={() => handleSelectRole("new")}
-          >
-            <div className="flex items-center gap-2">
-              <HugeiconsIcon icon={PlusSignIcon} size={16} />
-              Nuevo Rol
-            </div>
+          <Button variant="primary" size="sm" isIconOnly onPress={handleCreateNew}>
+            <HugeiconsIcon icon={Add01Icon} size={18} />
           </Button>
         </div>
-        <ListBox
-          aria-label="Lista de roles"
-          className="p-2 flex-1 overflow-y-auto"
-          selectedKeys={selectedRole ? [selectedRole.id] : []}
-          selectionMode="single"
-          items={roles}
-          onSelectionChange={(keys: any) => {
-            const arr = Array.from(keys);
-            if (arr.length > 0) handleSelectRole(arr[0] as string);
-          }}
-        >
-          {(role) => (
-            <ListBoxItem key={role.id} textValue={role.name} className="py-3">
-              <div className="flex flex-col w-full">
-                <div className="flex justify-between items-center w-full">
-                  <span className="font-medium">{role.name}</span>
-                  {role.isSuperAdmin && (
-                    <HugeiconsIcon
-                      icon={Alert02Icon}
-                      size={16}
-                      className="text-danger"
-                    />
-                  )}
-                </div>
+        <div className="flex-1 overflow-y-auto p-2 space-y-1">
+          {initialRoles.map((role) => (
+            <button
+              key={role.id}
+              onClick={() => handleSelect(role)}
+              className={`w-full text-left p-3 rounded-lg flex flex-col transition-colors ${
+                selectedRole?.id === role.id && !isCreating
+                  ? "bg-accent-soft border border-accent/20"
+                  : "hover:bg-surface-secondary border border-transparent"
+              }`}
+            >
+              <div className="flex items-center justify-between mb-1">
+                <span className={`font-medium ${selectedRole?.id === role.id && !isCreating ? "text-accent-soft-foreground" : "text-foreground"}`}>
+                  {role.name}
+                </span>
                 {role.isSystem && (
-                  <span className="text-xs text-default-400">
-                    Rol del Sistema
-                  </span>
+                  <HugeiconsIcon icon={SafeIcon} size={14} className="text-muted" />
                 )}
               </div>
-            </ListBoxItem>
-          )}
-        </ListBox>
-      </div>
+              <span className={`text-xs truncate ${selectedRole?.id === role.id && !isCreating ? "text-accent-soft-foreground/70" : "text-muted"}`}>
+                {role.description || "Sin descripción"}
+              </span>
+            </button>
+          ))}
+        </div>
+      </Surface>
 
-      {/* Editor de Permisos */}
-      <div className="w-2/3 bg-content1 rounded-xl border border-divider flex flex-col overflow-hidden">
-        {selectedRole ? (
-          <>
-            <div className="p-4 border-b border-divider bg-content2/50 flex justify-between items-center">
-              <h3 className="font-semibold text-lg flex items-center gap-2">
-                {isEditing ? (
-                  <TextField className="w-64">
-                    <Input
-                      value={editName}
-                      onChange={(e) => setEditName(e.target.value)}
-                      placeholder="Nombre del Rol"
-                    />
-                  </TextField>
-                ) : (
-                  <span>{selectedRole.name}</span>
-                )}
-                {selectedRole.isSystem && (
-                  <Chip size="sm" color="warning" variant="soft">
-                    Protegido
-                  </Chip>
-                )}
-              </h3>
+      {/* RIGHT PANE: Detail / Form */}
+      <Surface variant="default" className="flex-1 border border-border rounded-xl bg-background flex flex-col overflow-hidden">
+        {(!selectedRole && !isCreating) ? (
+          <div className="flex-1 flex flex-col items-center justify-center text-muted p-10">
+            <div className="w-16 h-16 rounded-full bg-surface-secondary flex items-center justify-center mb-4">
+              <HugeiconsIcon icon={SecurityPasswordIcon} size={32} />
+            </div>
+            <h3 className="text-lg font-medium text-foreground">Seleccione un Rol</h3>
+            <p className="text-sm text-center max-w-sm mt-2">
+              Elija un rol de la lista para ver o modificar sus permisos, o cree uno nuevo.
+            </p>
+          </div>
+        ) : (
+          <form id="role-form" onSubmit={handleSave} className="flex flex-col h-full overflow-hidden">
+            <div className="p-6 border-b border-border flex items-center justify-between bg-surface-secondary/20">
+              <div>
+                <h2 className="text-xl font-bold flex items-center gap-2">
+                  {isCreating ? "Crear Nuevo Rol" : selectedRole?.name}
+                  {selectedRole?.isSystem && (
+                    <span className="text-xs bg-accent/10 text-accent border border-accent/20 px-2 py-0.5 rounded-full font-medium">
+                      Sistema
+                    </span>
+                  )}
+                  {selectedRole?.isSuperAdmin && (
+                    <span className="text-xs bg-danger/10 text-danger border border-danger/20 px-2 py-0.5 rounded-full font-medium">
+                      Super Admin
+                    </span>
+                  )}
+                </h2>
+                <p className="text-sm text-muted mt-1">
+                  {isCreating ? "Configure los datos básicos y asigne los permisos." : "Gestione la configuración de este rol."}
+                </p>
+              </div>
 
-              <div className="flex gap-2">
-                {isEditing ? (
-                  <>
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      onPress={() => setIsEditing(false)}
-                    >
+              {!isCreating && !selectedRole?.isSuperAdmin && (
+                <div className="flex items-center gap-2">
+                  {!isEditing ? (
+                    <Button variant="secondary" onPress={() => setIsEditing(true)}>
+                      <HugeiconsIcon icon={PencilEdit01Icon} size={18} />
+                      Editar
+                    </Button>
+                  ) : (
+                    <Button variant="ghost" onPress={() => { setIsEditing(false); handleSelect(selectedRole!); }}>
                       Cancelar
                     </Button>
-                    <Button
-                      size="sm"
-                      variant="primary"
-                      onPress={handleSave}
-                      isPending={isLoading}
-                    >
-                      <div className="flex items-center gap-2">
-                        <HugeiconsIcon icon={FloppyDiskIcon} size={16} />
-                        Guardar
-                      </div>
+                  )}
+                  {!selectedRole?.isSystem && (
+                    <Button variant="ghost" className="text-danger" onPress={handleDelete}>
+                      <HugeiconsIcon icon={Delete01Icon} size={18} />
                     </Button>
-                  </>
-                ) : (
-                  <>
-                    {!selectedRole.isSystem && (
-                      <Button
-                        size="sm"
-                        variant="danger-soft"
-                        onPress={handleDelete}
-                      >
-                        <div className="flex items-center gap-2">
-                          <HugeiconsIcon icon={Delete01Icon} size={16} />
-                          Eliminar
-                        </div>
-                      </Button>
-                    )}
-                    <Button
-                      size="sm"
-                      variant="primary"
-                      onPress={() => setIsEditing(true)}
-                    >
-                      Editar Rol
-                    </Button>
-                  </>
-                )}
-              </div>
-            </div>
-
-            <div className="p-6 overflow-y-auto flex-1 space-y-8">
-              {isEditing && (
-                <div className="mb-6">
-                  <TextField variant="secondary">
-                    <Label>Descripción (Opcional)</Label>
-                    <Input
-                      value={editDesc}
-                      onChange={(e) => setEditDesc(e.target.value)}
-                    />
-                  </TextField>
+                  )}
                 </div>
               )}
+            </div>
 
-              {!isEditing && selectedRole.description && (
-                <p className="text-default-600 mb-6">
-                  {selectedRole.description}
-                </p>
-              )}
-
-              {selectedRole.isSuperAdmin ? (
-                <div className="flex flex-col items-center justify-center py-20 text-default-500 gap-4">
-                  <HugeiconsIcon
-                    icon={Alert02Icon}
-                    size={48}
-                    className="text-danger/50"
+            <div className="flex-1 overflow-y-auto p-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <TextField isRequired className="w-full">
+                  <Label>Nombre</Label>
+                  <Input
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Ej. Entrenador Principal"
+                    readOnly={!isEditing}
+                    variant={!isEditing ? undefined : "secondary"}
+                    className={!isEditing ? "bg-transparent px-0 border-transparent pointer-events-none" : ""}
                   />
-                  <p className="text-lg">
-                    Este rol tiene acceso total al sistema.
-                  </p>
-                  <p className="text-sm">
-                    Sus permisos no pueden ser editados manualmente.
+                </TextField>
+
+                <TextField className="w-full">
+                  <Label>Descripción</Label>
+                  <TextArea
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="Describe el propósito del rol"
+                    readOnly={!isEditing}
+                    variant={!isEditing ? undefined : "secondary"}
+                    className={!isEditing ? "bg-transparent px-0 border-transparent pointer-events-none resize-none" : ""}
+                  />
+                </TextField>
+              </div>
+
+              <div className="mb-4 flex items-center justify-between">
+                <h3 className="font-semibold text-lg border-b-2 border-accent pb-1 inline-block">Permisos del Sistema</h3>
+              </div>
+
+              {selectedRole?.isSuperAdmin ? (
+                <div className="p-8 border border-danger/20 bg-danger/5 rounded-xl flex flex-col items-center justify-center text-center">
+                  <HugeiconsIcon icon={LockPasswordIcon} size={48} className="text-danger mb-4" />
+                  <h4 className="text-danger font-bold text-lg">Acceso Total</h4>
+                  <p className="text-danger/80 max-w-md mt-2">
+                    Este rol tiene privilegios de Super Administrador. No es necesario (ni posible) asignarle permisos individuales porque hereda todos automáticamente.
                   </p>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
-                  {Object.entries(groupedPermissions).map(
-                    ([moduleName, perms]: any) => (
-                      <div
-                        key={moduleName}
-                        className="border border-divider rounded-lg p-4 bg-background/50"
-                      >
-                        <h4 className="font-semibold text-primary mb-3 pb-2 border-b border-divider">
-                          {moduleName}
-                        </h4>
+                <CheckboxGroup
+                  value={selectedPermissions}
+                  onChange={setSelectedPermissions}
+                  isDisabled={!isEditing}
+                >
+                  <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-8 gap-y-6">
+                    {Object.entries(groupedPermissions).map(([mod, perms]: any) => (
+                      <div key={mod} className={`border border-border rounded-xl p-5 transition-colors ${!isEditing ? "bg-surface-secondary/10 opacity-80" : "bg-background"}`}>
+                        <div className="flex items-center gap-2 mb-4 pb-2 border-b border-border">
+                          <Label className="font-semibold text-foreground m-0">
+                            {mod}
+                          </Label>
+                        </div>
                         <div className="space-y-3">
                           {perms.map((p: any) => (
-                            <label
-                              key={p.id}
-                              className={`flex items-center gap-3 ${isEditing ? "cursor-pointer hover:bg-content2" : ""} p-2 rounded-md transition-colors`}
-                            >
-                              <Checkbox
-                                isSelected={rolePermissions.has(p.id)}
-                                onChange={() => handleTogglePermission(p.id)}
-                                isReadOnly={!isEditing}
-                              />
-                              <div className="flex flex-col">
-                                <span className="text-sm font-medium">
-                                  {p.name}
-                                </span>
-                              </div>
-                            </label>
+                            <Checkbox key={p.id} value={p.id}>
+                              <Checkbox.Content>
+                                <Checkbox.Control>
+                                  <Checkbox.Indicator />
+                                </Checkbox.Control>
+                                <div className="flex flex-col ml-1">
+                                  <span className="text-sm font-medium leading-none mb-1">{p.name}</span>
+                                </div>
+                              </Checkbox.Content>
+                            </Checkbox>
                           ))}
                         </div>
                       </div>
-                    ),
-                  )}
-                </div>
+                    ))}
+                  </div>
+                </CheckboxGroup>
               )}
             </div>
-          </>
-        ) : (
-          <div className="flex flex-col items-center justify-center h-full text-default-400">
-            <p>Seleccione un rol para ver sus detalles</p>
-          </div>
+
+            {isEditing && (
+              <div className="p-4 border-t border-border bg-surface-secondary/30 flex justify-end gap-3">
+                <Button variant="secondary" onPress={() => isCreating ? handleSelect(initialRoles[0]) : handleSelect(selectedRole!)}>
+                  Cancelar
+                </Button>
+                <Button type="submit" form="role-form" variant="primary" isPending={isLoading}>
+                  <HugeiconsIcon icon={CheckmarkCircle01Icon} size={18} />
+                  Guardar Rol
+                </Button>
+              </div>
+            )}
+          </form>
         )}
-      </div>
+      </Surface>
+      
+      <ConfirmAlertDialog
+        isOpen={confirmDialog.isOpen}
+        onOpenChange={(open) => !open && setConfirmDialog({ ...confirmDialog, isOpen: false })}
+        title={confirmDialog.title}
+        description={confirmDialog.description}
+        status={confirmDialog.status}
+        confirmText={confirmDialog.confirmText}
+        onConfirm={confirmDialog.onConfirm}
+      />
     </div>
   );
 };
