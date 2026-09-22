@@ -8,26 +8,14 @@ import { Card } from "@heroui/react";
 import { FootballIcon, Structure04FreeIcons } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { redirect } from "next/navigation";
+import { auth } from "@/auth";
+import { resolvePageData } from "@/utils/resolvePageData";
 
 export default async function TeamsPage() {
-  const disciplinesOptionsResponse = await getDisciplinesOptions();
-
-  if (
-    disciplinesOptionsResponse.error &&
-    disciplinesOptionsResponse.statusCode === 401
-  ) {
-    redirect("/admin/login");
-  }
-
-  // 2. Manejo de errores generales (400, 500, etc.)
-  if (disciplinesOptionsResponse.error) {
-    return (
-      <ErrorPage
-        message={disciplinesOptionsResponse.message}
-        path={{ href: "/teams", label: "Volver a la lista de equipos" }}
-      />
-    );
-  }
+  const [disciplinesOptionsResponse] = await resolvePageData(
+    [getDisciplinesOptions()],
+    { path: { href: "/teams", label: "Volver a la lista de equipos" } },
+  );
 
   return (
     <>

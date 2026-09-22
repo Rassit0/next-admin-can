@@ -35,7 +35,7 @@ export const getAllowedChildRoutes = (
   userPermissions: string[],
   config: NavigationConfig[]
 ) => {
-  const module = config.find((m) => m.action === moduleId);
+  const module = config.find((m) => m.id === moduleId);
   if (!module || !module.routes) return [];
 
   return module.routes.filter((route) =>
@@ -60,9 +60,9 @@ export const filterNavigation = (
   userPermissions: string[]
 ): NavigationConfig[] => {
   return items.reduce<NavigationConfig[]>((acc, item) => {
-    // Si no tiene reglas de permisos o el action es 'dashboard', primero evaluamos parent access
+    // Si no tiene reglas de permisos o el id es 'dashboard', primero evaluamos parent access
     const hasParentAccess =
-      item.action === "dashboard" ||
+      item.id === "dashboard" ||
       !item.requiredPermissions ||
       hasRequiredPermissions(userPermissions, item.requiredPermissions);
 
@@ -73,7 +73,7 @@ export const filterNavigation = (
 
     if (item.routes && item.routes.length > 0) {
       if (item.entryStrategy === "firstAllowedChild") {
-        const firstAllowed = getFirstAllowedChildRoute(item.action, userPermissions, items);
+        const firstAllowed = getFirstAllowedChildRoute(item.id || "", userPermissions, items);
         if (!firstAllowed) {
           // Si la estrategia exige ir al primer hijo pero no tiene permiso para ninguno,
           // se oculta el padre completamente.

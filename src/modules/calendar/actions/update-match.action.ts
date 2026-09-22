@@ -6,7 +6,8 @@ import { handleServerAction } from "@/utils";
 import { updateTag } from "next/cache";
 
 interface UpdateMatchPayload {
-  teamSeasonCategoryId?: string;
+  homeTeamSeasonCategoryId?: string | null;
+  awayTeamSeasonCategoryId?: string | null;
   locationId?: string | null;
   homeTeamId?: string;
   awayTeamId?: string;

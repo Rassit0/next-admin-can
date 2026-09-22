@@ -58,7 +58,7 @@ export function Inicio({
       <ActualidadSection news={news} />
 
       {/* 5. Fixture (Básquetbol y Voleibol) */}
-      <FixtureSection initialFixtures={matches} disciplines={disciplines} />
+      <FixtureSection initialFixtures={matches} />
 
       {/* 6. Banner promocional 2 */}
       {promo2 && (

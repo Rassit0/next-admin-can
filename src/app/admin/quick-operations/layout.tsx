@@ -30,12 +30,18 @@ export default async function QuickOperationsLayout({ children }: LayoutProps) {
     }
   }
 
-  const allowedRoutes = getAllowedChildRoutes("quick-operations", userPermissions, itemsNavigation as NavigationConfig[]);
-  
+  const allowedRoutes = getAllowedChildRoutes(
+    "quick-operations",
+    userPermissions,
+    itemsNavigation as NavigationConfig[],
+  );
+
   const tabsRoutes = allowedRoutes
     .filter((route) => route.showInTabs)
     .map((route) => ({
-      value: route.href.replace(/^\/admin\/quick-operations(\/\[personId\])?/, "") || "/",
+      value:
+        route.href.replace(/^\/admin\/quick-operations(\/\[personId\])?/, "") ||
+        "/",
       title: route.label || "",
     }));
 
@@ -66,14 +72,14 @@ export default async function QuickOperationsLayout({ children }: LayoutProps) {
                 />
               </div>
 
-              <QuickOperationsPersonSelector />
-
               <TabsRouteNavigation
                 routes={tabsRoutes}
                 basePath={`/admin/quick-operations`}
                 defaultRoute="/"
                 variant="primary"
               />
+
+              <QuickOperationsPersonSelector />
 
               <div className="mt-2">{children}</div>
             </div>

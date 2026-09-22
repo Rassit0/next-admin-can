@@ -4,11 +4,13 @@ import clsx from "clsx";
 import Link from "next/link";
 import { useParams, usePathname, useSearchParams } from "next/navigation";
 
+import { NavigationIcon, NavigationIconKey } from "@/ui/components/navigation/IconRegistry";
+
 interface Props {
   item: {
     label: string;
     href: string;
-    icon?: React.ReactNode;
+    icon?: string;
     highlight?: boolean;
   };
   index: number;
@@ -62,7 +64,7 @@ export const Item = ({ item, index, urlBase }: Props) => {
             "text-indigo-700 dark:text-indigo-300": isHighlight && isActive,
           })}
         >
-          {item.icon}
+          <NavigationIcon iconKey={item.icon as NavigationIconKey} size={20} />
         </span>
       )}
       <span className="text-sm font-semibold hidden lg:block nav-text select-none">

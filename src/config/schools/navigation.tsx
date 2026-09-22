@@ -1,26 +1,4 @@
 import { NavItem } from "@/ui";
-import {
-  ArrowDataTransferHorizontalIcon,
-  Building03FreeIcons,
-  Building03Icon,
-  Calendar03Icon,
-  Calendar04Icon,
-  CheckmarkSquare03Icon,
-  DashboardSquare02Icon,
-  DistributeVerticalBottomIcon,
-  Flag03Icon,
-  IdentityCardIcon,
-  Layers01Icon,
-  Mortarboard02Icon,
-  Structure04FreeIcons,
-  Structure04Icon,
-  StudentIcon,
-  TaskDone01Icon,
-  UserGroupIcon,
-  UserIcon,
-  UserMultipleIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 
 export const itemsNavigationClubs: NavItem[] = [
   {
@@ -28,62 +6,62 @@ export const itemsNavigationClubs: NavItem[] = [
     href: "dashboard",
     action: "dashboard",
     subject: "home",
-    icon: <HugeiconsIcon icon={DashboardSquare02Icon} />,
+    icon: "dashboard",
   },
   {
     label: "Temporadas",
     href: "seasons",
     action: "seasons",
     subject: "home",
-    icon: <HugeiconsIcon icon={Calendar04Icon} />,
+    icon: "seasons",
   },
   {
     label: "Equipos",
     href: "teams",
     action: "teams",
     subject: "home",
-    icon: <HugeiconsIcon icon={Structure04FreeIcons} />,
+    icon: "teams",
   },
   {
     label: "Jugadores",
     href: "players",
     action: "players",
     subject: "home",
-    icon: <HugeiconsIcon icon={UserIcon} />,
+    icon: "players", // using users/players icon
   },
   {
     label: "Escuelas",
     href: "schools",
     action: "schools",
     subject: "home",
-    icon: <HugeiconsIcon icon={Mortarboard02Icon} />,
+    icon: "schools",
   },
   {
     label: "Estudiantes",
     href: "students",
     action: "students",
     subject: "home",
-    icon: <HugeiconsIcon icon={StudentIcon} />,
+    icon: "students",
   },
   {
     label: "Pases",
     href: "passes",
     action: "passes",
     subject: "home",
-    icon: <HugeiconsIcon icon={ArrowDataTransferHorizontalIcon} />,
+    icon: "quick-operations",
   },
   // {
   //   label: "Miembros",
   //   href: "members",
   //   action: "members",
   //   subject: "home",
-  //   icon: <HugeiconsIcon icon={UserGroupIcon} />,
+  //   icon: "teams",
   // },
   {
     label: "Asistencia",
     href: "attendance",
     action: "attendance",
     subject: "home",
-    icon: <HugeiconsIcon icon={TaskDone01Icon} />,
+    icon: "attendance",
   },
 ];

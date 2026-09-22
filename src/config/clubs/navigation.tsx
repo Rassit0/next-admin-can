@@ -1,26 +1,4 @@
 import { NavItem } from "@/ui";
-import {
-  ArrowDataTransferHorizontalIcon,
-  Building03FreeIcons,
-  Building03Icon,
-  Calendar03Icon,
-  Calendar04Icon,
-  CheckmarkSquare03Icon,
-  DashboardSquare02Icon,
-  DistributeVerticalBottomIcon,
-  Flag03Icon,
-  IdentityCardIcon,
-  Layers01Icon,
-  Mortarboard02Icon,
-  Structure04FreeIcons,
-  Structure04Icon,
-  StudentIcon,
-  TaskDone01Icon,
-  UserGroupIcon,
-  UserIcon,
-  UserMultipleIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 
 export const itemsNavigationClubs: NavItem[] = [
   {
@@ -28,48 +6,48 @@ export const itemsNavigationClubs: NavItem[] = [
     href: "dashboard",
     action: "dashboard",
     subject: "home",
-    icon: <HugeiconsIcon icon={DashboardSquare02Icon} />,
+    icon: "dashboard",
   },
   {
     label: "Temporadas",
     href: "seasons",
     action: "seasons",
     subject: "home",
-    icon: <HugeiconsIcon icon={Calendar04Icon} />,
+    icon: "seasons",
   },
   {
     label: "Clubes",
     href: "manage",
     action: "clubs",
     subject: "home",
-    icon: <HugeiconsIcon icon={Flag03Icon} />,
+    icon: "clubs",
   },
   // {
   //   label: "Equipos",
   //   href: "teams",
   //   action: "teams",
   //   subject: "home",
-  //   icon: <HugeiconsIcon icon={Structure04FreeIcons} />,
+  //   icon: "teams",
   // },
   {
     label: "Pases",
     href: "passes",
     action: "passes",
     subject: "home",
-    icon: <HugeiconsIcon icon={ArrowDataTransferHorizontalIcon} />,
+    icon: "quick-operations", // Assuming arrow transfer translates to quick-operations or something similar
   },
   {
     label: "Jugadores",
     href: "players",
     action: "players",
     subject: "home",
-    icon: <HugeiconsIcon icon={UserMultipleIcon} />,
+    icon: "players",
   },
   {
     label: "Asistencia",
     href: "attendance",
     action: "attendance",
     subject: "home",
-    icon: <HugeiconsIcon icon={TaskDone01Icon} />,
+    icon: "attendance", // You might need to add tasks to IconRegistry if it fails
   },
 ];

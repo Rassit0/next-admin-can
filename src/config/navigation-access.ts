@@ -1,4 +1,4 @@
-import { itemsNavigation } from "@/config/navigation";
+import { itemsNavigation, itemsWebNavigation } from "@/config/navigation";
 import { hasRequiredPermissions } from "@/shared/helpers/permissions";
 
 /**
@@ -11,16 +11,23 @@ export const hasModuleAccess = (
   userPermissions: string[],
   childRouteId?: string
 ): boolean => {
-  // Para las rutas web (que no están en itemsNavigation directamente en el index de web, pero las moví al objeto web), 
-  // primero buscamos en itemsNavigation y luego en itemsWebNavigation
-  let moduleItem = itemsNavigation.find((item) => item.id === moduleId);
-  
-  // Como fallback para web si es llamado directamente con IDs antiguos
-  if (!moduleItem && moduleId.startsWith("web-")) {
-     // En caso de que se haya llamado como module con un ID de web antiguo, aunque ya están en routes.
-     return false;
+  // Manejo especial para el módulo web que fue extraído a itemsWebNavigation
+  if (moduleId === "web") {
+    if (!childRouteId) return true;
+    
+    const childRoute = itemsWebNavigation.find((r: any) => r.id === childRouteId);
+    if (!childRoute) return false;
+    
+    if (childRoute.requiredPermissions) {
+      if (!hasRequiredPermissions(userPermissions, childRoute.requiredPermissions)) {
+        return false;
+      }
+    }
+    return true;
   }
 
+  let moduleItem = itemsNavigation.find((item) => item.id === moduleId);
+  
   if (!moduleItem) {
     return false; // Fail-closed
   }

@@ -20,13 +20,16 @@ import { MembershipHistoryDrawer } from "./person-360/MembershipHistoryDrawer";
 import { motion, useReducedMotion } from "framer-motion";
 import { staggerContainer, fadeInUp } from "@/ui/animations/transitions";
 
+import { IPersonContact } from "@/modules/persons/interfaces/person-contact.interface";
+
 interface Props {
   personId: string | null;
   selectedPerson: IPersonOption | null;
   initialSummary?: ISecretarySummaryResponse["data"];
+  initialContacts?: IPersonContact[];
 }
 
-export const Person360Container = ({ personId, selectedPerson, initialSummary }: Props) => {
+export const Person360Container = ({ personId, selectedPerson, initialSummary, initialContacts }: Props) => {
   const prefersReducedMotion = useReducedMotion();
   const [summary, setSummary] = useState<{data: ISecretarySummaryResponse["data"]} | null>(initialSummary ? { data: initialSummary } : null);
   const [isLoading, setIsLoading] = useState(false);
@@ -46,28 +49,15 @@ export const Person360Container = ({ personId, selectedPerson, initialSummary }:
       setSummary(null);
       setError(null);
       setSelectedChargeIds([]);
-      return;
     }
-
-    const fetchSummary = async () => {
-      setIsLoading(true);
-      setError(null);
-      try {
-        const res = await getSecretarySummary(personId);
-        if (res.error) {
-          setError(res.message);
-        } else {
-          setSummary(res.data || null);
-        }
-      } catch (err) {
-        setError("Ocurrió un error al cargar la información.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchSummary();
   }, [personId]);
+
+  // Sync state if initialSummary changes (e.g. during fast navigation without remounting)
+  useEffect(() => {
+    if (initialSummary) {
+      setSummary({ data: initialSummary });
+    }
+  }, [initialSummary]);
 
   const refreshSummary = async () => {
     if (!personId) return;
@@ -173,7 +163,7 @@ export const Person360Container = ({ personId, selectedPerson, initialSummary }:
       </motion.div>
 
       <motion.div variants={prefersReducedMotion ? {} : fadeInUp} className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <PersonContactsCard personId={personId} />
+        <PersonContactsCard personId={personId} initialContacts={initialContacts} />
       </motion.div>
 
       <BulkPaymentDrawer 

@@ -10,6 +10,7 @@ import { SessionAttendanceDrawer } from "../../attendance/components/SessionAtte
 import { Select, ListBox, Label } from "@heroui/react";
 import { deleteSession } from "../actions/delete-session.action";
 import { deleteGeneralEvent } from "../actions/delete-general-event.action";
+import { completeMatch, cancelMatch, reopenMatch, restoreMatch } from "../actions/match-lifecycle.actions";
 
 interface Props {
   state: {
@@ -31,11 +32,17 @@ export const EventDetailModal = ({ state, event, onEditMatch, onDeleteSuccess, o
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [deleteScope, setDeleteScope] = useState<"single" | "following" | "all">("single");
 
+  const [confirmAction, setConfirmAction] = useState<"COMPLETE" | "CANCEL" | "REOPEN" | "RESTORE" | null>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
   if (!event) return null;
 
   // Reset confirmation state when modal opens/closes
   if (!state.isOpen && confirmDelete) {
     setConfirmDelete(false);
+  }
+  if (!state.isOpen && confirmAction) {
+    setConfirmAction(null);
   }
 
   const type = event.extendedProps.type;
@@ -45,7 +52,10 @@ export const EventDetailModal = ({ state, event, onEditMatch, onDeleteSuccess, o
   return (
     <Modal>
       <Modal.Backdrop isOpen={state.isOpen} onOpenChange={(open) => {
-        if (!open) setConfirmDelete(false);
+        if (!open) {
+          setConfirmDelete(false);
+          setConfirmAction(null);
+        }
         state.setOpen(open);
       }}>
         <Modal.Container placement="auto" scroll="outside">
@@ -99,33 +109,54 @@ export const EventDetailModal = ({ state, event, onEditMatch, onDeleteSuccess, o
                 </div>
               </div>
             </Modal.Body>
-            <Modal.Footer>
-              {type === "MATCH" && !confirmDelete && (
+            <Modal.Footer className="flex-wrap">
+              {type === "MATCH" && !confirmDelete && !confirmAction && (
                 <>
-                  <Button variant="danger-soft" onPress={() => setConfirmDelete(true)}>
+                  <Button variant="danger-soft" onPress={() => setConfirmDelete(true)} isDisabled={isTransitioning}>
                     Eliminar
                   </Button>
-                  <Button variant="secondary" onPress={onEditMatch}>
+                  <Button variant="secondary" onPress={onEditMatch} isDisabled={isTransitioning}>
+                    Editar
+                  </Button>
+                  
+                  {event.extendedProps.status === "SCHEDULED" && (
+                    <>
+                      <Button variant="primary" onPress={() => setConfirmAction("COMPLETE")} isDisabled={isTransitioning}>
+                        Completar
+                      </Button>
+                      <Button variant="danger-soft" onPress={() => setConfirmAction("CANCEL")} isDisabled={isTransitioning}>
+                        Cancelar Partido
+                      </Button>
+                    </>
+                  )}
+                  {event.extendedProps.status === "COMPLETED" && (
+                    <Button variant="secondary" onPress={() => setConfirmAction("REOPEN")} isDisabled={isTransitioning}>
+                      Reabrir
+                    </Button>
+                  )}
+                  {event.extendedProps.status === "CANCELLED" && (
+                    <Button variant="secondary" onPress={() => setConfirmAction("RESTORE")} isDisabled={isTransitioning}>
+                      Restaurar
+                    </Button>
+                  )}
+                </>
+              )}
+              {type === "SESSION" && !confirmDelete && !confirmAction && (
+                <>
+                  <Button variant="danger-soft" onPress={() => setConfirmDelete(true)} isDisabled={isTransitioning}>
+                    Eliminar
+                  </Button>
+                  <Button variant="secondary" onPress={onEditSession} isDisabled={isTransitioning}>
                     Editar
                   </Button>
                 </>
               )}
-              {type === "SESSION" && !confirmDelete && (
+              {type === "GENERAL" && !confirmDelete && !confirmAction && (
                 <>
-                  <Button variant="danger-soft" onPress={() => setConfirmDelete(true)}>
+                  <Button variant="danger-soft" onPress={() => setConfirmDelete(true)} isDisabled={isTransitioning}>
                     Eliminar
                   </Button>
-                  <Button variant="secondary" onPress={onEditSession}>
-                    Editar
-                  </Button>
-                </>
-              )}
-              {type === "GENERAL" && !confirmDelete && (
-                <>
-                  <Button variant="danger-soft" onPress={() => setConfirmDelete(true)}>
-                    Eliminar
-                  </Button>
-                  <Button variant="secondary" onPress={onEditGeneralEvent}>
+                  <Button variant="secondary" onPress={onEditGeneralEvent} isDisabled={isTransitioning}>
                     Editar
                   </Button>
                 </>
@@ -197,12 +228,59 @@ export const EventDetailModal = ({ state, event, onEditMatch, onDeleteSuccess, o
                   </div>
                 </div>
               )}
-              {type === "SESSION" && (metadata as ISessionCalendarMetadata).courses?.length > 0 && (
+              {confirmAction && (
+                <div className="flex flex-col gap-3 w-full">
+                  <div className="bg-warning/10 p-3 rounded-lg flex flex-col gap-2">
+                    <p className="text-sm text-warning font-semibold">
+                      {confirmAction === "COMPLETE" && "Al completar el partido se bloquearán el resultado, la convocatoria y la planilla. Podrás corregirlo posteriormente reabriendo el partido. ¿Deseas continuar?"}
+                      {confirmAction === "CANCEL" && "El partido quedará cancelado y en modo solo lectura. Podrás restaurarlo posteriormente. ¿Deseas continuar?"}
+                      {confirmAction === "REOPEN" && "El partido volverá a estar programado y podrá editarse nuevamente. ¿Deseas continuar?"}
+                      {confirmAction === "RESTORE" && "El partido volverá a estar programado y podrá editarse nuevamente. ¿Deseas continuar?"}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2 justify-end w-full">
+                    <Button variant="ghost" size="sm" onPress={() => setConfirmAction(null)} isDisabled={isTransitioning}>
+                      Cancelar
+                    </Button>
+                    <Button 
+                      variant="primary" 
+                      size="sm" 
+                      isPending={isTransitioning}
+                      onPress={async () => {
+                        setIsTransitioning(true);
+                        let res;
+                        if (confirmAction === "COMPLETE") {
+                          res = await completeMatch(event.id);
+                        } else if (confirmAction === "CANCEL") {
+                          res = await cancelMatch(event.id);
+                        } else if (confirmAction === "REOPEN") {
+                          res = await reopenMatch(event.id);
+                        } else if (confirmAction === "RESTORE") {
+                          res = await restoreMatch(event.id);
+                        }
+                        setIsTransitioning(false);
+                        
+                        if (res && res.error) {
+                          toast.error(res.message);
+                        } else if (res && !res.error) {
+                          toast.success(res.message);
+                          setConfirmAction(null);
+                          state.setOpen(false);
+                          if (onDeleteSuccess) onDeleteSuccess(); // We can reuse onDeleteSuccess to refresh calendar/data if needed
+                        }
+                      }}
+                    >
+                      Confirmar
+                    </Button>
+                  </div>
+                </div>
+              )}
+              {type === "SESSION" && (metadata as ISessionCalendarMetadata).courses?.length > 0 && !confirmAction && !confirmDelete && (
                 <Button variant="primary" onPress={() => setIsAttendanceOpen(true)}>
                   Asistencia
                 </Button>
               )}
-              <Button variant="danger-soft" onPress={() => state.setOpen(false)}>
+              <Button variant="danger-soft" onPress={() => state.setOpen(false)} isDisabled={isTransitioning}>
                 Cerrar
               </Button>
             </Modal.Footer>

@@ -12,15 +12,16 @@ import { listItemTransition } from "@/ui/animations/transitions";
 
 interface Props {
   personId: string;
+  initialContacts?: IPersonContact[];
 }
 
-export const PersonContactsCard = ({ personId }: Props) => {
+export const PersonContactsCard = ({ personId, initialContacts }: Props) => {
   const permissions = usePermissions();
   const canRead = permissions.includes("READ_PERSONS");
   const canUpdate = permissions.includes("UPDATE_PERSONS");
   const prefersReducedMotion = useReducedMotion();
 
-  const [contacts, setContacts] = useState<IPersonContact[]>([]);
+  const [contacts, setContacts] = useState<IPersonContact[]>(initialContacts || []);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -28,6 +29,13 @@ export const PersonContactsCard = ({ personId }: Props) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
   const [selectedContact, setSelectedContact] = useState<IPersonContact | null>(null);
+
+  // Sincronizar estado cuando initialContacts cambie desde Server
+  useEffect(() => {
+    if (initialContacts) {
+      setContacts(initialContacts);
+    }
+  }, [initialContacts]);
 
   const fetchContacts = async () => {
     setIsLoading(true);
@@ -45,11 +53,6 @@ export const PersonContactsCard = ({ personId }: Props) => {
       setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    if (!canRead || !personId) return;
-    fetchContacts();
-  }, [personId, canRead]);
 
   const handleAdd = () => {
     setSelectedContact(null);

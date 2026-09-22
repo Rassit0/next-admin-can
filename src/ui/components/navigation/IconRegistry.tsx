@@ -50,7 +50,8 @@ export type NavigationIconKey =
   | "users"
   | "web"
   | "calendar"
-  | "news";
+  | "news"
+  | "attendance";
 
 export const getNavigationIcon = (key?: NavigationIconKey, size: number = 20): React.ReactNode => {
   if (!key) return null;
@@ -94,6 +95,8 @@ export const getNavigationIcon = (key?: NavigationIconKey, size: number = 20): R
       return <HugeiconsIcon icon={Calendar01Icon} size={size} />;
     case "news":
       return <HugeiconsIcon icon={BookOpen01Icon} size={size} />;
+    case "attendance":
+      return <HugeiconsIcon icon={TaskDone01Icon} size={size} />;
     default:
       return null;
   }

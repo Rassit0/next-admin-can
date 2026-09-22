@@ -10,7 +10,7 @@ export interface NavItems {
 
 export interface NavItem {
   label: string;
-  icon?: ReactNode;
+  icon?: string;
   href: string; // obligatorio si no hay subMenu
   action: Action;
   subject: string | string[];

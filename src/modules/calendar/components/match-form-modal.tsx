@@ -26,7 +26,8 @@ interface MatchInitialData {
   id: string;
   homeTeamId: string;
   awayTeamId: string;
-  teamSeasonCategoryId: string;
+  homeTeamSeasonCategoryId?: string | null;
+  awayTeamSeasonCategoryId?: string | null;
   locationId?: string | null;
   startDate: string;
   endDate: string;
@@ -69,7 +70,8 @@ export const MatchFormModal = ({
 
   const [homeTeamId, setHomeTeamId] = useState("");
   const [awayTeamId, setAwayTeamId] = useState("");
-  const [teamSeasonCategoryId, setTeamSeasonCategoryId] = useState("");
+  const [homeTeamSeasonCategoryId, setHomeTeamSeasonCategoryId] = useState("");
+  const [awayTeamSeasonCategoryId, setAwayTeamSeasonCategoryId] = useState("");
   const [locationId, setLocationId] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -100,24 +102,15 @@ export const MatchFormModal = ({
     );
   }, [teams, disciplineFilter]);
 
-  const filteredCategories = useMemo(() => {
-    if (!disciplineFilter) return [];
-    
-    let result = categories;
+  const homeCategories = useMemo(() => {
+    if (!homeTeamId) return [];
+    return categories.filter((c) => c.teamId === homeTeamId);
+  }, [categories, homeTeamId]);
 
-    result = result.filter((c) => {
-      const team = teams.find((t) => t.id === c.teamId);
-      return team?.club?.discipline?.name === disciplineFilter;
-    });
-
-    if (homeTeamId || awayTeamId) {
-      result = result.filter(
-        (c) => c.teamId === homeTeamId || c.teamId === awayTeamId
-      );
-    }
-
-    return result;
-  }, [categories, teams, disciplineFilter, homeTeamId, awayTeamId]);
+  const awayCategories = useMemo(() => {
+    if (!awayTeamId) return [];
+    return categories.filter((c) => c.teamId === awayTeamId);
+  }, [categories, awayTeamId]);
 
   useEffect(() => {
     if (
@@ -140,7 +133,8 @@ export const MatchFormModal = ({
       if (mode === "edit" && initialData) {
         setHomeTeamId(initialData.homeTeamId);
         setAwayTeamId(initialData.awayTeamId);
-        setTeamSeasonCategoryId(initialData.teamSeasonCategoryId);
+        setHomeTeamSeasonCategoryId(initialData.homeTeamSeasonCategoryId || "");
+        setAwayTeamSeasonCategoryId(initialData.awayTeamSeasonCategoryId || "");
         setLocationId(initialData.locationId || "");
         setStartDate(initialData.startDate.slice(0, 16));
         setEndDate(initialData.endDate.slice(0, 16));
@@ -195,7 +189,6 @@ export const MatchFormModal = ({
     if (
       !homeTeamId ||
       !awayTeamId ||
-      !teamSeasonCategoryId ||
       !startDate ||
       !endDate
     ) {
@@ -204,8 +197,10 @@ export const MatchFormModal = ({
     }
 
     if (homeTeamId === awayTeamId) {
-      setApiError("El equipo local no puede ser igual al visitante.");
-      return;
+      if (!homeTeamSeasonCategoryId || !awayTeamSeasonCategoryId || homeTeamSeasonCategoryId === awayTeamSeasonCategoryId) {
+        setApiError("Un equipo no puede jugar contra sí mismo en la misma categoría (o categoría nula).");
+        return;
+      }
     }
 
     if (startDate > endDate) {
@@ -217,7 +212,8 @@ export const MatchFormModal = ({
     setApiError(null);
 
     const payload = {
-      teamSeasonCategoryId,
+      homeTeamSeasonCategoryId: homeTeamSeasonCategoryId || null,
+      awayTeamSeasonCategoryId: awayTeamSeasonCategoryId || null,
       homeTeamId,
       awayTeamId,
       locationId: locationId || null,
@@ -242,8 +238,8 @@ export const MatchFormModal = ({
     } else {
       toast.success(
         mode === "create"
-          ? "Partido creado con éxito"
-          : "Partido actualizado con éxito",
+          ? "Partido creado con Ã©xito"
+          : "Partido actualizado con Ã©xito",
       );
       resetForm();
       state.close();
@@ -254,7 +250,8 @@ export const MatchFormModal = ({
   const resetForm = () => {
     setHomeTeamId("");
     setAwayTeamId("");
-    setTeamSeasonCategoryId("");
+    setHomeTeamSeasonCategoryId("");
+    setAwayTeamSeasonCategoryId("");
     setLocationId("");
     setStartDate("");
     setEndDate("");
@@ -265,18 +262,15 @@ export const MatchFormModal = ({
     setDisciplineFilter("");
   };
 
-  // UX Mejora: Indicar qué equipo corresponde a la categoría CAN
-  const selectedCategory = categories.find(
-    (c) => c.id === teamSeasonCategoryId,
-  );
-  const selectedCategoryTeamId = selectedCategory?.teamId;
+  // (UX Mejora removida para separar home y away)
+  const selectedCategoryTeamId = undefined;
 
   console.log("DEBUG STATE:", {
     homeTeamId,
     typeOfHomeTeamId: typeof homeTeamId,
     awayTeamId,
-    teamSeasonCategoryId,
-    selectedCategoryTeamId,
+    homeTeamSeasonCategoryId,
+    awayTeamSeasonCategoryId,
   });
 
   return (
@@ -317,7 +311,8 @@ export const MatchFormModal = ({
                     // Reiniciar selecciones si cambia la disciplina
                     setHomeTeamId("");
                     setAwayTeamId("");
-                    setTeamSeasonCategoryId("");
+                    setHomeTeamSeasonCategoryId("");
+                    setAwayTeamSeasonCategoryId("");
                   }}
                   isDisabled={loadingData}
                 >
@@ -343,7 +338,10 @@ export const MatchFormModal = ({
                   <Select
                     variant="secondary"
                     value={homeTeamId}
-                    onChange={(value) => setHomeTeamId(value as string)}
+                    onChange={(value) => {
+                      setHomeTeamId(value as string);
+                      setHomeTeamSeasonCategoryId("");
+                    }}
                     isDisabled={loadingData || !disciplineFilter}
                   >
                     <Label className="font-semibold text-sm">
@@ -381,7 +379,10 @@ export const MatchFormModal = ({
                   <Select
                     variant="secondary"
                     value={awayTeamId}
-                    onChange={(value) => setAwayTeamId(value as string)}
+                    onChange={(value) => {
+                      setAwayTeamId(value as string);
+                      setAwayTeamSeasonCategoryId("");
+                    }}
                     isDisabled={loadingData || !disciplineFilter}
                   >
                     <Label className="font-semibold text-sm">
@@ -441,48 +442,61 @@ export const MatchFormModal = ({
                   </TextField>
                 </div>
 
-                <Select
-                  variant="secondary"
-                  value={teamSeasonCategoryId}
-                  onChange={(value) => setTeamSeasonCategoryId(value as string)}
-                  isDisabled={loadingData || !disciplineFilter}
-                >
-                  <Label className="font-semibold text-sm">
-                    Categoría de Temporada CAN *
-                  </Label>
-                  <Select.Trigger>
-                    <Select.Value />
-                    <Select.Indicator />
-                  </Select.Trigger>
-                  <Select.Popover>
-                    <ListBox items={filteredCategories}>
-                      {(c) => (
-                        <ListBox.Item
-                          id={c.id}
-                          textValue={`${c.name} (${c.gender})`}
-                        >
-                          <div className="flex flex-col">
-                            <span>
-                              {c.name} ({c.gender})
-                            </span>
-                            <span className="text-xs text-muted">
-                              {c.seasonName}
-                            </span>
-                          </div>
-                        </ListBox.Item>
-                      )}
-                    </ListBox>
-                  </Select.Popover>
-                </Select>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <Select
+                    variant="secondary"
+                    value={homeTeamSeasonCategoryId}
+                    onChange={(value) => setHomeTeamSeasonCategoryId(value as string)}
+                    isDisabled={loadingData || !homeTeamId || homeCategories.length === 0}
+                  >
+                    <Label className="font-semibold text-sm">
+                      Categoría Local (Opcional)
+                    </Label>
+                    <Select.Trigger>
+                      <Select.Value />
+                      <Select.Indicator />
+                    </Select.Trigger>
+                    <Select.Popover>
+                      <ListBox items={homeCategories}>
+                        {(c) => (
+                          <ListBox.Item id={c.id} textValue={`${c.name} (${c.gender})`}>
+                            <div className="flex flex-col">
+                              <span>{c.name} ({c.gender})</span>
+                              <span className="text-xs text-muted">{c.seasonName}</span>
+                            </div>
+                          </ListBox.Item>
+                        )}
+                      </ListBox>
+                    </Select.Popover>
+                  </Select>
 
-                {selectedCategoryTeamId &&
-                  selectedCategoryTeamId !== homeTeamId &&
-                  selectedCategoryTeamId !== awayTeamId && (
-                    <p className="text-xs text-danger -mt-3">
-                      El equipo de la categoría CAN seleccionada debe participar
-                      como Local o Visitante.
-                    </p>
-                  )}
+                  <Select
+                    variant="secondary"
+                    value={awayTeamSeasonCategoryId}
+                    onChange={(value) => setAwayTeamSeasonCategoryId(value as string)}
+                    isDisabled={loadingData || !awayTeamId || awayCategories.length === 0}
+                  >
+                    <Label className="font-semibold text-sm">
+                      Categoría Visitante (Opcional)
+                    </Label>
+                    <Select.Trigger>
+                      <Select.Value />
+                      <Select.Indicator />
+                    </Select.Trigger>
+                    <Select.Popover>
+                      <ListBox items={awayCategories}>
+                        {(c) => (
+                          <ListBox.Item id={c.id} textValue={`${c.name} (${c.gender})`}>
+                            <div className="flex flex-col">
+                              <span>{c.name} ({c.gender})</span>
+                              <span className="text-xs text-muted">{c.seasonName}</span>
+                            </div>
+                          </ListBox.Item>
+                        )}
+                      </ListBox>
+                    </Select.Popover>
+                  </Select>
+                </div>
 
                 <Select
                   variant="secondary"
@@ -490,7 +504,7 @@ export const MatchFormModal = ({
                   onChange={(value) => setLocationId(value as string)}
                   isDisabled={loadingData}
                 >
-                  <Label className="font-semibold text-sm">Ubicación</Label>
+                  <Label className="font-semibold text-sm">UbicaciÃ³n</Label>
                   <Select.Trigger>
                     <Select.Value />
                     <Select.Indicator />
@@ -547,7 +561,7 @@ export const MatchFormModal = ({
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <TextField>
                     <Label className="font-semibold text-sm">
-                      Puntuación Local
+                      PuntuaciÃ³n Local
                     </Label>
                     <Input
                       type="number"
@@ -559,7 +573,7 @@ export const MatchFormModal = ({
                   </TextField>
                   <TextField>
                     <Label className="font-semibold text-sm">
-                      Puntuación Visitante
+                      PuntuaciÃ³n Visitante
                     </Label>
                     <Input
                       type="number"
@@ -583,9 +597,7 @@ export const MatchFormModal = ({
                 isDisabled={
                   loading ||
                   loadingData ||
-                  (selectedCategoryTeamId !== undefined &&
-                    selectedCategoryTeamId !== homeTeamId &&
-                    selectedCategoryTeamId !== awayTeamId)
+                  false
                 }
               >
                 <HugeiconsIcon
