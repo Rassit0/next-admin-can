@@ -20,7 +20,7 @@ export default async function AddBidManagementPage({ params }: Props) {
   ]);
 
   if (teamResponse.error && teamResponse.statusCode === 401) {
-    redirect("/admin/login");
+    redirect("/login");
   }
 
   // 2. Manejo de errores generales (400, 500, etc.)
@@ -37,7 +37,7 @@ export default async function AddBidManagementPage({ params }: Props) {
   }
 
   if (teamOfferingResponse.error && teamOfferingResponse.statusCode === 401) {
-    redirect("/admin/login");
+    redirect("/login");
   }
 
   // 2. Manejo de errores generales (400, 500, etc.)

@@ -5,8 +5,9 @@ import { handleServerAction, ServiceResponse } from "@/modules/portal/core/utils
 
 export interface PublicFixture {
   id: string;
-  category: string;
-  locationName: string;
+  homeCategoryName: string | null;
+  awayCategoryName: string | null;
+  locationName: string | null;
   date: string;
   homeTeam: {
     name: string;
@@ -22,10 +23,23 @@ export interface PublicFixture {
   discipline: string;
 }
 
-export const getPublicFixture = async (): Promise<ServiceResponse<PublicFixture[]>> => {
+export interface GetPublicFixtureParams {
+  from?: string;
+  to?: string;
+}
+
+export const getPublicFixture = async (params?: GetPublicFixtureParams): Promise<ServiceResponse<PublicFixture[]>> => {
   return handleServerAction(async () => {
+    let url = `public/matches/fixture`;
+    if (params?.from && params?.to) {
+      const searchParams = new URLSearchParams();
+      searchParams.set("from", params.from);
+      searchParams.set("to", params.to);
+      url += `?${searchParams.toString()}`;
+    }
+
     const res = await api.get<{ message: string; data: PublicFixture[] }>(
-      `public/matches/fixture`,
+      url,
       {
         next: {
           tags: ["public-fixtures"],

@@ -14,7 +14,7 @@ export default async function UserProfilePage({ params }: Props) {
   const userResponse = await getUserById(id);
 
   if (userResponse.error && userResponse.statusCode === 401) {
-    redirect("/admin/login");
+    redirect("/login");
   }
 
   if (userResponse.error) {
@@ -26,7 +26,7 @@ export default async function UserProfilePage({ params }: Props) {
   return (
     <div className="space-y-6">
       <Breadcrumbs>
-          <BreadcrumbsItem href="/admin/users/usuarios">Usuarios</BreadcrumbsItem>
+          <BreadcrumbsItem href="/admin/users">Usuarios</BreadcrumbsItem>
           <BreadcrumbsItem>{user.email}</BreadcrumbsItem>
       </Breadcrumbs>
 

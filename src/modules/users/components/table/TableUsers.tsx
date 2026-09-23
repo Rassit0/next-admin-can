@@ -21,6 +21,7 @@ import { IUser, deactivateUser, reactivateUser } from "../../actions/users";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { usePermissions } from "@/shared/providers/PermissionsProvider";
 
 interface Props {
   users: IUser[];
@@ -31,6 +32,8 @@ import { ConfirmAlertDialog } from "../modal/ConfirmAlertDialog";
 
 export const TableUsers: React.FC<Props> = ({ users }) => {
   const router = useRouter();
+  const permissions = usePermissions();
+  const canUnlockUsers = permissions.includes("UNLOCK_USERS");
   const [isLoading, setIsLoading] = useState<string | null>(null);
 
   // Credential Alert Dialog state
@@ -107,6 +110,28 @@ export const TableUsers: React.FC<Props> = ({ users }) => {
     });
   };
 
+  const handleUnlockUser = (user: IUser) => {
+    setConfirmDialog({
+      isOpen: true,
+      title: "Desbloquear Cuenta",
+      description: `¿Deseas desbloquear la cuenta de ${user.email}? Se restablecerá el contador de intentos fallidos y podrá volver a intentar iniciar sesión inmediatamente.`,
+      status: "accent",
+      confirmText: "Desbloquear",
+      onConfirm: async () => {
+        setIsLoading(user.id);
+        const { unlockUser } = await import("../../actions/users");
+        const res = await unlockUser(user.id);
+        setIsLoading(null);
+
+        if (res.error) {
+          toast.error(res.message);
+        } else {
+          toast.success(res.message || "Cuenta desbloqueada correctamente.");
+        }
+      },
+    });
+  };
+
   return (
     <>
       <Table>
@@ -162,6 +187,9 @@ export const TableUsers: React.FC<Props> = ({ users }) => {
                           className="text-danger"
                         />
                       )}
+                      {user.isLocked && (
+                        <Chip size="sm" variant="soft" color="danger">Bloqueado</Chip>
+                      )}
                     </div>
                   </Table.Cell>
                   <Table.Cell className="py-3">
@@ -213,13 +241,27 @@ export const TableUsers: React.FC<Props> = ({ users }) => {
                             <Dropdown.Item
                               key="edit"
                               id="edit"
-                              href={`/admin/users/usuarios/${user.id}`}
+                              href={`/admin/users/${user.id}`}
                             >
                               <div className="flex items-center gap-2">
                                 <HugeiconsIcon icon={PencilEdit01Icon} size={18} />
                                 Editar Perfil
                               </div>
                             </Dropdown.Item>
+                            
+                            {canUnlockUsers && user.isLocked && (
+                              <Dropdown.Item
+                                key="unlock"
+                                id="unlock"
+                                onAction={() => handleUnlockUser(user)}
+                              >
+                                <div className="flex items-center gap-2 text-accent">
+                                  <HugeiconsIcon icon={UserCheck01Icon} size={18} />
+                                  Desbloquear cuenta
+                                </div>
+                              </Dropdown.Item>
+                            )}
+
                             <Dropdown.Item
                               key="reset_password"
                               id="reset_password"

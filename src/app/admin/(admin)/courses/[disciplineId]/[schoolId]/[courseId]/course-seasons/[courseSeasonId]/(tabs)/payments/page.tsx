@@ -24,7 +24,7 @@ export default async function PaymentsPage({ params }: Props) {
   ]);
 
   if (membershipsResponse.error && membershipsResponse.statusCode === 401) {
-    redirect("/admin/login");
+    redirect("/login");
   }
   if (courseSeasonResponse.error) {
     return <ErrorPage message={courseSeasonResponse.message} />;

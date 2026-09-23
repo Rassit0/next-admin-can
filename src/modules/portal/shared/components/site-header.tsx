@@ -244,37 +244,46 @@ export function SiteHeader({ institution }: { institution: Institution }) {
           </span>
         </Link>
 
-        <nav
-          ref={navRef}
-          className="relative hidden items-center gap-1 lg:flex"
-        >
-          {navLinks.map((link) => (
-            <DesktopNavItem key={link.href} link={link} pathname={pathname} />
-          ))}
+        <div className="flex items-center gap-4">
+          <nav
+            ref={navRef}
+            className="relative hidden items-center gap-1 lg:flex"
+          >
+            {navLinks.map((link) => (
+              <DesktopNavItem key={link.href} link={link} pathname={pathname} />
+            ))}
 
-          <motion.div
-            className="absolute -bottom-0.5 h-0.5 rounded-full bg-neon shadow-neon"
-            initial={false}
-            animate={indicatorStyle}
-            transition={{
-              type: "spring",
-              stiffness: 500,
-              damping: 28,
-            }}
-          />
-        </nav>
+            <motion.div
+              className="absolute -bottom-0.5 h-0.5 rounded-full bg-neon shadow-neon"
+              initial={false}
+              animate={indicatorStyle}
+              transition={{
+                type: "spring",
+                stiffness: 500,
+                damping: 28,
+              }}
+            />
+          </nav>
 
-        <button
-          className="rounded-md p-2 text-primary lg:hidden"
-          onClick={() => setMobileOpen((v) => !v)}
-          aria-label="Abrir menú"
-        >
-          {mobileOpen ? (
-            <X className="h-6 w-6" />
-          ) : (
-            <Menu className="h-6 w-6" />
-          )}
-        </button>
+          <Link
+            href="/login"
+            className="hidden lg:flex items-center justify-center rounded-xl bg-accent px-5 py-2 text-sm font-bold uppercase tracking-wide text-white transition-transform hover:-translate-y-0.5 shadow-md hover:shadow-lg"
+          >
+            Ingresar
+          </Link>
+
+          <button
+            className="rounded-md p-2 text-primary lg:hidden"
+            onClick={() => setMobileOpen((v) => !v)}
+            aria-label="Abrir menú"
+          >
+            {mobileOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
+          </button>
+        </div>
       </div>
 
       <AnimatePresence>
@@ -294,6 +303,15 @@ export function SiteHeader({ institution }: { institution: Institution }) {
                   setMobileOpen={setMobileOpen}
                 />
               ))}
+              <div className="mt-4 border-t border-border/50 pt-4 px-4 pb-2">
+                <Link
+                  href="/login"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex w-full items-center justify-center rounded-xl bg-accent px-5 py-3 text-base font-bold uppercase tracking-wide text-white shadow-md active:scale-95 transition-transform"
+                >
+                  Ingresar
+                </Link>
+              </div>
             </div>
           </motion.nav>
         )}

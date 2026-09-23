@@ -62,7 +62,6 @@ export const filterNavigation = (
   return items.reduce<NavigationConfig[]>((acc, item) => {
     // Si no tiene reglas de permisos o el id es 'dashboard', primero evaluamos parent access
     const hasParentAccess =
-      item.id === "dashboard" ||
       !item.requiredPermissions ||
       hasRequiredPermissions(userPermissions, item.requiredPermissions);
 

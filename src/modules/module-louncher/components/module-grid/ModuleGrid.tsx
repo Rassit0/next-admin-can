@@ -1,37 +1,24 @@
 import { CardLouncher } from "@/modules/module-louncher";
-import { DashboardCircleEditIcon, GlobalIcon, Calendar01Icon } from "@hugeicons/core-free-icons";
+import { NavigationConfig } from "@/config/navigation";
+import { NavigationIcon, NavigationIconKey } from "@/ui/components/navigation/IconRegistry";
 
-export const ModuleGrid = () => {
+export interface ModuleGridProps {
+  items?: NavigationConfig[];
+}
+
+export const ModuleGrid = ({ items = [] }: ModuleGridProps) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <CardLouncher
-        href="/admin/dashboard"
-        icon={DashboardCircleEditIcon}
-        title="Administración General"
-        description="Gestiona la configuración, estructura y operación de la organización deportiva desde un único panel centralizado."
-        tagText="Panel Administrativo"
-      />
-      <CardLouncher
-        href="/admin/web"
-        icon={GlobalIcon}
-        title="Administración Web"
-        description="Gestiona las noticias, publicaciones, anuncios, historia e información de 'Nosotros' en el portal web del club."
-        tagText="CMS y Portales"
-      />
-      <CardLouncher
-        href="/admin/quick-operations"
-        icon={DashboardCircleEditIcon}
-        title="Operaciones Rápidas"
-        description="Gestión unificada de secretaría, operaciones y flujo de caja."
-        tagText="Secretaría"
-      />
-      <CardLouncher
-        href="/admin/calendar"
-        icon={Calendar01Icon}
-        title="Calendario Institucional"
-        description="Gestione y visualice todos los eventos, entrenamientos y partidos del club."
-        tagText="Organización"
-      />
+      {items.map((item) => (
+        <CardLouncher
+          key={item.id}
+          href={`/admin/${item.href}`}
+          iconNode={<NavigationIcon iconKey={item.icon as NavigationIconKey} size={40} />}
+          title={item.label}
+          description={item.description || "Gestione esta sección de la plataforma."}
+          tagText={item.tagText || "Módulo"}
+        />
+      ))}
     </div>
   );
 };

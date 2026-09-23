@@ -1,4 +1,4 @@
-import { getStaff, StaffTable } from "@/modules/staff";
+﻿import { getStaff, StaffTable } from "@/modules/staff";
 import { CreateStaffModal } from "@/modules/staff";
 import { ErrorPage, HeaderPage, PaginationSection, SectionFilters } from "@/ui";
 import {
@@ -36,7 +36,7 @@ export default async function StaffPage({ searchParams }: Props) {
   });
 
   if (staffResponse.error && staffResponse.statusCode === 401) {
-    redirect("/admin/login");
+    redirect("/login");
   }
 
   if (staffResponse.error) {
@@ -48,7 +48,7 @@ export default async function StaffPage({ searchParams }: Props) {
       <div className="space-y-8">
         <HeaderPage
           title="Directorio del Personal (Staff)"
-          description="Gestión del personal."
+          description="GestiÃ³n del personal."
           action={<CreateStaffModal />}
         />
 

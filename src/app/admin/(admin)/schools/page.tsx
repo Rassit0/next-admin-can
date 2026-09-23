@@ -1,4 +1,4 @@
-import {
+﻿import {
   ErrorPage,
   HeaderPage,
   PaginationSection,
@@ -45,9 +45,9 @@ export default async function SchoolsPage({ searchParams }: Props) {
     getDisciplinesOptions(),
   ]);
 
-  // 1. Manejo de error específico (Ej: 401 no autorizado)
+  // 1. Manejo de error especÃ­fico (Ej: 401 no autorizado)
   if (schoolsResponse.error && schoolsResponse.statusCode === 401) {
-    redirect("/admin/login");
+    redirect("/login");
   }
 
   // 2. Manejo de errores generales (400, 500, etc.)
@@ -60,12 +60,12 @@ export default async function SchoolsPage({ searchParams }: Props) {
     );
   }
 
-  // 1. Manejo de error específico (Ej: 401 no autorizado)
+  // 1. Manejo de error especÃ­fico (Ej: 401 no autorizado)
   if (
     disciplinesOptionsResponse.error &&
     disciplinesOptionsResponse.statusCode === 401
   ) {
-    redirect("/admin/login");
+    redirect("/login");
   }
 
   // 2. Manejo de errores generales (400, 500, etc.)

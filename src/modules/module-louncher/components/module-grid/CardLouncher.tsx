@@ -6,7 +6,8 @@ import React from "react";
 
 export interface CardLouncherProps {
   href: string;
-  icon: any;
+  icon?: any;
+  iconNode?: React.ReactNode;
   title: string;
   description: string;
   tagText: string;
@@ -15,6 +16,7 @@ export interface CardLouncherProps {
 export const CardLouncher = ({
   href,
   icon,
+  iconNode,
   title,
   description,
   tagText,
@@ -38,10 +40,14 @@ export const CardLouncher = ({
       >
         <div className="flex items-start justify-between mb-6">
           <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-accent-foreground">
-            <HugeiconsIcon
-              icon={icon}
-              style={{ fontVariationSettings: "'FILL' 1" }}
-            />
+            {iconNode ? (
+              iconNode
+            ) : icon ? (
+              <HugeiconsIcon
+                icon={icon}
+                style={{ fontVariationSettings: "'FILL' 1" }}
+              />
+            ) : null}
           </div>
         </div>
 

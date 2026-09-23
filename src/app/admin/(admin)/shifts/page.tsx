@@ -1,4 +1,4 @@
-import { ErrorPage, HeaderPage, PaginationSection, SectionFilters } from "@/ui";
+﻿import { ErrorPage, HeaderPage, PaginationSection, SectionFilters } from "@/ui";
 import { redirect } from "next/navigation";
 import { TableShifts } from "@/modules/shifts/components/table/TableShifts";
 import { AddModal, getShifts } from "@/modules/shifts";
@@ -20,7 +20,7 @@ export default async function ShiftsPage({ searchParams }: Props) {
   });
 
   if (shiftsResponse.error && shiftsResponse.statusCode === 401) {
-    redirect("/admin/login");
+    redirect("/login");
   }
 
   if (shiftsResponse.error) {
@@ -31,8 +31,8 @@ export default async function ShiftsPage({ searchParams }: Props) {
     <>
       {/* <!-- Header --> */}
       <HeaderPage
-        title="Gestión de Turnos"
-        description="Administra los turnos de la institución"
+        title="GestiÃ³n de Turnos"
+        description="Administra los turnos de la instituciÃ³n"
         action={<AddModal buttonFloatingMobile />}
       />
       

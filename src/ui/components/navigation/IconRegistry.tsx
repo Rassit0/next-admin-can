@@ -27,7 +27,8 @@ import {
   Time02Icon,
   Invoice01Icon,
   FlashIcon,
-  Calendar01Icon
+  Calendar01Icon,
+  ShieldKeyIcon
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
@@ -51,6 +52,7 @@ export type NavigationIconKey =
   | "web"
   | "calendar"
   | "news"
+  | "roles"
   | "attendance";
 
 export const getNavigationIcon = (key?: NavigationIconKey, size: number = 20): React.ReactNode => {
@@ -97,6 +99,8 @@ export const getNavigationIcon = (key?: NavigationIconKey, size: number = 20): R
       return <HugeiconsIcon icon={BookOpen01Icon} size={size} />;
     case "attendance":
       return <HugeiconsIcon icon={TaskDone01Icon} size={size} />;
+    case "roles":
+      return <HugeiconsIcon icon={ShieldKeyIcon} size={size} />;
     default:
       return null;
   }

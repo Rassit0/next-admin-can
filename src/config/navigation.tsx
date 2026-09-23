@@ -33,6 +33,11 @@ export const itemsNavigation: NavigationConfig[] = [
     hiddenInSidebar: true,
     mobile: { priority: 1 },
     entryStrategy: "self",
+    showInLauncher: true,
+    description:
+      "Gestión unificada de secretaría, operaciones y flujo de caja.",
+    tagText: "Secretaría",
+    requiredPermissions: { anyOf: ["READ_PERSONS"] },
     routes: [
       {
         id: "quick-ops-person",
@@ -80,6 +85,22 @@ export const itemsNavigation: NavigationConfig[] = [
     subject: "home",
     icon: "dashboard",
     mobile: { priority: 10 },
+    showInLauncher: true,
+    description:
+      "Gestiona la configuración, estructura y operación de la organización deportiva desde un único panel centralizado.",
+    tagText: "Panel Administrativo",
+    requiredPermissions: {
+      anyOf: [
+        "READ_DASHBOARD",
+        "READ_DISCIPLINES",
+        "READ_LOCATIONS",
+        "READ_CATEGORIES",
+        "READ_SEASONS",
+        "READ_CLUBS",
+        "READ_USERS",
+        "READ_ROLES",
+      ],
+    },
   },
   {
     label: "Disciplinas",
@@ -87,6 +108,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "disciplines",
     subject: "DISCIPLINES",
     icon: "disciplines",
+    requiredPermissions: { anyOf: ["READ_DISCIPLINES"] },
   },
   {
     label: "Instalaciones",
@@ -94,6 +116,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "locations",
     subject: "LOCATIONS",
     icon: "locations",
+    requiredPermissions: { anyOf: ["READ_LOCATIONS"] },
   },
   {
     label: "Categorias",
@@ -101,6 +124,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "categories",
     subject: "CATEGORIES",
     icon: "categories",
+    requiredPermissions: { anyOf: ["READ_CATEGORIES"] },
   },
   {
     label: "Temporadas",
@@ -108,6 +132,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "seasons",
     subject: "SEASONS",
     icon: "seasons",
+    requiredPermissions: { anyOf: ["READ_SEASONS"] },
   },
   {
     label: "Clubes",
@@ -115,6 +140,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "clubs",
     subject: "CLUBS",
     icon: "clubs",
+    requiredPermissions: { anyOf: ["READ_CLUBS"] },
   },
   {
     label: "Equipos",
@@ -123,6 +149,7 @@ export const itemsNavigation: NavigationConfig[] = [
     subject: "TEAMS",
     icon: "teams",
     mobile: { priority: 7 },
+    requiredPermissions: { anyOf: ["READ_TEAMS"] },
   },
   {
     label: "Jugadores",
@@ -130,6 +157,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "players",
     subject: "PLAYERS",
     icon: "players",
+    requiredPermissions: { anyOf: ["READ_PLAYERS"] },
   },
   {
     id: "memberships",
@@ -167,6 +195,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "schools",
     subject: "SCHOOLS",
     icon: "schools",
+    requiredPermissions: { anyOf: ["READ_SCHOOLS"] },
   },
   {
     label: "Cursos",
@@ -175,6 +204,7 @@ export const itemsNavigation: NavigationConfig[] = [
     subject: "COURSES",
     icon: "courses",
     mobile: { priority: 8 },
+    requiredPermissions: { anyOf: ["READ_COURSES"] },
   },
   {
     label: "Estudiantes",
@@ -182,6 +212,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "students",
     subject: "STUDENTS",
     icon: "students",
+    requiredPermissions: { anyOf: ["READ_STUDENTS"] },
   },
   {
     id: "accounting",
@@ -191,14 +222,6 @@ export const itemsNavigation: NavigationConfig[] = [
     subject: ["ACCOUNT_CHARGES", "ACCOUNT_CATEGORIES"],
     icon: "accounting",
     entryStrategy: "firstAllowedChild",
-    requiredPermissions: {
-      anyOf: [
-        "READ_ACCOUNT_CHARGES",
-        "READ_TRANSACTIONS",
-        "READ_ACCOUNT_CATEGORIES",
-        "READ_CASH_FLOW",
-      ],
-    },
     routes: [
       {
         id: "accounting-dashboard",
@@ -212,6 +235,42 @@ export const itemsNavigation: NavigationConfig[] = [
         },
       },
       {
+        id: "accounting-cash-flow",
+        label: "Flujo de Caja",
+        href: "/admin/accounting/cash-flow",
+        action: "accounting",
+        subject: "ACCOUNT_CHARGES",
+        showInTabs: true,
+        requiredPermissions: { anyOf: ["READ_TRANSACTIONS", "READ_CASH_FLOW"] },
+      },
+      {
+        id: "accounting-accounts",
+        label: "Cuentas",
+        href: "/admin/accounting/accounts",
+        action: "accounting",
+        subject: "FINANCIAL_ACCOUNTS",
+        showInTabs: true,
+        requiredPermissions: { anyOf: ["READ_FINANCIAL_ACCOUNTS"] },
+      },
+      {
+        id: "accounting-transfers",
+        label: "Transferencias",
+        href: "/admin/accounting/transfers",
+        action: "accounting",
+        subject: "INTERNAL_TRANSFERS",
+        showInTabs: true,
+        requiredPermissions: { anyOf: ["READ_INTERNAL_TRANSFERS"] },
+      },
+      {
+        id: "accounting-receivables",
+        label: "Cuentas por Cobrar",
+        href: "/admin/accounting/receivables",
+        action: "accounting",
+        subject: "ACCOUNT_CHARGES",
+        showInTabs: true,
+        requiredPermissions: { anyOf: ["READ_ACCOUNT_CHARGES"] },
+      },
+      {
         id: "accounting-categories",
         label: "Categorías",
         href: "/admin/accounting/categories",
@@ -221,13 +280,22 @@ export const itemsNavigation: NavigationConfig[] = [
         requiredPermissions: { anyOf: ["READ_ACCOUNT_CATEGORIES"] },
       },
       {
-        id: "accounting-cash-flow",
-        label: "Flujo de Caja",
-        href: "/admin/accounting/cash-flow",
+        id: "accounting-payables",
+        label: "Cuentas por Pagar",
+        href: "/admin/accounting/payables",
         action: "accounting",
         subject: "ACCOUNT_CHARGES",
         showInTabs: true,
-        requiredPermissions: { anyOf: ["READ_TRANSACTIONS", "READ_CASH_FLOW"] },
+        requiredPermissions: { anyOf: ["READ_ACCOUNT_CHARGES"] },
+      },
+      {
+        id: "accounting-reports",
+        label: "Reportes",
+        href: "/admin/accounting/reports",
+        action: "accounting",
+        subject: "REPORTS",
+        showInTabs: true,
+        requiredPermissions: { anyOf: ["READ_REPORTS"] },
       },
     ],
   },
@@ -237,35 +305,59 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "shifts",
     subject: "home",
     icon: "shifts",
+    requiredPermissions: { anyOf: ["READ_SHIFTS"] },
   },
   {
-    id: "users-management",
+    id: "users",
     label: "Usuarios",
     href: "users",
     action: "users",
-    subject: ["USERS", "ROLES"],
+    subject: "USERS",
     icon: "users",
-    entryStrategy: "firstAllowedChild",
-    routes: [
-      {
-        id: "users-list",
-        label: "Usuarios",
-        href: "/admin/users/usuarios",
-        action: "users",
-        subject: "USERS",
-        showInTabs: true,
-        requiredPermissions: { anyOf: ["READ_USERS"] },
-      },
-      {
-        id: "users-roles",
-        label: "Roles",
-        href: "/admin/users/roles",
-        action: "roles",
-        subject: "ROLES",
-        showInTabs: true,
-        requiredPermissions: { anyOf: ["READ_ROLES"] },
-      },
-    ],
+    showInLauncher: true,
+    requiredPermissions: { anyOf: ["READ_USERS"] },
+  },
+  {
+    id: "roles",
+    label: "Roles y Permisos",
+    href: "roles",
+    action: "roles",
+    subject: "ROLES",
+    icon: "roles",
+    showInLauncher: true,
+    requiredPermissions: { anyOf: ["READ_ROLES"] },
+  },
+  {
+    id: "calendar",
+    label: "Calendario Institucional",
+    href: "calendar",
+    action: "calendar",
+    subject: "home",
+    icon: "calendar",
+    hiddenInSidebar: true,
+    showInLauncher: true,
+    description:
+      "Gestione y visualice todos los eventos, entrenamientos y partidos del club.",
+    tagText: "Organización",
+    requiredPermissions: {
+      anyOf: ["READ_SCHEDULES", "READ_MATCHES", "READ_SESSIONS"],
+    },
+  },
+  {
+    id: "web",
+    label: "Administración Web",
+    href: "web",
+    action: "web",
+    subject: "home",
+    icon: "web",
+    hiddenInSidebar: true,
+    showInLauncher: true,
+    description:
+      "Gestiona las noticias, publicaciones, anuncios, historia e información de 'Nosotros' en el portal web del club.",
+    tagText: "CMS y Portales",
+    requiredPermissions: {
+      anyOf: ["READ_BANNERS", "READ_NEWS", "READ_PROMOTIONS"],
+    },
   },
 ];
 

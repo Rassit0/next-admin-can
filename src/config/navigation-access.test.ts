@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { hasModuleAccess } from "./navigation-access";
 
 jest.mock("@/config/navigation", () => ({

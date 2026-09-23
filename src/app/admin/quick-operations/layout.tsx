@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+﻿import { auth } from "@/auth";
 import { getPermissionsArray } from "@/modules/roles";
 import { Header, HeaderPage, TabsRouteNavigation, ModuleGuard } from "@/ui";
 import { redirect } from "next/navigation";
@@ -18,7 +18,7 @@ export default async function QuickOperationsLayout({ children }: LayoutProps) {
   const session = await auth();
 
   if (!session) {
-    redirect("/admin/login");
+    redirect("/login");
   }
 
   let userPermissions: string[] = [];
@@ -56,7 +56,7 @@ export default async function QuickOperationsLayout({ children }: LayoutProps) {
             actions={
               <Link href="/admin/dashboard">
                 <Button variant="outline" size="sm">
-                  Administración
+                  AdministraciÃ³n
                 </Button>
               </Link>
             }
@@ -67,8 +67,8 @@ export default async function QuickOperationsLayout({ children }: LayoutProps) {
             <div className="flex flex-col gap-4 max-w-300 mx-auto pb-10">
               <div className="mb-2">
                 <HeaderPage
-                  title="Operaciones Rápidas"
-                  description="Gestión unificada de secretaría, operaciones y flujo de caja."
+                  title="Operaciones RÃ¡pidas"
+                  description="GestiÃ³n unificada de secretarÃ­a, operaciones y flujo de caja."
                 />
               </div>
 

@@ -7,7 +7,6 @@ import {
   Label,
   InputGroup,
   Checkbox,
-  Link,
   Alert,
 } from "@heroui/react";
 import { motion, Variants } from "framer-motion";
@@ -22,14 +21,16 @@ import {
 import { useSearchParams } from "next/navigation";
 import { authenticate } from "@/modules/auth";
 import { signOut } from "next-auth/react";
+import { getSafeRedirectUrl } from "@/utils/safeRedirect";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 
 export const LoginForm = () => {
   const [isVisible, setIsVisible] = useState(false);
   const searchParams = useSearchParams();
-  const callbackUrl =
-    searchParams.get("redirectTo") ||
-    searchParams.get("callbackUrl") ||
-    "/admin";
+  const rawCallbackUrl =
+    searchParams.get("redirectTo") || searchParams.get("callbackUrl");
+  const callbackUrl = getSafeRedirectUrl(rawCallbackUrl, "/admin");
   const [errorMessage, formAction, isPending] = useActionState(
     authenticate,
     undefined,
@@ -207,6 +208,15 @@ export const LoginForm = () => {
             {isPending && <SpinnerIcon />}
             {isPending ? "Autenticando..." : "Entrar al sistema"}
           </Button>
+        </motion.div>
+
+        <motion.div variants={itemVariants} className="text-center pt-2">
+          <Link
+            href="/"
+            className="text-sm font-semibold text-muted hover:text-foreground transition-colors inline-flex items-center gap-2"
+          >
+            <ArrowLeft className="w-4 h-4" /> Volver al portal
+          </Link>
         </motion.div>
       </form>
     </motion.div>

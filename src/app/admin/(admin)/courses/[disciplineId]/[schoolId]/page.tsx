@@ -50,7 +50,7 @@ export default async function CoursesPage({ searchParams, params }: Props) {
 
   // 1. Manejo de error específico (Ej: 401 no autorizado)
   if (coursesResponse.error && coursesResponse.statusCode === 401) {
-    redirect("/admin/login");
+    redirect("/login");
   }
 
   // 2. Manejo de errores generales (400, 500, etc.)
@@ -64,7 +64,7 @@ export default async function CoursesPage({ searchParams, params }: Props) {
   }
 
   if (schoolResponse?.error && schoolResponse.statusCode === 401) {
-    redirect("/admin/login");
+    redirect("/login");
   }
 
   // 2. Manejo de errores generales (400, 500, etc.)
@@ -81,7 +81,7 @@ export default async function CoursesPage({ searchParams, params }: Props) {
     schoolsOptionsResponse.error &&
     schoolsOptionsResponse.statusCode === 401
   ) {
-    redirect("/admin/login");
+    redirect("/login");
   }
 
   // 2. Manejo de errores generales (400, 500, etc.)
@@ -98,7 +98,7 @@ export default async function CoursesPage({ searchParams, params }: Props) {
     disciplinesOptionsResponse.error &&
     disciplinesOptionsResponse.statusCode === 401
   ) {
-    redirect("/admin/login");
+    redirect("/login");
   }
 
   // 2. Manejo de errores generales (400, 500, etc.)

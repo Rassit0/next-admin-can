@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+﻿import { auth } from "@/auth";
 import { getPermissionsArray } from "@/modules/roles";
 import { getFirstAllowedChildRoute } from "@/shared/helpers/permissions";
 import { itemsNavigation as allowedNavigation } from "@/config";
@@ -9,7 +9,7 @@ export default async function MembershipsIndexPage() {
   const session = await auth();
   
   if (!session) {
-    redirect("/admin/login");
+    redirect("/login");
   }
 
   let userPermissions: string[] = [];
@@ -25,8 +25,8 @@ export default async function MembershipsIndexPage() {
   if (!firstAllowedChild) {
     return (
       <ErrorPage
-        message="403 - No tienes permisos para acceder a ninguna sección de Membresías."
-        path={{ href: "/admin", label: "Volver a Administración" }}
+        message="403 - No tienes permisos para acceder a ninguna secciÃ³n de MembresÃ­as."
+        path={{ href: "/admin", label: "Volver a AdministraciÃ³n" }}
       />
     );
   }

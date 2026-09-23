@@ -1,4 +1,4 @@
-import { AddModal, getPersons, TablePersons } from "@/modules/persons";
+﻿import { AddModal, getPersons, TablePersons } from "@/modules/persons";
 import { HeaderPage, PaginationSection, SectionFilters } from "@/ui";
 import {
   Alert01Icon,
@@ -26,9 +26,9 @@ export default async function MembersPage({ searchParams }: Props) {
     per_page,
   });
 
-  // 1. Manejo de error específico (Ej: 401 no autorizado)
+  // 1. Manejo de error especÃ­fico (Ej: 401 no autorizado)
   if (personsResponse.error && personsResponse.statusCode === 401) {
-    redirect("/admin/login");
+    redirect("/login");
   }
 
   // 2. Manejo de errores generales (400, 500, etc.)
@@ -52,7 +52,7 @@ export default async function MembersPage({ searchParams }: Props) {
             </div>
             <div>
               <p className="text-xs font-bold text-default-foreground/50 uppercase tracking-widest">
-                Básquet
+                BÃ¡squet
               </p>
               <p className="text-xl font-black font-headline text-default-foreground">
                 142
@@ -65,7 +65,7 @@ export default async function MembersPage({ searchParams }: Props) {
             </div>
             <div>
               <p className="text-xs font-bold text-default-foreground/50 uppercase tracking-widest">
-                Vóley
+                VÃ³ley
               </p>
               <p className="text-xl font-black font-headline text-default-foreground">
                 89
@@ -109,10 +109,10 @@ export default async function MembersPage({ searchParams }: Props) {
               Todos
             </button>
             <button className="px-4 py-1.5 text-slate-500 font-bold text-xs rounded-full hover:bg-slate-100">
-              Básquet
+              BÃ¡squet
             </button>
             <button className="px-4 py-1.5 text-slate-500 font-bold text-xs rounded-full hover:bg-slate-100">
-              Vóley
+              VÃ³ley
             </button>
           </div>
           <div className="flex items-center gap-3">
@@ -120,7 +120,7 @@ export default async function MembersPage({ searchParams }: Props) {
               <span className="material-symbols-outlined text-sm">
                 filter_list
               </span>
-              Más Filtros
+              MÃ¡s Filtros
             </button>
             <button className="flex items-center gap-2 text-xs font-bold text-slate-500 border border-outline-variant/20 px-3 py-1.5 rounded-lg hover:bg-slate-50">
               <span className="material-symbols-outlined text-sm">

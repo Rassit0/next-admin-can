@@ -31,6 +31,7 @@ export interface IUser {
   role: IRole | null;
   person: IPerson | null;
   tempPassword?: string; // Solo en creación
+  isLocked?: boolean;
 }
 
 export interface IUsersResponse {
@@ -133,5 +134,21 @@ export const resetPassword = async (id: string): Promise<ServiceResponse<IUser>>
       headers: { Authorization: `Bearer ${session.user.token}` },
     });
     return { error: false, data: res.data || res, message: "Contraseña restablecida exitosamente" };
+  });
+};
+
+export const unlockUser = async (id: string): Promise<ServiceResponse<IUser>> => {
+  const session = await auth();
+  if (!session?.user?.token) return { error: true, statusCode: 401, message: "No autorizado" };
+
+  return handleServerAction(async () => {
+    const res = await api.patch<any>(`users/${id}/unlock`, {}, {
+      headers: { Authorization: `Bearer ${session.user.token}` },
+    });
+    
+    const { updateTag } = await import("next/cache");
+    updateTag("users");
+    
+    return { error: false, data: res.data || res, message: "Cuenta desbloqueada exitosamente" };
   });
 };

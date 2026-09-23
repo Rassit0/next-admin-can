@@ -1,4 +1,8 @@
-import { OlympicTorchIcon, UserGroupIcon, ArrowUpRight01Icon } from "@hugeicons/core-free-icons";
+import {
+  OlympicTorchIcon,
+  UserGroupIcon,
+  ArrowUpRight01Icon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import React from "react";
 
@@ -18,7 +22,7 @@ export const HeaderPageLouncher = () => {
           nuestras academias, controle el flujo financiero y gestione la
           identidad digital del club desde un solo núcleo de control.
         </p>
-        <div className="flex sm:flex-row flex-col gap-4">
+        {/* <div className="flex sm:flex-row flex-col gap-4">
           <div className="bg-surface-container-lowest/10 backdrop-blur-md border border-white/10 p-4 rounded-2xl flex items-center space-x-4 flex-1">
             <div className="p-3 bg-accent-container rounded-xl flex items-center justify-center">
               <HugeiconsIcon icon={UserGroupIcon} className="text-white" size={24} />
@@ -37,7 +41,7 @@ export const HeaderPageLouncher = () => {
               <p className="text-xs text-accent-fixed">Crecimiento Mensual</p>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
       {/* <!-- Abstract Sport Decoration --> */}
       <div className="absolute right-12 top-1/2 -translate-y-1/2 opacity-30 pointer-events-none hidden lg:block">

@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+﻿import { auth } from "@/auth";
 import { Header } from "@/ui";
 import { redirect } from "next/navigation";
 import React from "react";
@@ -13,7 +13,7 @@ export default async function CalendarLayout({ children }: LayoutProps) {
   const session = await auth();
 
   if (!session) {
-    redirect("/admin/login");
+    redirect("/login");
   }
 
   return (
@@ -26,7 +26,7 @@ export default async function CalendarLayout({ children }: LayoutProps) {
           actions={
             <Link href="/admin">
               <Button variant="outline" size="sm">
-                Volver al Menú
+                Volver al MenÃº
               </Button>
             </Link>
           }

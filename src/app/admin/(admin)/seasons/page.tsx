@@ -1,4 +1,4 @@
-import {
+﻿import {
   ErrorPage,
   HeaderPage,
   PaginationSection,
@@ -41,12 +41,12 @@ export default async function SelectDisciplineSeasonsPage({
     getDisciplinesOptions(),
   ]);
 
-  // 1. Manejo de error específico (Ej: 401 no autorizado)
+  // 1. Manejo de error especÃ­fico (Ej: 401 no autorizado)
   if (
     disciplinesOptionsResponse.error &&
     disciplinesOptionsResponse.statusCode === 401
   ) {
-    redirect("/admin/login");
+    redirect("/login");
   }
 
   if (disciplinesOptionsResponse.error) {

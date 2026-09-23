@@ -2,7 +2,10 @@ import { CinematicLoader } from "@/modules/portal/home/components/cinematic-load
 import { SiteHeader } from "@/modules/portal/shared/components/site-header";
 import { ParticlesBackground } from "@/modules/portal/home/components/particles-background";
 import { Inicio } from "@/modules/portal/home/components/inicio-screen";
-import { getPublicFixture, PublicFixture } from "@/modules/portal/home/actions/fixture.action";
+import {
+  getPublicFixture,
+  PublicFixture,
+} from "@/modules/portal/home/actions/fixture.action";
 import { getPublicNews } from "@/modules/portal/news/actions/news.action";
 import { getPublicHeroBanners } from "@/modules/portal/hero-banners/actions/hero-banners.action";
 import { getPublicHomeDisciplines } from "@/modules/portal/home-disciplines/actions/home-disciplines.action";
@@ -16,10 +19,16 @@ export const metadata = {
     images: ["/logo.png"],
   },
 };
-
 export default async function Page() {
-  const [fixturesResponse, newsResponse, heroBannersResponse, homeDisciplinesResponse, promotionsResponse] = await Promise.all([
+  const [
+    fixturesResponse,
+    newsResponse,
+    heroBannersResponse,
+    homeDisciplinesResponse,
+    promotionsResponse,
+  ] = await Promise.all([
     getPublicFixture(),
+
     getPublicNews(4), // Solicitando exactamente 4 noticias
     getPublicHeroBanners(),
     getPublicHomeDisciplines(),
@@ -39,13 +48,11 @@ export default async function Page() {
   // Transformación de Fixture
   // Obtenemos disciplinas únicas del fixture
   const uniqueDisciplines = Array.from(
-    new Set(
-      matches.map((m) => m.discipline).filter(Boolean)
-    )
+    new Set(matches.map((m) => m.discipline).filter(Boolean)),
   );
 
   return (
-    <Inicio 
+    <Inicio
       heroBanners={heroBanners as any}
       promo1Banners={promo1Banners}
       promo2Banners={promo2Banners}
