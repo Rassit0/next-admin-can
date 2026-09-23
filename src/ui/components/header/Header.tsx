@@ -71,7 +71,7 @@ export const Header = ({ title, actions, showLogo }: HeaderProps) => {
           <Crest className="w-9 h-9 md:w-10 md:h-10 object-contain" />
         </Link>
         <span className="hidden md:block text-3xl font-semibold text-on-surface font-headline leading-tight">
-          {title || "Buen día, Mauricio"}
+          {title}
         </span>
         <span className="text-sm text-muted"></span>
       </div>
