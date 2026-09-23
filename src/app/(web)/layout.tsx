@@ -47,7 +47,22 @@ export default async function RootLayout({
   const institutionRes = await getInstitution();
 
   if (institutionRes.error || !institutionRes.data) {
-    notFound();
+    const { default: WebError } = await import("./error");
+    return (
+      <div
+        className={`${geistSans.variable} ${geistMono.variable} ${oswald.variable} light`}
+        data-theme="light"
+      >
+        <div className="font-sans antialiased bg-[var(--background-portal)] text-foreground">
+          <div className="relative min-h-screen bg-[var(--background-portal)]">
+            <WebError 
+              error={new Error(institutionRes.message || "503 - No se pudo establecer conexión con el servidor")} 
+              reset={async () => { "use server" }} 
+            />
+          </div>
+        </div>
+      </div>
+    );
   }
 
   // Si necesitamos pasar los datos de institutionRes.data al contexto o header, lo haremos aquí.

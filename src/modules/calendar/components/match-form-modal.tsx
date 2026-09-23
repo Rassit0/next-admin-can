@@ -97,9 +97,7 @@ export const MatchFormModal = ({
 
   const filteredTeams = useMemo(() => {
     if (!disciplineFilter) return [];
-    return teams.filter(
-      (t) => t.club?.discipline?.name === disciplineFilter
-    );
+    return teams.filter((t) => t.club?.discipline?.name === disciplineFilter);
   }, [teams, disciplineFilter]);
 
   const homeCategories = useMemo(() => {
@@ -136,8 +134,16 @@ export const MatchFormModal = ({
         setHomeTeamSeasonCategoryId(initialData.homeTeamSeasonCategoryId || "");
         setAwayTeamSeasonCategoryId(initialData.awayTeamSeasonCategoryId || "");
         setLocationId(initialData.locationId || "");
-        setStartDate(initialData.startDate.slice(0, 16));
-        setEndDate(initialData.endDate.slice(0, 16));
+
+        const toLocalDatetimeLocal = (iso: string) => {
+          if (!iso) return "";
+          const d = new Date(iso);
+          d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+          return d.toISOString().slice(0, 16);
+        };
+
+        setStartDate(toLocalDatetimeLocal(initialData.startDate));
+        setEndDate(toLocalDatetimeLocal(initialData.endDate));
         setType(initialData.type);
         setHomeScore(
           initialData.homeScore !== null && initialData.homeScore !== undefined
@@ -186,19 +192,20 @@ export const MatchFormModal = ({
   };
 
   const handleSubmit = async () => {
-    if (
-      !homeTeamId ||
-      !awayTeamId ||
-      !startDate ||
-      !endDate
-    ) {
+    if (!homeTeamId || !awayTeamId || !startDate || !endDate) {
       setApiError("Por favor complete los campos obligatorios.");
       return;
     }
 
     if (homeTeamId === awayTeamId) {
-      if (!homeTeamSeasonCategoryId || !awayTeamSeasonCategoryId || homeTeamSeasonCategoryId === awayTeamSeasonCategoryId) {
-        setApiError("Un equipo no puede jugar contra sí mismo en la misma categoría (o categoría nula).");
+      if (
+        !homeTeamSeasonCategoryId ||
+        !awayTeamSeasonCategoryId ||
+        homeTeamSeasonCategoryId === awayTeamSeasonCategoryId
+      ) {
+        setApiError(
+          "Un equipo no puede jugar contra sí mismo en la misma categoría (o categoría nula).",
+        );
         return;
       }
     }
@@ -211,14 +218,17 @@ export const MatchFormModal = ({
     setLoading(true);
     setApiError(null);
 
+    const startObj = new Date(startDate);
+    const endObj = new Date(endDate);
+
     const payload = {
       homeTeamSeasonCategoryId: homeTeamSeasonCategoryId || null,
       awayTeamSeasonCategoryId: awayTeamSeasonCategoryId || null,
       homeTeamId,
       awayTeamId,
       locationId: locationId || null,
-      startDate: new Date(startDate).toISOString(),
-      endDate: new Date(endDate).toISOString(),
+      startDate: startObj.toISOString(),
+      endDate: endObj.toISOString(),
       type,
       homeScore: homeScore !== "" ? Number(homeScore) : null,
       awayScore: awayScore !== "" ? Number(awayScore) : null,
@@ -306,8 +316,9 @@ export const MatchFormModal = ({
                 <Select
                   variant="secondary"
                   value={disciplineFilter}
-                  onChange={(value) => {
-                    setDisciplineFilter(value as string);
+                  onChange={(key) => {
+                    const value = key ? String(key) : "";
+                    setDisciplineFilter(value);
                     // Reiniciar selecciones si cambia la disciplina
                     setHomeTeamId("");
                     setAwayTeamId("");
@@ -338,8 +349,9 @@ export const MatchFormModal = ({
                   <Select
                     variant="secondary"
                     value={homeTeamId}
-                    onChange={(value) => {
-                      setHomeTeamId(value as string);
+                    onChange={(key) => {
+                      const value = key ? String(key) : "";
+                      setHomeTeamId(value);
                       setHomeTeamSeasonCategoryId("");
                     }}
                     isDisabled={loadingData || !disciplineFilter}
@@ -354,13 +366,20 @@ export const MatchFormModal = ({
                     <Select.Popover>
                       <ListBox items={filteredTeams}>
                         {(t) => (
-                          <ListBox.Item id={t.id} textValue={`${t.name} (${t.club?.name || ''})`}>
+                          <ListBox.Item
+                            id={t.id}
+                            textValue={`${t.name} (${t.club?.name || ""})`}
+                          >
                             <div className="flex justify-between items-center w-full">
                               <span>
                                 {t.name}{" "}
                                 {t.club?.name && (
                                   <span className="text-xs text-muted-foreground ml-1">
-                                    ({t.club.name} {t.club.discipline?.name ? `- ${t.club.discipline.name}` : ''})
+                                    ({t.club.name}{" "}
+                                    {t.club.discipline?.name
+                                      ? `- ${t.club.discipline.name}`
+                                      : ""}
+                                    )
                                   </span>
                                 )}
                               </span>
@@ -379,8 +398,9 @@ export const MatchFormModal = ({
                   <Select
                     variant="secondary"
                     value={awayTeamId}
-                    onChange={(value) => {
-                      setAwayTeamId(value as string);
+                    onChange={(key) => {
+                      const value = key ? String(key) : "";
+                      setAwayTeamId(value);
                       setAwayTeamSeasonCategoryId("");
                     }}
                     isDisabled={loadingData || !disciplineFilter}
@@ -395,13 +415,20 @@ export const MatchFormModal = ({
                     <Select.Popover>
                       <ListBox items={filteredTeams}>
                         {(t) => (
-                          <ListBox.Item id={t.id} textValue={`${t.name} (${t.club?.name || ''})`}>
+                          <ListBox.Item
+                            id={t.id}
+                            textValue={`${t.name} (${t.club?.name || ""})`}
+                          >
                             <div className="flex justify-between items-center w-full">
                               <span>
                                 {t.name}{" "}
                                 {t.club?.name && (
                                   <span className="text-xs text-muted-foreground ml-1">
-                                    ({t.club.name} {t.club.discipline?.name ? `- ${t.club.discipline.name}` : ''})
+                                    ({t.club.name}{" "}
+                                    {t.club.discipline?.name
+                                      ? `- ${t.club.discipline.name}`
+                                      : ""}
+                                    )
                                   </span>
                                 )}
                               </span>
@@ -446,8 +473,12 @@ export const MatchFormModal = ({
                   <Select
                     variant="secondary"
                     value={homeTeamSeasonCategoryId}
-                    onChange={(value) => setHomeTeamSeasonCategoryId(value as string)}
-                    isDisabled={loadingData || !homeTeamId || homeCategories.length === 0}
+                    onChange={(key) =>
+                      setHomeTeamSeasonCategoryId(key ? String(key) : "")
+                    }
+                    isDisabled={
+                      loadingData || !homeTeamId || homeCategories.length === 0
+                    }
                   >
                     <Label className="font-semibold text-sm">
                       Categoría Local (Opcional)
@@ -459,10 +490,17 @@ export const MatchFormModal = ({
                     <Select.Popover>
                       <ListBox items={homeCategories}>
                         {(c) => (
-                          <ListBox.Item id={c.id} textValue={`${c.name} (${c.gender})`}>
+                          <ListBox.Item
+                            id={c.id}
+                            textValue={`${c.name} (${c.gender})`}
+                          >
                             <div className="flex flex-col">
-                              <span>{c.name} ({c.gender})</span>
-                              <span className="text-xs text-muted">{c.seasonName}</span>
+                              <span>
+                                {c.name} ({c.gender})
+                              </span>
+                              <span className="text-xs text-muted">
+                                {c.seasonName}
+                              </span>
                             </div>
                           </ListBox.Item>
                         )}
@@ -473,8 +511,12 @@ export const MatchFormModal = ({
                   <Select
                     variant="secondary"
                     value={awayTeamSeasonCategoryId}
-                    onChange={(value) => setAwayTeamSeasonCategoryId(value as string)}
-                    isDisabled={loadingData || !awayTeamId || awayCategories.length === 0}
+                    onChange={(key) =>
+                      setAwayTeamSeasonCategoryId(key ? String(key) : "")
+                    }
+                    isDisabled={
+                      loadingData || !awayTeamId || awayCategories.length === 0
+                    }
                   >
                     <Label className="font-semibold text-sm">
                       Categoría Visitante (Opcional)
@@ -486,10 +528,17 @@ export const MatchFormModal = ({
                     <Select.Popover>
                       <ListBox items={awayCategories}>
                         {(c) => (
-                          <ListBox.Item id={c.id} textValue={`${c.name} (${c.gender})`}>
+                          <ListBox.Item
+                            id={c.id}
+                            textValue={`${c.name} (${c.gender})`}
+                          >
                             <div className="flex flex-col">
-                              <span>{c.name} ({c.gender})</span>
-                              <span className="text-xs text-muted">{c.seasonName}</span>
+                              <span>
+                                {c.name} ({c.gender})
+                              </span>
+                              <span className="text-xs text-muted">
+                                {c.seasonName}
+                              </span>
                             </div>
                           </ListBox.Item>
                         )}
@@ -501,7 +550,7 @@ export const MatchFormModal = ({
                 <Select
                   variant="secondary"
                   value={locationId}
-                  onChange={(value) => setLocationId(value as string)}
+                  onChange={(key) => setLocationId(key ? String(key) : "")}
                   isDisabled={loadingData}
                 >
                   <Label className="font-semibold text-sm">UbicaciÃ³n</Label>
@@ -531,7 +580,7 @@ export const MatchFormModal = ({
                 <Select
                   variant="secondary"
                   value={type}
-                  onChange={(value) => setType(value as string)}
+                  onChange={(key) => setType(key ? String(key) : "")}
                 >
                   <Label className="font-semibold text-sm">
                     Tipo de Partido *
@@ -594,11 +643,7 @@ export const MatchFormModal = ({
                 variant="primary"
                 onPress={handleSubmit}
                 isPending={loading}
-                isDisabled={
-                  loading ||
-                  loadingData ||
-                  false
-                }
+                isDisabled={loading || loadingData || false}
               >
                 <HugeiconsIcon
                   icon={mode === "create" ? Add01Icon : Edit02Icon}

@@ -102,11 +102,15 @@ function FixtureCard({
           <div className="flex items-center justify-center rounded-lg bg-primary/5 px-4 py-2 font-heading text-2xl font-700 text-primary">
             {fixture.status === "PLAYED" ? (
               <span className="tracking-widest flex items-center gap-1">
-                <span>{fixture.homeScore !== null ? fixture.homeScore : '-'}</span>
+                <span>
+                  {fixture.homeScore !== null ? fixture.homeScore : "-"}
+                </span>
                 <span className="text-muted-foreground text-sm font-400 mx-1">
                   -
                 </span>
-                <span>{fixture.awayScore !== null ? fixture.awayScore : '-'}</span>
+                <span>
+                  {fixture.awayScore !== null ? fixture.awayScore : "-"}
+                </span>
               </span>
             ) : (
               <span className="text-muted-foreground text-xl">Vs</span>
@@ -251,18 +255,20 @@ export function FixtureSection({
 
     const fetchFixtures = async () => {
       setIsLoading(true);
-      
+
       let from: string | undefined = undefined;
       let to: string | undefined = undefined;
-      
+
       if (dateRange && dateRange.start && dateRange.end) {
         from = dateRange.start.toDate(tz).toISOString();
         to = dateRange.end.add({ days: 1 }).toDate(tz).toISOString();
       }
 
       try {
-        const res = await getPublicFixture(from && to ? { from, to } : undefined);
-        
+        const res = await getPublicFixture(
+          from && to ? { from, to } : undefined,
+        );
+
         if (activeRequestRef.current === currentRequestId) {
           if (!res.error && res.data) {
             setFixtures(res.data);
@@ -282,12 +288,17 @@ export function FixtureSection({
   }, [dateRange]);
 
   // Derivar disciplinas únicas
-  const derivedDisciplines = useMemo(() => Array.from(
-    new Set(fixtures.map((f) => f.discipline).filter(Boolean)),
-  ), [fixtures]);
+  const derivedDisciplines = useMemo(
+    () =>
+      Array.from(new Set(fixtures.map((f) => f.discipline).filter(Boolean))),
+    [fixtures],
+  );
 
   useEffect(() => {
-    if (selectedDiscipline !== "all" && !derivedDisciplines.includes(selectedDiscipline)) {
+    if (
+      selectedDiscipline !== "all" &&
+      !derivedDisciplines.includes(selectedDiscipline)
+    ) {
       setSelectedDiscipline("all");
     }
   }, [derivedDisciplines, selectedDiscipline]);
@@ -391,7 +402,7 @@ export function FixtureSection({
         {/* Controles de Filtro: Fechas y Estado */}
         <div className="flex flex-col sm:flex-row items-center gap-4 w-full lg:w-auto">
           {/* HeroUI DateRangePicker */}
-          <div className="w-full sm:w-auto min-w-[280px]">
+          <div className="w-full sm:w-auto min-w-70">
             <DateRangePicker
               aria-label="Rango de Fechas"
               value={dateRange}
@@ -454,23 +465,25 @@ export function FixtureSection({
           {/* Estado Temporales */}
           <div className="flex bg-muted/30 p-1 rounded-xl shadow-inner border border-border/50 overflow-x-auto w-full sm:w-auto justify-center">
             {(["TODOS", "PROXIMOS", "JUGADOS"] as TemporalFilter[]).map(
-              (filter) => (
-                <button
-                  key={filter}
-                  onClick={() => setSelectedTemporal(filter)}
-                  className={`flex-shrink-0 px-4 py-1.5 rounded-lg text-xs font-700 uppercase tracking-wide transition-all ${
-                    selectedTemporal === filter
-                      ? "bg-white text-primary shadow-sm"
-                      : "text-muted-foreground hover:text-primary hover:bg-white/50"
-                  }`}
-                >
-                  {filter === "TODOS"
-                    ? "Todos"
-                    : filter === "PROXIMOS"
-                      ? "Próximos"
-                      : "Jugados"}
-                </button>
-              ),
+              (filter) => {
+                return (
+                  <button
+                    key={filter}
+                    onClick={() => setSelectedTemporal(filter)}
+                    className={`shrink-0 px-4 py-1.5 rounded-lg text-xs font-700 uppercase tracking-wide transition-all ${
+                      selectedTemporal === filter
+                        ? "bg-white text-primary shadow-sm"
+                        : "text-muted-foreground hover:text-primary hover:bg-white/50"
+                    }`}
+                  >
+                    {filter === "TODOS"
+                      ? "Todos"
+                      : filter === "PROXIMOS"
+                        ? "Próximos"
+                        : "Jugados"}
+                  </button>
+                );
+              },
             )}
           </div>
         </div>

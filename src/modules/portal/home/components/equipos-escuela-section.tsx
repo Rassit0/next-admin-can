@@ -71,7 +71,7 @@ export function EquiposEscuelaSection({
                 </span>
 
                 <div className="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-neon text-primary transition-transform duration-300 group-hover:translate-x-2 sm:h-16 sm:w-16">
-                  <ArrowRightIcon className="h-7 w-7 stroke-[3] sm:h-8 sm:w-8" />
+                  <ArrowRightIcon className="h-7 w-7 stroke-3 sm:h-8 sm:w-8" />
                 </div>
               </motion.button>
             </Link>

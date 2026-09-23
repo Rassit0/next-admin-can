@@ -31,7 +31,11 @@ export interface IMatchCalendarMetadata extends IBaseCalendarMetadata {
   awayScore: number | null;
   matchType: string;
   result: string | null;
-  category: {
+  homeCategory: {
+    id: string;
+    name: string;
+  } | null;
+  awayCategory: {
     id: string;
     name: string;
   } | null;

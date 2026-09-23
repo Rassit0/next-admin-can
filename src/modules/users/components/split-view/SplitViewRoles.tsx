@@ -32,7 +32,10 @@ interface Props {
   permissions: any[];
 }
 
-export const SplitViewRoles: React.FC<Props> = ({ initialRoles, permissions }) => {
+export const SplitViewRoles: React.FC<Props> = ({
+  initialRoles,
+  permissions,
+}) => {
   const router = useRouter();
   const [selectedRole, setSelectedRole] = useState<IRole | null>(null);
   const [isCreating, setIsCreating] = useState(false);
@@ -66,8 +69,9 @@ export const SplitViewRoles: React.FC<Props> = ({ initialRoles, permissions }) =
     setIsEditing(false);
     setName(role.name);
     setDescription(role.description || "");
-    // @ts-ignore
-    setSelectedPermissions(role.permissions?.map((p: any) => p.permission.id) || []);
+    setSelectedPermissions(
+      (role as any).permissions?.map((p: any) => p.permission.id) || [],
+    );
   };
 
   // Handle create new
@@ -92,9 +96,17 @@ export const SplitViewRoles: React.FC<Props> = ({ initialRoles, permissions }) =
     let res;
 
     if (isCreating) {
-      res = await createRole({ name, description, permissionIds: selectedPermissions });
+      res = await createRole({
+        name,
+        description,
+        permissionIds: selectedPermissions,
+      });
     } else if (selectedRole) {
-      res = await updateRole(selectedRole.id, { name, description, permissionIds: selectedPermissions });
+      res = await updateRole(selectedRole.id, {
+        name,
+        description,
+        permissionIds: selectedPermissions,
+      });
     }
 
     setIsLoading(false);
@@ -102,7 +114,9 @@ export const SplitViewRoles: React.FC<Props> = ({ initialRoles, permissions }) =
     if (res?.error) {
       toast.error(res.message);
     } else {
-      toast.success(isCreating ? "Rol creado exitosamente" : "Rol actualizado exitosamente");
+      toast.success(
+        isCreating ? "Rol creado exitosamente" : "Rol actualizado exitosamente",
+      );
       setIsCreating(false);
       setIsEditing(false);
       router.refresh();
@@ -115,7 +129,7 @@ export const SplitViewRoles: React.FC<Props> = ({ initialRoles, permissions }) =
   // Handle Delete
   const handleDelete = () => {
     if (!selectedRole || selectedRole.isSystem) return;
-    
+
     setConfirmDialog({
       isOpen: true,
       title: "Eliminar Rol",
@@ -150,10 +164,18 @@ export const SplitViewRoles: React.FC<Props> = ({ initialRoles, permissions }) =
   return (
     <div className="flex h-full w-full gap-6 overflow-hidden">
       {/* LEFT PANE: List */}
-      <Surface variant="default" className="w-[320px] flex-shrink-0 flex flex-col border border-border rounded-xl bg-surface-secondary/20">
+      <Surface
+        variant="default"
+        className="w-[320px] shrink-0 flex flex-col border border-border rounded-xl bg-surface-secondary/20"
+      >
         <div className="p-4 border-b border-border bg-background flex items-center justify-between">
           <h3 className="font-semibold text-lg">Roles</h3>
-          <Button variant="primary" size="sm" isIconOnly onPress={handleCreateNew}>
+          <Button
+            variant="primary"
+            size="sm"
+            isIconOnly
+            onPress={handleCreateNew}
+          >
             <HugeiconsIcon icon={Add01Icon} size={18} />
           </Button>
         </div>
@@ -169,14 +191,22 @@ export const SplitViewRoles: React.FC<Props> = ({ initialRoles, permissions }) =
               }`}
             >
               <div className="flex items-center justify-between mb-1">
-                <span className={`font-medium ${selectedRole?.id === role.id && !isCreating ? "text-accent-soft-foreground" : "text-foreground"}`}>
+                <span
+                  className={`font-medium ${selectedRole?.id === role.id && !isCreating ? "text-accent-soft-foreground" : "text-foreground"}`}
+                >
                   {role.name}
                 </span>
                 {role.isSystem && (
-                  <HugeiconsIcon icon={SafeIcon} size={14} className="text-muted" />
+                  <HugeiconsIcon
+                    icon={SafeIcon}
+                    size={14}
+                    className="text-muted"
+                  />
                 )}
               </div>
-              <span className={`text-xs truncate ${selectedRole?.id === role.id && !isCreating ? "text-accent-soft-foreground/70" : "text-muted"}`}>
+              <span
+                className={`text-xs truncate ${selectedRole?.id === role.id && !isCreating ? "text-accent-soft-foreground/70" : "text-muted"}`}
+              >
                 {role.description || "Sin descripción"}
               </span>
             </button>
@@ -185,19 +215,29 @@ export const SplitViewRoles: React.FC<Props> = ({ initialRoles, permissions }) =
       </Surface>
 
       {/* RIGHT PANE: Detail / Form */}
-      <Surface variant="default" className="flex-1 border border-border rounded-xl bg-background flex flex-col overflow-hidden">
-        {(!selectedRole && !isCreating) ? (
+      <Surface
+        variant="default"
+        className="flex-1 border border-border rounded-xl bg-background flex flex-col overflow-hidden"
+      >
+        {!selectedRole && !isCreating ? (
           <div className="flex-1 flex flex-col items-center justify-center text-muted p-10">
             <div className="w-16 h-16 rounded-full bg-surface-secondary flex items-center justify-center mb-4">
               <HugeiconsIcon icon={SecurityPasswordIcon} size={32} />
             </div>
-            <h3 className="text-lg font-medium text-foreground">Seleccione un Rol</h3>
+            <h3 className="text-lg font-medium text-foreground">
+              Seleccione un Rol
+            </h3>
             <p className="text-sm text-center max-w-sm mt-2">
-              Elija un rol de la lista para ver o modificar sus permisos, o cree uno nuevo.
+              Elija un rol de la lista para ver o modificar sus permisos, o cree
+              uno nuevo.
             </p>
           </div>
         ) : (
-          <form id="role-form" onSubmit={handleSave} className="flex flex-col h-full overflow-hidden">
+          <form
+            id="role-form"
+            onSubmit={handleSave}
+            className="flex flex-col h-full overflow-hidden"
+          >
             <div className="p-6 border-b border-border flex items-center justify-between bg-surface-secondary/20">
               <div>
                 <h2 className="text-xl font-bold flex items-center gap-2">
@@ -214,24 +254,39 @@ export const SplitViewRoles: React.FC<Props> = ({ initialRoles, permissions }) =
                   )}
                 </h2>
                 <p className="text-sm text-muted mt-1">
-                  {isCreating ? "Configure los datos básicos y asigne los permisos." : "Gestione la configuración de este rol."}
+                  {isCreating
+                    ? "Configure los datos básicos y asigne los permisos."
+                    : "Gestione la configuración de este rol."}
                 </p>
               </div>
 
               {!isCreating && !selectedRole?.isSuperAdmin && (
                 <div className="flex items-center gap-2">
                   {!isEditing ? (
-                    <Button variant="secondary" onPress={() => setIsEditing(true)}>
+                    <Button
+                      variant="secondary"
+                      onPress={() => setIsEditing(true)}
+                    >
                       <HugeiconsIcon icon={PencilEdit01Icon} size={18} />
                       Editar
                     </Button>
                   ) : (
-                    <Button variant="ghost" onPress={() => { setIsEditing(false); handleSelect(selectedRole!); }}>
+                    <Button
+                      variant="ghost"
+                      onPress={() => {
+                        setIsEditing(false);
+                        handleSelect(selectedRole!);
+                      }}
+                    >
                       Cancelar
                     </Button>
                   )}
                   {!selectedRole?.isSystem && (
-                    <Button variant="ghost" className="text-danger" onPress={handleDelete}>
+                    <Button
+                      variant="ghost"
+                      className="text-danger"
+                      onPress={handleDelete}
+                    >
                       <HugeiconsIcon icon={Delete01Icon} size={18} />
                     </Button>
                   )}
@@ -249,7 +304,11 @@ export const SplitViewRoles: React.FC<Props> = ({ initialRoles, permissions }) =
                     placeholder="Ej. Entrenador Principal"
                     readOnly={!isEditing}
                     variant={!isEditing ? undefined : "secondary"}
-                    className={!isEditing ? "bg-transparent px-0 border-transparent pointer-events-none" : ""}
+                    className={
+                      !isEditing
+                        ? "bg-transparent px-0 border-transparent pointer-events-none"
+                        : ""
+                    }
                   />
                 </TextField>
 
@@ -261,21 +320,35 @@ export const SplitViewRoles: React.FC<Props> = ({ initialRoles, permissions }) =
                     placeholder="Describe el propósito del rol"
                     readOnly={!isEditing}
                     variant={!isEditing ? undefined : "secondary"}
-                    className={!isEditing ? "bg-transparent px-0 border-transparent pointer-events-none resize-none" : ""}
+                    className={
+                      !isEditing
+                        ? "bg-transparent px-0 border-transparent pointer-events-none resize-none"
+                        : ""
+                    }
                   />
                 </TextField>
               </div>
 
               <div className="mb-4 flex items-center justify-between">
-                <h3 className="font-semibold text-lg border-b-2 border-accent pb-1 inline-block">Permisos del Sistema</h3>
+                <h3 className="font-semibold text-lg border-b-2 border-accent pb-1 inline-block">
+                  Permisos del Sistema
+                </h3>
               </div>
 
               {selectedRole?.isSuperAdmin ? (
                 <div className="p-8 border border-danger/20 bg-danger/5 rounded-xl flex flex-col items-center justify-center text-center">
-                  <HugeiconsIcon icon={LockPasswordIcon} size={48} className="text-danger mb-4" />
-                  <h4 className="text-danger font-bold text-lg">Acceso Total</h4>
+                  <HugeiconsIcon
+                    icon={LockPasswordIcon}
+                    size={48}
+                    className="text-danger mb-4"
+                  />
+                  <h4 className="text-danger font-bold text-lg">
+                    Acceso Total
+                  </h4>
                   <p className="text-danger/80 max-w-md mt-2">
-                    Este rol tiene privilegios de Super Administrador. No es necesario (ni posible) asignarle permisos individuales porque hereda todos automáticamente.
+                    Este rol tiene privilegios de Super Administrador. No es
+                    necesario (ni posible) asignarle permisos individuales
+                    porque hereda todos automáticamente.
                   </p>
                 </div>
               ) : (
@@ -285,29 +358,36 @@ export const SplitViewRoles: React.FC<Props> = ({ initialRoles, permissions }) =
                   isDisabled={!isEditing}
                 >
                   <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-8 gap-y-6">
-                    {Object.entries(groupedPermissions).map(([mod, perms]: any) => (
-                      <div key={mod} className={`border border-border rounded-xl p-5 transition-colors ${!isEditing ? "bg-surface-secondary/10 opacity-80" : "bg-background"}`}>
-                        <div className="flex items-center gap-2 mb-4 pb-2 border-b border-border">
-                          <Label className="font-semibold text-foreground m-0">
-                            {mod}
-                          </Label>
+                    {Object.entries(groupedPermissions).map(
+                      ([mod, perms]: any) => (
+                        <div
+                          key={mod}
+                          className={`border border-border rounded-xl p-5 transition-colors ${!isEditing ? "bg-surface-secondary/10 opacity-80" : "bg-background"}`}
+                        >
+                          <div className="flex items-center gap-2 mb-4 pb-2 border-b border-border">
+                            <Label className="font-semibold text-foreground m-0">
+                              {mod}
+                            </Label>
+                          </div>
+                          <div className="space-y-3">
+                            {perms.map((p: any) => (
+                              <Checkbox key={p.id} value={p.id}>
+                                <Checkbox.Content>
+                                  <Checkbox.Control>
+                                    <Checkbox.Indicator />
+                                  </Checkbox.Control>
+                                  <div className="flex flex-col ml-1">
+                                    <span className="text-sm font-medium leading-none mb-1">
+                                      {p.name}
+                                    </span>
+                                  </div>
+                                </Checkbox.Content>
+                              </Checkbox>
+                            ))}
+                          </div>
                         </div>
-                        <div className="space-y-3">
-                          {perms.map((p: any) => (
-                            <Checkbox key={p.id} value={p.id}>
-                              <Checkbox.Content>
-                                <Checkbox.Control>
-                                  <Checkbox.Indicator />
-                                </Checkbox.Control>
-                                <div className="flex flex-col ml-1">
-                                  <span className="text-sm font-medium leading-none mb-1">{p.name}</span>
-                                </div>
-                              </Checkbox.Content>
-                            </Checkbox>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
+                      ),
+                    )}
                   </div>
                 </CheckboxGroup>
               )}
@@ -315,10 +395,22 @@ export const SplitViewRoles: React.FC<Props> = ({ initialRoles, permissions }) =
 
             {isEditing && (
               <div className="p-4 border-t border-border bg-surface-secondary/30 flex justify-end gap-3">
-                <Button variant="secondary" onPress={() => isCreating ? handleSelect(initialRoles[0]) : handleSelect(selectedRole!)}>
+                <Button
+                  variant="secondary"
+                  onPress={() =>
+                    isCreating
+                      ? handleSelect(initialRoles[0])
+                      : handleSelect(selectedRole!)
+                  }
+                >
                   Cancelar
                 </Button>
-                <Button type="submit" form="role-form" variant="primary" isPending={isLoading}>
+                <Button
+                  type="submit"
+                  form="role-form"
+                  variant="primary"
+                  isPending={isLoading}
+                >
                   <HugeiconsIcon icon={CheckmarkCircle01Icon} size={18} />
                   Guardar Rol
                 </Button>
@@ -327,10 +419,12 @@ export const SplitViewRoles: React.FC<Props> = ({ initialRoles, permissions }) =
           </form>
         )}
       </Surface>
-      
+
       <ConfirmAlertDialog
         isOpen={confirmDialog.isOpen}
-        onOpenChange={(open) => !open && setConfirmDialog({ ...confirmDialog, isOpen: false })}
+        onOpenChange={(open) =>
+          !open && setConfirmDialog({ ...confirmDialog, isOpen: false })
+        }
         title={confirmDialog.title}
         description={confirmDialog.description}
         status={confirmDialog.status}

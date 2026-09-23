@@ -7,6 +7,8 @@ import { deleteMatch } from "../actions/delete-match.action";
 import { EventApi } from "@fullcalendar/core";
 import { ISessionCalendarMetadata, IMatchCalendarMetadata, IGeneralEventCalendarMetadata } from "../interfaces/calendar.interface";
 import { SessionAttendanceDrawer } from "../../attendance/components/SessionAttendanceDrawer";
+import { MatchCallUpsDrawer } from "./match-call-ups-drawer";
+import { MatchLineupsDrawer } from "./match-lineups-drawer";
 import { Select, ListBox, Label } from "@heroui/react";
 import { deleteSession } from "../actions/delete-session.action";
 import { deleteGeneralEvent } from "../actions/delete-general-event.action";
@@ -27,6 +29,8 @@ interface Props {
 
 export const EventDetailModal = ({ state, event, onEditMatch, onDeleteSuccess, onEditSession, onEditGeneralEvent }: Props) => {
   const [isAttendanceOpen, setIsAttendanceOpen] = useState(false);
+  const [isCallUpsOpen, setIsCallUpsOpen] = useState(false);
+  const [isLineupsOpen, setIsLineupsOpen] = useState(false);
 
   const [isDeleting, setIsDeleting] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
@@ -98,7 +102,11 @@ export const EventDetailModal = ({ state, event, onEditMatch, onDeleteSuccess, o
                       <strong>Partido:</strong> {(metadata as IMatchCalendarMetadata).homeTeam?.name || "N/A"} vs {(metadata as IMatchCalendarMetadata).awayTeam?.name || "N/A"} <br/>
                       <strong>Marcador:</strong> {(metadata as IMatchCalendarMetadata).homeScore ?? "-"} - {(metadata as IMatchCalendarMetadata).awayScore ?? "-"} <br/>
                       <strong>Resultado CAN:</strong> {(metadata as IMatchCalendarMetadata).result} <br/>
-                      <strong>Categoría:</strong> {(metadata as IMatchCalendarMetadata).category?.name || "N/A"}
+                      <strong>Categoría:</strong> {
+                        (metadata as IMatchCalendarMetadata).homeCategory?.id === (metadata as IMatchCalendarMetadata).awayCategory?.id
+                          ? ((metadata as IMatchCalendarMetadata).homeCategory?.name || "N/A")
+                          : `${(metadata as IMatchCalendarMetadata).homeCategory?.name || "N/A"} (L) vs ${(metadata as IMatchCalendarMetadata).awayCategory?.name || "N/A"} (V)`
+                      }
                     </>
                   )}
                   {type === "GENERAL" && (
@@ -117,6 +125,12 @@ export const EventDetailModal = ({ state, event, onEditMatch, onDeleteSuccess, o
                   </Button>
                   <Button variant="secondary" onPress={onEditMatch} isDisabled={isTransitioning}>
                     Editar
+                  </Button>
+                  <Button variant="primary" onPress={() => setIsCallUpsOpen(true)} isDisabled={isTransitioning}>
+                    Convocados
+                  </Button>
+                  <Button variant="primary" onPress={() => setIsLineupsOpen(true)} isDisabled={isTransitioning}>
+                    Plantilla
                   </Button>
                   
                   {event.extendedProps.status === "SCHEDULED" && (
@@ -296,6 +310,27 @@ export const EventDetailModal = ({ state, event, onEditMatch, onDeleteSuccess, o
           courseSeasonId={(metadata as ISessionCalendarMetadata).courses[0].id}
           sessionStartDate={event.start.toISOString()}
         />
+      )}
+
+      {type === "MATCH" && event.start && (
+        <>
+          <MatchCallUpsDrawer
+            isOpen={isCallUpsOpen}
+            onOpenChange={setIsCallUpsOpen}
+            matchId={event.id}
+            metadata={metadata as IMatchCalendarMetadata}
+            startDate={event.start.toISOString()}
+            status={event.extendedProps.status}
+          />
+          <MatchLineupsDrawer
+            isOpen={isLineupsOpen}
+            onOpenChange={setIsLineupsOpen}
+            matchId={event.id}
+            metadata={metadata as IMatchCalendarMetadata}
+            startDate={event.start.toISOString()}
+            status={event.extendedProps.status}
+          />
+        </>
       )}
     </Modal>
   );

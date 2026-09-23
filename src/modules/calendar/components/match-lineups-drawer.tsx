@@ -7,16 +7,14 @@ import { getMatchLineup, IMatchCallUpWithLineup, IMatchLineupsResponse } from ".
 import { toast } from "sonner";
 import { Spinner } from "@heroui/react";
 
+import { IMatchCalendarMetadata } from "../interfaces/calendar.interface";
+
 interface Props {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   matchId: string;
-  homeTeamName: string;
-  awayTeamName: string;
-  homeCategoryName: string | null;
-  awayCategoryName: string | null;
-  hasHomeCategory: boolean;
-  hasAwayCategory: boolean;
+  metadata: IMatchCalendarMetadata;
+  startDate: string;
   status?: string;
 }
 
@@ -24,12 +22,8 @@ export const MatchLineupsDrawer = ({
   isOpen,
   onOpenChange,
   matchId,
-  homeTeamName,
-  awayTeamName,
-  homeCategoryName,
-  awayCategoryName,
-  hasHomeCategory,
-  hasAwayCategory,
+  metadata,
+  startDate,
   status,
 }: Props) => {
   const [isPending, startTransition] = useTransition();
@@ -101,9 +95,9 @@ export const MatchLineupsDrawer = ({
                   <MatchLineupSidePanel
                     side="HOME"
                     matchId={matchId}
-                    teamName={homeTeamName}
-                    categoryName={homeCategoryName}
-                    hasCategory={hasHomeCategory}
+                    teamName={metadata.homeTeam?.name || "Local"}
+                    categoryName={metadata.homeCategory?.name || null}
+                    hasCategory={!!metadata.homeCategory}
                     callUps={data.home}
                     onSuccess={handleSuccess}
                     isDirty={homeDirty}
@@ -114,9 +108,9 @@ export const MatchLineupsDrawer = ({
                   <MatchLineupSidePanel
                     side="AWAY"
                     matchId={matchId}
-                    teamName={awayTeamName}
-                    categoryName={awayCategoryName}
-                    hasCategory={hasAwayCategory}
+                    teamName={metadata.awayTeam?.name || "Visitante"}
+                    categoryName={metadata.awayCategory?.name || null}
+                    hasCategory={!!metadata.awayCategory}
                     callUps={data.away}
                     onSuccess={handleSuccess}
                     isDirty={awayDirty}

@@ -37,7 +37,7 @@ export function PromoBanner({
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
         className={`relative w-full overflow-hidden bg-primary shadow-xl ${
-          fullWidth ? "min-h-[400px] md:min-h-[500px]" : "rounded-lg"
+          fullWidth ? "min-h-100 md:min-h-125" : "rounded-lg"
         }`}
       >
         <div className="absolute inset-0">
