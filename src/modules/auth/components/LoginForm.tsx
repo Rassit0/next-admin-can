@@ -96,7 +96,7 @@ export const LoginForm = () => {
             className="w-full flex flex-col gap-1.5"
             name="email"
             type="email"
-            defaultValue="admin@can.edu.bo"
+            // defaultValue="admin@can.edu.bo"
           >
             <Label className="text-foreground font-semibold text-sm">
               Correo electrónico
