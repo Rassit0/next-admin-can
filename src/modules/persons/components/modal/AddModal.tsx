@@ -80,7 +80,7 @@ export const AddModal = ({
         isDismissable={false}
       >
         <Modal.Container placement="center" scroll="outside">
-          <Modal.Dialog className="sm:max-w-2xl bg-background-tertiary">
+          <Modal.Dialog className="sm:max-w-2xl bg-background-tertiary" aria-label="Agregar Miembro">
             <Modal.CloseTrigger />
             <Modal.Header>
               <div className="flex items-center gap-2">

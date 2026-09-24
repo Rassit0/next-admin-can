@@ -43,44 +43,7 @@ export const heroDisciplines = [
 
 // (Removed news and NewsItem as they are now obsolete)
 
-export const timeline: TimelineNode[] = [
-  {
-    year: "1937",
-    title: "Fundación del Club",
-    description:
-      "Un grupo de vecinos visionarios funda la institución con la misión de promover el deporte amateur y la vida comunitaria.",
-  },
-  {
-    year: "1958",
-    title: "Primer título metropolitano",
-    description:
-      "El equipo de vóleibol obtiene el primer campeonato oficial, marcando el inicio de una identidad ganadora.",
-  },
-  {
-    year: "1976",
-    title: "Apertura de la sede deportiva",
-    description:
-      "Se inaugura el complejo principal con canchas reglamentarias y espacios para la formación de jóvenes atletas.",
-  },
-  {
-    year: "1994",
-    title: "Nace la escuela de formación",
-    description:
-      "La academia juvenil sistematiza el desarrollo deportivo desde edades tempranas, semillero de futuras estrellas.",
-  },
-  {
-    year: "2011",
-    title: "Expansión multideportiva",
-    description:
-      "El club incorpora disciplinas como frontón, atletismo y natación, consolidándose como una institución masiva.",
-  },
-  {
-    year: "2026",
-    title: "Más de 1.000 atletas activos",
-    description:
-      "Hoy somos una de las instituciones polideportivas más grandes de la región, con más de 50 equipos en competición.",
-  },
-];
+
 
 
 export const navItems = [

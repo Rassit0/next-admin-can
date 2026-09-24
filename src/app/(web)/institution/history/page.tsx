@@ -2,6 +2,8 @@ import { CinematicLoader } from "@/modules/portal/home/components/cinematic-load
 import { SiteHeader } from "@/modules/portal/shared/components/site-header";
 import { ParticlesBackground } from "@/modules/portal/home/components/particles-background";
 import InstitucionContent from "@/modules/portal/institutions/components/institucion-content";
+import { getPublicInstitutionHistory } from "@/modules/portal/institutions/actions/history.action";
+import { resolvePageData } from "@/utils/resolvePageData";
 
 export const metadata = {
   title: "Nuestra Historia e Institución | Club Atlético Nacional",
@@ -12,15 +14,11 @@ export const metadata = {
   },
 };
 
-export default function HistoryInstitutionPage() {
-  return (
-    // <div className="relative min-h-screen bg-background">
-    //   <CinematicLoader />
-    //   <ParticlesBackground />
-    //   <SiteHeader />
-    //   <main className="relative">
-    //   </main>
-    // </div>
-    <InstitucionContent />
-  );
+export default async function HistoryInstitutionPage() {
+  const [historyResponse] = await resolvePageData([
+    getPublicInstitutionHistory(),
+  ]);
+  const historyData = historyResponse.data;
+
+  return <InstitucionContent data={historyData} />;
 }

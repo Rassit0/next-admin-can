@@ -100,7 +100,7 @@ export class CANApiAdapter implements HttpAdapter {
     const ms = options?.timeout || this.defaultTimeout;
     const timeout = setTimeout(() => timeoutController.abort(), ms);
 
-    const signal = options?.signal
+    const signal = options?.signal instanceof AbortSignal
       ? AbortSignal.any([options.signal, timeoutController.signal])
       : timeoutController.signal;
 

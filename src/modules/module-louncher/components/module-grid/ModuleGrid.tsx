@@ -12,7 +12,7 @@ export const ModuleGrid = ({ items = [] }: ModuleGridProps) => {
       {items.map((item) => (
         <CardLouncher
           key={item.id}
-          href={`/admin/${item.href}`}
+          href={item.href.startsWith("/") ? item.href : `/admin/${item.href}`}
           iconNode={<NavigationIcon iconKey={item.icon as NavigationIconKey} size={40} />}
           title={item.label}
           description={item.description || "Gestione esta sección de la plataforma."}

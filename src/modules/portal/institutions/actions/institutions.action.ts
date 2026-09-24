@@ -1,11 +1,16 @@
 "use server";
 
 import { api } from "@/modules/portal/core/api/api";
-import { handleServerAction, ServiceResponse } from "@/modules/portal/core/utils/handleServerAction";
+import {
+  handleServerAction,
+} from "@/modules/portal/core/utils/handleServerAction";
 import { Institution } from "@/modules/portal/institutions/interfaces/institution.interface";
+import { ServiceResponse } from "@/types/api";
 import { notFound } from "next/navigation";
 
-export const getInstitution = async (): Promise<ServiceResponse<Institution>> => {
+export const getInstitution = async (): Promise<
+  ServiceResponse<Institution>
+> => {
   return handleServerAction(async () => {
     const res = await api.get<{ message: string; data: Institution }>(
       `public/institutions/default`,
@@ -22,5 +27,9 @@ export const getInstitution = async (): Promise<ServiceResponse<Institution>> =>
       data: res.data,
       message: res.message || "Institución obtenida exitosamente",
     };
-  });
+  }) as unknown as Promise<ServiceResponse<Institution>>;
 };
+
+
+
+

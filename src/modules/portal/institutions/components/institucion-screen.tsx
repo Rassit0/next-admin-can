@@ -1,31 +1,47 @@
-'use client'
+"use client";
 
-import { useRef } from 'react'
-import { motion, useScroll, useSpring } from 'framer-motion'
-import { timeline } from '@/modules/portal/core/constants/data'
+import { useRef } from "react";
+import { motion, useScroll, useSpring } from "framer-motion";
+import { PublicInstitutionHistoryResponse } from "../interfaces/history.interface";
 
-export function Institucion() {
-  const containerRef = useRef<HTMLDivElement>(null)
+export function Institucion({
+  data,
+}: {
+  data: PublicInstitutionHistoryResponse;
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start 70%', 'end 60%'],
-  })
+    offset: ["start 70%", "end 60%"],
+  });
   const pathScale = useSpring(scrollYProgress, {
     stiffness: 120,
     damping: 30,
-  })
+  });
 
   return (
     <div className="mx-auto max-w-5xl px-4 pb-24 pt-28 sm:px-6 lg:px-8 lg:pt-36">
       <div className="mb-14 text-center">
         <h1 className="font-heading text-5xl font-700 uppercase tracking-tight text-primary sm:text-6xl">
-          Nuestra <span className="text-neon text-glow-neon">Historia</span>
+          {data.intro.title.split(" ")[0]}{" "}
+          <span className="text-neon text-glow-neon">
+            {data.intro.title.split(" ").slice(1).join(" ")}
+          </span>
         </h1>
-        <p className="mx-auto mt-3 max-w-xl text-muted-foreground text-pretty">
-          Casi nueve décadas construyendo identidad, comunidad y excelencia
-          deportiva. Recorré los hitos que nos definen.
+        <p className="mx-auto mt-3 max-w-xl text-muted-foreground text-pretty whitespace-pre-line">
+          {data.intro.description}
         </p>
       </div>
+
+      {data.intro.imageUrl && (
+        <div className="mb-14 w-full flex justify-center">
+          <img
+            src={data.intro.imageUrl}
+            alt={data.intro.imageAlt || "Institution history image"}
+            className="max-w-full rounded-2xl shadow-lg border border-border"
+          />
+        </div>
+      )}
 
       <div ref={containerRef} className="relative">
         {/* Track */}
@@ -37,17 +53,17 @@ export function Institucion() {
         />
 
         <div className="space-y-12">
-          {timeline.map((node, i) => {
-            const left = i % 2 === 0
+          {data.timeline.map((node: any, i: number) => {
+            const left = i % 2 === 0;
             return (
               <motion.div
                 key={node.year}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-80px' }}
+                viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.5 }}
                 className={`relative flex items-center pl-12 sm:pl-0 ${
-                  left ? 'sm:justify-start' : 'sm:justify-end'
+                  left ? "sm:justify-start" : "sm:justify-end"
                 }`}
               >
                 {/* Node dot */}
@@ -74,10 +90,10 @@ export function Institucion() {
                   </p>
                 </motion.div>
               </motion.div>
-            )
+            );
           })}
         </div>
       </div>
     </div>
-  )
+  );
 }

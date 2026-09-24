@@ -99,15 +99,8 @@ export const authConfig = {
           email: backendUser.email,
           isActive: backendUser.isActive,
           roleId: backendUser.roleId,
-          modules: backendUser.modules || [],
+          personId: backendUser.personId || null,
           token: backendUser.token,
-          person: backendUser.person
-            ? {
-                name: backendUser.person.name,
-                lastName: backendUser.person.lastName,
-                email: backendUser.person.email,
-              }
-            : null,
         };
 
         // Decodificamos el token JWT del backend para obtener su expiración (exp)

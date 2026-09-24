@@ -3,6 +3,7 @@ import { NavItem } from "@/ui/interfaces/sidebar/sidebar";
 import clsx from "clsx";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { NavigationIcon, NavigationIconKey } from "@/ui/components/navigation/IconRegistry";
 
 interface Props {
   item: NavItem;
@@ -51,7 +52,7 @@ export const MobileNavItem = ({ item, urlBase, isActive, onClick }: Props) => {
           )}
         >
           <div className="scale-[0.85] origin-bottom">
-            {item.icon}
+            {item.icon && <NavigationIcon iconKey={item.icon as NavigationIconKey} size={24} />}
           </div>
           {item.label && (
             <span className="font-inter text-[8px] sm:text-[9px] font-bold tracking-tighter uppercase mt-1 text-center w-full truncate px-0.5">

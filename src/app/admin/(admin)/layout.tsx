@@ -6,23 +6,15 @@ import { getInstitutionContext } from "@/modules/organizations";
 import { BottonNavBar, ErrorPage, Header, Sidebar } from "@/ui";
 import { iconMap } from "@/utils";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { auth } from "@/auth";
-import { getPermissionsArray } from "@/modules/roles";
+import { getCurrentUserContext } from "@/shared/helpers/server-context";
 
 export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth();
-  let userPermissions: string[] = [];
-
-  if (session?.user?.roleId) {
-    const permRes = await getPermissionsArray({ roleId: session.user.roleId });
-    if (!permRes.error && permRes.data) {
-      userPermissions = permRes.data;
-    }
-  }
+  const context = await getCurrentUserContext();
+  const userPermissions = context?.permissions || [];
 
   const allowedItems = filterNavigation(itemsNavigation as NavigationConfig[], userPermissions);
 
@@ -46,7 +38,7 @@ export default async function AdminLayout({
         <div className="max-w-400 mx-auto">
           {/* Container for ultra-wide screens */}
           {/* <!-- TopNavBar --> */}
-          <Header />
+          <Header user={context?.user} person={context?.person} />
           {/* <!-- Dashboard Canvas --> */}
           <main className="page-content">
             {/* <!-- Header Section --> */}

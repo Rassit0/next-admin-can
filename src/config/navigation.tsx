@@ -300,6 +300,16 @@ export const itemsNavigation: NavigationConfig[] = [
     ],
   },
   {
+    id: "members",
+    label: "Personas",
+    href: "members",
+    action: "members",
+    subject: "PERSONS",
+    icon: "players",
+    showInLauncher: false,
+    requiredPermissions: { anyOf: ["READ_PERSONS"] },
+  },
+  {
     label: "Turnos",
     href: "shifts",
     action: "shifts",
@@ -314,7 +324,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "users",
     subject: "USERS",
     icon: "users",
-    showInLauncher: true,
+    showInLauncher: false,
     requiredPermissions: { anyOf: ["READ_USERS"] },
   },
   {
@@ -324,7 +334,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "roles",
     subject: "ROLES",
     icon: "roles",
-    showInLauncher: true,
+    showInLauncher: false,
     requiredPermissions: { anyOf: ["READ_ROLES"] },
   },
   {
@@ -358,6 +368,17 @@ export const itemsNavigation: NavigationConfig[] = [
     requiredPermissions: {
       anyOf: ["READ_BANNERS", "READ_NEWS", "READ_PROMOTIONS"],
     },
+  },
+  {
+    id: "portal",
+    label: "Portal Web",
+    href: "/",
+    action: "web",
+    subject: "home",
+    icon: "web",
+    showInLauncher: true,
+    description: "Ir a la página principal del portal público.",
+    tagText: "Público",
   },
 ];
 
@@ -405,5 +426,14 @@ export const itemsWebNavigation: NavigationConfig[] = [
     subject: "home",
     icon: "categories",
     requiredPermissions: { anyOf: ["READ_PROMOTIONS"] },
+  },
+  {
+    id: "web-institution-history",
+    label: "Historia",
+    href: "institution-history",
+    action: "web_banners",
+    subject: "home",
+    icon: "calendar", // using calendar as an icon, or dashboard. The user said: "Elegir icon existente coherente con: Historia / Timeline / Institución". I'll check available icons later.
+    requiredPermissions: { anyOf: ["READ_INSTITUTION_HISTORY"] },
   },
 ];

@@ -75,6 +75,8 @@ export const getPersonsOptions = async (
       },
     );
 
+    console.log("getPersonsOptions res:", res);
+
     return {
       error: false,
       data: {

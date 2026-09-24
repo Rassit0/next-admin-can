@@ -11,13 +11,18 @@ import React, { useState } from "react";
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { Button } from "@heroui/react";
 import { Crest } from "../crest";
+import { UserAccountDropdown } from "./UserAccountDropdown";
+
+import { CurrentPerson, AuthIdentity } from "@/shared/helpers/server-context";
 
 interface HeaderProps {
   title?: React.ReactNode;
   actions?: React.ReactNode;
   showLogo?: boolean;
+  user?: AuthIdentity;
+  person?: CurrentPerson | null;
 }
-export const Header = ({ title, actions, showLogo }: HeaderProps) => {
+export const Header = ({ title, actions, showLogo, user, person }: HeaderProps) => {
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
 
@@ -88,20 +93,7 @@ export const Header = ({ title, actions, showLogo }: HeaderProps) => {
         </div>
         <div className="h-8 w-px bg-outline-variant/30 hidden md:block"></div>
         <div className="flex items-center gap-3">
-          <div className="text-right hidden sm:block">
-            <p className="text-sm font-semibold text-on-surface font-headline leading-tight">
-              Admin CAN
-            </p>
-            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wide">
-              Superusuario
-            </p>
-          </div>
-          <div className="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center overflow-hidden border-2 border-primary-container/20">
-            <img
-              alt="Avatar de Usuario Administrativo"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEp9jnhMRX_Y2u47NpUQL2Rc9po8bXJeofB7yPxD0naG1SCZiTxEu5Le8Ksk0-W0XIWcGM4HM4XHcIqjv3BOglIgoi-hyAdTpQ9yl1T0MXlmQIaJq0weKGtVGZwyL3RdtLz8YwC3w3O4k0gTq7Bu8XfcGWbFXhfUSOy3S6h-N3zCFKUAHqp2qyULixKMedKQ5rH25emRmxB_NlO5Qq4ky4zKaHncl2-3bPq-yS7eh1pG0yNCHPJxGwpmHWAy0ggqg6lGe9cBSX1Vtd"
-            />
-          </div>
+          <UserAccountDropdown user={user} person={person} />
         </div>
       </div>
     </motion.header>

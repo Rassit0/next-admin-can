@@ -15,6 +15,7 @@ export interface User {
   email: string;
   isActive: boolean;
   roleId: string;
+  personId?: string | null;
   modules: PermissionModule[];
   person?: {
     name: string;
