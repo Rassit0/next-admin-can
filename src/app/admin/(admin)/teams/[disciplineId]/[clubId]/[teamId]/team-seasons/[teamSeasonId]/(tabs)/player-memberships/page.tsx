@@ -134,10 +134,7 @@ export default async function PlayerMembershipsPage({
               }))}
             />
           </SectionFilters>
-          <TableMemberships
-            memberships={memberships}
-            origin="teams"
-          />
+          <TableMemberships memberships={memberships} origin="teams" />
           <PaginationSection
             totalPages={meta.totalPages}
             itemsPerPage={meta.itemsPerPage}

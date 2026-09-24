@@ -14,7 +14,7 @@ export class CANApiAdapter implements HttpAdapter {
   constructor() {
     this.baseUrl = process.env.NEXT_PUBLIC_CAN_API_URL || "";
   }
-  // MÉTODO CENTRALIZADOR: Aquí controlas la conexión
+  // MiTODO CENTRALIZADOR: Aqui­ controlas la conexión
   private async request<T>(endpoint: string, options: RequestInit): Promise<T> {
     if (!this.baseUrl) {
       if (!this.baseUrl) {
@@ -23,10 +23,10 @@ export class CANApiAdapter implements HttpAdapter {
           "CRITICAL: NEXT_PUBLIC_CAN_API_URL is missing in environment variables",
         );
 
-        // Lanza un error genérico para el usuario
+        // Lanza un error geni©rico para el usuario
         throw new ApiError(
           500,
-          "El servicio no está disponible en este momento.",
+          "El servicio no esti¡ disponible en este momento.",
         );
       }
     }
@@ -52,7 +52,7 @@ export class CANApiAdapter implements HttpAdapter {
       // Si el error ya es una instancia de ApiError, lo relanzamos
       if (error instanceof ApiError) throw error;
 
-      // Si llegamos aquí, es un fallo de conexión o red
+      // Si llegamos aqui­, es un fallo de conexión o red
       throw new ApiError(
         503,
         "No se pudo establecer conexión con el servidor.",
@@ -91,7 +91,7 @@ export class CANApiAdapter implements HttpAdapter {
     }
 
     const errorMap: Record<number, string> = {
-      401: "Token inválido o expirado",
+      401: "Token invi¡lido o expirado",
       403: "Acceso denegado",
       404: "Recurso no encontrado",
     };

@@ -76,7 +76,7 @@ export const TableCharges = ({
     <Table>
       <Table.ScrollContainer>
         <Table.Content
-          aria-label="Cargos de la membresía"
+          aria-label="Cargos de la membresiÂ­a"
           className="min-w-200"
         >
           <Table.Header className="bg-surface-secondary">
@@ -165,7 +165,7 @@ export const TableCharges = ({
                                 .person;
                             return `${person.name} ${person.lastName}`;
                           }
-                          return "—";
+                          return "Ã¢ÂÂ";
                         })()}
                       </span>
                     </Table.Cell>
@@ -185,8 +185,13 @@ export const TableCharges = ({
                   <Table.Cell className="py-3 text-right">
                     {Number(charge.adjustmentAmount) !== 0 ? (
                       <div className="flex flex-col items-end gap-0.5">
-                        <span className={`inline-flex items-center px-1.5 py-0.5 rounded border text-xs font-bold shadow-sm ${Number(charge.adjustmentAmount) < 0 ? "bg-success-50 text-success-700 border-success-200" : "bg-danger-50 text-danger-700 border-danger-200"}`}>
-                          {Number(charge.adjustmentAmount) > 0 ? "+" : "-"}{formatCurrency(Math.abs(Number(charge.adjustmentAmount)))}
+                        <span
+                          className={`inline-flex items-center px-1.5 py-0.5 rounded border text-xs font-bold shadow-sm ${Number(charge.adjustmentAmount) < 0 ? "bg-success-50 text-success-700 border-success-200" : "bg-danger-50 text-danger-700 border-danger-200"}`}
+                        >
+                          {Number(charge.adjustmentAmount) > 0 ? "+" : "-"}
+                          {formatCurrency(
+                            Math.abs(Number(charge.adjustmentAmount)),
+                          )}
                         </span>
                         {charge.adjustmentReason && (
                           <span

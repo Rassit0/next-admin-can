@@ -10,9 +10,7 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-export default async function AccountingTabsLayout({
-  children,
-}: LayoutProps) {
+export default async function AccountingTabsLayout({ children }: LayoutProps) {
   const session = await auth();
   let userPermissions: string[] = [];
 
@@ -23,8 +21,12 @@ export default async function AccountingTabsLayout({
     }
   }
 
-  const allowedRoutes = getAllowedChildRoutes("accounting", userPermissions, itemsNavigation as NavigationConfig[]);
-  
+  const allowedRoutes = getAllowedChildRoutes(
+    "accounting",
+    userPermissions,
+    itemsNavigation as NavigationConfig[],
+  );
+
   const tabsRoutes = allowedRoutes
     .filter((route) => route.showInTabs)
     .map((route) => ({
@@ -44,9 +46,7 @@ export default async function AccountingTabsLayout({
           basePath={`/admin/accounting`}
           defaultRoute="/"
         />
-        <div className="mt-6">
-          {children}
-        </div>
+        <div className="mt-6">{children}</div>
       </div>
     </>
   );

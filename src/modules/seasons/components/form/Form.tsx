@@ -112,7 +112,7 @@ export const FormSeason = ({
               : messages;
             return `${field}: ${msgList}`;
           })
-          .join("\n"); // Los separamos por saltos de línea para el toast
+          .join("\n"); // Los separamos por saltos de li­nea para el toast
       }
 
       // 2. Pasamos la descripción formateada al componente de notificaciones

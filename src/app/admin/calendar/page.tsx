@@ -16,10 +16,10 @@ export default function CalendarPage() {
       />
 
       {/* 
-        El calendario se carga vacío y dispara inmediatamente fetchEvents
+        El calendario se carga vaci­o y dispara inmediatamente fetchEvents
         hacia el backend para traer el mes actual. Esto evita cargar
         datos innecesarios desde el servidor y permite hidratar FullCalendar
-        con el rango correcto de fechas según el viewport del usuario.
+        con el rango correcto de fechas segiºn el viewport del usuario.
       */}
       <div className="mt-4">
         <CalendarWrapper />

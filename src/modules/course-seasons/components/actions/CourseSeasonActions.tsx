@@ -142,7 +142,7 @@ export const CourseSeasonActions = ({ courseSeason, baseUrl }: Props) => {
     }
 
     if (!res || res.error) {
-      toast.error(res?.message || "Ocurrió un error");
+      toast.error(res?.message || "OcurriiÂ³ un error");
       setLoading(false);
       return;
     }
@@ -207,14 +207,16 @@ export const CourseSeasonActions = ({ courseSeason, baseUrl }: Props) => {
               </AlertDialog.Header>
               <AlertDialog.Body className="gap-4 p-2">
                 <p>
-                  ¿Estás seguro de que deseas ejecutar la acción{" "}
+                  ÃÂ¿EstiÂ¡s seguro de que deseas ejecutar la acciiÂ³n{" "}
                   <strong>{selectedAction?.label.toLowerCase()}</strong> para
                   este turno?
                 </p>
 
                 {selectedAction?.key === "cancel" && (
                   <div className="p-3 bg-warning/20 border border-warning/50 rounded-lg text-sm text-warning-800">
-                    <strong>Atención:</strong> Cancelar el turno no lo elimina. La información histórica, membresías, ciclos, deudas y cobros relacionados se conservan.
+                    <strong>AtenciiÂ³n:</strong> Cancelar el turno no lo elimina.
+                    La informaciiÂ³n histiÂ³rica, membresiÂ­as, ciclos, deudas y
+                    cobros relacionados se conservan.
                   </div>
                 )}
 
@@ -321,11 +323,11 @@ export const CourseSeasonActions = ({ courseSeason, baseUrl }: Props) => {
                 )}
 
                 {selectedAction?.key !== "open_registration" &&
-                  selectedAction?.key !== "close_registration" && 
+                  selectedAction?.key !== "close_registration" &&
                   selectedAction?.key !== "delete" && (
                     <TextField name="reason" className="w-full" isRequired>
                       <Label className="text-sm font-semibold">
-                        Motivo u Observación
+                        Motivo u ObservaciiÂ³n
                       </Label>
                       <InputGroup>
                         <InputGroup.Prefix>
@@ -335,7 +337,7 @@ export const CourseSeasonActions = ({ courseSeason, baseUrl }: Props) => {
                             className="text-muted-foreground"
                           />
                         </InputGroup.Prefix>
-                        <InputGroup.Input placeholder="Ej. Falta de alumnos, decisión técnica..." />
+                        <InputGroup.Input placeholder="Ej. Falta de alumnos, decisiiÂ³n tiÂ©cnica..." />
                       </InputGroup>
                     </TextField>
                   )}

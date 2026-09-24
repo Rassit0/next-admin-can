@@ -48,7 +48,7 @@ export const DisciplineCard = ({ discipline }: Props) => {
         <Actions discipline={discipline} />
       </div>
 
-      {/* Header: Icono y Botón de menú */}
+      {/* Header: Icono y Botón de meniº */}
       <Card.Header>
         <Card.Title className="text-xl font-bold">{discipline.name}</Card.Title>
       </Card.Header>

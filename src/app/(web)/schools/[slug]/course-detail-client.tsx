@@ -19,7 +19,7 @@ export function CourseDetailClient({ course }: CourseDetailClientProps) {
 
   if (!course) return null;
 
-  const ageRange = `${course.minAge} - ${course.maxAge} años`;
+  const ageRange = `${course.minAge} - ${course.maxAge} aiÂ±os`;
 
   return (
     <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
@@ -83,7 +83,7 @@ export function CourseDetailClient({ course }: CourseDetailClientProps) {
             <div className="rounded-lg border border-silver-deep bg-white p-4">
               <DollarSign className="mb-2 h-5 w-5 text-neon" />
               <p className="text-xs font-600 text-primary/60 uppercase">
-                Matrícula
+                MatriÂ­cula
               </p>
               <p className="font-oswald text-sm font-bold text-primary">
                 ${course.registrationFee}
@@ -151,7 +151,7 @@ export function CourseDetailClient({ course }: CourseDetailClientProps) {
                     className="flex items-start gap-3 text-primary/80"
                   >
                     <span className="mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-neon/20 text-neon">
-                      ✓
+                      Ã¢ÂÂ
                     </span>
                     {req}
                   </li>
@@ -178,7 +178,7 @@ export function CourseDetailClient({ course }: CourseDetailClientProps) {
                 <span className="text-xs font-500 text-primary/60">/mes</span>
               </p>
               <p className="mt-1 text-xs text-primary/50">
-                + ${course.registrationFee} de matrícula inicial
+                + ${course.registrationFee} de matriÂ­cula inicial
               </p>
             </div>
 
@@ -217,7 +217,7 @@ export function CourseDetailClient({ course }: CourseDetailClientProps) {
             </Magnetic>
 
             <p className="text-xs text-center text-primary/50">
-              Contacta con nuestra secretaría para inscribirte
+              Contacta con nuestra secretariÂ­a para inscribirte
             </p>
           </TiltCard>
         </motion.div>
@@ -228,7 +228,7 @@ export function CourseDetailClient({ course }: CourseDetailClientProps) {
         isOpen={contactOpen}
         onClose={() => setContactOpen(false)}
         title="Consultar Disponibilidad"
-        message={`Te ayudaremos con la inscripción al curso de ${course.name}. Contáctanos para conocer los detalles y disponibilidad.`}
+        message={`Te ayudaremos con la inscripciiÂ³n al curso de ${course.name}. ContiÂ¡ctanos para conocer los detalles y disponibilidad.`}
       />
     </div>
   );

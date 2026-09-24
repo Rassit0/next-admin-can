@@ -60,11 +60,11 @@ export function Teams({ teams }: { teams: Team[] }) {
       <div className="mb-8">
         <h1 className="font-heading text-5xl font-700 uppercase tracking-tight text-primary sm:text-6xl">
           Equipos y{" "}
-          <span className="text-neon text-glow-neon">Competición</span>
+          <span className="text-neon text-glow-neon">CompeticiiÂ³n</span>
         </h1>
         <p className="mt-3 max-w-xl text-muted-foreground text-pretty">
-          Filtrá por disciplina, sede y categoría. Girá cada tarjeta para ver la
-          membresía y solicitá tu cupo.
+          FiltriÂ¡ por disciplina, sede y categoriÂ­a. GiriÂ¡ cada tarjeta para ver
+          la membresiÂ­a y solicitiÂ¡ tu cupo.
         </p>
       </div>
 
@@ -90,7 +90,7 @@ export function Teams({ teams }: { teams: Team[] }) {
           }}
         />
         <FilterSelect
-          label="Categoría"
+          label="CategoriÂ­a"
           value={category}
           options={categories}
           onChange={setCategory}
@@ -114,7 +114,7 @@ export function Teams({ teams }: { teams: Team[] }) {
 
       {filtered.length === 0 && (
         <p className="py-16 text-center text-muted-foreground">
-          No hay equipos para esta combinación de filtros.
+          No hay equipos para esta combinaciiÂ³n de filtros.
         </p>
       )}
 
@@ -192,7 +192,7 @@ function FlipCard({ team, onApply }: { team: Team; onApply: () => void }) {
             </h3>
             <div className="mt-3 flex items-center gap-1.5 text-sm text-muted-foreground">
               <MapPin className="h-3.5 w-3.5" />
-              {team.club} · {team.gender}
+              {team.club} ÃÂ· {team.gender}
             </div>
           </div>
 
@@ -211,25 +211,25 @@ function FlipCard({ team, onApply }: { team: Team; onApply: () => void }) {
               {full
                 ? "Cupos Completos"
                 : lastSlots
-                  ? `¡Últimos Cupos! ${slotsLeft}/${team.capacity}`
+                  ? `ÃÂ¡iÂltimos Cupos! ${slotsLeft}/${team.capacity}`
                   : `Cupos: ${slotsLeft}/${team.capacity}`}
             </span>
           </div>
         </div>
 
-        {/* Back — Membership card */}
+        {/* Back Ã¢ÂÂ Membership card */}
         <div className="absolute inset-0 flex flex-col justify-between overflow-hidden rounded-2xl border border-neon/50 bg-primary p-6 text-white shadow-neon backface-hidden transform-[rotateY(180deg)]">
           <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-neon/20 blur-2xl" />
           <div>
             <span className="text-xs font-600 uppercase tracking-[0.22em] text-neon">
-              Membresía
+              MembresiÂ­a
             </span>
             <h3 className="mt-1 font-heading text-xl font-700 uppercase tracking-wide">
               {team.name}
             </h3>
             <div className="mt-4 space-y-2 text-sm">
               <div className="flex items-center justify-between border-b border-white/10 pb-2">
-                <span className="text-white/60">Matrícula</span>
+                <span className="text-white/60">MatriÂ­cula</span>
                 <span className="font-700">${team.registrationFee} USD</span>
               </div>
               <div className="flex items-center justify-between">
@@ -253,7 +253,7 @@ function FlipCard({ team, onApply }: { team: Team; onApply: () => void }) {
             )}
           >
             <Zap className="h-4 w-4" />
-            {full ? "Sin cupos" : "Solicitar Membresía"}
+            {full ? "Sin cupos" : "Solicitar MembresiÂ­a"}
           </button>
         </div>
       </div>
@@ -300,9 +300,10 @@ function MembershipModal({
               Solicitud enviada
             </h3>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground text-pretty">
-              Recibimos tu solicitud de membresía para{" "}
-              <span className="font-600 text-primary">{team.name}</span>. Nuestro
-              equipo se pondrá en contacto para coordinar la incorporación.
+              Recibimos tu solicitud de membresiÂ­a para{" "}
+              <span className="font-600 text-primary">{team.name}</span>.
+              Nuestro equipo se pondriÂ¡ en contacto para coordinar la
+              incorporaciiÂ³n.
             </p>
             <button
               onClick={onClose}

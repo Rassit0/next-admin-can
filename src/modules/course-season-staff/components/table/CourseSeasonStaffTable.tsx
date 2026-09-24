@@ -42,7 +42,7 @@ export const CourseSeasonStaffTable = ({ staffList, courseSeason }: Props) => {
   }, []);
 
   const handleRemove = async (id: string) => {
-    if (!confirm("¿Está seguro de remover a este profesor/personal?")) return;
+    if (!confirm("ÃÂ¿EstiÂ¡ seguro de remover a este profesor/personal?")) return;
 
     setLoadingId(id);
     const res = await removeCourseSeasonStaff(id);
@@ -104,7 +104,7 @@ export const CourseSeasonStaffTable = ({ staffList, courseSeason }: Props) => {
           <Table.Body
             renderEmptyState={() => (
               <div className="py-10 text-center text-sm text-muted">
-                Aún no hay personal asignado a esta temporada.
+                AiÂºn no hay personal asignado a esta temporada.
               </div>
             )}
           >

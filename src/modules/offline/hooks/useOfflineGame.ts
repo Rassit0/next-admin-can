@@ -20,7 +20,7 @@ export const useOfflineGame = () => {
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
 
-  // Físicas usando refs para evitar re-renders
+  // Fi­sicas usando refs para evitar re-renders
   const playerY = useRef(GROUND_Y);
   const playerVelocity = useRef(0);
   const obstacles = useRef<Obstacle[]>([]);
@@ -54,7 +54,7 @@ export const useOfflineGame = () => {
       setScore(0);
       return;
     }
-    // Salta solo si está en el suelo (o muy cerca)
+    // Salta solo si esti¡ en el suelo (o muy cerca)
     if (playerY.current >= GROUND_Y - 1) {
       playerVelocity.current = JUMP_STRENGTH;
     }
@@ -74,10 +74,13 @@ export const useOfflineGame = () => {
     }
 
     const currentSpeed = INITIAL_OBSTACLE_SPEED * speedMultiplier.current;
-    
-    // Generar obstáculos (Conos deportivos)
-    if (obstacles.current.length === 0 || obstacles.current[obstacles.current.length - 1].x < 220) {
-      // Aleatoriedad ligeramente ajustada según la velocidad para que no se separen demasiado
+
+    // Generar obsti¡culos (Conos deportivos)
+    if (
+      obstacles.current.length === 0 ||
+      obstacles.current[obstacles.current.length - 1].x < 220
+    ) {
+      // Aleatoriedad ligeramente ajustada segiºn la velocidad para que no se separen demasiado
       const spawnChance = Math.min(0.02 * speedMultiplier.current, 0.05);
       if (Math.random() < spawnChance) {
         obstacleIdCounter.current += 1;
@@ -92,13 +95,23 @@ export const useOfflineGame = () => {
     }
 
     let collision = false;
-    
+
     obstacles.current.forEach((obs) => {
       obs.x -= currentSpeed;
-      
+
       // Hitbox del jugador (el balón) aprox 24x24
-      const playerRect = { x: 50, y: playerY.current - 24, width: 20, height: 20 };
-      const obsRect = { x: obs.x, y: GROUND_Y - obs.height, width: obs.width, height: obs.height };
+      const playerRect = {
+        x: 50,
+        y: playerY.current - 24,
+        width: 20,
+        height: 20,
+      };
+      const obsRect = {
+        x: obs.x,
+        y: GROUND_Y - obs.height,
+        width: obs.width,
+        height: obs.height,
+      };
 
       // Detección AABB
       if (
@@ -114,8 +127,8 @@ export const useOfflineGame = () => {
       if (!obs.passed && obs.x + obs.width < playerRect.x) {
         obs.passed = true;
         scoreRef.current += 10;
-        
-        // Aumentar dificultad gradualmente con cada obstáculo superado
+
+        // Aumentar dificultad gradualmente con cada obsti¡culo superado
         speedMultiplier.current += 0.03;
       }
     });
@@ -126,12 +139,15 @@ export const useOfflineGame = () => {
       setScore(scoreRef.current);
       if (scoreRef.current > highScore) {
         setHighScore(scoreRef.current);
-        localStorage.setItem("can-offline-high-score", scoreRef.current.toString());
+        localStorage.setItem(
+          "can-offline-high-score",
+          scoreRef.current.toString(),
+        );
       }
     } else {
-      // Limpiar obstáculos que ya pasaron
+      // Limpiar obsti¡culos que ya pasaron
       obstacles.current = obstacles.current.filter((obs) => obs.x > -50);
-      
+
       // Actualizar estado react
       setRenderPlayerY(playerY.current);
       setRenderObstacles([...obstacles.current]);

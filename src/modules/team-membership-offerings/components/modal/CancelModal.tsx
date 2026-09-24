@@ -31,7 +31,7 @@ export const CancelModal = ({ isOpen, onOpenChange, teamSeason }: Props) => {
   const [statusNotes, setStatusNotes] = useState("");
   const handleFinalize = async () => {
     if (!statusNotes) {
-      toast.danger("Debe ingresar un motivo de cancelación");
+      toast.danger("Debe ingresar un motivo de cancelaciiÂ³n");
       return;
     }
     setIsLoading(true);
@@ -49,10 +49,10 @@ export const CancelModal = ({ isOpen, onOpenChange, teamSeason }: Props) => {
               : messages;
             return `${field}: ${msgList}`;
           })
-          .join("\n"); // Los separamos por saltos de línea para el toast
+          .join("\n"); // Los separamos por saltos de liÂ­nea para el toast
       }
 
-      // 2. Pasamos la descripción formateada al componente de notificaciones
+      // 2. Pasamos la descripciiÂ³n formateada al componente de notificaciones
       toast.danger(res.message, {
         description: errorDescription,
       });
@@ -81,8 +81,8 @@ export const CancelModal = ({ isOpen, onOpenChange, teamSeason }: Props) => {
             <AlertDialog.Heading className="flex flex-col">
               <span>Cancelar Temporada</span>
               <span className="text-muted">
-                Estás por cancelar el ciclo de {teamSeason.name}: Esta acción es
-                irreversible
+                EstiÂ¡s por cancelar el ciclo de {teamSeason.name}: Esta acciiÂ³n
+                es irreversible
               </span>
             </AlertDialog.Heading>
           </AlertDialog.Header>
@@ -91,11 +91,11 @@ export const CancelModal = ({ isOpen, onOpenChange, teamSeason }: Props) => {
               <Alert.Indicator />
               <Alert.Content>
                 <Alert.Title>
-                  ¿Estás seguro de cancelar la temporada?
+                  ÃÂ¿EstiÂ¡s seguro de cancelar la temporada?
                 </Alert.Title>
                 <Alert.Description>
-                  Se bloquearán nuevas inscripciones y las membresías activas se
-                  moverán al historial.
+                  Se bloqueariÂ¡n nuevas inscripciones y las membresiÂ­as activas
+                  se moveriÂ¡n al historial.
                 </Alert.Description>
               </Alert.Content>
             </Alert>
@@ -125,10 +125,10 @@ export const CancelModal = ({ isOpen, onOpenChange, teamSeason }: Props) => {
               value={statusNotes}
               onChange={setStatusNotes}
             >
-              <Label>Motivo de Cancelación</Label>
-              <TextArea placeholder="Describe brevemente los motivos de la cancelación..." />
+              <Label>Motivo de CancelaciiÂ³n</Label>
+              <TextArea placeholder="Describe brevemente los motivos de la cancelaciiÂ³n..." />
               <FieldError>
-                {!statusNotes && "Debe ingresar un motivo de cancelación"}
+                {!statusNotes && "Debe ingresar un motivo de cancelaciiÂ³n"}
               </FieldError>
             </TextField>
           </AlertDialog.Body>
@@ -142,7 +142,7 @@ export const CancelModal = ({ isOpen, onOpenChange, teamSeason }: Props) => {
               isPending={isLoading}
               variant="danger"
             >
-              Sí, cancelar
+              SiÂ­, cancelar
             </Button>
           </AlertDialog.Footer>
         </AlertDialog.Dialog>

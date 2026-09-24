@@ -1,7 +1,10 @@
 "use server";
 
 import { api } from "@/modules/portal/core/api/api";
-import { handleServerAction, ServiceResponse } from "@/modules/portal/core/utils/handleServerAction";
+import {
+  handleServerAction,
+  ServiceResponse,
+} from "@/modules/portal/core/utils/handleServerAction";
 
 export interface PublicFixture {
   id: string;
@@ -28,7 +31,9 @@ export interface GetPublicFixtureParams {
   to?: string;
 }
 
-export const getPublicFixture = async (params?: GetPublicFixtureParams): Promise<ServiceResponse<PublicFixture[]>> => {
+export const getPublicFixture = async (
+  params?: GetPublicFixtureParams,
+): Promise<ServiceResponse<PublicFixture[]>> => {
   return handleServerAction(async () => {
     let url = `public/matches/fixture`;
     if (params?.from && params?.to) {
@@ -38,20 +43,17 @@ export const getPublicFixture = async (params?: GetPublicFixtureParams): Promise
       url += `?${searchParams.toString()}`;
     }
 
-    const res = await api.get<{ message: string; data: PublicFixture[] }>(
-      url,
-      {
-        next: {
-          tags: ["public-fixtures"],
-          revalidate: 1800,
-        },
+    const res = await api.get<{ message: string; data: PublicFixture[] }>(url, {
+      next: {
+        tags: ["public-fixtures"],
+        revalidate: 1800,
       },
-    );
+    });
 
     return {
       error: false,
       data: res.data || [],
-      message: res.message || "Fixture público obtenido exitosamente",
+      message: res.message || "Fixture piºblico obtenido exitosamente",
     };
   });
 };

@@ -19,7 +19,10 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
-import { IPayment, PaymentMethod } from "@/modules/payments/interfaces/payment.interface";
+import {
+  IPayment,
+  PaymentMethod,
+} from "@/modules/payments/interfaces/payment.interface";
 import { processPayment } from "@/modules/payments/helpers/gateway";
 import { formatCurrency } from "@/modules/player-memberships";
 
@@ -35,8 +38,8 @@ type Phase = "form" | "processing" | "success" | "error";
 const BANKS = [
   { id: "bnb", name: "Banco Nacional de Bolivia" },
   { id: "bmsc", name: "Banco Mercantil Santa Cruz" },
-  { id: "bcp", name: "Banco de Crédito BCP" },
-  { id: "bu", name: "Banco Unión" },
+  { id: "bcp", name: "Banco de CriÂ©dito BCP" },
+  { id: "bu", name: "Banco UniiÂ³n" },
 ];
 
 const formatCardNumber = (value: string): string =>
@@ -87,8 +90,7 @@ export const PaymentGatewayModal = ({
   }, [isOpen]);
 
   const amountLabel = useMemo(
-    () =>
-      payment ? formatCurrency(payment.amount, payment.currency) : "",
+    () => (payment ? formatCurrency(payment.amount, payment.currency) : ""),
     [payment],
   );
 
@@ -126,7 +128,7 @@ export const PaymentGatewayModal = ({
             <Modal.Heading>Procesar pago</Modal.Heading>
             <p className="mt-1.5 text-sm leading-5 text-muted">
               {payment
-                ? `${payment.concept} · ${payment.athleteName}`
+                ? `${payment.concept} ÃÂ· ${payment.athleteName}`
                 : "Selecciona un cargo pendiente"}
             </p>
           </Modal.Header>
@@ -150,9 +152,7 @@ export const PaymentGatewayModal = ({
                 >
                   <Tabs
                     selectedKey={method}
-                    onSelectionChange={(key) =>
-                      setMethod(key as PaymentMethod)
-                    }
+                    onSelectionChange={(key) => setMethod(key as PaymentMethod)}
                   >
                     <Tabs.List className="w-full">
                       <Tabs.Tab id="CARD">
@@ -177,7 +177,7 @@ export const PaymentGatewayModal = ({
                           />
                         </TextField>
                         <TextField className="w-full" name="cardNumber">
-                          <Label>Número de tarjeta</Label>
+                          <Label>NiÂºmero de tarjeta</Label>
                           <Input
                             variant="secondary"
                             inputMode="numeric"
@@ -217,8 +217,8 @@ export const PaymentGatewayModal = ({
                           </TextField>
                         </div>
                         <p className="text-[11px] leading-relaxed text-muted">
-                          Entorno de simulación seguro. No ingreses datos reales
-                          de tarjetas.
+                          Entorno de simulaciiÂ³n seguro. No ingreses datos
+                          reales de tarjetas.
                         </p>
                       </div>
                     </Tabs.Panel>
@@ -258,7 +258,7 @@ export const PaymentGatewayModal = ({
                           </ComboBox.Popover>
                         </ComboBox>
                         <TextField className="w-full" name="reference">
-                          <Label>Número de comprobante</Label>
+                          <Label>NiÂºmero de comprobante</Label>
                           <Input
                             variant="secondary"
                             placeholder="Ej. 0098123455"
@@ -315,7 +315,7 @@ export const PaymentGatewayModal = ({
                     <HugeiconsIcon icon={CheckmarkCircle02Icon} size={36} />
                   </motion.span>
                   <p className="text-base font-bold text-foreground">
-                    ¡Pago aprobado!
+                    ÃÂ¡Pago aprobado!
                   </p>
                   <p className="text-xs text-muted">{feedback}</p>
                   <p className="rounded-lg bg-surface px-3 py-1 text-[11px] font-medium text-muted">
@@ -346,10 +346,7 @@ export const PaymentGatewayModal = ({
 
           {(phase === "form" || phase === "error") && (
             <Modal.Footer>
-              <Button
-                variant="secondary"
-                onPress={() => onOpenChange(false)}
-              >
+              <Button variant="secondary" onPress={() => onOpenChange(false)}>
                 Cancelar
               </Button>
               {phase === "error" ? (

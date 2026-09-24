@@ -16,13 +16,13 @@ export const navLinks: NavLinkDef[] = [
     ],
   },
   { href: "/present", label: "Actualidad" },
-  { href: "/teams/basketball", label: "Básquetbol" },
+  { href: "/teams/basketball", label: "Bi¡squetbol" },
   { href: "/teams/volleyball", label: "Voleibol" },
   /* {
     href: "/teams",
     label: "Equipos",
     subLinks: [
-      { href: "/teams/basketball", label: "Básquetbol" },
+      { href: "/teams/basketball", label: "Bi¡squetbol" },
       { href: "/teams/volleyball", label: "Voleibol" },
       { href: "/teams/fixture", label: "Fixture" },
     ],

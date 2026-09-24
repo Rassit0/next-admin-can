@@ -130,7 +130,9 @@ export const PendingChargesCard = ({
             <p className="font-medium text-default-500">
               No hay cargos pendientes
             </p>
-            <p className="text-xs text-default-400">Esta persona está al día</p>
+            <p className="text-xs text-default-400">
+              Esta persona esti¡ al di­a
+            </p>
           </div>
         ) : (
           <div className="flex flex-col divide-y divide-default-100">

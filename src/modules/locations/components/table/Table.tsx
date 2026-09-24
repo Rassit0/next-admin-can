@@ -31,7 +31,7 @@ export const TableLocations = ({ locations }: Props) => {
     direction: "ascending",
   });
 
-  // Evitamos la hidratación fallida
+  // Evitamos la hidrataciiÂ³n fallida
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -73,18 +73,18 @@ export const TableLocations = ({ locations }: Props) => {
             </Table.Column> */}
 
             <Table.Column allowsSorting isRowHeader id="name">
-              <SortableColumnHeader id="name">INSTALACIÓN</SortableColumnHeader>
+              <SortableColumnHeader id="name">INSTALACIiÂN</SortableColumnHeader>
             </Table.Column>
 
             <Table.Column allowsSorting id="address">
               <SortableColumnHeader id="address">
-                DIRECCIÓN
+                DIRECCIiÂN
               </SortableColumnHeader>
             </Table.Column>
 
             <Table.Column allowsSorting id="description">
               <SortableColumnHeader id="description">
-                DESCRIPCIÓN
+                DESCRIPCIiÂN
               </SortableColumnHeader>
             </Table.Column>
 
@@ -96,13 +96,13 @@ export const TableLocations = ({ locations }: Props) => {
 
             <Table.Column allowsSorting id="isInternal">
               <SortableColumnHeader id="isInternal">
-                ¿ES INTERNO?
+                ÃÂ¿ES INTERNO?
               </SortableColumnHeader>
             </Table.Column>
 
             <Table.Column allowsSorting id="isRentable">
               <SortableColumnHeader id="isRentable">
-                ¿SE PUEDE ALQUILAR?
+                ÃÂ¿SE PUEDE ALQUILAR?
               </SortableColumnHeader>
             </Table.Column>
 
@@ -119,7 +119,7 @@ export const TableLocations = ({ locations }: Props) => {
                     No se encontraron registros
                   </span>
                   <span className="text-sm text-default-400">
-                    Intenta con otros términos de búsqueda o agrega uno nuevo.
+                    Intenta con otros tiÂ©rminos de biÂºsqueda o agrega uno nuevo.
                   </span>
                 </div>
               </div>
@@ -152,7 +152,7 @@ export const TableLocations = ({ locations }: Props) => {
                     size="sm"
                     variant="soft"
                   >
-                    {location.isInternal ? "Sí" : "No"}
+                    {location.isInternal ? "SiÂ­" : "No"}
                   </Chip>
                 </Table.Cell>
                 <Table.Cell>
@@ -165,7 +165,7 @@ export const TableLocations = ({ locations }: Props) => {
                     size="sm"
                     variant="soft"
                   >
-                    {location.isRentable ? "Sí" : "No"}
+                    {location.isRentable ? "SiÂ­" : "No"}
                   </Chip>
                 </Table.Cell>
                 <Table.Cell>

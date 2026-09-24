@@ -54,7 +54,9 @@ export const getPlayersOptions = async (
           ...player,
           person: {
             ...player.person,
-            birthDate: player.person.birthDate ? new Date(player.person.birthDate) : null,
+            birthDate: player.person.birthDate
+              ? new Date(player.person.birthDate)
+              : null,
           },
         })),
       },

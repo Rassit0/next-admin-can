@@ -19,7 +19,7 @@ export interface ILateFeePreview {
 
 export const previewLateFee = async (
   chargeId: string,
-  type: 'student' | 'membership' = 'student'
+  type: "student" | "membership" = "student",
 ): Promise<ServiceResponse<ILateFeePreview>> => {
   const session = await auth();
 
@@ -31,7 +31,8 @@ export const previewLateFee = async (
     };
 
   return handleServerAction(async () => {
-    const endpointPrefix = type === 'membership' ? 'membership-charges' : 'student-charges';
+    const endpointPrefix =
+      type === "membership" ? "membership-charges" : "student-charges";
     const res = await api.post<{ data: ILateFeePreview; message?: string }>(
       `${endpointPrefix}/${chargeId}/late-fee/preview`,
       {},
@@ -39,7 +40,7 @@ export const previewLateFee = async (
         headers: {
           Authorization: `Bearer ${session.user.token}`,
         },
-      }
+      },
     );
 
     return {

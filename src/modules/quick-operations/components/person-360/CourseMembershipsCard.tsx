@@ -20,7 +20,11 @@ interface Props {
   onSuccess?: () => void;
 }
 
-export const CourseMembershipsCard = ({ memberships, personId, onSuccess }: Props) => {
+export const CourseMembershipsCard = ({
+  memberships,
+  personId,
+  onSuccess,
+}: Props) => {
   const prefersReducedMotion = useReducedMotion();
 
   return (
@@ -98,7 +102,6 @@ export const CourseMembershipsCard = ({ memberships, personId, onSuccess }: Prop
             ))}
           </AnimatePresence>
         )}
-
       </Card.Content>
     </Card>
   );

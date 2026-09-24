@@ -1,7 +1,13 @@
 "use client";
 import { Chip } from "@heroui/react";
 import { IStudentMembership } from "@/modules/student-memberships";
-import { getCurrentCycle, getPendingCurrentCycle, getUpcomingCycles, isMembershipInGap, getPastCycles } from "@/modules/student-memberships/helpers/domain";
+import {
+  getCurrentCycle,
+  getPendingCurrentCycle,
+  getUpcomingCycles,
+  isMembershipInGap,
+  getPastCycles,
+} from "@/modules/student-memberships/helpers/domain";
 
 interface Props {
   membership: IStudentMembership;
@@ -23,9 +29,14 @@ export const ParticipationChip = ({ membership, size = "sm" }: Props) => {
 
   if (currentCycle) {
     const startDate = new Date(currentCycle.cycleStartDate);
-    const monthFormatter = new Intl.DateTimeFormat("es-BO", { month: "long", year: "numeric", timeZone: "UTC" });
+    const monthFormatter = new Intl.DateTimeFormat("es-BO", {
+      month: "long",
+      year: "numeric",
+      timeZone: "UTC",
+    });
     const monthName = monthFormatter.format(startDate);
-    const capitalizedMonth = monthName.charAt(0).toUpperCase() + monthName.slice(1);
+    const capitalizedMonth =
+      monthName.charAt(0).toUpperCase() + monthName.slice(1);
 
     return (
       <div className="flex flex-col gap-1 items-start">
@@ -40,16 +51,23 @@ export const ParticipationChip = ({ membership, size = "sm" }: Props) => {
   const pendingCycle = getPendingCurrentCycle(membership.cycleEnrollments);
   if (pendingCycle) {
     const startDate = new Date(pendingCycle.cycleStartDate);
-    const monthFormatter = new Intl.DateTimeFormat("es-BO", { month: "long", year: "numeric", timeZone: "UTC" });
+    const monthFormatter = new Intl.DateTimeFormat("es-BO", {
+      month: "long",
+      year: "numeric",
+      timeZone: "UTC",
+    });
     const monthName = monthFormatter.format(startDate);
-    const capitalizedMonth = monthName.charAt(0).toUpperCase() + monthName.slice(1);
+    const capitalizedMonth =
+      monthName.charAt(0).toUpperCase() + monthName.slice(1);
 
     let expirationText = "";
     if (pendingCycle.createdAt) {
-      const expirationDate = new Date(new Date(pendingCycle.createdAt).getTime() + 24 * 60 * 60 * 1000);
+      const expirationDate = new Date(
+        new Date(pendingCycle.createdAt).getTime() + 24 * 60 * 60 * 1000,
+      );
       const now = new Date();
       const diffMs = Math.max(0, expirationDate.getTime() - now.getTime());
-      
+
       const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
       if (diffHours > 0) {
         expirationText = `Vence en ${diffHours} h`;
@@ -65,7 +83,11 @@ export const ParticipationChip = ({ membership, size = "sm" }: Props) => {
           <span className="size-1.5 rounded-full bg-warning" aria-hidden />
           <Chip.Label>{capitalizedMonth} (Pendiente)</Chip.Label>
         </Chip>
-        {expirationText && <span className="text-[10px] text-muted font-medium">{expirationText}</span>}
+        {expirationText && (
+          <span className="text-[10px] text-muted font-medium">
+            {expirationText}
+          </span>
+        )}
       </div>
     );
   }
@@ -74,10 +96,15 @@ export const ParticipationChip = ({ membership, size = "sm" }: Props) => {
   if (isGap && upcomingCycles.length > 0) {
     const nextCycle = upcomingCycles[0];
     const startDate = new Date(nextCycle.cycleStartDate);
-    const monthFormatter = new Intl.DateTimeFormat("es-BO", { month: "long", year: "numeric", timeZone: "UTC" });
+    const monthFormatter = new Intl.DateTimeFormat("es-BO", {
+      month: "long",
+      year: "numeric",
+      timeZone: "UTC",
+    });
     const monthName = monthFormatter.format(startDate);
-    const capitalizedMonth = monthName.charAt(0).toUpperCase() + monthName.slice(1);
-    
+    const capitalizedMonth =
+      monthName.charAt(0).toUpperCase() + monthName.slice(1);
+
     const pastCycles = getPastCycles(membership.cycleEnrollments);
     if (pastCycles.length === 0) {
       return (
@@ -96,7 +123,9 @@ export const ParticipationChip = ({ membership, size = "sm" }: Props) => {
           <span className="size-1.5 rounded-full bg-warning" aria-hidden />
           <Chip.Label>En pausa</Chip.Label>
         </Chip>
-        <span className="text-[10px] text-muted">Próximo: {capitalizedMonth}</span>
+        <span className="text-[10px] text-muted">
+          Próximo: {capitalizedMonth}
+        </span>
       </div>
     );
   }

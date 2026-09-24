@@ -26,7 +26,7 @@ export const getLocations = async ({
     const res = await api.get<ILocationsResponse>(
       `locations?${params.toString()}`, // 1er argumento: el endpoint
       {
-        // 2do argumento: options (aquí va el caché)
+        // 2do argumento: options (aqui­ va el cachi©)
         next: {
           tags: ["locations"],
           revalidate: 3600,

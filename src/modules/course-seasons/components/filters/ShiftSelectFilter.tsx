@@ -19,7 +19,7 @@ export const ShiftSelectFilter = ({ shifts }: ShiftSelectFilterProps) => {
   const handleSelectionChange = (value: string) => {
     const params = new URLSearchParams(searchParams);
 
-    params.set("page", "1"); // Reset a página 1
+    params.set("page", "1"); // Reset a pi¡gina 1
 
     if (value && value !== "all") {
       params.set("shiftId", value);
@@ -62,5 +62,3 @@ export const ShiftSelectFilter = ({ shifts }: ShiftSelectFilterProps) => {
     </Select>
   );
 };
-
-

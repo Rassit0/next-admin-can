@@ -14,11 +14,11 @@ export type MembershipLifecycleAction =
   | "activate";
 
 const messages: Record<MembershipLifecycleAction, string> = {
-  finish: "Membresía finalizada exitosamente",
-  suspend: "Membresía suspendida exitosamente",
+  finish: "Membresi­a finalizada exitosamente",
+  suspend: "Membresi­a suspendida exitosamente",
   withdraw: "Atleta dado de baja exitosamente",
-  reactivate: "Membresía reactivada exitosamente",
-  activate: "Membresía activada exitosamente",
+  reactivate: "Membresi­a reactivada exitosamente",
+  activate: "Membresi­a activada exitosamente",
 };
 
 export const updateMembershipLifecycle = async ({

@@ -13,94 +13,97 @@ interface ExampleProps {
 
 export const PAYMENT_PLAN_EXAMPLES: ExampleProps[] = [
   {
-    name: 'Plan Regular (Sin Descuentos)',
-    description: "El atleta paga ciclo a ciclo de forma normal sin ningún tipo de descuento ni cuotas adelantadas.",
+    name: "Plan Regular (Sin Descuentos)",
+    description:
+      "El atleta paga ciclo a ciclo de forma normal sin ningiºn tipo de descuento ni cuotas adelantadas.",
     details: [
       { label: "Agrupar Cuotas", value: "1" },
       { label: "Descuentos", value: "Ninguno" },
     ],
     planData: {
-      name: 'Plan Regular',
+      name: "Plan Regular",
       advanceCycles: 1,
       promotionalCycles: 1,
-      advanceCyclesDiscountPercent: '0',
-      registrationDiscountPercent: '0',
-      recurringDiscountPercent: '0',
-      seasonFeeDiscountPercent: '0',
+      advanceCyclesDiscountPercent: "0",
+      registrationDiscountPercent: "0",
+      recurringDiscountPercent: "0",
+      seasonFeeDiscountPercent: "0",
       isSinglePayment: false,
     },
     supportedBillingTypes: ["MONTHLY_ONLY", "BOTH"],
   },
   {
     name: 'Promo: "Inicia gratis y adelanta el próximo mes" (o 2x1)',
-    description: "El atleta entra gratis el primer mes, pero se le obliga a pagar el segundo mes por adelantado.",
+    description:
+      "El atleta entra gratis el primer mes, pero se le obliga a pagar el segundo mes por adelantado.",
     details: [
       { label: "Agrupar Cuotas", value: "2" },
       { label: "Ciclos con descuento", value: "1" },
       { label: "Descuento en Cuotas Adelantadas", value: "100%" },
     ],
     planData: {
-      name: 'Promo 2x1 (1er mes gratis)',
+      name: "Promo 2x1 (1er mes gratis)",
       advanceCycles: 2,
       promotionalCycles: 1,
-      advanceCyclesDiscountPercent: '100',
-      registrationDiscountPercent: '0',
-      recurringDiscountPercent: '0',
+      advanceCyclesDiscountPercent: "100",
+      registrationDiscountPercent: "0",
+      recurringDiscountPercent: "0",
       isSinglePayment: false,
     },
     supportedBillingTypes: ["MONTHLY_ONLY", "BOTH"],
   },
   {
     name: 'Promo: "Paga 3 meses con 10% de descuento"',
-    description: "El atleta adelanta 3 meses (trimestre) recibiendo un 10% de descuento sobre ese total. Luego pagará normal.",
+    description:
+      "El atleta adelanta 3 meses (trimestre) recibiendo un 10% de descuento sobre ese total. Luego pagari¡ normal.",
     details: [
       { label: "Agrupar Cuotas", value: "3" },
       { label: "Ciclos con descuento", value: "3" },
       { label: "Descuento en Cuotas Adelantadas", value: "10%" },
     ],
     planData: {
-      name: 'Pago Trimestral (10% descuento)',
+      name: "Pago Trimestral (10% descuento)",
       advanceCycles: 3,
       promotionalCycles: 3,
-      advanceCyclesDiscountPercent: '10',
-      registrationDiscountPercent: '0',
-      recurringDiscountPercent: '0',
+      advanceCyclesDiscountPercent: "10",
+      registrationDiscountPercent: "0",
+      recurringDiscountPercent: "0",
       isSinglePayment: false,
     },
     supportedBillingTypes: ["MONTHLY_ONLY", "BOTH"],
   },
   {
-    name: 'Beca Completa (100% Gratis Mensual)',
-    description: "El atleta no pagará nunca la mensualidad, pero el sistema registrará los ciclos a $0.",
-    details: [
-      { label: "Descuento Cuota Recurrente", value: "100%" },
-    ],
+    name: "Beca Completa (100% Gratis Mensual)",
+    description:
+      "El atleta no pagari¡ nunca la mensualidad, pero el sistema registrari¡ los ciclos a $0.",
+    details: [{ label: "Descuento Cuota Recurrente", value: "100%" }],
     planData: {
-      name: 'Beca Completa',
-      recurringDiscountPercent: '100',
-      registrationDiscountPercent: '100',
+      name: "Beca Completa",
+      recurringDiscountPercent: "100",
+      registrationDiscountPercent: "100",
       advanceCycles: 1,
-      advanceCyclesDiscountPercent: '0',
+      advanceCyclesDiscountPercent: "0",
       isSinglePayment: false,
     },
     supportedBillingTypes: ["MONTHLY_ONLY", "BOTH"],
   },
   {
-    name: 'Pago Anual / Temporada Completa',
-    description: "El atleta paga todo el año/temporada en su primer día con un descuento por pronto pago.",
+    name: "Pago Anual / Temporada Completa",
+    description:
+      "El atleta paga todo el ai±o/temporada en su primer di­a con un descuento por pronto pago.",
     details: [
-      { label: "Obligar Pago Único", value: "Activo" },
+      { label: "Obligar Pago inico", value: "Activo" },
       { label: "Descuento Tarifa de Temporada", value: "15%" },
     ],
     planData: {
-      name: 'Temporada Completa',
+      name: "Temporada Completa",
       isSinglePayment: true,
-      seasonFeeDiscountPercent: '15',
+      seasonFeeDiscountPercent: "15",
       advanceCycles: 1,
-      advanceCyclesDiscountPercent: '0',
+      advanceCyclesDiscountPercent: "0",
     },
     supportedBillingTypes: ["SINGLE_ONLY", "BOTH"],
-  }
+  },
 ];
 
 interface ExamplesModalProps {
@@ -120,8 +123,9 @@ export const ExamplesModal = ({
 }: ExamplesModalProps) => {
   const filteredExamples = PAYMENT_PLAN_EXAMPLES.filter((example) =>
     billingType
-      ? example.supportedBillingTypes.includes(billingType) || example.supportedBillingTypes.includes("BOTH")
-      : true
+      ? example.supportedBillingTypes.includes(billingType) ||
+        example.supportedBillingTypes.includes("BOTH")
+      : true,
   );
   return (
     <Modal.Backdrop isOpen={isOpen} onOpenChange={onOpenChange}>

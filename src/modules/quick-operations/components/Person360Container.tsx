@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Spinner, Card } from "@heroui/react";
 import { getSecretarySummary } from "../actions/get-secretary-summary";
 import { ISecretarySummaryResponse } from "../interfaces/secretary-summary.interface";
-import { IPersonOption } from "@/common/actions/get-persons-options";
+import { IPersonOption } from "@/modules/persons";
 import { PersonHeader } from "./person-360/PersonHeader";
 import { Person360EnrollStudentDrawer } from "./person-360/Person360EnrollStudentDrawer";
 import { Person360EnrollPlayerDrawer } from "./person-360/Person360EnrollPlayerDrawer";
@@ -29,9 +29,16 @@ interface Props {
   initialContacts?: IPersonContact[];
 }
 
-export const Person360Container = ({ personId, selectedPerson, initialSummary, initialContacts }: Props) => {
+export const Person360Container = ({
+  personId,
+  selectedPerson,
+  initialSummary,
+  initialContacts,
+}: Props) => {
   const prefersReducedMotion = useReducedMotion();
-  const [summary, setSummary] = useState<{data: ISecretarySummaryResponse["data"]} | null>(initialSummary ? { data: initialSummary } : null);
+  const [summary, setSummary] = useState<{
+    data: ISecretarySummaryResponse["data"];
+  } | null>(initialSummary ? { data: initialSummary } : null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -42,7 +49,8 @@ export const Person360Container = ({ personId, selectedPerson, initialSummary, i
   // Financial Ext State
   const [isHistoryDrawerOpen, setIsHistoryDrawerOpen] = useState(false);
   const [isChargeDrawerOpen, setIsChargeDrawerOpen] = useState(false);
-  const [isMembershipHistoryDrawerOpen, setIsMembershipHistoryDrawerOpen] = useState(false);
+  const [isMembershipHistoryDrawerOpen, setIsMembershipHistoryDrawerOpen] =
+    useState(false);
 
   useEffect(() => {
     if (!personId) {
@@ -71,8 +79,10 @@ export const Person360Container = ({ personId, selectedPerson, initialSummary, i
   };
 
   const handleChargeToggle = (chargeId: string) => {
-    setSelectedChargeIds(prev => 
-      prev.includes(chargeId) ? prev.filter(id => id !== chargeId) : [...prev, chargeId]
+    setSelectedChargeIds((prev) =>
+      prev.includes(chargeId)
+        ? prev.filter((id) => id !== chargeId)
+        : [...prev, chargeId],
     );
   };
 
@@ -89,7 +99,9 @@ export const Person360Container = ({ personId, selectedPerson, initialSummary, i
   if (!personId) {
     return (
       <div className="flex flex-col items-center justify-center p-12 text-default-500 border-2 border-dashed border-default-200 rounded-xl mt-6">
-        <p className="text-lg">Seleccione una persona para ver sus operaciones rápidas.</p>
+        <p className="text-lg">
+          Seleccione una persona para ver sus operaciones ri¡pidas.
+        </p>
       </div>
     );
   }
@@ -114,47 +126,67 @@ export const Person360Container = ({ personId, selectedPerson, initialSummary, i
   if (!summary) return null;
 
   return (
-    <motion.div 
+    <motion.div
       className="flex flex-col gap-6 mt-6"
       variants={prefersReducedMotion ? {} : staggerContainer}
       initial="hidden"
       animate="show"
     >
       <motion.div variants={prefersReducedMotion ? {} : fadeInUp}>
-        <PersonHeader profile={summary.data.profile} selectedPerson={selectedPerson} />
+        <PersonHeader
+          profile={summary.data.profile}
+          selectedPerson={selectedPerson}
+        />
       </motion.div>
-      
-      <motion.div variants={prefersReducedMotion ? {} : fadeInUp} className="flex flex-wrap items-center gap-4">
-        <Person360EnrollPlayerDrawer profile={summary.data.profile} onSuccess={refreshSummary} />
-        <Person360EnrollStudentDrawer profile={summary.data.profile} onSuccess={refreshSummary} />
-        
+
+      <motion.div
+        variants={prefersReducedMotion ? {} : fadeInUp}
+        className="flex flex-wrap items-center gap-4"
+      >
+        <Person360EnrollPlayerDrawer
+          profile={summary.data.profile}
+          onSuccess={refreshSummary}
+        />
+        <Person360EnrollStudentDrawer
+          profile={summary.data.profile}
+          onSuccess={refreshSummary}
+        />
+
         <div className="ml-auto flex flex-wrap items-center gap-2">
-          <Button 
+          <Button
             variant="secondary"
             onPress={() => setIsMembershipHistoryDrawerOpen(true)}
           >
             Historial de Membresías
           </Button>
-          <Button 
+          <Button
             variant="secondary"
             onPress={() => setIsHistoryDrawerOpen(true)}
           >
             Historial de Pagos
           </Button>
-          <Button 
-            variant="outline"
-            onPress={() => setIsChargeDrawerOpen(true)}
-          >
+          <Button variant="outline" onPress={() => setIsChargeDrawerOpen(true)}>
             <i className="ri-add-line mr-2"></i> Nuevo Cargo
           </Button>
         </div>
       </motion.div>
 
-      <motion.div variants={prefersReducedMotion ? {} : fadeInUp} className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <TeamMembershipsCard memberships={summary.data.playerMemberships} personId={personId} onSuccess={refreshSummary} />
-        <CourseMembershipsCard memberships={summary.data.studentMemberships} personId={personId} onSuccess={refreshSummary} />
-        <PendingChargesCard 
-          charges={summary.data.pendingCharges} 
+      <motion.div
+        variants={prefersReducedMotion ? {} : fadeInUp}
+        className="grid grid-cols-1 md:grid-cols-3 gap-4"
+      >
+        <TeamMembershipsCard
+          memberships={summary.data.playerMemberships}
+          personId={personId}
+          onSuccess={refreshSummary}
+        />
+        <CourseMembershipsCard
+          memberships={summary.data.studentMemberships}
+          personId={personId}
+          onSuccess={refreshSummary}
+        />
+        <PendingChargesCard
+          charges={summary.data.pendingCharges}
           selectedChargeIds={selectedChargeIds}
           onChargeToggle={handleChargeToggle}
           onCobrarClick={handleCobrarClick}
@@ -162,14 +194,22 @@ export const Person360Container = ({ personId, selectedPerson, initialSummary, i
         />
       </motion.div>
 
-      <motion.div variants={prefersReducedMotion ? {} : fadeInUp} className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <PersonContactsCard personId={personId} initialContacts={initialContacts} />
+      <motion.div
+        variants={prefersReducedMotion ? {} : fadeInUp}
+        className="grid grid-cols-1 md:grid-cols-3 gap-4"
+      >
+        <PersonContactsCard
+          personId={personId}
+          initialContacts={initialContacts}
+        />
       </motion.div>
 
-      <BulkPaymentDrawer 
+      <BulkPaymentDrawer
         isOpen={isBulkDrawerOpen}
         onOpenChange={setIsBulkDrawerOpen}
-        charges={summary.data.pendingCharges.filter(c => selectedChargeIds.includes(c.id))}
+        charges={summary.data.pendingCharges.filter((c) =>
+          selectedChargeIds.includes(c.id),
+        )}
         payerPerson={selectedPerson}
         onSuccess={handlePaymentSuccess}
         onError={refreshSummary}
@@ -202,5 +242,3 @@ export const Person360Container = ({ personId, selectedPerson, initialSummary, i
     </motion.div>
   );
 };
-
-

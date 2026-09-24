@@ -17,7 +17,7 @@ export const getStudentById = async ({
     const res = await api.get<{ data: IStudent; message: string }>(
       `students/${id}`, // 1er argumento: el endpoint
       {
-        // 2do argumento: options (aquí va el caché)
+        // 2do argumento: options (aqui­ va el cachi©)
         // next: {
         //   tags: ["students"],
         //   revalidate: 3600,

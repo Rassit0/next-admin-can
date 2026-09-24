@@ -2,7 +2,10 @@
 import { api } from "@/utils/api";
 import { ServiceResponse } from "@/types/api";
 import { handleServerAction } from "@/utils";
-import { ITransaction, ITransactionsResponse } from "../interfaces/transaction.interface";
+import {
+  ITransaction,
+  ITransactionsResponse,
+} from "../interfaces/transaction.interface";
 
 interface SearchParams {
   search?: string;
@@ -22,8 +25,12 @@ interface SearchParams {
 
 const parseTransaction = (transaction: ITransaction): ITransaction => ({
   ...transaction,
-  transactionDate: transaction.transactionDate ? new Date(transaction.transactionDate) : new Date(),
-  createdAt: transaction.createdAt ? new Date(transaction.createdAt) : new Date(),
+  transactionDate: transaction.transactionDate
+    ? new Date(transaction.transactionDate)
+    : new Date(),
+  createdAt: transaction.createdAt
+    ? new Date(transaction.createdAt)
+    : new Date(),
 });
 
 export const getTransactions = async ({
@@ -48,7 +55,8 @@ export const getTransactions = async ({
     if (page) params.set("page", page);
     if (type) params.set("type", type);
     if (paymentMethods) params.set("paymentMethods", paymentMethods);
-    if (financialAccountIds) params.set("financialAccountIds", financialAccountIds);
+    if (financialAccountIds)
+      params.set("financialAccountIds", financialAccountIds);
     if (startDate) params.set("startDate", startDate);
     if (endDate) params.set("endDate", endDate);
     if (origin) params.set("origin", origin);
@@ -77,13 +85,17 @@ export const getTransactions = async ({
   });
 };
 
-export const getPaymentMethods = async (): Promise<ServiceResponse<{ data: string[] }>> => {
+export const getPaymentMethods = async (): Promise<
+  ServiceResponse<{ data: string[] }>
+> => {
   return handleServerAction(async () => {
-    const res = await api.get<{ data: string[] }>("transactions/payment-methods");
+    const res = await api.get<{ data: string[] }>(
+      "transactions/payment-methods",
+    );
     return {
       error: false,
       data: res,
-      message: "Métodos de pago obtenidos",
+      message: "Mi©todos de pago obtenidos",
     };
   });
 };

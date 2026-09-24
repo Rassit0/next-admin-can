@@ -64,7 +64,7 @@ export const MetricsCards = ({
     {
       label: "Inscripción (Bs)",
       value: String(Number(teamSeason.billingConfig?.registrationFee)),
-      hint: "Tarifa única de ingreso",
+      hint: "Tarifa iºnica de ingreso",
       icon: Ticket01Icon,
       tone: "text-primary",
       bg: "bg-primary/10",

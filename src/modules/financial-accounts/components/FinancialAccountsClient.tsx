@@ -2,7 +2,13 @@
 import React, { useState } from "react";
 import { FinancialAccount } from "../interfaces/financial-account.interface";
 import { Button, Card, Chip } from "@heroui/react";
-import { PlusSignIcon, BankIcon, Wallet01Icon, Money01Icon, Edit02Icon } from "@hugeicons/core-free-icons";
+import {
+  PlusSignIcon,
+  BankIcon,
+  Wallet01Icon,
+  Money01Icon,
+  Edit02Icon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { FinancialAccountDrawer } from "./FinancialAccountDrawer";
 import { CashClosuresDrawer } from "@/modules/cash-closures/components/CashClosuresDrawer";
@@ -15,10 +21,13 @@ export const FinancialAccountsClient = ({ accounts }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const onOpenChange = (open: boolean) => setIsOpen(open);
   const onOpen = () => setIsOpen(true);
-  const [accountToEdit, setAccountToEdit] = useState<FinancialAccount | null>(null);
-  
+  const [accountToEdit, setAccountToEdit] = useState<FinancialAccount | null>(
+    null,
+  );
+
   const [isClosuresOpen, setIsClosuresOpen] = useState(false);
-  const [accountForClosures, setAccountForClosures] = useState<FinancialAccount | null>(null);
+  const [accountForClosures, setAccountForClosures] =
+    useState<FinancialAccount | null>(null);
 
   const handleOpenCreate = () => {
     setAccountToEdit(null);
@@ -38,12 +47,26 @@ export const FinancialAccountsClient = ({ accounts }: Props) => {
   const getIcon = (type: string) => {
     switch (type) {
       case "BANK":
-        return <HugeiconsIcon icon={BankIcon} size={24} className="text-primary" />;
+        return (
+          <HugeiconsIcon icon={BankIcon} size={24} className="text-primary" />
+        );
       case "DIGITAL_WALLET":
-        return <HugeiconsIcon icon={Wallet01Icon} size={24} className="text-secondary" />;
+        return (
+          <HugeiconsIcon
+            icon={Wallet01Icon}
+            size={24}
+            className="text-secondary"
+          />
+        );
       case "CASH":
       default:
-        return <HugeiconsIcon icon={Money01Icon} size={24} className="text-success" />;
+        return (
+          <HugeiconsIcon
+            icon={Money01Icon}
+            size={24}
+            className="text-success"
+          />
+        );
     }
   };
 
@@ -53,7 +76,7 @@ export const FinancialAccountsClient = ({ accounts }: Props) => {
         <div>
           <h2 className="text-2xl font-bold">Cuentas Financieras</h2>
           <p className="text-default-500">
-            Gestiona cajas físicas, cuentas bancarias y billeteras digitales.
+            Gestiona cajas fi­sicas, cuentas bancarias y billeteras digitales.
           </p>
         </div>
         <Button variant="primary" onPress={handleOpenCreate}>
@@ -73,12 +96,22 @@ export const FinancialAccountsClient = ({ accounts }: Props) => {
                 <div className="flex flex-col">
                   <p className="text-md font-bold">{acc.name}</p>
                   <p className="text-small text-default-500">
-                    {acc.accountNumber || (acc.type === "CASH" ? "Efectivo" : "Sin número")}
+                    {acc.accountNumber ||
+                      (acc.type === "CASH" ? "Efectivo" : "Sin niºmero")}
                   </p>
                 </div>
               </div>
-              <Button isIconOnly variant="ghost" size="sm" onPress={() => handleOpenEdit(acc)}>
-                <HugeiconsIcon icon={Edit02Icon} size={18} className="text-default-400" />
+              <Button
+                isIconOnly
+                variant="ghost"
+                size="sm"
+                onPress={() => handleOpenEdit(acc)}
+              >
+                <HugeiconsIcon
+                  icon={Edit02Icon}
+                  size={18}
+                  className="text-default-400"
+                />
               </Button>
             </Card.Header>
             <Card.Content className="pt-0">
@@ -88,9 +121,14 @@ export const FinancialAccountsClient = ({ accounts }: Props) => {
                 )}
                 <div className="flex flex-row justify-between items-center mt-2">
                   <div className="flex flex-col">
-                    <span className="text-xs text-default-500 uppercase tracking-wider">Saldo Disponible</span>
+                    <span className="text-xs text-default-500 uppercase tracking-wider">
+                      Saldo Disponible
+                    </span>
                     <span className="text-xl font-bold">
-                      {acc.currency} {Number(acc.cachedBalance).toLocaleString("es-BO", { minimumFractionDigits: 2 })}
+                      {acc.currency}{" "}
+                      {Number(acc.cachedBalance).toLocaleString("es-BO", {
+                        minimumFractionDigits: 2,
+                      })}
                     </span>
                   </div>
                   {acc.isDefault && (
@@ -102,7 +140,11 @@ export const FinancialAccountsClient = ({ accounts }: Props) => {
               </div>
               {acc.type === "CASH" && (
                 <div className="mt-4 pt-4 border-t border-default-100 flex justify-end">
-                  <Button size="sm" variant="secondary" onPress={() => handleOpenClosures(acc)}>
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    onPress={() => handleOpenClosures(acc)}
+                  >
                     Arqueos de Caja
                   </Button>
                 </div>
@@ -122,7 +164,7 @@ export const FinancialAccountsClient = ({ accounts }: Props) => {
         onOpenChange={onOpenChange}
         accountToEdit={accountToEdit}
       />
-      
+
       <CashClosuresDrawer
         isOpen={isClosuresOpen}
         onOpenChange={setIsClosuresOpen}

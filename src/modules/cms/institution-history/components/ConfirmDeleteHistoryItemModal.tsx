@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  Modal,
-  Button,
-  useOverlayState,
-} from "@heroui/react";
+import { Modal, Button, useOverlayState } from "@heroui/react";
 import { useState } from "react";
 import { deleteInstitutionHistoryItemAction } from "../actions";
 import { InstitutionHistoryItem } from "../services";
@@ -12,7 +8,11 @@ import { Delete02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { toast } from "sonner";
 
-export const ConfirmDeleteHistoryItemModal = ({ item }: { item: InstitutionHistoryItem }) => {
+export const ConfirmDeleteHistoryItemModal = ({
+  item,
+}: {
+  item: InstitutionHistoryItem;
+}) => {
   const state = useOverlayState();
   const [loading, setLoading] = useState(false);
 
@@ -28,7 +28,7 @@ export const ConfirmDeleteHistoryItemModal = ({ item }: { item: InstitutionHisto
       }
     } catch (error) {
       console.error(error);
-      toast.error("Ocurrió un error inesperado al eliminar");
+      toast.error("OcurriiÂ³ un error inesperado al eliminar");
     } finally {
       setLoading(false);
     }
@@ -48,18 +48,26 @@ export const ConfirmDeleteHistoryItemModal = ({ item }: { item: InstitutionHisto
               <Modal.Icon className="bg-danger/20 text-danger">
                 <HugeiconsIcon icon={Delete02Icon} size={24} />
               </Modal.Icon>
-              <Modal.Heading>Confirmar Eliminación</Modal.Heading>
+              <Modal.Heading>Confirmar EliminaciiÂ³n</Modal.Heading>
             </Modal.Header>
             <Modal.Body className="px-6 py-4">
               <p>
-                ¿Estás seguro de que deseas eliminar el hito <strong>{item.year} - {item.title}</strong>? Esta acción no se puede deshacer.
+                ÃÂ¿EstiÂ¡s seguro de que deseas eliminar el hito{" "}
+                <strong>
+                  {item.year} - {item.title}
+                </strong>
+                ? Esta acciiÂ³n no se puede deshacer.
               </p>
             </Modal.Body>
             <Modal.Footer>
               <Button variant="ghost" onPress={() => state.setOpen(false)}>
                 Cancelar
               </Button>
-              <Button variant="danger" isPending={loading} onPress={handleDelete}>
+              <Button
+                variant="danger"
+                isPending={loading}
+                onPress={handleDelete}
+              >
                 Eliminar
               </Button>
             </Modal.Footer>

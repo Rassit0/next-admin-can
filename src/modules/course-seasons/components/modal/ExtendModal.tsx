@@ -37,11 +37,11 @@ export const ExtendModal = ({ isOpen, onOpenChange, courseSeason }: Props) => {
 
   const handleExtend = async () => {
     if (!reason) {
-      toast.danger("Debe ingresar un motivo de extensión");
+      toast.danger("Debe ingresar un motivo de extensiiÂ³n");
       return;
     }
     if (!newEndDate) {
-      toast.danger("Debe seleccionar una fecha de finalización");
+      toast.danger("Debe seleccionar una fecha de finalizaciiÂ³n");
       return;
     }
     setIsLoading(true);
@@ -62,10 +62,10 @@ export const ExtendModal = ({ isOpen, onOpenChange, courseSeason }: Props) => {
               : messages;
             return `${field}: ${msgList}`;
           })
-          .join("\n"); // Los separamos por saltos de línea para el toast
+          .join("\n"); // Los separamos por saltos de liÂ­nea para el toast
       }
 
-      // 2. Pasamos la descripción formateada al componente de notificaciones
+      // 2. Pasamos la descripciiÂ³n formateada al componente de notificaciones
       toast.danger(
         res.errors ? "Error al extender la temporada" : res.message,
         {
@@ -97,7 +97,7 @@ export const ExtendModal = ({ isOpen, onOpenChange, courseSeason }: Props) => {
             <AlertDialog.Heading className="flex flex-col">
               <span>Extender Temporada</span>
               <span className="text-muted">
-                Estás por extender el ciclo de {courseSeason.season.name}
+                EstiÂ¡s por extender el ciclo de {courseSeason.season.name}
               </span>
             </AlertDialog.Heading>
           </AlertDialog.Header>
@@ -106,11 +106,11 @@ export const ExtendModal = ({ isOpen, onOpenChange, courseSeason }: Props) => {
               <Alert.Indicator />
               <Alert.Content>
                 <Alert.Title>
-                  ¿Estás seguro de extender la temporada?
+                  ÃÂ¿EstiÂ¡s seguro de extender la temporada?
                 </Alert.Title>
                 <Alert.Description>
-                  Se extenderá la temporada y las membresías se actualizarán
-                  automáticamente.
+                  Se extenderiÂ¡ la temporada y las membresiÂ­as se actualizariÂ¡n
+                  automiÂ¡ticamente.
                 </Alert.Description>
               </Alert.Content>
             </Alert>
@@ -142,7 +142,7 @@ export const ExtendModal = ({ isOpen, onOpenChange, courseSeason }: Props) => {
                 value={newEndDate}
                 onChange={setNewEndDate}
               >
-                <Label>Nueva Fecha de Finalización</Label>
+                <Label>Nueva Fecha de FinalizaciiÂ³n</Label>
                 <DateField.Group variant="secondary" fullWidth>
                   <DateField.Input>
                     {(segment) => <DateField.Segment segment={segment} />}
@@ -156,7 +156,7 @@ export const ExtendModal = ({ isOpen, onOpenChange, courseSeason }: Props) => {
                 <FieldError
                   children={
                     !newEndDate && (
-                      <>Debe seleccionar una fecha de finalización</>
+                      <>Debe seleccionar una fecha de finalizaciiÂ³n</>
                     )
                   }
                 />
@@ -198,10 +198,10 @@ export const ExtendModal = ({ isOpen, onOpenChange, courseSeason }: Props) => {
                 value={reason}
                 onChange={setReason}
               >
-                <Label>Motivo de Finalización</Label>
-                <TextArea placeholder="Describe brevemente los motivos de la finalización anticipada..." />
+                <Label>Motivo de FinalizaciiÂ³n</Label>
+                <TextArea placeholder="Describe brevemente los motivos de la finalizaciiÂ³n anticipada..." />
                 <FieldError>
-                  {!reason && "Debe ingresar un motivo de cancelación"}
+                  {!reason && "Debe ingresar un motivo de cancelaciiÂ³n"}
                 </FieldError>
               </TextField>
             </div>
@@ -216,7 +216,7 @@ export const ExtendModal = ({ isOpen, onOpenChange, courseSeason }: Props) => {
               isPending={isLoading}
               variant="danger"
             >
-              Sí, extender
+              SiÂ­, extender
             </Button>
           </AlertDialog.Footer>
         </AlertDialog.Dialog>

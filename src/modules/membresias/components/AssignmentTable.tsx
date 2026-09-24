@@ -24,7 +24,7 @@ const formatCurrency = (amount: number, currency: string = "BOB") =>
   }).format(amount);
 
 const formatDate = (date: Date | null | undefined) => {
-  if (!date) return "—";
+  if (!date) return "Ã¢ÂÂ";
   return new Date(date).toLocaleDateString("es-BO", {
     year: "numeric",
     month: "short",
@@ -47,30 +47,40 @@ export const AssignmentTable = ({
           <Table.Header className="bg-surface-secondary">
             <Table.Column isRowHeader allowsSorting id="member">
               <SortableColumnHeader id="member">
-                <span className="text-xs font-semibold uppercase tracking-wide">Miembro</span>
+                <span className="text-xs font-semibold uppercase tracking-wide">
+                  Miembro
+                </span>
               </SortableColumnHeader>
             </Table.Column>
             <Table.Column allowsSorting id="enrolledAt">
               <SortableColumnHeader id="enrolledAt">
-                <span className="text-xs font-semibold uppercase tracking-wide">Inscrito</span>
+                <span className="text-xs font-semibold uppercase tracking-wide">
+                  Inscrito
+                </span>
               </SortableColumnHeader>
             </Table.Column>
             <Table.Column id="charges" className="text-right">
-              <span className="text-xs font-semibold uppercase tracking-wide">Cargos Iniciales</span>
+              <span className="text-xs font-semibold uppercase tracking-wide">
+                Cargos Iniciales
+              </span>
             </Table.Column>
             <Table.Column allowsSorting id="status">
               <SortableColumnHeader id="status">
-                <span className="text-xs font-semibold uppercase tracking-wide">Estado</span>
+                <span className="text-xs font-semibold uppercase tracking-wide">
+                  Estado
+                </span>
               </SortableColumnHeader>
             </Table.Column>
             <Table.Column className="text-center">
-              <span className="text-xs font-semibold uppercase tracking-wide">Acciones</span>
+              <span className="text-xs font-semibold uppercase tracking-wide">
+                Acciones
+              </span>
             </Table.Column>
           </Table.Header>
           <Table.Body
             renderEmptyState={() => (
               <div className="py-10 text-center text-sm text-muted">
-                No hay asignaciones para esta temporada aún.
+                No hay asignaciones para esta temporada aiÂºn.
               </div>
             )}
           >
@@ -107,7 +117,9 @@ export const AssignmentTable = ({
                       </Avatar>
                       <div className="flex flex-col min-w-0">
                         <span className="font-medium text-foreground truncate">
-                          {person ? `${person.name} ${person.lastName}` : "Miembro"}
+                          {person
+                            ? `${person.name} ${person.lastName}`
+                            : "Miembro"}
                         </span>
                         {person?.documentNumber && (
                           <span className="text-xs text-muted truncate">
@@ -126,24 +138,31 @@ export const AssignmentTable = ({
                     </span>
                   </Table.Cell>
                   <Table.Cell className="py-3">
-                    <div title={`${statusConfig.label} desde ${formatDate(
+                    <div
+                      title={`${statusConfig.label} desde ${formatDate(
                         assignment[
                           {
                             active: "enrolledAt",
                             suspended: "suspendedAt",
                             completed: "completedAt",
                             withdrawn: "withdrawnAt",
-                          }[assignment.status] as keyof IMemberTeamSeasonAssignment
-                        ] as Date
-                      )}`} className={`flex w-fit items-center gap-1.5 rounded-lg ${statusConfig.bgColor} px-2.5 py-1.5`}>
-                        <HugeiconsIcon
-                          icon={statusConfig.icon}
-                          size={14}
-                          className={statusConfig.textColor}
-                        />
-                        <span className={`text-xs font-semibold ${statusConfig.textColor}`}>
-                          {statusConfig.label}
-                        </span>
+                          }[
+                            assignment.status
+                          ] as keyof IMemberTeamSeasonAssignment
+                        ] as Date,
+                      )}`}
+                      className={`flex w-fit items-center gap-1.5 rounded-lg ${statusConfig.bgColor} px-2.5 py-1.5`}
+                    >
+                      <HugeiconsIcon
+                        icon={statusConfig.icon}
+                        size={14}
+                        className={statusConfig.textColor}
+                      />
+                      <span
+                        className={`text-xs font-semibold ${statusConfig.textColor}`}
+                      >
+                        {statusConfig.label}
+                      </span>
                     </div>
                   </Table.Cell>
                   <Table.Cell className="py-3">

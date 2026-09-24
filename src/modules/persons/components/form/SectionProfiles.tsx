@@ -43,7 +43,7 @@ export const SectionProfiles = () => {
               </div>
               <div>
                 <div className="text-sm font-bold text-on-surface">
-                  Básquetbol
+                  Bi¡squetbol
                 </div>
                 <div className="text-[10px] text-on-surface-variant uppercase font-black tracking-wider">
                   Sub-18 Masculino
@@ -108,7 +108,7 @@ export const SectionProfiles = () => {
               Perfiles de Estudiante
             </h3>
             <p className="text-xs text-on-surface-variant font-medium mt-1">
-              Formación académica y deportiva
+              Formación acadi©mica y deportiva
             </p>
           </div>
           <button className="flex items-center gap-1.5 px-3 py-1.5 bg-tertiary-container/10 text-tertiary font-bold text-xs rounded-full hover:bg-tertiary-container/20 transition-colors">
@@ -124,14 +124,14 @@ export const SectionProfiles = () => {
               </div>
               <div>
                 <div className="font-bold text-on-surface">
-                  Táctica Aplicada al Fútbol
+                  Ti¡ctica Aplicada al Fiºtbol
                 </div>
                 <div className="text-xs text-on-surface-variant">
                   Escuela de Verano CAN - Módulo II
                 </div>
                 <div className="flex gap-4 mt-2">
                   <span className="text-[11px] font-bold px-2 py-0.5 bg-tertiary-fixed-dim/30 rounded text-tertiary uppercase tracking-tighter">
-                    Turno: Mañana
+                    Turno: Mai±ana
                   </span>
                   <span className="text-[11px] font-bold px-2 py-0.5 bg-tertiary-fixed-dim/30 rounded text-tertiary uppercase tracking-tighter">
                     Ciclo: 2024-B
@@ -167,10 +167,10 @@ export const SectionProfiles = () => {
               <HugeiconsIcon icon={Dumbbell01Icon} className="text-secondary" />
               <div>
                 <div className="text-sm font-bold">
-                  Preparador Físico - Atletismo
+                  Preparador Fi­sico - Atletismo
                 </div>
                 <div className="text-[10px] text-on-surface-variant uppercase font-bold">
-                  Categoría: Senior Elite
+                  Categori­a: Senior Elite
                 </div>
               </div>
             </div>

@@ -46,19 +46,19 @@ export const PAYMENT_STATUS_CONFIG = {
 
 export const PAYMENT_METHOD_CONFIG = {
   "credit-card": {
-    label: "Tarjeta de Crédito",
-    icon: "💳",
+    label: "Tarjeta de CriÂ©dito",
+    icon: "Ã°ÂÂÂ³",
   },
   "debit-card": {
-    label: "Tarjeta de Débito",
-    icon: "💳",
+    label: "Tarjeta de DiÂ©bito",
+    icon: "Ã°ÂÂÂ³",
   },
   "bank-transfer": {
     label: "Transferencia Bancaria",
-    icon: "🏦",
+    icon: "Ã°ÂÂÂ¦",
   },
   cash: {
     label: "Efectivo",
-    icon: "💵",
+    icon: "Ã°ÂÂÂµ",
   },
 } as const;

@@ -1,5 +1,8 @@
 import { Metadata } from "next";
-import { getTransactions, getPaymentMethods } from "@/modules/accounting-cash-flow/actions/get";
+import {
+  getTransactions,
+  getPaymentMethods,
+} from "@/modules/accounting-cash-flow/actions/get";
 import { CashFlowView } from "@/modules/accounting-cash-flow/components/CashFlowView";
 import { getAccountCategories } from "@/modules/account-categories/actions/get";
 import { getFinancialAccountOptions } from "@/modules/financial-accounts/actions/get-options";
@@ -31,8 +34,8 @@ export default async function QuickOperationsCashFlowPage({
     categoryId,
   } = resolvedSearchParams;
 
-  const [response, categoriesRes, financialAccountsRes, paymentMethodsRes] = await resolvePageData(
-    [
+  const [response, categoriesRes, financialAccountsRes, paymentMethodsRes] =
+    await resolvePageData([
       getTransactions({
         search,
         page,
@@ -50,8 +53,7 @@ export default async function QuickOperationsCashFlowPage({
       getAccountCategories({ per_page: "100" }),
       getFinancialAccountOptions(),
       getPaymentMethods(),
-    ],
-  );
+    ]);
 
   const financialAccounts = financialAccountsRes.data || [];
 

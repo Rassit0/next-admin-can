@@ -22,20 +22,20 @@ export const SiteFooter = ({ institution }: { institution: Institution }) => {
                 CAN
               </span>
               <span className="text-[10px] font-500 uppercase tracking-[0.25em] text-white/60">
-                {institution.name} ·{" "}
+                {institution.name} ÃÂ·{" "}
                 {new Date(institution.createdAt).getFullYear()}
               </span>
             </div>
           </div>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-white">
-            Institución polideportiva. Formando deportistas y comunidad desde
-            hace casi nueve décadas.
+            InstituciiÂ³n polideportiva. Formando deportistas y comunidad desde
+            hace casi nueve diÂ©cadas.
           </p>
         </div>
 
         <div>
           <h4 className="font-heading text-sm font-700 uppercase tracking-[0.2em] text-neon">
-            Navegación
+            NavegaciiÂ³n
           </h4>
           <ul className="mt-4 space-y-2">
             {navLinks.map((item) => (
@@ -57,7 +57,7 @@ export const SiteFooter = ({ institution }: { institution: Institution }) => {
           </h4>
           <ul className="mt-4 space-y-3 text-sm text-white/90">
             <li>
-              <strong className="text-neon">Dirección:</strong>{" "}
+              <strong className="text-neon">DirecciiÂ³n:</strong>{" "}
               {institution.address}
             </li>
             {defaultContact?.email && (
@@ -71,14 +71,14 @@ export const SiteFooter = ({ institution }: { institution: Institution }) => {
               {defaultContact?.phone || "+591 73841415"}
             </li>
             <li>
-              <strong className="text-neon">Teléfono Fijo:</strong> 25233388
+              <strong className="text-neon">TeliÂ©fono Fijo:</strong> 25233388
             </li>
           </ul>
 
           {/* Redes Sociales */}
           <div className="mt-6">
             <h4 className="mb-4 font-heading text-sm font-700 uppercase tracking-[0.2em] text-neon">
-              Síguenos
+              SiÂ­guenos
             </h4>
             <div className="flex items-center gap-4">
               <Link
@@ -138,7 +138,7 @@ export const SiteFooter = ({ institution }: { institution: Institution }) => {
         </div>
       </div>
       <div className="border-t border-white/10 py-5 text-center text-xs text-white/40">
-        © {new Date().getFullYear()} {institution.name}. Todos los derechos
+        ÃÂ© {new Date().getFullYear()} {institution.name}. Todos los derechos
         reservados.
       </div>
     </footer>

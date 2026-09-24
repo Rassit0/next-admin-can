@@ -49,16 +49,13 @@ export default async function StudentChargesPage({
             showButtonBack={false}
           />
           <SectionFilters />
-          
-          <TableCharges 
-            charges={chargesData} 
-            showPerson={true} 
-          />
-          
-          <PaginationSection 
-            totalPages={meta.totalPages} 
-            itemsPerPage={meta.itemsPerPage} 
-            totalItems={meta.totalItems} 
+
+          <TableCharges charges={chargesData} showPerson={true} />
+
+          <PaginationSection
+            totalPages={meta.totalPages}
+            itemsPerPage={meta.itemsPerPage}
+            totalItems={meta.totalItems}
           />
         </Card>
       </div>

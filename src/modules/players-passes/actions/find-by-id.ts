@@ -14,7 +14,7 @@ export const findPersonById = async ({
     const res = await api.get<{ data: IPerson; message: string }>(
       `persons/${id}`, // 1er argumento: el endpoint
       {
-        // 2do argumento: options (aquí va el caché)
+        // 2do argumento: options (aqui­ va el cachi©)
         next: {
           tags: ["persons"],
           revalidate: 3600,
@@ -38,11 +38,11 @@ export const findPersonById = async ({
     if (error instanceof ApiError) {
       console.warn(`[ApiError ${error.statusCode}]: ${error.message}`);
 
-      // Devolvemos el error en un formato que el frontend pueda procesar fácilmente
+      // Devolvemos el error en un formato que el frontend pueda procesar fi¡cilmente
       return {
         error: true,
         message: error.message,
-        errors: error.errors, // Aquí vienen los errores de validación (ej: campos requeridos)
+        errors: error.errors, // Aqui­ vienen los errores de validación (ej: campos requeridos)
         statusCode: error.statusCode,
       };
     }
@@ -52,7 +52,7 @@ export const findPersonById = async ({
 
     return {
       error: true,
-      message: "Ocurrió un error inesperado. Por favor, intenta más tarde.",
+      message: "Ocurrió un error inesperado. Por favor, intenta mi¡s tarde.",
       statusCode: 500,
     };
   }

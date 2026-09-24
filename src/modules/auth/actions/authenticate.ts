@@ -15,7 +15,7 @@ export async function authenticate(
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
-          return "Credenciales inválidas.";
+          return "Credenciales invi¡lidas.";
         default:
           return error.cause?.err?.message || "Algo salió mal.";
       }

@@ -1,4 +1,4 @@
-﻿"use server";
+"use server";
 import { api } from "@/utils/api";
 import { ServiceResponse } from "@/types/api";
 import { handleServerAction } from "@/utils";
@@ -9,7 +9,12 @@ import { redirect } from "next/navigation";
 export const getAllShifts = async (): Promise<ServiceResponse<IShift[]>> => {
   const session = await auth();
 
-  if (!session?.user) return { error: true, statusCode: 401, message: "Su sesión ha expirado. Por favor, inicie sesión nuevamente." } as any;
+  if (!session?.user)
+    return {
+      error: true,
+      statusCode: 401,
+      message: "Su sesión ha expirado. Por favor, inicie sesiÃƒÂ³n nuevamente.",
+    } as any;
 
   return handleServerAction(async () => {
     const res = await api.get<{ message: string; data: IShift[] }>(

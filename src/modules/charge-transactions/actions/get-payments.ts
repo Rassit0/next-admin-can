@@ -22,7 +22,9 @@ const parsePayment = (payment: IChargePayment): IChargePayment => ({
   updatedAt: payment.updatedAt ? new Date(payment.updatedAt) : new Date(),
   transactions: (payment.transactions || []).map((t) => ({
     ...t,
-    transactionDate: t.transactionDate ? new Date(t.transactionDate) : new Date(),
+    transactionDate: t.transactionDate
+      ? new Date(t.transactionDate)
+      : new Date(),
     createdAt: t.createdAt ? new Date(t.createdAt) : new Date(),
   })),
 });

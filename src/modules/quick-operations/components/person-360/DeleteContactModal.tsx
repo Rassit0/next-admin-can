@@ -44,10 +44,7 @@ export const DeleteContactModal = ({
   };
 
   return (
-    <AlertDialog.Backdrop
-      isOpen={isOpen}
-      onOpenChange={onOpenChange}
-    >
+    <AlertDialog.Backdrop isOpen={isOpen} onOpenChange={onOpenChange}>
       <AlertDialog.Container>
         <AlertDialog.Dialog className="sm:max-w-md">
           <AlertDialog.CloseTrigger />
@@ -57,11 +54,11 @@ export const DeleteContactModal = ({
           </AlertDialog.Header>
           <AlertDialog.Body>
             <p>
-              ¿Estás seguro que deseas eliminar a{" "}
+              ÃÂ¿EstiÂ¡s seguro que deseas eliminar a{" "}
               <strong>
                 {contact?.contactPerson.name} {contact?.contactPerson.lastName}
               </strong>{" "}
-              de los contactos? Esta acción no se puede deshacer.
+              de los contactos? Esta acciiÂ³n no se puede deshacer.
             </p>
           </AlertDialog.Body>
           <AlertDialog.Footer>

@@ -92,7 +92,7 @@ export const AccountCategoryDrawer = ({
           <Drawer.CloseTrigger />
           <Drawer.Header className="border-b border-border">
             <Drawer.Heading className="text-lg font-bold">
-              {category ? "Editar Categoría" : "Nueva Categoría"}
+              {category ? "Editar Categori­a" : "Nueva Categori­a"}
             </Drawer.Heading>
           </Drawer.Header>
           <Drawer.Body className="gap-6 pt-6">
@@ -109,13 +109,13 @@ export const AccountCategoryDrawer = ({
             <TextField className="w-full">
               <Label className="text-sm font-semibold">Código / Serie</Label>
               <Input
-                placeholder="Ej. MAT (Se genera automático si se deja vacío)"
+                placeholder="Ej. MAT (Se genera automi¡tico si se deja vaci­o)"
                 value={code}
                 onChange={(e) => setCode(e.target.value.toUpperCase())}
                 variant="secondary"
               />
             </TextField>
-            
+
             <ComboBox
               className="w-full"
               variant="secondary"
@@ -146,17 +146,14 @@ export const AccountCategoryDrawer = ({
             <TextField className="w-full">
               <Label className="text-sm font-semibold">Descripción</Label>
               <TextArea
-                placeholder="Detalles adicionales sobre esta categoría"
+                placeholder="Detalles adicionales sobre esta categori­a"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
             </TextField>
           </Drawer.Body>
           <Drawer.Footer className="border-t border-border">
-            <Button
-              variant="outline"
-              onPress={() => onOpenChange(false)}
-            >
+            <Button variant="outline" onPress={() => onOpenChange(false)}>
               <HugeiconsIcon icon={Cancel01Icon} size={18} />
               Cancelar
             </Button>

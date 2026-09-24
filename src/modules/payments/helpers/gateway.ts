@@ -10,7 +10,7 @@ import {
 } from "@/modules/payments/interfaces/payment.interface";
 
 const fullName = (membership: any): string => {
-  const person = (membership.player?.person || membership.student?.person);
+  const person = membership.player?.person || membership.student?.person;
   if (!person) return "Atleta";
   return [person.name, person.lastName, person.secondLastName]
     .filter(Boolean)
@@ -31,10 +31,7 @@ export const buildPaymentLedger = (
   const ledger: IPayment[] = [];
 
   memberships.forEach((membership) => {
-    const breakdown = calculateInitialCharges(
-      season,
-      membership.paymentPlan,
-    );
+    const breakdown = calculateInitialCharges(season, membership.paymentPlan);
     const collected = membership.status === "ACTIVE";
 
     breakdown.lines.forEach((line) => {
@@ -43,7 +40,9 @@ export const buildPaymentLedger = (
         id: `${membership.id}-${line.key}`,
         membershipId: membership.id,
         athleteName: fullName(membership),
-        athleteImageUrl: (membership.player?.person || membership.student?.person).imageUrl ?? null,
+        athleteImageUrl:
+          (membership.player?.person || membership.student?.person).imageUrl ??
+          null,
         concept: line.label,
         amount: line.net,
         currency: breakdown.currency,
@@ -91,11 +90,11 @@ export const validatePaymentInput = (
     if (!input.cardholder.trim())
       return { valid: false, error: "Ingresa el nombre del titular." };
     if (!luhnValid(input.cardNumber))
-      return { valid: false, error: "El número de tarjeta no es válido." };
+      return { valid: false, error: "El niºmero de tarjeta no es vi¡lido." };
     if (!/^\d{2}\/\d{2}$/.test(input.expiry))
       return { valid: false, error: "La fecha debe tener el formato MM/AA." };
     if (!/^\d{3,4}$/.test(input.cvc))
-      return { valid: false, error: "El CVC no es válido." };
+      return { valid: false, error: "El CVC no es vi¡lido." };
     return { valid: true };
   }
   if (!input.bank.trim())
@@ -118,7 +117,7 @@ export const processPayment = (input: PaymentInput): Promise<PaymentResult> => {
       resolve({
         success: false,
         reference: "",
-        message: validation.error ?? "Datos de pago inválidos.",
+        message: validation.error ?? "Datos de pago invi¡lidos.",
       });
       return;
     }
@@ -135,7 +134,7 @@ export const processPayment = (input: PaymentInput): Promise<PaymentResult> => {
         reference: success ? generateReference() : "",
         message: success
           ? "Pago procesado exitosamente."
-          : "El emisor rechazó la transacción. Verifica los datos o usa otro método.",
+          : "El emisor rechazó la transacción. Verifica los datos o usa otro mi©todo.",
       });
     }, 1400);
   });

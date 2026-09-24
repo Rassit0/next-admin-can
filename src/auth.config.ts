@@ -10,7 +10,7 @@ export interface BackendUser extends AuthUser {
 }
 
 // Configuración de acceso: Rutas de Next.js -> Módulos del Backend
-// Puedes ir agregando aquí las rutas y qué módulo de tu backend necesitan para entrar
+// Puedes ir agregando aqui­ las rutas y qui© módulo de tu backend necesitan para entrar
 export const moduleAccessControl: {
   path: string;
   requiredModule: PermissionModule;
@@ -27,7 +27,7 @@ export const moduleAccessControl: {
   { path: "/admin/locations", requiredModule: "LOCATIONS" },
   { path: "/admin/web", requiredModule: "INSTITUTIONS" }, // Asume que la web se gestiona a nivel institución
 
-  // Estructura Deportiva y Académica
+  // Estructura Deportiva y Acadi©mica
   { path: "/admin/disciplines", requiredModule: "DISCIPLINES" },
   { path: "/admin/categories", requiredModule: "CATEGORIES" },
   { path: "/admin/seasons", requiredModule: "SEASONS" },
@@ -41,7 +41,7 @@ export const moduleAccessControl: {
   { path: "/admin/students", requiredModule: "STUDENTS" },
   { path: "/admin/staff", requiredModule: "STAFF" },
 
-  // Rutas con parámetros dinámicos (Sub-entidades)
+  // Rutas con pari¡metros dini¡micos (Sub-entidades)
   // Equipos (Usa find con regex por lo que soporta /admin/teams/...)
   { path: "/admin/teams", requiredModule: "TEAMS" },
   // { path: "/admin/teams/[disciplineId]/[clubId]", requiredModule: "TEAM_SEASONS" }, // Ejemplo
@@ -57,12 +57,15 @@ export const authConfig = {
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       // Verificamos que tenga token del backend para considerarlo autenticado
-      // Esto evita bucles infinitos cuando expira el token pero NextAuth mantiene un user genérico vacío
+      // Esto evita bucles infinitos cuando expira el token pero NextAuth mantiene un user geni©rico vaci­o
       const isLoggedIn = !!(auth?.user && (auth.user as BackendUser).token);
       const path = nextUrl.pathname;
 
-      // Si ya está logueado e intenta acceder al login, lo redirigimos a /admin
-      if (isLoggedIn && (path.startsWith("/login") || path.startsWith("/admin/login"))) {
+      // Si ya esti¡ logueado e intenta acceder al login, lo redirigimos a /admin
+      if (
+        isLoggedIn &&
+        (path.startsWith("/login") || path.startsWith("/admin/login"))
+      ) {
         // Si viene con expired=true, permitimos que llegue al login para que el cliente ejecute signOut()
         if (nextUrl.searchParams.get("expired") === "true") {
           return true;
@@ -81,7 +84,7 @@ export const authConfig = {
       const isAdminRoute = path.startsWith("/admin");
 
       if (isAdminRoute) {
-        if (!isLoggedIn) return false; // Redirige a /login si no está autenticado
+        if (!isLoggedIn) return false; // Redirige a /login si no esti¡ autenticado
         return true;
       }
 
@@ -91,7 +94,7 @@ export const authConfig = {
     async jwt({ token, user }) {
       const backendUser = user as BackendUser | undefined;
       if (backendUser) {
-        // Obtenemos modulos únicos para reducir drásticamente el tamaño del token
+        // Obtenemos modulos iºnicos para reducir dri¡sticamente el tamai±o del token
         // Asignamos una version reducida del usuario para evitar el Error 431 (Headers Too Large)
         // Extraemos solo lo estrictamente necesario, descartando IDs, fechas y descripciones
         token.user = {
@@ -119,7 +122,7 @@ export const authConfig = {
       }
 
       // Si el token del backend expiró, limpiamos el token de NextAuth
-      // Esto hará que en el middleware auth.user sea undefined y redirija al login (evita bucle en /unauthorized)
+      // Esto hari¡ que en el middleware auth.user sea undefined y redirija al login (evita bucle en /unauthorized)
       if (
         typeof token.backendExp === "number" &&
         Date.now() / 1000 > token.backendExp

@@ -1,20 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { 
-  Spinner, 
-  Card,
-  Chip, 
-  Avatar
-} from "@heroui/react";
+import { Spinner, Card, Chip, Avatar } from "@heroui/react";
 import { getStudentMembershipHistories } from "../actions/get-histories";
-import { 
-  IStudentMembershipHistory, 
-  StudentMembershipStatus 
+import {
+  IStudentMembershipHistory,
+  StudentMembershipStatus,
 } from "../interfaces/student-membership.interface";
 
 // Utility icons
-const StatusIcon = ({ status }: { status: StudentMembershipStatus | "TRANSFER" }) => {
+const StatusIcon = ({
+  status,
+}: {
+  status: StudentMembershipStatus | "TRANSFER";
+}) => {
   switch (status) {
     case "ACTIVE":
       return <div className="w-3 h-3 rounded-full bg-success" />;
@@ -33,24 +32,37 @@ const StatusIcon = ({ status }: { status: StudentMembershipStatus | "TRANSFER" }
 
 const getStatusColor = (status: StudentMembershipStatus | "TRANSFER") => {
   switch (status) {
-    case "ACTIVE": return "success";
-    case "SUSPENDED": return "warning";
-    case "FINISHED": return "accent";
-    case "WITHDRAWN": return "danger";
-    case "TRANSFER": return "default";
-    default: return "default";
+    case "ACTIVE":
+      return "success";
+    case "SUSPENDED":
+      return "warning";
+    case "FINISHED":
+      return "accent";
+    case "WITHDRAWN":
+      return "danger";
+    case "TRANSFER":
+      return "default";
+    default:
+      return "default";
   }
 };
 
 const getStatusLabel = (status: StudentMembershipStatus | "TRANSFER") => {
   switch (status) {
-    case "ACTIVE": return "Activa";
-    case "SUSPENDED": return "Suspendida";
-    case "FINISHED": return "Finalizada";
-    case "WITHDRAWN": return "Baja";
-    case "TRANSFER": return "Transferencia";
-    case "PENDING_ACTIVE": return "Pendiente";
-    default: return status;
+    case "ACTIVE":
+      return "Activa";
+    case "SUSPENDED":
+      return "Suspendida";
+    case "FINISHED":
+      return "Finalizada";
+    case "WITHDRAWN":
+      return "Baja";
+    case "TRANSFER":
+      return "Transferencia";
+    case "PENDING_ACTIVE":
+      return "Pendiente";
+    default:
+      return status;
   }
 };
 
@@ -98,7 +110,7 @@ export function MembershipTimeline({ studentMembershipId }: Props) {
   if (histories.length === 0) {
     return (
       <div className="bg-default-50 p-8 rounded-medium border border-default-200 text-default-500 text-center">
-        No existen eventos registrados para esta membresía.
+        No existen eventos registrados para esta membresi­a.
       </div>
     );
   }
@@ -107,10 +119,10 @@ export function MembershipTimeline({ studentMembershipId }: Props) {
     <div className="relative border-l border-default-200 ml-3 md:ml-4 space-y-8 py-4">
       {histories.map((history, index) => {
         // Detectar si es una transferencia (Mismo estado previo y nuevo, y empieza con "Transferencia de turno")
-        const isTransfer = 
-          history.previousStatus === history.newStatus && 
+        const isTransfer =
+          history.previousStatus === history.newStatus &&
           history.reason?.startsWith("Transferencia de turno");
-        
+
         const displayStatus = isTransfer ? "TRANSFER" : history.newStatus;
         const color = getStatusColor(displayStatus);
 
@@ -124,9 +136,16 @@ export function MembershipTimeline({ studentMembershipId }: Props) {
             <div className="flex flex-col gap-2">
               <div className="flex flex-wrap items-center gap-2 justify-between">
                 <div className="flex items-center gap-2">
-                  <Chip 
-                    size="sm" 
-                    color={color as "success" | "warning" | "danger" | "default" | "accent"} 
+                  <Chip
+                    size="sm"
+                    color={
+                      color as
+                        | "success"
+                        | "warning"
+                        | "danger"
+                        | "default"
+                        | "accent"
+                    }
                     variant="soft"
                     className="font-medium"
                   >
@@ -138,7 +157,7 @@ export function MembershipTimeline({ studentMembershipId }: Props) {
                     </span>
                   )}
                 </div>
-                
+
                 <time className="text-xs text-default-400 font-medium whitespace-nowrap">
                   {new Intl.DateTimeFormat("es-ES", {
                     day: "2-digit",
@@ -154,7 +173,9 @@ export function MembershipTimeline({ studentMembershipId }: Props) {
                 <div className="bg-default-50 rounded-medium p-3 text-sm text-default-600">
                   {isTransfer ? (
                     <div className="flex flex-col gap-1">
-                      <span className="font-semibold text-default-700">Transferencia de turno</span>
+                      <span className="font-semibold text-default-700">
+                        Transferencia de turno
+                      </span>
                       <p>{history.reason}</p>
                     </div>
                   ) : (

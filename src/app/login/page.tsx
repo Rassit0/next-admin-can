@@ -28,7 +28,7 @@ export default function LoginPage() {
             <span className="text-accent">siguiente nivel.</span>
           </h2>
           <p className="text-lg text-muted/90 leading-relaxed">
-            Una plataforma integral diseñada para potenciar el rendimiento,
+            Una plataforma integral disei±ada para potenciar el rendimiento,
             optimizar la administración y conectar a toda tu comunidad deportiva
             en un solo lugar.
           </p>
@@ -43,7 +43,7 @@ export default function LoginPage() {
 
       {/* Zona Derecha - Formulario de Acceso */}
       <div className="w-full lg:w-1/2 relative flex flex-col items-center justify-center p-4 sm:p-8 md:p-12 overflow-y-auto">
-        {/* En móvil mostramos las partículas de fondo también en la derecha */}
+        {/* En móvil mostramos las parti­culas de fondo tambii©n en la derecha */}
         <div className="lg:hidden absolute inset-0 overflow-hidden pointer-events-none">
           <ParticlesBackground />
           <div className="absolute inset-0 bg-background/90 backdrop-blur-xl" />

@@ -204,7 +204,7 @@ export const MatchFormModal = ({
         homeTeamSeasonCategoryId === awayTeamSeasonCategoryId
       ) {
         setApiError(
-          "Un equipo no puede jugar contra sí mismo en la misma categoría (o categoría nula).",
+          "Un equipo no puede jugar contra siÂ­ mismo en la misma categoriÂ­a (o categoriÂ­a nula).",
         );
         return;
       }
@@ -248,8 +248,8 @@ export const MatchFormModal = ({
     } else {
       toast.success(
         mode === "create"
-          ? "Partido creado con Ã©xito"
-          : "Partido actualizado con Ã©xito",
+          ? "Partido creado con í©xito"
+          : "Partido actualizado con í©xito",
       );
       resetForm();
       state.close();
@@ -481,7 +481,7 @@ export const MatchFormModal = ({
                     }
                   >
                     <Label className="font-semibold text-sm">
-                      Categoría Local (Opcional)
+                      CategoriÂ­a Local (Opcional)
                     </Label>
                     <Select.Trigger>
                       <Select.Value />
@@ -519,7 +519,7 @@ export const MatchFormModal = ({
                     }
                   >
                     <Label className="font-semibold text-sm">
-                      Categoría Visitante (Opcional)
+                      CategoriÂ­a Visitante (Opcional)
                     </Label>
                     <Select.Trigger>
                       <Select.Value />
@@ -553,7 +553,7 @@ export const MatchFormModal = ({
                   onChange={(key) => setLocationId(key ? String(key) : "")}
                   isDisabled={loadingData}
                 >
-                  <Label className="font-semibold text-sm">UbicaciÃ³n</Label>
+                  <Label className="font-semibold text-sm">Ubicación</Label>
                   <Select.Trigger>
                     <Select.Value />
                     <Select.Indicator />
@@ -610,7 +610,7 @@ export const MatchFormModal = ({
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <TextField>
                     <Label className="font-semibold text-sm">
-                      PuntuaciÃ³n Local
+                      Puntuación Local
                     </Label>
                     <Input
                       type="number"
@@ -622,7 +622,7 @@ export const MatchFormModal = ({
                   </TextField>
                   <TextField>
                     <Label className="font-semibold text-sm">
-                      PuntuaciÃ³n Visitante
+                      Puntuación Visitante
                     </Label>
                     <Input
                       type="number"

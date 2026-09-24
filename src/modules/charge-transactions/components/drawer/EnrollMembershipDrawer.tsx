@@ -15,7 +15,11 @@ import {
   FieldError,
   Popover,
 } from "@heroui/react";
-import { Add01Icon, UserAdd01Icon, InformationCircleIcon } from "@hugeicons/core-free-icons";
+import {
+  Add01Icon,
+  UserAdd01Icon,
+  InformationCircleIcon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -129,7 +133,7 @@ export const EnrollMembershipDrawer = ({
       .substring(0, 10);
 
     if (!playerKey) err.playerKey = "Seleccione un atleta.";
-    if (!categoryKey) err.categoryKey = "Seleccione una categoría.";
+    if (!categoryKey) err.categoryKey = "Seleccione una categoriÂ­a.";
     if (!planKey) err.planKey = "Seleccione un plan de pago.";
     if (!startedAt) err.startedAt = "Debe ingresar una fecha de inicio.";
     else if (startedAt < sStartStr || startedAt > sEndStr) {
@@ -150,20 +154,20 @@ export const EnrollMembershipDrawer = ({
           (isNaN(season) || season < 0 || season > 100)
         ) {
           err.seasonDiscountPercent =
-            "El descuento debe ser mayor o igual a 0 y máximo 100.";
+            "El descuento debe ser mayor o igual a 0 y miÂ¡ximo 100.";
         }
       } else {
         if (!regDiscountPercent && !recDiscountPercent) {
           err.discountPercent =
-            "Debe ingresar al menos un porcentaje de descuento (Matrícula o Mensualidad).";
+            "Debe ingresar al menos un porcentaje de descuento (MatriÂ­cula o Mensualidad).";
         }
         if (regDiscountPercent && (isNaN(reg) || reg < 0 || reg > 100)) {
           err.regDiscountPercent =
-            "El descuento debe ser mayor o igual a 0 y máximo 100.";
+            "El descuento debe ser mayor o igual a 0 y miÂ¡ximo 100.";
         }
         if (recDiscountPercent && (isNaN(rec) || rec < 0 || rec > 100)) {
           err.recDiscountPercent =
-            "El descuento debe ser mayor o igual a 0 y máximo 100.";
+            "El descuento debe ser mayor o igual a 0 y miÂ¡ximo 100.";
         }
       }
 
@@ -172,7 +176,7 @@ export const EnrollMembershipDrawer = ({
       }
 
       if (discountType === "OTHER" && !discountReason.trim()) {
-        err.discountReason = "Especifique una razón o justificación.";
+        err.discountReason = "Especifique una raziÂ³n o justificaciiÂ³n.";
       }
 
       if (discountEndDate) {
@@ -213,7 +217,7 @@ export const EnrollMembershipDrawer = ({
   const reset = () => {
     setPlayerKey(null);
     setPlanKey(paymentPlans.find((p) => p.isDefault)?.id ?? null);
-    if (currentCategory && categories.some(c => c.id === currentCategory)) {
+    if (currentCategory && categories.some((c) => c.id === currentCategory)) {
       setCategoryKey(currentCategory);
     } else if (categories.length > 0) {
       setCategoryKey(categories[0].id);
@@ -240,7 +244,10 @@ export const EnrollMembershipDrawer = ({
       if (active) {
         if (!res.error && res.data) {
           setCategories(res.data);
-          if (currentCategory && res.data.some(c => c.id === currentCategory)) {
+          if (
+            currentCategory &&
+            res.data.some((c) => c.id === currentCategory)
+          ) {
             setCategoryKey(currentCategory);
           } else if (res.data.length > 0) {
             setCategoryKey(res.data[0].id);
@@ -329,22 +336,22 @@ export const EnrollMembershipDrawer = ({
       .substring(0, 10);
 
     if (startedAt < sStartStr || startedAt > sEndStr) {
-      toast.danger("Fecha inválida", {
-        description: `La fecha de inicio de la membresía debe estar dentro de la temporada (${sStartStr} al ${sEndStr}).`,
+      toast.danger("Fecha inviÂ¡lida", {
+        description: `La fecha de inicio de la membresiÂ­a debe estar dentro de la temporada (${sStartStr} al ${sEndStr}).`,
       });
       return;
     }
 
     if (hasDiscount && discountEndDate) {
       if (discountEndDate < startedAt) {
-        toast.danger("Fecha de descuento inválida", {
+        toast.danger("Fecha de descuento inviÂ¡lida", {
           description:
             "La fecha de fin del descuento no puede ser menor a la fecha de inicio.",
         });
         return;
       }
       if (discountEndDate > sEndStr) {
-        toast.danger("Fecha de descuento inválida", {
+        toast.danger("Fecha de descuento inviÂ¡lida", {
           description: `La fecha de fin del descuento no puede exceder el final de la temporada (${sEndStr}).`,
         });
         return;
@@ -352,7 +359,7 @@ export const EnrollMembershipDrawer = ({
     }
 
     if (Object.keys(errors).length > 0) {
-      toast.danger("Existen campos inválidos", {
+      toast.danger("Existen campos inviÂ¡lidos", {
         description: "Revisa el formulario para corregir los errores.",
       });
       return;
@@ -426,14 +433,13 @@ export const EnrollMembershipDrawer = ({
                   Inscribir atleta
                 </Drawer.Heading>
                 <p className="mt-1 text-xs font-medium text-muted">
-                  {teamSeason.team.name} · {teamSeason.season.name}
+                  {teamSeason.team.name} ÃÂ· {teamSeason.season.name}
                 </p>
               </div>
             </Drawer.Header>
 
             <Drawer.Body className="gap-5">
               <Surface variant="transparent" className="flex flex-col gap-5">
-
                 {/* Player picker */}
                 <SelectOrCreatePlayer
                   playerId={playerKey}
@@ -489,9 +495,9 @@ export const EnrollMembershipDrawer = ({
                               {plan.isSinglePayment
                                 ? teamSeason.billingConfig?.billingType ===
                                   "MONTHLY_ONLY"
-                                  ? `Pago Único (Adelantado) • -${plan.recurringDiscountPercent}% (Mensualidades)`
-                                  : `Pago Único • -${plan.seasonFeeDiscountPercent}% (Temporada)`
-                                : `Insc. -${plan.registrationDiscountPercent}% • Mens. -${plan.recurringDiscountPercent}%`}
+                                  ? `Pago iÂnico (Adelantado) - -${plan.recurringDiscountPercent}% (Mensualidades)`
+                                  : `Pago iÂnico - -${plan.seasonFeeDiscountPercent}% (Temporada)`
+                                : `Insc. -${plan.registrationDiscountPercent}% - Mens. -${plan.recurringDiscountPercent}%`}
                             </span>
                           </div>
                         </ListBox.Item>
@@ -500,12 +506,12 @@ export const EnrollMembershipDrawer = ({
                   </ComboBox.Popover>
                 </ComboBox>
 
-                {/* Categoría */}
+                {/* CategoriÂ­a */}
                 <ComboBox
                   className="w-full"
                   variant="secondary"
                   menuTrigger="focus"
-                  aria-label="Seleccionar Categoría"
+                  aria-label="Seleccionar CategoriÂ­a"
                   selectedKey={categoryKey}
                   onSelectionChange={(key) =>
                     setCategoryKey(key ? String(key) : null)
@@ -514,18 +520,18 @@ export const EnrollMembershipDrawer = ({
                   isInvalid={!!errors.categoryKey || undefined}
                 >
                   <Label className="text-sm font-semibold flex items-center">
-                    Categoría
-                    <InfoTooltip text="La categoría en la que el jugador será inscrito." />
+                    CategoriÂ­a
+                    <InfoTooltip text="La categoriÂ­a en la que el jugador seriÂ¡ inscrito." />
                   </Label>
                   <ComboBox.InputGroup>
                     <Input
                       variant="secondary"
                       placeholder={
                         loadingCategories
-                          ? "Cargando categorías..."
+                          ? "Cargando categoriÂ­as..."
                           : categories.length === 0
-                            ? "No hay categorías disponibles"
-                            : "Selecciona una categoría"
+                            ? "No hay categoriÂ­as disponibles"
+                            : "Selecciona una categoriÂ­a"
                       }
                     />
                     <ComboBox.Trigger />
@@ -626,7 +632,7 @@ export const EnrollMembershipDrawer = ({
                               }
                             >
                               <Label className="text-sm font-semibold">
-                                Desc. Matrícula (%)
+                                Desc. MatriÂ­cula (%)
                               </Label>
                               <Input
                                 variant="secondary"
@@ -638,7 +644,7 @@ export const EnrollMembershipDrawer = ({
                                 }
                               />
                               <p className="text-xs text-muted mt-1 leading-tight">
-                                Dejar vacío si no aplica.
+                                Dejar vaciÂ­o si no aplica.
                               </p>
                               {(errors.regDiscountPercent ||
                                 errors.discountPercent) && (
@@ -669,7 +675,7 @@ export const EnrollMembershipDrawer = ({
                                 }
                               />
                               <p className="text-xs text-muted mt-1 leading-tight">
-                                Dejar vacío si no aplica.
+                                Dejar vaciÂ­o si no aplica.
                               </p>
                               {(errors.recDiscountPercent ||
                                 (errors.discountPercent &&
@@ -716,18 +722,18 @@ export const EnrollMembershipDrawer = ({
                             </ListBox.Item>
                             <ListBox.Item
                               id="FINANCIAL_AID"
-                              textValue="Ayuda económica"
+                              textValue="Ayuda econiÂ³mica"
                             >
-                              Ayuda económica
+                              Ayuda econiÂ³mica
                             </ListBox.Item>
                             <ListBox.Item id="AGREEMENT" textValue="Convenio">
                               Convenio
                             </ListBox.Item>
                             <ListBox.Item
                               id="EXEMPTION"
-                              textValue="Exoneración"
+                              textValue="ExoneraciiÂ³n"
                             >
-                              Exoneración
+                              ExoneraciiÂ³n
                             </ListBox.Item>
                             <ListBox.Item id="OTHER" textValue="Otro">
                               Otro
@@ -741,7 +747,7 @@ export const EnrollMembershipDrawer = ({
                         isInvalid={!!errors.discountReason || undefined}
                       >
                         <Label className="text-sm font-semibold">
-                          Razón / Justificación
+                          RaziÂ³n / JustificaciiÂ³n
                         </Label>
                         <Input
                           variant="secondary"
@@ -771,7 +777,7 @@ export const EnrollMembershipDrawer = ({
                           onChange={(e) => setDiscountEndDate(e.target.value)}
                         />
                         <p className="text-xs text-muted mt-1 leading-tight">
-                          Si se deja en blanco, el descuento será permanente
+                          Si se deja en blanco, el descuento seriÂ¡ permanente
                           hasta que termine la temporada.
                         </p>
                         {errors.discountEndDate && (
@@ -790,7 +796,7 @@ export const EnrollMembershipDrawer = ({
                     </Switch.Control>
                     <Switch.Content>
                       <Label className="text-sm">
-                        Es Migración (omitir cargos iniciales)
+                        Es MigraciiÂ³n (omitir cargos iniciales)
                       </Label>
                     </Switch.Content>
                   </Switch>
@@ -812,7 +818,7 @@ export const EnrollMembershipDrawer = ({
                     <Alert.Indicator />
                     <Alert.Content>
                       <Alert.Title>
-                        Formulario incompleto o inválido
+                        Formulario incompleto o inviÂ¡lido
                       </Alert.Title>
                       <Alert.Description>
                         <ul className="list-disc pl-5 mt-1 text-sm space-y-1">

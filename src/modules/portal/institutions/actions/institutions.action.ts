@@ -1,9 +1,7 @@
 "use server";
 
 import { api } from "@/modules/portal/core/api/api";
-import {
-  handleServerAction,
-} from "@/modules/portal/core/utils/handleServerAction";
+import { handleServerAction } from "@/modules/portal/core/utils/handleServerAction";
 import { Institution } from "@/modules/portal/institutions/interfaces/institution.interface";
 import { ServiceResponse } from "@/types/api";
 import { notFound } from "next/navigation";
@@ -29,7 +27,3 @@ export const getInstitution = async (): Promise<
     };
   }) as unknown as Promise<ServiceResponse<Institution>>;
 };
-
-
-
-

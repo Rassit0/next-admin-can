@@ -29,7 +29,7 @@ export const AccountingCashFlowChart = ({ data }: Props) => {
       <Card.Header className="px-6 pt-6 flex-col items-start gap-1">
         <Card.Title className="text-lg font-semibold flex items-center">
           Flujo de Caja
-          <InfoTooltip text="Visualiza el historial de ingresos vs egresos para entender el comportamiento de la caja en el período." />
+          <InfoTooltip text="Visualiza el historial de ingresos vs egresos para entender el comportamiento de la caja en el peri­odo." />
         </Card.Title>
         <p className="text-sm text-muted-foreground">
           Comparativa de ingresos vs egresos

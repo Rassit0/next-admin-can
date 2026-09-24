@@ -24,7 +24,7 @@ export default async function InstitutionHistoryPage() {
         <HeaderPage
           title="Historia Institucional"
           description="Administra la sección introductoria y los hitos históricos (timeline) del portal público."
-          action={<AddInstitutionHistoryItemModal />}
+          action={<AddInstitutionHistoryItemModal buttonFloatingMobile />}
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -35,7 +35,7 @@ export default async function InstitutionHistoryPage() {
 
           <div className="lg:col-span-2">
             <h2 className="text-xl font-bold mb-4">
-              Línea de Tiempo (Timeline)
+              Linea de Tiempo (Timeline)
             </h2>
             <TableInstitutionHistory items={itemsData} />
           </div>

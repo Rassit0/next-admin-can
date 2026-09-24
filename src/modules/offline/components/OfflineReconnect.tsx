@@ -17,7 +17,16 @@ export const OfflineReconnect = () => {
           className="fixed bottom-10 left-1/2 z-50 flex items-center gap-3 px-5 py-3 bg-emerald-500/90 dark:bg-emerald-500 backdrop-blur-md text-white rounded-full shadow-2xl font-medium border border-emerald-400"
         >
           {/* Tick SVG */}
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
             <polyline points="20 6 9 17 4 12" />
           </svg>
           <span>Conexión restaurada</span>

@@ -1,12 +1,9 @@
 "use client";
+import { Form, Input, TextField, Label, Switch } from "@heroui/react";
 import {
-  Form,
-  Input,
-  TextField,
-  Label,
-  Switch,
-} from "@heroui/react";
-import { IHeroBanner, PostHeroBannerInterface } from "../../interfaces/hero-banner.interface";
+  IHeroBanner,
+  PostHeroBannerInterface,
+} from "../../interfaces/hero-banner.interface";
 import { addHeroBanner } from "../../actions/add";
 import { editHeroBanner } from "../../actions/edit";
 import { useState } from "react";
@@ -22,7 +19,10 @@ interface Props {
   setIsLoading?: (value: boolean) => void;
 }
 
-const validateImageAspectRatio = (file: File, expectedRatio: number): Promise<boolean> => {
+const validateImageAspectRatio = (
+  file: File,
+  expectedRatio: number,
+): Promise<boolean> => {
   return new Promise((resolve) => {
     const img = new window.Image();
     const objectUrl = URL.createObjectURL(file);
@@ -60,19 +60,25 @@ export const HeroBannerForm = ({
   const [files16x9, setFiles16x9] = useState<File[]>([]);
   const [files1x1, setFiles1x1] = useState<File[]>([]);
   const [files3x4, setFiles3x4] = useState<File[]>([]);
-  
+
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const handleUploadImage = (newFiles: File[], type: "16x9" | "1x1" | "3x4") => {
+  const handleUploadImage = (
+    newFiles: File[],
+    type: "16x9" | "1x1" | "3x4",
+  ) => {
     if (type === "16x9") {
       setFiles16x9(newFiles);
-      if (newFiles.length === 0) setFormData({ ...formData, image16x9: "" as any });
+      if (newFiles.length === 0)
+        setFormData({ ...formData, image16x9: "" as any });
     } else if (type === "1x1") {
       setFiles1x1(newFiles);
-      if (newFiles.length === 0) setFormData({ ...formData, image1x1: "" as any });
+      if (newFiles.length === 0)
+        setFormData({ ...formData, image1x1: "" as any });
     } else {
       setFiles3x4(newFiles);
-      if (newFiles.length === 0) setFormData({ ...formData, image3x4: "" as any });
+      if (newFiles.length === 0)
+        setFormData({ ...formData, image3x4: "" as any });
     }
   };
 
@@ -93,9 +99,9 @@ export const HeroBannerForm = ({
     if ((e.target as HTMLFormElement).id !== formId) return;
 
     const newErrors: Record<string, string> = {};
-    if (!formData.title) newErrors.title = "El título es obligatorio";
-    
-    // Validación de imagen 16x9
+    if (!formData.title) newErrors.title = "El tiÂ­tulo es obligatorio";
+
+    // ValidaciiÂ³n de imagen 16x9
     if (!heroBanner && files16x9.length === 0) {
       newErrors.image16x9 = "La imagen principal 16:9 es obligatoria";
     }
@@ -111,7 +117,7 @@ export const HeroBannerForm = ({
 
     setIsLoading?.(true);
 
-    // Validar aspect ratio nativamente (comentado porque el backend recorta automáticamente)
+    // Validar aspect ratio nativamente (comentado porque el backend recorta automiÂ¡ticamente)
     /*
     if (files16x9.length > 0) {
       const isValid = await validateImageAspectRatio(files16x9[0], 16 / 9);
@@ -132,7 +138,7 @@ export const HeroBannerForm = ({
     if (files3x4.length > 0) {
       const isValid = await validateImageAspectRatio(files3x4[0], 3 / 4);
       if (!isValid) {
-        toast.error("La imagen Móvil debe tener un aspect ratio de 3:4.");
+        toast.error("La imagen MiÂ³vil debe tener un aspect ratio de 3:4.");
         setIsLoading?.(false);
         return;
       }
@@ -151,15 +157,23 @@ export const HeroBannerForm = ({
     }
     if (files1x1.length > 0) {
       payload.append("image1x1", files1x1[0]);
-    } else if (heroBanner && heroBanner.image1x1 && formData.image1x1 === ("" as any)) {
+    } else if (
+      heroBanner &&
+      heroBanner.image1x1 &&
+      formData.image1x1 === ("" as any)
+    ) {
       payload.append("removeImage1x1", "true");
     }
     if (files3x4.length > 0) {
       payload.append("image3x4", files3x4[0]);
-    } else if (heroBanner && heroBanner.image3x4 && formData.image3x4 === ("" as any)) {
+    } else if (
+      heroBanner &&
+      heroBanner.image3x4 &&
+      formData.image3x4 === ("" as any)
+    ) {
       payload.append("removeImage3x4", "true");
     }
-    
+
     let res;
     if (heroBanner) {
       res = await editHeroBanner(heroBanner.id, payload as any);
@@ -184,10 +198,14 @@ export const HeroBannerForm = ({
   };
 
   return (
-    <Form id={formId} onSubmit={handleSubmit} className="flex flex-col gap-6 w-full">
+    <Form
+      id={formId}
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-6 w-full"
+    >
       <div className="flex flex-col gap-4 w-full">
         <TextField isRequired variant="secondary">
-          <Label>Título</Label>
+          <Label>TiÂ­tulo</Label>
           <Input
             placeholder="Ej: Temporada 2024"
             value={formData.title}
@@ -197,27 +215,33 @@ export const HeroBannerForm = ({
               handleRemoveError("title");
             }}
           />
-          {errors.title && <span className="text-danger text-xs mt-1">{errors.title}</span>}
+          {errors.title && (
+            <span className="text-danger text-xs mt-1">{errors.title}</span>
+          )}
         </TextField>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <TextField variant="secondary">
-            <Label>Texto de botón (CTA)</Label>
+            <Label>Texto de botiÂ³n (CTA)</Label>
             <Input
-              placeholder="Ej: Ver más"
+              placeholder="Ej: Ver miÂ¡s"
               value={formData.ctaText || ""}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              onChange={(e: any) => setFormData({ ...formData, ctaText: e.target.value })}
+              onChange={(e: any) =>
+                setFormData({ ...formData, ctaText: e.target.value })
+              }
             />
           </TextField>
 
           <TextField variant="secondary">
-            <Label>Redirección (URL o Ruta)</Label>
+            <Label>RedirecciiÂ³n (URL o Ruta)</Label>
             <Input
               placeholder="Ej: /actualidad o https://google.com"
               value={formData.redirectTo || ""}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              onChange={(e: any) => setFormData({ ...formData, redirectTo: e.target.value })}
+              onChange={(e: any) =>
+                setFormData({ ...formData, redirectTo: e.target.value })
+              }
             />
           </TextField>
         </div>
@@ -227,7 +251,7 @@ export const HeroBannerForm = ({
             <Label>
               <span className="flex items-center gap-2">
                 Orden (Sort Order)
-                <InfoTooltip text="Define el orden de aparición visual. Valores menores (ej: 0, 1) aparecerán primero en la lista." />
+                <InfoTooltip text="Define el orden de apariciiÂ³n visual. Valores menores (ej: 0, 1) apareceriÂ¡n primero en la lista." />
               </span>
             </Label>
             <Input
@@ -235,7 +259,12 @@ export const HeroBannerForm = ({
               placeholder="0"
               value={formData.sortOrder?.toString() || "0"}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              onChange={(e: any) => setFormData({ ...formData, sortOrder: parseInt(e.target.value) || 0 })}
+              onChange={(e: any) =>
+                setFormData({
+                  ...formData,
+                  sortOrder: parseInt(e.target.value) || 0,
+                })
+              }
             />
           </TextField>
         </div>
@@ -271,15 +300,15 @@ export const HeroBannerForm = ({
               maxSizeMB={5}
             />
             {formData.image16x9 && (
-              <div className="mt-2 text-sm text-success">
-                ✅ Cargada
-              </div>
+              <div className="mt-2 text-sm text-success">Ã¢ÂÂ Cargada</div>
             )}
           </div>
 
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium">Imagen Tablet (1:1)</label>
-            <span className="text-xs text-default-400">Opcional. Formato cuadrado.</span>
+            <span className="text-xs text-default-400">
+              Opcional. Formato cuadrado.
+            </span>
             <FileUploader
               files={files1x1}
               onFilesChange={(f) => handleUploadImage(f, "1x1")}
@@ -289,10 +318,12 @@ export const HeroBannerForm = ({
             />
             {formData.image1x1 && (
               <div className="mt-2 text-sm text-success flex items-center justify-between">
-                <span>✅ Cargada</span>
+                <span>Ã¢ÂÂ Cargada</span>
                 <button
                   type="button"
-                  onClick={() => setFormData({ ...formData, image1x1: "" as any })}
+                  onClick={() =>
+                    setFormData({ ...formData, image1x1: "" as any })
+                  }
                   className="text-danger hover:underline cursor-pointer"
                 >
                   Eliminar
@@ -302,8 +333,10 @@ export const HeroBannerForm = ({
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium">Imagen Móvil (3:4)</label>
-            <span className="text-xs text-default-400">Opcional. Formato vertical.</span>
+            <label className="text-sm font-medium">Imagen MiÂ³vil (3:4)</label>
+            <span className="text-xs text-default-400">
+              Opcional. Formato vertical.
+            </span>
             <FileUploader
               files={files3x4}
               onFilesChange={(f) => handleUploadImage(f, "3x4")}
@@ -313,10 +346,12 @@ export const HeroBannerForm = ({
             />
             {formData.image3x4 && (
               <div className="mt-2 text-sm text-success flex items-center justify-between">
-                <span>✅ Cargada</span>
+                <span>Ã¢ÂÂ Cargada</span>
                 <button
                   type="button"
-                  onClick={() => setFormData({ ...formData, image3x4: "" as any })}
+                  onClick={() =>
+                    setFormData({ ...formData, image3x4: "" as any })
+                  }
                   className="text-danger hover:underline cursor-pointer"
                 >
                   Eliminar
@@ -325,7 +360,6 @@ export const HeroBannerForm = ({
             )}
           </div>
         </div>
-
       </div>
     </Form>
   );

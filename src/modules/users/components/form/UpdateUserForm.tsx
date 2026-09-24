@@ -1,11 +1,18 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Button, Input, Select, ListBox, TextField, Label } from "@heroui/react";
-import { PersonAutocomplete } from "@/common/components/form/PersonAutocomplete";
+import {
+  Button,
+  Input,
+  Select,
+  ListBox,
+  TextField,
+  Label,
+} from "@heroui/react";
 import { getRoles, IRole } from "../../actions/roles";
 import { updateUser, IUser } from "../../actions/users";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { SelectOrCreatePerson } from "@/modules/persons";
 
 interface Props {
   user: IUser;
@@ -55,7 +62,7 @@ export const UpdateUserForm: React.FC<Props> = ({ user }) => {
   return (
     <div className="flex flex-col gap-6 bg-content1 p-6 rounded-xl border border-divider">
       <h3 className="text-lg font-semibold">Datos de Autenticación y Acceso</h3>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <TextField isRequired variant="secondary" className="w-full">
           <Label>Correo Electrónico</Label>
@@ -92,15 +99,16 @@ export const UpdateUserForm: React.FC<Props> = ({ user }) => {
       </div>
 
       <div className="border-t border-divider pt-4">
-        <PersonAutocomplete
+        <SelectOrCreatePerson
           label="Persona Vinculada"
           personId={personId}
           setPersonId={setPersonId}
           isRequired={false}
         />
         <p className="text-xs text-default-500 mt-2">
-          La persona vinculada permite que el usuario actúe como un Jugador, Estudiante, Staff o Familiar. 
-          Puede dejarlo vacío si solo es un administrador técnico.
+          La persona vinculada permite que el usuario actúe como un Jugador,
+          Estudiante, Staff o Familiar. Puede dejarlo vacÃÂ­o si solo es un
+          administrador tÃÂ©cnico.
         </p>
       </div>
 

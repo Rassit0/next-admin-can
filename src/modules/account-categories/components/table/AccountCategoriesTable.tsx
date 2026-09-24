@@ -50,7 +50,7 @@ export const AccountCategoriesTable = ({
                     No se encontraron registros
                   </span>
                   <span className="text-sm text-default-400">
-                    Registra una nueva categoría para organizar tus
+                    Registra una nueva categori­a para organizar tus
                     transacciones.
                   </span>
                 </div>

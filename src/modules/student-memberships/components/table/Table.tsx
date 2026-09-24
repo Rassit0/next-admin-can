@@ -10,9 +10,7 @@ import { IStudentMembership } from "@/modules/student-memberships";
 import { StatusChip } from "@/modules/student-memberships/components/status/StatusChip";
 import { ParticipationChip } from "@/modules/student-memberships/components/status/ParticipationChip";
 import { MembershipActions } from "@/modules/student-memberships/components/actions/MembershipActions";
-import {
-  formatCurrency,
-} from "@/modules/student-memberships/helpers/initial-charges";
+import { formatCurrency } from "@/modules/student-memberships/helpers/initial-charges";
 
 interface Props {
   memberships: IStudentMembership[];
@@ -45,7 +43,10 @@ export const TableMemberships = ({
   return (
     <Table>
       <Table.ScrollContainer>
-        <Table.Content aria-label="Membresías de estudiantes" className="min-w-200">
+        <Table.Content
+          aria-label="MembresiÂ­as de estudiantes"
+          className="min-w-200"
+        >
           <Table.Header className="bg-surface-secondary">
             {showStudentDetail && (
               <Table.Column isRowHeader allowsSorting id="name">
@@ -60,7 +61,7 @@ export const TableMemberships = ({
               <Table.Column allowsSorting id="courseSeason">
                 <SortableColumnHeader id="courseSeason">
                   <span className="text-xs font-semibold uppercase tracking-wide">
-                    Curso / Categoría
+                    Curso / CategoriÂ­a
                   </span>
                 </SortableColumnHeader>
               </Table.Column>
@@ -92,13 +93,13 @@ export const TableMemberships = ({
             <Table.Column allowsSorting id="status">
               <SortableColumnHeader id="status">
                 <span className="text-xs font-semibold uppercase tracking-wide">
-                  Membresía
+                  MembresiÂ­a
                 </span>
               </SortableColumnHeader>
             </Table.Column>
             <Table.Column id="participation">
               <span className="text-xs font-semibold uppercase tracking-wide">
-                Participación
+                ParticipaciiÂ³n
               </span>
             </Table.Column>
             <Table.Column className="text-center">
@@ -110,7 +111,7 @@ export const TableMemberships = ({
           <Table.Body
             renderEmptyState={() => (
               <div className="py-10 text-center text-sm text-muted">
-                Aún no hay estudiantes inscritos en esta temporada.
+                AiÂºn no hay estudiantes inscritos en esta temporada.
               </div>
             )}
           >
@@ -140,7 +141,13 @@ export const TableMemberships = ({
                         <div className="flex flex-col min-w-0">
                           <span className="font-medium text-foreground truncate">
                             {person
-                              ? [person.lastName, person.secondLastName, person.name].filter(Boolean).join(" ")
+                              ? [
+                                  person.lastName,
+                                  person.secondLastName,
+                                  person.name,
+                                ]
+                                  .filter(Boolean)
+                                  .join(" ")
                               : "Estudiante"}
                           </span>
                           {person ? (
@@ -156,27 +163,44 @@ export const TableMemberships = ({
                     <Table.Cell className="py-3">
                       <div className="flex flex-col min-w-0">
                         {(() => {
-                          const courseObj = courseSeason?.course ?? membership.courseSeason?.course;
-                          const url = courseObj && 'school' in courseObj && courseObj.school 
-                            ? `/admin/courses/${courseObj.school.disciplineId}/${courseObj.schoolId}/${courseObj.id}/course-seasons/${membership.courseSeasonId}/student-memberships?shiftId=${membership.courseSeasonShiftId}` 
-                            : "#";
-                          
+                          const courseObj =
+                            courseSeason?.course ??
+                            membership.courseSeason?.course;
+                          const url =
+                            courseObj &&
+                            "school" in courseObj &&
+                            courseObj.school
+                              ? `/admin/courses/${courseObj.school.disciplineId}/${courseObj.schoolId}/${courseObj.id}/course-seasons/${membership.courseSeasonId}/student-memberships?shiftId=${membership.courseSeasonShiftId}`
+                              : "#";
+
                           const innerContent = (
                             <>
                               <span className="font-medium text-foreground truncate group-hover:text-primary transition-colors">
-                                {courseSeason?.course?.name ?? membership.courseSeason?.course?.name ?? "—"}
+                                {courseSeason?.course?.name ??
+                                  membership.courseSeason?.course?.name ??
+                                  "Ã¢ÂÂ"}
                               </span>
                               <span className="text-xs text-muted truncate group-hover:text-primary/80 transition-colors">
-                                {courseSeason 
-                                  ? (Array.from(new Set(courseSeason.shifts?.map((s) => s.category?.name).filter(Boolean))).join(' · ') || "—")
-                                  : (
-                                      [
-                                        membership.courseSeasonShift?.category?.name ?? membership.courseSeason?.category?.name,
-                                        membership.courseSeasonShift?.shift?.name
-                                      ].filter(Boolean).join(" · ") || "—"
-                                    )
-                                } •{" "}
-                                {courseSeason?.season?.name ?? membership.courseSeason?.season?.name ?? "—"}
+                                {courseSeason
+                                  ? Array.from(
+                                      new Set(
+                                        courseSeason.shifts
+                                          ?.map((s) => s.category?.name)
+                                          .filter(Boolean),
+                                      ),
+                                    ).join(" ÃÂ· ") || "Ã¢ÂÂ"
+                                  : [
+                                      membership.courseSeasonShift?.category
+                                        ?.name ??
+                                        membership.courseSeason?.category?.name,
+                                      membership.courseSeasonShift?.shift?.name,
+                                    ]
+                                      .filter(Boolean)
+                                      .join(" ÃÂ· ") || "Ã¢ÂÂ"}{" "}
+                                -{" "}
+                                {courseSeason?.season?.name ??
+                                  membership.courseSeason?.season?.name ??
+                                  "Ã¢ÂÂ"}
                               </span>
                             </>
                           );
@@ -186,7 +210,10 @@ export const TableMemberships = ({
                               {innerContent}
                             </div>
                           ) : (
-                            <Link href={url} className="group flex flex-col min-w-0 hover:opacity-80 transition-opacity">
+                            <Link
+                              href={url}
+                              className="group flex flex-col min-w-0 hover:opacity-80 transition-opacity"
+                            >
                               {innerContent}
                             </Link>
                           );
@@ -196,7 +223,7 @@ export const TableMemberships = ({
                   )}
                   <Table.Cell className="py-3">
                     <span className="font-medium text-foreground">
-                      {membership.paymentPlan?.name ?? "—"}
+                      {membership.paymentPlan?.name ?? "Ã¢ÂÂ"}
                     </span>
                   </Table.Cell>
                   <Table.Cell className="py-3 text-right">
@@ -213,7 +240,10 @@ export const TableMemberships = ({
                     {membership.startedAt.toLocaleDateString("es-BO")}
                   </Table.Cell>
                   <Table.Cell className="py-3">
-                    <StatusChip status={membership.status} suspensionReason={membership.suspensionReason} />
+                    <StatusChip
+                      status={membership.status}
+                      suspensionReason={membership.suspensionReason}
+                    />
                   </Table.Cell>
                   <Table.Cell className="py-3">
                     <ParticipationChip membership={membership} />

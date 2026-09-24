@@ -5,9 +5,9 @@ import EscuelasContent from "@/modules/portal/schools/components/escuelas-conten
 import { getPublicCourses } from "@/modules/portal/schools/actions/schools.action";
 
 export const metadata = {
-  title: "Escuelas de Formación y Cursos | Club Atlético Nacional",
+  title: "Escuelas de Formación y Cursos | Club Atli©tico Nacional",
   description:
-    "Programas de formación deportiva para todas las edades en el Club Atlético Nacional.",
+    "Programas de formación deportiva para todas las edades en el Club Atli©tico Nacional.",
   openGraph: {
     images: ["/logo.png"],
   },
@@ -15,8 +15,7 @@ export const metadata = {
 
 export default async function EscuelasPage() {
   const coursesRes = await getPublicCourses();
-  const courses =
-    !coursesRes.error && coursesRes.data ? coursesRes.data : [];
+  const courses = !coursesRes.error && coursesRes.data ? coursesRes.data : [];
 
   return (
     // <div className="relative min-h-screen bg-background">

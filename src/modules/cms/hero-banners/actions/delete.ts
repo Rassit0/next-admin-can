@@ -10,7 +10,12 @@ export const deleteHeroBanner = async (
 ): Promise<ServiceResponse<void>> => {
   const session = await auth();
 
-  if (!session?.user) return { error: true, statusCode: 401, message: "Su sesión ha expirado." } as any;
+  if (!session?.user)
+    return {
+      error: true,
+      statusCode: 401,
+      message: "Su sesión ha expirado.",
+    } as any;
 
   return handleServerAction(async () => {
     await api.delete(`hero-banners/${id}`, {
@@ -21,7 +26,7 @@ export const deleteHeroBanner = async (
 
     updateTag("public-hero-banners");
     updateTag("admin-hero-banners");
-    
+
     return {
       error: false,
       data: undefined,

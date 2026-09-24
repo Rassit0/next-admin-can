@@ -1,46 +1,39 @@
-'use client'
+"use client";
 
-import { useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import {
-  Phone,
-  Mail,
-  MessageCircle,
-  X,
-  Globe,
-  Clock,
-} from 'lucide-react'
+import { useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Phone, Mail, MessageCircle, X, Globe, Clock } from "lucide-react";
 import {
   CLUB_CONTACT,
   getWhatsAppLink,
   getTelLink,
   getEmailLink,
-} from '@/modules/portal/core/constants/contact-info'
+} from "@/modules/portal/core/constants/contact-info";
 
 interface ContactSecretaryModalProps {
-  isOpen: boolean
-  onClose: () => void
-  title?: string
-  message?: string
+  isOpen: boolean;
+  onClose: () => void;
+  title?: string;
+  message?: string;
 }
 
 export function ContactSecretaryModal({
   isOpen,
   onClose,
-  title = 'Contacta a Nuestra Secretaría',
-  message = 'Estamos disponibles para responder tus preguntas sobre inscripciones, aranceles y más información sobre nuestros programas.',
+  title = "Contacta a Nuestra Secretari­a",
+  message = "Estamos disponibles para responder tus preguntas sobre inscripciones, aranceles y mi¡s información sobre nuestros programas.",
 }: ContactSecretaryModalProps) {
   // Close on Escape
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen) {
-        onClose()
+      if (e.key === "Escape" && isOpen) {
+        onClose();
       }
-    }
+    };
 
-    window.addEventListener('keydown', handleEscape)
-    return () => window.removeEventListener('keydown', handleEscape)
-  }, [isOpen, onClose])
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, [isOpen, onClose]);
 
   return (
     <AnimatePresence mode="wait">
@@ -89,12 +82,14 @@ export function ContactSecretaryModal({
                 <div className="flex items-start gap-3">
                   <Clock className="mt-1 h-5 w-5 flex-shrink-0 text-neon" />
                   <div>
-                    <p className="font-semibold text-primary">Horarios de Atención</p>
+                    <p className="font-semibold text-primary">
+                      Horarios de Atención
+                    </p>
                     <p className="text-sm text-primary/70">
                       Lunes a Viernes: {CLUB_CONTACT.hours.weekday}
                     </p>
                     <p className="text-sm text-primary/70">
-                      Sábados: {CLUB_CONTACT.hours.saturday}
+                      Si¡bados: {CLUB_CONTACT.hours.saturday}
                     </p>
                   </div>
                 </div>
@@ -110,14 +105,16 @@ export function ContactSecretaryModal({
                   <Phone className="h-5 w-5 text-neon" />
                   <div>
                     <p className="text-sm font-medium text-primary">Llamar</p>
-                    <p className="text-sm text-primary/70">{CLUB_CONTACT.phone}</p>
+                    <p className="text-sm text-primary/70">
+                      {CLUB_CONTACT.phone}
+                    </p>
                   </div>
                 </a>
 
                 {/* WhatsApp */}
                 <a
                   href={getWhatsAppLink(
-                    `Hola! Quisiera consultar sobre los programas de ${CLUB_CONTACT.name}`
+                    `Hola! Quisiera consultar sobre los programas de ${CLUB_CONTACT.name}`,
                   )}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -126,7 +123,9 @@ export function ContactSecretaryModal({
                   <MessageCircle className="h-5 w-5 text-neon" />
                   <div>
                     <p className="text-sm font-medium text-primary">WhatsApp</p>
-                    <p className="text-sm text-primary/70">{CLUB_CONTACT.whatsapp}</p>
+                    <p className="text-sm text-primary/70">
+                      {CLUB_CONTACT.whatsapp}
+                    </p>
                   </div>
                 </a>
 
@@ -138,7 +137,9 @@ export function ContactSecretaryModal({
                   <Mail className="h-5 w-5 text-neon" />
                   <div>
                     <p className="text-sm font-medium text-primary">Email</p>
-                    <p className="text-sm text-primary/70">{CLUB_CONTACT.email}</p>
+                    <p className="text-sm text-primary/70">
+                      {CLUB_CONTACT.email}
+                    </p>
                   </div>
                 </a>
 
@@ -151,8 +152,12 @@ export function ContactSecretaryModal({
                 >
                   <Globe className="h-5 w-5 text-neon" />
                   <div>
-                    <p className="text-sm font-medium text-primary">Sitio Web</p>
-                    <p className="text-sm text-primary/70">{CLUB_CONTACT.web}</p>
+                    <p className="text-sm font-medium text-primary">
+                      Sitio Web
+                    </p>
+                    <p className="text-sm text-primary/70">
+                      {CLUB_CONTACT.web}
+                    </p>
                   </div>
                 </a>
               </div>
@@ -169,5 +174,5 @@ export function ContactSecretaryModal({
         </>
       )}
     </AnimatePresence>
-  )
+  );
 }

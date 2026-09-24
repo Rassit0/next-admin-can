@@ -9,7 +9,7 @@ export const createScheduleAction = async (payload: ICreateSchedulePayload) => {
   return handleServerAction(async () => {
     const res = await api.post("sessions", payload);
 
-    // Invalidamos el caché del calendario y de las sesiones
+    // Invalidamos el cachi© del calendario y de las sesiones
     updateTag("calendar");
     updateTag("sessions");
 

@@ -7,7 +7,11 @@ interface Props {
   contact: IPersonContact | null;
 }
 
-export const ContactDetailsModal = ({ isOpen, onOpenChange, contact }: Props) => {
+export const ContactDetailsModal = ({
+  isOpen,
+  onOpenChange,
+  contact,
+}: Props) => {
   if (!contact) return null;
 
   return (
@@ -21,7 +25,9 @@ export const ContactDetailsModal = ({ isOpen, onOpenChange, contact }: Props) =>
           <Modal.Body className="pb-6">
             <div className="flex flex-col items-center justify-center gap-4 py-4">
               <Avatar size="lg" className="w-24 h-24 text-large">
-                <Avatar.Image src={contact.contactPerson.imageUrl || undefined} />
+                <Avatar.Image
+                  src={contact.contactPerson.imageUrl || undefined}
+                />
                 <Avatar.Fallback>
                   {contact.contactPerson.name.charAt(0) +
                     (contact.contactPerson.lastName?.charAt(0) || "")}
@@ -48,7 +54,8 @@ export const ContactDetailsModal = ({ isOpen, onOpenChange, contact }: Props) =>
                     Documento
                   </span>
                   <span className="font-medium">
-                    {contact.contactPerson.documentType && contact.contactPerson.documentNumber
+                    {contact.contactPerson.documentType &&
+                    contact.contactPerson.documentNumber
                       ? `${contact.contactPerson.documentType} ${contact.contactPerson.documentNumber}`
                       : "No especificado"}
                   </span>
@@ -61,7 +68,7 @@ export const ContactDetailsModal = ({ isOpen, onOpenChange, contact }: Props) =>
                 </div>
                 <div className="flex flex-col">
                   <span className="text-xs text-default-500 uppercase font-bold">
-                    Teléfono
+                    Teli©fono
                   </span>
                   <span className="font-medium">
                     {contact.contactPerson.phone || "No especificado"}

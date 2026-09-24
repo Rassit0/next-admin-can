@@ -33,7 +33,7 @@ export async function handleServerAction<T>(
 
     return {
       error: true,
-      message: "Ocurrió un error inesperado. Por favor, intenta más tarde.",
+      message: "Ocurrió un error inesperado. Por favor, intenta mi¡s tarde.",
       statusCode: 500,
     };
   }

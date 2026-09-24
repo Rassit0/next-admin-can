@@ -13,7 +13,9 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 
 export default async function HomeDisciplinesPage() {
-  const [homeDisciplinesResponse] = await resolvePageData([getHomeDisciplines()]);
+  const [homeDisciplinesResponse] = await resolvePageData([
+    getHomeDisciplines(),
+  ]);
 
   const homeDisciplinesData = homeDisciplinesResponse.data;
 
@@ -27,8 +29,8 @@ export default async function HomeDisciplinesPage() {
       <div className="space-y-8">
         <HeaderPage
           title="Gestión de Equipos y Escuela"
-          description="Administra los bloques de equipos y escuela de fútbol en el Home."
-          action={<AddHomeDisciplineModal />}
+          description="Administra los bloques de equipos y escuela de fiºtbol en el Home."
+          action={<AddHomeDisciplineModal buttonFloatingMobile />}
         />
 
         {/* <!-- Filters Bento --> */}

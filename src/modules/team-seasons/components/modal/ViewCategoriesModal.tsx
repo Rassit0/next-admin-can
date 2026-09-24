@@ -99,7 +99,7 @@ export const ViewCategoriesModal = ({ teamSeason, urlBase }: Props) => {
       toast.error(res.message || "Ocurrió un error al cambiar el estado");
     } else {
       toast.success(
-        `Categoría ${category.isActive ? "desactivada" : "activada"} exitosamente`,
+        `Categori­a ${category.isActive ? "desactivada" : "activada"} exitosamente`,
       );
       loadData();
     }
@@ -162,7 +162,7 @@ export const ViewCategoriesModal = ({ teamSeason, urlBase }: Props) => {
           </span>
         </div>
         <div className="flex justify-between items-center mt-1 text-xs">
-          <span className="text-muted-foreground">Año de Nac.:</span>
+          <span className="text-muted-foreground">Ai±o de Nac.:</span>
           <span className="font-semibold">
             {category.minBirthYear || "-"} - {category.maxBirthYear || "-"}
           </span>

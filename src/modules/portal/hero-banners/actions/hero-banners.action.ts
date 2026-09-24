@@ -3,14 +3,13 @@ import { ServiceResponse } from "@/types/api";
 import { api } from "@/utils/api";
 import { IHeroBanner } from "@/modules/cms/hero-banners";
 
-export const getPublicHeroBanners = async (): Promise<ServiceResponse<IHeroBanner[]>> => {
+export const getPublicHeroBanners = async (): Promise<
+  ServiceResponse<IHeroBanner[]>
+> => {
   try {
-    const response = await api.get<IHeroBanner[]>(
-      `public/hero-banners`,
-      {
-        next: { tags: ["public-hero-banners"], revalidate: 3600 },
-      }
-    );
+    const response = await api.get<IHeroBanner[]>(`public/hero-banners`, {
+      next: { tags: ["public-hero-banners"], revalidate: 3600 },
+    });
 
     return {
       error: false,

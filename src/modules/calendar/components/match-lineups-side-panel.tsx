@@ -48,14 +48,15 @@ export const MatchLineupSidePanel = ({
   isReadOnly = false,
 }: Props) => {
   const permissions = usePermissions();
-  const canUpdateMatches = permissions.includes("UPDATE_MATCHES") && !isReadOnly;
+  const canUpdateMatches =
+    permissions.includes("UPDATE_MATCHES") && !isReadOnly;
 
   const [searchTerm, setSearchTerm] = useState("");
   const [isSaving, setIsSaving] = useState(false);
   const [editStates, setEditStates] = useState<Record<string, EditState>>({});
 
   useEffect(() => {
-    // Inicializar el estado de edición desde la base de datos (lo persistido)
+    // Inicializar el estado de ediciiÂ³n desde la base de datos (lo persistido)
     const newStates: Record<string, EditState> = {};
     for (const c of callUps) {
       if (c.lineup) {
@@ -87,13 +88,13 @@ export const MatchLineupSidePanel = ({
   const updateField = (
     callUpId: string,
     field: keyof EditState,
-    value: boolean | number
+    value: boolean | number,
   ) => {
     if (!canUpdateMatches) return;
     setEditStates((prev) => {
       const newState = { ...prev };
       newState[callUpId] = { ...newState[callUpId], [field]: value };
-      
+
       // If participated changes to false, maybe reset other fields to default or leave them (we won't send them anyway)
       return newState;
     });
@@ -109,7 +110,7 @@ export const MatchLineupSidePanel = ({
         c.player.person.lastName.toLowerCase().includes(lowerSearch) ||
         `${c.player.person.name} ${c.player.person.lastName}`
           .toLowerCase()
-          .includes(lowerSearch)
+          .includes(lowerSearch),
     );
   }, [callUps, searchTerm]);
 
@@ -130,7 +131,7 @@ export const MatchLineupSidePanel = ({
     const destructiveRemovals = [];
     for (const c of callUps) {
       if (c.lineup && !editStates[c.id]?.participated) {
-        // Estaba persistido y ahora se le quitó participó
+        // Estaba persistido y ahora se le quitiÂ³ participiÂ³
         const L = c.lineup;
         if (
           L.isStarter ||
@@ -140,7 +141,9 @@ export const MatchLineupSidePanel = ({
           L.yellowCards > 0 ||
           L.redCards > 0
         ) {
-          destructiveRemovals.push(`${c.player.person.name} ${c.player.person.lastName}`);
+          destructiveRemovals.push(
+            `${c.player.person.name} ${c.player.person.lastName}`,
+          );
         }
       }
     }
@@ -148,8 +151,8 @@ export const MatchLineupSidePanel = ({
     if (destructiveRemovals.length > 0) {
       const isMultiple = destructiveRemovals.length > 1;
       const msg = isMultiple
-        ? `Se eliminarán la participación y estadísticas de ${destructiveRemovals.length} jugadores.\n\n¿Deseas continuar?`
-        : `Se eliminarán la participación y estadísticas de ${destructiveRemovals[0]}.\n\n¿Deseas continuar?`;
+        ? `Se eliminariÂ¡n la participaciiÂ³n y estadiÂ­sticas de ${destructiveRemovals.length} jugadores.\n\nÃÂ¿Deseas continuar?`
+        : `Se eliminariÂ¡n la participaciiÂ³n y estadiÂ­sticas de ${destructiveRemovals[0]}.\n\nÃÂ¿Deseas continuar?`;
       if (!window.confirm(msg)) return;
     }
 
@@ -172,12 +175,14 @@ export const MatchLineupSidePanel = ({
       if (res.error || !res.data) {
         toast.error(res.error || "Error al guardar planilla");
       } else {
-        toast.success(`Planilla del equipo ${side === "HOME" ? "local" : "visitante"} actualizada`);
+        toast.success(
+          `Planilla del equipo ${side === "HOME" ? "local" : "visitante"} actualizada`,
+        );
         onDirtyChange(false);
         onSuccess(res.data as IMatchLineupsResponse);
       }
     } catch (e) {
-      toast.error("Ocurrió un error inesperado al guardar.");
+      toast.error("OcurriiÂ³ un error inesperado al guardar.");
     } finally {
       setIsSaving(false);
     }
@@ -191,28 +196,36 @@ export const MatchLineupSidePanel = ({
         </h3>
         <p className="text-sm font-semibold">{teamName}</p>
         <p className="text-xs text-muted">
-          {categoryName || "Sin categoría asignada"}
+          {categoryName || "Sin categoriÂ­a asignada"}
         </p>
       </div>
 
       {!hasCategory ? (
         <div className="bg-warning/10 p-4 rounded-lg flex flex-col items-center justify-center text-center h-48 border border-warning/20">
           <p className="text-sm text-warning font-semibold">
-            Este equipo no tiene una categoría gestionada.
+            Este equipo no tiene una categoriÂ­a gestionada.
           </p>
         </div>
       ) : callUps.length === 0 ? (
         <div className="flex flex-col items-center justify-center text-center h-48 text-muted bg-default-50 rounded-lg p-4">
           <p className="text-sm font-medium">No hay convocados</p>
-          <p className="text-xs mt-1">Primero debes guardar la convocatoria para registrar participación.</p>
+          <p className="text-xs mt-1">
+            Primero debes guardar la convocatoria para registrar participaciiÂ³n.
+          </p>
         </div>
       ) : (
         <>
           <div className="flex flex-col gap-3 flex-1 overflow-hidden">
             <div className="flex items-center justify-between text-sm">
-              <span className="font-semibold text-muted">Convocados: {callUps.length}</span>
-              <span className="font-semibold text-primary">Participaron: {statsCount.participated}</span>
-              <span className="font-semibold text-secondary">Titulares: {statsCount.starters}</span>
+              <span className="font-semibold text-muted">
+                Convocados: {callUps.length}
+              </span>
+              <span className="font-semibold text-primary">
+                Participaron: {statsCount.participated}
+              </span>
+              <span className="font-semibold text-secondary">
+                Titulares: {statsCount.starters}
+              </span>
               {isReadOnly && (
                 <span className="text-xs text-danger font-semibold">
                   Solo lectura
@@ -222,7 +235,11 @@ export const MatchLineupSidePanel = ({
 
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <HugeiconsIcon icon={SearchIcon} size={16} className="text-muted" />
+                <HugeiconsIcon
+                  icon={SearchIcon}
+                  size={16}
+                  className="text-muted"
+                />
               </div>
               <input
                 type="text"
@@ -250,7 +267,9 @@ export const MatchLineupSidePanel = ({
                   <div
                     key={c.id}
                     className={`flex flex-col gap-2 p-3 rounded-md transition-colors border border-border ${
-                      state.participated ? "bg-default-50" : "bg-transparent opacity-80"
+                      state.participated
+                        ? "bg-default-50"
+                        : "bg-transparent opacity-80"
                     }`}
                   >
                     <div className="flex items-center justify-between">
@@ -263,26 +282,30 @@ export const MatchLineupSidePanel = ({
                           {c.player.person.name} {c.player.person.lastName}
                         </span>
                       </div>
-                      
+
                       <div className="flex gap-4">
                         <Checkbox
                           id={`participated-${c.id}`}
                           isSelected={state.participated}
-                          onChange={(isSelected) => updateField(c.id, "participated", isSelected)}
+                          onChange={(isSelected) =>
+                            updateField(c.id, "participated", isSelected)
+                          }
                           isDisabled={isDisabled}
                         >
                           <Checkbox.Control>
                             <Checkbox.Indicator />
                           </Checkbox.Control>
                           <Checkbox.Content>
-                            <span className="text-sm">Participó</span>
+                            <span className="text-sm">ParticipiÂ³</span>
                           </Checkbox.Content>
                         </Checkbox>
-                        
+
                         <Checkbox
                           id={`starter-${c.id}`}
                           isSelected={state.isStarter}
-                          onChange={(isSelected) => updateField(c.id, "isStarter", isSelected)}
+                          onChange={(isSelected) =>
+                            updateField(c.id, "isStarter", isSelected)
+                          }
                           isDisabled={isDisabled || !state.participated}
                         >
                           <Checkbox.Control>
@@ -298,52 +321,92 @@ export const MatchLineupSidePanel = ({
                     {state.participated && (
                       <div className="grid grid-cols-5 gap-2 mt-2 pt-2 border-t border-border/50">
                         <div className="flex flex-col">
-                          <label className="text-[10px] text-muted font-semibold uppercase mb-1">Min</label>
+                          <label className="text-[10px] text-muted font-semibold uppercase mb-1">
+                            Min
+                          </label>
                           <Input
                             type="number"
                             min={0}
                             value={state.minutesPlayed.toString()}
-                            onChange={(e) => updateField(c.id, "minutesPlayed", parseInt(e.target.value) || 0)}
+                            onChange={(e) =>
+                              updateField(
+                                c.id,
+                                "minutesPlayed",
+                                parseInt(e.target.value) || 0,
+                              )
+                            }
                             disabled={isDisabled}
                           />
                         </div>
                         <div className="flex flex-col">
-                          <label className="text-[10px] text-muted font-semibold uppercase mb-1">Goles</label>
+                          <label className="text-[10px] text-muted font-semibold uppercase mb-1">
+                            Goles
+                          </label>
                           <Input
                             type="number"
                             min={0}
                             value={state.goals.toString()}
-                            onChange={(e) => updateField(c.id, "goals", parseInt(e.target.value) || 0)}
+                            onChange={(e) =>
+                              updateField(
+                                c.id,
+                                "goals",
+                                parseInt(e.target.value) || 0,
+                              )
+                            }
                             disabled={isDisabled}
                           />
                         </div>
                         <div className="flex flex-col">
-                          <label className="text-[10px] text-muted font-semibold uppercase mb-1">Asist</label>
+                          <label className="text-[10px] text-muted font-semibold uppercase mb-1">
+                            Asist
+                          </label>
                           <Input
                             type="number"
                             min={0}
                             value={state.assists.toString()}
-                            onChange={(e) => updateField(c.id, "assists", parseInt(e.target.value) || 0)}
+                            onChange={(e) =>
+                              updateField(
+                                c.id,
+                                "assists",
+                                parseInt(e.target.value) || 0,
+                              )
+                            }
                             disabled={isDisabled}
                           />
                         </div>
                         <div className="flex flex-col">
-                          <label className="text-[10px] text-muted font-semibold uppercase mb-1">Ama</label>
+                          <label className="text-[10px] text-muted font-semibold uppercase mb-1">
+                            Ama
+                          </label>
                           <Input
                             type="number"
                             min={0}
                             value={state.yellowCards.toString()}
-                            onChange={(e) => updateField(c.id, "yellowCards", parseInt(e.target.value) || 0)}
+                            onChange={(e) =>
+                              updateField(
+                                c.id,
+                                "yellowCards",
+                                parseInt(e.target.value) || 0,
+                              )
+                            }
                             disabled={isDisabled}
                           />
                         </div>
                         <div className="flex flex-col">
-                          <label className="text-[10px] text-muted font-semibold uppercase mb-1">Roj</label>
+                          <label className="text-[10px] text-muted font-semibold uppercase mb-1">
+                            Roj
+                          </label>
                           <Input
                             type="number"
                             min={0}
                             value={state.redCards.toString()}
-                            onChange={(e) => updateField(c.id, "redCards", parseInt(e.target.value) || 0)}
+                            onChange={(e) =>
+                              updateField(
+                                c.id,
+                                "redCards",
+                                parseInt(e.target.value) || 0,
+                              )
+                            }
                             disabled={isDisabled}
                           />
                         </div>
@@ -353,7 +416,9 @@ export const MatchLineupSidePanel = ({
                 );
               })}
               {filteredCallUps.length === 0 && (
-                <p className="text-xs text-muted text-center pt-4">No se encontraron resultados</p>
+                <p className="text-xs text-muted text-center pt-4">
+                  No se encontraron resultados
+                </p>
               )}
             </div>
           </div>

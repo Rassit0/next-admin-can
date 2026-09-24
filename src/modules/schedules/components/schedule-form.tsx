@@ -117,7 +117,7 @@ export const ScheduleForm = ({
       if (result.error) {
         toast.error(result.message || "Error al programar horario");
       } else {
-        toast.success(result.message || "Horario programado con éxito");
+        toast.success(result.message || "Horario programado con i©xito");
         onSubmited?.();
       }
     } catch (error) {
@@ -131,7 +131,7 @@ export const ScheduleForm = ({
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       <Select
         name="locationId"
-        placeholder="Selecciona donde será la sesión"
+        placeholder="Selecciona donde seri¡ la sesión"
         selectedKey={formData.locationId || undefined}
         onSelectionChange={(key) => handleChange("locationId", key as string)}
       >
@@ -210,7 +210,7 @@ export const ScheduleForm = ({
             setErrors((prev) => ({ ...prev, untilDate: "" }));
           }}
         >
-          <Label>Hasta (Límite de recurrencia)</Label>
+          <Label>Hasta (Li­mite de recurrencia)</Label>
           <DateField.Group>
             <DateField.Input>
               {(segment) => <DateField.Segment segment={segment} />}
@@ -305,10 +305,10 @@ export const ScheduleForm = ({
             {[
               { id: "MO", label: "Lunes" },
               { id: "TU", label: "Martes" },
-              { id: "WE", label: "Miércoles" },
+              { id: "WE", label: "Mii©rcoles" },
               { id: "TH", label: "Jueves" },
               { id: "FR", label: "Viernes" },
-              { id: "SA", label: "Sábado" },
+              { id: "SA", label: "Si¡bado" },
               { id: "SU", label: "Domingo" },
             ].map((day) => (
               <Checkbox key={day.id} value={day.id}>

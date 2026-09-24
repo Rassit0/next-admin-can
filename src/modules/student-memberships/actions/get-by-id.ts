@@ -30,7 +30,7 @@ export const getStudentMembershipById = async ({
         createdAt: new Date(res.data.createdAt),
         updatedAt: new Date(res.data.updatedAt),
       },
-      message: "Membresía de jugador obtenida exitosamente",
+      message: "Membresi­a de jugador obtenida exitosamente",
     };
   });
 };

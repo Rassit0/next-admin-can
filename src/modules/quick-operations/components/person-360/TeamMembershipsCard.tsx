@@ -20,7 +20,11 @@ interface Props {
   onSuccess?: () => void;
 }
 
-export const TeamMembershipsCard = ({ memberships, personId, onSuccess }: Props) => {
+export const TeamMembershipsCard = ({
+  memberships,
+  personId,
+  onSuccess,
+}: Props) => {
   const prefersReducedMotion = useReducedMotion();
 
   return (
@@ -63,17 +67,19 @@ export const TeamMembershipsCard = ({ memberships, personId, onSuccess }: Props)
                       <PlayerStatusChip
                         status={membership.status as PlayerMembershipStatus}
                       />
-                      {membership.status !== "CANCELLED" && membership.status !== "WITHDRAWN" && membership.totalPendingAmount !== undefined && (
-                        membership.totalPendingAmount > 0 ? (
+                      {membership.status !== "CANCELLED" &&
+                        membership.status !== "WITHDRAWN" &&
+                        membership.totalPendingAmount !== undefined &&
+                        (membership.totalPendingAmount > 0 ? (
                           <div className="text-[10px] font-medium bg-warning-50 text-warning-600 px-1.5 py-0.5 rounded border border-warning-200 h-fit">
-                            Deuda: {formatCurrency(membership.totalPendingAmount)}
+                            Deuda:{" "}
+                            {formatCurrency(membership.totalPendingAmount)}
                           </div>
                         ) : (
                           <div className="text-[10px] font-medium bg-success-50 text-success-600 px-1.5 py-0.5 rounded border border-success-200 h-fit">
-                            Al día
+                            Al di­a
                           </div>
-                        )
-                      )}
+                        ))}
                     </div>
                     <MembershipActions
                       membership={membership as unknown as IPlayerMembership}
@@ -98,7 +104,6 @@ export const TeamMembershipsCard = ({ memberships, personId, onSuccess }: Props)
             ))}
           </AnimatePresence>
         )}
-
       </Card.Content>
     </Card>
   );

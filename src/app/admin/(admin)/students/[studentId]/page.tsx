@@ -44,7 +44,7 @@ export default async function StudentPage({ params }: Props) {
               <Tabs.Indicator />
             </Tabs.Tab>
             <Tabs.Tab id="medical-info" className="py-6 md:py-2">
-              Información Médica
+              Información Mi©dica
               <Tabs.Indicator />
             </Tabs.Tab>
             <Tabs.Tab id="memberships" className="py-6 md:py-2">
@@ -66,7 +66,7 @@ export default async function StudentPage({ params }: Props) {
           <p>Información de Contacto.</p>
         </Tabs.Panel>
         <Tabs.Panel className="pt-4" id="medical-info">
-          <p>Información Médica.</p>
+          <p>Información Mi©dica.</p>
         </Tabs.Panel>
         <Tabs.Panel className="pt-4" id="memberships">
           <p>Membresías.</p>

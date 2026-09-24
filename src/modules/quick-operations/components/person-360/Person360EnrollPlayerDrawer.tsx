@@ -169,7 +169,7 @@ export const Person360EnrollPlayerDrawer = ({
             <Drawer.CloseTrigger />
             <Drawer.Header className="border-b border-border">
               <Drawer.Heading slot="title" className="text-lg font-bold">
-                Inscripción de Jugador
+                InscripciiÂ³n de Jugador
               </Drawer.Heading>
               <p className="mt-1 text-xs text-muted">
                 Selecciona la disciplina y el equipo para inscribir a la
@@ -177,7 +177,6 @@ export const Person360EnrollPlayerDrawer = ({
               </p>
             </Drawer.Header>
 
-            
             {loadingContext ? (
               <Drawer.Body className="flex items-center justify-center">
                 <Spinner />
@@ -188,56 +187,68 @@ export const Person360EnrollPlayerDrawer = ({
                 teamSeason={teamSeasonData}
                 paymentPlans={paymentPlansData}
                 defaultPerson={defaultPerson}
-                headerNode={(<div className="flex flex-col gap-4 mb-4">
-                  <Select
-                    placeholder="Seleccione..."
-                    value={selectedDisciplineId}
-                    onChange={(key) =>
-                      setSelectedDisciplineId(key?.toString() || null)
-                    }
-                  >
-                    <Label className="text-sm font-semibold">Disciplina</Label>
-                    <Select.Trigger>
-                      <Select.Value />
-                    </Select.Trigger>
-                    <Select.Popover>
-                      <ListBox>
-                        {disciplines.map((d) => (
-                          <ListBox.Item key={d.id} id={d.id} textValue={d.name}>
-                            {d.name}
-                          </ListBox.Item>
-                        ))}
-                      </ListBox>
-                    </Select.Popover>
-                  </Select>
+                headerNode={
+                  <div className="flex flex-col gap-4 mb-4">
+                    <Select
+                      placeholder="Seleccione..."
+                      value={selectedDisciplineId}
+                      onChange={(key) =>
+                        setSelectedDisciplineId(key?.toString() || null)
+                      }
+                    >
+                      <Label className="text-sm font-semibold">
+                        Disciplina
+                      </Label>
+                      <Select.Trigger>
+                        <Select.Value />
+                      </Select.Trigger>
+                      <Select.Popover>
+                        <ListBox>
+                          {disciplines.map((d) => (
+                            <ListBox.Item
+                              key={d.id}
+                              id={d.id}
+                              textValue={d.name}
+                            >
+                              {d.name}
+                            </ListBox.Item>
+                          ))}
+                        </ListBox>
+                      </Select.Popover>
+                    </Select>
 
-                  <Select
-                    placeholder="Seleccione..."
-                    isDisabled={
-                      !selectedDisciplineId || teamSeasons.length === 0
-                    }
-                    value={selectedTeamSeasonId}
-                    onChange={(key) =>
-                      setSelectedTeamSeasonId(key?.toString() || null)
-                    }
-                  >
-                    <Label className="text-sm font-semibold">
-                      Equipo y Temporada
-                    </Label>
-                    <Select.Trigger>
-                      <Select.Value />
-                    </Select.Trigger>
-                    <Select.Popover>
-                      <ListBox>
-                        {teamSeasons.map((ts) => (
-                          <ListBox.Item key={ts.id} id={ts.id} textValue={ts.name}>
-                            {ts.name}
-                          </ListBox.Item>
-                        ))}
-                      </ListBox>
-                    </Select.Popover>
-                  </Select>
-                </div>)}
+                    <Select
+                      placeholder="Seleccione..."
+                      isDisabled={
+                        !selectedDisciplineId || teamSeasons.length === 0
+                      }
+                      value={selectedTeamSeasonId}
+                      onChange={(key) =>
+                        setSelectedTeamSeasonId(key?.toString() || null)
+                      }
+                    >
+                      <Label className="text-sm font-semibold">
+                        Equipo y Temporada
+                      </Label>
+                      <Select.Trigger>
+                        <Select.Value />
+                      </Select.Trigger>
+                      <Select.Popover>
+                        <ListBox>
+                          {teamSeasons.map((ts) => (
+                            <ListBox.Item
+                              key={ts.id}
+                              id={ts.id}
+                              textValue={ts.name}
+                            >
+                              {ts.name}
+                            </ListBox.Item>
+                          ))}
+                        </ListBox>
+                      </Select.Popover>
+                    </Select>
+                  </div>
+                }
                 onSuccess={() => {
                   handleSuccess();
                   setIsOpen(false);
@@ -288,7 +299,11 @@ export const Person360EnrollPlayerDrawer = ({
                     <Select.Popover>
                       <ListBox>
                         {teamSeasons.map((ts) => (
-                          <ListBox.Item key={ts.id} id={ts.id} textValue={ts.name}>
+                          <ListBox.Item
+                            key={ts.id}
+                            id={ts.id}
+                            textValue={ts.name}
+                          >
                             {ts.name}
                           </ListBox.Item>
                         ))}
@@ -298,7 +313,7 @@ export const Person360EnrollPlayerDrawer = ({
                 </div>
                 <div className="flex items-center justify-center h-full text-sm text-muted-foreground p-8 text-center">
                   Selecciona una disciplina y equipo para continuar con la
-                  inscripci�n.
+                  inscripciÃ¯Â¿Â½n.
                 </div>
               </Drawer.Body>
             )}

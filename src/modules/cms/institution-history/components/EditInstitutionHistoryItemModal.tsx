@@ -17,7 +17,11 @@ import { Edit02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { toast } from "sonner";
 
-export const EditInstitutionHistoryItemModal = ({ item }: { item: InstitutionHistoryItem }) => {
+export const EditInstitutionHistoryItemModal = ({
+  item,
+}: {
+  item: InstitutionHistoryItem;
+}) => {
   const state = useOverlayState();
   const [loading, setLoading] = useState(false);
   const [isActive, setIsActive] = useState(item.isActive);
@@ -67,21 +71,30 @@ export const EditInstitutionHistoryItemModal = ({ item }: { item: InstitutionHis
             <form onSubmit={handleSubmit}>
               <Modal.Body className="px-6 py-4 flex flex-col gap-4">
                 <TextField name="year" defaultValue={item.year} isRequired>
-                  <Label>Año / Periodo</Label>
+                  <Label>Ai±o / Periodo</Label>
                   <Input />
                 </TextField>
 
                 <TextField name="title" defaultValue={item.title} isRequired>
-                  <Label>Título</Label>
+                  <Label>Ti­tulo</Label>
                   <Input />
                 </TextField>
 
-                <TextField name="description" defaultValue={item.description} isRequired>
+                <TextField
+                  name="description"
+                  defaultValue={item.description}
+                  isRequired
+                >
                   <Label>Descripción</Label>
                   <TextArea />
                 </TextField>
 
-                <TextField name="sortOrder" type="number" defaultValue={item.sortOrder.toString()} isRequired>
+                <TextField
+                  name="sortOrder"
+                  type="number"
+                  defaultValue={item.sortOrder.toString()}
+                  isRequired
+                >
                   <Label>Ordenamiento</Label>
                   <Input />
                 </TextField>
@@ -92,7 +105,9 @@ export const EditInstitutionHistoryItemModal = ({ item }: { item: InstitutionHis
                       <Switch.Thumb />
                     </Switch.Control>
                     <Switch.Content>
-                      <span className="text-sm font-medium">Activo / Visible</span>
+                      <span className="text-sm font-medium">
+                        Activo / Visible
+                      </span>
                     </Switch.Content>
                   </Switch>
                 </div>

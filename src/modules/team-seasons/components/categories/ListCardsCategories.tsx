@@ -20,7 +20,9 @@ export const ListCardsCategories = ({
   categoriesOptions,
 }: Props) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<ITeamSeasonCategory | undefined>();
+  const [selectedCategory, setSelectedCategory] = useState<
+    ITeamSeasonCategory | undefined
+  >();
 
   const handleOpenAdd = () => {
     setSelectedCategory(undefined);
@@ -40,17 +42,18 @@ export const ListCardsCategories = ({
             Categorías Deportivas
           </h3>
           <p className="text-sm text-muted-foreground mt-1">
-            Gestiona las categorías, géneros y límites de edades para esta temporada.
+            Gestiona las categorías, gi©neros y li­mites de edades para esta
+            temporada.
           </p>
         </div>
-          <button
-            type="button"
-            className="px-4 py-2 rounded-md bg-primary text-white text-sm font-medium hover:bg-primary-dark transition-colors inline-flex items-center gap-2"
-            onClick={handleOpenAdd}
-          >
-            <HugeiconsIcon icon={Add01Icon} size={20} />
-            Añadir
-          </button>
+        <button
+          type="button"
+          className="px-4 py-2 rounded-md bg-primary text-white text-sm font-medium hover:bg-primary-dark transition-colors inline-flex items-center gap-2"
+          onClick={handleOpenAdd}
+        >
+          <HugeiconsIcon icon={Add01Icon} size={20} />
+          Ai±adir
+        </button>
       </div>
 
       {categories.length === 0 ? (
@@ -58,9 +61,12 @@ export const ListCardsCategories = ({
           <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-3">
             <HugeiconsIcon icon={Add01Icon} size={24} />
           </div>
-          <p className="font-semibold text-foreground">Aún no hay categorías</p>
+          <p className="font-semibold text-foreground">
+            Aiºn no hay categorías
+          </p>
           <p className="text-sm text-muted-foreground mt-1 max-w-sm">
-            Agrega una o más categorías deportivas para permitir inscripciones en esta temporada.
+            Agrega una o mi¡s categorías deportivas para permitir inscripciones
+            en esta temporada.
           </p>
           <button
             type="button"
@@ -68,7 +74,7 @@ export const ListCardsCategories = ({
             onClick={handleOpenAdd}
           >
             <HugeiconsIcon icon={Add01Icon} size={20} />
-            Añadir Categoría
+            Ai±adir Categori­a
           </button>
         </div>
       ) : (

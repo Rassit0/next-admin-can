@@ -1,5 +1,8 @@
 import { Card } from "@heroui/react";
-import { getTeamSeasonById, getTeamSeasonCategories } from "@/modules/team-seasons";
+import {
+  getTeamSeasonById,
+  getTeamSeasonCategories,
+} from "@/modules/team-seasons";
 import {
   getTeamSeasonStaff,
   AssignStaffDrawer,
@@ -35,7 +38,7 @@ export default async function TeamSeasonStaffPage({ params }: Props) {
         <div className="flex flex-col">
           <h2 className="text-xl font-bold">Personal Asignado</h2>
           <p className="text-sm text-muted-foreground mt-1">
-            Gestione el personal técnico y administrativo asignado a esta
+            Gestione el personal ti©cnico y administrativo asignado a esta
             temporada.
           </p>
         </div>

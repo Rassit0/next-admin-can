@@ -29,7 +29,10 @@ import { updateCharge } from "../../actions/update";
 import { removeCharge } from "../../actions/remove";
 import { updateChargeDueDate } from "../../actions/update-charge-due-date";
 import { applyLateFee } from "../../actions/apply-late-fee";
-import { previewLateFee, ILateFeePreview } from "../../actions/preview-late-fee";
+import {
+  previewLateFee,
+  ILateFeePreview,
+} from "../../actions/preview-late-fee";
 
 interface Props {
   charge: ICharge;
@@ -45,45 +48,62 @@ interface ActionDef {
   danger?: boolean;
 }
 
-export const ChargeActions = ({ charge, onPay, detailsHref, onSuccess }: Props) => {
+export const ChargeActions = ({
+  charge,
+  onPay,
+  detailsHref,
+  onSuccess,
+}: Props) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const confirmState = useOverlayState();
   const [selectedAction, setSelectedAction] = useState<ActionDef | null>(null);
-  
+
   // State for Add Discount form
-  const [adjustmentAmount, setAdjustmentAmount] = useState(charge.adjustmentAmount ? charge.adjustmentAmount.toString() : "");
-  const [adjustmentReason, setDiscountReason] = useState(charge.adjustmentReason || "");
+  const [adjustmentAmount, setAdjustmentAmount] = useState(
+    charge.adjustmentAmount ? charge.adjustmentAmount.toString() : "",
+  );
+  const [adjustmentReason, setDiscountReason] = useState(
+    charge.adjustmentReason || "",
+  );
 
   // State for Edit Charge form
-  const [chargeDescription, setChargeDescription] = useState(charge.description);
+  const [chargeDescription, setChargeDescription] = useState(
+    charge.description,
+  );
   const [chargeAmount, setChargeAmount] = useState(charge.amount.toString());
   const [chargeDueDate, setChargeDueDate] = useState(
-    charge.dueDate ? new Date(charge.dueDate).toISOString().split('T')[0] : ""
+    charge.dueDate ? new Date(charge.dueDate).toISOString().split("T")[0] : "",
   );
 
   const [updateDueDateValue, setUpdateDueDateValue] = useState(
-    charge.dueDate ? new Date(charge.dueDate).toISOString().split('T')[0] : ""
+    charge.dueDate ? new Date(charge.dueDate).toISOString().split("T")[0] : "",
   );
 
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [lateFeePreview, setLateFeePreview] = useState<ILateFeePreview | null>(null);
+  const [lateFeePreview, setLateFeePreview] = useState<ILateFeePreview | null>(
+    null,
+  );
   const [customLateFeeAmount, setCustomLateFeeAmount] = useState<string>("");
 
   const hasAdjustment = Number(charge.adjustmentAmount) !== 0;
-  
-  const isManual = 
-    charge.membershipCharges?.[0]?.type === 'MANUAL' || 
-    charge.studentCharges?.[0]?.type === 'MANUAL' ||
+
+  const isManual =
+    charge.membershipCharges?.[0]?.type === "MANUAL" ||
+    charge.studentCharges?.[0]?.type === "MANUAL" ||
     !!charge.accountCharge;
 
-  const isStudentCharge = charge.studentCharges && charge.studentCharges.length > 0;
-  const isMembershipCharge = charge.membershipCharges && charge.membershipCharges.length > 0;
-  const isLateFee = charge.studentCharges?.[0]?.type === 'LATE_FEE' || charge.membershipCharges?.[0]?.type === 'LATE_FEE';
+  const isStudentCharge =
+    charge.studentCharges && charge.studentCharges.length > 0;
+  const isMembershipCharge =
+    charge.membershipCharges && charge.membershipCharges.length > 0;
+  const isLateFee =
+    charge.studentCharges?.[0]?.type === "LATE_FEE" ||
+    charge.membershipCharges?.[0]?.type === "LATE_FEE";
   const isPastDue = new Date(charge.dueDate) < new Date();
 
   const allActions: ActionDef[] = [];
-  
+
   // Add payment action if pending or partial
   if (onPay && (charge.status === "PENDING" || charge.status === "PARTIAL")) {
     allActions.push({
@@ -116,21 +136,25 @@ export const ChargeActions = ({ charge, onPay, detailsHref, onSuccess }: Props) 
       danger: true,
     });
   }
-  
+
   // A charge is fully paid with real money if the total paid amount equals or exceeds the charge amount
   // We use the actual payments data from the backend as the single source of truth for real money.
   const paidAmount = charge.payments
     ? charge.payments
         .filter((p) => p.status === "COMPLETED")
         .reduce((sum, p) => sum + Number(p.amount), 0)
-    : (Number(charge.amount) + Number(charge.adjustmentAmount || 0)) - Number(charge.pendingAmount || 0);
+    : Number(charge.amount) +
+      Number(charge.adjustmentAmount || 0) -
+      Number(charge.pendingAmount || 0);
   const isFullyPaidWithMoney = paidAmount >= Number(charge.amount);
 
   // We allow adding/editing discounts if the charge is not cancelled and not fully paid with money.
   if (charge.status !== "CANCELLED" && !isFullyPaidWithMoney) {
     allActions.push({
       key: "add-adjustment",
-      label: hasAdjustment ? "Editar Ajuste (Descuento/Recargo)" : "Aplicar Ajuste (Descuento/Recargo)",
+      label: hasAdjustment
+        ? "Editar Ajuste (Descuento/Recargo)"
+        : "Aplicar Ajuste (Descuento/Recargo)",
       icon: Tag01Icon,
     });
   }
@@ -143,7 +167,11 @@ export const ChargeActions = ({ charge, onPay, detailsHref, onSuccess }: Props) 
     });
   }
 
-  if ((isStudentCharge || isMembershipCharge) && !isLateFee && charge.status !== "CANCELLED") {
+  if (
+    (isStudentCharge || isMembershipCharge) &&
+    !isLateFee &&
+    charge.status !== "CANCELLED"
+  ) {
     allActions.push({
       key: "apply-late-fee",
       label: "Generar Mora",
@@ -167,7 +195,7 @@ export const ChargeActions = ({ charge, onPay, detailsHref, onSuccess }: Props) 
       onPay(charge);
       return;
     }
-    
+
     if (key === "details" && detailsHref) {
       router.push(detailsHref);
       return;
@@ -176,18 +204,23 @@ export const ChargeActions = ({ charge, onPay, detailsHref, onSuccess }: Props) 
     const actionDef = allActions.find((a) => a.key === key);
     if (actionDef) {
       setSelectedAction(actionDef);
-      
+
       if (key === "apply-late-fee") {
         setLoading(true);
-        previewLateFee(charge.id, isMembershipCharge ? 'membership' : 'student').then((res) => {
+        previewLateFee(
+          charge.id,
+          isMembershipCharge ? "membership" : "student",
+        ).then((res) => {
           setLoading(false);
           if (res.error) {
             toast.error(res.message);
             return;
           }
           if (res.data?.alreadyHasLateFee) {
-             toast.error("Este cargo ya tiene una mora generada que está pendiente de pago.");
-             return;
+            toast.error(
+              "Este cargo ya tiene una mora generada que estiÂ¡ pendiente de pago.",
+            );
+            return;
           }
           setLateFeePreview(res.data!);
           setCustomLateFeeAmount(res.data!.totalLateFeeAmount.toString());
@@ -198,19 +231,29 @@ export const ChargeActions = ({ charge, onPay, detailsHref, onSuccess }: Props) 
 
       // Reset form on open
       if (key === "add-adjustment") {
-        setAdjustmentAmount(charge.adjustmentAmount ? charge.adjustmentAmount.toString() : "");
+        setAdjustmentAmount(
+          charge.adjustmentAmount ? charge.adjustmentAmount.toString() : "",
+        );
         setDiscountReason(charge.adjustmentReason || "");
         setErrors({});
       } else if (key === "edit-charge") {
         setChargeDescription(charge.description);
         setChargeAmount(charge.amount.toString());
-        setChargeDueDate(charge.dueDate ? new Date(charge.dueDate).toISOString().split('T')[0] : "");
+        setChargeDueDate(
+          charge.dueDate
+            ? new Date(charge.dueDate).toISOString().split("T")[0]
+            : "",
+        );
         setErrors({});
       } else if (key === "update-due-date") {
-        setUpdateDueDateValue(charge.dueDate ? new Date(charge.dueDate).toISOString().split('T')[0] : "");
+        setUpdateDueDateValue(
+          charge.dueDate
+            ? new Date(charge.dueDate).toISOString().split("T")[0]
+            : "",
+        );
         setErrors({});
       }
-      
+
       confirmState.open();
     }
   };
@@ -231,7 +274,11 @@ export const ChargeActions = ({ charge, onPay, detailsHref, onSuccess }: Props) 
         setLoading(false);
         return;
       }
-      res = await applyLateFee(charge.id, isMembershipCharge ? 'membership' : 'student', parsedAmount);
+      res = await applyLateFee(
+        charge.id,
+        isMembershipCharge ? "membership" : "student",
+        parsedAmount,
+      );
     } else if (action === "remove-adjustment") {
       res = await removeChargeAdjustment(charge.id);
     } else if (action === "delete-charge") {
@@ -239,19 +286,22 @@ export const ChargeActions = ({ charge, onPay, detailsHref, onSuccess }: Props) 
     } else if (action === "add-adjustment") {
       const amountNum = Number(adjustmentAmount);
       const chargeAmountNum = Number(charge.amount);
-      
+
       if (isNaN(amountNum) || adjustmentAmount === "") {
-        setErrors({ adjustmentAmount: "Monto inválido." });
+        setErrors({ adjustmentAmount: "Monto inviÂ¡lido." });
         setLoading(false);
         return;
       }
 
       if (amountNum < 0 && Math.abs(amountNum) > chargeAmountNum) {
-        setErrors({ adjustmentAmount: "El monto del ajuste (si es descuento) no puede exceder el monto original del cargo." });
+        setErrors({
+          adjustmentAmount:
+            "El monto del ajuste (si es descuento) no puede exceder el monto original del cargo.",
+        });
         setLoading(false);
         return;
       }
-      
+
       if (!adjustmentReason.trim()) {
         setErrors({ adjustmentReason: "El motivo es obligatorio." });
         setLoading(false);
@@ -268,7 +318,10 @@ export const ChargeActions = ({ charge, onPay, detailsHref, onSuccess }: Props) 
       const adjustmentNum = Number(charge.adjustmentAmount || 0);
 
       if (amountNum + adjustmentNum < 0) {
-        setErrors({ chargeAmount: "El nuevo monto base sumado al ajuste no puede ser negativo." });
+        setErrors({
+          chargeAmount:
+            "El nuevo monto base sumado al ajuste no puede ser negativo.",
+        });
         setLoading(false);
         return;
       }
@@ -293,19 +346,29 @@ export const ChargeActions = ({ charge, onPay, detailsHref, onSuccess }: Props) 
       });
     } else if (action === "update-due-date") {
       if (!updateDueDateValue) {
-        setErrors({ updateDueDateValue: "La fecha de vencimiento es obligatoria." });
+        setErrors({
+          updateDueDateValue: "La fecha de vencimiento es obligatoria.",
+        });
         setLoading(false);
         return;
       }
-      
+
       const tz = process.env.NEXT_PUBLIC_APP_TIMEZONE || "America/La_Paz";
       const safeDate = new Date(`${updateDueDateValue}T12:00:00Z`);
-      const tzDate = new Date(safeDate.toLocaleString('en-US', { timeZone: tz }));
-      const utcDate = new Date(safeDate.toLocaleString('en-US', { timeZone: 'UTC' }));
-      const offsetMinutes = Math.round((utcDate.getTime() - tzDate.getTime()) / 60000);
-      
+      const tzDate = new Date(
+        safeDate.toLocaleString("en-US", { timeZone: tz }),
+      );
+      const utcDate = new Date(
+        safeDate.toLocaleString("en-US", { timeZone: "UTC" }),
+      );
+      const offsetMinutes = Math.round(
+        (utcDate.getTime() - tzDate.getTime()) / 60000,
+      );
+
       const localMidnightUTC = new Date(`${updateDueDateValue}T00:00:00Z`);
-      localMidnightUTC.setUTCMinutes(localMidnightUTC.getUTCMinutes() + offsetMinutes);
+      localMidnightUTC.setUTCMinutes(
+        localMidnightUTC.getUTCMinutes() + offsetMinutes,
+      );
 
       res = await updateChargeDueDate({
         id: charge.id,
@@ -384,39 +447,60 @@ export const ChargeActions = ({ charge, onPay, detailsHref, onSuccess }: Props) 
                 </AlertDialog.Heading>
               </AlertDialog.Header>
               <AlertDialog.Body className="gap-4 p-2">
-                {(selectedAction?.key === "remove-adjustment" || selectedAction?.key === "delete-charge") && (
+                {(selectedAction?.key === "remove-adjustment" ||
+                  selectedAction?.key === "delete-charge") && (
                   <p>
-                    {selectedAction?.key === "remove-adjustment" 
-                      ? "¿Estás seguro de que deseas remover el ajuste de este cargo? El saldo pendiente se actualizará automáticamente."
-                      : "¿Estás seguro de que deseas eliminar este cargo permanentemente? Esta acción no se puede deshacer."}
+                    {selectedAction?.key === "remove-adjustment"
+                      ? "ÃÂ¿EstiÂ¡s seguro de que deseas remover el ajuste de este cargo? El saldo pendiente se actualizariÂ¡ automiÂ¡ticamente."
+                      : "ÃÂ¿EstiÂ¡s seguro de que deseas eliminar este cargo permanentemente? Esta acciiÂ³n no se puede deshacer."}
                   </p>
                 )}
 
                 {selectedAction?.key === "apply-late-fee" && lateFeePreview && (
                   <>
                     <p className="text-sm mb-2">
-                      Estás a punto de aplicar una mora a este cargo vencido.
+                      EstiÂ¡s a punto de aplicar una mora a este cargo vencido.
                     </p>
                     <div className="bg-surface-secondary p-3 rounded-lg flex flex-col gap-1 text-sm">
                       <div className="flex justify-between">
-                        <span className="text-muted-foreground">Monto Original:</span>
-                        <span className="font-semibold">{lateFeePreview.originalAmount} Bs</span>
+                        <span className="text-muted-foreground">
+                          Monto Original:
+                        </span>
+                        <span className="font-semibold">
+                          {lateFeePreview.originalAmount} Bs
+                        </span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-muted-foreground">Días transcurridos:</span>
-                        <span className="font-semibold">{lateFeePreview.daysPassed} días</span>
+                        <span className="text-muted-foreground">
+                          DiÂ­as transcurridos:
+                        </span>
+                        <span className="font-semibold">
+                          {lateFeePreview.daysPassed} diÂ­as
+                        </span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-muted-foreground">Días de gracia permitidos:</span>
-                        <span className="font-semibold">{lateFeePreview.graceDays} días</span>
+                        <span className="text-muted-foreground">
+                          DiÂ­as de gracia permitidos:
+                        </span>
+                        <span className="font-semibold">
+                          {lateFeePreview.graceDays} diÂ­as
+                        </span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-muted-foreground">Días sancionables:</span>
-                        <span className="font-semibold text-danger">{lateFeePreview.punishableDays} días</span>
+                        <span className="text-muted-foreground">
+                          DiÂ­as sancionables:
+                        </span>
+                        <span className="font-semibold text-danger">
+                          {lateFeePreview.punishableDays} diÂ­as
+                        </span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-muted-foreground">Recargo por día:</span>
-                        <span className="font-semibold">{lateFeePreview.lateFeePerDay} Bs</span>
+                        <span className="text-muted-foreground">
+                          Recargo por diÂ­a:
+                        </span>
+                        <span className="font-semibold">
+                          {lateFeePreview.lateFeePerDay} Bs
+                        </span>
                       </div>
                       <div className="border-t border-border mt-2 pt-2 flex justify-between font-bold text-base items-center">
                         <span>Total Mora a Aplicar (Bs):</span>
@@ -424,7 +508,9 @@ export const ChargeActions = ({ charge, onPay, detailsHref, onSuccess }: Props) 
                           <TextField
                             name="customLateFeeAmount"
                             isRequired
-                            isInvalid={!!errors.customLateFeeAmount || undefined}
+                            isInvalid={
+                              !!errors.customLateFeeAmount || undefined
+                            }
                           >
                             <Input
                               variant="secondary"
@@ -437,7 +523,13 @@ export const ChargeActions = ({ charge, onPay, detailsHref, onSuccess }: Props) 
                                 setErrors({});
                               }}
                             />
-                            <FieldError children={errors.customLateFeeAmount && <> {errors.customLateFeeAmount}</>} />
+                            <FieldError
+                              children={
+                                errors.customLateFeeAmount && (
+                                  <> {errors.customLateFeeAmount}</>
+                                )
+                              }
+                            />
                           </TextField>
                         </div>
                       </div>
@@ -461,18 +553,26 @@ export const ChargeActions = ({ charge, onPay, detailsHref, onSuccess }: Props) 
                           setChargeDescription(e.target.value);
                           setErrors({});
                         }}
-                        placeholder="Ej. Inscripción, Mensualidad..."
+                        placeholder="Ej. InscripciiÂ³n, Mensualidad..."
                       />
-                      <FieldError children={errors.chargeDescription && <> {errors.chargeDescription}</>} />
+                      <FieldError
+                        children={
+                          errors.chargeDescription && (
+                            <> {errors.chargeDescription}</>
+                          )
+                        }
+                      />
                     </TextField>
-                    
+
                     <TextField
                       name="chargeAmount"
                       isRequired
                       className="w-full"
                       isInvalid={!!errors.chargeAmount || undefined}
                     >
-                      <Label className="text-sm font-semibold">Monto Base (Bs)</Label>
+                      <Label className="text-sm font-semibold">
+                        Monto Base (Bs)
+                      </Label>
                       <Input
                         variant="secondary"
                         type="number"
@@ -485,11 +585,15 @@ export const ChargeActions = ({ charge, onPay, detailsHref, onSuccess }: Props) 
                         }}
                         placeholder="0.00"
                       />
-                      <FieldError children={errors.chargeAmount && <> {errors.chargeAmount}</>} />
+                      <FieldError
+                        children={
+                          errors.chargeAmount && <> {errors.chargeAmount}</>
+                        }
+                      />
                     </TextField>
 
-                    <TextField 
-                      name="chargeDueDate" 
+                    <TextField
+                      name="chargeDueDate"
                       className="w-full"
                       isRequired
                       isInvalid={!!errors.chargeDueDate || undefined}
@@ -506,7 +610,11 @@ export const ChargeActions = ({ charge, onPay, detailsHref, onSuccess }: Props) 
                           setErrors({});
                         }}
                       />
-                      <FieldError children={errors.chargeDueDate && <> {errors.chargeDueDate}</>} />
+                      <FieldError
+                        children={
+                          errors.chargeDueDate && <> {errors.chargeDueDate}</>
+                        }
+                      />
                     </TextField>
                   </>
                 )}
@@ -514,10 +622,11 @@ export const ChargeActions = ({ charge, onPay, detailsHref, onSuccess }: Props) 
                 {selectedAction?.key === "update-due-date" && (
                   <>
                     <p className="text-sm mb-4">
-                      Modificar la fecha de vencimiento de este cargo no afectará su estado contable.
+                      Modificar la fecha de vencimiento de este cargo no
+                      afectariÂ¡ su estado contable.
                     </p>
-                    <TextField 
-                      name="updateDueDateValue" 
+                    <TextField
+                      name="updateDueDateValue"
                       className="w-full"
                       isRequired
                       isInvalid={!!errors.updateDueDateValue || undefined}
@@ -534,7 +643,13 @@ export const ChargeActions = ({ charge, onPay, detailsHref, onSuccess }: Props) 
                           setErrors({});
                         }}
                       />
-                      <FieldError children={errors.updateDueDateValue && <> {errors.updateDueDateValue}</>} />
+                      <FieldError
+                        children={
+                          errors.updateDueDateValue && (
+                            <> {errors.updateDueDateValue}</>
+                          )
+                        }
+                      />
                     </TextField>
                   </>
                 )}
@@ -542,40 +657,50 @@ export const ChargeActions = ({ charge, onPay, detailsHref, onSuccess }: Props) 
                 {selectedAction?.key === "add-adjustment" && (
                   <>
                     <p className="text-sm text-muted-foreground mb-2">
-                      Monto Original del Cargo: <strong>{Number(charge.amount).toFixed(2)} Bs</strong>
+                      Monto Original del Cargo:{" "}
+                      <strong>{Number(charge.amount).toFixed(2)} Bs</strong>
                     </p>
-                    
+
                     <TextField
                       name="adjustmentAmount"
                       isRequired
                       className="w-full"
                       isInvalid={!!errors.adjustmentAmount || undefined}
                     >
-                      <Label>Monto (Bs) - Negativo para descuento, positivo para recargo</Label>
+                      <Label>
+                        Monto (Bs) - Negativo para descuento, positivo para
+                        recargo
+                      </Label>
                       <Input
                         variant="secondary"
                         type="text"
                         inputMode="text"
                         value={adjustmentAmount}
                         onChange={(e) => {
-                          // Permitir números, punto y signo menos
-                          const val = e.target.value.replace(/[^0-9.-]/g, '');
+                          // Permitir niÂºmeros, punto y signo menos
+                          const val = e.target.value.replace(/[^0-9.-]/g, "");
                           setAdjustmentAmount(val);
                           setErrors({});
                         }}
                         placeholder="0.00"
                       />
-                      <FieldError children={errors.adjustmentAmount && <> {errors.adjustmentAmount}</>} />
+                      <FieldError
+                        children={
+                          errors.adjustmentAmount && (
+                            <> {errors.adjustmentAmount}</>
+                          )
+                        }
+                      />
                     </TextField>
 
-                    <TextField 
-                      name="adjustmentReason" 
+                    <TextField
+                      name="adjustmentReason"
                       className="w-full"
                       isRequired
                       isInvalid={!!errors.adjustmentReason || undefined}
                     >
                       <Label className="text-sm font-semibold">
-                        Motivo u Observación
+                        Motivo u ObservaciiÂ³n
                       </Label>
                       <InputGroup>
                         <InputGroup.Prefix>
@@ -595,7 +720,13 @@ export const ChargeActions = ({ charge, onPay, detailsHref, onSuccess }: Props) 
                           placeholder="Ej. Beca, Hermano, etc."
                         />
                       </InputGroup>
-                      <FieldError children={errors.adjustmentReason && <> {errors.adjustmentReason}</>} />
+                      <FieldError
+                        children={
+                          errors.adjustmentReason && (
+                            <> {errors.adjustmentReason}</>
+                          )
+                        }
+                      />
                     </TextField>
                   </>
                 )}

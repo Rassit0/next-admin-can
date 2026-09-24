@@ -1,13 +1,24 @@
 "use client";
 
-import { Input, TextArea, Button, Switch, TextField, Label } from "@heroui/react";
+import {
+  Input,
+  TextArea,
+  Button,
+  Switch,
+  TextField,
+  Label,
+} from "@heroui/react";
 import { useState, useRef, useEffect } from "react";
 import { updateInstitutionHistorySettingsAction } from "../actions";
 import { InstitutionHistorySettings } from "../services";
 import { FileUploader } from "@/ui/components/file-uploader/FileUploader";
 import { toast } from "sonner";
 
-export const InstitutionHistorySettingsForm = ({ defaultValues }: { defaultValues: InstitutionHistorySettings }) => {
+export const InstitutionHistorySettingsForm = ({
+  defaultValues,
+}: {
+  defaultValues: InstitutionHistorySettings;
+}) => {
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
   const [removeImage, setRemoveImage] = useState(false);
@@ -25,13 +36,13 @@ export const InstitutionHistorySettingsForm = ({ defaultValues }: { defaultValue
       description !== defaultValues.description ||
       files.length > 0 ||
       removeImage;
-      
+
     setIsDirty(dirty);
   };
 
   useEffect(() => {
     checkDirty();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [files, removeImage, defaultValues]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -62,25 +73,38 @@ export const InstitutionHistorySettingsForm = ({ defaultValues }: { defaultValue
   };
 
   return (
-    <form ref={formRef} onChange={checkDirty} onSubmit={handleSubmit} className="flex flex-col gap-4">
+    <form
+      ref={formRef}
+      onChange={checkDirty}
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-4"
+    >
       <TextField name="title" defaultValue={defaultValues.title} isRequired>
-        <Label>Título</Label>
+        <Label>Ti­tulo</Label>
         <Input placeholder="Ej. Nuestra Historia" />
       </TextField>
-      
+
       <TextField name="description" defaultValue={defaultValues.description}>
         <Label>Descripción (Texto corto)</Label>
         <TextArea placeholder="Breve introducción histórica..." />
       </TextField>
 
       <div className="mt-2 space-y-2">
-        <label className="text-sm font-semibold">Imagen Principal (Opcional)</label>
-        <p className="text-xs text-default-400">Sube una nueva imagen (16:9 recomendado)</p>
-        
+        <label className="text-sm font-semibold">
+          Imagen Principal (Opcional)
+        </label>
+        <p className="text-xs text-default-400">
+          Sube una nueva imagen (16:9 recomendado)
+        </p>
+
         {defaultValues.imageUrl && !removeImage && files.length === 0 && (
           <div className="relative w-full aspect-video rounded-xl overflow-hidden mb-2">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={defaultValues.imageUrl} alt="Current" className="object-cover w-full h-full" />
+            <img
+              src={defaultValues.imageUrl}
+              alt="Current"
+              className="object-cover w-full h-full"
+            />
           </div>
         )}
         <FileUploader
@@ -100,7 +124,9 @@ export const InstitutionHistorySettingsForm = ({ defaultValues }: { defaultValue
                 <Switch.Thumb />
               </Switch.Control>
               <Switch.Content>
-                <span className="text-sm font-medium">Eliminar imagen actual</span>
+                <span className="text-sm font-medium">
+                  Eliminar imagen actual
+                </span>
               </Switch.Content>
             </Switch>
           </div>
@@ -108,7 +134,12 @@ export const InstitutionHistorySettingsForm = ({ defaultValues }: { defaultValue
       </div>
 
       {isDirty && (
-        <Button variant="primary" type="submit" isPending={loading} className="mt-4 text-primary-foreground">
+        <Button
+          variant="primary"
+          type="submit"
+          isPending={loading}
+          className="mt-4 text-primary-foreground"
+        >
           Guardar Configuración
         </Button>
       )}

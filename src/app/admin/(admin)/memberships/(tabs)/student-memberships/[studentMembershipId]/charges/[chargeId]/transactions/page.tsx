@@ -44,7 +44,7 @@ export default async function ChargeTransactionsPage({
     <>
       <HeaderPage
         title={`Detalles de Cargo`}
-        description={`Membresía: ${membership.student?.person.name} ${membership.student?.person.lastName}`}
+        description={`Membresi­a: ${membership.student?.person.name} ${membership.student?.person.lastName}`}
         // breadcrumb={[
         //   { label: "Membresías", href: `/admin/player-memberships` },
         //   {

@@ -24,7 +24,10 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useEffect, useMemo, useState } from "react";
 import { ICourseSeason, ICourseSeasonShift } from "@/modules/course-seasons";
-import { addCourseSeasonStaff, IStaffOption } from "@/modules/course-season-staff";
+import {
+  addCourseSeasonStaff,
+  IStaffOption,
+} from "@/modules/course-season-staff";
 import { SelectOrCreateCourseStaff } from "../form/SelectOrCreateCourseStaff";
 
 interface Props {
@@ -40,14 +43,18 @@ const toLocalIso = (dateStr: string) => {
   return new Date(`${dateStr}T00:00:00`).toISOString();
 };
 
-export const AssignStaffDrawer = ({ courseSeason, shifts, size = "md" }: Props) => {
+export const AssignStaffDrawer = ({
+  courseSeason,
+  shifts,
+  size = "md",
+}: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const [staffId, setStaffId] = useState<string | null>(null);
   const [selectedStaff, setSelectedStaff] = useState<IStaffOption | null>(null);
   const [courseSeasonShiftId, setCourseSeasonShiftId] = useState<string>("");
-  
+
   const [role, setRole] = useState<string>("HEAD_COACH");
   const [customRole, setCustomRole] = useState<string>("");
   const [startedAt, setStartedAt] = useState<string>(today());
@@ -64,13 +71,14 @@ export const AssignStaffDrawer = ({ courseSeason, shifts, size = "md" }: Props) 
     const err: Record<string, string> = {};
 
     if (!staffId) err.staffId = "Debe seleccionar a un miembro del personal.";
-    if (!courseSeasonShiftId) err.courseSeasonShiftId = "El turno es obligatorio.";
+    if (!courseSeasonShiftId)
+      err.courseSeasonShiftId = "El turno es obligatorio.";
     if (!role) err.role = "El rol es obligatorio.";
     if (role === "OTHER" && !customRole.trim()) {
-      err.customRole = "Debe especificar el rol si seleccionó 'Otro'.";
+      err.customRole = "Debe especificar el rol si seleccioniÂ³ 'Otro'.";
     }
     if (!startedAt) err.startedAt = "La fecha de inicio es obligatoria.";
-    
+
     if (endedAt && startedAt && endedAt < startedAt) {
       err.endedAt = "La fecha de fin no puede ser anterior a la de inicio.";
     }
@@ -175,7 +183,7 @@ export const AssignStaffDrawer = ({ courseSeason, shifts, size = "md" }: Props) 
                   Asignar personal
                 </Drawer.Heading>
                 <p className="mt-1 text-xs font-medium text-muted">
-                  {courseSeason.course.name} · {courseSeason.season.name}
+                  {courseSeason.course.name} ÃÂ· {courseSeason.season.name}
                 </p>
               </div>
             </Drawer.Header>
@@ -221,21 +229,29 @@ export const AssignStaffDrawer = ({ courseSeason, shifts, size = "md" }: Props) 
                   <Select.Popover>
                     <ListBox>
                       {shifts.map((s) => (
-                        <ListBox.Item id={s.id} key={s.id} textValue={s.shift.name}>
+                        <ListBox.Item
+                          id={s.id}
+                          key={s.id}
+                          textValue={s.shift.name}
+                        >
                           {s.shift.name}
                         </ListBox.Item>
                       ))}
                     </ListBox>
                   </Select.Popover>
                 </Select>
-                {errors.courseSeasonShiftId && <FieldError>{errors.courseSeasonShiftId}</FieldError>}
+                {errors.courseSeasonShiftId && (
+                  <FieldError>{errors.courseSeasonShiftId}</FieldError>
+                )}
 
                 <ComboBox
                   className="w-full"
                   variant="secondary"
                   menuTrigger="focus"
                   selectedKey={role}
-                  onSelectionChange={(key) => setRole(key ? String(key) : "HEAD_COACH")}
+                  onSelectionChange={(key) =>
+                    setRole(key ? String(key) : "HEAD_COACH")
+                  }
                   isInvalid={!!errors.role || undefined}
                 >
                   <Label className="text-sm font-semibold flex items-center">
@@ -247,13 +263,22 @@ export const AssignStaffDrawer = ({ courseSeason, shifts, size = "md" }: Props) 
                   </ComboBox.InputGroup>
                   <ComboBox.Popover>
                     <ListBox>
-                      <ListBox.Item id="HEAD_COACH" textValue="Profesor Principal (Head Coach)">
+                      <ListBox.Item
+                        id="HEAD_COACH"
+                        textValue="Profesor Principal (Head Coach)"
+                      >
                         Profesor Principal (Head Coach)
                       </ListBox.Item>
-                      <ListBox.Item id="ASSISTANT_COACH" textValue="Profesor Asistente">
+                      <ListBox.Item
+                        id="ASSISTANT_COACH"
+                        textValue="Profesor Asistente"
+                      >
                         Profesor Asistente
                       </ListBox.Item>
-                      <ListBox.Item id="ASSISTANT" textValue="Auxiliar / Asistente">
+                      <ListBox.Item
+                        id="ASSISTANT"
+                        textValue="Auxiliar / Asistente"
+                      >
                         Auxiliar / Asistente
                       </ListBox.Item>
                       <ListBox.Item id="DELEGATE" textValue="Delegado">
@@ -274,14 +299,18 @@ export const AssignStaffDrawer = ({ courseSeason, shifts, size = "md" }: Props) 
                     className="w-full"
                     isInvalid={!!errors.customRole || undefined}
                   >
-                    <Label className="text-sm font-semibold">Rol Personalizado</Label>
+                    <Label className="text-sm font-semibold">
+                      Rol Personalizado
+                    </Label>
                     <Input
                       variant="secondary"
-                      placeholder="Ej: Preparador Físico"
+                      placeholder="Ej: Preparador FiÂ­sico"
                       value={customRole}
                       onChange={(e) => setCustomRole(e.target.value)}
                     />
-                    {errors.customRole && <FieldError>{errors.customRole}</FieldError>}
+                    {errors.customRole && (
+                      <FieldError>{errors.customRole}</FieldError>
+                    )}
                   </TextField>
                 )}
 
@@ -298,7 +327,9 @@ export const AssignStaffDrawer = ({ courseSeason, shifts, size = "md" }: Props) 
                     value={startedAt}
                     onChange={(e) => setStartedAt(e.target.value)}
                   />
-                  {errors.startedAt && <FieldError>{errors.startedAt}</FieldError>}
+                  {errors.startedAt && (
+                    <FieldError>{errors.startedAt}</FieldError>
+                  )}
                 </TextField>
 
                 <TextField
@@ -325,7 +356,7 @@ export const AssignStaffDrawer = ({ courseSeason, shifts, size = "md" }: Props) 
                       </Switch.Control>
                       <Label className="text-sm font-semibold flex items-center">
                         Es el profesor principal
-                        <InfoTooltip text="El profesor marcado como principal representará a esta clase/curso en la App para funciones oficiales (ej. llamado de asistencia principal)." />
+                        <InfoTooltip text="El profesor marcado como principal representariÂ¡ a esta clase/curso en la App para funciones oficiales (ej. llamado de asistencia principal)." />
                       </Label>
                     </Switch.Content>
                   </Switch>

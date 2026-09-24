@@ -21,7 +21,7 @@ export const AddModal = ({ disciplinesOptions }: Props) => {
         onPress={() => state.open()}
       >
         <HugeiconsIcon icon={Add01Icon} />
-        Agregar Categoría
+        Agregar Categori­a
       </Button>
       <Button
         className="flex md:hidden"
@@ -46,9 +46,9 @@ export const AddModal = ({ disciplinesOptions }: Props) => {
               <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
                 <HugeiconsIcon icon={Layers01Icon} />
               </Modal.Icon>
-              <Modal.Heading>Agregar Categoría</Modal.Heading>
+              <Modal.Heading>Agregar Categori­a</Modal.Heading>
               <p className="mt-1.5 text-sm leading-5 text-muted">
-                Agrega una nueva categoría al sistema.
+                Agrega una nueva categori­a al sistema.
               </p>
             </Modal.Header>
             <Modal.Body className="p-6">

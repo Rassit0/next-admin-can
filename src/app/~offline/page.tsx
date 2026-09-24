@@ -5,7 +5,7 @@ import { OfflineHero, OfflineReconnect } from "@/modules/offline";
 export const metadata: Metadata = {
   title: "Conexión en pausa | Sistema Gestión CAN",
   description:
-    "Te encuentras fuera de línea. La aplicación se reconectará automáticamente.",
+    "Te encuentras fuera de li­nea. La aplicación se reconectari¡ automi¡ticamente.",
 };
 
 export default function OfflinePage() {

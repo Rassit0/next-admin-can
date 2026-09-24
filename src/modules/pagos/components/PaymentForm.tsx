@@ -91,16 +91,16 @@ export const PaymentForm = ({
     const newErrors: Record<string, string> = {};
 
     if (!cardData.cardNumber || !validateCardNumber(cardData.cardNumber)) {
-      newErrors.cardNumber = "Número de tarjeta inválido";
+      newErrors.cardNumber = "Niºmero de tarjeta invi¡lido";
     }
     if (!cardData.cardHolder) {
       newErrors.cardHolder = "Nombre del titular requerido";
     }
     if (!cardData.expiryDate || !/^\d{2}\/\d{2}$/.test(cardData.expiryDate)) {
-      newErrors.expiryDate = "Fecha de vencimiento inválida (MM/YY)";
+      newErrors.expiryDate = "Fecha de vencimiento invi¡lida (MM/YY)";
     }
     if (!cardData.cvv || !/^\d{3,4}$/.test(cardData.cvv)) {
-      newErrors.cvv = "CVV inválido";
+      newErrors.cvv = "CVV invi¡lido";
     }
 
     setErrors(newErrors);
@@ -114,7 +114,7 @@ export const PaymentForm = ({
       newErrors.bankName = "Banco requerido";
     }
     if (!transferData.accountNumber) {
-      newErrors.accountNumber = "Número de cuenta requerido";
+      newErrors.accountNumber = "Niºmero de cuenta requerido";
     }
 
     setErrors(newErrors);
@@ -180,7 +180,7 @@ export const PaymentForm = ({
         <div className="text-sm text-accent">
           <p className="font-semibold">Pago Seguro</p>
           <p className="text-xs opacity-80">
-            Tu información está encriptada y protegida
+            Tu información esti¡ encriptada y protegida
           </p>
         </div>
       </motion.div>
@@ -192,12 +192,12 @@ export const PaymentForm = ({
             setSelectedTab(key as "card" | "transfer");
             setErrors({});
           }}
-          aria-label="Métodos de pago"
+          aria-label="Mi©todos de pago"
         >
           <Tabs.ListContainer>
             <Tabs.List aria-label="Options">
               <Tabs.Tab id="card">
-                Tarjeta de Crédito
+                Tarjeta de Cri©dito
                 <Tabs.Indicator />
               </Tabs.Tab>
               <Tabs.Tab id="transfer">
@@ -225,7 +225,7 @@ export const PaymentForm = ({
                   })
                 }
               >
-                <Label>Número de Tarjeta</Label>
+                <Label>Niºmero de Tarjeta</Label>
                 <Input placeholder="4532 1234 5678 9010" />
                 <FieldError>{errors.cardNumber}</FieldError>
               </TextField>
@@ -240,7 +240,7 @@ export const PaymentForm = ({
                 isDisabled={isLoading}
               >
                 <Label>Nombre del Titular</Label>
-                <Input placeholder="Juan Pérez" />
+                <Input placeholder="Juan Pi©rez" />
                 <FieldError>{errors.cardHolder}</FieldError>
               </TextField>
 
@@ -319,7 +319,7 @@ export const PaymentForm = ({
                       <Label>Banco Fassil</Label>
                     </ListBox.Item>
                     <ListBox.Item id="banco-ecb">
-                      <Label>Banco de Crédito Boliviano</Label>
+                      <Label>Banco de Cri©dito Boliviano</Label>
                     </ListBox.Item>
                   </ListBox>
                 </Select.Popover>
@@ -334,8 +334,8 @@ export const PaymentForm = ({
                 isInvalid={!!errors.accountNumber}
                 isDisabled={isLoading}
               >
-                <Label>Número de Cuenta</Label>
-                <Input placeholder="Ingresa tu número de cuenta" />
+                <Label>Niºmero de Cuenta</Label>
+                <Input placeholder="Ingresa tu niºmero de cuenta" />
                 <FieldError>{errors.accountNumber}</FieldError>
               </TextField>
 
@@ -346,7 +346,7 @@ export const PaymentForm = ({
                   className="text-warning shrink-0 mt-0.5"
                 />
                 <p className="text-xs text-warning">
-                  Recibirás instrucciones de transferencia bancaria por correo
+                  Recibiri¡s instrucciones de transferencia bancaria por correo
                 </p>
               </div>
             </motion.div>

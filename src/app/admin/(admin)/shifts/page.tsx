@@ -1,4 +1,4 @@
-﻿import { ErrorPage, HeaderPage, PaginationSection, SectionFilters } from "@/ui";
+import { ErrorPage, HeaderPage, PaginationSection, SectionFilters } from "@/ui";
 import { redirect } from "next/navigation";
 import { TableShifts } from "@/modules/shifts/components/table/TableShifts";
 import { AddModal, getShifts } from "@/modules/shifts";
@@ -31,17 +31,17 @@ export default async function ShiftsPage({ searchParams }: Props) {
     <>
       {/* <!-- Header --> */}
       <HeaderPage
-        title="GestiÃ³n de Turnos"
-        description="Administra los turnos de la instituciÃ³n"
+        title="Gestión de Turnos"
+        description="Administra los turnos de la institución"
         action={<AddModal buttonFloatingMobile />}
       />
-      
+
       {/* <!-- Search and Filter Bar --> */}
       <SectionFilters />
-      
+
       {/* <!-- Main Table --> */}
       <TableShifts shifts={shiftsResponse.data.data} />
-      
+
       <PaginationSection
         totalPages={shiftsResponse.data.meta.totalPages}
         itemsPerPage={shiftsResponse.data.meta.itemsPerPage}

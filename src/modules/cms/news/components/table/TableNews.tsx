@@ -32,11 +32,11 @@ export const TableNews = ({ news }: Props) => {
               PORTADA
             </Table.Column>
             <Table.Column allowsSorting id="title">
-              <SortableColumnHeader id="title">Título</SortableColumnHeader>
+              <SortableColumnHeader id="title">Ti­tulo</SortableColumnHeader>
             </Table.Column>
             <Table.Column allowsSorting id="category">
               <SortableColumnHeader id="category">
-                Categoría
+                Categori­a
               </SortableColumnHeader>
             </Table.Column>
             <Table.Column allowsSorting id="status">
@@ -79,7 +79,11 @@ export const TableNews = ({ news }: Props) => {
                 <Table.Cell className="font-medium max-w-75 truncate">
                   {item.title}
                 </Table.Cell>
-                <Table.Cell>{typeof item.category === 'object' ? item.category?.name : (item.category || "-")}</Table.Cell>
+                <Table.Cell>
+                  {typeof item.category === "object"
+                    ? item.category?.name
+                    : item.category || "-"}
+                </Table.Cell>
                 <Table.Cell>
                   <Chip
                     size="sm"

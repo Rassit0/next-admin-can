@@ -11,7 +11,12 @@ export const addNews = async (
 ): Promise<ServiceResponse<INews>> => {
   const session = await auth();
 
-  if (!session?.user) return { error: true, statusCode: 401, message: "Su sesión ha expirado." } as any;
+  if (!session?.user)
+    return {
+      error: true,
+      statusCode: 401,
+      message: "Su sesión ha expirado.",
+    } as any;
 
   return handleServerAction(async () => {
     const response = await api.post<INews>("news", data, {
@@ -22,7 +27,7 @@ export const addNews = async (
 
     updateTag("public-news");
     updateTag("admin-news");
-    
+
     return {
       error: false,
       data: response,

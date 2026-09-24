@@ -46,7 +46,8 @@ export const getPlayerMemberships = async ({
     if (playerId) params.set("playerId", playerId);
     if (paymentPlanId) params.set("paymentPlanId", paymentPlanId);
     if (teamSeasonId) params.set("teamSeasonId", teamSeasonId);
-    if (teamSeasonCategoryId) params.set("teamSeasonCategoryId", teamSeasonCategoryId);
+    if (teamSeasonCategoryId)
+      params.set("teamSeasonCategoryId", teamSeasonCategoryId);
 
     const res = await api.get<IPlayerMembershipResponse>(
       `player-memberships?${params.toString()}`,

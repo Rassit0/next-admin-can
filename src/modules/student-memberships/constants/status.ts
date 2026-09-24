@@ -1,4 +1,7 @@
-import { StudentMembershipStatus, StudentMembershipSuspensionReason } from "@/modules/student-memberships";
+import {
+  StudentMembershipStatus,
+  StudentMembershipSuspensionReason,
+} from "@/modules/student-memberships";
 
 type ChipColor = "accent" | "danger" | "default" | "success" | "warning";
 
@@ -13,7 +16,7 @@ export const MEMBERSHIP_STATUS_CONFIG: Record<
   StatusConfig
 > = {
   PENDING_ACTIVE: {
-    label: "Pendiente de activación",
+    label: "Pendiente de activaciiÂ³n",
     color: "accent",
     dot: "bg-accent",
   },
@@ -25,14 +28,22 @@ export const MEMBERSHIP_STATUS_CONFIG: Record<
 
 export const getStatusConfig = (
   status: StudentMembershipStatus,
-  suspensionReason?: StudentMembershipSuspensionReason | null
+  suspensionReason?: StudentMembershipSuspensionReason | null,
 ): StatusConfig => {
   if (status === "SUSPENDED") {
     if (suspensionReason === "PAUSE") {
-      return { label: "Suspendida — Pausa programada", color: "warning", dot: "bg-warning" };
+      return {
+        label: "Suspendida Ã¢ÂÂ Pausa programada",
+        color: "warning",
+        dot: "bg-warning",
+      };
     }
     if (suspensionReason === "MANUAL") {
-      return { label: "Suspendida — Manual", color: "warning", dot: "bg-warning" };
+      return {
+        label: "Suspendida Ã¢ÂÂ Manual",
+        color: "warning",
+        dot: "bg-warning",
+      };
     }
     return MEMBERSHIP_STATUS_CONFIG.SUSPENDED;
   }

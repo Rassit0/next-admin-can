@@ -132,7 +132,7 @@ export const InternalTransferDrawer = ({
                 isRequired
                 className="w-full"
                 name="sourceAccountId"
-                placeholder="Selecciona cuenta que envía"
+                placeholder="Selecciona cuenta que envi­a"
                 variant="secondary"
                 selectedKey={sourceAccountId}
                 onSelectionChange={(key) =>
@@ -252,7 +252,7 @@ export const InternalTransferDrawer = ({
                   variant="secondary"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Ej. Depósito del día"
+                  placeholder="Ej. Depósito del di­a"
                 />
               </TextField>
 

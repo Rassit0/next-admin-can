@@ -98,7 +98,7 @@ export const ShiftConfigBlock = ({
         />
 
         <SelectCategory
-          label="Categoría"
+          label="Categori­a"
           categoriesOptions={categoriesOptions}
           categoryId={shift.categoryId || null}
           setCategoryId={(val) => {
@@ -114,7 +114,7 @@ export const ShiftConfigBlock = ({
           isRequired
           className="w-full"
           name="gender"
-          placeholder="Seleccione un género"
+          placeholder="Seleccione un gi©nero"
           variant="secondary"
           isInvalid={!!getError("gender") || undefined}
           value={shift.gender || ""}
@@ -168,7 +168,7 @@ export const ShiftConfigBlock = ({
           isInvalid={!!getError("minBirthYear") || undefined}
           isDisabled={!shift.validateAge}
         >
-          <Label>Año Nac. Mínimo (Opcional)</Label>
+          <Label>Ai±o Nac. Mi­nimo (Opcional)</Label>
           <Input
             min={1900}
             placeholder="Ej: 2015"
@@ -197,7 +197,7 @@ export const ShiftConfigBlock = ({
           isInvalid={!!getError("maxBirthYear") || undefined}
           isDisabled={!shift.validateAge}
         >
-          <Label>Año Nac. Máximo (Opcional)</Label>
+          <Label>Ai±o Nac. Mi¡ximo (Opcional)</Label>
           <Input
             min={1900}
             placeholder="Ej: 2016"

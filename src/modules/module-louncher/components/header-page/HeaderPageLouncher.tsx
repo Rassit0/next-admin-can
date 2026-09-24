@@ -18,9 +18,9 @@ export const HeaderPageLouncher = () => {
           Bienvenido al Panel Administrativo de CAN
         </h2>
         <p className="text-base md:text-lg text-accent-fixed opacity-90 font-body mb-6 md:mb-8">
-          Administre con precisión atlética. Supervise el crecimiento de
+          Administre con precisión atli©tica. Supervise el crecimiento de
           nuestras academias, controle el flujo financiero y gestione la
-          identidad digital del club desde un solo núcleo de control.
+          identidad digital del club desde un solo niºcleo de control.
         </p>
         {/* <div className="flex sm:flex-row flex-col gap-4">
           <div className="bg-surface-container-lowest/10 backdrop-blur-md border border-white/10 p-4 rounded-2xl flex items-center space-x-4 flex-1">

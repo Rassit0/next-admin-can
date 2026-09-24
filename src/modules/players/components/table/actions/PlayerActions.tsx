@@ -114,7 +114,7 @@ export const PlayerActions = ({ player }: Props) => {
     <>
       <Dropdown>
         <Button
-          aria-label="Acciones de membresía"
+          aria-label="Acciones de membresi­a"
           isIconOnly
           size="sm"
           variant="ghost"

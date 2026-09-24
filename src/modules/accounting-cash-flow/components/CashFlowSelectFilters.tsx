@@ -108,11 +108,11 @@ export const CashFlowSelectFilters = ({
 
       <Select
         className="w-full max-w-50"
-        placeholder="Métodos de pago"
+        placeholder="Mi©todos de pago"
         value={currentMethod}
         onChange={(key) => handleMethodChange(key?.toString() || "all")}
       >
-        <Label className="sr-only">Métodos de pago</Label>
+        <Label className="sr-only">Mi©todos de pago</Label>
         <Select.Trigger>
           <Select.Value />
           <Select.Indicator />
@@ -121,10 +121,10 @@ export const CashFlowSelectFilters = ({
           <ListBox>
             <ListBox.Item
               id="all"
-              textValue="Todos los métodos"
+              textValue="Todos los mi©todos"
               className="hover:bg-accent-soft"
             >
-              Todos los métodos
+              Todos los mi©todos
               <ListBox.ItemIndicator />
             </ListBox.Item>
             {availableMethods.map((method) => (

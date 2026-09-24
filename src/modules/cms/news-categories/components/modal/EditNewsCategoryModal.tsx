@@ -1,10 +1,5 @@
 "use client";
-import {
-  Button,
-  Modal,
-  ProgressCircle,
-  useOverlayState,
-} from "@heroui/react";
+import { Button, Modal, ProgressCircle, useOverlayState } from "@heroui/react";
 import { Folder01Icon, PencilEdit02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
@@ -18,7 +13,12 @@ interface Props {
   showButton?: boolean;
 }
 
-export const EditNewsCategoryModal = ({ category, isOpen, setIsOpen, showButton = true }: Props) => {
+export const EditNewsCategoryModal = ({
+  category,
+  isOpen,
+  setIsOpen,
+  showButton = true,
+}: Props) => {
   const state = useOverlayState({
     isOpen: isOpen,
     onOpenChange: setIsOpen,
@@ -35,7 +35,7 @@ export const EditNewsCategoryModal = ({ category, isOpen, setIsOpen, showButton 
           className="text-default-600 w-full justify-start"
         >
           <HugeiconsIcon icon={PencilEdit02Icon} size={16} />
-          Editar Categoría
+          Editar Categori­a
         </Button>
       )}
 
@@ -48,10 +48,11 @@ export const EditNewsCategoryModal = ({ category, isOpen, setIsOpen, showButton 
                 <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
                   <HugeiconsIcon icon={Folder01Icon} />
                 </Modal.Icon>
-                <Modal.Heading>Editar Categoría</Modal.Heading>
+                <Modal.Heading>Editar Categori­a</Modal.Heading>
               </div>
               <p className="mt-1.5 text-sm leading-5 text-muted">
-                Modifica los datos de la categoría. El slug no puede ser alterado.
+                Modifica los datos de la categori­a. El slug no puede ser
+                alterado.
               </p>
             </Modal.Header>
             <Modal.Body className="p-6">

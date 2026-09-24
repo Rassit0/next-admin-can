@@ -7,12 +7,19 @@ interface SectionFiltersProps {
   searchPlaceholder?: string;
 }
 
-export const SectionFilters = ({ actions, children, showSearch, searchPlaceholder }: SectionFiltersProps) => {
+export const SectionFilters = ({
+  actions,
+  children,
+  showSearch,
+  searchPlaceholder,
+}: SectionFiltersProps) => {
   return (
     <div className="flex flex-wrap flex-row gap-2 justify-between items-end w-full">
       {/* Contenedor izquierdo: Search + Filtros */}
       <div className="flex flex-wrap flex-1 gap-2 items-center">
-        <Filters showSearch={showSearch} searchPlaceholder={searchPlaceholder}>{children}</Filters>
+        <Filters showSearch={showSearch} searchPlaceholder={searchPlaceholder}>
+          {children}
+        </Filters>
         <PerPage />
       </div>
 

@@ -8,14 +8,16 @@ export const deleteAccountCategory = async (
   id: string,
 ): Promise<ServiceResponse<void>> => {
   return handleServerAction(async () => {
-    const res = await api.delete<{ message: string; data: void }>(`account-categories/${id}`);
+    const res = await api.delete<{ message: string; data: void }>(
+      `account-categories/${id}`,
+    );
 
     updateTag("account-categories");
 
     return {
       error: false,
       data: res.data,
-      message: res.message || "Categoría eliminada exitosamente",
+      message: res.message || "Categori­a eliminada exitosamente",
     };
   });
 };

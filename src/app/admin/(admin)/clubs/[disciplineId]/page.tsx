@@ -48,7 +48,7 @@ export default async function ClubsPage({ searchParams, params }: Props) {
     getDisciplinesOptions(),
   ]);
 
-  // 1. Manejo de error específico (Ej: 401 no autorizado)
+  // 1. Manejo de error especi­fico (Ej: 401 no autorizado)
   if (clubsResponse.error && clubsResponse.statusCode === 401) {
     redirect("/login");
   }
@@ -63,7 +63,7 @@ export default async function ClubsPage({ searchParams, params }: Props) {
     );
   }
 
-  // 1. Manejo de error específico (Ej: 401 no autorizado)
+  // 1. Manejo de error especi­fico (Ej: 401 no autorizado)
   if (
     disciplinesOptionsResponse.error &&
     disciplinesOptionsResponse.statusCode === 401

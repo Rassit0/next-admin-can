@@ -17,7 +17,7 @@ import {
   cn,
 } from "@heroui/react";
 import { useAsyncList } from "@react-stately/data";
-import { getPersonsOptions, IPersonOption } from "@/common/actions/get-persons-options";
+import { getPersonsOptions, IPersonOption } from "@/modules/persons";
 import { Cancel01Icon, FloppyDiskIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { IAccountCharge } from "../../interfaces/charge.interface";
@@ -139,7 +139,7 @@ export const AccountChargeDrawer = ({
     setCategoryId("");
     setDescription("");
     setReferenceNumber("");
-    
+
     if (defaultPerson) {
       setEntityType("PERSON");
       setPersonId(defaultPerson.id);
@@ -149,7 +149,7 @@ export const AccountChargeDrawer = ({
       setExternalEntity("");
       setPersonId("");
     }
-    
+
     setIsImmediate(false);
     setPaymentMethod("CASH");
   };
@@ -205,7 +205,9 @@ export const AccountChargeDrawer = ({
           categoryId,
           dueDate: isImmediate
             ? new Date().toISOString()
-            : (dueDate ? new Date(dueDate).toISOString() : new Date().toISOString()),
+            : dueDate
+              ? new Date(dueDate).toISOString()
+              : new Date().toISOString(),
           description: description || undefined,
           referenceNumber: referenceNumber || undefined,
           externalEntity:
@@ -245,9 +247,11 @@ export const AccountChargeDrawer = ({
           </Drawer.Header>
           <Drawer.Body className="gap-6 pt-6 pb-6">
             <TextField className="w-full" isRequired>
-              <Label className="text-sm font-semibold">Título / Concepto</Label>
+              <Label className="text-sm font-semibold">
+                Ti­tulo / Concepto
+              </Label>
               <Input
-                placeholder={`Ej. ${isReceivable ? "Cobro por alquiler" : "Pago de servicio eléctrico"}`}
+                placeholder={`Ej. ${isReceivable ? "Cobro por alquiler" : "Pago de servicio eli©ctrico"}`}
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 variant="secondary"
@@ -274,7 +278,7 @@ export const AccountChargeDrawer = ({
                     Liquidar Inmediatamente
                   </span>
                   <span className="text-xs text-default-500">
-                    Registrar el pago automáticamente en caja
+                    Registrar el pago automi¡ticamente en caja
                   </span>
                 </div>
                 <Switch
@@ -293,7 +297,7 @@ export const AccountChargeDrawer = ({
                 onSelectionChange={(key) => setPaymentMethod(String(key))}
                 isRequired
               >
-                <Label className="text-sm font-semibold">Método de Pago</Label>
+                <Label className="text-sm font-semibold">Mi©todo de Pago</Label>
                 <ComboBox.InputGroup>
                   <Input variant="secondary" />
                   <ComboBox.Trigger />
@@ -341,11 +345,11 @@ export const AccountChargeDrawer = ({
               }}
               isRequired
             >
-              <Label className="text-sm font-semibold">Categoría</Label>
+              <Label className="text-sm font-semibold">Categori­a</Label>
               <ComboBox.InputGroup>
                 <Input
                   variant="secondary"
-                  placeholder="Seleccione una categoría"
+                  placeholder="Seleccione una categori­a"
                 />
                 <ComboBox.Trigger />
               </ComboBox.InputGroup>
@@ -405,7 +409,9 @@ export const AccountChargeDrawer = ({
                       setPersonId(key?.toString() || "");
                     }}
                   >
-                    <Label className="text-sm font-semibold">Beneficiario / Estudiante (Opcional)</Label>
+                    <Label className="text-sm font-semibold">
+                      Beneficiario / Estudiante (Opcional)
+                    </Label>
                     <Autocomplete.Trigger>
                       <Autocomplete.Value />
                       <Autocomplete.ClearButton />
@@ -428,9 +434,13 @@ export const AccountChargeDrawer = ({
                             <SearchField.Input placeholder="Buscar beneficiario..." />
                             <Spinner
                               size="sm"
-                              className={cn("absolute top-1/2 right-2 -translate-y-1/2", {
-                                "pointer-events-none opacity-0": !list.isLoading,
-                              })}
+                              className={cn(
+                                "absolute top-1/2 right-2 -translate-y-1/2",
+                                {
+                                  "pointer-events-none opacity-0":
+                                    !list.isLoading,
+                                },
+                              )}
                             />
                           </SearchField.Group>
                         </SearchField>
@@ -447,7 +457,9 @@ export const AccountChargeDrawer = ({
                             textValue={item.fullName}
                           >
                             <div className="flex flex-col">
-                              <span className="font-semibold">{item.fullName}</span>
+                              <span className="font-semibold">
+                                {item.fullName}
+                              </span>
                               <span className="text-sm text-default-400">
                                 {item.documentNumber || "Sin documento"}
                               </span>
@@ -464,7 +476,7 @@ export const AccountChargeDrawer = ({
             {!defaultPerson && (
               <TextField className="w-full">
                 <Label className="text-sm font-semibold">
-                  Número de Referencia
+                  Niºmero de Referencia
                 </Label>
                 <Input
                   placeholder="Ej. Factura #12345"

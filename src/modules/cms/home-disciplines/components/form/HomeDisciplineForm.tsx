@@ -1,12 +1,9 @@
 "use client";
+import { Form, Input, TextField, Label, Switch } from "@heroui/react";
 import {
-  Form,
-  Input,
-  TextField,
-  Label,
-  Switch,
-} from "@heroui/react";
-import { IHomeDiscipline, PostHomeDisciplineInterface } from "../../interfaces/home-discipline.interface";
+  IHomeDiscipline,
+  PostHomeDisciplineInterface,
+} from "../../interfaces/home-discipline.interface";
 import { addHomeDiscipline } from "../../actions/add";
 import { editHomeDiscipline } from "../../actions/edit";
 import { useState } from "react";
@@ -22,7 +19,10 @@ interface Props {
   setIsLoading?: (value: boolean) => void;
 }
 
-const validateImageAspectRatio = (file: File, expectedRatio: number): Promise<boolean> => {
+const validateImageAspectRatio = (
+  file: File,
+  expectedRatio: number,
+): Promise<boolean> => {
   return new Promise((resolve) => {
     const img = new window.Image();
     const objectUrl = URL.createObjectURL(file);
@@ -59,7 +59,8 @@ export const HomeDisciplineForm = ({
 
   const handleUploadImage = (newFiles: File[]) => {
     setFiles4x3(newFiles);
-    if (newFiles.length === 0) setFormData({ ...formData, image4x3: "" as any });
+    if (newFiles.length === 0)
+      setFormData({ ...formData, image4x3: "" as any });
   };
 
   const handleRemoveError = (fieldName: string) => {
@@ -79,9 +80,9 @@ export const HomeDisciplineForm = ({
     if ((e.target as HTMLFormElement).id !== formId) return;
 
     const newErrors: Record<string, string> = {};
-    if (!formData.title) newErrors.title = "El título es obligatorio";
-    
-    // Validación de imagen 4x3
+    if (!formData.title) newErrors.title = "El tiÂ­tulo es obligatorio";
+
+    // ValidaciiÂ³n de imagen 4x3
     if (!homeDiscipline && files4x3.length === 0) {
       newErrors.image4x3 = "La imagen principal 4:3 es obligatoria";
     }
@@ -97,7 +98,7 @@ export const HomeDisciplineForm = ({
 
     setIsLoading?.(true);
 
-      /* Comentado porque el backend recorta automáticamente
+    /* Comentado porque el backend recorta automiÂ¡ticamente
       if (files4x3.length > 0) {
         const isValid = await validateImageAspectRatio(files4x3[0], 4 / 3);
         if (!isValid) {
@@ -117,7 +118,7 @@ export const HomeDisciplineForm = ({
     if (files4x3.length > 0) {
       payload.append("image4x3", files4x3[0]);
     }
-    
+
     let res;
     if (homeDiscipline) {
       res = await editHomeDiscipline(homeDiscipline.id, payload as any);
@@ -142,12 +143,16 @@ export const HomeDisciplineForm = ({
   };
 
   return (
-    <Form id={formId} onSubmit={handleSubmit} className="flex flex-col gap-6 w-full">
+    <Form
+      id={formId}
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-6 w-full"
+    >
       <div className="flex flex-col gap-4 w-full">
         <TextField isRequired variant="secondary">
-          <Label>Título</Label>
+          <Label>TiÂ­tulo</Label>
           <Input
-            placeholder="Ej: Escuela de Fútbol"
+            placeholder="Ej: Escuela de FiÂºtbol"
             value={formData.title}
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             onChange={(e: any) => {
@@ -155,17 +160,21 @@ export const HomeDisciplineForm = ({
               handleRemoveError("title");
             }}
           />
-          {errors.title && <span className="text-danger text-xs mt-1">{errors.title}</span>}
+          {errors.title && (
+            <span className="text-danger text-xs mt-1">{errors.title}</span>
+          )}
         </TextField>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <TextField variant="secondary">
-            <Label>Redirección (URL o Ruta)</Label>
+            <Label>RedirecciiÂ³n (URL o Ruta)</Label>
             <Input
               placeholder="Ej: /equipos"
               value={formData.redirectTo || ""}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              onChange={(e: any) => setFormData({ ...formData, redirectTo: e.target.value })}
+              onChange={(e: any) =>
+                setFormData({ ...formData, redirectTo: e.target.value })
+              }
             />
           </TextField>
         </div>
@@ -175,7 +184,7 @@ export const HomeDisciplineForm = ({
             <Label>
               <span className="flex items-center gap-2">
                 Orden (Sort Order)
-                <InfoTooltip text="Define el orden de aparición visual. Valores menores (ej: 0, 1) aparecerán primero en la lista." />
+                <InfoTooltip text="Define el orden de apariciiÂ³n visual. Valores menores (ej: 0, 1) apareceriÂ¡n primero en la lista." />
               </span>
             </Label>
             <Input
@@ -183,7 +192,12 @@ export const HomeDisciplineForm = ({
               placeholder="0"
               value={formData.sortOrder?.toString() || "0"}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              onChange={(e: any) => setFormData({ ...formData, sortOrder: parseInt(e.target.value) || 0 })}
+              onChange={(e: any) =>
+                setFormData({
+                  ...formData,
+                  sortOrder: parseInt(e.target.value) || 0,
+                })
+              }
             />
           </TextField>
         </div>
@@ -217,12 +231,9 @@ export const HomeDisciplineForm = ({
             maxSizeMB={5}
           />
           {formData.image4x3 && (
-            <div className="mt-2 text-sm text-success">
-              ✅ Cargada
-            </div>
+            <div className="mt-2 text-sm text-success">Ã¢ÂÂ Cargada</div>
           )}
         </div>
-
       </div>
     </Form>
   );

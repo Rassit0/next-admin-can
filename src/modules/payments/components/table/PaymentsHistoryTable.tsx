@@ -23,7 +23,7 @@ const initialsFromName = (name: string) =>
 export const PaymentsHistoryTable = ({
   payments,
   onPay,
-  emptyLabel = "No hay pagos en esta categoría.",
+  emptyLabel = "No hay pagos en esta categoriÂ­a.",
 }: Props) => {
   return (
     <Table>
@@ -33,10 +33,10 @@ export const PaymentsHistoryTable = ({
             <Table.Column isRowHeader>ATLETA</Table.Column>
             <Table.Column>CONCEPTO</Table.Column>
             <Table.Column className="text-right">MONTO</Table.Column>
-            <Table.Column>MÉTODO</Table.Column>
+            <Table.Column>MiÂTODO</Table.Column>
             <Table.Column>REFERENCIA</Table.Column>
             <Table.Column>ESTADO</Table.Column>
-            <Table.Column className="text-center">ACCIÓN</Table.Column>
+            <Table.Column className="text-center">ACCIiÂN</Table.Column>
           </Table.Header>
           <Table.Body
             renderEmptyState={() => (
@@ -73,10 +73,10 @@ export const PaymentsHistoryTable = ({
                     ? "Tarjeta"
                     : payment.method === "TRANSFER"
                       ? "Transferencia"
-                      : "—"}
+                      : "Ã¢ÂÂ"}
                 </Table.Cell>
                 <Table.Cell className="font-mono text-xs text-muted">
-                  {payment.reference ?? "—"}
+                  {payment.reference ?? "Ã¢ÂÂ"}
                 </Table.Cell>
                 <Table.Cell>
                   <PaymentStatusChip status={payment.status} />
@@ -96,7 +96,7 @@ export const PaymentsHistoryTable = ({
                       <span className="text-xs text-muted">
                         {payment.paidAt
                           ? payment.paidAt.toLocaleDateString("es-BO")
-                          : "—"}
+                          : "Ã¢ÂÂ"}
                       </span>
                     )}
                   </div>

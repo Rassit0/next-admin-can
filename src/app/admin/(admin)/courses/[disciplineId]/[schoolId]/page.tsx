@@ -48,7 +48,7 @@ export default async function CoursesPage({ searchParams, params }: Props) {
     getSchoolById({ id: schoolId }),
   ]);
 
-  // 1. Manejo de error específico (Ej: 401 no autorizado)
+  // 1. Manejo de error especi­fico (Ej: 401 no autorizado)
   if (coursesResponse.error && coursesResponse.statusCode === 401) {
     redirect("/login");
   }

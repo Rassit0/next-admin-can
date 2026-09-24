@@ -40,7 +40,10 @@ const formatCurrency = (amount: number, currency: string = "BOB") =>
     currency,
   }).format(amount);
 
-export const InvoicePreview = ({ assignment, isLoading }: InvoicePreviewProps) => {
+export const InvoicePreview = ({
+  assignment,
+  isLoading,
+}: InvoicePreviewProps) => {
   return (
     <motion.div
       className="rounded-xl border border-border bg-surface-secondary p-6 shadow-sm"
@@ -57,7 +60,9 @@ export const InvoicePreview = ({ assignment, isLoading }: InvoicePreviewProps) =
         <motion.div variants={itemVariants}>
           <HugeiconsIcon icon={Invoice01Icon} size={18} />
         </motion.div>
-        <motion.span variants={itemVariants}>Resumen de Cargos Iniciales</motion.span>
+        <motion.span variants={itemVariants}>
+          Resumen de Cargos Iniciales
+        </motion.span>
       </motion.div>
 
       <motion.div

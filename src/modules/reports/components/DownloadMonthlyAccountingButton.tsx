@@ -16,7 +16,7 @@ export function DownloadMonthlyAccountingButton() {
 
   const handleDownload = async () => {
     if (!selectedDate) {
-      toast.error("Por favor seleccione un mes y año.");
+      toast.error("Por favor seleccione un mes y ai±o.");
       return;
     }
 
@@ -66,7 +66,7 @@ export function DownloadMonthlyAccountingButton() {
   return (
     <div className="flex flex-col gap-4 w-full">
       <div className="space-y-2">
-        <label className="text-sm font-medium">Mes y Año</label>
+        <label className="text-sm font-medium">Mes y Ai±o</label>
         <input
           type="month"
           value={selectedDate}

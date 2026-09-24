@@ -14,44 +14,50 @@ export const useMobileNavigation = (items: NavItem[], urlBase?: string) => {
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() || 0;
     const direction = latest - previous;
-    const isAtBottom = typeof window !== "undefined" && window.innerHeight + latest >= document.body.scrollHeight - 50;
+    const isAtBottom =
+      typeof window !== "undefined" &&
+      window.innerHeight + latest >= document.body.scrollHeight - 50;
 
     if (direction > 0 && latest > 70 && !isAtBottom) {
       setHidden(true);
-      setIsMoreOpen(false); // Cerrar menú Más al scrollear
+      setIsMoreOpen(false); // Cerrar meniº Mi¡s al scrollear
     } else if (direction < 0 || isAtBottom) {
       setHidden(false);
     }
   });
 
   // Procesamiento de prioridad para móviles
-  // 1. Eliminar los que explícitamente tienen mobile.visible = false
-  const visibleItems = items.filter(item => item.mobile?.visible !== false);
+  // 1. Eliminar los que expli­citamente tienen mobile.visible = false
+  const visibleItems = items.filter((item) => item.mobile?.visible !== false);
 
   // 2. Ordenar por prioridad (mayor primero), luego posición, luego orden original
-  // Conservamos el índice original para desempatar manteniendo el orden inicial
+  // Conservamos el i­ndice original para desempatar manteniendo el orden inicial
   const itemsWithIndex = visibleItems.map((item, index) => ({ item, index }));
-  const sortedItems = itemsWithIndex.sort((a, b) => {
-    const priorityA = a.item.mobile?.priority ?? 0;
-    const priorityB = b.item.mobile?.priority ?? 0;
-    if (priorityB !== priorityA) return priorityB - priorityA;
+  const sortedItems = itemsWithIndex
+    .sort((a, b) => {
+      const priorityA = a.item.mobile?.priority ?? 0;
+      const priorityB = b.item.mobile?.priority ?? 0;
+      if (priorityB !== priorityA) return priorityB - priorityA;
 
-    const positionA = a.item.mobile?.position ?? 0;
-    const positionB = b.item.mobile?.position ?? 0;
-    if (positionA !== positionB) return positionA - positionB;
+      const positionA = a.item.mobile?.position ?? 0;
+      const positionB = b.item.mobile?.position ?? 0;
+      if (positionA !== positionB) return positionA - positionB;
 
-    return a.index - b.index;
-  }).map(x => x.item);
+      return a.index - b.index;
+    })
+    .map((x) => x.item);
 
-  // 3. Seleccionar los primeros 4 para la barra principal y el resto para el menú "Más"
+  // 3. Seleccionar los primeros 4 para la barra principal y el resto para el meniº "Mi¡s"
   const MAX_MAIN_ITEMS = 4;
   const showMoreButton = sortedItems.length > MAX_MAIN_ITEMS;
-  
-  // Si no exceden el máximo, mostrar todos como principales
-  const mainItems = showMoreButton ? sortedItems.slice(0, MAX_MAIN_ITEMS) : sortedItems;
+
+  // Si no exceden el mi¡ximo, mostrar todos como principales
+  const mainItems = showMoreButton
+    ? sortedItems.slice(0, MAX_MAIN_ITEMS)
+    : sortedItems;
   const moreItems = showMoreButton ? sortedItems.slice(MAX_MAIN_ITEMS) : [];
 
-  // Lógica para determinar si un elemento o ruta está activa
+  // Lógica para determinar si un elemento o ruta esti¡ activa
   const fromContext = searchParams.get("from");
   const currentPath = pathname.replace(urlBase ?? "", "");
   const currentSegment = currentPath.split("/").filter(Boolean)[0] ?? "/";
@@ -59,7 +65,10 @@ export const useMobileNavigation = (items: NavItem[], urlBase?: string) => {
 
   const isItemActive = (item: NavItem) => {
     const itemSegment = item.href.split("/").filter(Boolean)[0] ?? "/";
-    return effectiveSegment === itemSegment || pathname.startsWith(urlBase ? `${urlBase}/${item.href}` : item.href);
+    return (
+      effectiveSegment === itemSegment ||
+      pathname.startsWith(urlBase ? `${urlBase}/${item.href}` : item.href)
+    );
   };
 
   const isMoreActive = moreItems.some(isItemActive);

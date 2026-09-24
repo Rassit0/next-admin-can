@@ -21,14 +21,18 @@ interface Props {
   onOpenChange: Dispatch<SetStateAction<boolean>>;
   courseSeason: ICourseSeason;
 }
-export const FinalizeModal = ({ isOpen, onOpenChange, courseSeason }: Props) => {
+export const FinalizeModal = ({
+  isOpen,
+  onOpenChange,
+  courseSeason,
+}: Props) => {
   const state = useOverlayState({ isOpen, onOpenChange });
   const [isLoading, setIsLoading] = useState(false);
   const [statusNotes, setStatusNotes] = useState("");
 
   const handleFinalize = async () => {
     if (!statusNotes) {
-      toast.danger("Debe ingresar un motivo de finalización");
+      toast.danger("Debe ingresar un motivo de finalizaciiÂ³n");
       return;
     }
     setIsLoading(true);
@@ -46,10 +50,10 @@ export const FinalizeModal = ({ isOpen, onOpenChange, courseSeason }: Props) => 
               : messages;
             return `${field}: ${msgList}`;
           })
-          .join("\n"); // Los separamos por saltos de línea para el toast
+          .join("\n"); // Los separamos por saltos de liÂ­nea para el toast
       }
 
-      // 2. Pasamos la descripción formateada al componente de notificaciones
+      // 2. Pasamos la descripciiÂ³n formateada al componente de notificaciones
       toast.danger(res.message, {
         description: errorDescription,
       });
@@ -78,8 +82,8 @@ export const FinalizeModal = ({ isOpen, onOpenChange, courseSeason }: Props) => 
             <AlertDialog.Heading className="flex flex-col">
               <span>Finalizar Temporada Anticipadamente</span>
               <span className="text-muted">
-                Estás por cerrar el ciclo de {courseSeason.season.name}: Esta
-                acción es irreversible
+                EstiÂ¡s por cerrar el ciclo de {courseSeason.season.name}: Esta
+                acciiÂ³n es irreversible
               </span>
             </AlertDialog.Heading>
           </AlertDialog.Header>
@@ -88,11 +92,11 @@ export const FinalizeModal = ({ isOpen, onOpenChange, courseSeason }: Props) => 
               <Alert.Indicator />
               <Alert.Content>
                 <Alert.Title>
-                  ¿Estás seguro de finalizar la temporada?
+                  ÃÂ¿EstiÂ¡s seguro de finalizar la temporada?
                 </Alert.Title>
                 <Alert.Description>
-                  Se bloquearán nuevas inscripciones y las membresías activas se
-                  moverán al historial.
+                  Se bloqueariÂ¡n nuevas inscripciones y las membresiÂ­as activas
+                  se moveriÂ¡n al historial.
                 </Alert.Description>
               </Alert.Content>
             </Alert>
@@ -122,10 +126,10 @@ export const FinalizeModal = ({ isOpen, onOpenChange, courseSeason }: Props) => 
               value={statusNotes}
               onChange={setStatusNotes}
             >
-              <Label>Motivo de Finalización</Label>
-              <TextArea placeholder="Describe brevemente los motivos de la finalización anticipada..." />
+              <Label>Motivo de FinalizaciiÂ³n</Label>
+              <TextArea placeholder="Describe brevemente los motivos de la finalizaciiÂ³n anticipada..." />
               <FieldError>
-                {!statusNotes && "Debe ingresar un motivo de cancelación"}
+                {!statusNotes && "Debe ingresar un motivo de cancelaciiÂ³n"}
               </FieldError>
             </TextField>
           </AlertDialog.Body>
@@ -139,7 +143,7 @@ export const FinalizeModal = ({ isOpen, onOpenChange, courseSeason }: Props) => 
               isPending={isLoading}
               variant="danger"
             >
-              Sí, finalizar
+              SiÂ­, finalizar
             </Button>
           </AlertDialog.Footer>
         </AlertDialog.Dialog>

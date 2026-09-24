@@ -4,9 +4,9 @@ import { ContactClient } from "@/modules/portal/contact/components/contact-clien
 import { getInstitution } from "@/modules/portal/institutions/actions/institutions.action";
 
 export const metadata = {
-  title: "Contacto | Club Atlético Nacional",
+  title: "Contacto | Club Atli©tico Nacional",
   description:
-    "Ponte en contacto con el Club Atlético Nacional. Información de departamentos y direcciones.",
+    "Ponte en contacto con el Club Atli©tico Nacional. Información de departamentos y direcciones.",
 };
 
 export default async function ContactPage() {

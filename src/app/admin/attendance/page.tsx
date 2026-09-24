@@ -6,9 +6,7 @@ export default function AttendancePage() {
       <HeaderPage
         title="Asistencias"
         description="Gestión y control de asistencias."
-        breadcrumb={[
-          { label: "Asistencias" },
-        ]}
+        breadcrumb={[{ label: "Asistencias" }]}
       />
       <div>
         <h1>AttendancesPage Page</h1>

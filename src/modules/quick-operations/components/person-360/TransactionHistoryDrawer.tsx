@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Drawer, Spinner, Pagination } from "@heroui/react";
 import { TableTransactions } from "@/modules/charge-transactions/components/table/TableTransactions";
 import { getPersonTransactions } from "../../actions/get-person-transactions";
-import { IPersonOption } from "@/common/actions/get-persons-options";
+import { IPersonOption } from "@/modules/persons";
 
 interface Props {
   isOpen: boolean;

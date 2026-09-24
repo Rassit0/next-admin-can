@@ -84,10 +84,10 @@ export const FormTeam = ({
               : messages;
             return `${field}: ${msgList}`;
           })
-          .join("\n"); // Los separamos por saltos de línea para el toast
+          .join("\n"); // Los separamos por saltos de liÂ­nea para el toast
       }
 
-      // 2. Pasamos la descripción formateada al componente de notificaciones
+      // 2. Pasamos la descripciiÂ³n formateada al componente de notificaciones
       toast.danger(res.message, {
         description: errorDescription,
       });
@@ -156,8 +156,8 @@ export const FormTeam = ({
           }}
           variant="secondary"
         >
-          <Label>Descripción</Label>
-          <TextArea placeholder="Ingrese la descripción" />
+          <Label>DescripciiÂ³n</Label>
+          <TextArea placeholder="Ingrese la descripciiÂ³n" />
           <FieldError
             children={errors.description && <> {errors.description}</>}
           />
@@ -174,7 +174,7 @@ export const FormTeam = ({
           />
           {team?.imageUrl && files.length === 0 && (
             <div className="mt-2 text-sm text-success">
-              ✓ Ya existe un logo asociado
+              Ã¢ÂÂ Ya existe un logo asociado
             </div>
           )}
         </div>

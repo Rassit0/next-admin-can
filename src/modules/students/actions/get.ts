@@ -30,7 +30,7 @@ export const getStudents = async ({
     const res = await api.get<IStudentsResponse>(
       `students?${params.toString()}`, // 1er argumento: el endpoint
       {
-        // 2do argumento: options (aquí va el caché)
+        // 2do argumento: options (aqui­ va el cachi©)
         next: {
           tags: ["students"],
           revalidate: 3600,

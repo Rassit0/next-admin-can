@@ -45,7 +45,7 @@ export interface HttpAdapter {
 
 const ERROR_MESSAGES: Readonly<Record<number, string>> = {
   400: "Petición incorrecta",
-  401: "Token inválido o expirado",
+  401: "Token invi¡lido o expirado",
   403: "Acceso denegado",
   404: "Recurso no encontrado",
   500: "Error interno del servidor",
@@ -69,7 +69,7 @@ export class CANApiAdapter implements HttpAdapter {
   }
 
   /**
-   * Método centralizador: Contiene TODA la lógica de comunicación HTTP.
+   * Mi©todo centralizador: Contiene TODA la lógica de comunicación HTTP.
    * Construye la URL, query params, timeout, AbortController, token,
    * headers, body, cache, ejecuta el fetch y maneja errores de conexión.
    * Retorna el Response crudo sin procesarlo.
@@ -83,7 +83,7 @@ export class CANApiAdapter implements HttpAdapter {
     if (!this.baseUrl) {
       throw new ApiError(
         500,
-        "El servicio no está disponible en este momento.",
+        "El servicio no esti¡ disponible en este momento.",
       );
     }
 
@@ -100,9 +100,10 @@ export class CANApiAdapter implements HttpAdapter {
     const ms = options?.timeout || this.defaultTimeout;
     const timeout = setTimeout(() => timeoutController.abort(), ms);
 
-    const signal = options?.signal instanceof AbortSignal
-      ? AbortSignal.any([options.signal, timeoutController.signal])
-      : timeoutController.signal;
+    const signal =
+      options?.signal instanceof AbortSignal
+        ? AbortSignal.any([options.signal, timeoutController.signal])
+        : timeoutController.signal;
 
     let token: string | undefined | null;
     if (this.tokenFetcher && !options?.omitToken) {
@@ -173,7 +174,7 @@ export class CANApiAdapter implements HttpAdapter {
 
   /**
    * Procesa la respuesta HTTP:
-   * - 204: retorna objeto vacío
+   * - 204: retorna objeto vaci­o
    * - OK + JSON: parsea y retorna
    * - OK + no-JSON: lanza ApiError (respuesta inesperada)
    * - Error: lanza ApiError con el mensaje del servidor
@@ -213,14 +214,14 @@ export class CANApiAdapter implements HttpAdapter {
     throw new ApiError(res.status, message, errorData.errors || errorData);
   }
 
-  // --- Métodos públicos ---
+  // --- Mi©todos piºblicos ---
 
   get<T>(endpoint: string, options?: HttpRequestOptions): Promise<T> {
     return this.request<T>(endpoint, "GET", undefined, options);
   }
 
   /**
-   * Descarga contenido binario (PDFs, imágenes, etc.).
+   * Descarga contenido binario (PDFs, imi¡genes, etc.).
    * Reutiliza requestRaw() para la comunicación y handleResponse() para errores.
    */
   async getBlob(endpoint: string, options?: HttpRequestOptions): Promise<Blob> {

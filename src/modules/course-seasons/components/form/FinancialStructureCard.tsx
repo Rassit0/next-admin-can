@@ -90,9 +90,9 @@ export const FinancialStructureCard = ({
           <Alert.Content>
             <Alert.Title>Configuración de Cobros</Alert.Title>
             <Alert.Description>
-              Configura cómo se estructurarán los cobros de los atletas
-              de esta temporada. El modelo de facturación determina si se cobra
-              cada ciclo temporal o si se hace un único pago por adelantado.
+              Configura cómo se estructurari¡n los cobros de los atletas de esta
+              temporada. El modelo de facturación determina si se cobra cada
+              ciclo temporal o si se hace un iºnico pago por adelantado.
             </Alert.Description>
           </Alert.Content>
         </Alert>
@@ -120,16 +120,16 @@ export const FinancialStructureCard = ({
             <ListBox>
               <ListBox.Item
                 id="MONTHLY_ONLY"
-                textValue="Pago Recurrente (Según Frecuencia)"
+                textValue="Pago Recurrente (Segiºn Frecuencia)"
               >
-                Pago Recurrente (Según Frecuencia)
+                Pago Recurrente (Segiºn Frecuencia)
                 <ListBox.ItemIndicator />
               </ListBox.Item>
               <ListBox.Item
                 id="SINGLE_ONLY"
-                textValue="Pago Único (Toda la temporada)"
+                textValue="Pago inico (Toda la temporada)"
               >
-                Pago Único (Toda la temporada)
+                Pago inico (Toda la temporada)
                 <ListBox.ItemIndicator />
               </ListBox.Item>
               <ListBox.Item
@@ -145,9 +145,9 @@ export const FinancialStructureCard = ({
             children={errors.billingType && <> {errors.billingType}</>}
           />
           <Description className="text-xs text-muted-foreground mt-1">
-            <b>Recurrente:</b> el precio se aplica a cada ciclo temporal (semanal, quincenal, o
-            mensual). <br />
-            <b>Único:</b> cobra el valor de toda la temporada por adelantado.{" "}
+            <b>Recurrente:</b> el precio se aplica a cada ciclo temporal
+            (semanal, quincenal, o mensual). <br />
+            <b>inico:</b> cobra el valor de toda la temporada por adelantado.{" "}
             <br />
             <b>Ambos:</b> permite al cliente elegir su modalidad al inscribirse.
           </Description>
@@ -198,8 +198,8 @@ export const FinancialStructureCard = ({
               }
             />
             <Description className="text-xs text-muted-foreground mt-1">
-              Determina el período de tiempo que abarca cada ciclo. El atleta deberá
-              adquirir los ciclos para estar al día.
+              Determina el peri­odo de tiempo que abarca cada ciclo. El atleta
+              deberi¡ adquirir los ciclos para estar al di­a.
             </Description>
           </Select>
         )}
@@ -213,7 +213,7 @@ export const FinancialStructureCard = ({
             type="text"
             isInvalid={!!errors.registrationFee || undefined}
           >
-            <Label>Costo de Inscripción / Matrícula</Label>
+            <Label>Costo de Inscripción / Matri­cula</Label>
             <InputGroup>
               <InputGroup.Prefix>$</InputGroup.Prefix>
               <InputGroup.Input
@@ -237,10 +237,10 @@ export const FinancialStructureCard = ({
               }
             />
             <Description className="text-xs text-muted-foreground mt-1">
-              Costo inicial y único cobrado al momento de inscribir al atleta.
+              Costo inicial y iºnico cobrado al momento de inscribir al atleta.
               {isFinancialDisabled && (
                 <span className="block mt-1 text-warning-600 font-medium">
-                  Nota: Modificar este valor solo afectará a las{" "}
+                  Nota: Modificar este valor solo afectari¡ a las{" "}
                   <b>nuevas inscripciones</b>.
                 </span>
               )}
@@ -289,7 +289,7 @@ export const FinancialStructureCard = ({
               Precio a pagar por la adquisición de cada ciclo.
               {isFinancialDisabled && (
                 <span className="block mt-1 text-warning-600 font-medium">
-                  Nota: Modificar este valor aplicará para las{" "}
+                  Nota: Modificar este valor aplicari¡ para las{" "}
                   <b>nuevas suscripciones y los próximos ciclos adquiridos</b>.
                 </span>
               )}
@@ -306,7 +306,7 @@ export const FinancialStructureCard = ({
             type="text"
             isInvalid={!!errors.seasonFee || undefined}
           >
-            <Label>Tarifa de Temporada (Pago Único)</Label>
+            <Label>Tarifa de Temporada (Pago inico)</Label>
             <InputGroup>
               <InputGroup.Prefix>$</InputGroup.Prefix>
               <InputGroup.Input
@@ -326,12 +326,12 @@ export const FinancialStructureCard = ({
               children={errors.seasonFee && <> {errors.seasonFee}</>}
             />
             <Description className="text-xs text-muted-foreground mt-1">
-              Monto total que se cobrará si el atleta decide pagar la temporada
+              Monto total que se cobrari¡ si el atleta decide pagar la temporada
               completa de golpe.
               {isFinancialDisabled && (
                 <span className="block mt-1 text-warning-600 font-medium">
-                  Nota: Modificar este valor solo afectará a las{" "}
-                  <b>nuevas inscripciones</b> que elijan este método.
+                  Nota: Modificar este valor solo afectari¡ a las{" "}
+                  <b>nuevas inscripciones</b> que elijan este mi©todo.
                 </span>
               )}
             </Description>
@@ -349,14 +349,14 @@ export const FinancialStructureCard = ({
           <Alert status="accent">
             <Alert.Indicator />
             <Alert.Content>
-              <Alert.Title>Cálculos Proporcionales (Prorrateos)</Alert.Title>
+              <Alert.Title>Ci¡lculos Proporcionales (Prorrateos)</Alert.Title>
               <Alert.Description>
-                Activa estas opciones para que el sistema sugiera montos
-                justos en función del día exacto en que el atleta inicie o
-                termine su membresía.
+                Activa estas opciones para que el sistema sugiera montos justos
+                en función del di­a exacto en que el atleta inicie o termine su
+                membresi­a.
                 <br />
-                <strong>Ejemplo:</strong> Si la cuota de ciclo es de 100 Bs. y el
-                atleta se inscribe a mitad del mes, el sistema le sugerirá
+                <strong>Ejemplo:</strong> Si la cuota de ciclo es de 100 Bs. y
+                el atleta se inscribe a mitad del mes, el sistema le sugeriri¡
                 un cargo de 50 Bs.
               </Alert.Description>
             </Alert.Content>
@@ -389,7 +389,7 @@ export const FinancialStructureCard = ({
                     <Switch.Thumb />
                   </Switch.Control>
                   <span className="text-sm">
-                    Prorratear última cuota recurrente (al finalizar temporada)
+                    Prorratear iºltima cuota recurrente (al finalizar temporada)
                   </span>
                 </Switch.Content>
               </Switch>
@@ -403,7 +403,7 @@ export const FinancialStructureCard = ({
                     <Switch.Thumb />
                   </Switch.Control>
                   <span className="text-sm">
-                    Prorratear matrícula en función del avance de temporada
+                    Prorratear matri­cula en función del avance de temporada
                   </span>
                 </Switch.Content>
               </Switch>
@@ -421,7 +421,7 @@ export const FinancialStructureCard = ({
                   <Switch.Thumb />
                 </Switch.Control>
                 <span className="text-sm">
-                  Prorratear tarifa de temporada (Pago único) en función del
+                  Prorratear tarifa de temporada (Pago iºnico) en función del
                   avance
                 </span>
               </Switch.Content>

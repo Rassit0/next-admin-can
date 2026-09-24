@@ -33,7 +33,7 @@ import { useRouter } from "next/navigation";
 import { ICharge } from "../../interfaces/charges.interface";
 import { addTransaction } from "../../actions/add-transaction";
 import { SelectOrCreatePerson } from "@/modules/persons";
-import { IPersonOption } from "@/common/actions/get-persons-options";
+import { IPersonOption } from "@/modules/persons";
 import { getFinancialAccounts } from "@/modules/financial-accounts/actions/get-all";
 import { FinancialAccount } from "@/modules/financial-accounts/interfaces/financial-account.interface";
 import { PrintReportDialog } from "../dialog/PrintReportDialog";
@@ -84,7 +84,7 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
   const [notes, setNotes] = useState<string>("");
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  // Estado para el diálogo de impresión de recibo
+  // Estado para el dii¡logo de impresión de recibo
   const [printTransactionId, setPrintTransactionId] = useState<string | null>(
     null,
   );
@@ -129,7 +129,7 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
       const hasInvalidMethod = splits.some((s) => !s.paymentMethod);
       if (hasInvalidMethod) {
         toast.danger(
-          "Debe seleccionar un método de pago válido para cada cuenta.",
+          "Debe seleccionar un mi©todo de pago vi¡lido para cada cuenta.",
         );
         setIsLoading(false);
         return;
@@ -187,7 +187,7 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
 
         console.log("PAYMENT RESPONSE DATA:", res.data);
 
-        // Mostrar diálogo de impresión con el ID de la transacción creada
+        // Mostrar dii¡logo de impresión con el ID de la transacción creada
         if (res.data?.transaction?.id) {
           setPrintTransactionId(res.data.transaction.id);
           setShowPrintDialog(true);
@@ -236,7 +236,10 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
     <>
       <Drawer.Backdrop isOpen={isOpen} onOpenChange={onOpenChange}>
         <Drawer.Content placement="right">
-          <Drawer.Dialog className="w-full sm:max-w-md" aria-label="Registrar Pago">
+          <Drawer.Dialog
+            className="w-full sm:max-w-md"
+            aria-label="Registrar Pago"
+          >
             <Drawer.CloseTrigger />
             <form onSubmit={handleSubmit} className="flex flex-col h-full">
               <Drawer.Header className="flex flex-col gap-1 border-b border-border">
@@ -252,65 +255,73 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
               <Drawer.Body className="gap-6 pt-6">
                 <Card className="border border-outline-variant/30 shadow-none bg-surface-container-low mb-2">
                   <div className="p-4 flex flex-col gap-2">
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-primary-600">Monto Base</span>
-                    <span
-                      className={`font-semibold ${Number(charge.adjustmentAmount) !== 0 ? "line-through text-primary-400" : "text-primary-700"}`}
-                    >
-                      {Number(charge.amount).toFixed(2)} Bs
-                    </span>
-                  </div>
-                  {Number(charge.adjustmentAmount) !== 0 && (
-                    <>
-                      <div className="flex justify-between items-center text-sm">
-                        <span className="text-primary-600">
-                          {Number(charge.adjustmentAmount) < 0 ? "Descuento" : "Recargo"}
-                        </span>
-                        <span className={`font-semibold ${Number(charge.adjustmentAmount) < 0 ? "text-success-600" : "text-danger-600"}`}>
-                          {Number(charge.adjustmentAmount) > 0 ? "+" : "-"}{Math.abs(Number(charge.adjustmentAmount)).toFixed(2)} Bs
-                        </span>
-                      </div>
-                      <div className="flex justify-between items-center text-sm border-t border-primary-200 border-dashed pt-2 mt-1">
-                        <span className="text-primary-600 font-medium">
-                          Total Esperado
-                        </span>
-                        <span className="font-bold text-primary-700">
+                    <div className="flex justify-between items-center text-sm">
+                      <span className="text-primary-600">Monto Base</span>
+                      <span
+                        className={`font-semibold ${Number(charge.adjustmentAmount) !== 0 ? "line-through text-primary-400" : "text-primary-700"}`}
+                      >
+                        {Number(charge.amount).toFixed(2)} Bs
+                      </span>
+                    </div>
+                    {Number(charge.adjustmentAmount) !== 0 && (
+                      <>
+                        <div className="flex justify-between items-center text-sm">
+                          <span className="text-primary-600">
+                            {Number(charge.adjustmentAmount) < 0
+                              ? "Descuento"
+                              : "Recargo"}
+                          </span>
+                          <span
+                            className={`font-semibold ${Number(charge.adjustmentAmount) < 0 ? "text-success-600" : "text-danger-600"}`}
+                          >
+                            {Number(charge.adjustmentAmount) > 0 ? "+" : "-"}
+                            {Math.abs(Number(charge.adjustmentAmount)).toFixed(
+                              2,
+                            )}{" "}
+                            Bs
+                          </span>
+                        </div>
+                        <div className="flex justify-between items-center text-sm border-t border-primary-200 border-dashed pt-2 mt-1">
+                          <span className="text-primary-600 font-medium">
+                            Total Esperado
+                          </span>
+                          <span className="font-bold text-primary-700">
+                            {(
+                              Number(charge.amount) +
+                              Number(charge.adjustmentAmount)
+                            ).toFixed(2)}{" "}
+                            Bs
+                          </span>
+                        </div>
+                      </>
+                    )}
+
+                    {Number(charge.amount) +
+                      Number(charge.adjustmentAmount || 0) -
+                      pendingAmount >
+                      0 && (
+                      <div className="flex justify-between items-center text-sm text-warning-600">
+                        <span>Abonado hasta ahora</span>
+                        <span className="font-semibold text-warning-600">
+                          -
                           {(
                             Number(charge.amount) +
-                            Number(charge.adjustmentAmount)
+                            Number(charge.adjustmentAmount || 0) -
+                            pendingAmount
                           ).toFixed(2)}{" "}
                           Bs
                         </span>
                       </div>
-                    </>
-                  )}
-
-                  {Number(charge.amount) +
-                    Number(charge.adjustmentAmount || 0) -
-                    pendingAmount >
-                    0 && (
-                    <div className="flex justify-between items-center text-sm text-warning-600">
-                      <span>Abonado hasta ahora</span>
-                      <span className="font-semibold text-warning-600">
-                        -
-                        {(
-                          Number(charge.amount) +
-                          Number(charge.adjustmentAmount || 0) -
-                          pendingAmount
-                        ).toFixed(2)}{" "}
-                        Bs
+                    )}
+                    <div className="flex justify-between items-center border-t border-primary-200 pt-2 mt-1">
+                      <span className="text-primary-700 font-medium">
+                        Saldo a Pagar
+                      </span>
+                      <span className="text-2xl font-bold text-primary font-mono">
+                        {pendingAmount.toFixed(2)} Bs
                       </span>
                     </div>
-                  )}
-                  <div className="flex justify-between items-center border-t border-primary-200 pt-2 mt-1">
-                    <span className="text-primary-700 font-medium">
-                      Saldo a Pagar
-                    </span>
-                    <span className="text-2xl font-bold text-primary font-mono">
-                      {pendingAmount.toFixed(2)} Bs
-                    </span>
                   </div>
-                </div>
                 </Card>
 
                 <SelectOrCreatePerson
@@ -431,4 +442,3 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
     </>
   );
 };
-

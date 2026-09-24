@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  Button,
-  Modal,
-  useOverlayState,
-} from "@heroui/react";
+import { Button, Modal, useOverlayState } from "@heroui/react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Time02Icon, Delete01Icon } from "@hugeicons/core-free-icons";
 import React from "react";
@@ -23,21 +19,35 @@ export const ViewShiftsModal = ({ courseSeason, urlBase }: Props) => {
 
   const renderShift = (shiftItem: ICourseSeasonShift) => {
     return (
-      <div key={shiftItem.id} className="p-3 bg-surface-container-low border border-border/50 rounded-xl mb-3">
+      <div
+        key={shiftItem.id}
+        className="p-3 bg-surface-container-low border border-border/50 rounded-xl mb-3"
+      >
         <div className="flex justify-between items-center mb-2">
           <div className="flex items-center gap-2">
-            <span className="font-bold text-sm text-foreground">{shiftItem.shift?.name || "Turno"}</span>
+            <span className="font-bold text-sm text-foreground">
+              {shiftItem.shift?.name || "Turno"}
+            </span>
             <div className="text-[10px] font-label-sm text-on-surface-variant bg-surface px-2 py-0.5 rounded-full border border-border/50">
-              {shiftItem._count?.studentMemberships || 0} / {shiftItem.maxMembers}
+              {shiftItem._count?.studentMemberships || 0} /{" "}
+              {shiftItem.maxMembers}
             </div>
           </div>
-          <EditShiftModal courseSeasonId={courseSeason.id} urlBase={urlBase} shift={shiftItem} />
+          <EditShiftModal
+            courseSeasonId={courseSeason.id}
+            urlBase={urlBase}
+            shift={shiftItem}
+          />
         </div>
-        
+
         {courseSeason.status === "ACTIVE" && (
           <div className="flex items-center gap-2 mt-2">
             <div className="flex-1">
-              <ButtonMemberships courseSeasonId={courseSeason.id} shiftId={shiftItem.id} urlBase={urlBase} />
+              <ButtonMemberships
+                courseSeasonId={courseSeason.id}
+                shiftId={shiftItem.id}
+                urlBase={urlBase}
+              />
             </div>
           </div>
         )}
@@ -56,10 +66,17 @@ export const ViewShiftsModal = ({ courseSeason, urlBase }: Props) => {
         )}
         {courseSeason.status === "FINISHED" && (
           <div className="flex items-center gap-2 mt-2">
-            <Button size="sm" className="flex-1 bg-surface-container-highest text-on-surface-variant rounded-full font-bold text-xs">
-              Estadísticas
+            <Button
+              size="sm"
+              className="flex-1 bg-surface-container-highest text-on-surface-variant rounded-full font-bold text-xs"
+            >
+              Estadi­sticas
             </Button>
-            <ButtonMemberships courseSeasonId={courseSeason.id} shiftId={shiftItem.id} urlBase={urlBase} />
+            <ButtonMemberships
+              courseSeasonId={courseSeason.id}
+              shiftId={shiftItem.id}
+              urlBase={urlBase}
+            />
           </div>
         )}
       </div>

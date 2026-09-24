@@ -4,7 +4,10 @@ import { Button, Card, Chip } from "@heroui/react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Edit02Icon, Settings02Icon } from "@hugeicons/core-free-icons";
 import { ITeamSeasonCategory } from "@/modules/team-seasons";
-import { activateTeamSeasonCategory, deactivateTeamSeasonCategory } from "../../actions/categories.actions";
+import {
+  activateTeamSeasonCategory,
+  deactivateTeamSeasonCategory,
+} from "../../actions/categories.actions";
 import { toast } from "@heroui/react";
 import { useState } from "react";
 
@@ -33,11 +36,15 @@ export const CardCategory = ({ teamSeasonId, category, onEdit }: Props) => {
     setIsLoading(false);
 
     if (res.error) {
-      toast.danger(res.message || "Ocurrió un error al cambiar el estado de la categoría");
+      toast.danger(
+        res.message || "Ocurrió un error al cambiar el estado de la categori­a",
+      );
       return;
     }
 
-    toast.success(`Categoría ${category.isActive ? "desactivada" : "activada"} exitosamente`);
+    toast.success(
+      `Categori­a ${category.isActive ? "desactivada" : "activada"} exitosamente`,
+    );
   };
 
   return (
@@ -68,7 +75,7 @@ export const CardCategory = ({ teamSeasonId, category, onEdit }: Props) => {
           </p>
         </div>
         <div>
-          <p className="text-xs text-muted-foreground mb-1">Año de Nac.</p>
+          <p className="text-xs text-muted-foreground mb-1">Ai±o de Nac.</p>
           <p className="font-semibold text-foreground">
             {category.minBirthYear || "-"} - {category.maxBirthYear || "-"}
           </p>
@@ -86,8 +93,8 @@ export const CardCategory = ({ teamSeasonId, category, onEdit }: Props) => {
         <button
           type="button"
           className={`flex-1 h-8 px-3 rounded-md border text-sm font-medium transition-colors ${
-            category.isActive 
-              ? "border-danger text-danger hover:bg-danger/10" 
+            category.isActive
+              ? "border-danger text-danger hover:bg-danger/10"
               : "border-success text-success hover:bg-success/10"
           }`}
           onClick={handleToggleStatus}

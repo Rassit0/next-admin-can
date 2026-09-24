@@ -24,7 +24,7 @@ export const InternalTransfersClient = ({ transfers, accounts }: Props) => {
   const handleCancel = async (id: string) => {
     if (
       !confirm(
-        "¿Está seguro de anular esta transferencia? Esto revertirá los saldos de ambas cuentas.",
+        "ÃÂ¿EstiÂ¡ seguro de anular esta transferencia? Esto revertiriÂ¡ los saldos de ambas cuentas.",
       )
     ) {
       return;

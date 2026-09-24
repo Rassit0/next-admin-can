@@ -16,7 +16,7 @@ export function InstitutionContacts({ contacts }: Props) {
             Directorio de Contactos
           </h2>
           <p className="mt-2 text-muted-foreground">
-            Comunícate con nuestros diferentes departamentos
+            Comuni­cate con nuestros diferentes departamentos
           </p>
         </div>
 

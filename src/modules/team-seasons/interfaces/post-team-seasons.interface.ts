@@ -1,4 +1,9 @@
-import { StatusTeamSeason, Gender, SeasonBillingType, BillingFrequency } from "./team-season.interface";
+import {
+  StatusTeamSeason,
+  Gender,
+  SeasonBillingType,
+  BillingFrequency,
+} from "./team-season.interface";
 
 export interface IPostTeamSeason {
   description: string | null;

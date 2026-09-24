@@ -17,15 +17,17 @@ export const updateAccountCategory = async (
   data: UpdateAccountCategoryDto,
 ): Promise<ServiceResponse<IAccountCategory>> => {
   return handleServerAction(async () => {
-    const res = await api.patch<{ message: string; data: IAccountCategory }>(`account-categories/${id}`, data);
+    const res = await api.patch<{ message: string; data: IAccountCategory }>(
+      `account-categories/${id}`,
+      data,
+    );
 
     updateTag("account-categories");
-
 
     return {
       error: false,
       data: res.data,
-      message: res.message || "Categoría actualizada exitosamente",
+      message: res.message || "Categori­a actualizada exitosamente",
     };
   });
 };

@@ -39,7 +39,7 @@ export default async function PaymentPlansPage({
     getTeamSeasonById({ id: teamSeasonId }),
   ]);
 
-  // 1. Manejo de error específico (Ej: 401 no autorizado)
+  // 1. Manejo de error especi­fico (Ej: 401 no autorizado)
   if (paymentPlansResponse.error && paymentPlansResponse.statusCode === 401) {
     redirect("/login");
   }
@@ -59,7 +59,7 @@ export default async function PaymentPlansPage({
     <div className="flex flex-col gap-6">
       <HeaderPage
         title="Planes de pago"
-        description="Aquí puedes ver todos los planes de pago de la temporada"
+        description="Aqui­ puedes ver todos los planes de pago de la temporada"
         action={<AddModal teamSeasonId={teamSeasonId} />}
         showButtonBack={false}
       />

@@ -21,7 +21,12 @@ interface NextMatchCountdownProps {
 }
 
 export function NextMatchCountdown({ match }: NextMatchCountdownProps) {
-  const [timeLeft, setTimeLeft] = useState<{ d: number; h: number; m: number; s: number } | null>(null);
+  const [timeLeft, setTimeLeft] = useState<{
+    d: number;
+    h: number;
+    m: number;
+    s: number;
+  } | null>(null);
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -49,7 +54,12 @@ export function NextMatchCountdown({ match }: NextMatchCountdownProps) {
     const timer = setInterval(() => {
       const newTime = calculateTimeLeft();
       setTimeLeft(newTime);
-      if (newTime.d === 0 && newTime.h === 0 && newTime.m === 0 && newTime.s === 0) {
+      if (
+        newTime.d === 0 &&
+        newTime.h === 0 &&
+        newTime.m === 0 &&
+        newTime.s === 0
+      ) {
         clearInterval(timer);
       }
     }, 1000);
@@ -71,7 +81,12 @@ export function NextMatchCountdown({ match }: NextMatchCountdownProps) {
           </span>
           <div className="relative z-10 mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-white p-3 shadow-lg md:h-28 md:w-28">
             {match.homeTeam.imageUrl ? (
-              <Image src={match.homeTeam.imageUrl} alt={match.homeTeam.name} fill className="object-contain p-2" />
+              <Image
+                src={match.homeTeam.imageUrl}
+                alt={match.homeTeam.name}
+                fill
+                className="object-contain p-2"
+              />
             ) : (
               <span className="font-heading text-2xl font-bold uppercase text-primary/70 md:text-4xl">
                 {getInitials(match.homeTeam.name)}
@@ -85,9 +100,8 @@ export function NextMatchCountdown({ match }: NextMatchCountdownProps) {
 
         {/* PANEL CENTRAL COUNTDOWN */}
         <div className="relative z-20 flex shrink-0 flex-col items-center justify-center border-y border-white/10 bg-black/90 p-8 shadow-[0_0_40px_rgba(0,0,0,0.8)] md:border-x md:border-y-0 md:p-10">
-          
           <div className="mb-6 inline-flex items-center rounded-full border border-neon/20 bg-neon/10 px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest text-neon backdrop-blur-md md:text-xs">
-            {isToday ? "🔥 Hoy" : "⭐ Próximo Partido"}
+            {isToday ? "Ã°ÂÂÂ¥ Hoy" : "Ã¢Â­Â PriÂ³ximo Partido"}
           </div>
 
           <span className="mb-6 text-center text-[10px] font-bold uppercase tracking-widest text-neon/80">
@@ -98,7 +112,7 @@ export function NextMatchCountdown({ match }: NextMatchCountdownProps) {
           <div className="flex items-center justify-center rounded-xl border border-white/10 bg-black p-3 shadow-[inset_0_2px_15px_rgba(0,0,0,1)] md:p-4">
             {isClient && timeLeft ? (
               <div className="flex items-center gap-1 md:gap-2">
-                <TimeUnit value={timeLeft.d} label="Días" />
+                <TimeUnit value={timeLeft.d} label="DiÂ­as" />
                 <Separator />
                 <TimeUnit value={timeLeft.h} label="Horas" />
                 <Separator />
@@ -108,7 +122,7 @@ export function NextMatchCountdown({ match }: NextMatchCountdownProps) {
               </div>
             ) : (
               <div className="flex items-center gap-1 opacity-30 md:gap-2">
-                <TimeUnit value={0} label="Días" />
+                <TimeUnit value={0} label="DiÂ­as" />
                 <Separator />
                 <TimeUnit value={0} label="Horas" />
                 <Separator />
@@ -121,15 +135,20 @@ export function NextMatchCountdown({ match }: NextMatchCountdownProps) {
 
           {/* Estado al llegar a cero */}
           <div className="mt-6 min-h-[2rem]">
-            {isClient && timeLeft && (timeLeft.d === 0 && timeLeft.h === 0 && timeLeft.m === 0 && timeLeft.s === 0) && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="font-heading text-base font-black uppercase tracking-widest text-neon md:text-lg"
-              >
-                Hora del partido
-              </motion.div>
-            )}
+            {isClient &&
+              timeLeft &&
+              timeLeft.d === 0 &&
+              timeLeft.h === 0 &&
+              timeLeft.m === 0 &&
+              timeLeft.s === 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="font-heading text-base font-black uppercase tracking-widest text-neon md:text-lg"
+                >
+                  Hora del partido
+                </motion.div>
+              )}
           </div>
         </div>
 
@@ -141,7 +160,12 @@ export function NextMatchCountdown({ match }: NextMatchCountdownProps) {
           </span>
           <div className="relative z-10 mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-white p-3 shadow-lg md:h-28 md:w-28">
             {match.awayTeam.imageUrl ? (
-              <Image src={match.awayTeam.imageUrl} alt={match.awayTeam.name} fill className="object-contain p-2" />
+              <Image
+                src={match.awayTeam.imageUrl}
+                alt={match.awayTeam.name}
+                fill
+                className="object-contain p-2"
+              />
             ) : (
               <span className="font-heading text-2xl font-bold uppercase text-primary/70 md:text-4xl">
                 {getInitials(match.awayTeam.name)}
@@ -157,19 +181,29 @@ export function NextMatchCountdown({ match }: NextMatchCountdownProps) {
       {/* FOOTER INFORMATIVO */}
       <div className="flex flex-col items-center justify-center gap-2 border-t border-white/5 bg-black/95 px-6 py-4 text-xs font-bold uppercase tracking-widest text-white/50 md:flex-row md:gap-6">
         <div className="flex items-center gap-2">
-          <span className="text-neon/70">■</span> {match.discipline}
+          <span className="text-neon/70">Ã¢ÂÂ </span> {match.discipline}
         </div>
-        <div className="hidden text-white/10 md:block">•</div>
+        <div className="hidden text-white/10 md:block">-</div>
         <div className="flex items-center gap-2">
-          <span className="text-neon/70">■</span>{" "}
-          {matchDate.toLocaleDateString("es-ES", { weekday: "short", day: "numeric", month: "short" }).replace(",", "")} ·{" "}
-          {matchDate.toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" })}
+          <span className="text-neon/70">Ã¢ÂÂ </span>{" "}
+          {matchDate
+            .toLocaleDateString("es-ES", {
+              weekday: "short",
+              day: "numeric",
+              month: "short",
+            })
+            .replace(",", "")}{" "}
+          ÃÂ·{" "}
+          {matchDate.toLocaleTimeString("es-ES", {
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
         </div>
         {match.locationName && (
           <>
-            <div className="hidden text-white/10 md:block">•</div>
+            <div className="hidden text-white/10 md:block">-</div>
             <div className="flex items-center gap-2">
-              <span className="text-neon/70">■</span> {match.locationName}
+              <span className="text-neon/70">Ã¢ÂÂ </span> {match.locationName}
             </div>
           </>
         )}
@@ -196,7 +230,9 @@ function TimeUnit({ value, label }: { value: number; label: string }) {
         <AnimatePresence mode="popLayout">
           <motion.span
             key={value}
-            initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { y: 24, opacity: 0 }}
+            initial={
+              shouldReduceMotion ? { opacity: 1, y: 0 } : { y: 24, opacity: 0 }
+            }
             animate={{ y: 0, opacity: 1 }}
             exit={shouldReduceMotion ? { opacity: 0 } : { y: -24, opacity: 0 }}
             transition={{ duration: 0.25, type: "spring", bounce: 0.3 }}

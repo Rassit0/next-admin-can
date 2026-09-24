@@ -107,11 +107,16 @@ export const SelectOrCreateStaff = ({
               aria-label="Lista de personal"
               className="max-h-105 overflow-y-auto"
               items={list.items}
-              renderEmptyState={() => <EmptyState>No se encontraron resultados</EmptyState>}
+              renderEmptyState={() => (
+                <EmptyState>No se encontraron resultados</EmptyState>
+              )}
             >
               <Collection items={list.items}>
                 {(item) => (
-                  <ListBox.Item id={item.id} textValue={`${item.person.name} ${item.person.lastName}`}>
+                  <ListBox.Item
+                    id={item.id}
+                    textValue={`${item.person.name} ${item.person.lastName}`}
+                  >
                     <div className="flex items-center gap-3 w-full">
                       <Avatar className="shrink-0" size="sm">
                         <Avatar.Image
@@ -124,7 +129,8 @@ export const SelectOrCreateStaff = ({
                       </Avatar>
                       <div className="flex flex-col flex-1">
                         <span className="text-sm font-medium truncate">
-                          {item.person.name} {item.person.lastName} {item.person.secondLastName || ''}
+                          {item.person.name} {item.person.lastName}{" "}
+                          {item.person.secondLastName || ""}
                         </span>
                         <span className="text-xs text-default-500 truncate">
                           DNI: {item.person.documentNumber}
@@ -141,7 +147,7 @@ export const SelectOrCreateStaff = ({
               >
                 <div className="flex items-center justify-center gap-2 py-2">
                   <Spinner size="sm" />
-                  <span className="muted text-sm">Cargando más...</span>
+                  <span className="muted text-sm">Cargando mi¡s...</span>
                 </div>
               </ListBoxLoadMoreItem>
             </ListBox>

@@ -1,10 +1,5 @@
 "use client";
-import {
-  Button,
-  Modal,
-  ProgressCircle,
-  useOverlayState,
-} from "@heroui/react";
+import { Button, Modal, ProgressCircle, useOverlayState } from "@heroui/react";
 import { Add01Icon, Image01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
@@ -16,7 +11,7 @@ interface Props {
 }
 
 export const AddPromotionModal = ({
-  buttonLabel = "Añadir Promotion",
+  buttonLabel = "Ai±adir Promotion",
   buttonIcon = Add01Icon,
 }: Props) => {
   const state = useOverlayState();
@@ -44,7 +39,8 @@ export const AddPromotionModal = ({
                 <Modal.Heading>Agregar Promotion</Modal.Heading>
               </div>
               <p className="mt-1.5 text-sm leading-5 text-muted">
-                Agrega un nuevo promotion para el carrusel de la página principal.
+                Agrega un nuevo promotion para el carrusel de la pi¡gina
+                principal.
               </p>
             </Modal.Header>
             <Modal.Body className="p-6">

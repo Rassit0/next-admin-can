@@ -1,10 +1,5 @@
 "use client";
-import {
-  Button,
-  Modal,
-  ProgressCircle,
-  useOverlayState,
-} from "@heroui/react";
+import { Button, Modal, ProgressCircle, useOverlayState } from "@heroui/react";
 import { Edit03Icon, File01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Dispatch, SetStateAction, useState } from "react";
@@ -73,11 +68,7 @@ export const EditNewsModal = ({
               >
                 Cancelar
               </Button>
-              <Button
-                type="submit"
-                form="edit-news-form"
-                isPending={isLoading}
-              >
+              <Button type="submit" form="edit-news-form" isPending={isLoading}>
                 {isLoading && (
                   <ProgressCircle isIndeterminate aria-label="Loading">
                     <ProgressCircle.Track>

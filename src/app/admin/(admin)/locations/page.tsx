@@ -1,4 +1,4 @@
-﻿import { ErrorPage, HeaderPage, PaginationSection, SectionFilters } from "@/ui";
+import { ErrorPage, HeaderPage, PaginationSection, SectionFilters } from "@/ui";
 import { notFound, redirect } from "next/navigation";
 import { AddModal, getLocations, TableLocations } from "@/modules/locations";
 
@@ -17,7 +17,7 @@ export default async function LocationsPage({ searchParams }: Props) {
     per_page,
   });
 
-  // 1. Manejo de error especÃ­fico (Ej: 401 no autorizado)
+  // 1. Manejo de error especí­fico (Ej: 401 no autorizado)
   if (result.error && result.statusCode === 401) {
     redirect("/login");
   }
@@ -31,7 +31,7 @@ export default async function LocationsPage({ searchParams }: Props) {
     <>
       {/* <!-- Header --> */}
       <HeaderPage
-        title="GestiÃ³n de Instalaciones"
+        title="Gestión de Instalaciones"
         description="Administra las instalaciones del club"
         action={<AddModal />}
       />

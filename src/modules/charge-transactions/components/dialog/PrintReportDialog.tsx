@@ -24,7 +24,7 @@ interface Props {
 }
 
 /**
- * Componente reutilizable para descargar/imprimir el recibo PDF de un pago o transacción.
+ * Componente reutilizable para descargar/imprimir el recibo PDF de un pago o transacciiÂ³n.
  * Se puede usar desde cualquier lugar pasando el transactionId y el tipo de reporte.
  */
 export const PrintReportDialog = ({
@@ -40,7 +40,7 @@ export const PrintReportDialog = ({
   const openPdf = useCallback(
     async (action: "print" | "download") => {
       if (!transactionId && (!paymentIds || paymentIds.length === 0)) {
-        toast.danger("No hay pagos seleccionados o el ID es inválido.");
+        toast.danger("No hay pagos seleccionados o el ID es inviÂ¡lido.");
         return;
       }
       setIsLoading(true);
@@ -94,11 +94,11 @@ export const PrintReportDialog = ({
           document.body.removeChild(link);
         }
 
-        // Limpiar el blob URL después de un tiempo
+        // Limpiar el blob URL despuiÂ©s de un tiempo
         setTimeout(() => URL.revokeObjectURL(url), 10000);
         onOpenChange(false);
       } catch (error) {
-        toast.danger("Ocurrió un error al generar el recibo.");
+        toast.danger("OcurriiÂ³ un error al generar el recibo.");
       } finally {
         setIsLoading(false);
         onSuccess?.();
@@ -114,7 +114,7 @@ export const PrintReportDialog = ({
           className="sm:max-w-sm"
           aria-label={
             paymentIds && paymentIds.length > 0
-              ? "Imprimir Recibo Múltiple"
+              ? "Imprimir Recibo MiÂºltiple"
               : "Imprimir Recibo de Pago"
           }
         >
@@ -123,15 +123,15 @@ export const PrintReportDialog = ({
             <AlertDialog.Icon status="accent" />
             <AlertDialog.Heading>
               {paymentIds && paymentIds.length > 0
-                ? "Recibo Múltiple"
+                ? "Recibo MiÂºltiple"
                 : "Recibo de Pago"}
             </AlertDialog.Heading>
           </AlertDialog.Header>
           <AlertDialog.Body>
             <p className="text-sm text-muted">
               {paymentIds && paymentIds.length > 0
-                ? "Los pagos se registraron exitosamente. ¿Qué deseas hacer con el recibo múltiple consolidado?"
-                : "El pago se registró exitosamente. ¿Qué deseas hacer con el recibo?"}
+                ? "Los pagos se registraron exitosamente. ÃÂ¿QuiÂ© deseas hacer con el recibo miÂºltiple consolidado?"
+                : "El pago se registriÂ³ exitosamente. ÃÂ¿QuiÂ© deseas hacer con el recibo?"}
             </p>
           </AlertDialog.Body>
           <AlertDialog.Footer className="flex flex-col gap-2 sm:flex-row">

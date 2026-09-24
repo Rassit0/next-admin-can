@@ -2,7 +2,7 @@
 import React from "react";
 import { Card, Avatar } from "@heroui/react";
 import { IPersonProfileSummary } from "../../interfaces/secretary-summary.interface";
-import { IPersonOption } from "@/common/actions/get-persons-options";
+import { IPersonOption } from "@/modules/persons";
 import { usePermissions } from "@/shared/providers/PermissionsProvider";
 import { Person360EditAction } from "./Person360EditAction";
 import { PersonHeroParticles } from "./PersonHeroParticles";

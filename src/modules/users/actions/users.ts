@@ -43,7 +43,8 @@ export const getUsers = async (
   searchParams: Record<string, string>,
 ): Promise<ServiceResponse<IUsersResponse>> => {
   const session = await auth();
-  if (!session?.user?.token) return { error: true, statusCode: 401, message: "No autorizado" };
+  if (!session?.user?.token)
+    return { error: true, statusCode: 401, message: "No autorizado" };
 
   return handleServerAction(async () => {
     const params = new URLSearchParams();
@@ -59,32 +60,53 @@ export const getUsers = async (
   });
 };
 
-export const getUserById = async (id: string): Promise<ServiceResponse<IUser>> => {
+export const getUserById = async (
+  id: string,
+): Promise<ServiceResponse<IUser>> => {
   const session = await auth();
-  if (!session?.user?.token) return { error: true, statusCode: 401, message: "No autorizado" };
+  if (!session?.user?.token)
+    return { error: true, statusCode: 401, message: "No autorizado" };
 
   return handleServerAction(async () => {
-    const res = await api.get<{ data: IUser; message?: string }>(`users/${id}`, {
-      headers: { Authorization: `Bearer ${session.user.token}` },
-      next: { tags: ["users", `user-${id}`] },
-    });
+    const res = await api.get<{ data: IUser; message?: string }>(
+      `users/${id}`,
+      {
+        headers: { Authorization: `Bearer ${session.user.token}` },
+        next: { tags: ["users", `user-${id}`] },
+      },
+    );
     const user = res.data ?? (res as unknown as IUser);
-    return { error: false, data: user, message: res.message || "Usuario obtenido" };
+    return {
+      error: false,
+      data: user,
+      message: res.message || "Usuario obtenido",
+    };
   });
 };
 
-export const createUser = async (
-  data: { email: string; personId?: string; roleId: string },
-): Promise<ServiceResponse<IUser>> => {
+export const createUser = async (data: {
+  email: string;
+  personId?: string;
+  roleId: string;
+}): Promise<ServiceResponse<IUser>> => {
   const session = await auth();
-  if (!session?.user?.token) return { error: true, statusCode: 401, message: "No autorizado" };
+  if (!session?.user?.token)
+    return { error: true, statusCode: 401, message: "No autorizado" };
 
   return handleServerAction(async () => {
-    const res = await api.post<{ data: IUser; message?: string }>("users", data, {
-      headers: { Authorization: `Bearer ${session.user.token}` },
-    });
+    const res = await api.post<{ data: IUser; message?: string }>(
+      "users",
+      data,
+      {
+        headers: { Authorization: `Bearer ${session.user.token}` },
+      },
+    );
     const user = res.data ?? (res as unknown as IUser);
-    return { error: false, data: user, message: res.message || "Usuario creado exitosamente" };
+    return {
+      error: false,
+      data: user,
+      message: res.message || "Usuario creado exitosamente",
+    };
   });
 };
 
@@ -93,69 +115,122 @@ export const updateUser = async (
   data: { email?: string; personId?: string | null; roleId?: string },
 ): Promise<ServiceResponse<IUser>> => {
   const session = await auth();
-  if (!session?.user?.token) return { error: true, statusCode: 401, message: "No autorizado" };
+  if (!session?.user?.token)
+    return { error: true, statusCode: 401, message: "No autorizado" };
 
   return handleServerAction(async () => {
-    const res = await api.patch<{ data: IUser; message?: string }>(`users/${id}`, data, {
-      headers: { Authorization: `Bearer ${session.user.token}` },
-    });
+    const res = await api.patch<{ data: IUser; message?: string }>(
+      `users/${id}`,
+      data,
+      {
+        headers: { Authorization: `Bearer ${session.user.token}` },
+      },
+    );
     const user = res.data ?? (res as unknown as IUser);
-    return { error: false, data: user, message: res.message || "Usuario actualizado" };
+    return {
+      error: false,
+      data: user,
+      message: res.message || "Usuario actualizado",
+    };
   });
 };
 
-export const deactivateUser = async (id: string): Promise<ServiceResponse<IUser>> => {
+export const deactivateUser = async (
+  id: string,
+): Promise<ServiceResponse<IUser>> => {
   const session = await auth();
-  if (!session?.user?.token) return { error: true, statusCode: 401, message: "No autorizado" };
+  if (!session?.user?.token)
+    return { error: true, statusCode: 401, message: "No autorizado" };
 
   return handleServerAction(async () => {
-    const res = await api.patch<{ data: IUser; message?: string }>(`users/${id}/deactivate`, {}, {
-      headers: { Authorization: `Bearer ${session.user.token}` },
-    });
+    const res = await api.patch<{ data: IUser; message?: string }>(
+      `users/${id}/deactivate`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${session.user.token}` },
+      },
+    );
     const user = res.data ?? (res as unknown as IUser);
-    return { error: false, data: user, message: res.message || "Usuario desactivado" };
+    return {
+      error: false,
+      data: user,
+      message: res.message || "Usuario desactivado",
+    };
   });
 };
 
-export const reactivateUser = async (id: string): Promise<ServiceResponse<IUser>> => {
+export const reactivateUser = async (
+  id: string,
+): Promise<ServiceResponse<IUser>> => {
   const session = await auth();
-  if (!session?.user?.token) return { error: true, statusCode: 401, message: "No autorizado" };
+  if (!session?.user?.token)
+    return { error: true, statusCode: 401, message: "No autorizado" };
 
   return handleServerAction(async () => {
-    const res = await api.patch<{ data: IUser; message?: string }>(`users/${id}/reactivate`, {}, {
-      headers: { Authorization: `Bearer ${session.user.token}` },
-    });
+    const res = await api.patch<{ data: IUser; message?: string }>(
+      `users/${id}/reactivate`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${session.user.token}` },
+      },
+    );
     const user = res.data ?? (res as unknown as IUser);
-    return { error: false, data: user, message: res.message || "Usuario reactivado" };
+    return {
+      error: false,
+      data: user,
+      message: res.message || "Usuario reactivado",
+    };
   });
 };
 
-export const resetPassword = async (id: string): Promise<ServiceResponse<IUser>> => {
+export const resetPassword = async (
+  id: string,
+): Promise<ServiceResponse<IUser>> => {
   const session = await auth();
-  if (!session?.user?.token) return { error: true, statusCode: 401, message: "No autorizado" };
+  if (!session?.user?.token)
+    return { error: true, statusCode: 401, message: "No autorizado" };
 
   return handleServerAction(async () => {
-    const res = await api.patch<{ data: IUser; message?: string }>(`users/${id}/reset-password`, {}, {
-      headers: { Authorization: `Bearer ${session.user.token}` },
-    });
+    const res = await api.patch<{ data: IUser; message?: string }>(
+      `users/${id}/reset-password`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${session.user.token}` },
+      },
+    );
     const user = res.data ?? (res as unknown as IUser);
-    return { error: false, data: user, message: res.message || "Contraseña restablecida exitosamente" };
+    return {
+      error: false,
+      data: user,
+      message: res.message || "Contrasei±a restablecida exitosamente",
+    };
   });
 };
 
-export const unlockUser = async (id: string): Promise<ServiceResponse<IUser>> => {
+export const unlockUser = async (
+  id: string,
+): Promise<ServiceResponse<IUser>> => {
   const session = await auth();
-  if (!session?.user?.token) return { error: true, statusCode: 401, message: "No autorizado" };
+  if (!session?.user?.token)
+    return { error: true, statusCode: 401, message: "No autorizado" };
 
   return handleServerAction(async () => {
-    const res = await api.patch<{ data: IUser; message?: string }>(`users/${id}/unlock`, {}, {
-      headers: { Authorization: `Bearer ${session.user.token}` },
-    });
-    
+    const res = await api.patch<{ data: IUser; message?: string }>(
+      `users/${id}/unlock`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${session.user.token}` },
+      },
+    );
+
     const { updateTag } = await import("next/cache");
     updateTag("users");
-    
+
     const user = res.data ?? (res as unknown as IUser);
-    return { error: false, data: user, message: res.message || "Cuenta desbloqueada exitosamente" };
+    return {
+      error: false,
+      data: user,
+      message: res.message || "Cuenta desbloqueada exitosamente",
+    };
   });
 };

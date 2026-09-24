@@ -39,7 +39,7 @@ export const NewsCategoryActions = ({ item }: Props) => {
     <>
       <Dropdown>
         <Button
-          aria-label="Acciones de categoría"
+          aria-label="Acciones de categori­a"
           isIconOnly
           size="sm"
           variant="ghost"
@@ -59,7 +59,9 @@ export const NewsCategoryActions = ({ item }: Props) => {
                   className={(action as any).danger ? "text-danger" : undefined}
                   icon={action.icon}
                 />
-                <Label className={(action as any).danger ? "text-danger" : undefined}>
+                <Label
+                  className={(action as any).danger ? "text-danger" : undefined}
+                >
                   {action.label}
                 </Label>
               </Dropdown.Item>
@@ -67,7 +69,7 @@ export const NewsCategoryActions = ({ item }: Props) => {
           </Dropdown.Menu>
         </Dropdown.Popover>
       </Dropdown>
-      
+
       {isOpenEditModal && (
         <EditNewsCategoryModal
           category={item}

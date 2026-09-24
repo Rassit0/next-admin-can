@@ -3,7 +3,7 @@
 import { api } from "@/utils/api";
 import { ServiceResponse } from "@/types/api";
 import { handleServerAction } from "@/utils";
-// Usando updateTag en vez de revalidateTag según la instrucción
+// Usando updateTag en vez de revalidateTag segiºn la instrucción
 import { updateTag } from "next/cache";
 
 interface CreateMatchPayload {

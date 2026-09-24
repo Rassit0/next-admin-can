@@ -62,7 +62,7 @@ export const TableUsers: React.FC<Props> = ({ users }) => {
     setConfirmDialog({
       isOpen: true,
       title: user.isActive ? "Desactivar Usuario" : "Reactivar Usuario",
-      description: `¿Estás seguro de ${user.isActive ? "desactivar" : "reactivar"} a este usuario?`,
+      description: `ÃÂ¿EstiÂ¡s seguro de ${user.isActive ? "desactivar" : "reactivar"} a este usuario?`,
       status: user.isActive ? "warning" : "success",
       confirmText: user.isActive ? "Desactivar" : "Reactivar",
       onConfirm: async () => {
@@ -84,8 +84,8 @@ export const TableUsers: React.FC<Props> = ({ users }) => {
   const handleResetPassword = (user: IUser) => {
     setConfirmDialog({
       isOpen: true,
-      title: "Restablecer Contraseña",
-      description: `¿Estás seguro de restablecer la contraseña para ${user.email}? Esta acción invalidará su contraseña actual inmediatamente.`,
+      title: "Restablecer ContraseiÂ±a",
+      description: `ÃÂ¿EstiÂ¡s seguro de restablecer la contraseiÂ±a para ${user.email}? Esta acciiÂ³n invalidariÂ¡ su contraseiÂ±a actual inmediatamente.`,
       status: "danger",
       confirmText: "Restablecer",
       onConfirm: async () => {
@@ -97,7 +97,7 @@ export const TableUsers: React.FC<Props> = ({ users }) => {
         if (res.error) {
           toast.error(res.message);
         } else {
-          toast.success("Contraseña restablecida exitosamente");
+          toast.success("ContraseiÂ±a restablecida exitosamente");
           if (res.data?.tempPassword) {
             setCredentialDialog({
               isOpen: true,
@@ -114,7 +114,7 @@ export const TableUsers: React.FC<Props> = ({ users }) => {
     setConfirmDialog({
       isOpen: true,
       title: "Desbloquear Cuenta",
-      description: `¿Deseas desbloquear la cuenta de ${user.email}? Se restablecerá el contador de intentos fallidos y podrá volver a intentar iniciar sesión inmediatamente.`,
+      description: `ÃÂ¿Deseas desbloquear la cuenta de ${user.email}? Se restableceriÂ¡ el contador de intentos fallidos y podriÂ¡ volver a intentar iniciar sesiiÂ³n inmediatamente.`,
       status: "accent",
       confirmText: "Desbloquear",
       onConfirm: async () => {
@@ -167,7 +167,7 @@ export const TableUsers: React.FC<Props> = ({ users }) => {
             <Table.Body
               renderEmptyState={() => (
                 <div className="py-10 text-center text-sm text-muted">
-                  Aún no hay usuarios registrados.
+                  AiÂºn no hay usuarios registrados.
                 </div>
               )}
             >
@@ -188,7 +188,9 @@ export const TableUsers: React.FC<Props> = ({ users }) => {
                         />
                       )}
                       {user.isLocked && (
-                        <Chip size="sm" variant="soft" color="danger">Bloqueado</Chip>
+                        <Chip size="sm" variant="soft" color="danger">
+                          Bloqueado
+                        </Chip>
                       )}
                     </div>
                   </Table.Cell>
@@ -244,11 +246,14 @@ export const TableUsers: React.FC<Props> = ({ users }) => {
                               href={`/admin/users/${user.id}`}
                             >
                               <div className="flex items-center gap-2">
-                                <HugeiconsIcon icon={PencilEdit01Icon} size={18} />
+                                <HugeiconsIcon
+                                  icon={PencilEdit01Icon}
+                                  size={18}
+                                />
                                 Editar Perfil
                               </div>
                             </Dropdown.Item>
-                            
+
                             {canUnlockUsers && user.isLocked && (
                               <Dropdown.Item
                                 key="unlock"
@@ -256,7 +261,10 @@ export const TableUsers: React.FC<Props> = ({ users }) => {
                                 onAction={() => handleUnlockUser(user)}
                               >
                                 <div className="flex items-center gap-2 text-accent">
-                                  <HugeiconsIcon icon={UserCheck01Icon} size={18} />
+                                  <HugeiconsIcon
+                                    icon={UserCheck01Icon}
+                                    size={18}
+                                  />
                                   Desbloquear cuenta
                                 </div>
                               </Dropdown.Item>
@@ -269,19 +277,23 @@ export const TableUsers: React.FC<Props> = ({ users }) => {
                             >
                               <div className="flex items-center gap-2 text-warning">
                                 <HugeiconsIcon icon={Alert02Icon} size={18} />
-                                Restablecer Contraseña
+                                Restablecer ContraseiÂ±a
                               </div>
                             </Dropdown.Item>
                             <Dropdown.Item
                               key="toggle"
                               id="toggle"
-                              className={user.isActive ? "text-danger" : "text-success"}
+                              className={
+                                user.isActive ? "text-danger" : "text-success"
+                              }
                               onAction={() => handleToggleActive(user)}
                             >
                               <div className="flex items-center gap-2">
                                 <HugeiconsIcon
                                   icon={
-                                    user.isActive ? UserBlock01Icon : UserCheck01Icon
+                                    user.isActive
+                                      ? UserBlock01Icon
+                                      : UserCheck01Icon
                                   }
                                   size={18}
                                 />
@@ -304,14 +316,18 @@ export const TableUsers: React.FC<Props> = ({ users }) => {
 
       <CredentialAlertDialog
         isOpen={credentialDialog.isOpen}
-        onOpenChange={(open) => !open && setCredentialDialog({ isOpen: false, email: "" })}
+        onOpenChange={(open) =>
+          !open && setCredentialDialog({ isOpen: false, email: "" })
+        }
         email={credentialDialog.email}
         password={credentialDialog.password}
       />
 
       <ConfirmAlertDialog
         isOpen={confirmDialog.isOpen}
-        onOpenChange={(open) => !open && setConfirmDialog({ ...confirmDialog, isOpen: false })}
+        onOpenChange={(open) =>
+          !open && setConfirmDialog({ ...confirmDialog, isOpen: false })
+        }
         title={confirmDialog.title}
         description={confirmDialog.description}
         status={confirmDialog.status}

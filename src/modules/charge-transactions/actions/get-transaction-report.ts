@@ -12,9 +12,7 @@ export const getTransactionReport = async (
   type: "payment" | "transaction" = "transaction",
 ): Promise<ServiceResponse<string>> => {
   return handleServerAction(async () => {
-    const blob = await api.getBlob(
-      `payment-report/${type}/${id}`,
-    );
+    const blob = await api.getBlob(`payment-report/${type}/${id}`);
 
     const arrayBuffer = await blob.arrayBuffer();
     const pdfBase64 = Buffer.from(arrayBuffer).toString("base64");

@@ -35,7 +35,7 @@ export const CardProfile = () => {
         <div className="space-y-3">
           <div className="flex justify-between text-sm">
             <span className="text-on-surface-variant">Departamento</span>
-            <span className="font-semibold">Área Deportiva</span>
+            <span className="font-semibold">irea Deportiva</span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-on-surface-variant">Contrato</span>

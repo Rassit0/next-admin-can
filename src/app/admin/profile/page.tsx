@@ -2,7 +2,13 @@ import React from "react";
 import { getDetailedProfile } from "@/modules/users/actions/get-detailed-profile";
 import { Card } from "@heroui/react";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { UserIcon, Mail01Icon, SmartPhone01Icon, IdentificationIcon, Home01Icon } from "@hugeicons/core-free-icons";
+import {
+  UserIcon,
+  Mail01Icon,
+  SmartPhone01Icon,
+  IdentificationIcon,
+  Home01Icon,
+} from "@hugeicons/core-free-icons";
 import { HeaderPage } from "@/ui";
 import { redirect } from "next/navigation";
 import { AvatarEditor } from "./AvatarEditor";

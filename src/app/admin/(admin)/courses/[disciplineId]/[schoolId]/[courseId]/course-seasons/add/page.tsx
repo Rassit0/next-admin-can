@@ -34,7 +34,9 @@ export default async function AddCourseSeasonPage({
     getCategoriesByDisciplineOptions(disciplineId),
     getSeasonsByDisciplineOptions(disciplineId),
     getShiftsOptions(),
-    cloneFromId ? getCourseSeasonById({ id: cloneFromId }) : Promise.resolve(undefined as any),
+    cloneFromId
+      ? getCourseSeasonById({ id: cloneFromId })
+      : Promise.resolve(undefined as any),
   ]);
 
   return (

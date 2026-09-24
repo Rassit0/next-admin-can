@@ -21,7 +21,7 @@ export const CreateCategoryButton = () => {
         className="flex items-center gap-2"
       >
         <HugeiconsIcon icon={PlusSignIcon} size={18} />
-        Nueva Categoría
+        Nueva CategoriÂ­a
       </Button>
       <AccountCategoryDrawer
         isOpen={isOpen}
@@ -32,9 +32,14 @@ export const CreateCategoryButton = () => {
   );
 };
 
-export const AccountCategoriesClient = ({ categories }: { categories: IAccountCategory[] }) => {
+export const AccountCategoriesClient = ({
+  categories,
+}: {
+  categories: IAccountCategory[];
+}) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<IAccountCategory | null>(null);
+  const [selectedCategory, setSelectedCategory] =
+    useState<IAccountCategory | null>(null);
   const router = useRouter();
 
   const handleEdit = (category: IAccountCategory) => {
@@ -43,7 +48,9 @@ export const AccountCategoriesClient = ({ categories }: { categories: IAccountCa
   };
 
   const handleDelete = async (category: IAccountCategory) => {
-    if (confirm(`¿Estás seguro de eliminar la categoría "${category.name}"?`)) {
+    if (
+      confirm(`ÃÂ¿EstiÂ¡s seguro de eliminar la categoriÂ­a "${category.name}"?`)
+    ) {
       const res = await deleteAccountCategory(category.id);
       if (res.error) {
         toast.error(res.message);

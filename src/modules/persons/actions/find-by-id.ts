@@ -15,7 +15,7 @@ export const findPersonById = async ({
     const res = await api.get<{ data: IPerson; message: string }>(
       `persons/${id}`, // 1er argumento: el endpoint
       {
-        // 2do argumento: options (aquí va el caché)
+        // 2do argumento: options (aqui­ va el cachi©)
         next: {
           tags: ["persons"],
           revalidate: 3600,

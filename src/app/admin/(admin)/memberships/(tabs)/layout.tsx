@@ -23,8 +23,12 @@ export default async function TeamSeasonDetailLayout({
     }
   }
 
-  const allowedRoutes = getAllowedChildRoutes("memberships", userPermissions, itemsNavigation as NavigationConfig[]);
-  
+  const allowedRoutes = getAllowedChildRoutes(
+    "memberships",
+    userPermissions,
+    itemsNavigation as NavigationConfig[],
+  );
+
   const tabsRoutes = allowedRoutes
     .filter((route) => route.showInTabs)
     .map((route) => ({

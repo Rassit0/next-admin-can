@@ -2,14 +2,24 @@
 import { api } from "@/utils/api";
 import { ServiceResponse } from "@/types/api";
 import { handleServerAction } from "@/utils";
-import { INewsCategory, PostNewsCategoryInterface } from "../interfaces/news-categories.interface";
+import {
+  INewsCategory,
+  PostNewsCategoryInterface,
+} from "../interfaces/news-categories.interface";
 import { auth } from "@/auth";
 import { updateTag } from "next/cache";
 
-export const addNewsCategory = async (data: PostNewsCategoryInterface): Promise<ServiceResponse<INewsCategory>> => {
+export const addNewsCategory = async (
+  data: PostNewsCategoryInterface,
+): Promise<ServiceResponse<INewsCategory>> => {
   const session = await auth();
 
-  if (!session?.user) return { error: true, statusCode: 401, message: "Su sesión ha expirado" } as any;
+  if (!session?.user)
+    return {
+      error: true,
+      statusCode: 401,
+      message: "Su sesión ha expirado",
+    } as any;
 
   return handleServerAction(async () => {
     const res = await api.post<INewsCategory>("news-categories", data, {
@@ -25,7 +35,7 @@ export const addNewsCategory = async (data: PostNewsCategoryInterface): Promise<
     return {
       error: false,
       data: res,
-      message: "Categoría creada exitosamente",
+      message: "Categori­a creada exitosamente",
     };
   });
 };

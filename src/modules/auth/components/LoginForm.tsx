@@ -41,7 +41,7 @@ export const LoginForm = () => {
   const toggleVisibility = () => setIsVisible(!isVisible);
 
   useEffect(() => {
-    // Si fuimos redirigidos aquí porque expiró la sesión, limpiamos la cookie local de NextAuth
+    // Si fuimos redirigidos aquÃÂ­ porque expiró la sesión, limpiamos la cookie local de NextAuth
     if (searchParams.get("expired") === "true") {
       signOut({ redirect: false });
     }
@@ -137,7 +137,7 @@ export const LoginForm = () => {
               <InputGroup.Input
                 type={isVisible ? "text" : "password"}
                 className="w-full py-3 sm:py-3.5 px-0 bg-transparent border-none focus:ring-0 focus:outline-none text-base tracking-wide"
-                placeholder="••••••••"
+                placeholder="*********"
                 aria-label="Contraseña"
               />
               <InputGroup.Suffix>
@@ -178,7 +178,7 @@ export const LoginForm = () => {
             color="primary"
             className="text-sm font-semibold hover:text-accent transition-colors"
           >
-            ¿Olvidaste tu contraseña?
+            ÃÂ¿Olvidaste tu contraseña?
           </Link>
         </motion.div> */}
 

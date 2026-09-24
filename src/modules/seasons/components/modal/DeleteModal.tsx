@@ -59,13 +59,13 @@ export const DeleteModal = ({
             <AlertDialog.CloseTrigger />
             <AlertDialog.Header>
               <AlertDialog.Icon status="danger" />
-              <AlertDialog.Heading>¿Eliminar temporada?</AlertDialog.Heading>
+              <AlertDialog.Heading>ÃÂ¿Eliminar temporada?</AlertDialog.Heading>
             </AlertDialog.Header>
             <AlertDialog.Body>
               <p>
-                Se eliminará permanentemente la temporada{" "}
+                Se eliminariÂ¡ permanentemente la temporada{" "}
                 <strong>{season.name}</strong> si no tiene datos asociados a
-                este. Esta acción no se puede deshacer.
+                este. Esta acciiÂ³n no se puede deshacer.
               </p>
             </AlertDialog.Body>
             <AlertDialog.Footer>

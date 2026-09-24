@@ -53,7 +53,7 @@ export const FormClub = ({
     }
     setIsLoading?.(true);
     let res;
-    
+
     const formData = new FormData();
     formData.append("name", name);
     if (shortName) formData.append("shortName", shortName);
@@ -72,10 +72,10 @@ export const FormClub = ({
 
       if (res.errors) {
         // Convertimos el objeto { type: ["msg"] } en una lista de strings limpia
-        errorDescription = "Error de Validación"; // Los separamos por saltos de línea para el toast
+        errorDescription = "Error de ValidaciiÂ³n"; // Los separamos por saltos de liÂ­nea para el toast
       }
 
-      // 2. Pasamos la descripción formateada al componente de notificaciones
+      // 2. Pasamos la descripciiÂ³n formateada al componente de notificaciones
       toast.danger(res.message, {
         description: errorDescription,
       });
@@ -131,16 +131,11 @@ export const FormClub = ({
           <FieldError children={errors.shortName && <> {errors.shortName}</>} />
         </TextField>
 
-        <Switch
-          isSelected={isExternal}
-          onChange={setIsExternal}
-        >
+        <Switch isSelected={isExternal} onChange={setIsExternal}>
           <Switch.Control>
             <Switch.Thumb />
           </Switch.Control>
-          <Switch.Content>
-            Es un club externo
-          </Switch.Content>
+          <Switch.Content>Es un club externo</Switch.Content>
         </Switch>
 
         <div className="flex flex-col gap-2">
@@ -154,7 +149,7 @@ export const FormClub = ({
           />
           {club?.imageUrl && files.length === 0 && (
             <div className="mt-2 text-sm text-success">
-              ✓ Ya existe un logo asociado
+              Ã¢ÂÂ Ya existe un logo asociado
             </div>
           )}
         </div>

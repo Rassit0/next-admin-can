@@ -1,15 +1,6 @@
 "use client";
-import {
-  Avatar,
-  Button,
-  Chip,
-  Table,
-  toast,
-} from "@heroui/react";
-import {
-  Copy01Icon,
-  Search01Icon,
-} from "@hugeicons/core-free-icons";
+import { Avatar, Button, Chip, Table, toast } from "@heroui/react";
+import { Copy01Icon, Search01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { SortableColumnHeader } from "@/ui";
 import { IStaff } from "@/modules/staff";
@@ -98,7 +89,7 @@ export const StaffTable = ({ staffs }: Props) => {
                     No se encontró personal
                   </span>
                   <span className="text-sm text-default-400">
-                    Intenta con otros términos de búsqueda o agrega nuevo
+                    Intenta con otros ti©rminos de biºsqueda o agrega nuevo
                     personal.
                   </span>
                 </div>
@@ -132,9 +123,7 @@ export const StaffTable = ({ staffs }: Props) => {
                     </Avatar.Fallback>
                   </Avatar>
                 </Table.Cell>
-                <Table.Cell>
-                  {staff.person.name}
-                </Table.Cell>
+                <Table.Cell>{staff.person.name}</Table.Cell>
                 <Table.Cell>{staff.person.lastName}</Table.Cell>
                 <Table.Cell>{staff.person.secondLastName || "-"}</Table.Cell>
                 <Table.Cell>{staff.person.documentNumber}</Table.Cell>
@@ -157,8 +146,7 @@ export const StaffTable = ({ staffs }: Props) => {
                   </Chip>
                 </Table.Cell>
                 <Table.Cell>
-                  <div className="flex justify-center gap-2">
-                  </div>
+                  <div className="flex justify-center gap-2"></div>
                 </Table.Cell>
               </Table.Row>
             ))}

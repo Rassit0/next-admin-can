@@ -48,7 +48,9 @@ export const calculateInitialCharges = (
   > | null,
   currency = "Bs",
 ): InitialChargesBreakdown => {
-  const registrationGross = toNumber(courseSeason.billingConfig?.registrationFee);
+  const registrationGross = toNumber(
+    courseSeason.billingConfig?.registrationFee,
+  );
   const monthlyGross = toNumber(courseSeason.billingConfig?.recurringFee);
 
   const registrationDiscountPercent = paymentPlan
@@ -61,7 +63,9 @@ export const calculateInitialCharges = (
   const registrationDiscount = round2(
     registrationGross * (registrationDiscountPercent / 100),
   );
-  const monthlyDiscount = round2(monthlyGross * (recurringDiscountPercent / 100));
+  const monthlyDiscount = round2(
+    monthlyGross * (recurringDiscountPercent / 100),
+  );
 
   const registrationNet = round2(registrationGross - registrationDiscount);
   const monthlyNet = round2(monthlyGross - monthlyDiscount);
@@ -69,8 +73,8 @@ export const calculateInitialCharges = (
   const lines: ChargeLine[] = [
     {
       key: "registration",
-      label: "Matrícula de inscripción",
-      description: "Cargo único al momento de la inscripción",
+      label: "Matri­cula de inscripción",
+      description: "Cargo iºnico al momento de la inscripción",
       gross: registrationGross,
       discountPercent: registrationDiscountPercent,
       adjustmentAmount: -registrationDiscount,
@@ -99,12 +103,12 @@ export const calculateInitialCharges = (
     });
   }
   if (registrationGross === 0) {
-    flags.push({ type: "info", label: "Temporada sin matrícula" });
+    flags.push({ type: "info", label: "Temporada sin matri­cula" });
   }
   if (courseSeason.billingConfig?.lateFeeEnabled) {
     flags.push({
       type: "warning",
-      label: "Aplica recargo por mora en pagos tardíos",
+      label: "Aplica recargo por mora en pagos tardi­os",
     });
   }
 

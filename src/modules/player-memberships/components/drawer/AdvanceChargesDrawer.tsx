@@ -71,7 +71,7 @@ export const AdvanceChargesDrawer = ({
         }
       }
     } catch (error) {
-      setPreviewError("Ocurrió un error al obtener la previsualización.");
+      setPreviewError("OcurriiÂ³ un error al obtener la previsualizaciiÂ³n.");
       setPreviewData(null);
     } finally {
       setIsLoadingPreview(false);
@@ -97,7 +97,7 @@ export const AdvanceChargesDrawer = ({
         onSuccess?.();
       }
     } catch (error) {
-      toast.error("Ocurrió un error inesperado al generar los cargos.");
+      toast.error("OcurriiÂ³ un error inesperado al generar los cargos.");
     } finally {
       setIsGenerating(false);
     }
@@ -129,7 +129,7 @@ export const AdvanceChargesDrawer = ({
                 Adelantar Cuotas
               </Drawer.Heading>
               <p className="mt-1 text-xs font-medium text-muted">
-                Genera las próximas cuotas de esta membresía por adelantado.
+                Genera las priÂ³ximas cuotas de esta membresiÂ­a por adelantado.
               </p>
             </div>
           </Drawer.Header>
@@ -142,10 +142,10 @@ export const AdvanceChargesDrawer = ({
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-foreground">
-                    ¿Confirmar adelanto?
+                    ÃÂ¿Confirmar adelanto?
                   </h3>
                   <p className="text-sm text-muted mt-2">
-                    Estás a punto de generar{" "}
+                    EstiÂ¡s a punto de generar{" "}
                     <strong>{previewData?.charges.length} cuotas</strong> por un
                     total de{" "}
                     <strong>
@@ -155,8 +155,8 @@ export const AdvanceChargesDrawer = ({
                     .
                   </p>
                   <p className="text-xs text-muted mt-2">
-                    Esta acción creará los cargos en el sistema y no se puede
-                    deshacer automáticamente.
+                    Esta acciiÂ³n creariÂ¡ los cargos en el sistema y no se puede
+                    deshacer automiÂ¡ticamente.
                   </p>
                 </div>
               </div>
@@ -184,7 +184,7 @@ export const AdvanceChargesDrawer = ({
 
                 <div className="flex flex-col gap-3">
                   <h4 className="text-sm font-semibold text-foreground border-b border-border pb-2">
-                    Previsualización
+                    PrevisualizaciiÂ³n
                   </h4>
 
                   {isLoadingPreview ? (
@@ -258,7 +258,7 @@ export const AdvanceChargesDrawer = ({
                     </div>
                   ) : (
                     <p className="text-sm text-muted text-center py-4">
-                      Ingresa una cantidad para ver la previsualización.
+                      Ingresa una cantidad para ver la previsualizaciiÂ³n.
                     </p>
                   )}
                 </div>

@@ -22,7 +22,9 @@ export const regularizeHistoricalCharge = async (
 
     const body = {
       cycleId: data.cycleId,
-      ...(data.overrideAmount !== undefined && { overrideAmount: data.overrideAmount }),
+      ...(data.overrideAmount !== undefined && {
+        overrideAmount: data.overrideAmount,
+      }),
     };
 
     const response = await api.post<{
@@ -34,7 +36,8 @@ export const regularizeHistoricalCharge = async (
     return {
       error: false,
       data: response.data,
-      message: response.message || "Regularización histórica creada exitosamente",
+      message:
+        response.message || "Regularización histórica creada exitosamente",
     };
   });
 };

@@ -9,7 +9,7 @@ export const SectionInfo = () => {
     <div className="w-full md:w-1/3 p-8 border-r border-outline-variant/15  space-y-8 bg-surface-container-low/30">
       <section>
         <h3 className="text-xs font-black text-sky-700 uppercase tracking-widest mb-6">
-          Información Básica
+          Información Bi¡sica
         </h3>
         <div className="flex justify-center mb-6">
           <div className="relative group">
@@ -138,7 +138,7 @@ export const SectionInfo = () => {
           </div>
           <div>
             <label className="block text-[11px] font-bold text-on-surface-variant uppercase mb-1">
-              Teléfono de Contacto
+              Teli©fono de Contacto
             </label>
             <input
               className="w-full px-4 py-2.5 bg-surface-container-high border-none rounded-lg focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all text-sm"

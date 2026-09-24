@@ -1,4 +1,4 @@
-﻿"use server";
+"use server";
 import { api } from "@/utils/api";
 import { ServiceResponse } from "@/types/api";
 import { updateTag } from "next/cache";
@@ -11,7 +11,7 @@ export const deleteShift = async (
 ): Promise<ServiceResponse<void>> => {
   const session = await auth();
 
-  if (!session?.user) return { error: true, statusCode: 401, message: "Su sesión ha expirado. Por favor, inicie sesión nuevamente." } as any;
+  if (!session?.user) return { error: true, statusCode: 401, message: "Su sesiiÂ³n ha expirado. Por favor, inicie sesiiÂ³n nuevamente." } as any;
   return handleServerAction(async () => {
     const response = await api.delete<{ message: string; data: any }>(
       `shifts/${id}`,

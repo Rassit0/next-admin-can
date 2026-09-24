@@ -41,7 +41,7 @@ export class CANApiAdapter implements HttpAdapter {
     this.defaultTimeout = defaultTimeout;
   }
 
-  // MÉTODO CENTRALIZADOR: Aquí controlas la conexión
+  // MiTODO CENTRALIZADOR: Aqui­ controlas la conexión
   private async request<T>(
     endpoint: string,
     method: string,
@@ -52,11 +52,18 @@ export class CANApiAdapter implements HttpAdapter {
       console.error(
         "CRITICAL: NEXT_PUBLIC_CAN_API_URL is missing in environment variables",
       );
-      throw new ApiError(500, "El servicio no está disponible en este momento.");
+      throw new ApiError(
+        500,
+        "El servicio no esti¡ disponible en este momento.",
+      );
     }
 
-    const normalizedBaseUrl = this.baseUrl.endsWith("/") ? this.baseUrl.slice(0, -1) : this.baseUrl;
-    const normalizedEndpoint = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
+    const normalizedBaseUrl = this.baseUrl.endsWith("/")
+      ? this.baseUrl.slice(0, -1)
+      : this.baseUrl;
+    const normalizedEndpoint = endpoint.startsWith("/")
+      ? endpoint
+      : `/${endpoint}`;
     let url = `${normalizedBaseUrl}${normalizedEndpoint}`;
     if (options?.params) {
       const searchParams = new URLSearchParams();
@@ -151,7 +158,7 @@ export class CANApiAdapter implements HttpAdapter {
 
     const errorMap: Record<number, string> = {
       400: "Petición incorrecta",
-      401: "Token inválido o expirado",
+      401: "Token invi¡lido o expirado",
       403: "Acceso denegado",
       404: "Recurso no encontrado",
       500: "Error interno del servidor",

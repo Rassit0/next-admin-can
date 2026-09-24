@@ -1,5 +1,8 @@
 import { ErrorPage } from "@/ui";
-import { getCourseSeasonById, getCourseSeasonSummary } from "@/modules/course-seasons";
+import {
+  getCourseSeasonById,
+  getCourseSeasonSummary,
+} from "@/modules/course-seasons";
 import { MetricsCards } from "@/modules/student-memberships";
 import { Avatar, Button, Card, Alert, Chip, Popover } from "@heroui/react";
 import { InformationCircleIcon } from "@hugeicons/core-free-icons";
@@ -57,12 +60,13 @@ export default async function CourseSeasonDashboardPage({ params }: Props) {
     MIXED: "Mixto",
   };
 
-  const allStaffs = courseSeason.shifts?.flatMap((shift) =>
-    (shift.courseSeasonStaffs || []).map((staffAssignment) => ({
-      ...staffAssignment,
-      shiftName: shift.shift?.name,
-    }))
-  ) || [];
+  const allStaffs =
+    courseSeason.shifts?.flatMap((shift) =>
+      (shift.courseSeasonStaffs || []).map((staffAssignment) => ({
+        ...staffAssignment,
+        shiftName: shift.shift?.name,
+      })),
+    ) || [];
 
   return (
     <div className="flex flex-col gap-6">
@@ -76,19 +80,30 @@ export default async function CourseSeasonDashboardPage({ params }: Props) {
           <hr className="border-border" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {allStaffs.map((staffAssignment) => (
-              <div key={staffAssignment.id} className="flex items-center gap-3 bg-surface-container-low p-3 rounded-xl border border-border/50">
+              <div
+                key={staffAssignment.id}
+                className="flex items-center gap-3 bg-surface-container-low p-3 rounded-xl border border-border/50"
+              >
                 <Avatar size="md">
                   {staffAssignment.staff.person.imageUrl && (
-                    <Avatar.Image src={staffAssignment.staff.person.imageUrl} alt={`${staffAssignment.staff.person.name} ${staffAssignment.staff.person.lastName}`} />
+                    <Avatar.Image
+                      src={staffAssignment.staff.person.imageUrl}
+                      alt={`${staffAssignment.staff.person.name} ${staffAssignment.staff.person.lastName}`}
+                    />
                   )}
                   <Avatar.Fallback>{`${staffAssignment.staff.person.name.charAt(0)}${staffAssignment.staff.person.lastName.charAt(0)}`}</Avatar.Fallback>
                 </Avatar>
                 <div className="flex flex-col">
                   <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
-                    {staffAssignment.isPrimary ? "Profesor Principal" : "Staff"} • {STAFF_ROLES_TRANSLATOR[staffAssignment.role] || staffAssignment.role} • {staffAssignment.shiftName}
+                    {staffAssignment.isPrimary ? "Profesor Principal" : "Staff"}{" "}
+                    -{" "}
+                    {STAFF_ROLES_TRANSLATOR[staffAssignment.role] ||
+                      staffAssignment.role}{" "}
+                    - {staffAssignment.shiftName}
                   </span>
                   <span className="text-sm font-semibold text-foreground">
-                    {staffAssignment.staff.person.name} {staffAssignment.staff.person.lastName}
+                    {staffAssignment.staff.person.name}{" "}
+                    {staffAssignment.staff.person.lastName}
                   </span>
                 </div>
               </div>
@@ -109,7 +124,9 @@ export default async function CourseSeasonDashboardPage({ params }: Props) {
               size="sm"
               className="font-semibold tracking-wide uppercase"
             >
-              {courseSeason.isRegistrationOpen ? "Inscripciones Abiertas" : "Inscripciones Cerradas"}
+              {courseSeason.isRegistrationOpen
+                ? "Inscripciones Abiertas"
+                : "Inscripciones Cerradas"}
             </Chip>
           </div>
         </div>
@@ -121,17 +138,20 @@ export default async function CourseSeasonDashboardPage({ params }: Props) {
               <InfoTooltip text="Define si la temporada permite pagos fragmentados mes a mes, o si es un pago cerrado." />
             </p>
             <p className="font-bold text-sm">
-              {courseSeason.billingConfig?.billingType === "MONTHLY_ONLY" && "Sólo Recurrente"}
-              {courseSeason.billingConfig?.billingType === "SINGLE_ONLY" && "Sólo Pago Único"}
-              {courseSeason.billingConfig?.billingType === "BOTH" && "Pago Único o Recurrente"}
+              {courseSeason.billingConfig?.billingType === "MONTHLY_ONLY" &&
+                "SiÂ³lo Recurrente"}
+              {courseSeason.billingConfig?.billingType === "SINGLE_ONLY" &&
+                "SiÂ³lo Pago iÂnico"}
+              {courseSeason.billingConfig?.billingType === "BOTH" &&
+                "Pago iÂnico o Recurrente"}
             </p>
           </div>
           {courseSeason.billingConfig?.billingType !== "SINGLE_ONLY" && (
             <>
               <div>
                 <p className="text-xs text-muted-foreground mb-1 uppercase font-semibold flex items-center">
-                  Matrícula
-                  <InfoTooltip text="Costo único que se cobra al inicio (o prorrateado) por ingresar al equipo en esta temporada." />
+                  MatriÂ­cula
+                  <InfoTooltip text="Costo iÂºnico que se cobra al inicio (o prorrateado) por ingresar al equipo en esta temporada." />
                 </p>
                 <p className="font-bold text-sm">
                   {courseSeason.billingConfig?.registrationFee
@@ -144,11 +164,12 @@ export default async function CourseSeasonDashboardPage({ params }: Props) {
                   Cuota Base (
                   {courseSeason.billingConfig?.billingFrequency === "WEEKLY"
                     ? "Semanal"
-                    : courseSeason.billingConfig?.billingFrequency === "BIWEEKLY"
+                    : courseSeason.billingConfig?.billingFrequency ===
+                        "BIWEEKLY"
                       ? "Quincenal"
                       : "Mensual"}
                   )
-                  <InfoTooltip text="Monto recurrente base que se cobrará periódicamente (antes de aplicar planes o descuentos)." />
+                  <InfoTooltip text="Monto recurrente base que se cobrariÂ¡ periiÂ³dicamente (antes de aplicar planes o descuentos)." />
                 </p>
                 <p className="font-bold text-sm">
                   {courseSeason.billingConfig?.recurringFee
@@ -163,7 +184,7 @@ export default async function CourseSeasonDashboardPage({ params }: Props) {
             <div>
               <p className="text-xs text-muted-foreground mb-1 uppercase font-semibold flex items-center">
                 Tarifa Temporada Completa
-                <InfoTooltip text="Costo de la temporada completa si el modelo permite o requiere Pago Único (esquema cerrado)." />
+                <InfoTooltip text="Costo de la temporada completa si el modelo permite o requiere Pago iÂnico (esquema cerrado)." />
               </p>
               <p className="font-bold text-sm">
                 {courseSeason.billingConfig?.seasonFee
@@ -175,12 +196,12 @@ export default async function CourseSeasonDashboardPage({ params }: Props) {
           <div className="col-span-full">
             <p className="text-xs text-muted-foreground mb-2 uppercase font-semibold flex items-center">
               Opciones de Prorrateo Activas
-              <InfoTooltip text="Si el jugador ingresa tarde (después de la fecha de inicio del ciclo), el sistema cobrará la fracción correspondiente matemáticamente a los días activos de las opciones que veas aquí marcadas." />
+              <InfoTooltip text="Si el jugador ingresa tarde (despuiÂ©s de la fecha de inicio del ciclo), el sistema cobrariÂ¡ la fracciiÂ³n correspondiente matemiÂ¡ticamente a los diÂ­as activos de las opciones que veas aquiÂ­ marcadas." />
             </p>
             <div className="flex flex-wrap gap-2">
               {courseSeason.billingConfig?.prorateRegistrationFee && (
                 <Chip size="sm" variant="soft" color="default">
-                  Matrícula
+                  MatriÂ­cula
                 </Chip>
               )}
               {courseSeason.billingConfig?.prorateFirstRecurringFee && (
@@ -190,12 +211,12 @@ export default async function CourseSeasonDashboardPage({ params }: Props) {
               )}
               {courseSeason.billingConfig?.prorateLastRecurringFee && (
                 <Chip size="sm" variant="soft" color="default">
-                  Último Cargo Recurrente
+                  iÂltimo Cargo Recurrente
                 </Chip>
               )}
               {courseSeason.billingConfig?.prorateSeasonFee && (
                 <Chip size="sm" variant="soft" color="default">
-                  Tarifa Temporada (Pago Único)
+                  Tarifa Temporada (Pago iÂnico)
                 </Chip>
               )}
               {!courseSeason.billingConfig?.prorateRegistrationFee &&
@@ -209,37 +230,56 @@ export default async function CourseSeasonDashboardPage({ params }: Props) {
             </div>
           </div>
         </div>
-
       </Card>
 
       <Card className="p-6 shadow-[0px_4px_12px_rgba(0,0,0,0.06)] border border-border flex flex-col gap-5 bg-surface-container-lowest">
         <div className="flex items-center justify-between">
           <h3 className="font-headline font-bold text-lg">
-            Turnos y Reglas de Participación
+            Turnos y Reglas de ParticipaciiÂ³n
           </h3>
         </div>
         <hr className="border-border" />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {courseSeason.shifts?.map((shiftItem) => (
-            <div key={shiftItem.id} className="flex flex-col gap-2 p-4 rounded-xl border border-border/50 bg-surface-container-low">
+            <div
+              key={shiftItem.id}
+              className="flex flex-col gap-2 p-4 rounded-xl border border-border/50 bg-surface-container-low"
+            >
               <div className="flex items-center justify-between">
-                <span className="font-bold text-base">{shiftItem.shift?.name || "Turno"}</span>
-                <Chip size="sm" color="accent" variant="soft" className="font-semibold tracking-wide uppercase">{GENDER_MAP[shiftItem.gender] || shiftItem.gender}</Chip>
+                <span className="font-bold text-base">
+                  {shiftItem.shift?.name || "Turno"}
+                </span>
+                <Chip
+                  size="sm"
+                  color="accent"
+                  variant="soft"
+                  className="font-semibold tracking-wide uppercase"
+                >
+                  {GENDER_MAP[shiftItem.gender] || shiftItem.gender}
+                </Chip>
               </div>
               <div className="flex flex-col text-sm text-muted-foreground mt-2 space-y-1">
-                <span><strong className="text-foreground">Categoría:</strong> {shiftItem.category?.name}</span>
+                <span>
+                  <strong className="text-foreground">CategoriÂ­a:</strong>{" "}
+                  {shiftItem.category?.name}
+                </span>
                 <span>
                   <strong className="text-foreground">Edades:</strong>{" "}
                   {shiftItem.minBirthYear || shiftItem.maxBirthYear
                     ? `${shiftItem.minBirthYear || "Cualquiera"} al ${shiftItem.maxBirthYear || "Cualquiera"}`
-                    : `${shiftItem.category?.minAge} a ${shiftItem.category?.maxAge || "Sin límite"} años`}
+                    : `${shiftItem.category?.minAge} a ${shiftItem.category?.maxAge || "Sin liÂ­mite"} aiÂ±os`}
                 </span>
-                <span><strong className="text-foreground">Capacidad:</strong> {shiftItem.minMembers} min - {shiftItem.maxMembers} max</span>
+                <span>
+                  <strong className="text-foreground">Capacidad:</strong>{" "}
+                  {shiftItem.minMembers} min - {shiftItem.maxMembers} max
+                </span>
               </div>
             </div>
           ))}
           {(!courseSeason.shifts || courseSeason.shifts.length === 0) && (
-            <p className="text-sm text-muted-foreground italic col-span-full">No hay turnos configurados para esta temporada.</p>
+            <p className="text-sm text-muted-foreground italic col-span-full">
+              No hay turnos configurados para esta temporada.
+            </p>
           )}
         </div>
       </Card>

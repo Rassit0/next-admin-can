@@ -61,7 +61,7 @@ export const TablePayments = ({ payments }: Props) => {
   );
   const [isLoading, setIsLoading] = useState(false);
 
-  // Estado para el diálogo de impresión de recibo
+  // Estado para el diiÂ¡logo de impresiiÂ³n de recibo
   const [printTransactionId, setPrintTransactionId] = useState<string | null>(
     null,
   );
@@ -104,7 +104,7 @@ export const TablePayments = ({ payments }: Props) => {
             <Table.Header className="bg-surface-secondary">
               <Table.Column isRowHeader>
                 <span className="text-xs font-semibold uppercase tracking-wide">
-                  N° Recibo
+                  NÃÂ° Recibo
                 </span>
               </Table.Column>
               <Table.Column>
@@ -119,7 +119,7 @@ export const TablePayments = ({ payments }: Props) => {
               </Table.Column>
               <Table.Column>
                 <span className="text-xs font-semibold uppercase tracking-wide">
-                  Métodos de Pago
+                  MiÂ©todos de Pago
                 </span>
               </Table.Column>
               <Table.Column className="text-center">
@@ -136,7 +136,7 @@ export const TablePayments = ({ payments }: Props) => {
               )}
             >
               {payments.map((item) => {
-                // Obtener los metodos únicos del pago
+                // Obtener los metodos iÂºnicos del pago
                 const methods = Array.from(
                   new Set(item.transactions?.map((t) => t.paymentMethod) || []),
                 );
@@ -279,9 +279,9 @@ export const TablePayments = ({ payments }: Props) => {
             </AlertDialog.Header>
             <AlertDialog.Body>
               <p>
-                ¿Anular este pago? Esta operación revertirá el efecto financiero
-                del pago, pero el comprobante permanecerá registrado como
-                "Anulado" para fines de auditoría.
+                ÃÂ¿Anular este pago? Esta operaciiÂ³n revertiriÂ¡ el efecto
+                financiero del pago, pero el comprobante permaneceriÂ¡ registrado
+                como "Anulado" para fines de auditoriÂ­a.
               </p>
             </AlertDialog.Body>
             <AlertDialog.Footer>
@@ -339,7 +339,7 @@ export const TablePayments = ({ payments }: Props) => {
 
                   <div>
                     <h3 className="text-sm font-semibold mb-2">
-                      Distribución Financiera
+                      DistribuciiÂ³n Financiera
                     </h3>
                     <div className="border border-border rounded-lg divide-y divide-border overflow-hidden">
                       {paymentToView.transactions?.map((t, idx) => (

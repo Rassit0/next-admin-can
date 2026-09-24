@@ -26,11 +26,11 @@ export const getRegularizableCycles = async (
       type === "membership"
         ? `membership-charges/${membershipId}/regularizable-cycles`
         : `student-charges/${membershipId}/regularizable-cycles`;
-        
+
     const response = await api.get<any>(endpoint);
-    
-    // Si el backend devuelve un arreglo directo o está envuelto en { data }
-    const rawCycles = Array.isArray(response) ? response : (response?.data || []);
+
+    // Si el backend devuelve un arreglo directo o esti¡ envuelto en { data }
+    const rawCycles = Array.isArray(response) ? response : response?.data || [];
 
     const mappedCycles = rawCycles.map((c: any) => ({
       id: c.cycleId,
@@ -43,7 +43,10 @@ export const getRegularizableCycles = async (
       amount: c.netAmount,
       sequence: c.billingCycle,
       status: "PENDING",
-      title: c.title || c.description || `Ciclo: ${c.billingYear} - Mes ${c.billingMonth}`
+      title:
+        c.title ||
+        c.description ||
+        `Ciclo: ${c.billingYear} - Mes ${c.billingMonth}`,
     }));
 
     return {

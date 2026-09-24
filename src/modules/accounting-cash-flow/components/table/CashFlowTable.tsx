@@ -44,7 +44,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
         if (groups.has(t.paymentId)) {
           const group = groups.get(t.paymentId)!;
           group.amount += t.amount;
-          group._isGrouped = true; // Solo es agrupado si hay más de 1
+          group._isGrouped = true; // Solo es agrupado si hay miÂ¡s de 1
           group._groupedDetails!.push({
             method: t.paymentMethod,
             account: t.financialAccountName || "Sin asignar",
@@ -53,7 +53,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
         } else {
           const newGroup: ITransaction = {
             ...t,
-            _isGrouped: false, // Inicialmente falso, es una transacción normal
+            _isGrouped: false, // Inicialmente falso, es una transacciiÂ³n normal
             _groupedDetails: [
               {
                 method: t.paymentMethod,
@@ -84,7 +84,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
         setVoidTransactionId(null);
       }
     } catch (error) {
-      toast.error("Ocurrió un error al anular el pago");
+      toast.error("OcurriiÂ³ un error al anular el pago");
     } finally {
       setIsVoiding(false);
     }
@@ -111,13 +111,13 @@ export const CashFlowTable = ({ transactions }: Props) => {
                 <div className="font-semibold">Concepto</div>
               </Table.Column>
               <Table.Column id="category">
-                <div className="font-semibold">Categoría</div>
+                <div className="font-semibold">CategoriÂ­a</div>
               </Table.Column>
               <Table.Column allowsSorting id="type">
                 <SortableColumnHeader id="type">Tipo</SortableColumnHeader>
               </Table.Column>
               <Table.Column id="paymentMethod">
-                <div className="font-semibold">Método</div>
+                <div className="font-semibold">MiÂ©todo</div>
               </Table.Column>
               <Table.Column>Origen</Table.Column>
               <Table.Column>Cuenta Financiera</Table.Column>
@@ -150,7 +150,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
                       No se encontraron movimientos
                     </span>
                     <span className="text-sm text-default-400">
-                      Aún no hay transacciones registradas en este periodo.
+                      AiÂºn no hay transacciones registradas en este periodo.
                     </span>
                   </div>
                 </div>
@@ -182,7 +182,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
                           ? `${transaction.receiptSeries}-${transaction.receiptNumber}`
                           : transaction.receiptNumber
                             ? `${transaction.receiptNumber}`
-                            : "—"}
+                            : "Ã¢ÂÂ"}
                       </span>
                     </Table.Cell>
                     <Table.Cell>
@@ -242,7 +242,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
                               color="default"
                               className="font-medium"
                             >
-                              Múltiples
+                              MiÂºltiples
                             </Chip>
                             {transaction._groupedDetails?.map((d, idx) => (
                               <span
@@ -274,7 +274,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
                         {transaction.origin === "ACCOUNT_CHARGE"
                           ? "Administrativo"
                           : transaction.origin === "MEMBERSHIP"
-                            ? "Membresía"
+                            ? "MembresiÂ­a"
                             : transaction.origin === "STUDENT"
                               ? "Academia"
                               : transaction.origin === "BOOKING"
@@ -312,7 +312,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
                               .replace(/\s+/g, " ")
                               .trim()
                           ) : (
-                            <span className="text-default-400">—</span>
+                            <span className="text-default-400">Ã¢ÂÂ</span>
                           )}
                         </span>
                       </div>
@@ -323,7 +323,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
                           {transaction.thirdParty ? (
                             transaction.thirdParty.name
                           ) : (
-                            <span className="text-default-400">—</span>
+                            <span className="text-default-400">Ã¢ÂÂ</span>
                           )}
                         </span>
                       </div>
@@ -340,7 +340,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
                       {transaction._isGrouped ? (
                         <div className="flex flex-col items-end text-right">
                           <span className="text-default-400 text-xs italic">
-                            N/A (Múltiples)
+                            N/A (MiÂºltiples)
                           </span>
                         </div>
                       ) : (
@@ -373,7 +373,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
                           </Button>
                           <Dropdown.Popover>
                             <Dropdown.Menu
-                              aria-label="Acciones de Transacción"
+                              aria-label="Acciones de TransacciiÂ³n"
                               onAction={(key) => {
                                 if (key === "print") {
                                   setPrintTransactionId(transaction.id);
@@ -436,17 +436,17 @@ export const CashFlowTable = ({ transactions }: Props) => {
             <AlertDialog.Header>
               <AlertDialog.Icon status="danger" />
               <AlertDialog.Heading>
-                Anular Pago / Transacción
+                Anular Pago / TransacciiÂ³n
               </AlertDialog.Heading>
             </AlertDialog.Header>
             <AlertDialog.Body>
               <p>
-                ¿Estás seguro que deseas anular esta transacción? Esta acción
-                reversará el saldo aplicado a los cargos asociados y devolverá
-                la transacción a su estado anterior.
+                ÃÂ¿EstiÂ¡s seguro que deseas anular esta transacciiÂ³n? Esta
+                acciiÂ³n reversariÂ¡ el saldo aplicado a los cargos asociados y
+                devolveriÂ¡ la transacciiÂ³n a su estado anterior.
               </p>
               <p className="mt-2 text-sm text-default-500">
-                Esta acción no se puede deshacer.
+                Esta acciiÂ³n no se puede deshacer.
               </p>
             </AlertDialog.Body>
             <AlertDialog.Footer>
@@ -462,7 +462,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
                 onPress={handleVoid}
                 isPending={isVoiding}
               >
-                Sí, Anular
+                SiÂ­, Anular
               </Button>
             </AlertDialog.Footer>
           </AlertDialog.Dialog>

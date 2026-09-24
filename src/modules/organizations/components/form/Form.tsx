@@ -98,7 +98,7 @@ export const FormOrganization = ({
               : messages;
             return `${field}: ${msgList}`;
           })
-          .join("\n"); // Los separamos por saltos de línea para el toast
+          .join("\n"); // Los separamos por saltos de li­nea para el toast
       }
 
       // 2. Pasamos la descripción formateada al componente de notificaciones
@@ -187,7 +187,7 @@ export const FormOrganization = ({
         >
           <Label>Descripción</Label>
           <TextArea
-            placeholder="Ingrese la descripción de la categoría"
+            placeholder="Ingrese la descripción de la categori­a"
             rows={4}
             value={description}
             onChange={(e) => {
@@ -222,7 +222,7 @@ export const FormOrganization = ({
             <Alert.Content>
               {/* <Alert.Title>Scheduled maintenance</Alert.Title> */}
               <Alert.Description>
-                Las escuelas inactivas no se mostrarán en los formularios de
+                Las escuelas inactivas no se mostrari¡n en los formularios de
                 inscripción.
               </Alert.Description>
             </Alert.Content>

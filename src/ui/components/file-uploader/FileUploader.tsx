@@ -47,7 +47,7 @@ export function FileUploader({
         e.dataTransfer.clearData();
       }
     },
-    [files, maxFiles, maxSizeMB]
+    [files, maxFiles, maxSizeMB],
   );
 
   const addFiles = (newFiles: File[]) => {
@@ -75,12 +75,12 @@ export function FileUploader({
         className={clsx(
           "w-full h-32 border-2 border-dashed rounded-xl flex flex-col items-center justify-center cursor-pointer transition-all duration-200",
           "border-default-300 hover:border-primary hover:bg-primary/5",
-          "bg-default-50 text-default-500"
+          "bg-default-50 text-default-500",
         )}
       >
         <HugeiconsIcon icon={CloudUploadIcon} size={32} className="mb-2" />
         <p className="text-sm font-medium">
-          Haz clic o arrastra archivos aquí
+          Haz clic o arrastra archivos aqui­
         </p>
         <p className="text-xs mt-1 text-default-400">
           Max {maxFiles} archivos. Hasta {maxSizeMB}MB c/u.

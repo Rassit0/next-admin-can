@@ -49,7 +49,7 @@ export const AlertEditDialog = ({ isLoading, team, formId }: Props) => {
               <AlertDialog.Heading className="flex flex-col">
                 <span>Actualizar Equipo</span>
                 <span className="text-muted">
-                  Estás por modificar la configuración de {team.name}
+                  EstiÂ¡s por modificar la configuraciiÂ³n de {team.name}
                 </span>
               </AlertDialog.Heading>
             </AlertDialog.Header>
@@ -58,14 +58,14 @@ export const AlertEditDialog = ({ isLoading, team, formId }: Props) => {
                 <Alert.Indicator />
                 <Alert.Content>
                   <Alert.Title>
-                    ¿Estás seguro de modificar la configuración del equipo?
+                    ÃÂ¿EstiÂ¡s seguro de modificar la configuraciiÂ³n del equipo?
                   </Alert.Title>
 
                   <Alert.Description>
-                    Los cambios en el género o en los límites de edad pueden
+                    Los cambios en el giÂ©nero o en los liÂ­mites de edad pueden
                     afectar a los jugadores asociados a este equipo. Los pases
-                    que ya no cumplan con los criterios establecidos podrán ser
-                    marcados para revisión o inactivados.
+                    que ya no cumplan con los criterios establecidos podriÂ¡n ser
+                    marcados para revisiiÂ³n o inactivados.
                   </Alert.Description>
                 </Alert.Content>
               </Alert>
@@ -82,7 +82,7 @@ export const AlertEditDialog = ({ isLoading, team, formId }: Props) => {
                 onPress={() => state.close()}
                 variant="danger"
               >
-                Sí, modificar
+                SiÂ­, modificar
               </Button>
             </AlertDialog.Footer>
           </AlertDialog.Dialog>

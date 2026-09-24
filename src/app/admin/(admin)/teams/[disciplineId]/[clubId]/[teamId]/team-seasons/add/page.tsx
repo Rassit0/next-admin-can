@@ -37,8 +37,6 @@ export default async function AddTeamSeasonPage({ params }: Props) {
     );
   }
 
-
-
   if (seasonsOptions.error) {
     return (
       <ErrorPage

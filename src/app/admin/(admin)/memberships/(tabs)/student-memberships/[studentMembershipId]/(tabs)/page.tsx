@@ -62,7 +62,7 @@ export default async function StudentMembershipInfoPage({
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">
-                  Teléfono
+                  Teli©fono
                 </p>
                 <p className="font-semibold text-foreground">
                   {membership.student?.person.phone || "No registrado"}
@@ -83,7 +83,7 @@ export default async function StudentMembershipInfoPage({
         <Card className="p-5 shadow-sm border border-border">
           <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
             <HugeiconsIcon icon={File02Icon} className="text-primary" />
-            Detalles de la Membresía
+            Detalles de la Membresi­a
           </h3>
           <div className="flex flex-col gap-4">
             <div className="grid grid-cols-2 gap-4 items-center">

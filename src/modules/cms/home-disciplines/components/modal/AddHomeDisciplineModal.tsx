@@ -4,28 +4,57 @@ import { Add01Icon, Image01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { HomeDisciplineForm } from "../form/HomeDisciplineForm";
+import { ButtonFloating } from "@/ui";
 
 interface Props {
+  label?: string;
+  isIcon?: boolean;
   buttonFloatingMobile?: boolean;
 }
 
-export const AddHomeDisciplineModal = ({ buttonFloatingMobile }: Props) => {
+export const AddHomeDisciplineModal = ({
+  label,
+  isIcon = false,
+  buttonFloatingMobile,
+}: Props) => {
   const state = useOverlayState();
   const [isLoading, setIsLoading] = useState(false);
 
   return (
     <>
-      <Button
-        onPress={() => state.open()}
-        className={`bg-on-surface text-surface hover:bg-on-surface-variant flex ${
-          buttonFloatingMobile
-            ? "fixed md:relative bottom-6 md:bottom-auto right-6 md:right-auto shadow-xl md:shadow-none z-50 md:z-auto"
-            : ""
-        }`}
-      >
-        <HugeiconsIcon icon={Add01Icon} />
-        Crear Bloque
-      </Button>
+      {!isIcon && (
+        <Button
+          className="hidden lg:flex"
+          variant="primary"
+          onPress={() => state.open()}
+          isIconOnly={isIcon}
+        >
+          <HugeiconsIcon icon={Add01Icon} />
+          {label || "Crear Disciplina"}
+        </Button>
+      )}
+      {isIcon && (
+        <Button
+          variant="primary"
+          onPress={() => state.open()}
+          isIconOnly={isIcon}
+        >
+          <HugeiconsIcon icon={Add01Icon} />
+        </Button>
+      )}
+      {buttonFloatingMobile && (
+        <ButtonFloating
+          className="lg:hidden"
+          icon={
+            <HugeiconsIcon
+              icon={Add01Icon}
+              className="h-6 w-6 text-background"
+            />
+          }
+          onPress={() => state.open()}
+          // text="Agregar Disciplina"
+        />
+      )}
 
       <Modal.Backdrop isOpen={state.isOpen} onOpenChange={state.setOpen}>
         <Modal.Container placement="auto" scroll="outside">
@@ -39,7 +68,8 @@ export const AddHomeDisciplineModal = ({ buttonFloatingMobile }: Props) => {
                 <Modal.Heading>Agregar Bloque (Equipos/Escuela)</Modal.Heading>
               </div>
               <p className="mt-1.5 text-sm leading-5 text-muted">
-                Agrega un nuevo bloque de Equipos o Escuela de Fútbol para el Home.
+                Agrega un nuevo bloque de Equipos o Escuela de Fiºtbol para el
+                Home.
               </p>
             </Modal.Header>
             <Modal.Body className="p-6">

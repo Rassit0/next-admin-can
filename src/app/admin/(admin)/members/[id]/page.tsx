@@ -55,7 +55,7 @@ export default async function MemberPage({
     <div className="p-8 max-w-7xl mx-auto space-y-12">
       <HeaderPage
         title="Perfil de Miembro"
-        description="Gestión y detalles del miembro seleccionado."
+        description="GestiiÂ³n y detalles del miembro seleccionado."
         breadcrumb={[
           { label: "Miembros", href: "/admin/members" },
           { label: `${person.name}` },
@@ -67,7 +67,7 @@ export default async function MemberPage({
           <div className="relative group">
             <div className="absolute inset-0 athletic-gradient rounded-full blur-xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
             <img
-              alt="Mateo Velásquez Hincapié"
+              alt="Mateo VeliÂ¡squez HincapiiÂ©"
               className="relative w-40 h-40 rounded-full object-cover border-4 border-white shadow-2xl"
               data-alt="Portrait of Mateo Velasquez, a young athletic man with dark hair, confident expression, soft natural lighting"
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3Qe2YeNO9xDkZEo9MX-WD0APSxLU0RZzpRfTCp5m-TDx8gCmaUmxXFN76QEeO0Tv4ObDqmRnWrhojoWPW5abwN-vEfZMzYwvotcy7gzr813ytfW4YlQx6DIK7VuLyWp6mRoXbXWMTd-tkmNIukCCvFQB29irYjQjwvlIE9RtkPXFijFmTxnYwhLDygsvIhBJEUa4kS7O-ny4LCM9GsQKPPClwNJhH7U4fAaqA9801l6Nu4pB9OT-dPC_Mb7OTlKwGcjFv53Xb0bns"
@@ -91,7 +91,7 @@ export default async function MemberPage({
             </div>
             <p className="text-on-surface-variant font-medium flex items-center gap-2 justify-center md:justify-start">
               <span className="text-primary font-bold">ID: {person.id}</span>
-              <span className="text-outline-variant">•</span>
+              <span className="text-outline-variant">-</span>
               <span>
                 Afiliado desde:{" "}
                 {person.createdAt.toLocaleDateString("es-CO", {
@@ -126,9 +126,9 @@ export default async function MemberPage({
             <p className="text-[10px] text-on-surface-variant font-bold uppercase tracking-wider mb-1">
               Pagos
             </p>
-            <h3 className="text-2xl font-black text-tertiary">Al Día</h3>
+            <h3 className="text-2xl font-black text-tertiary">Al DiÂ­a</h3>
             <p className="text-[11px] text-on-surface-variant">
-              Próximo: 05 Abr
+              PriÂ³ximo: 05 Abr
             </p>
           </div>
         </div>
@@ -140,10 +140,10 @@ export default async function MemberPage({
           <section>
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-extrabold tracking-tight">
-                Gestión de Perfiles
+                GestiiÂ³n de Perfiles
               </h2>
               <button className="bg-accent text-white px-5 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 shadow-lg shadow-primary/10 hover:bg-primary-container transition-all active:scale-95">
-                <HugeiconsIcon icon={AddCircleFreeIcons} /> Añadir Perfil
+                <HugeiconsIcon icon={AddCircleFreeIcons} /> AiÂ±adir Perfil
               </button>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -176,7 +176,7 @@ export default async function MemberPage({
                       <span className="text-on-surface-variant">
                         Departamento
                       </span>
-                      <span className="font-semibold">Área Deportiva</span>
+                      <span className="font-semibold">iÂrea Deportiva</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span className="text-on-surface-variant">Contrato</span>
@@ -224,7 +224,9 @@ export default async function MemberPage({
                 <Card.Content className="flex justify-center">
                   <div className="space-y-3">
                     <div className="flex justify-between text-sm">
-                      <span className="text-on-surface-variant">Categoría</span>
+                      <span className="text-on-surface-variant">
+                        CategoriÂ­a
+                      </span>
                       <span className="font-semibold">U-20</span>
                     </div>
                     <div className="flex justify-between text-sm">
@@ -275,7 +277,7 @@ export default async function MemberPage({
                 </div>
                 <div className="space-y-3 mb-6">
                   <div className="flex justify-between text-sm">
-                    <span className="text-on-surface-variant">Categoría</span>
+                    <span className="text-on-surface-variant">CategoriÂ­a</span>
                     <span className="font-semibold">Elite</span>
                   </div>
                   <div className="flex justify-between text-sm">
@@ -300,10 +302,10 @@ export default async function MemberPage({
           <section>
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-extrabold tracking-tight">
-                Vínculos Familiares
+                ViÂ­nculos Familiares
               </h2>
               <button className="bg-background-tertiary text-primary border-2 border-primary/20 px-5 py-2 rounded-xl font-bold text-sm flex items-center gap-2 hover:bg-primary/5 transition-all active:scale-95">
-                <HugeiconsIcon icon={AddMaleIcon} /> Añadir Familiar
+                <HugeiconsIcon icon={AddMaleIcon} /> AiÂ±adir Familiar
               </button>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -321,10 +323,10 @@ export default async function MemberPage({
                     />
                     <Card.Header>
                       <Card.Title className="text-lg text-foreground/50 font-bold uppercase">
-                        Elena Velásquez
+                        Elena VeliÂ¡squez
                       </Card.Title>
                       <Card.Description className="text-sm text-foreground font-bold">
-                        Hermana • Afiliado Jugador
+                        Hermana - Afiliado Jugador
                       </Card.Description>
                     </Card.Header>
                   </div>
@@ -361,10 +363,10 @@ export default async function MemberPage({
                     />
                     <Card.Header>
                       <Card.Title className="text-lg text-foreground/50 font-bold uppercase">
-                        Roberto Velásquez
+                        Roberto VeliÂ¡squez
                       </Card.Title>
                       <Card.Description className="text-sm text-foreground font-bold">
-                        Padre • Socio Vitalicio
+                        Padre - Socio Vitalicio
                       </Card.Description>
                     </Card.Header>
                   </div>
@@ -399,10 +401,10 @@ export default async function MemberPage({
                   />
                   <div className="flex-1">
                     <h4 className="font-bold text-slate-900">
-                      Elena Velásquez
+                      Elena VeliÂ¡squez
                     </h4>
                     <p className="text-xs text-on-surface-variant">
-                      Hermana • Afiliado Jugador
+                      Hermana - Afiliado Jugador
                     </p>
                   </div>
                   <HugeiconsIcon icon={Tick02Icon} />
@@ -437,10 +439,10 @@ export default async function MemberPage({
                   />
                   <div className="flex-1">
                     <h4 className="font-bold text-slate-900">
-                      Roberto Velásquez
+                      Roberto VeliÂ¡squez
                     </h4>
                     <p className="text-xs text-on-surface-variant">
-                      Padre • Socio Vitalicio
+                      Padre - Socio Vitalicio
                     </p>
                   </div>
                   <span
@@ -491,13 +493,13 @@ export default async function MemberPage({
                       Miembro
                     </th>
                     <th className="px-6 py-4 text-left text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-                      Identificación
+                      IdentificaciiÂ³n
                     </th>
                     <th className="px-6 py-4 text-left text-[10px] font-bold text-slate-500 uppercase tracking-widest">
                       Parentesco / Rol
                     </th>
                     <th className="px-6 py-4 text-right text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-                      Acción
+                      AcciiÂ³n
                     </th>
                   </tr>
                 </thead>
@@ -511,7 +513,7 @@ export default async function MemberPage({
                           src="https://lh3.googleusercontent.com/aida-public/AB6AXuCH6mR2p_hEa9E-zZ66pG6D8z3T_B5i8O7Qn_9M_p9N-z5U8k3mR6e5R4I9P"
                         /> */}
                         <span className="font-bold text-slate-900">
-                          Juan Pablo Velásquez
+                          Juan Pablo VeliÂ¡squez
                         </span>
                       </div>
                     </td>
@@ -538,7 +540,7 @@ export default async function MemberPage({
                           src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-p9D8z3T_B5i8O7Qn_9M_p9N-z5U8k3mR6e5R4I9P"
                         /> */}
                         <span className="font-bold text-slate-900">
-                          Camila Velásquez
+                          Camila VeliÂ¡squez
                         </span>
                       </div>
                     </td>
@@ -547,7 +549,7 @@ export default async function MemberPage({
                     </td>
                     <td className="px-6 py-4">
                       <span className="text-sm text-slate-600">
-                        Hija / Jugadora Natación
+                        Hija / Jugadora NataciiÂ³n
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right">
@@ -585,7 +587,7 @@ export default async function MemberPage({
                 Estado Administrativo
               </p>
               <h4 className="text-xl font-extrabold text-green-700">
-                AL DÍA / EN REGLA
+                AL DiÂA / EN REGLA
               </h4>
             </div>
             {/* <!-- Attendance Doughnut-style indicator --> */}
@@ -610,7 +612,7 @@ export default async function MemberPage({
               <div className="flex items-center gap-2 mb-3">
                 <HugeiconsIcon icon={Calendar05Icon} />
                 <span className="text-[10px] font-black uppercase tracking-widest text-primary">
-                  Próximo Evento
+                  PriÂ³ximo Evento
                 </span>
               </div>
               <h4 className="text-lg font-bold text-foreground leading-tight mb-2">
@@ -631,10 +633,10 @@ export default async function MemberPage({
             <div className="grid grid-cols-2 gap-4">
               <div className="p-4 bg-slate-50 rounded-xl text-center">
                 <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">
-                  Antigüedad
+                  AntigiÂ¼edad
                 </p>
                 <p className="text-xl font-extrabold text-slate-900 italic">
-                  6.2 <span className="text-[10px] not-italic">años</span>
+                  6.2 <span className="text-[10px] not-italic">aiÂ±os</span>
                 </p>
               </div>
               <div className="p-4 bg-slate-50 rounded-xl text-center">
@@ -661,7 +663,7 @@ export default async function MemberPage({
                   Baloncesto
                 </span>
                 <span className="px-3 py-1 bg-slate-100 rounded-full text-xs font-semibold text-slate-700">
-                  Natación
+                  NataciiÂ³n
                 </span>
                 <span className="px-3 py-1 bg-slate-100 rounded-full text-xs font-semibold text-slate-700">
                   Gimnasio
@@ -673,7 +675,7 @@ export default async function MemberPage({
           <div className="bg-surface-container-low rounded-2xl p-6 space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="font-black text-lg tracking-tight">
-                Documentación
+                DocumentaciiÂ³n
               </h3>
               <span
                 className="material-symbols-outlined text-on-surface-variant"
@@ -693,10 +695,10 @@ export default async function MemberPage({
                   </span>
                   <div>
                     <p className="text-sm font-bold leading-tight">
-                      Examen Médico 2024
+                      Examen MiÂ©dico 2024
                     </p>
                     <p className="text-[10px] text-on-surface-variant">
-                      Vence en 45 días
+                      Vence en 45 diÂ­as
                     </p>
                   </div>
                 </div>
@@ -746,7 +748,7 @@ export default async function MemberPage({
                     Carnet Digital
                   </p>
                   <h4 className="text-xl font-black italic">
-                    CLUB ATLÉTICO NACIONAL
+                    CLUB ATLiÂTICO NACIONAL
                   </h4>
                 </div>
                 <span
@@ -759,7 +761,7 @@ export default async function MemberPage({
               <div className="flex justify-between items-end">
                 <div>
                   <p className="text-xs font-medium opacity-70">Titular</p>
-                  <p className="font-bold tracking-wide">MATEO VELÁSQUEZ H.</p>
+                  <p className="font-bold tracking-wide">MATEO VELiÂSQUEZ H.</p>
                 </div>
                 <div className="w-12 h-12 bg-background-secondary p-1 rounded-lg">
                   <img

@@ -12,7 +12,12 @@ export const editHeroBanner = async (
 ): Promise<ServiceResponse<IHeroBanner>> => {
   const session = await auth();
 
-  if (!session?.user) return { error: true, statusCode: 401, message: "Su sesión ha expirado." } as any;
+  if (!session?.user)
+    return {
+      error: true,
+      statusCode: 401,
+      message: "Su sesión ha expirado.",
+    } as any;
 
   return handleServerAction(async () => {
     const response = await api.patch<IHeroBanner>(`hero-banners/${id}`, data, {
@@ -23,7 +28,7 @@ export const editHeroBanner = async (
 
     updateTag("public-hero-banners");
     updateTag("admin-hero-banners");
-    
+
     return {
       error: false,
       data: response,

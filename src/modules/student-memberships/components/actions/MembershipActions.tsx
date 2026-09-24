@@ -62,24 +62,79 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
   const statusActions: ActionDef[] = [];
 
   if (membership.status === "ACTIVE") {
-    statusActions.push({ key: "transfer", label: "Transferir turno", icon: Calendar01Icon });
-    statusActions.push({ key: "pause", label: "Programar pausa", icon: Calendar01Icon });
-    statusActions.push({ key: "advance", label: "Inscribir a Ciclo", icon: PlayIcon });
-    statusActions.push({ key: "regularize", label: "Regularizar Histórico", icon: Note01Icon });
+    statusActions.push({
+      key: "transfer",
+      label: "Transferir turno",
+      icon: Calendar01Icon,
+    });
+    statusActions.push({
+      key: "pause",
+      label: "Programar pausa",
+      icon: Calendar01Icon,
+    });
+    statusActions.push({
+      key: "advance",
+      label: "Inscribir a Ciclo",
+      icon: PlayIcon,
+    });
+    statusActions.push({
+      key: "regularize",
+      label: "Regularizar HistiÂ³rico",
+      icon: Note01Icon,
+    });
     statusActions.push({ key: "suspend", label: "Suspender", icon: PauseIcon });
-    statusActions.push({ key: "finish", label: "Finalizar", icon: CheckmarkCircle02Icon });
-    statusActions.push({ key: "withdraw", label: "Dar de baja", icon: Logout01Icon, danger: true });
+    statusActions.push({
+      key: "finish",
+      label: "Finalizar",
+      icon: CheckmarkCircle02Icon,
+    });
+    statusActions.push({
+      key: "withdraw",
+      label: "Dar de baja",
+      icon: Logout01Icon,
+      danger: true,
+    });
   } else if (membership.status === "SUSPENDED") {
-    statusActions.push({ key: "reentry", label: "Reingresar al curso", icon: PlayIcon });
-    statusActions.push({ key: "finish", label: "Finalizar", icon: CheckmarkCircle02Icon });
-    statusActions.push({ key: "withdraw", label: "Dar de baja", icon: Logout01Icon, danger: true });
+    statusActions.push({
+      key: "reentry",
+      label: "Reingresar al curso",
+      icon: PlayIcon,
+    });
+    statusActions.push({
+      key: "finish",
+      label: "Finalizar",
+      icon: CheckmarkCircle02Icon,
+    });
+    statusActions.push({
+      key: "withdraw",
+      label: "Dar de baja",
+      icon: Logout01Icon,
+      danger: true,
+    });
   } else if (membership.status === "WITHDRAWN") {
-    statusActions.push({ key: "reentry", label: "Reingresar al curso", icon: PlayIcon });
+    statusActions.push({
+      key: "reentry",
+      label: "Reingresar al curso",
+      icon: PlayIcon,
+    });
   } else if (membership.status === "PENDING_ACTIVE") {
-    statusActions.push({ key: "transfer", label: "Transferir turno", icon: Calendar01Icon });
-    statusActions.push({ key: "pause", label: "Programar pausa", icon: Calendar01Icon });
+    statusActions.push({
+      key: "transfer",
+      label: "Transferir turno",
+      icon: Calendar01Icon,
+    });
+    statusActions.push({
+      key: "pause",
+      label: "Programar pausa",
+      icon: Calendar01Icon,
+    });
     statusActions.push({ key: "activate", label: "Activar", icon: PlayIcon });
-    statusActions.push({ key: "withdraw", label: "Dar de baja", icon: Logout01Icon, danger: true });
+    statusActions.push({
+      key: "withdraw",
+      label: "Dar de baja",
+      icon: Logout01Icon,
+      danger: true,
+    });
   }
 
   const confirmState = useOverlayState();
@@ -96,7 +151,7 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
   if (membership.totalPaidAmount === 0) {
     allActions.push({
       key: "remove",
-      label: "Eliminar Membresía",
+      label: "Eliminar MembresiÂ­a",
       icon: Logout01Icon,
       danger: true,
     });
@@ -150,7 +205,7 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
     }
 
     if (action !== "remove" && action !== "activate" && !reason?.trim()) {
-      toast.error("El motivo es obligatorio para esta acción");
+      toast.error("El motivo es obligatorio para esta acciiÂ³n");
       setLoading(false);
       return;
     }
@@ -170,9 +225,10 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
       res = await reactivateStudentMembership({
         membershipId: membership.id,
         quantity,
-        reentryDate: reentryDate ? new Date(reentryDate).toISOString() : undefined,
+        reentryDate: reentryDate
+          ? new Date(reentryDate).toISOString()
+          : undefined,
       });
-
     } else if (action === "remove") {
       res = await removeStudentMembership(membership.id);
     } else if (action === "pause") {
@@ -216,7 +272,7 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
     <>
       <Dropdown>
         <Button
-          aria-label="Acciones de membresía"
+          aria-label="Acciones de membresiÂ­a"
           isIconOnly
           size="sm"
           variant="ghost"
@@ -265,9 +321,9 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
               </AlertDialog.Header>
               <AlertDialog.Body className="gap-4 p-2">
                 <p>
-                  ¿Estás seguro de que deseas ejecutar la acción{" "}
+                  ÃÂ¿EstiÂ¡s seguro de que deseas ejecutar la acciiÂ³n{" "}
                   <strong>{selectedAction?.label.toLowerCase()}</strong> para
-                  esta membresía?
+                  esta membresiÂ­a?
                 </p>
 
                 {selectedAction?.key === "pause" && (
@@ -374,15 +430,28 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
 
                 {selectedAction?.key === "reentry" && (
                   <div className="flex flex-col gap-4 w-full">
-                    <TextField name="quantity" isRequired className="w-full" defaultValue="1">
-                      <Label className="text-sm font-semibold">Cantidad de ciclos a adquirir</Label>
+                    <TextField
+                      name="quantity"
+                      isRequired
+                      className="w-full"
+                      defaultValue="1"
+                    >
+                      <Label className="text-sm font-semibold">
+                        Cantidad de ciclos a adquirir
+                      </Label>
                       <InputGroup>
-                        <InputGroup.Input type="number" min="1" placeholder="Ej. 1" />
+                        <InputGroup.Input
+                          type="number"
+                          min="1"
+                          placeholder="Ej. 1"
+                        />
                       </InputGroup>
                     </TextField>
 
                     <DatePicker name="reentryDate" className="w-full">
-                      <Label className="text-sm font-semibold">Fecha de reingreso (Opcional)</Label>
+                      <Label className="text-sm font-semibold">
+                        Fecha de reingreso (Opcional)
+                      </Label>
                       <DateField.Group variant="secondary">
                         <DateField.Input>
                           {(segment) => <DateField.Segment segment={segment} />}
@@ -405,7 +474,9 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
                           </Calendar.Header>
                           <Calendar.Grid>
                             <Calendar.GridHeader>
-                              {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
+                              {(day) => (
+                                <Calendar.HeaderCell>{day}</Calendar.HeaderCell>
+                              )}
                             </Calendar.GridHeader>
                             <Calendar.GridBody>
                               {(date) => <Calendar.Cell date={date} />}
@@ -416,8 +487,6 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
                     </DatePicker>
                   </div>
                 )}
-
-
 
                 {selectedAction?.key === "remove" && (
                   <TextField name="confirmDelete" isRequired className="w-full">
@@ -430,28 +499,30 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
                   </TextField>
                 )}
 
-                {selectedAction?.key !== "remove" && selectedAction?.key !== "reentry" && selectedAction?.key !== "advance" && (
-                  <TextField
-                    name="reason"
-                    className="w-full"
-                    isRequired={selectedAction?.key !== "activate"}
-                  >
-                    <Label className="text-sm font-semibold">
-                      Motivo u Observación{" "}
-                      {selectedAction?.key === "activate" && "(Opcional)"}
-                    </Label>
-                    <InputGroup>
-                      <InputGroup.Prefix>
-                        <HugeiconsIcon
-                          icon={Note01Icon}
-                          size={18}
-                          className="text-muted-foreground"
-                        />
-                      </InputGroup.Prefix>
-                      <InputGroup.Input placeholder="Ej. Retiro voluntario, Falta de pago..." />
-                    </InputGroup>
-                  </TextField>
-                )}
+                {selectedAction?.key !== "remove" &&
+                  selectedAction?.key !== "reentry" &&
+                  selectedAction?.key !== "advance" && (
+                    <TextField
+                      name="reason"
+                      className="w-full"
+                      isRequired={selectedAction?.key !== "activate"}
+                    >
+                      <Label className="text-sm font-semibold">
+                        Motivo u ObservaciiÂ³n{" "}
+                        {selectedAction?.key === "activate" && "(Opcional)"}
+                      </Label>
+                      <InputGroup>
+                        <InputGroup.Prefix>
+                          <HugeiconsIcon
+                            icon={Note01Icon}
+                            size={18}
+                            className="text-muted-foreground"
+                          />
+                        </InputGroup.Prefix>
+                        <InputGroup.Input placeholder="Ej. Retiro voluntario, Falta de pago..." />
+                      </InputGroup>
+                    </TextField>
+                  )}
               </AlertDialog.Body>
               <AlertDialog.Footer>
                 <Button

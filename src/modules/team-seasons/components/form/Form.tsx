@@ -3,7 +3,10 @@ import { HeaderPage } from "@/ui";
 import { BasicInfoCard } from "./BasicInfoCard";
 import { DelayPoliciesCard } from "./DelayPoliciesCard";
 import { FinancialStructureCard } from "./FinancialStructureCard";
-import { CategoryConfigBlock, ICategoryConfigForm } from "./CategoryConfigBlock";
+import {
+  CategoryConfigBlock,
+  ICategoryConfigForm,
+} from "./CategoryConfigBlock";
 import { useCallback, useRef, useState } from "react";
 
 import { Alert, Button, Form, toast } from "@heroui/react";
@@ -131,17 +134,20 @@ export const FormTeamSeason = ({
             minMembers: 5,
             maxMembers: 20,
           },
-        ]
+        ],
   );
   // fin form params
 
-  const handleCategoryChange = useCallback((index: number, field: keyof ICategoryConfigForm, value: any) => {
-    setCategories((prev) => {
-      const newCategories = [...prev];
-      newCategories[index] = { ...newCategories[index], [field]: value };
-      return newCategories;
-    });
-  }, []);
+  const handleCategoryChange = useCallback(
+    (index: number, field: keyof ICategoryConfigForm, value: any) => {
+      setCategories((prev) => {
+        const newCategories = [...prev];
+        newCategories[index] = { ...newCategories[index], [field]: value };
+        return newCategories;
+      });
+    },
+    [],
+  );
 
   const handleRemoveCategory = useCallback((index: number) => {
     setCategories((prev) => prev.filter((_, i) => i !== index));
@@ -200,15 +206,15 @@ export const FormTeamSeason = ({
         "Debe ingresar el valor para la tarifa de la temporada";
     }
     if (lateFeePerDay === null) {
-      newErrors.lateFeePerDay = "Debe ingresar el valor de la multa por día";
+      newErrors.lateFeePerDay = "Debe ingresar el valor de la multa por di­a";
     }
     console.log({ graceDays });
     if (graceDays === null) {
-      newErrors.graceDays = "Debe ingresar el número de días de gracia";
+      newErrors.graceDays = "Debe ingresar el niºmero de días de gracia";
     }
     if (debtToleranceMonths === null) {
       newErrors.debtToleranceMonths =
-        "Debe ingresar el número de meses de tolerancia de deuda para la suspensión";
+        "Debe ingresar el niºmero de meses de tolerancia de deuda para la suspensión";
     }
     if (billingType !== "SINGLE_ONLY") {
       if (!billingFrequency) {
@@ -217,23 +223,24 @@ export const FormTeamSeason = ({
       }
 
       if (billingDay === null) {
-        newErrors.billingDay = "Debe ingresar el día de facturación";
+        newErrors.billingDay = "Debe ingresar el di­a de facturación";
       } else {
         if (
           billingFrequency === "MONTHLY" &&
           (billingDay < 1 || billingDay > 28)
         ) {
-          newErrors.billingDay = "Para mensual, el día debe ser entre 1 y 28";
+          newErrors.billingDay = "Para mensual, el di­a debe ser entre 1 y 28";
         } else if (
           billingFrequency === "WEEKLY" &&
           (billingDay < 1 || billingDay > 7)
         ) {
-          newErrors.billingDay = "Para semanal, el día debe ser entre 1 y 7";
+          newErrors.billingDay = "Para semanal, el di­a debe ser entre 1 y 7";
         } else if (
           billingFrequency === "BIWEEKLY" &&
           (billingDay < 1 || billingDay > 14)
         ) {
-          newErrors.billingDay = "Para quincenal, el día debe ser entre 1 y 14";
+          newErrors.billingDay =
+            "Para quincenal, el di­a debe ser entre 1 y 14";
         }
       }
     }
@@ -243,32 +250,32 @@ export const FormTeamSeason = ({
 
     if (!teamSeason || teamSeason.status === "DRAFT") {
       if (categories.length === 0) {
-        newErrors.categories = "Debe agregar al menos una categoría";
+        newErrors.categories = "Debe agregar al menos una categori­a";
       } else {
         categories.forEach((cat, index) => {
           if (!cat.categoryId)
             newErrors[`category_${index}_categoryId`] =
-              "Debe seleccionar una categoría";
+              "Debe seleccionar una categori­a";
           if (!cat.gender)
             newErrors[`category_${index}_gender`] =
-              "Debe seleccionar el género";
+              "Debe seleccionar el gi©nero";
           if (!cat.minMembers)
             newErrors[`category_${index}_minMembers`] =
-              "Debe ingresar cupo mínimo";
+              "Debe ingresar cupo mi­nimo";
           if (!cat.maxMembers)
             newErrors[`category_${index}_maxMembers`] =
-              "Debe ingresar cupo máximo";
+              "Debe ingresar cupo mi¡ximo";
           if (
             cat.validateAge &&
             cat.minBirthYear &&
             cat.maxBirthYear &&
             cat.minBirthYear > cat.maxBirthYear
           ) {
-            newErrors[`category_${index}_minBirthYear`] = "Año min > max";
-            newErrors[`category_${index}_maxBirthYear`] = "Año max < min";
+            newErrors[`category_${index}_minBirthYear`] = "Ai±o min > max";
+            newErrors[`category_${index}_maxBirthYear`] = "Ai±o max < min";
           }
 
-          // Prevenir categorías duplicadas (misma categoría y mismo género)
+          // Prevenir categorías duplicadas (misma categori­a y mismo gi©nero)
           const isDuplicate = categories.some(
             (c, i) =>
               i !== index &&
@@ -278,7 +285,7 @@ export const FormTeamSeason = ({
           );
           if (isDuplicate) {
             newErrors[`category_${index}_categoryId`] =
-              "Esta categoría con este género ya fue agregada";
+              "Esta categori­a con este gi©nero ya fue agregada";
           }
         });
       }
@@ -341,7 +348,10 @@ export const FormTeamSeason = ({
         }));
       }
 
-      res = await editTeamSeason({ id: teamSeason.id, data: baseEditData as IPostTeamSeason });
+      res = await editTeamSeason({
+        id: teamSeason.id,
+        data: baseEditData as IPostTeamSeason,
+      });
     } else {
       const data: IPostTeamSeason = {
         ...baseData,
@@ -372,7 +382,7 @@ export const FormTeamSeason = ({
               : messages;
             return `${field}: ${msgList}`;
           })
-          .join("\n"); // Los separamos por saltos de línea para el toast
+          .join("\n"); // Los separamos por saltos de li­nea para el toast
       }
 
       // 2. Pasamos la descripción formateada al componente de notificaciones
@@ -409,18 +419,18 @@ export const FormTeamSeason = ({
                   Esta temporada se encuentra actualmente{" "}
                   <strong>Activa</strong>. Por seguridad e integridad de los
                   registros financieros y de membresías, los datos estructurales
-                  (Categoría, Temporada, Género) y la configuración base de
-                  facturación están <strong>bloqueados</strong>. <br />
-                  Aún puedes ajustar los <strong>montos de cobro</strong>{" "}
-                  (Matrícula, Cuotas), cupos y límites de edades, pero estos
-                  cambios afectarán{" "}
-                  <strong>únicamente a las nuevas inscripciones</strong>.
+                  (Categori­a, Temporada, Gi©nero) y la configuración base de
+                  facturación esti¡n <strong>bloqueados</strong>. <br />
+                  Aiºn puedes ajustar los <strong>montos de cobro</strong>{" "}
+                  (Matri­cula, Cuotas), cupos y li­mites de edades, pero estos
+                  cambios afectari¡n{" "}
+                  <strong>iºnicamente a las nuevas inscripciones</strong>.
                 </Alert.Description>
               </Alert.Content>
             </Alert>
           </div>
         )}
-        {/* <!-- Section 1: Información Básica --> */}
+        {/* <!-- Section 1: Información Bi¡sica --> */}
         <div className="lg:col-span-7 space-y-6">
           {/* <!-- Basic Info Card --> */}
           <BasicInfoCard
@@ -475,45 +485,45 @@ export const FormTeamSeason = ({
             isFinancialDisabled={isFinancialDisabled}
           />
         </div>
-        
-        {/* <!-- Section 3: Configuraciones de Categoría --> */}
+
+        {/* <!-- Section 3: Configuraciones de Categori­a --> */}
         {(!teamSeason || teamSeason.status === "DRAFT") && (
           <div className="lg:col-span-12">
             <div className="rounded-xl border border-border bg-card overflow-hidden">
               <div className="px-6 py-4 border-b border-border bg-surface-container/50">
                 <h3 className="text-lg font-bold">Categorías y Cupos</h3>
                 <p className="text-on-surface-variant text-sm mt-1">
-                  Agregue las categorías que estarán disponibles para esta
+                  Agregue las categorías que estari¡n disponibles para esta
                   temporada.
                 </p>
               </div>
-            
-            {categories.map((category, index) => (
-              <CategoryConfigBlock
-                key={category.key}
-                index={index}
-                category={category}
-                categoriesOptions={categoriesOptions}
-                onChange={handleCategoryChange}
-                onRemove={handleRemoveCategory}
-                errors={errors}
-                canRemove={categories.length > 1}
-              />
-            ))}
-            <div className="p-4 bg-surface-container-low border-t border-border">
-              <Button
-                className="w-full bg-surface-container border border-dashed border-border/50 text-muted"
-                size="lg"
-                onPress={handleAddCategory}
-              >
-                + Agregar Categoría
-              </Button>
-            </div>
+
+              {categories.map((category, index) => (
+                <CategoryConfigBlock
+                  key={category.key}
+                  index={index}
+                  category={category}
+                  categoriesOptions={categoriesOptions}
+                  onChange={handleCategoryChange}
+                  onRemove={handleRemoveCategory}
+                  errors={errors}
+                  canRemove={categories.length > 1}
+                />
+              ))}
+              <div className="p-4 bg-surface-container-low border-t border-border">
+                <Button
+                  className="w-full bg-surface-container border border-dashed border-border/50 text-muted"
+                  size="lg"
+                  onPress={handleAddCategory}
+                >
+                  + Agregar Categori­a
+                </Button>
+              </div>
             </div>
           </div>
         )}
 
-        {/* <!-- Section 4: Políticas de Mora (Full Width Bottom) --> */}
+        {/* <!-- Section 4: Poli­ticas de Mora (Full Width Bottom) --> */}
         <div className="lg:col-span-12"></div>
         {/* <!-- Section 5: Estado Final (Floating Sticky-ish bottom or separate block) --> */}
         <div className="lg:col-span-12 flex justify-end items-center gap-8 p-4 lg:p-8 bg-surface-container-low rounded-full">

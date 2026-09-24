@@ -25,7 +25,7 @@ export const RegularizeHistoricalChargeButton = ({
         <HugeiconsIcon icon={HistoryIcon} size={18} />
         Regularizar Histórico
       </Button>
-      
+
       <RegularizeHistoricalChargeDrawer
         isOpen={isOpen}
         onOpenChange={setIsOpen}

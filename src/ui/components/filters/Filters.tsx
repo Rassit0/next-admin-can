@@ -6,7 +6,7 @@ import { useDebouncedCallback } from "use-debounce";
 
 interface FiltersProps {
   showSearch?: boolean;
-  searchPlaceholder?: string; // Opcional: para cambiar el texto rápido
+  searchPlaceholder?: string; // Opcional: para cambiar el texto ri¡pido
   children?: React.ReactNode;
 }
 
@@ -25,7 +25,7 @@ export const Filters = ({
   const handleUrlUpdate = useDebouncedCallback((value: string) => {
     const params = new URLSearchParams(searchParams);
 
-    params.set("page", "1"); // Reset a página 1
+    params.set("page", "1"); // Reset a pi¡gina 1
 
     if (value) {
       params.set("search", value);
@@ -44,7 +44,7 @@ export const Filters = ({
 
   return (
     <div className="flex flex-wrap gap-2 md:gap-4 items-center w-full">
-      {/* Si showSearch es true, renderiza el estándar */}
+      {/* Si showSearch es true, renderiza el esti¡ndar */}
       {showSearch && (
         <SearchField
           name="search"

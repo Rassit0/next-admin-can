@@ -49,7 +49,7 @@ export default async function SeasonsPage({ searchParams, params }: Props) {
     getDisciplinesOptions(),
   ]);
 
-  // 1. Manejo de error específico (Ej: 401 no autorizado)
+  // 1. Manejo de error especi­fico (Ej: 401 no autorizado)
   if (seasonsResponse.error && seasonsResponse.statusCode === 401) {
     redirect("/login");
   }

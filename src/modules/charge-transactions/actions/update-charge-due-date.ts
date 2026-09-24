@@ -27,17 +27,22 @@ export const updateChargeDueDate = async (
     const response = await api.patch<{
       message: string;
       data: ICharge;
-    }>(`charges/${id}/due-date`, { dueDate }, {
-      headers: {
-        Authorization: `Bearer ${session.user.token}`,
+    }>(
+      `charges/${id}/due-date`,
+      { dueDate },
+      {
+        headers: {
+          Authorization: `Bearer ${session.user.token}`,
+        },
       },
-    });
+    );
 
     updateTag("charges");
     return {
       error: false,
       data: response.data,
-      message: response.message || "Fecha de vencimiento actualizada exitosamente",
+      message:
+        response.message || "Fecha de vencimiento actualizada exitosamente",
     };
   });
 };

@@ -59,7 +59,7 @@ export const CashClosureFormModal = ({
   const onNextStep = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!account) return;
-    
+
     const actualBalance = Number(actualBalanceStr);
     if (isNaN(actualBalance) || actualBalanceStr.trim() === "") {
       setErrors({ actualBalance: "Monto requerido" });
@@ -75,9 +75,12 @@ export const CashClosureFormModal = ({
   const onSubmitFinal = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!account) return;
-    
+
     if (difference !== 0 && (!observations || observations.trim() === "")) {
-      setErrors({ observations: "Debe proporcionar una observación para justificar la diferencia." });
+      setErrors({
+        observations:
+          "Debe proporcionar una observación para justificar la diferencia.",
+      });
       return;
     }
 
@@ -114,7 +117,7 @@ export const CashClosureFormModal = ({
               <div className="flex items-center gap-2">
                 <Modal.Heading>
                   {step === 1
-                    ? "Arqueo de Caja (Conteo Físico)"
+                    ? "Arqueo de Caja (Conteo Fi­sico)"
                     : "Resumen del Arqueo"}
                 </Modal.Heading>
               </div>
@@ -127,8 +130,8 @@ export const CashClosureFormModal = ({
                   className="flex flex-col gap-4 w-full"
                 >
                   <p className="text-sm text-on-surface-variant">
-                    Realice el conteo físico del dinero en caja (monedas y billetes)
-                    y registre el monto total.
+                    Realice el conteo fi­sico del dinero en caja (monedas y
+                    billetes) y registre el monto total.
                   </p>
                   <TextField
                     isRequired
@@ -137,7 +140,7 @@ export const CashClosureFormModal = ({
                     type="number"
                     isInvalid={!!errors.actualBalance || undefined}
                   >
-                    <Label>Dinero físico en caja</Label>
+                    <Label>Dinero fi­sico en caja</Label>
                     <InputGroup>
                       <InputGroup.Prefix>
                         <span className="text-on-surface-variant text-sm pr-2">
@@ -197,8 +200,8 @@ export const CashClosureFormModal = ({
                       difference! < 0
                         ? "bg-danger-50 text-danger-600"
                         : difference! > 0
-                        ? "bg-warning-50 text-warning-600"
-                        : "bg-success-50 text-success-600"
+                          ? "bg-warning-50 text-warning-600"
+                          : "bg-success-50 text-success-600"
                     }`}
                   >
                     <span className="font-bold">Diferencia:</span>
@@ -232,7 +235,7 @@ export const CashClosureFormModal = ({
                       placeholder={
                         difference !== 0
                           ? "Justifique la diferencia de dinero..."
-                          : "Algún comentario adicional..."
+                          : "Algiºn comentario adicional..."
                       }
                     />
                     <FieldError
@@ -265,7 +268,7 @@ export const CashClosureFormModal = ({
                     onPress={() => setStep(1)}
                     isDisabled={isSubmitting}
                   >
-                    Atrás
+                    Atri¡s
                   </Button>
                   <Button
                     type="submit"

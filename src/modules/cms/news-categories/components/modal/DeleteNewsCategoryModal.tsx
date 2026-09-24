@@ -1,10 +1,5 @@
 "use client";
-import {
-  Button,
-  Modal,
-  ProgressCircle,
-  useOverlayState,
-} from "@heroui/react";
+import { Button, Modal, ProgressCircle, useOverlayState } from "@heroui/react";
 import { Delete02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Dispatch, SetStateAction, useState } from "react";
@@ -25,17 +20,20 @@ export const DeleteNewsCategoryModal = ({ id, isOpen, setIsOpen }: Props) => {
     setIsLoading(true);
     const res = await deleteNewsCategory(id);
     setIsLoading(false);
-    
+
     if (res.error) {
       if (res.statusCode === 409) {
-        toast.error("Acción denegada", { description: "No se puede eliminar esta categoría porque tiene noticias asociadas." });
+        toast.error("AcciiÂ³n denegada", {
+          description:
+            "No se puede eliminar esta categoriÂ­a porque tiene noticias asociadas.",
+        });
       } else {
         toast.error("Error al eliminar", { description: res.message });
       }
       return;
     }
-    
-    toast.success("Categoría eliminada correctamente");
+
+    toast.success("CategoriÂ­a eliminada correctamente");
     state.close();
   };
 
@@ -49,12 +47,13 @@ export const DeleteNewsCategoryModal = ({ id, isOpen, setIsOpen }: Props) => {
               <Modal.Icon className="bg-danger/10 text-danger">
                 <HugeiconsIcon icon={Delete02Icon} />
               </Modal.Icon>
-              <Modal.Heading>Eliminar Categoría</Modal.Heading>
+              <Modal.Heading>Eliminar CategoriÂ­a</Modal.Heading>
             </div>
           </Modal.Header>
           <Modal.Body className="p-6">
             <p className="text-sm text-muted">
-              ¿Estás seguro de que deseas eliminar esta categoría? Esta acción no se puede deshacer.
+              ÃÂ¿EstiÂ¡s seguro de que deseas eliminar esta categoriÂ­a? Esta
+              acciiÂ³n no se puede deshacer.
             </p>
           </Modal.Body>
           <Modal.Footer>

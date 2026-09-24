@@ -11,7 +11,8 @@ export default function VolleyballPage() {
       </div>
       <div className="flex min-h-[40vh] items-center justify-center rounded-3xl border border-neon/30 bg-primary/90 px-8 py-16 shadow-2xl">
         <p className="text-slate-300 text-xl font-300 text-center">
-          Próximamente encontrarás aquí toda la información sobre nuestros equipos, torneos y entrenamientos de voleibol.
+          Próximamente encontrari¡s aqui­ toda la información sobre nuestros
+          equipos, torneos y entrenamientos de voleibol.
         </p>
       </div>
     </div>

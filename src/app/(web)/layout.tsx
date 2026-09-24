@@ -19,7 +19,7 @@ const oswald = Oswald({
 });
 
 export const metadata: Metadata = {
-  title: "CAN - Club Atlético Nacional",
+  title: "CAN - Club Atli©tico Nacional",
   description:
     "Portal institucional del CAN - +1.000 deportistas activos, +50 equipos en competición, escuelas de formación y membresías deportivas.",
   generator: "v0.app",
@@ -55,9 +55,16 @@ export default async function RootLayout({
       >
         <div className="font-sans antialiased bg-[var(--background-portal)] text-foreground">
           <div className="relative min-h-screen bg-[var(--background-portal)]">
-            <WebError 
-              error={new Error(institutionRes.message || "503 - No se pudo establecer conexión con el servidor")} 
-              reset={async () => { "use server" }} 
+            <WebError
+              error={
+                new Error(
+                  institutionRes.message ||
+                    "503 - No se pudo establecer conexión con el servidor",
+                )
+              }
+              reset={async () => {
+                "use server";
+              }}
             />
           </div>
         </div>
@@ -65,7 +72,7 @@ export default async function RootLayout({
     );
   }
 
-  // Si necesitamos pasar los datos de institutionRes.data al contexto o header, lo haremos aquí.
+  // Si necesitamos pasar los datos de institutionRes.data al contexto o header, lo haremos aqui­.
   // Por ahora validamos que la API responda.
 
   return (

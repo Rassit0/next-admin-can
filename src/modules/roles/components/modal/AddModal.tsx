@@ -11,10 +11,7 @@ import {
   Checkbox,
   CheckboxGroup,
 } from "@heroui/react";
-import {
-  Add01Icon,
-  IdentityCardIcon,
-} from "@hugeicons/core-free-icons";
+import { Add01Icon, IdentityCardIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -93,7 +90,11 @@ export const AddModal: React.FC<Props> = ({ permissions }) => {
               </p>
             </Modal.Header>
             <Modal.Body className="p-6">
-              <form id="add-role-form" onSubmit={handleSubmit} className="flex flex-col gap-6">
+              <form
+                id="add-role-form"
+                onSubmit={handleSubmit}
+                className="flex flex-col gap-6"
+              >
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <TextField isRequired className="w-full" variant="secondary">
                     <Label>Nombre</Label>
@@ -120,25 +121,32 @@ export const AddModal: React.FC<Props> = ({ permissions }) => {
                     onChange={setSelectedPermissions}
                   >
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
-                      {Object.entries(groupedPermissions).map(([mod, perms]: any) => (
-                        <div key={mod} className="border border-divider rounded-lg p-4 bg-background/50">
-                          <Label className="font-semibold text-primary mb-3 pb-2 border-b border-divider block">
-                            {mod}
-                          </Label>
-                          <div className="space-y-3 mt-3">
-                            {perms.map((p: any) => (
-                              <Checkbox key={p.id} value={p.id}>
-                                <Checkbox.Content>
-                                  <Checkbox.Control>
-                                    <Checkbox.Indicator />
-                                  </Checkbox.Control>
-                                  <span className="text-sm font-medium">{p.name}</span>
-                                </Checkbox.Content>
-                              </Checkbox>
-                            ))}
+                      {Object.entries(groupedPermissions).map(
+                        ([mod, perms]: any) => (
+                          <div
+                            key={mod}
+                            className="border border-divider rounded-lg p-4 bg-background/50"
+                          >
+                            <Label className="font-semibold text-primary mb-3 pb-2 border-b border-divider block">
+                              {mod}
+                            </Label>
+                            <div className="space-y-3 mt-3">
+                              {perms.map((p: any) => (
+                                <Checkbox key={p.id} value={p.id}>
+                                  <Checkbox.Content>
+                                    <Checkbox.Control>
+                                      <Checkbox.Indicator />
+                                    </Checkbox.Control>
+                                    <span className="text-sm font-medium">
+                                      {p.name}
+                                    </span>
+                                  </Checkbox.Content>
+                                </Checkbox>
+                              ))}
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ),
+                      )}
                     </div>
                   </CheckboxGroup>
                 </div>
@@ -148,7 +156,12 @@ export const AddModal: React.FC<Props> = ({ permissions }) => {
               <Button variant="secondary" onPress={() => state.close()}>
                 Cancelar
               </Button>
-              <Button type="submit" form="add-role-form" variant="primary" isPending={isLoading}>
+              <Button
+                type="submit"
+                form="add-role-form"
+                variant="primary"
+                isPending={isLoading}
+              >
                 Crear Rol
               </Button>
             </Modal.Footer>

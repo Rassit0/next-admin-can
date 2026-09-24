@@ -2,14 +2,25 @@
 import { api } from "@/utils/api";
 import { ServiceResponse } from "@/types/api";
 import { handleServerAction } from "@/utils";
-import { INewsCategory, UpdateNewsCategoryInterface } from "../interfaces/news-categories.interface";
+import {
+  INewsCategory,
+  UpdateNewsCategoryInterface,
+} from "../interfaces/news-categories.interface";
 import { auth } from "@/auth";
 import { updateTag } from "next/cache";
 
-export const editNewsCategory = async (id: string, data: UpdateNewsCategoryInterface): Promise<ServiceResponse<INewsCategory>> => {
+export const editNewsCategory = async (
+  id: string,
+  data: UpdateNewsCategoryInterface,
+): Promise<ServiceResponse<INewsCategory>> => {
   const session = await auth();
 
-  if (!session?.user) return { error: true, statusCode: 401, message: "Su sesión ha expirado" } as any;
+  if (!session?.user)
+    return {
+      error: true,
+      statusCode: 401,
+      message: "Su sesión ha expirado",
+    } as any;
 
   return handleServerAction(async () => {
     const res = await api.patch<INewsCategory>(`news-categories/${id}`, data, {
@@ -23,11 +34,14 @@ export const editNewsCategory = async (id: string, data: UpdateNewsCategoryInter
     updateTag("public-news");
 
     // Invalidate specific news details
-    const slugsRes = await api.get<string[]>(`news-categories/${id}/news-slugs`, {
-      headers: {
-        Authorization: `Bearer ${session.user.token}`,
+    const slugsRes = await api.get<string[]>(
+      `news-categories/${id}/news-slugs`,
+      {
+        headers: {
+          Authorization: `Bearer ${session.user.token}`,
+        },
       },
-    });
+    );
 
     if (Array.isArray(slugsRes)) {
       slugsRes.forEach((slug) => {
@@ -38,7 +52,7 @@ export const editNewsCategory = async (id: string, data: UpdateNewsCategoryInter
     return {
       error: false,
       data: res,
-      message: "Categoría actualizada exitosamente",
+      message: "Categori­a actualizada exitosamente",
     };
   });
 };

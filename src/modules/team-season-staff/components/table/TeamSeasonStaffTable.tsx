@@ -42,7 +42,7 @@ export const TeamSeasonStaffTable = ({ staffList, teamSeason }: Props) => {
   }, []);
 
   const handleRemove = async (id: string) => {
-    if (!confirm("¿Está seguro de remover a este miembro del personal?"))
+    if (!confirm("ÃÂ¿EstiÂ¡ seguro de remover a este miembro del personal?"))
       return;
 
     setLoadingId(id);
@@ -86,7 +86,7 @@ export const TeamSeasonStaffTable = ({ staffList, teamSeason }: Props) => {
             </Table.Column>
             <Table.Column id="category">
               <span className="text-xs font-semibold uppercase tracking-wide">
-                Categoría
+                CategoriÂ­a
               </span>
             </Table.Column>
             <Table.Column allowsSorting id="startedAt">
@@ -105,7 +105,7 @@ export const TeamSeasonStaffTable = ({ staffList, teamSeason }: Props) => {
           <Table.Body
             renderEmptyState={() => (
               <div className="py-10 text-center text-sm text-muted">
-                Aún no hay personal asignado a esta temporada.
+                AiÂºn no hay personal asignado a esta temporada.
               </div>
             )}
           >
@@ -161,7 +161,9 @@ export const TeamSeasonStaffTable = ({ staffList, teamSeason }: Props) => {
                   <Table.Cell>
                     <span className="text-sm">
                       {item.teamSeasonCategory?.category?.name || "-"}
-                      {item.teamSeasonCategory?.gender ? ` (${item.teamSeasonCategory.gender})` : ""}
+                      {item.teamSeasonCategory?.gender
+                        ? ` (${item.teamSeasonCategory.gender})`
+                        : ""}
                     </span>
                   </Table.Cell>
                   <Table.Cell>

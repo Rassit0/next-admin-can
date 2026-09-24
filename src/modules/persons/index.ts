@@ -17,3 +17,4 @@ export * from "./actions/delete-person";
 export * from "./actions/find-by-id";
 export * from "./interfaces/person-contact.interface";
 export * from "./actions/get-person-contacts";
+export * from "./actions/get-persons-options";

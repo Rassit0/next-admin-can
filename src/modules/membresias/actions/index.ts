@@ -21,7 +21,9 @@ const parseAssignment = (
   assignment: IMemberTeamSeasonAssignment,
 ): IMemberTeamSeasonAssignment => ({
   ...assignment,
-  enrolledAt: assignment.enrolledAt ? new Date(assignment.enrolledAt) : new Date(),
+  enrolledAt: assignment.enrolledAt
+    ? new Date(assignment.enrolledAt)
+    : new Date(),
   suspendedAt: assignment.suspendedAt ? new Date(assignment.suspendedAt) : null,
   completedAt: assignment.completedAt ? new Date(assignment.completedAt) : null,
   withdrawnAt: assignment.withdrawnAt ? new Date(assignment.withdrawnAt) : null,
@@ -60,7 +62,7 @@ export const getMemberTeamSeasonAssignments = async (
   });
 };
 
-// Alias para compatibilidad con nomenclatura de páginas
+// Alias para compatibilidad con nomenclatura de pi¡ginas
 export const getMembershipsForTeamSeason = getMemberTeamSeasonAssignments;
 
 export const assignMemberToTeamSeason = async (
@@ -72,7 +74,9 @@ export const assignMemberToTeamSeason = async (
       payload,
     );
 
-    const assignment = parseAssignment(res as unknown as IMemberTeamSeasonAssignment);
+    const assignment = parseAssignment(
+      res as unknown as IMemberTeamSeasonAssignment,
+    );
 
     return {
       error: false,
@@ -91,7 +95,9 @@ export const suspendMemberAssignment = async (
       {},
     );
 
-    const assignment = parseAssignment(res as unknown as IMemberTeamSeasonAssignment);
+    const assignment = parseAssignment(
+      res as unknown as IMemberTeamSeasonAssignment,
+    );
 
     return {
       error: false,
@@ -110,7 +116,9 @@ export const reactivateMemberAssignment = async (
       {},
     );
 
-    const assignment = parseAssignment(res as unknown as IMemberTeamSeasonAssignment);
+    const assignment = parseAssignment(
+      res as unknown as IMemberTeamSeasonAssignment,
+    );
 
     return {
       error: false,
@@ -129,7 +137,9 @@ export const completeMemberAssignment = async (
       {},
     );
 
-    const assignment = parseAssignment(res as unknown as IMemberTeamSeasonAssignment);
+    const assignment = parseAssignment(
+      res as unknown as IMemberTeamSeasonAssignment,
+    );
 
     return {
       error: false,
@@ -148,7 +158,9 @@ export const withdrawMemberAssignment = async (
       {},
     );
 
-    const assignment = parseAssignment(res as unknown as IMemberTeamSeasonAssignment);
+    const assignment = parseAssignment(
+      res as unknown as IMemberTeamSeasonAssignment,
+    );
 
     return {
       error: false,

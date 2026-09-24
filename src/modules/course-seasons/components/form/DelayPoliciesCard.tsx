@@ -58,10 +58,11 @@ export const DelayPoliciesCard = ({
           </div>
           <div>
             <h3 className="font-headline font-bold text-lg text-on-surface">
-              Políticas de Mora
+              Poli­ticas de Mora
             </h3>
             <p className="text-xs text-on-surface-variant font-medium">
-              Aplica recargos por mora en la compra o pago de los ciclos vencidos.
+              Aplica recargos por mora en la compra o pago de los ciclos
+              vencidos.
             </p>
           </div>
         </div>
@@ -73,9 +74,9 @@ export const DelayPoliciesCard = ({
             <Alert.Content>
               <Alert.Title>Configuración de Recargos</Alert.Title>
               <Alert.Description>
-                Si habilitas esta opción, podrás aplicar recargos por mora de
-                forma explícita a los atletas que se atrasen en sus pagos de
-                ciclos, sumando el costo de Mora por cada día de retraso.
+                Si habilitas esta opción, podri¡s aplicar recargos por mora de
+                forma expli­cita a los atletas que se atrasen en sus pagos de
+                ciclos, sumando el costo de Mora por cada di­a de retraso.
               </Alert.Description>
             </Alert.Content>
           </Alert>
@@ -86,7 +87,9 @@ export const DelayPoliciesCard = ({
               <Switch.Thumb />
             </Switch.Control>
             <Switch.Content>
-              <Label className="text-sm">Habilitar Mora (Aplicación Explícita)</Label>
+              <Label className="text-sm">
+                Habilitar Mora (Aplicación Expli­cita)
+              </Label>
             </Switch.Content>
           </Switch>
           {lateFeeEnabled && (

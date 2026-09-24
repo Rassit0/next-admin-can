@@ -42,7 +42,7 @@ export const CardAdmin = async () => {
 
         <p className="text-sm text-gray-500 font-body leading-relaxed mb-6">
           Gestiona la configuración, estructura y operación de la organización
-          deportiva desde un único panel centralizado.
+          deportiva desde un iºnico panel centralizado.
         </p>
 
         <div className="mt-auto pt-6 border-t border-gray-50 flex items-center justify-between">

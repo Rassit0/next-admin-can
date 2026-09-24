@@ -9,14 +9,13 @@ import {
   TextField,
   Label,
 } from "@heroui/react";
-import { PersonAutocomplete } from "@/common/components/form/PersonAutocomplete";
-import { IPersonOption } from "@/common/actions/get-persons-options";
 import { createUser } from "../../actions/users";
 import { getRoles, IRole } from "../../actions/roles";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 import { CredentialAlertDialog } from "./CredentialAlertDialog";
+import { SelectOrCreatePerson } from "@/modules/persons";
 
 interface Props {
   isOpen: boolean;
@@ -24,7 +23,11 @@ interface Props {
   onSuccess?: () => void;
 }
 
-export const CreateUserModal: React.FC<Props> = ({ isOpen, onOpenChange, onSuccess }) => {
+export const CreateUserModal: React.FC<Props> = ({
+  isOpen,
+  onOpenChange,
+  onSuccess,
+}) => {
   const router = useRouter();
   const [personId, setPersonId] = useState<string | null>(null);
   const [email, setEmail] = useState("");
@@ -101,13 +104,13 @@ export const CreateUserModal: React.FC<Props> = ({ isOpen, onOpenChange, onSucce
               </Modal.Header>
               <Modal.Body>
                 <div className="flex flex-col gap-4">
-                  <PersonAutocomplete
+                  <SelectOrCreatePerson
                     label="Vincular a una Persona (Opcional)"
                     personId={personId}
                     setPersonId={setPersonId}
                     isRequired={false}
                   />
-                  
+
                   <TextField isRequired variant="secondary" className="w-full">
                     <Label>Correo Electrónico</Label>
                     <Input
@@ -132,24 +135,37 @@ export const CreateUserModal: React.FC<Props> = ({ isOpen, onOpenChange, onSucce
                     <Select.Popover>
                       <ListBox>
                         {roles.map((role) => (
-                          <ListBox.Item id={role.id} key={role.id} textValue={role.name}>
+                          <ListBox.Item
+                            id={role.id}
+                            key={role.id}
+                            textValue={role.name}
+                          >
                             {role.name} {role.isSystem ? "(Sistema)" : ""}
                           </ListBox.Item>
                         ))}
                       </ListBox>
                     </Select.Popover>
                   </Select>
-                  
+
                   <p className="text-xs text-default-500">
-                    La contraseña se generará automáticamente y se mostrará al finalizar la creación.
+                    La contraseña se generará automáticamente y se mostrará al
+                    finalizar la creación.
                   </p>
                 </div>
               </Modal.Body>
               <Modal.Footer>
-                <Button variant="ghost" className="text-danger" onPress={() => onOpenChange(false)}>
+                <Button
+                  variant="ghost"
+                  className="text-danger"
+                  onPress={() => onOpenChange(false)}
+                >
                   Cancelar
                 </Button>
-                <Button variant="primary" onPress={() => handleSubmit(() => onOpenChange(false))} isPending={isLoading}>
+                <Button
+                  variant="primary"
+                  onPress={() => handleSubmit(() => onOpenChange(false))}
+                  isPending={isLoading}
+                >
                   Crear Usuario
                 </Button>
               </Modal.Footer>
@@ -160,7 +176,9 @@ export const CreateUserModal: React.FC<Props> = ({ isOpen, onOpenChange, onSucce
 
       <CredentialAlertDialog
         isOpen={credentialDialog.isOpen}
-        onOpenChange={(open) => !open && setCredentialDialog({ isOpen: false, email: "" })}
+        onOpenChange={(open) =>
+          !open && setCredentialDialog({ isOpen: false, email: "" })
+        }
         email={credentialDialog.email}
         password={credentialDialog.password}
       />

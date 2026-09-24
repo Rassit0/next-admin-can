@@ -3,7 +3,7 @@ import {
   STATUS_BG_MAP,
   TeamSeasonActions,
   ViewCategoriesModal,
-  ManageCategoryButton
+  ManageCategoryButton,
 } from "@/modules/team-seasons";
 import { Avatar, Button, Card } from "@heroui/react";
 import {
@@ -60,20 +60,20 @@ export const CardTeamSeason = ({ teamSeason, urlBase }: Props) => {
         <div className="space-y-4 mb-8">
           <div>
             <div className="flex justify-between text-[10px] font-label-sm mb-1 uppercase text-outline">
-              Ocupación del Clan
+              OcupaciiÂ³n del Clan
             </div>
             <div className="w-full h-2.5 bg-surface rounded-full overflow-hidden relative">
               <div className="absolute inset-y-0 left-0 bg-accent rounded-full w-full"></div>
             </div>
             <div className="flex justify-between text-[10px] mt-1 font-label-sm text-error font-bold">
               <span>Capacidad: 25</span>
-              <span>¡MAXIMA CAPACIDAD!</span>
+              <span>ÃÂ¡MAXIMA CAPACIDAD!</span>
             </div>
           </div>
         </div>
         <div className="mt-auto space-y-3">
           <Button className="w-full py-3.5 bg-outline-variant/40 text-on-surface-variant/50 rounded-full font-extrabold text-md cursor-not-allowed border border-outline-variant/20">
-            ¡Cupos Llenos!
+            ÃÂ¡Cupos Llenos!
           </Button>
           <div className="grid grid-cols-2 gap-2">
             <Button variant="secondary" className="w-full">
@@ -122,7 +122,7 @@ export const CardTeamSeason = ({ teamSeason, urlBase }: Props) => {
             <span className="material-symbols-outlined text-lg">
               assessment
             </span>
-            Ver Reporte / Estadísticas
+            Ver Reporte / EstadiÂ­sticas
           </Button>
           <Button className="w-full py-3.5 bg-surface-container-highest text-on-surface-variant rounded-full font-bold text-md flex items-center justify-center gap-2 hover:bg-surface-variant transition-all">
             <span className="material-symbols-outlined text-lg">
@@ -182,10 +182,12 @@ export const CardTeamSeason = ({ teamSeason, urlBase }: Props) => {
         </p>
 
         {(() => {
-          const allStaffs = teamSeason.categories?.flatMap(c => c.teamSeasonStaffs || []);
+          const allStaffs = teamSeason.categories?.flatMap(
+            (c) => c.teamSeasonStaffs || [],
+          );
           const primaryStaff =
-            allStaffs?.find((s) => s.isPrimary)?.staff
-              .person || allStaffs?.[0]?.staff.person;
+            allStaffs?.find((s) => s.isPrimary)?.staff.person ||
+            allStaffs?.[0]?.staff.person;
           if (!primaryStaff) return null;
           return (
             <div className="flex items-center gap-3 mb-6 bg-surface-container-low p-2 rounded-lg border border-border/50">
@@ -213,7 +215,7 @@ export const CardTeamSeason = ({ teamSeason, urlBase }: Props) => {
         <div className="mt-2">
           <div className="flex flex-col gap-2 mb-3">
             <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
-              Categorías
+              CategoriÂ­as
             </h4>
             <div className="flex flex-wrap gap-2 w-full">
               <div className="flex-1 min-w-35">
@@ -223,7 +225,10 @@ export const CardTeamSeason = ({ teamSeason, urlBase }: Props) => {
                 />
               </div>
               <div className="flex-1 min-w-35">
-                <ManageCategoryButton teamSeason={teamSeason} urlBase={urlBase} />
+                <ManageCategoryButton
+                  teamSeason={teamSeason}
+                  urlBase={urlBase}
+                />
               </div>
             </div>
           </div>

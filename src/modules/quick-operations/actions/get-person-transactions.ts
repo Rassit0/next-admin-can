@@ -20,22 +20,19 @@ export const getPersonTransactions = async (
     };
 
   return handleServerAction(async () => {
-    const res = await api.get<any>(
-      `transactions`,
-      {
-        params: {
-          payerPersonId: personId,
-          page: page.toString(),
-          per_page: limit.toString(),
-          sortField: "transactionDate",
-          orderBy: "desc",
-        },
-        headers: {
-          Authorization: `Bearer ${session.user.token}`,
-        },
-        signal,
+    const res = await api.get<any>(`transactions`, {
+      params: {
+        payerPersonId: personId,
+        page: page.toString(),
+        per_page: limit.toString(),
+        sortField: "transactionDate",
+        orderBy: "desc",
       },
-    );
+      headers: {
+        Authorization: `Bearer ${session.user.token}`,
+      },
+      signal,
+    });
 
     return {
       error: false,

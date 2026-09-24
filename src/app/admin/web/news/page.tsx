@@ -27,7 +27,7 @@ export default async function NewsPage() {
       <div className="space-y-8">
         <HeaderPage
           title="Gestión de Noticias"
-          description="Administra los artículos y comunicados del portal web."
+          description="Administra los arti­culos y comunicados del portal web."
           action={
             <>
               <ButtonRedirect

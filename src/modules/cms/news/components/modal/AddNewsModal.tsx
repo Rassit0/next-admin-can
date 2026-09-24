@@ -1,36 +1,46 @@
 "use client";
-import {
-  Button,
-  Modal,
-  ProgressCircle,
-  useOverlayState,
-} from "@heroui/react";
+import { Button, Modal, ProgressCircle, useOverlayState } from "@heroui/react";
 import { Add01Icon, File01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { NewsForm } from "../form/NewsForm";
 
 interface Props {
+  label?: string;
+  isIcon?: boolean;
   buttonFloatingMobile?: boolean;
 }
 
-export const AddNewsModal = ({ buttonFloatingMobile }: Props) => {
+export const AddNewsModal = ({
+  label,
+  isIcon = false,
+  buttonFloatingMobile,
+}: Props) => {
   const state = useOverlayState();
   const [isLoading, setIsLoading] = useState(false);
 
   return (
     <>
-      <Button
-        onPress={() => state.open()}
-        className={`bg-on-surface text-surface hover:bg-on-surface-variant flex ${
-          buttonFloatingMobile
-            ? "fixed md:relative bottom-6 md:bottom-auto right-6 md:right-auto shadow-xl md:shadow-none z-50 md:z-auto"
-            : ""
-        }`}
-      >
-        <HugeiconsIcon icon={Add01Icon} />
-        Crear Noticia
-      </Button>
+      {!isIcon && (
+        <Button
+          className="hidden lg:flex"
+          variant="primary"
+          onPress={() => state.open()}
+          isIconOnly={isIcon}
+        >
+          <HugeiconsIcon icon={Add01Icon} />
+          {label || "Crear Nota"}
+        </Button>
+      )}
+      {isIcon && (
+        <Button
+          variant="primary"
+          onPress={() => state.open()}
+          isIconOnly={isIcon}
+        >
+          <HugeiconsIcon icon={Add01Icon} />
+        </Button>
+      )}
 
       <Modal.Backdrop isOpen={state.isOpen} onOpenChange={state.setOpen}>
         <Modal.Container placement="auto" scroll="outside">
@@ -63,11 +73,7 @@ export const AddNewsModal = ({ buttonFloatingMobile }: Props) => {
               >
                 Cancelar
               </Button>
-              <Button
-                type="submit"
-                form="add-news-form"
-                isPending={isLoading}
-              >
+              <Button type="submit" form="add-news-form" isPending={isLoading}>
                 {isLoading && (
                   <ProgressCircle isIndeterminate aria-label="Loading">
                     <ProgressCircle.Track>

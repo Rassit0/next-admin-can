@@ -50,7 +50,7 @@ export const FormStudent = ({
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleRemoveError = (fieldName: string) => {
-    // Limpiar solo el error de este campo específico
+    // Limpiar solo el error de este campo especi­fico
     if (errors[fieldName]) {
       setErrors((prev) => {
         const newErrors = { ...prev };
@@ -102,7 +102,7 @@ export const FormStudent = ({
               : messages;
             return `${field}: ${msgList}`;
           })
-          .join("\n"); // Los separamos por saltos de línea para el toast
+          .join("\n"); // Los separamos por saltos de li­nea para el toast
       }
 
       // 2. Pasamos la descripción formateada al componente de notificaciones
@@ -151,7 +151,7 @@ export const FormStudent = ({
                 Foto de Perfil
               </h3>
               <p className="text-sm text-on-surface-variant">
-                Sube una foto profesional para la identificación institucional. Tamaño máximo: 5 MB.
+                Sube una foto profesional para la identificación institucional. Tamai±o mi¡ximo: 5 MB.
               </p>
             </div>
           </div> */}
@@ -188,8 +188,8 @@ export const FormStudent = ({
                   </span>
                   <span className="text-xs text-on-surface-variant">
                     {isActive
-                      ? "El jugador está activo y puede ser inscrito en temporadas."
-                      : "El jugador está inactivo temporalmente."}
+                      ? "El jugador esti¡ activo y puede ser inscrito en temporadas."
+                      : "El jugador esti¡ inactivo temporalmente."}
                   </span>
                 </div>
                 <Switch isSelected={isActive} onChange={setIsActive} size="sm">

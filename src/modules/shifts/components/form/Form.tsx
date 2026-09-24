@@ -27,7 +27,7 @@ export const FormShift = ({
 }: Props) => {
   const [name, setName] = useState(shift?.name || null);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  
+
   const handleRemoveError = useCallback((fieldName: string) => {
     setErrors((prev) => {
       const { [fieldName]: _, ...rest } = prev;
@@ -39,29 +39,29 @@ export const FormShift = ({
     e.preventDefault();
     setErrors({});
     const newErrors: Record<string, string> = {};
-    
+
     if (!name) {
       newErrors.name = "Debe ingresar un nombre";
     }
-    
+
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) {
       return;
     }
-    
+
     setIsLoading?.(true);
     let res;
     const data = {
       name: name!,
     };
-    
+
     if (shift) {
       res = await editShift({ id: shift.id, data });
     } else {
       res = await addShift(data);
     }
     setIsLoading?.(false);
-    
+
     if (res.error) {
       let errorDescription = res.message;
 
@@ -84,7 +84,7 @@ export const FormShift = ({
       }
       return;
     }
-    
+
     toast.success(res.message, {
       description: res.message,
     });
@@ -109,7 +109,7 @@ export const FormShift = ({
               setName(e.target.value || null);
               handleRemoveError("name");
             }}
-            placeholder="Ingrese el nombre del turno (ej. Mañana, Tarde)"
+            placeholder="Ingrese el nombre del turno (ej. Mai±ana, Tarde)"
           />
           <FieldError children={errors.name && <> {errors.name}</>} />
         </TextField>

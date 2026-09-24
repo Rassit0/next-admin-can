@@ -1,7 +1,10 @@
 "use server";
 
 import { api } from "@/modules/portal/core/api/api";
-import { handleServerAction, ServiceResponse } from "@/modules/portal/core/utils/handleServerAction";
+import {
+  handleServerAction,
+  ServiceResponse,
+} from "@/modules/portal/core/utils/handleServerAction";
 
 export interface PublicCourse {
   id: string;
@@ -17,7 +20,9 @@ export interface PublicCourse {
   monthlyFee: number;
 }
 
-export const getPublicCourses = async (): Promise<ServiceResponse<PublicCourse[]>> => {
+export const getPublicCourses = async (): Promise<
+  ServiceResponse<PublicCourse[]>
+> => {
   return handleServerAction(async () => {
     const res = await api.get<{ message: string; data: PublicCourse[] }>(
       `public/course-seasons`,
@@ -32,7 +37,7 @@ export const getPublicCourses = async (): Promise<ServiceResponse<PublicCourse[]
     return {
       error: false,
       data: res.data || [],
-      message: res.message || "Cursos públicos obtenidos exitosamente",
+      message: res.message || "Cursos piºblicos obtenidos exitosamente",
     };
   });
 };

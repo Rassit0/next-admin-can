@@ -11,11 +11,12 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    // Podrías registrar el error en un servicio como Sentry aquí
+    // Podrías registrar el error en un servicio como Sentry aqui­
     console.error("Uncaught error caught by error.tsx:", error);
   }, [error]);
 
-  let message = error.message || "Ocurrió un error inesperado al cargar la vista.";
+  let message =
+    error.message || "Ocurrió un error inesperado al cargar la vista.";
   let path = undefined;
 
   try {
@@ -25,13 +26,8 @@ export default function Error({
       path = parsed.path;
     }
   } catch (e) {
-    // No es un string JSON válido, mantener el mensaje original
+    // No es un string JSON vi¡lido, mantener el mensaje original
   }
 
-  return (
-    <ErrorPage 
-      message={message} 
-      path={path}
-    />
-  );
+  return <ErrorPage message={message} path={path} />;
 }

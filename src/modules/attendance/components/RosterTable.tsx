@@ -61,7 +61,10 @@ export const RosterTable = ({
 
   return (
     <div className="w-full overflow-x-auto">
-      <Table aria-label="Roster de la sesión" className="w-full shadow-none border-t border-border">
+      <Table
+        aria-label="Roster de la sesión"
+        className="w-full shadow-none border-t border-border"
+      >
         <Table.Header>
           <Table.Column>
             <span className="text-xs font-semibold uppercase tracking-wide">
@@ -91,9 +94,9 @@ export const RosterTable = ({
             const cycle = membership.cycleEnrollments?.[0];
             const studentId = membership.studentId;
             const existingBooking = bookings.find(
-              (b) => b.studentId === studentId
+              (b) => b.studentId === studentId,
             );
-            
+
             const isLoading = loadingIds.includes(studentId);
             const isConfirmed = cycle?.status === "CONFIRMED";
             const isPending = cycle?.status === "PENDING";
@@ -131,12 +134,12 @@ export const RosterTable = ({
                   <div className="flex justify-center items-center gap-2">
                     {existingBooking ? (
                       <>
-                        <Chip
-                          color="success"
-                          variant="soft"
-                        >
+                        <Chip color="success" variant="soft">
                           <div className="flex items-center gap-1">
-                            <HugeiconsIcon icon={CheckmarkBadge01Icon} size={16} />
+                            <HugeiconsIcon
+                              icon={CheckmarkBadge01Icon}
+                              size={16}
+                            />
                             Asistencia Registrada
                           </div>
                         </Chip>
@@ -145,7 +148,9 @@ export const RosterTable = ({
                           variant="danger-soft"
                           size="sm"
                           isDisabled={isLoading}
-                          onPress={() => handleDelete(existingBooking.id, studentId)}
+                          onPress={() =>
+                            handleDelete(existingBooking.id, studentId)
+                          }
                         >
                           <HugeiconsIcon icon={Cancel01Icon} size={18} />
                         </Button>
@@ -157,7 +162,13 @@ export const RosterTable = ({
                         isDisabled={!isConfirmed || isLoading}
                         onPress={() => handleCheckIn(studentId)}
                       >
-                        {isLoading ? "Cargando..." : (isPending ? "Pendiente" : !isConfirmed ? "Sin Ciclo" : "Registrar Asistencia")}
+                        {isLoading
+                          ? "Cargando..."
+                          : isPending
+                            ? "Pendiente"
+                            : !isConfirmed
+                              ? "Sin Ciclo"
+                              : "Registrar Asistencia"}
                       </Button>
                     )}
                   </div>

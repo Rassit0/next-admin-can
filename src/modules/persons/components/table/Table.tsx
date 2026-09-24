@@ -74,7 +74,7 @@ export const TablePersons = ({ persons }: Props) => {
             </Table.Column>
 
             <Table.Column allowsSorting id="phone">
-              <SortableColumnHeader id="phone">TELÉFONO</SortableColumnHeader>
+              <SortableColumnHeader id="phone">TELiFONO</SortableColumnHeader>
             </Table.Column>
 
             <Table.Column allowsSorting id="status">
@@ -93,7 +93,7 @@ export const TablePersons = ({ persons }: Props) => {
                     No se encontraron personas
                   </span>
                   <span className="text-sm text-default-400">
-                    Intenta con otros términos de búsqueda o agrega una nueva
+                    Intenta con otros ti©rminos de biºsqueda o agrega una nueva
                     persona.
                   </span>
                 </div>

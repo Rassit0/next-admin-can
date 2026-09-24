@@ -12,18 +12,27 @@ export const editHomeDiscipline = async (
 ): Promise<ServiceResponse<IHomeDiscipline>> => {
   const session = await auth();
 
-  if (!session?.user) return { error: true, statusCode: 401, message: "Su sesión ha expirado." } as any;
+  if (!session?.user)
+    return {
+      error: true,
+      statusCode: 401,
+      message: "Su sesión ha expirado.",
+    } as any;
 
   return handleServerAction(async () => {
-    const response = await api.patch<IHomeDiscipline>(`home-disciplines/${id}`, data, {
-      headers: {
-        Authorization: `Bearer ${session.user.token}`,
+    const response = await api.patch<IHomeDiscipline>(
+      `home-disciplines/${id}`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${session.user.token}`,
+        },
       },
-    });
+    );
 
     updateTag("public-home-disciplines");
     updateTag("admin-home-disciplines");
-    
+
     return {
       error: false,
       data: response,

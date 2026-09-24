@@ -83,7 +83,9 @@ export const CreateMassiveManualChargeDrawer = ({
         onOpenChange(false);
       }
     } catch (error) {
-      toast.error("Ocurrió un error inesperado al generar los cargos masivos.");
+      toast.error(
+        "OcurriiÂ³ un error inesperado al generar los cargos masivos.",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -103,7 +105,7 @@ export const CreateMassiveManualChargeDrawer = ({
                     Generar Cargo Masivo
                   </Drawer.Heading>
                   <p className="mt-1 text-xs font-medium text-warning-500">
-                    Atención: Se aplicará este cargo a TODOS los miembros
+                    AtenciiÂ³n: Se aplicariÂ¡ este cargo a TODOS los miembros
                     activos y pendientes de esta temporada.
                   </p>
                 </div>
@@ -117,7 +119,7 @@ export const CreateMassiveManualChargeDrawer = ({
                   variant="secondary"
                 >
                   <Label className="text-sm font-semibold">
-                    Descripción del Cargo
+                    DescripciiÂ³n del Cargo
                   </Label>
                   <InputGroup>
                     <InputGroup.Prefix>
@@ -127,7 +129,7 @@ export const CreateMassiveManualChargeDrawer = ({
                         className="text-muted-foreground"
                       />
                     </InputGroup.Prefix>
-                    <InputGroup.Input placeholder="Ej. Inscripción a Torneo, Equipamiento General..." />
+                    <InputGroup.Input placeholder="Ej. InscripciiÂ³n a Torneo, Equipamiento General..." />
                   </InputGroup>
                 </TextField>
 
@@ -157,7 +159,7 @@ export const CreateMassiveManualChargeDrawer = ({
                   defaultValue={today(getLocalTimeZone())}
                 >
                   <Label className="text-sm font-semibold">
-                    Fecha Límite de Pago (Vencimiento)
+                    Fecha LiÂ­mite de Pago (Vencimiento)
                   </Label>
                   <DateField.Group variant="secondary">
                     <DateField.Input>
@@ -170,7 +172,7 @@ export const CreateMassiveManualChargeDrawer = ({
                     </DateField.Suffix>
                   </DateField.Group>
                   <DatePicker.Popover>
-                    <Calendar aria-label="Fecha Límite de Pago">
+                    <Calendar aria-label="Fecha LiÂ­mite de Pago">
                       <Calendar.Header>
                         <Calendar.YearPickerTrigger>
                           <Calendar.YearPickerTriggerHeading />
@@ -232,17 +234,17 @@ export const CreateMassiveManualChargeDrawer = ({
             <AlertDialog.Header>
               <AlertDialog.Icon status="danger" />
               <AlertDialog.Heading>
-                Confirmar Generación Masiva
+                Confirmar GeneraciiÂ³n Masiva
               </AlertDialog.Heading>
             </AlertDialog.Header>
             <AlertDialog.Body>
               <p>
-                ¿Estás seguro de generar este cargo de{" "}
+                ÃÂ¿EstiÂ¡s seguro de generar este cargo de{" "}
                 <strong>{pendingData?.amount} Bs</strong> a TODOS los miembros
                 activos y pendientes?
                 <br />
                 <br />
-                Esta acción no se puede deshacer de forma masiva.
+                Esta acciiÂ³n no se puede deshacer de forma masiva.
               </p>
             </AlertDialog.Body>
             <AlertDialog.Footer>

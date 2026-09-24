@@ -11,7 +11,12 @@ export const deleteNews = async (
 ): Promise<ServiceResponse<void>> => {
   const session = await auth();
 
-  if (!session?.user) return { error: true, statusCode: 401, message: "Su sesión ha expirado." } as any;
+  if (!session?.user)
+    return {
+      error: true,
+      statusCode: 401,
+      message: "Su sesión ha expirado.",
+    } as any;
 
   return handleServerAction(async () => {
     await api.delete(`news/${id}`, {
@@ -23,7 +28,7 @@ export const deleteNews = async (
     updateTag("public-news");
     updateTag(`public-news-detail-${slug}`);
     updateTag("admin-news");
-    
+
     return {
       error: false,
       data: undefined,

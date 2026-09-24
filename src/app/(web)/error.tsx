@@ -18,8 +18,8 @@ export default function WebError({
     console.error("Portal Error Boundary atrapó:", error);
   }, [error]);
 
-  const isNetworkError = 
-    error.message.includes("conexión") || 
+  const isNetworkError =
+    error.message.includes("conexión") ||
     error.message.includes("fetch") ||
     error.message.includes("503");
 
@@ -39,14 +39,14 @@ export default function WebError({
           {isNetworkError ? "Servidor en Mantenimiento" : "Algo salió mal"}
         </h2>
         <p className="mt-4 max-w-md text-muted-foreground text-pretty">
-          {isNetworkError 
+          {isNetworkError
             ? "No pudimos establecer conexión con los servidores del Club. Es posible que estemos realizando labores de mantenimiento o que haya un problema temporal en la red."
-            : "Ocurrió un error inesperado al cargar esta página. Por favor, intenta de nuevo más tarde."}
+            : "Ocurrió un error inesperado al cargar esta pi¡gina. Por favor, intenta de nuevo mi¡s tarde."}
         </p>
 
         <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
           <Magnetic as="div">
-            <button 
+            <button
               onClick={() => reset()}
               className="flex items-center justify-center gap-2 rounded-full border border-primary/20 bg-background px-6 py-3.5 text-sm font-600 uppercase tracking-wide text-primary transition-all hover:bg-primary/5 w-full sm:w-auto"
             >
@@ -54,7 +54,7 @@ export default function WebError({
               Reintentar
             </button>
           </Magnetic>
-          
+
           <Link href="/">
             <Magnetic as="div">
               <button className="neon-perimeter flex w-full sm:w-auto justify-center items-center gap-2 rounded-full bg-neon px-8 py-3.5 text-sm font-600 uppercase tracking-wide text-primary transition-all hover:shadow-neon">

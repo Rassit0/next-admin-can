@@ -57,13 +57,21 @@ export const CardCourseOffering = ({ courseSeason }: Props) => {
         </div>
       </Card.Header>
       <div className="pb-3">
-        <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-2">Turnos</h4>
+        <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-2">
+          Turnos
+        </h4>
         <div className="flex flex-col gap-2">
           {courseSeason.shifts?.map((shiftItem) => (
-            <div key={shiftItem.id} className="flex justify-between items-center bg-surface-container-low p-2 rounded border border-border/50">
-              <span className="text-xs font-medium">{shiftItem.shift.name}</span>
+            <div
+              key={shiftItem.id}
+              className="flex justify-between items-center bg-surface-container-low p-2 rounded border border-border/50"
+            >
+              <span className="text-xs font-medium">
+                {shiftItem.shift.name}
+              </span>
               <span className="text-[10px] bg-surface px-2 py-0.5 rounded-full border border-border/50">
-                {shiftItem._count?.studentMemberships || 0} / {shiftItem.maxMembers}
+                {shiftItem._count?.studentMemberships || 0} /{" "}
+                {shiftItem.maxMembers}
               </span>
             </div>
           ))}
@@ -71,18 +79,25 @@ export const CardCourseOffering = ({ courseSeason }: Props) => {
       </div>
 
       {(() => {
-        const primaryStaff = courseSeason.shifts?.flatMap(s => s.courseSeasonStaffs || []).find((s) => s.isPrimary)?.staff.person;
+        const primaryStaff = courseSeason.shifts
+          ?.flatMap((s) => s.courseSeasonStaffs || [])
+          .find((s) => s.isPrimary)?.staff.person;
         if (!primaryStaff) return null;
         return (
           <div className="flex items-center gap-3 mb-4 bg-surface-container-low p-2 rounded-lg border border-border/50">
             <Avatar size="sm">
               {primaryStaff.imageUrl && (
-                <Avatar.Image src={primaryStaff.imageUrl} alt={`${primaryStaff.name} ${primaryStaff.lastName}`} />
+                <Avatar.Image
+                  src={primaryStaff.imageUrl}
+                  alt={`${primaryStaff.name} ${primaryStaff.lastName}`}
+                />
               )}
               <Avatar.Fallback>{`${primaryStaff.name.charAt(0)}${primaryStaff.lastName.charAt(0)}`}</Avatar.Fallback>
             </Avatar>
             <div className="flex flex-col">
-              <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Entrenador Principal</span>
+              <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+                Entrenador Principal
+              </span>
               <span className="text-xs font-semibold text-foreground">
                 {primaryStaff.name} {primaryStaff.lastName}
               </span>

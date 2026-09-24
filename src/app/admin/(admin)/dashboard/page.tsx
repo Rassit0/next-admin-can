@@ -125,10 +125,10 @@ export default function DashboardPage() {
               </h3>
               <div className="flex gap-2">
                 <span className="px-2 py-0.5 bg-sky-100 text-sky-700 text-[10px] font-bold rounded-full">
-                  Básquet
+                  BiÂ¡squet
                 </span>
                 <span className="px-2 py-0.5 bg-purple-100 text-purple-700 text-[10px] font-bold rounded-full">
-                  Vóley
+                  ViÂ³ley
                 </span>
               </div>
             </div>
@@ -145,10 +145,10 @@ export default function DashboardPage() {
                 </div>
                 <div className="flex-1">
                   <h4 className="text-sm font-bold text-on-surface">
-                    U17 Básquetbol - Masculino
+                    U17 BiÂ¡squetbol - Masculino
                   </h4>
                   <p className="text-[11px] text-slate-500">
-                    16:30 • Mario Silva
+                    16:30 - Mario Silva
                   </p>
                 </div>
                 <span className="material-symbols-outlined text-slate-300">
@@ -167,10 +167,10 @@ export default function DashboardPage() {
                 </div>
                 <div className="flex-1">
                   <h4 className="text-sm font-bold text-on-surface">
-                    Primera Vóley - Femenino
+                    Primera ViÂ³ley - Femenino
                   </h4>
                   <p className="text-[11px] text-slate-500">
-                    19:00 • Elena Rossi
+                    19:00 - Elena Rossi
                   </p>
                 </div>
                 <span className="material-symbols-outlined text-slate-300">
@@ -181,7 +181,7 @@ export default function DashboardPage() {
               <div className="hidden sm:flex items-center gap-4 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-2xl">
                 <div className="w-12 h-12 bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center border border-sky-100 dark:border-slate-700">
                   <span className="text-[10px] font-bold text-sky-700">
-                    MAÑ
+                    MAiÂ
                   </span>
                   <span className="text-lg font-bold text-sky-900 dark:text-sky-400">
                     15
@@ -189,10 +189,10 @@ export default function DashboardPage() {
                 </div>
                 <div className="flex-1">
                   <h4 className="text-sm font-bold text-on-surface">
-                    U13 Básquetbol - Mixto
+                    U13 BiÂ¡squetbol - Mixto
                   </h4>
                   <p className="text-[11px] text-slate-500">
-                    10:00 • Pablo Méndez
+                    10:00 - Pablo MiÂ©ndez
                   </p>
                 </div>
                 <span className="material-symbols-outlined text-slate-300">
@@ -221,9 +221,9 @@ export default function DashboardPage() {
                 <div className="absolute left-0 top-1 w-6 h-6 rounded-full bg-sky-500 flex items-center justify-center">
                   <HugeiconsIcon icon={Tick02Icon} size={18} strokeWidth={2} />
                 </div>
-                <p className="text-sm font-bold">Inscripción</p>
+                <p className="text-sm font-bold">InscripciiÂ³n</p>
                 <p className="text-xs text-slate-400">
-                  Facundo García a Básquet U17.
+                  Facundo GarciÂ­a a BiÂ¡squet U17.
                 </p>
                 <span className="text-[9px] uppercase font-bold text-slate-500 tracking-wider">
                   Hace 12m
@@ -240,7 +240,7 @@ export default function DashboardPage() {
                 </div>
                 <p className="text-sm font-bold">Pago</p>
                 <p className="text-xs text-slate-400">
-                  Cuota Septiembre - Martina López.
+                  Cuota Septiembre - Martina LiÂ³pez.
                 </p>
                 <span className="text-[9px] uppercase font-bold text-slate-500 tracking-wider">
                   Hace 45m
@@ -257,7 +257,7 @@ export default function DashboardPage() {
                 </div>
                 <p className="text-sm font-bold">Reprogramado</p>
                 <p className="text-xs text-slate-400">
-                  Vóley Femenino pasó a las 19:00.
+                  ViÂ³ley Femenino pasiÂ³ a las 19:00.
                 </p>
                 <span className="text-[9px] uppercase font-bold text-slate-500 tracking-wider">
                   Hace 2h
@@ -272,7 +272,7 @@ export default function DashboardPage() {
                   </span>
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold">Ocupación</h4>
+                  <h4 className="text-xs font-bold">OcupaciiÂ³n</h4>
                   <p className="text-[10px] text-slate-400">85% Hoy</p>
                 </div>
               </div>
@@ -302,7 +302,7 @@ export default function DashboardPage() {
               <HugeiconsIcon icon={Basketball01Icon} className="text-sm" />
             </div>
             <div className="flex-1">
-              <p className="text-sm font-bold text-on-surface">Básquetbol</p>
+              <p className="text-sm font-bold text-on-surface">BiÂ¡squetbol</p>
               <p className="text-[11px] text-slate-500">420 Alumnos</p>
             </div>
             <span className="text-xs font-bold text-tertiary">+4%</span>
@@ -312,7 +312,7 @@ export default function DashboardPage() {
               <HugeiconsIcon icon={VolleyballIcon} className="text-sm" />
             </div>
             <div className="flex-1">
-              <p className="text-sm font-bold text-on-surface">Vóleibol</p>
+              <p className="text-sm font-bold text-on-surface">ViÂ³leibol</p>
               <p className="text-[11px] text-slate-500">315 Alumnos</p>
             </div>
             <span className="text-xs font-bold text-tertiary">+8%</span>
@@ -322,7 +322,7 @@ export default function DashboardPage() {
               <span className="material-symbols-outlined text-sm">pool</span>
             </div>
             <div className="flex-1">
-              <p className="text-sm font-bold text-on-surface">Natación</p>
+              <p className="text-sm font-bold text-on-surface">NataciiÂ³n</p>
               <p className="text-[11px] text-slate-500">549 Alumnos</p>
             </div>
             <span className="text-xs font-bold text-slate-400">--</span>

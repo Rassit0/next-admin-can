@@ -27,7 +27,12 @@ import {
   SeasonLifecycleAction,
   updateSeasonLifecycle,
 } from "../../actions/update-lifecycle";
-import { getLocalTimeZone, today, parseDate, CalendarDate } from "@internationalized/date";
+import {
+  getLocalTimeZone,
+  today,
+  parseDate,
+  CalendarDate,
+} from "@internationalized/date";
 
 interface Props {
   season: ISeason;
@@ -64,8 +69,8 @@ export const SeasonActions = ({ season }: Props) => {
     new CalendarDate(
       seasonEndDateObj.getUTCFullYear(),
       seasonEndDateObj.getUTCMonth() + 1,
-      seasonEndDateObj.getUTCDate()
-    )
+      seasonEndDateObj.getUTCDate(),
+    ),
   );
 
   const allActions: ActionDef[] = [...statusActions];
@@ -91,7 +96,7 @@ export const SeasonActions = ({ season }: Props) => {
     if (action === "extend") {
       // Create a string in ISO format for the API
       payloadNewEndDate = new Date(
-        Date.UTC(newEndDate.year, newEndDate.month - 1, newEndDate.day)
+        Date.UTC(newEndDate.year, newEndDate.month - 1, newEndDate.day),
       ).toISOString();
     }
 
@@ -169,9 +174,9 @@ export const SeasonActions = ({ season }: Props) => {
               </AlertDialog.Header>
               <AlertDialog.Body className="gap-4 p-2 overflow-visible">
                 <p>
-                  ¿Estás seguro de que deseas ejecutar la acción{" "}
-                  <strong>{selectedAction?.label.toLowerCase()}</strong> para
-                  la temporada <strong>{season.name}</strong>?
+                  ÃÂ¿EstiÂ¡s seguro de que deseas ejecutar la acciiÂ³n{" "}
+                  <strong>{selectedAction?.label.toLowerCase()}</strong> para la
+                  temporada <strong>{season.name}</strong>?
                 </p>
 
                 {selectedAction?.key === "extend" && (
@@ -183,7 +188,9 @@ export const SeasonActions = ({ season }: Props) => {
                     onChange={(val) => val && setNewEndDate(val)}
                     minValue={today(getLocalTimeZone())}
                   >
-                    <Label className="text-sm font-semibold">Nueva fecha de fin</Label>
+                    <Label className="text-sm font-semibold">
+                      Nueva fecha de fin
+                    </Label>
                     <DateField.Group variant="secondary" fullWidth>
                       <DateField.Input>
                         {(segment) => <DateField.Segment segment={segment} />}
@@ -206,7 +213,9 @@ export const SeasonActions = ({ season }: Props) => {
                         </Calendar.Header>
                         <Calendar.Grid>
                           <Calendar.GridHeader>
-                            {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
+                            {(day) => (
+                              <Calendar.HeaderCell>{day}</Calendar.HeaderCell>
+                            )}
                           </Calendar.GridHeader>
                           <Calendar.GridBody>
                             {(date) => <Calendar.Cell date={date} />}
@@ -214,7 +223,9 @@ export const SeasonActions = ({ season }: Props) => {
                         </Calendar.Grid>
                         <Calendar.YearPickerGrid>
                           <Calendar.YearPickerGridBody>
-                            {({ year }) => <Calendar.YearPickerCell year={year} />}
+                            {({ year }) => (
+                              <Calendar.YearPickerCell year={year} />
+                            )}
                           </Calendar.YearPickerGridBody>
                         </Calendar.YearPickerGrid>
                       </Calendar>
@@ -224,7 +235,7 @@ export const SeasonActions = ({ season }: Props) => {
 
                 <TextField name="reason" className="w-full" isRequired>
                   <Label className="text-sm font-semibold">
-                    Motivo u Observación
+                    Motivo u ObservaciiÂ³n
                   </Label>
                   <InputGroup>
                     <InputGroup.Prefix>

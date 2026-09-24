@@ -31,7 +31,7 @@ import { addBulk } from "../../actions/add-bulk";
 import { getFinancialAccounts } from "@/modules/financial-accounts/actions/get-all";
 import { FinancialAccount } from "@/modules/financial-accounts/interfaces/financial-account.interface";
 import { formatCurrency } from "@/utils/constants";
-import { IPersonOption } from "@/common/actions/get-persons-options";
+import { IPersonOption } from "@/modules/persons";
 import { PrintReportDialog } from "../dialog/PrintReportDialog";
 import { PaymentDistributionsList } from "./PaymentDistributionsList";
 import { SplitItem } from "./PayChargeDrawer";
@@ -130,13 +130,13 @@ export const BulkPaymentDrawer = ({
     if (hasUncustomizedCharges) {
       if (!paymentMethod)
         newErrors.paymentMethod =
-          "Seleccione un método de pago global por defecto";
+          "Seleccione un mi©todo de pago global por defecto";
       if (!financialAccountId)
         newErrors.financialAccountId =
           "Seleccione una cuenta financiera global por defecto";
       // TODO: (Opcional temporalmente) Volver a obligar a ingresar Referencia Global para transferencias/QR en el futuro
       // if ((paymentMethod === "TRANSFER" || paymentMethod === "QR") && !reference.trim()) {
-      //   newErrors.reference = "La referencia es obligatoria para este método de pago";
+      //   newErrors.reference = "La referencia es obligatoria para este mi©todo de pago";
       // }
     }
 
@@ -161,7 +161,7 @@ export const BulkPaymentDrawer = ({
         );
         if (hasInvalidMethod) {
           newErrors[`charge_${charge.id}`] =
-            "La distribución tiene cuentas, métodos o montos inválidos.";
+            "La distribución tiene cuentas, mi©todos o montos invi¡lidos.";
         }
       }
     }
@@ -249,17 +249,17 @@ export const BulkPaymentDrawer = ({
         <Drawer.Content placement="right">
           <Drawer.Dialog
             className="w-full sm:max-w-md"
-            aria-label="Cobrar Múltiples Cargos"
+            aria-label="Cobrar Miºltiples Cargos"
           >
             <Drawer.CloseTrigger />
             <form onSubmit={handleConfirm} className="flex flex-col h-full">
               <Drawer.Header className="flex flex-col gap-1 border-b border-border">
                 <Drawer.Heading className="text-xl font-bold flex items-center gap-2">
                   <HugeiconsIcon icon={Wallet01Icon} />
-                  Cobrar Múltiples Cargos
+                  Cobrar Miºltiples Cargos
                 </Drawer.Heading>
                 <p className="text-sm text-default-500">
-                  Está a punto de cobrar {charges.length} cargos.
+                  Esti¡ a punto de cobrar {charges.length} cargos.
                 </p>
               </Drawer.Header>
 
@@ -321,7 +321,7 @@ export const BulkPaymentDrawer = ({
                     </Select.Popover>
                   </Select>
 
-                  {/* Método de Pago */}
+                  {/* Mi©todo de Pago */}
                   <Select
                     className="w-full"
                     variant="secondary"
@@ -332,7 +332,7 @@ export const BulkPaymentDrawer = ({
                     }}
                     isInvalid={!!errors.paymentMethod}
                   >
-                    <Label>Método de Pago Global</Label>
+                    <Label>Mi©todo de Pago Global</Label>
                     <Select.Trigger>
                       <Select.Value />
                       <Select.Indicator />
@@ -344,8 +344,8 @@ export const BulkPaymentDrawer = ({
                             (a) => a.id === financialAccountId,
                           )?.allowedPaymentMethods || []
                         ).map((method) => (
-                          <ListBox.Item 
-                            key={method} 
+                          <ListBox.Item
+                            key={method}
                             id={method}
                             textValue={PAYMENT_METHOD_LABELS[method] || method}
                           >
@@ -370,7 +370,7 @@ export const BulkPaymentDrawer = ({
                         <span className="text-danger ml-1">*</span>
                       )} */}
                     </Label>
-                    <Input placeholder="Ej. Número de operación" />
+                    <Input placeholder="Ej. Niºmero de operación" />
                     {errors.reference && (
                       <FieldError>{errors.reference}</FieldError>
                     )}

@@ -3,13 +3,15 @@ import { ServiceResponse } from "@/types/api";
 import { api } from "@/utils/api";
 import { IHomeDiscipline } from "@/modules/cms/home-disciplines";
 
-export const getPublicHomeDisciplines = async (): Promise<ServiceResponse<IHomeDiscipline[]>> => {
+export const getPublicHomeDisciplines = async (): Promise<
+  ServiceResponse<IHomeDiscipline[]>
+> => {
   try {
     const response = await api.get<IHomeDiscipline[]>(
       `public/home-disciplines`,
       {
         next: { tags: ["public-home-disciplines"], revalidate: 3600 },
-      }
+      },
     );
 
     return {

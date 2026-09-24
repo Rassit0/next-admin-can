@@ -20,7 +20,7 @@ export const TablePromotions = ({ promotions }: Props) => {
               PORTADA
             </Table.Column>
             <Table.Column allowsSorting id="title">
-              <SortableColumnHeader id="title">Título</SortableColumnHeader>
+              <SortableColumnHeader id="title">Ti­tulo</SortableColumnHeader>
             </Table.Column>
             <Table.Column allowsSorting id="position">
               <SortableColumnHeader id="position">
@@ -62,7 +62,9 @@ export const TablePromotions = ({ promotions }: Props) => {
                 <Table.Cell className="font-medium max-w-75 truncate">
                   {item.title}
                 </Table.Cell>
-                <Table.Cell>{item.position === "PROMO_1" ? "Promo 1" : "Promo 2"}</Table.Cell>
+                <Table.Cell>
+                  {item.position === "PROMO_1" ? "Promo 1" : "Promo 2"}
+                </Table.Cell>
                 <Table.Cell>
                   <Chip
                     size="sm"

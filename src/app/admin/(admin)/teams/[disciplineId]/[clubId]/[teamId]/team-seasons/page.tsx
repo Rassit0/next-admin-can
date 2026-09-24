@@ -31,12 +31,13 @@ export default async function TeamSeasonsPage({ searchParams, params }: Props) {
   const [{ search, page, per_page }, { disciplineId, clubId, teamId }] =
     await Promise.all([searchParams, params]);
 
-  const [teamSeasonsResponse, teamResponse, seasonsOptions] =
-    await Promise.all([
+  const [teamSeasonsResponse, teamResponse, seasonsOptions] = await Promise.all(
+    [
       getTeamSeasons({ search, page, per_page, teamId }),
       getTeamContext({ id: teamId }),
       getSeasonsByDisciplineOptions(disciplineId),
-    ]);
+    ],
+  );
 
   if (teamResponse.error && teamResponse.statusCode === 401) {
     redirect("/login");
@@ -71,7 +72,6 @@ export default async function TeamSeasonsPage({ searchParams, params }: Props) {
       />
     );
   }
-
 
   if (seasonsOptions.error) {
     return (

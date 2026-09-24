@@ -68,13 +68,13 @@ export const EditShiftModal = ({ courseSeasonId, urlBase, shift }: Props) => {
 
   const handleEditShift = async () => {
     const newErrors: Record<string, string> = {};
-    if (!categoryId) newErrors.categoryId = "Seleccione una categoría";
-    if (!gender) newErrors.gender = "Seleccione un género";
+    if (!categoryId) newErrors.categoryId = "Seleccione una categori­a";
+    if (!gender) newErrors.gender = "Seleccione un gi©nero";
     if (minBirthYear && maxBirthYear && minBirthYear > maxBirthYear) {
-      newErrors.minBirthYear = "Error en rango de años";
+      newErrors.minBirthYear = "Error en rango de ai±os";
     }
     if (minMembers > maxMembers) {
-      newErrors.minMembers = "Mínimo no puede ser mayor que el máximo";
+      newErrors.minMembers = "Mi­nimo no puede ser mayor que el mi¡ximo";
     }
 
     setErrors(newErrors);
@@ -143,7 +143,7 @@ export const EditShiftModal = ({ courseSeasonId, urlBase, shift }: Props) => {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="col-span-2">
                     <SelectCategory
-                      label="Categoría"
+                      label="Categori­a"
                       categoriesOptions={categoriesOptions}
                       categoryId={categoryId}
                       setCategoryId={setCategoryId}
@@ -213,7 +213,7 @@ export const EditShiftModal = ({ courseSeasonId, urlBase, shift }: Props) => {
 
                   <div className="col-span-1">
                     <label className="text-xs font-bold mb-1 block">
-                      Año Nacimiento Min (Opcional)
+                      Ai±o Nacimiento Min (Opcional)
                     </label>
                     <input
                       type="number"
@@ -234,7 +234,7 @@ export const EditShiftModal = ({ courseSeasonId, urlBase, shift }: Props) => {
                   </div>
                   <div className="col-span-1">
                     <label className="text-xs font-bold mb-1 block">
-                      Año Nacimiento Max (Opcional)
+                      Ai±o Nacimiento Max (Opcional)
                     </label>
                     <input
                       type="number"
@@ -250,7 +250,7 @@ export const EditShiftModal = ({ courseSeasonId, urlBase, shift }: Props) => {
                   </div>
                   <div>
                     <label className="text-xs font-bold mb-1 block">
-                      Cupo Máximo
+                      Cupo Mi¡ximo
                     </label>
                     <input
                       type="number"
@@ -262,7 +262,7 @@ export const EditShiftModal = ({ courseSeasonId, urlBase, shift }: Props) => {
                   </div>
                   <div>
                     <label className="text-xs font-bold mb-1 block">
-                      Cupo Mínimo
+                      Cupo Mi­nimo
                     </label>
                     <input
                       type="number"

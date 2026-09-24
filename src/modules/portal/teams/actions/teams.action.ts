@@ -23,7 +23,7 @@ export const getPublicTeams = async (
     return {
       error: false,
       data: res.data,
-      message: res.message || "Equipos públicos obtenidos exitosamente",
+      message: res.message || "Equipos piºblicos obtenidos exitosamente",
     };
   });
 };

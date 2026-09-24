@@ -8,7 +8,7 @@ import type { IHomeDiscipline } from "@/modules/cms/home-disciplines";
 
 const fallbackSections = [
   {
-    title: "Básquetbol",
+    title: "Bi¡squetbol",
     href: "/teams/basketball",
   },
   {

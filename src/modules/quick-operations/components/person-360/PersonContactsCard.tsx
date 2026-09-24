@@ -3,7 +3,10 @@ import React, { useEffect, useState } from "react";
 import { Card, Spinner, Avatar } from "@heroui/react";
 import { usePermissions } from "@/shared/providers/PermissionsProvider";
 import { getPersonContacts } from "../../../persons/actions/get-person-contacts";
-import { IPersonContact, ContactRelationshipLabels } from "../../../persons/interfaces/person-contact.interface";
+import {
+  IPersonContact,
+  ContactRelationshipLabels,
+} from "../../../persons/interfaces/person-contact.interface";
 import { PersonContactDrawer } from "./PersonContactDrawer";
 import { DeleteContactModal } from "./DeleteContactModal";
 import { ContactDetailsModal } from "./ContactDetailsModal";
@@ -21,14 +24,18 @@ export const PersonContactsCard = ({ personId, initialContacts }: Props) => {
   const canUpdate = permissions.includes("UPDATE_PERSONS");
   const prefersReducedMotion = useReducedMotion();
 
-  const [contacts, setContacts] = useState<IPersonContact[]>(initialContacts || []);
+  const [contacts, setContacts] = useState<IPersonContact[]>(
+    initialContacts || [],
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
-  const [selectedContact, setSelectedContact] = useState<IPersonContact | null>(null);
+  const [selectedContact, setSelectedContact] = useState<IPersonContact | null>(
+    null,
+  );
 
   // Sincronizar estado cuando initialContacts cambie desde Server
   useEffect(() => {
@@ -102,11 +109,11 @@ export const PersonContactsCard = ({ personId, initialContacts }: Props) => {
       <Card className="h-full shadow-sm">
         <Card.Header className="flex justify-between items-center">
           <h3 className="font-semibold text-lg flex items-center gap-2">
-            <i className="ri-team-line text-default-500"></i> Familiares y Contactos (
-            {contacts.length})
+            <i className="ri-team-line text-default-500"></i> Familiares y
+            Contactos ({contacts.length})
           </h3>
           {canUpdate && (
-            <button 
+            <button
               className="text-primary hover:text-primary-600 text-sm font-medium transition-colors"
               onClick={handleAdd}
             >
@@ -142,26 +149,37 @@ export const PersonContactsCard = ({ personId, initialContacts }: Props) => {
                 >
                   <div className="flex justify-between items-start gap-2">
                     <div className="flex items-center gap-3">
-                      <button onClick={() => handleViewDetails(contact)} className="hover:opacity-80 transition-opacity">
+                      <button
+                        onClick={() => handleViewDetails(contact)}
+                        className="hover:opacity-80 transition-opacity"
+                      >
                         <Avatar size="md">
-                          <Avatar.Image src={contact.contactPerson.imageUrl || undefined} />
+                          <Avatar.Image
+                            src={contact.contactPerson.imageUrl || undefined}
+                          />
                           <Avatar.Fallback>
-                            {contact.contactPerson.name.charAt(0) + (contact.contactPerson.lastName?.charAt(0) || "")}
+                            {contact.contactPerson.name.charAt(0) +
+                              (contact.contactPerson.lastName?.charAt(0) || "")}
                           </Avatar.Fallback>
                         </Avatar>
                       </button>
                       <div>
-                        <h4 className="font-semibold text-sm leading-tight hover:text-primary cursor-pointer transition-colors" onClick={() => handleViewDetails(contact)}>
-                          {contact.contactPerson.name} {contact.contactPerson.lastName}
+                        <h4
+                          className="font-semibold text-sm leading-tight hover:text-primary cursor-pointer transition-colors"
+                          onClick={() => handleViewDetails(contact)}
+                        >
+                          {contact.contactPerson.name}{" "}
+                          {contact.contactPerson.lastName}
                         </h4>
                         <p className="text-xs text-default-500 mt-0.5">
-                          {ContactRelationshipLabels[contact.relationship] || contact.relationship}
+                          {ContactRelationshipLabels[contact.relationship] ||
+                            contact.relationship}
                         </p>
                       </div>
                     </div>
-                    
+
                     <div className="flex gap-2">
-                      <button 
+                      <button
                         className="text-default-400 hover:text-primary transition-colors"
                         onClick={() => handleViewDetails(contact)}
                         title="Ver detalles"
@@ -170,14 +188,14 @@ export const PersonContactsCard = ({ personId, initialContacts }: Props) => {
                       </button>
                       {canUpdate && (
                         <>
-                          <button 
+                          <button
                             className="text-default-400 hover:text-primary transition-colors"
                             onClick={() => handleEdit(contact)}
                             title="Editar contacto"
                           >
                             <i className="ri-pencil-line text-lg"></i>
                           </button>
-                          <button 
+                          <button
                             className="text-default-400 hover:text-danger transition-colors"
                             onClick={() => handleDelete(contact)}
                             title="Eliminar contacto"
@@ -192,7 +210,8 @@ export const PersonContactsCard = ({ personId, initialContacts }: Props) => {
                     <div className="flex gap-2">
                       {contact.isEmergencyContact && (
                         <span className="text-xs font-medium bg-danger-100 text-danger-600 px-2 py-0.5 rounded-md flex items-center">
-                          <i className="ri-heart-pulse-line mr-1"></i> Emergencia
+                          <i className="ri-heart-pulse-line mr-1"></i>{" "}
+                          Emergencia
                         </span>
                       )}
                       {contact.isBillingContact && (
@@ -216,7 +235,7 @@ export const PersonContactsCard = ({ personId, initialContacts }: Props) => {
         contact={selectedContact}
         onSuccess={fetchContacts}
       />
-      
+
       <DeleteContactModal
         isOpen={isDeleteModalOpen}
         onOpenChange={handleDeleteModalClose}

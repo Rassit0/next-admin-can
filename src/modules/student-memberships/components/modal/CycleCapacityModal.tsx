@@ -15,7 +15,10 @@ import {
   RefreshIcon,
 } from "@hugeicons/core-free-icons";
 import React, { useState, useEffect } from "react";
-import { getCycleCapacity, CycleCapacity } from "@/modules/course-seasons/actions/get-cycle-capacity";
+import {
+  getCycleCapacity,
+  CycleCapacity,
+} from "@/modules/course-seasons/actions/get-cycle-capacity";
 
 interface Props {
   courseSeasonId: string;
@@ -39,7 +42,10 @@ export const CycleCapacityModal = ({ courseSeasonId }: Props) => {
         const sortedData = [...res.data].sort((a, b) => {
           const shiftCompare = a.shiftName.localeCompare(b.shiftName);
           if (shiftCompare !== 0) return shiftCompare;
-          return new Date(a.cycleStartDate).getTime() - new Date(b.cycleStartDate).getTime();
+          return (
+            new Date(a.cycleStartDate).getTime() -
+            new Date(b.cycleStartDate).getTime()
+          );
         });
         setData(sortedData);
       }
@@ -62,7 +68,7 @@ export const CycleCapacityModal = ({ courseSeasonId }: Props) => {
 
   // Asegurar que la fecha se formatea sin shift de timezone (considerando que vienen en UTC a las 00:00:00)
   const formatCycleDate = (dateString: string) => {
-    // Si viene sin Z, asume local, lo forzamos a UTC para mostrar exactamente el mes/año
+    // Si viene sin Z, asume local, lo forzamos a UTC para mostrar exactamente el mes/ai±o
     const normalized = dateString.endsWith("Z") ? dateString : `${dateString}Z`;
     const date = new Date(normalized);
     const formatter = new Intl.DateTimeFormat("es-ES", {
@@ -103,13 +109,21 @@ export const CycleCapacityModal = ({ courseSeasonId }: Props) => {
               {isLoading ? (
                 <div className="flex flex-col items-center justify-center p-8 gap-4">
                   <Spinner size="lg" />
-                  <p className="text-sm text-muted-foreground">Cargando cupos...</p>
+                  <p className="text-sm text-muted-foreground">
+                    Cargando cupos...
+                  </p>
                 </div>
               ) : error ? (
                 <div className="p-6">
                   <div className="flex flex-col items-center justify-center text-center p-6 bg-error-container/20 rounded-xl border border-error/20 gap-4">
-                    <HugeiconsIcon icon={Alert01Icon} size={32} className="text-error" />
-                    <p className="text-sm text-foreground font-medium">{error}</p>
+                    <HugeiconsIcon
+                      icon={Alert01Icon}
+                      size={32}
+                      className="text-error"
+                    />
+                    <p className="text-sm text-foreground font-medium">
+                      {error}
+                    </p>
                     <Button size="sm" variant="secondary" onPress={loadData}>
                       <HugeiconsIcon icon={RefreshIcon} size={16} /> Reintentar
                     </Button>
@@ -122,25 +136,40 @@ export const CycleCapacityModal = ({ courseSeasonId }: Props) => {
               ) : (
                 <Table>
                   <Table.ScrollContainer>
-                    <Table.Content aria-label="Capacidad de Ciclos" className="min-w-full">
+                    <Table.Content
+                      aria-label="Capacidad de Ciclos"
+                      className="min-w-full"
+                    >
                       <Table.Header className="bg-surface-secondary">
                         <Table.Column id="cycle">
-                          <span className="text-xs font-semibold uppercase tracking-wide">Ciclo</span>
+                          <span className="text-xs font-semibold uppercase tracking-wide">
+                            Ciclo
+                          </span>
                         </Table.Column>
                         <Table.Column id="shift">
-                          <span className="text-xs font-semibold uppercase tracking-wide">Turno</span>
+                          <span className="text-xs font-semibold uppercase tracking-wide">
+                            Turno
+                          </span>
                         </Table.Column>
                         <Table.Column id="capacity" className="text-right">
-                          <span className="text-xs font-semibold uppercase tracking-wide">Capacidad</span>
+                          <span className="text-xs font-semibold uppercase tracking-wide">
+                            Capacidad
+                          </span>
                         </Table.Column>
                         <Table.Column id="occupied" className="text-right">
-                          <span className="text-xs font-semibold uppercase tracking-wide">Ocupados</span>
+                          <span className="text-xs font-semibold uppercase tracking-wide">
+                            Ocupados
+                          </span>
                         </Table.Column>
                         <Table.Column id="available" className="text-right">
-                          <span className="text-xs font-semibold uppercase tracking-wide">Disponibles</span>
+                          <span className="text-xs font-semibold uppercase tracking-wide">
+                            Disponibles
+                          </span>
                         </Table.Column>
                         <Table.Column id="status">
-                          <span className="text-xs font-semibold uppercase tracking-wide">Estado</span>
+                          <span className="text-xs font-semibold uppercase tracking-wide">
+                            Estado
+                          </span>
                         </Table.Column>
                       </Table.Header>
                       <Table.Body
@@ -150,7 +179,9 @@ export const CycleCapacityModal = ({ courseSeasonId }: Props) => {
                         {(item) => {
                           const isUnlimited = item.maxMembers === null;
                           return (
-                            <Table.Row key={`${item.shiftId}-${item.cycleStartDate}`}>
+                            <Table.Row
+                              key={`${item.shiftId}-${item.cycleStartDate}`}
+                            >
                               <Table.Cell>
                                 <span className="font-medium text-foreground">
                                   {formatCycleDate(item.cycleStartDate)}
@@ -163,29 +194,45 @@ export const CycleCapacityModal = ({ courseSeasonId }: Props) => {
                               </Table.Cell>
                               <Table.Cell className="text-right">
                                 {isUnlimited ? (
-                                  <span className="text-muted-foreground italic text-sm">Ilimitada</span>
+                                  <span className="text-muted-foreground italic text-sm">
+                                    Ilimitada
+                                  </span>
                                 ) : (
-                                  <span className="font-semibold">{item.maxMembers}</span>
+                                  <span className="font-semibold">
+                                    {item.maxMembers}
+                                  </span>
                                 )}
                               </Table.Cell>
                               <Table.Cell className="text-right">
-                                <span className="font-semibold text-foreground">{item.occupiedSpots}</span>
+                                <span className="font-semibold text-foreground">
+                                  {item.occupiedSpots}
+                                </span>
                               </Table.Cell>
                               <Table.Cell className="text-right">
                                 {isUnlimited ? (
-                                  <span className="text-muted-foreground">--</span>
+                                  <span className="text-muted-foreground">
+                                    --
+                                  </span>
                                 ) : (
-                                  <span className="font-semibold">{item.availableSpots}</span>
+                                  <span className="font-semibold">
+                                    {item.availableSpots}
+                                  </span>
                                 )}
                               </Table.Cell>
                               <Table.Cell>
                                 <Chip
                                   variant="soft"
-                                  color={item.status === "AVAILABLE" ? "success" : "danger"}
+                                  color={
+                                    item.status === "AVAILABLE"
+                                      ? "success"
+                                      : "danger"
+                                  }
                                   size="sm"
                                   className="font-bold"
                                 >
-                                  {item.status === "AVAILABLE" ? "Disponible" : "Lleno"}
+                                  {item.status === "AVAILABLE"
+                                    ? "Disponible"
+                                    : "Lleno"}
                                 </Chip>
                               </Table.Cell>
                             </Table.Row>

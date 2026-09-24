@@ -33,7 +33,7 @@ export const SortableColumnHeader = ({ children, id, className }: Props) => {
 
     let nextOrder: "asc" | "desc" = "asc";
 
-    // Si ya está ordenado por esta columna
+    // Si ya esti¡ ordenado por esta columna
     if (currentField === id) {
       nextOrder = currentOrder === "asc" ? "desc" : "asc";
     }
@@ -56,7 +56,7 @@ export const SortableColumnHeader = ({ children, id, className }: Props) => {
       className={clsx(
         "group flex items-center gap-1 select-none transition-colors",
         "hover:text-primary",
-        className
+        className,
       )}
     >
       <span>{children}</span>

@@ -6,7 +6,7 @@ import { DownloadReportButton } from "@/modules/reports/components/DownloadRepor
 import { DownloadMonthlyAccountingButton } from "@/modules/reports/components/DownloadMonthlyAccountingButton";
 
 export const metadata = {
-  title: "Reportes | Operaciones Rápidas",
+  title: "Reportes | Operaciones Ri¡pidas",
 };
 
 export default async function QuickOperationsReportsPage({
@@ -34,7 +34,7 @@ export default async function QuickOperationsReportsPage({
     <div className="space-y-6">
       <div>
         <h2 className="text-2xl font-bold tracking-tight">
-          Catálogo de Reportes
+          Cati¡logo de Reportes
         </h2>
         <p className="text-default-500">
           Genera y exporta reportes financieros y consolidados del sistema.
@@ -50,7 +50,8 @@ export default async function QuickOperationsReportsPage({
               <p className="text-md font-bold">Informe Mensual Contable</p>
             </div>
             <p className="text-sm text-default-500">
-              Reporte contable gerencial en Excel. Resumen de flujos, distribución contable y sábana detallada para reconciliación.
+              Reporte contable gerencial en Excel. Resumen de flujos,
+              distribución contable y si¡bana detallada para reconciliación.
             </p>
           </div>
           <div className="h-px bg-default-200 w-full" />
@@ -66,14 +67,16 @@ export default async function QuickOperationsReportsPage({
               <p className="text-md font-bold">Informe de Arqueos de Caja</p>
             </div>
             <p className="text-sm text-default-500">
-              Auditoría financiera de tesorería. Historial de cierres, sobrantes
-              y faltantes agrupados por caja física.
+              Auditori­a financiera de tesoreri­a. Historial de cierres,
+              sobrantes y faltantes agrupados por caja fi­sica.
             </p>
           </div>
           <div className="h-px bg-default-200 w-full" />
           <div className="flex-1 space-y-4 p-6">
             <div className="space-y-2">
-              <label className="text-sm font-medium">Período de análisis</label>
+              <label className="text-sm font-medium">
+                Peri­odo de ani¡lisis
+              </label>
               <DateRangeFilter
                 startKey="closures_start"
                 endKey="closures_end"
@@ -105,7 +108,9 @@ export default async function QuickOperationsReportsPage({
           <div className="h-px bg-default-200 w-full" />
           <div className="flex-1 space-y-4 p-6">
             <div className="space-y-2">
-              <label className="text-sm font-medium">Período de análisis</label>
+              <label className="text-sm font-medium">
+                Peri­odo de ani¡lisis
+              </label>
               <DateRangeFilter
                 startKey="detailed_start"
                 endKey="detailed_end"
@@ -127,11 +132,11 @@ export default async function QuickOperationsReportsPage({
           <div className="flex items-center gap-2 mb-2">
             <HugeiconsIcon icon={File01Icon} className="text-default-500" />
             <p className="text-md font-bold text-default-500">
-              Más reportes próximamente
+              Mi¡s reportes próximamente
             </p>
           </div>
           <p className="text-sm text-default-400">
-            Nuevos reportes como "Estado de Deudores" se irán añadiendo aquí.
+            Nuevos reportes como "Estado de Deudores" se iri¡n ai±adiendo aqui­.
           </p>
         </div>
       </div>

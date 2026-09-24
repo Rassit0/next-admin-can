@@ -5,10 +5,17 @@ import { handleServerAction } from "@/utils";
 import { INewsCategory } from "../interfaces/news-categories.interface";
 import { auth } from "@/auth";
 
-export const getNewsCategories = async (): Promise<ServiceResponse<INewsCategory[]>> => {
+export const getNewsCategories = async (): Promise<
+  ServiceResponse<INewsCategory[]>
+> => {
   const session = await auth();
 
-  if (!session?.user) return { error: true, statusCode: 401, message: "Su sesión ha expirado. Por favor, inicie sesión nuevamente." } as any;
+  if (!session?.user)
+    return {
+      error: true,
+      statusCode: 401,
+      message: "Su sesión ha expirado. Por favor, inicie sesión nuevamente.",
+    } as any;
 
   return handleServerAction(async () => {
     const res = await api.get<INewsCategory[]>("news-categories", {

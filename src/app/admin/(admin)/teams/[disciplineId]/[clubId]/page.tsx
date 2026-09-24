@@ -44,7 +44,7 @@ export default async function TeamsPage({ searchParams, params }: Props) {
     getClubContext({ id: clubId }),
   ]);
 
-  // 1. Manejo de error específico (Ej: 401 no autorizado)
+  // 1. Manejo de error especi­fico (Ej: 401 no autorizado)
   if (teamsResponse.error && teamsResponse.statusCode === 401) {
     redirect("/login");
   }

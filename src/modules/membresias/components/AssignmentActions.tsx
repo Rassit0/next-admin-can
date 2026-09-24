@@ -3,7 +3,12 @@
 import { Button, Dropdown, Spinner } from "@heroui/react";
 import { useState } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { MoreVerticalIcon, PauseCircleIcon, LogoutIcon, PlayCircleIcon } from "@hugeicons/core-free-icons";
+import {
+  MoreVerticalIcon,
+  PauseCircleIcon,
+  LogoutIcon,
+  PlayCircleIcon,
+} from "@hugeicons/core-free-icons";
 import { IMemberTeamSeasonAssignment } from "@/modules/membresias/types";
 import {
   suspendMemberAssignment,
@@ -82,7 +87,8 @@ export const AssignmentActions = ({
       label: "Retirar",
       icon: LogoutIcon,
       color: "danger" as const,
-      visible: assignment.status === "active" || assignment.status === "suspended",
+      visible:
+        assignment.status === "active" || assignment.status === "suspended",
     },
   ];
 
@@ -97,7 +103,7 @@ export const AssignmentActions = ({
         isDisabled
         className="text-muted"
       >
-        —
+        Ã¢ÂÂ
       </Button>
     );
   }
@@ -117,7 +123,7 @@ export const AssignmentActions = ({
           <HugeiconsIcon icon={MoreVerticalIcon} size={18} />
         )}
       </Button>
-      <Dropdown.Menu aria-label="Acciones de asignación">
+      <Dropdown.Menu aria-label="Acciones de asignaciiÂ³n">
         {availableActions.map((action) => (
           <Dropdown.Item
             key={action.key}

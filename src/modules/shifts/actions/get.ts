@@ -21,7 +21,12 @@ export const getShifts = async ({
 }: SearchParams): Promise<ServiceResponse<IShiftResponse>> => {
   const session = await auth();
 
-  if (!session?.user) return { error: true, statusCode: 401, message: "Su sesión ha expirado. Por favor, inicie sesión nuevamente." } as any;
+  if (!session?.user)
+    return {
+      error: true,
+      statusCode: 401,
+      message: "Su sesión ha expirado. Por favor, inicie sesión nuevamente.",
+    } as any;
 
   return handleServerAction(async () => {
     const params = new URLSearchParams();
@@ -30,18 +35,15 @@ export const getShifts = async ({
     if (page) params.set("page", page);
     if (institutionId) params.set("institutionId", institutionId);
 
-    const res = await api.get<IShiftResponse>(
-      `shifts?${params.toString()}`,
-      {
-        next: {
-          tags: ["shifts"],
-          revalidate: 3600,
-        },
-        headers: {
-          Authorization: `Bearer ${session.user.token}`,
-        },
+    const res = await api.get<IShiftResponse>(`shifts?${params.toString()}`, {
+      next: {
+        tags: ["shifts"],
+        revalidate: 3600,
       },
-    );
+      headers: {
+        Authorization: `Bearer ${session.user.token}`,
+      },
+    });
 
     const data = res.data.map((shift) => ({
       ...shift,
@@ -59,4 +61,3 @@ export const getShifts = async ({
     };
   });
 };
-

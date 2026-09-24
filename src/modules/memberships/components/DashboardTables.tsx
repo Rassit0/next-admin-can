@@ -83,7 +83,9 @@ export const DashboardTables = ({
                                 size="sm"
                                 variant="soft"
                                 color={
-                                  debtor.type === "Jugador" ? "accent" : "default"
+                                  debtor.type === "Jugador"
+                                    ? "accent"
+                                    : "default"
                                 }
                               >
                                 {debtor.type}
@@ -135,7 +137,9 @@ export const DashboardTables = ({
                                 size="sm"
                                 variant="soft"
                                 color={
-                                  charge.type === "Jugador" ? "accent" : "default"
+                                  charge.type === "Jugador"
+                                    ? "accent"
+                                    : "default"
                                 }
                               >
                                 {charge.type}
@@ -162,16 +166,16 @@ export const DashboardTables = ({
       <Card className="border-none bg-background/60 dark:bg-default-100/50 shadow-sm flex flex-col">
         <Card.Header className="px-6 pt-6">
           <Card.Title className="text-lg font-semibold">
-            Últimos Pagos
+            iltimos Pagos
           </Card.Title>
         </Card.Header>
         <div className="px-6 pb-6 pt-0 flex-1">
-          <Table aria-label="Últimos pagos" className="mt-2">
+          <Table aria-label="iltimos pagos" className="mt-2">
             <Table.ScrollContainer>
               <Table.Content>
                 <Table.Header>
                   <Table.Column isRowHeader>PAGADOR</Table.Column>
-                  <Table.Column>MÉTODO</Table.Column>
+                  <Table.Column>MiTODO</Table.Column>
                   <Table.Column>MONTO</Table.Column>
                   <Table.Column>FECHA</Table.Column>
                 </Table.Header>

@@ -16,14 +16,17 @@ export const createAccountCategory = async (
   data: CreateAccountCategoryDto,
 ): Promise<ServiceResponse<IAccountCategory>> => {
   return handleServerAction(async () => {
-    const res = await api.post<{ message: string; data: IAccountCategory }>("account-categories", data);
+    const res = await api.post<{ message: string; data: IAccountCategory }>(
+      "account-categories",
+      data,
+    );
 
     updateTag("account-categories");
 
     return {
       error: false,
       data: res.data,
-      message: res.message || "Categoría creada exitosamente",
+      message: res.message || "Categori­a creada exitosamente",
     };
   });
 };

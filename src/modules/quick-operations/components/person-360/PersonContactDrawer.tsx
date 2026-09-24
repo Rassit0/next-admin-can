@@ -17,8 +17,12 @@ import { toast } from "sonner";
 import { addPersonContact } from "@/modules/persons/actions/add-person-contact";
 import { editPersonContact } from "@/modules/persons/actions/edit-person-contact";
 import { SelectOrCreatePerson } from "@/modules/persons";
-import { IPersonOption } from "@/common/actions/get-persons-options";
-import { IPersonContact, ContactRelationshipLabels, ContactRelationship } from "@/modules/persons/interfaces/person-contact.interface";
+import { IPersonOption } from "@/modules/persons";
+import {
+  IPersonContact,
+  ContactRelationshipLabels,
+  ContactRelationship,
+} from "@/modules/persons/interfaces/person-contact.interface";
 import { revalidatePersonContactsCache } from "../../actions/revalidate-contacts";
 
 interface Props {
@@ -38,8 +42,12 @@ export const PersonContactDrawer = ({
 }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [contactPersonId, setContactPersonId] = useState<string | null>(null);
-  const [selectedPerson, setSelectedPerson] = useState<IPersonOption | null>(null);
-  const [relationship, setRelationship] = useState<ContactRelationship | "">("");
+  const [selectedPerson, setSelectedPerson] = useState<IPersonOption | null>(
+    null,
+  );
+  const [relationship, setRelationship] = useState<ContactRelationship | "">(
+    "",
+  );
   const [isEmergencyContact, setIsEmergencyContact] = useState(false);
   const [isBillingContact, setIsBillingContact] = useState(false);
 
@@ -87,7 +95,7 @@ export const PersonContactDrawer = ({
           isEmergencyContact,
           isBillingContact,
         });
-        
+
         if (res.error) {
           toast.error(res.message);
         } else {
@@ -131,7 +139,7 @@ export const PersonContactDrawer = ({
               {drawerTitle}
             </Drawer.Heading>
           </Drawer.Header>
-          
+
           <Drawer.Body className="gap-6 pt-6 pb-6">
             {!isEditing ? (
               <SelectOrCreatePerson
@@ -143,9 +151,14 @@ export const PersonContactDrawer = ({
               />
             ) : (
               <div className="w-full flex flex-col gap-1">
-                <Label className="text-sm font-semibold text-default-600">Persona Contacto</Label>
+                <Label className="text-sm font-semibold text-default-600">
+                  Persona Contacto
+                </Label>
                 <div className="p-3 bg-default-100 rounded-lg border border-default-200">
-                  <span className="font-medium">{contact.contactPerson.name} {contact.contactPerson.lastName}</span>
+                  <span className="font-medium">
+                    {contact.contactPerson.name}{" "}
+                    {contact.contactPerson.lastName}
+                  </span>
                 </div>
               </div>
             )}
@@ -170,11 +183,13 @@ export const PersonContactDrawer = ({
               </ComboBox.InputGroup>
               <ComboBox.Popover>
                 <ListBox>
-                  {Object.entries(ContactRelationshipLabels).map(([key, label]) => (
-                    <ListBox.Item key={key} id={key} textValue={label}>
-                      {label}
-                    </ListBox.Item>
-                  ))}
+                  {Object.entries(ContactRelationshipLabels).map(
+                    ([key, label]) => (
+                      <ListBox.Item key={key} id={key} textValue={label}>
+                        {label}
+                      </ListBox.Item>
+                    ),
+                  )}
                 </ListBox>
               </ComboBox.Popover>
             </ComboBox>
@@ -185,8 +200,12 @@ export const PersonContactDrawer = ({
                 onChange={setIsEmergencyContact}
               >
                 <div className="flex flex-col">
-                  <span className="font-medium text-sm">Contacto de Emergencia</span>
-                  <span className="text-xs text-default-500">Notificar en caso de incidencias de salud o emergencias.</span>
+                  <span className="font-medium text-sm">
+                    Contacto de Emergencia
+                  </span>
+                  <span className="text-xs text-default-500">
+                    Notificar en caso de incidencias de salud o emergencias.
+                  </span>
                 </div>
               </Switch>
 
@@ -195,8 +214,13 @@ export const PersonContactDrawer = ({
                 onChange={setIsBillingContact}
               >
                 <div className="flex flex-col">
-                  <span className="font-medium text-sm">Contacto de Facturación</span>
-                  <span className="text-xs text-default-500">Recibe notificaciones sobre estados de cuenta y vencimientos.</span>
+                  <span className="font-medium text-sm">
+                    Contacto de Facturación
+                  </span>
+                  <span className="text-xs text-default-500">
+                    Recibe notificaciones sobre estados de cuenta y
+                    vencimientos.
+                  </span>
                 </div>
               </Switch>
             </div>
@@ -215,7 +239,11 @@ export const PersonContactDrawer = ({
               onPress={handleSubmit}
               isDisabled={isLoading}
             >
-              {isLoading ? "Cargando..." : isEditing ? "Guardar Cambios" : "Agregar Contacto"}
+              {isLoading
+                ? "Cargando..."
+                : isEditing
+                  ? "Guardar Cambios"
+                  : "Agregar Contacto"}
             </Button>
           </Drawer.Footer>
         </Drawer.Dialog>

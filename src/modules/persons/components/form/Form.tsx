@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { toast } from "sonner";
 import { iconMap } from "@/utils/iconMap";
 import {
@@ -86,7 +86,9 @@ export const FormPerson = ({
     initialBirthDate,
   );
   const [image, setImage] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(person?.imageUrl || null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(
+    person?.imageUrl || null,
+  );
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -101,7 +103,9 @@ export const FormPerson = ({
     const file = e.target.files?.[0];
     if (file) {
       if (!file.type.startsWith("image/")) {
-        toast.error("Formato inválido", { description: "Por favor, seleccione un archivo de imagen válido." });
+        toast.error("Formato invÃÂÃÂ¡lido", {
+          description: "Por favor, seleccione un archivo de imagen vÃÂÃÂ¡lido.",
+        });
         return;
       }
       setImage(file);
@@ -161,7 +165,7 @@ export const FormPerson = ({
   };
 
   const handleRemoveError = (fieldName: string) => {
-    // Limpiar solo el error de este campo específico
+    // Limpiar solo el error de este campo especÃÂÃÂ­fico
     if (errors[fieldName]) {
       setErrors((prev) => {
         const newErrors = { ...prev };
@@ -227,10 +231,10 @@ export const FormPerson = ({
               : messages;
             return `${field}: ${msgList}`;
           })
-          .join("\n"); // Los separamos por saltos de línea para el toast
+          .join("\n"); // Los separamos por saltos de lÃÂÃÂ­nea para el toast
       }
 
-      // 2. Pasamos la descripción formateada al componente de notificaciones
+      // 2. Pasamos la descripciÃÂÃÂ³n formateada al componente de notificaciones
       toast.error(res.message, {
         description: errorDescription,
       });
@@ -256,7 +260,7 @@ export const FormPerson = ({
       >
         {/* <!-- Basic Information: Bento Layout --> */}
         <div className="flex flex-col gap-8 w-full">
-          {/* Sección de Foto (Compacta pero llamativa) */}
+          {/* SecciÃÂÃÂ³n de Foto (Compacta pero llamativa) */}
           <div className="flex flex-col sm:flex-row items-center gap-6 bg-surface-container-low p-6 rounded-2xl border border-outline-variant/30">
             <div className="relative group shrink-0">
               <input
@@ -268,7 +272,11 @@ export const FormPerson = ({
               />
               <div className="w-24 h-24 rounded-full bg-background border-4 border-background shadow-inner flex items-center justify-center overflow-hidden">
                 {previewUrl ? (
-                  <img src={previewUrl} alt="Preview" className="w-full h-full object-cover" />
+                  <img
+                    src={previewUrl}
+                    alt="Preview"
+                    className="w-full h-full object-cover"
+                  />
                 ) : (
                   <HugeiconsIcon
                     icon={UserIcon}
@@ -290,8 +298,8 @@ export const FormPerson = ({
                 Foto de Perfil
               </h3>
               <p className="text-sm text-on-surface-variant">
-                Sube una foto profesional para la identificación institucional.
-                Tamaño máximo: 5 MB.
+                Sube una foto profesional para la identificaciÃÂÃÂ³n
+                institucional. TamaÃÂÃÂ±o mÃÂÃÂ¡ximo: 5 MB.
               </p>
             </div>
           </div>
@@ -301,7 +309,7 @@ export const FormPerson = ({
             <div className="flex items-center gap-2">
               <div className="w-1.5 h-6 bg-primary rounded-full"></div>
               <h2 className="font-headline text-xl font-bold">
-                Información Básica
+                InformaciÃÂÃÂ³n BÃÂÃÂ¡sica
               </h2>
             </div>
 
@@ -630,4 +638,3 @@ export const FormPerson = ({
     </Surface>
   );
 };
-

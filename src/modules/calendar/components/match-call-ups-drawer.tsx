@@ -5,7 +5,12 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { UserGroupIcon } from "@hugeicons/core-free-icons";
-import { getMatchCallUps, getMatchCallUpCandidates, IMatchCallUpsResponse, IMatchCallUpCandidatesResponse } from "../actions/match-call-ups.action";
+import {
+  getMatchCallUps,
+  getMatchCallUpCandidates,
+  IMatchCallUpsResponse,
+  IMatchCallUpCandidatesResponse,
+} from "../actions/match-call-ups.action";
 import { MatchCallUpSidePanel } from "./match-call-up-side-panel";
 import { IMatchCalendarMetadata } from "../interfaces/calendar.interface";
 
@@ -28,8 +33,9 @@ export const MatchCallUpsDrawer = ({
 }: Props) => {
   const [loading, setLoading] = useState(false);
   const [callUps, setCallUps] = useState<IMatchCallUpsResponse | null>(null);
-  const [candidates, setCandidates] = useState<IMatchCallUpCandidatesResponse | null>(null);
-  
+  const [candidates, setCandidates] =
+    useState<IMatchCallUpCandidatesResponse | null>(null);
+
   // Track dirty state to prompt user on close if they have unsaved changes
   const [isHomeDirty, setIsHomeDirty] = useState(false);
   const [isAwayDirty, setIsAwayDirty] = useState(false);
@@ -53,7 +59,7 @@ export const MatchCallUpsDrawer = ({
       } else {
         setCandidates(candidatesRes.data || null);
       }
-      
+
       // Reset dirty state after loading
       setIsHomeDirty(false);
       setIsAwayDirty(false);
@@ -64,10 +70,13 @@ export const MatchCallUpsDrawer = ({
     }
   };
 
-  const handleSideSuccess = (side: "HOME" | "AWAY", res: IMatchCallUpsResponse) => {
+  const handleSideSuccess = (
+    side: "HOME" | "AWAY",
+    res: IMatchCallUpsResponse,
+  ) => {
     // The backend returns the full updated state (both sides and configuredAt)
     setCallUps(res);
-    
+
     // Only reset the dirty state for the side that was successfully saved
     if (side === "HOME") {
       setIsHomeDirty(false);
@@ -85,10 +94,12 @@ export const MatchCallUpsDrawer = ({
 
   const matchTitle = `${metadata.homeTeam?.name || "N/A"} vs ${metadata.awayTeam?.name || "N/A"}`;
   const matchDateFormatted = new Date(startDate).toLocaleString();
-  
+
   const handleOpenChange = (open: boolean) => {
     if (!open && (isHomeDirty || isAwayDirty)) {
-      if (!window.confirm("Tienes cambios sin guardar. ¿Cerrar de todos modos?")) {
+      if (
+        !window.confirm("Tienes cambios sin guardar. ÃÂ¿Cerrar de todos modos?")
+      ) {
         return; // Prevent closing
       }
     }
@@ -108,7 +119,7 @@ export const MatchCallUpsDrawer = ({
               </Drawer.Heading>
             </div>
             <p className="text-sm text-muted">
-              {matchTitle} • {matchDateFormatted}
+              {matchTitle} - {matchDateFormatted}
             </p>
           </Drawer.Header>
 
@@ -153,8 +164,15 @@ export const MatchCallUpsDrawer = ({
               </div>
             ) : (
               <div className="flex justify-center items-center h-64 flex-col gap-2">
-                <p className="text-sm text-muted">No se pudo cargar la información.</p>
-                <button onClick={fetchAll} className="text-primary-500 text-sm hover:underline">Reintentar</button>
+                <p className="text-sm text-muted">
+                  No se pudo cargar la informaciiÂ³n.
+                </p>
+                <button
+                  onClick={fetchAll}
+                  className="text-primary-500 text-sm hover:underline"
+                >
+                  Reintentar
+                </button>
               </div>
             )}
           </Drawer.Body>

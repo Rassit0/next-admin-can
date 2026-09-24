@@ -118,7 +118,7 @@ export const CashClosuresDrawer = ({
                           </div>
                           <div className="flex flex-col">
                             <span className="text-on-surface-variant text-xs">
-                              Físico
+                              Fi­sico
                             </span>
                             <span>
                               {Number(closure.actualBalance).toLocaleString(

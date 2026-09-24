@@ -1,7 +1,10 @@
-export function getSafeRedirectUrl(url: string | null | undefined, fallback: string = "/admin"): string {
+export function getSafeRedirectUrl(
+  url: string | null | undefined,
+  fallback: string = "/admin",
+): string {
   if (!url) return fallback;
 
-  // Aceptar rutas relativas válidas (empiezan con / pero no con //)
+  // Aceptar rutas relativas vi¡lidas (empiezan con / pero no con //)
   if (url.startsWith("/") && !url.startsWith("//")) {
     return url;
   }

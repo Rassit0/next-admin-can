@@ -60,7 +60,7 @@ export const FormLocation = ({
       newErrors.name = "Debe ingresar un nombre";
     }
     if (!address) {
-      newErrors.address = "Debe ingresar una dirección";
+      newErrors.address = "Debe ingresar una direcciiÂ³n";
     }
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) {
@@ -93,8 +93,8 @@ export const FormLocation = ({
     }
     toast.success(res.message, {
       description: location
-        ? "La instalación se ha editado exitosamente"
-        : "La instalación se ha agregado exitosamente",
+        ? "La instalaciiÂ³n se ha editado exitosamente"
+        : "La instalaciiÂ³n se ha agregado exitosamente",
     });
     onSubmited?.();
   };
@@ -116,7 +116,7 @@ export const FormLocation = ({
               setName(e.target.value);
               setErrors({});
             }}
-            placeholder="Ingrese el nombre de la instalación"
+            placeholder="Ingrese el nombre de la instalaciiÂ³n"
           />
           <FieldError children={errors.name && <> {errors.name}</>} />
         </TextField>
@@ -126,10 +126,10 @@ export const FormLocation = ({
           name="address"
           isInvalid={!!errors.address || undefined}
         >
-          <Label>Dirección</Label>
+          <Label>DirecciiÂ³n</Label>
           <TextArea
             variant="secondary"
-            placeholder="Ingrese la dirección de la instalación"
+            placeholder="Ingrese la direcciiÂ³n de la instalaciiÂ³n"
             rows={4}
             value={address}
             onChange={(e) => {
@@ -146,10 +146,10 @@ export const FormLocation = ({
           name="description"
           isInvalid={!!errors.description || undefined}
         >
-          <Label>Descripción</Label>
+          <Label>DescripciiÂ³n</Label>
           <TextArea
             variant="secondary"
-            placeholder="Ingrese la descripción de la categoría"
+            placeholder="Ingrese la descripciiÂ³n de la categoriÂ­a"
             rows={4}
             value={description}
             onChange={(e) => {
@@ -181,7 +181,7 @@ export const FormLocation = ({
               <Checkbox.Indicator />
             </Checkbox.Control>
             <Checkbox.Content>
-              <Label>¿Se puede alquilar?</Label>
+              <Label>ÃÂ¿Se puede alquilar?</Label>
             </Checkbox.Content>
           </Checkbox>
           <Checkbox value="isInternal">
@@ -189,7 +189,7 @@ export const FormLocation = ({
               <Checkbox.Indicator />
             </Checkbox.Control>
             <Checkbox.Content>
-              <Label>¿Es interno?</Label>
+              <Label>ÃÂ¿Es interno?</Label>
             </Checkbox.Content>
           </Checkbox>
         </CheckboxGroup>

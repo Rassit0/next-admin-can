@@ -24,7 +24,7 @@ export const getPersons = async ({
     const res = await api.get<IPersonsResponse>(
       `persons?${params.toString()}`, // 1er argumento: el endpoint
       {
-        // 2do argumento: options (aquí va el caché)
+        // 2do argumento: options (aqui­ va el cachi©)
         next: {
           tags: ["persons"],
           revalidate: 3600,

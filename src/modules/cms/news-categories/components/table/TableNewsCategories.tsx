@@ -49,7 +49,7 @@ export const TableNewsCategories = ({ categories }: Props) => {
                     No se encontraron categorías
                   </span>
                   <span className="text-sm text-default-400">
-                    Crea una nueva categoría para empezar.
+                    Crea una nueva categori­a para empezar.
                   </span>
                 </div>
               </div>

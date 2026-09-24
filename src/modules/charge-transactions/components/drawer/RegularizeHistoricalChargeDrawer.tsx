@@ -48,7 +48,7 @@ export const RegularizeHistoricalChargeDrawer = ({
   const [cycles, setCycles] = useState<RegularizableCycle[]>([]);
   const [selectedCycleId, setSelectedCycleId] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   // Override amount handling
   const [useOverride, setUseOverride] = useState(false);
   const [overrideAmount, setOverrideAmount] = useState<string>("");
@@ -94,12 +94,12 @@ export const RegularizeHistoricalChargeDrawer = ({
       toast.error("Selecciona un ciclo para regularizar.");
       return;
     }
-    
+
     let parsedOverrideAmount: number | undefined = undefined;
     if (hasOverridePermission && useOverride && overrideAmount !== "") {
       parsedOverrideAmount = Number(overrideAmount);
       if (isNaN(parsedOverrideAmount) || parsedOverrideAmount < 0) {
-        toast.error("El monto modificado no es válido.");
+        toast.error("El monto modificado no es vi¡lido.");
         return;
       }
     }
@@ -115,16 +115,22 @@ export const RegularizeHistoricalChargeDrawer = ({
 
       if (res.error) {
         if (res.statusCode === 409) {
-          toast.error("Este ciclo ya fue regularizado por otro usuario o sistema. Por favor actualiza la vista.");
+          toast.error(
+            "Este ciclo ya fue regularizado por otro usuario o sistema. Por favor actualiza la vista.",
+          );
           loadCycles();
           router.refresh();
         } else if (res.statusCode === 403) {
-          toast.error("No tienes autorización para modificar el importe histórico.");
+          toast.error(
+            "No tienes autorización para modificar el importe histórico.",
+          );
         } else {
           toast.error(res.message || "Error al regularizar el cargo.");
         }
       } else {
-        toast.success(res.message || "Regularización histórica creada exitosamente.");
+        toast.success(
+          res.message || "Regularización histórica creada exitosamente.",
+        );
         if (onSuccess) onSuccess();
         router.refresh();
         onOpenChange(false);
@@ -157,11 +163,14 @@ export const RegularizeHistoricalChargeDrawer = ({
             <Drawer.Body className="flex flex-col gap-5 pt-6">
               {isLoadingCycles ? (
                 <div className="flex justify-center p-4">
-                  <p className="text-sm text-muted">Cargando ciclos disponibles...</p>
+                  <p className="text-sm text-muted">
+                    Cargando ciclos disponibles...
+                  </p>
                 </div>
               ) : cycles.length === 0 ? (
                 <Alert color="warning">
-                  No existen cuotas históricas pendientes de regularización para esta membresía.
+                  No existen cuotas históricas pendientes de regularización para
+                  esta membresi­a.
                 </Alert>
               ) : (
                 <>
@@ -169,7 +178,9 @@ export const RegularizeHistoricalChargeDrawer = ({
                     name="cycleId"
                     placeholder="Selecciona un ciclo"
                     selectedKey={selectedCycleId || undefined}
-                    onSelectionChange={(key) => setSelectedCycleId(key as string)}
+                    onSelectionChange={(key) =>
+                      setSelectedCycleId(key as string)
+                    }
                     isRequired
                     className="w-full"
                   >
@@ -191,7 +202,8 @@ export const RegularizeHistoricalChargeDrawer = ({
                                 {cycle.title}
                               </span>
                               <span className="text-xs text-muted">
-                                Importe oficial: Bs {Number(cycle.amount).toFixed(2)}
+                                Importe oficial: Bs{" "}
+                                {Number(cycle.amount).toFixed(2)}
                               </span>
                             </div>
                           </ListBox.Item>
@@ -202,7 +214,9 @@ export const RegularizeHistoricalChargeDrawer = ({
 
                   {selectedCycle && (
                     <div className="bg-default-100 p-4 rounded-lg flex justify-between items-center">
-                      <span className="text-sm font-medium">Importe oficial:</span>
+                      <span className="text-sm font-medium">
+                        Importe oficial:
+                      </span>
                       <span className="text-lg font-bold">
                         Bs {Number(selectedCycle.amount).toFixed(2)}
                       </span>
@@ -220,11 +234,13 @@ export const RegularizeHistoricalChargeDrawer = ({
                         />
                         Modificar importe histórico (Excepción administrativa)
                       </label>
-                      
+
                       {useOverride && (
                         <div className="pl-6 flex flex-col gap-2">
                           <Alert color="warning" className="text-xs mb-2">
-                            Estás a punto de alterar el importe oficial de esta cuota. Esta acción quedará registrada en auditoría.
+                            Esti¡s a punto de alterar el importe oficial de esta
+                            cuota. Esta acción quedari¡ registrada en
+                            auditori­a.
                           </Alert>
                           <TextField
                             name="overrideAmount"
@@ -236,14 +252,18 @@ export const RegularizeHistoricalChargeDrawer = ({
                             </Label>
                             <InputGroup>
                               <InputGroup.Prefix>
-                                <span className="text-muted-foreground font-bold text-sm">Bs</span>
+                                <span className="text-muted-foreground font-bold text-sm">
+                                  Bs
+                                </span>
                               </InputGroup.Prefix>
                               <InputGroup.Input
                                 type="number"
                                 step="0.01"
                                 min="0"
                                 value={overrideAmount}
-                                onChange={(e) => setOverrideAmount(e.target.value)}
+                                onChange={(e) =>
+                                  setOverrideAmount(e.target.value)
+                                }
                                 placeholder="Ej. 150.00"
                               />
                             </InputGroup>
@@ -252,21 +272,39 @@ export const RegularizeHistoricalChargeDrawer = ({
                       )}
                     </div>
                   )}
-                  
+
                   {selectedCycle && (
                     <div className="mt-4 border-t border-border pt-4 text-sm">
-                      <p className="font-semibold mb-2">Resumen de la acción:</p>
+                      <p className="font-semibold mb-2">
+                        Resumen de la acción:
+                      </p>
                       <p className="text-muted">
-                        Se generará un cargo PENDIENTE correspondiente{" "}
+                        Se generari¡ un cargo PENDIENTE correspondiente{" "}
                         {selectedCycle.cycleId === "REGISTRATION" ? (
-                          <>a la <strong className="text-foreground">Matrícula de inscripción</strong></>
+                          <>
+                            a la{" "}
+                            <strong className="text-foreground">
+                              Matri­cula de inscripción
+                            </strong>
+                          </>
                         ) : (
-                          <>al ciclo <strong className="text-foreground">{selectedCycle.year} - Mes {selectedCycle.month}</strong></>
+                          <>
+                            al ciclo{" "}
+                            <strong className="text-foreground">
+                              {selectedCycle.year} - Mes {selectedCycle.month}
+                            </strong>
+                          </>
                         )}{" "}
                         por el importe de{" "}
                         <strong className="text-foreground">
-                          Bs {hasOverridePermission && useOverride && overrideAmount !== "" ? Number(overrideAmount).toFixed(2) : Number(selectedCycle.amount).toFixed(2)}
-                        </strong>.
+                          Bs{" "}
+                          {hasOverridePermission &&
+                          useOverride &&
+                          overrideAmount !== ""
+                            ? Number(overrideAmount).toFixed(2)
+                            : Number(selectedCycle.amount).toFixed(2)}
+                        </strong>
+                        .
                       </p>
                     </div>
                   )}
@@ -285,7 +323,12 @@ export const RegularizeHistoricalChargeDrawer = ({
               <Button
                 type="submit"
                 variant="primary"
-                isDisabled={isSubmitting || isLoadingCycles || cycles.length === 0 || !selectedCycleId}
+                isDisabled={
+                  isSubmitting ||
+                  isLoadingCycles ||
+                  cycles.length === 0 ||
+                  !selectedCycleId
+                }
                 isPending={isSubmitting}
               >
                 Regularizar Cargo

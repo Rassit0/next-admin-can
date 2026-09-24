@@ -15,10 +15,10 @@ export const ButtonRedirectBack = () => {
         variant="primary"
         className="w-full sm:w-auto font-medium px-8 py-6 transition-all outline-none focus-visible:ring-2 focus-visible:ring-foreground/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         onPress={() => router.back()}
-        aria-label="Volver atrás"
+        aria-label="Volver atri¡s"
       >
         <HugeiconsIcon icon={ArrowLeft01Icon} className="w-5 h-5" />
-        Volver atrás
+        Volver atri¡s
       </Button>
     </>
   );

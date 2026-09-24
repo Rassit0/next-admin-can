@@ -14,7 +14,10 @@ import {
 } from "@heroui/react";
 import { Dispatch, SetStateAction } from "react";
 import { useAsyncList } from "@react-stately/data";
-import { getAvailableStaffOptions, IStaffOption } from "@/modules/team-season-staff";
+import {
+  getAvailableStaffOptions,
+  IStaffOption,
+} from "@/modules/team-season-staff";
 import { CreateStaffModal } from "@/modules/staff";
 
 interface Props {
@@ -42,12 +45,12 @@ export const SelectOrCreateStaff = ({
 }: Props) => {
   const list = useAsyncList<IStaffOption>({
     async load({ cursor: page = "1", filterText, signal }) {
-      const res = await getAvailableStaffOptions({ 
-        search: filterText, 
-        page, 
-        teamSeasonId 
+      const res = await getAvailableStaffOptions({
+        search: filterText,
+        page,
+        teamSeasonId,
       });
-      
+
       if (!res || res.error) {
         return {
           cursor: undefined,
@@ -60,7 +63,9 @@ export const SelectOrCreateStaff = ({
       };
     },
   });
-  const uniqueItems = Array.from(new Map(list.items.map(item => [item.id, item])).values());
+  const uniqueItems = Array.from(
+    new Map(list.items.map((item) => [item.id, item])).values(),
+  );
 
   return (
     <div className="flex items-end gap-4 w-full">
@@ -76,7 +81,9 @@ export const SelectOrCreateStaff = ({
           const selectedId = key?.toString() || null;
           setStaffId(selectedId);
           if (setSelectedStaff) {
-            const selectedItem = list.items.find((item) => item.id === selectedId);
+            const selectedItem = list.items.find(
+              (item) => item.id === selectedId,
+            );
             setSelectedStaff(selectedItem || null);
           }
           if (handleRemoveError) {
@@ -122,11 +129,17 @@ export const SelectOrCreateStaff = ({
               aria-label="Lista de personal"
               className="max-h-105 overflow-y-auto"
               items={uniqueItems}
-              renderEmptyState={() => <EmptyState>No se encontró personal disponible</EmptyState>}
+              renderEmptyState={() => (
+                <EmptyState>No se encontró personal disponible</EmptyState>
+              )}
             >
               <Collection items={uniqueItems}>
                 {(item) => (
-                  <ListBox.Item key={item.id} id={item.id} textValue={item.fullName}>
+                  <ListBox.Item
+                    key={item.id}
+                    id={item.id}
+                    textValue={item.fullName}
+                  >
                     <div className="flex items-center gap-3 w-full">
                       <Avatar className="shrink-0" size="sm">
                         <Avatar.Image
@@ -156,7 +169,7 @@ export const SelectOrCreateStaff = ({
               >
                 <div className="flex items-center justify-center gap-2 py-2">
                   <Spinner size="sm" />
-                  <span className="muted text-sm">Cargando más...</span>
+                  <span className="muted text-sm">Cargando mi¡s...</span>
                 </div>
               </ListBoxLoadMoreItem>
             </ListBox>
@@ -175,7 +188,8 @@ export const SelectOrCreateStaff = ({
               name: staff.person.name,
               lastName: staff.person.lastName,
               secondLastName: staff.person.secondLastName,
-              fullName: `${staff.person.name} ${staff.person.lastName} ${staff.person.secondLastName || ""}`.trim(),
+              fullName:
+                `${staff.person.name} ${staff.person.lastName} ${staff.person.secondLastName || ""}`.trim(),
               documentNumber: staff.person.documentNumber,
               imageUrl: staff.person.imageUrl,
               isActive: staff.isActive,

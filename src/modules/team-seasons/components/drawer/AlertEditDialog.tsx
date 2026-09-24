@@ -48,9 +48,9 @@ export const AlertEditDialog = ({ isLoading, category, formId }: Props) => {
                 <HugeiconsIcon icon={Alert02Icon} />
               </AlertDialog.Icon>
               <AlertDialog.Heading className="flex flex-col">
-                <span>Actualizar Categoría</span>
+                <span>Actualizar CategoriÂ­a</span>
                 <span className="text-muted">
-                  Estás por modificar la configuración de {category.name}
+                  EstiÂ¡s por modificar la configuraciiÂ³n de {category.name}
                 </span>
               </AlertDialog.Heading>
             </AlertDialog.Header>
@@ -59,15 +59,15 @@ export const AlertEditDialog = ({ isLoading, category, formId }: Props) => {
                 <Alert.Indicator />
                 <Alert.Content>
                   <Alert.Title>
-                    ¿Estás seguro de modificar la configuración de{" "}
+                    ÃÂ¿EstiÂ¡s seguro de modificar la configuraciiÂ³n de{" "}
                     {category.name}?
                   </Alert.Title>
 
                   <Alert.Description>
-                    Los cambios en los límites de edad pueden afectar a los
-                    jugadores asociados a esta categoría. Los pases que ya no
-                    cumplan con los criterios establecidos podrán ser marcados
-                    para revisión o inactivados.
+                    Los cambios en los liÂ­mites de edad pueden afectar a los
+                    jugadores asociados a esta categoriÂ­a. Los pases que ya no
+                    cumplan con los criterios establecidos podriÂ¡n ser marcados
+                    para revisiiÂ³n o inactivados.
                   </Alert.Description>
                 </Alert.Content>
               </Alert>
@@ -84,7 +84,7 @@ export const AlertEditDialog = ({ isLoading, category, formId }: Props) => {
                 onPress={() => state.close()}
                 variant="danger"
               >
-                Sí, modificar
+                SiÂ­, modificar
               </Button>
             </AlertDialog.Footer>
           </AlertDialog.Dialog>

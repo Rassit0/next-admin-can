@@ -1,9 +1,5 @@
 "use client";
-import {
-  Button,
-  Modal,
-  ProgressCircle,
-} from "@heroui/react";
+import { Button, Modal, ProgressCircle } from "@heroui/react";
 import { Image01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState, Dispatch, SetStateAction } from "react";

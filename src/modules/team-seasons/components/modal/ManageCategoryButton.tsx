@@ -44,7 +44,7 @@ export const ManageCategoryButton = ({ teamSeason, urlBase }: Props) => {
         isPending={loading}
       >
         <HugeiconsIcon icon={Add01Icon} size={14} />
-        Agregar Categoría
+        Agregar Categori­a
       </Button>
 
       {isOpen && (

@@ -7,19 +7,24 @@ interface CategorySelectFilterProps {
   categories: { id: string; name: string }[];
 }
 
-export const CategorySelectFilter = ({ categories }: CategorySelectFilterProps) => {
+export const CategorySelectFilter = ({
+  categories,
+}: CategorySelectFilterProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   const currentCategoryId = searchParams.get("teamSeasonCategoryId") || "all";
 
-  const allCategories = [{ id: "all", name: "Todas las categorías" }, ...categories];
+  const allCategories = [
+    { id: "all", name: "Todas las categorías" },
+    ...categories,
+  ];
 
   const handleSelectionChange = (value: string) => {
     const params = new URLSearchParams(searchParams);
 
-    params.set("page", "1"); // Reset a página 1
+    params.set("page", "1"); // Reset a pi¡gina 1
 
     if (value && value !== "all") {
       params.set("teamSeasonCategoryId", value);
@@ -35,11 +40,11 @@ export const CategorySelectFilter = ({ categories }: CategorySelectFilterProps) 
       aria-label="Filtro de categorías"
       variant="secondary"
       className="md:w-64 w-full"
-      placeholder="Categoría"
+      placeholder="Categori­a"
       value={currentCategoryId as Key}
       onChange={(value) => handleSelectionChange(value?.toString() || "all")}
     >
-      <Label>Categoría</Label>
+      <Label>Categori­a</Label>
       <Select.Trigger>
         <Select.Value />
         <Select.Indicator />

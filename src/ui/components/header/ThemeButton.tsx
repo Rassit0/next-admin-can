@@ -17,7 +17,7 @@ export const ThemeButton = () => {
     ? theme === "dark"
       ? Sun01Icon
       : Moon02Icon
-    : Sun01Icon; // ícono estable en SSR
+    : Sun01Icon; // i­cono estable en SSR
 
   return (
     <Button

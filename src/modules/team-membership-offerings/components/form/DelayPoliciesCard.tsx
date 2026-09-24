@@ -50,10 +50,10 @@ export const DelayPoliciesCard = ({
           </div>
           <div>
             <h3 className="font-headline font-bold text-lg text-on-surface">
-              Políticas de Mora y Suspensión
+              Poli­ticas de Mora y Suspensión
             </h3>
             <p className="text-xs text-on-surface-variant font-medium">
-              Configura los límites de recargos y vigencia de membresía.
+              Configura los li­mites de recargos y vigencia de membresi­a.
             </p>
           </div>
         </div>
@@ -79,7 +79,7 @@ export const DelayPoliciesCard = ({
         >
           <Label className="flex items-center gap-2 text-sm font-label font-bold">
             <HugeiconsIcon icon={MoneyExchange01Icon} />
-            Recargo por día
+            Recargo por di­a
           </Label>
           <InputGroup>
             <InputGroup.Prefix>$</InputGroup.Prefix>
@@ -152,7 +152,7 @@ export const DelayPoliciesCard = ({
         >
           <Label className="flex items-center gap-2 text-sm font-label font-bold">
             <HugeiconsIcon icon={UnavailableIcon} />
-            Suspensión Automática
+            Suspensión Automi¡tica
           </Label>
           <NumberField.Group>
             <NumberField.DecrementButton />

@@ -44,7 +44,11 @@ export const CreateManualChargeDrawer = ({
 
   useEffect(() => {
     if (isOpen) {
-      getAccountCategories({ per_page: "100", type: "RECEIVABLE", excludeSystem: "true" }).then(res => {
+      getAccountCategories({
+        per_page: "100",
+        type: "RECEIVABLE",
+        excludeSystem: "true",
+      }).then((res) => {
         if (!res.error && res.data) setCategories(res.data.data || []);
       });
     }
@@ -116,17 +120,21 @@ export const CreateManualChargeDrawer = ({
                 }}
                 isRequired
               >
-                <Label className="text-sm font-semibold">Categoría Contable</Label>
+                <Label className="text-sm font-semibold">
+                  Categori­a Contable
+                </Label>
                 <ComboBox.InputGroup>
-                  <InputGroup.Input
-                    placeholder="Seleccione una categoría"
-                  />
+                  <InputGroup.Input placeholder="Seleccione una categori­a" />
                   <ComboBox.Trigger />
                 </ComboBox.InputGroup>
                 <ComboBox.Popover>
                   <ListBox>
                     {categories.map((cat) => (
-                      <ListBox.Item key={cat.id} id={cat.id} textValue={cat.name}>
+                      <ListBox.Item
+                        key={cat.id}
+                        id={cat.id}
+                        textValue={cat.name}
+                      >
                         {cat.name}
                       </ListBox.Item>
                     ))}
@@ -178,7 +186,7 @@ export const CreateManualChargeDrawer = ({
                 defaultValue={today(getLocalTimeZone())}
               >
                 <Label className="text-sm font-semibold">
-                  Fecha Límite de Pago (Vencimiento)
+                  Fecha Li­mite de Pago (Vencimiento)
                 </Label>
                 <DateField.Group variant="secondary">
                   <DateField.Input>
@@ -191,7 +199,7 @@ export const CreateManualChargeDrawer = ({
                   </DateField.Suffix>
                 </DateField.Group>
                 <DatePicker.Popover>
-                  <Calendar aria-label="Fecha Límite de Pago">
+                  <Calendar aria-label="Fecha Li­mite de Pago">
                     <Calendar.Header>
                       <Calendar.YearPickerTrigger>
                         <Calendar.YearPickerTriggerHeading />

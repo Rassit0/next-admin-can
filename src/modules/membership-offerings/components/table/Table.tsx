@@ -1,6 +1,6 @@
 "use client";
 import { Avatar, Button, Checkbox, Chip, Table } from "@heroui/react";
-import { EyeIcon , Search01Icon } from "@hugeicons/core-free-icons";
+import { EyeIcon, Search01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useEffect, useState } from "react";
 import { ButtonGestion } from "./ButtonGestion";
@@ -45,7 +45,7 @@ export const TableCategories = ({ categories, disciplinesOptions }: Props) => {
             </Table.Column> */}
 
             <Table.Column isRowHeader allowsSorting id="name">
-              <SortableColumnHeader id="name">CATEGORÍA</SortableColumnHeader>
+              <SortableColumnHeader id="name">CATEGORiA</SortableColumnHeader>
             </Table.Column>
 
             <Table.Column allowsSorting id="maxAge">
@@ -60,7 +60,7 @@ export const TableCategories = ({ categories, disciplinesOptions }: Props) => {
               DISCIPLINA
             </Table.Column>
             <Table.Column allowsSorting id="description">
-              DESCRIPCIÓN
+              DESCRIPCIiN
             </Table.Column>
 
             <Table.Column allowsSorting id="createdAt">
@@ -88,7 +88,7 @@ export const TableCategories = ({ categories, disciplinesOptions }: Props) => {
                     No se encontraron registros
                   </span>
                   <span className="text-sm text-default-400">
-                    Intenta con otros términos de búsqueda o agrega uno nuevo.
+                    Intenta con otros ti©rminos de biºsqueda o agrega uno nuevo.
                   </span>
                 </div>
               </div>

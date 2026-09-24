@@ -65,8 +65,12 @@ export const GeneralEventFormModal = ({
   const [loadingData, setLoadingData] = useState(false);
 
   const [locations, setLocations] = useState<ILocation[]>([]);
-  const [institutions, setInstitutions] = useState<{ id: string; name: string }[]>([]);
-  const [categories, setCategories] = useState<{ id: string; name: string; seasonName: string }[]>([]);
+  const [institutions, setInstitutions] = useState<
+    { id: string; name: string }[]
+  >([]);
+  const [categories, setCategories] = useState<
+    { id: string; name: string; seasonName: string }[]
+  >([]);
   const [courseSeasons, setCourseSeasons] = useState<ICourseSeason[]>([]);
 
   const [title, setTitle] = useState("");
@@ -86,7 +90,9 @@ export const GeneralEventFormModal = ({
   const [isRecurrent, setIsRecurrent] = useState(false);
   const [recurrenceDays, setRecurrenceDays] = useState<string[]>([]);
   const [untilDate, setUntilDate] = useState("");
-  const [editScope, setEditScope] = useState<"single" | "following" | "all">("single");
+  const [editScope, setEditScope] = useState<"single" | "following" | "all">(
+    "single",
+  );
 
   const [apiError, setApiError] = useState<string | null>(null);
 
@@ -108,14 +114,14 @@ export const GeneralEventFormModal = ({
             setInstitutionId(instRes.data.id);
           }
         }
-        
+
         if (!seasonsRes.error) {
           const cats = seasonsRes.data.data.flatMap((ts) =>
             ts.categories.map((c) => ({
               id: c.id,
               name: c.category.name,
               seasonName: ts.season.name,
-            }))
+            })),
           );
           setCategories(cats);
         }
@@ -137,14 +143,14 @@ export const GeneralEventFormModal = ({
       setTitle(initialData.title || "");
       setDescription(initialData.description || "");
       setLocationId(initialData.locationId || "");
-      
+
       const toLocalDatetimeLocal = (iso: string) => {
         if (!iso) return "";
         const d = new Date(iso);
         d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
         return d.toISOString().slice(0, 16);
       };
-      
+
       setStartDate(toLocalDatetimeLocal(initialData.startDate));
       setEndDate(toLocalDatetimeLocal(initialData.endDate));
 
@@ -193,9 +199,9 @@ export const GeneralEventFormModal = ({
       setApiError("Las fechas son obligatorias.");
       return;
     }
-    
+
     if (contextType === "TEAM" && !teamSeasonCategoryId) {
-      setApiError("Debes seleccionar una categoría/equipo.");
+      setApiError("Debes seleccionar una categori­a/equipo.");
       return;
     }
     if (contextType === "SCHOOL") {
@@ -215,7 +221,7 @@ export const GeneralEventFormModal = ({
       // Create local Date objects, then get ISO string which includes Z
       const startObj = new Date(startDate);
       const endObj = new Date(endDate);
-      
+
       const payload: any = {
         title: title || undefined,
         description: description || undefined,
@@ -239,7 +245,8 @@ export const GeneralEventFormModal = ({
         payload.institutionId = null;
         payload.teamSeasonCategoryId = null;
         payload.courseSeasonId = courseSeasonId;
-        payload.courseSeasonShiftId = schoolScope === "SHIFT" ? courseSeasonShiftId : null;
+        payload.courseSeasonShiftId =
+          schoolScope === "SHIFT" ? courseSeasonShiftId : null;
       }
 
       if (isRecurrent && mode === "create") {
@@ -262,8 +269,8 @@ export const GeneralEventFormModal = ({
       } else {
         toast.success(
           mode === "create"
-            ? "Evento general creado con éxito"
-            : "Evento general actualizado con éxito",
+            ? "Evento general creado con i©xito"
+            : "Evento general actualizado con i©xito",
         );
         state.setOpen(false);
         if (onSuccess) onSuccess();
@@ -275,7 +282,9 @@ export const GeneralEventFormModal = ({
     }
   };
 
-  const selectedCourseSeason = courseSeasons.find(c => c.id === courseSeasonId);
+  const selectedCourseSeason = courseSeasons.find(
+    (c) => c.id === courseSeasonId,
+  );
   const availableShifts = selectedCourseSeason?.shifts || [];
 
   return (
@@ -286,8 +295,12 @@ export const GeneralEventFormModal = ({
           <Modal.CloseTrigger />
           <Modal.Header>
             <Modal.Heading className="flex items-center gap-2 text-lg font-semibold">
-              <HugeiconsIcon icon={mode === "create" ? Add01Icon : Edit02Icon} />
-              {mode === "create" ? "Crear Evento General" : "Editar Evento General"}
+              <HugeiconsIcon
+                icon={mode === "create" ? Add01Icon : Edit02Icon}
+              />
+              {mode === "create"
+                ? "Crear Evento General"
+                : "Editar Evento General"}
             </Modal.Heading>
           </Modal.Header>
           <Modal.Body className="max-h-[70vh] p-4 md:p-6 overflow-y-auto">
@@ -301,15 +314,22 @@ export const GeneralEventFormModal = ({
                 <CloseButton onPress={() => setApiError(null)} />
               </Alert>
             )}
-            
+
             <TextField className="mb-4">
-              <Label>Título (Opcional)</Label>
-              <Input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Ej: Reunión Institucional" />
+              <Label>Ti­tulo (Opcional)</Label>
+              <Input
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="Ej: Reunión Institucional"
+              />
             </TextField>
-            
+
             <TextField className="mb-4">
               <Label>Descripción (Opcional)</Label>
-              <Input value={description} onChange={(e) => setDescription(e.target.value)} />
+              <Input
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
             </TextField>
 
             <div className="grid grid-cols-2 gap-4 mb-4">
@@ -342,9 +362,15 @@ export const GeneralEventFormModal = ({
                 <Select.Trigger />
                 <Select.Popover>
                   <ListBox>
-                    <ListBox.Item id="" textValue="Sin locación">Sin locación</ListBox.Item>
+                    <ListBox.Item id="" textValue="Sin locación">
+                      Sin locación
+                    </ListBox.Item>
                     {locations.map((loc) => (
-                      <ListBox.Item id={loc.id} key={loc.id} textValue={loc.name}>
+                      <ListBox.Item
+                        id={loc.id}
+                        key={loc.id}
+                        textValue={loc.name}
+                      >
                         {loc.name}
                       </ListBox.Item>
                     ))}
@@ -359,14 +385,22 @@ export const GeneralEventFormModal = ({
                 <Label>Alcance</Label>
                 <Select
                   selectedKey={contextType}
-                  onSelectionChange={(key) => setContextType(key as ContextType)}
+                  onSelectionChange={(key) =>
+                    setContextType(key as ContextType)
+                  }
                 >
                   <Select.Trigger />
                   <Select.Popover>
                     <ListBox>
-                      <ListBox.Item id="INSTITUTION" textValue="Institucional">Institucional</ListBox.Item>
-                      <ListBox.Item id="TEAM" textValue="Equipo / Categoría">Equipo / Categoría</ListBox.Item>
-                      <ListBox.Item id="SCHOOL" textValue="Escuela / Temporada">Escuela / Temporada</ListBox.Item>
+                      <ListBox.Item id="INSTITUTION" textValue="Institucional">
+                        Institucional
+                      </ListBox.Item>
+                      <ListBox.Item id="TEAM" textValue="Equipo / Categori­a">
+                        Equipo / Categori­a
+                      </ListBox.Item>
+                      <ListBox.Item id="SCHOOL" textValue="Escuela / Temporada">
+                        Escuela / Temporada
+                      </ListBox.Item>
                     </ListBox>
                   </Select.Popover>
                 </Select>
@@ -382,8 +416,14 @@ export const GeneralEventFormModal = ({
                     <Select.Trigger />
                     <Select.Popover>
                       <ListBox>
-                        {institutions.map(inst => (
-                          <ListBox.Item id={inst.id} key={inst.id} textValue={inst.name}>{inst.name}</ListBox.Item>
+                        {institutions.map((inst) => (
+                          <ListBox.Item
+                            id={inst.id}
+                            key={inst.id}
+                            textValue={inst.name}
+                          >
+                            {inst.name}
+                          </ListBox.Item>
                         ))}
                       </ListBox>
                     </Select.Popover>
@@ -393,16 +433,22 @@ export const GeneralEventFormModal = ({
 
               {contextType === "TEAM" && (
                 <TextField className="mb-4">
-                  <Label>Equipo / Categoría</Label>
+                  <Label>Equipo / Categori­a</Label>
                   <Select
                     selectedKey={teamSeasonCategoryId}
-                    onSelectionChange={(key) => setTeamSeasonCategoryId(key as string)}
+                    onSelectionChange={(key) =>
+                      setTeamSeasonCategoryId(key as string)
+                    }
                   >
                     <Select.Trigger />
                     <Select.Popover>
                       <ListBox>
-                        {categories.map(cat => (
-                          <ListBox.Item id={cat.id} key={cat.id} textValue={`${cat.name} (${cat.seasonName})`}>
+                        {categories.map((cat) => (
+                          <ListBox.Item
+                            id={cat.id}
+                            key={cat.id}
+                            textValue={`${cat.name} (${cat.seasonName})`}
+                          >
                             {cat.name} ({cat.seasonName})
                           </ListBox.Item>
                         ))}
@@ -418,13 +464,21 @@ export const GeneralEventFormModal = ({
                     <Label>Escuela / Temporada</Label>
                     <Select
                       selectedKey={courseSeasonId}
-                      onSelectionChange={(key) => setCourseSeasonId(key as string)}
+                      onSelectionChange={(key) =>
+                        setCourseSeasonId(key as string)
+                      }
                     >
                       <Select.Trigger />
                       <Select.Popover>
                         <ListBox>
-                          {courseSeasons.map(c => (
-                            <ListBox.Item id={c.id} key={c.id} textValue={c.name}>{c.name}</ListBox.Item>
+                          {courseSeasons.map((c) => (
+                            <ListBox.Item
+                              id={c.id}
+                              key={c.id}
+                              textValue={c.name}
+                            >
+                              {c.name}
+                            </ListBox.Item>
                           ))}
                         </ListBox>
                       </Select.Popover>
@@ -435,13 +489,22 @@ export const GeneralEventFormModal = ({
                     <Label>Alcance en Escuela</Label>
                     <Select
                       selectedKey={schoolScope}
-                      onSelectionChange={(key) => setSchoolScope(key as SchoolScope)}
+                      onSelectionChange={(key) =>
+                        setSchoolScope(key as SchoolScope)
+                      }
                     >
                       <Select.Trigger />
                       <Select.Popover>
                         <ListBox>
-                          <ListBox.Item id="ALL" textValue="Toda la escuela">Toda la escuela</ListBox.Item>
-                          <ListBox.Item id="SHIFT" textValue="Un turno específico">Un turno específico</ListBox.Item>
+                          <ListBox.Item id="ALL" textValue="Toda la escuela">
+                            Toda la escuela
+                          </ListBox.Item>
+                          <ListBox.Item
+                            id="SHIFT"
+                            textValue="Un turno especi­fico"
+                          >
+                            Un turno especi­fico
+                          </ListBox.Item>
                         </ListBox>
                       </Select.Popover>
                     </Select>
@@ -449,16 +512,22 @@ export const GeneralEventFormModal = ({
 
                   {schoolScope === "SHIFT" && (
                     <TextField className="mb-4">
-                      <Label>Turno Específico</Label>
+                      <Label>Turno Especi­fico</Label>
                       <Select
                         selectedKey={courseSeasonShiftId}
-                        onSelectionChange={(key) => setCourseSeasonShiftId(key as string)}
+                        onSelectionChange={(key) =>
+                          setCourseSeasonShiftId(key as string)
+                        }
                       >
                         <Select.Trigger />
                         <Select.Popover>
                           <ListBox>
-                            {availableShifts.map(s => (
-                              <ListBox.Item id={s.id} key={s.id} textValue={s.shift?.name || "Turno"}>
+                            {availableShifts.map((s) => (
+                              <ListBox.Item
+                                id={s.id}
+                                key={s.id}
+                                textValue={s.shift?.name || "Turno"}
+                              >
                                 {s.shift?.name || "Turno"}
                               </ListBox.Item>
                             ))}
@@ -512,7 +581,9 @@ export const GeneralEventFormModal = ({
 
             {mode === "edit" && initialData?.seriesId && (
               <div className="border-t pt-4 mb-4">
-                <h4 className="font-semibold mb-2">Este evento pertenece a una serie</h4>
+                <h4 className="font-semibold mb-2">
+                  Este evento pertenece a una serie
+                </h4>
                 <TextField>
                   <Label>Aplicar cambios a:</Label>
                   <Select
@@ -525,7 +596,10 @@ export const GeneralEventFormModal = ({
                         <ListBox.Item id="single" textValue="Solo este evento">
                           Solo este evento
                         </ListBox.Item>
-                        <ListBox.Item id="following" textValue="Este y los siguientes">
+                        <ListBox.Item
+                          id="following"
+                          textValue="Este y los siguientes"
+                        >
                           Este y los siguientes
                         </ListBox.Item>
                         <ListBox.Item id="all" textValue="Toda la serie">

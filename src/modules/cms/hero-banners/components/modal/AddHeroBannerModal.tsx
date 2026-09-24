@@ -4,28 +4,57 @@ import { Add01Icon, Image01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { HeroBannerForm } from "../form/HeroBannerForm";
+import { ButtonFloating } from "@/ui";
 
 interface Props {
+  label?: string;
+  isIcon?: boolean;
   buttonFloatingMobile?: boolean;
 }
 
-export const AddHeroBannerModal = ({ buttonFloatingMobile }: Props) => {
+export const AddHeroBannerModal = ({
+  label,
+  isIcon = false,
+  buttonFloatingMobile,
+}: Props) => {
   const state = useOverlayState();
   const [isLoading, setIsLoading] = useState(false);
 
   return (
     <>
-      <Button
-        onPress={() => state.open()}
-        className={`bg-on-surface text-surface hover:bg-on-surface-variant flex ${
-          buttonFloatingMobile
-            ? "fixed md:relative bottom-6 md:bottom-auto right-6 md:right-auto shadow-xl md:shadow-none z-50 md:z-auto"
-            : ""
-        }`}
-      >
-        <HugeiconsIcon icon={Add01Icon} />
-        Crear Hero Banner
-      </Button>
+      {!isIcon && (
+        <Button
+          className="hidden lg:flex"
+          variant="primary"
+          onPress={() => state.open()}
+          isIconOnly={isIcon}
+        >
+          <HugeiconsIcon icon={Add01Icon} />
+          {label || "Agregar banner"}
+        </Button>
+      )}
+      {isIcon && (
+        <Button
+          variant="primary"
+          onPress={() => state.open()}
+          isIconOnly={isIcon}
+        >
+          <HugeiconsIcon icon={Add01Icon} />
+        </Button>
+      )}
+      {buttonFloatingMobile && (
+        <ButtonFloating
+          className="lg:hidden"
+          icon={
+            <HugeiconsIcon
+              icon={Add01Icon}
+              className="h-6 w-6 text-background"
+            />
+          }
+          onPress={() => state.open()}
+          // text="Agregar Disciplina"
+        />
+      )}
 
       <Modal.Backdrop isOpen={state.isOpen} onOpenChange={state.setOpen}>
         <Modal.Container placement="auto" scroll="outside">
@@ -39,7 +68,8 @@ export const AddHeroBannerModal = ({ buttonFloatingMobile }: Props) => {
                 <Modal.Heading>Agregar Hero Banner</Modal.Heading>
               </div>
               <p className="mt-1.5 text-sm leading-5 text-muted">
-                Agrega un nuevo Hero Banner para el carrusel de la página principal.
+                Agrega un nuevo Hero Banner para el carrusel de la pi¡gina
+                principal.
               </p>
             </Modal.Header>
             <Modal.Body className="p-6">

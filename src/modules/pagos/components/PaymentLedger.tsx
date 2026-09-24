@@ -24,7 +24,7 @@ const formatCurrency = (amount: number, currency: string = "BOB") =>
   }).format(amount);
 
 const formatDate = (date: Date | null | undefined) => {
-  if (!date) return "—";
+  if (!date) return "Ã¢ÂÂ";
   return new Date(date).toLocaleDateString("es-BO", {
     year: "numeric",
     month: "short",
@@ -96,7 +96,7 @@ export const PaymentLedger = ({
             </Table.Column>
             <Table.Column id="method">
               <span className="text-xs font-semibold uppercase tracking-wide">
-                Método
+                MiÂ©todo
               </span>
             </Table.Column>
             <Table.Column allowsSorting id="status">
@@ -120,7 +120,7 @@ export const PaymentLedger = ({
           <Table.Body
             renderEmptyState={() => (
               <div className="py-10 text-center text-sm text-muted">
-                No hay registros de pago aún.
+                No hay registros de pago aiÂºn.
               </div>
             )}
           >
@@ -158,7 +158,7 @@ export const PaymentLedger = ({
                 </Table.Cell>
                 <Table.Cell className="py-3">
                   <code className="text-xs bg-surface px-2 py-1 rounded">
-                    {payment.reference || "—"}
+                    {payment.reference || "Ã¢ÂÂ"}
                   </code>
                 </Table.Cell>
                 <Table.Cell className="py-3">

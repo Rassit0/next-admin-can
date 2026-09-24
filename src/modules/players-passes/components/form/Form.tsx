@@ -247,7 +247,7 @@ export const FormPlayerPass = ({
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleRemoveError = (fieldName: string) => {
-    // Limpiar solo el error de este campo específico
+    // Limpiar solo el error de este campo especi­fico
     if (errors[fieldName]) {
       setErrors((prev) => {
         const newErrors = { ...prev };
@@ -261,7 +261,7 @@ export const FormPlayerPass = ({
     console.log("entro");
     e.preventDefault();
     e.stopPropagation();
-    
+
     // Evitar que el submit de un formulario anidado dispare este submit
     if ((e.target as HTMLFormElement).id !== formId) {
       return;
@@ -335,7 +335,7 @@ export const FormPlayerPass = ({
               : messages;
             return `${field}: ${msgList}`;
           })
-          .join("\n"); // Los separamos por saltos de línea para el toast
+          .join("\n"); // Los separamos por saltos de li­nea para el toast
       }
 
       // 2. Pasamos la descripción formateada al componente de notificaciones
@@ -415,7 +415,7 @@ export const FormPlayerPass = ({
                 <div className="col-span-full gap-y-2">
                   <div className="flex items-center justify-between">
                     <h2 className="text-xl font-bold">
-                      3. CONFIGURACIÓN DESTINO
+                      3. CONFIGURACIiN DESTINO
                     </h2>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 p-2">

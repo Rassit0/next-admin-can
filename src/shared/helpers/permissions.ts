@@ -1,4 +1,3 @@
-
 import { NavigationConfig } from "@/config/navigation";
 
 export interface PermissionRule {
@@ -8,9 +7,9 @@ export interface PermissionRule {
 
 export const hasRequiredPermissions = (
   userPermissions: string[],
-  rule?: PermissionRule
+  rule?: PermissionRule,
 ): boolean => {
-  // Si no hay regla, es de acceso público
+  // Si no hay regla, es de acceso piºblico
   if (!rule || (!rule.anyOf && !rule.allOf)) {
     return true;
   }
@@ -33,31 +32,33 @@ export const hasRequiredPermissions = (
 export const getAllowedChildRoutes = (
   moduleId: string,
   userPermissions: string[],
-  config: NavigationConfig[]
+  config: NavigationConfig[],
 ) => {
   const module = config.find((m) => m.id === moduleId);
   if (!module || !module.routes) return [];
 
   return module.routes.filter((route) =>
-    hasRequiredPermissions(userPermissions, route.requiredPermissions)
+    hasRequiredPermissions(userPermissions, route.requiredPermissions),
   );
 };
 
 export const getFirstAllowedChildRoute = (
   moduleId: string,
   userPermissions: string[],
-  config: NavigationConfig[]
+  config: NavigationConfig[],
 ) => {
   const allowed = getAllowedChildRoutes(moduleId, userPermissions, config);
-  // Un "default candidate" en este contexto asume que debe poder mostrarse 
-  // (es decir, no es una ruta dinámica u oculta, a menos que el flujo lo permita).
+  // Un "default candidate" en este contexto asume que debe poder mostrarse
+  // (es decir, no es una ruta dini¡mica u oculta, a menos que el flujo lo permita).
   // Por requerimiento, evitamos auto-navegar a rutas como [personId].
-  return allowed.find((route) => !route.href.includes("[") && !route.href.includes("]"));
+  return allowed.find(
+    (route) => !route.href.includes("[") && !route.href.includes("]"),
+  );
 };
 
 export const filterNavigation = (
   items: NavigationConfig[],
-  userPermissions: string[]
+  userPermissions: string[],
 ): NavigationConfig[] => {
   return items.reduce<NavigationConfig[]>((acc, item) => {
     // Si no tiene reglas de permisos o el id es 'dashboard', primero evaluamos parent access
@@ -72,7 +73,11 @@ export const filterNavigation = (
 
     if (item.routes && item.routes.length > 0) {
       if (item.entryStrategy === "firstAllowedChild") {
-        const firstAllowed = getFirstAllowedChildRoute(item.id || "", userPermissions, items);
+        const firstAllowed = getFirstAllowedChildRoute(
+          item.id || "",
+          userPermissions,
+          items,
+        );
         if (!firstAllowed) {
           // Si la estrategia exige ir al primer hijo pero no tiene permiso para ninguno,
           // se oculta el padre completamente.
@@ -92,5 +97,3 @@ export const filterNavigation = (
     return acc;
   }, []);
 };
-
-

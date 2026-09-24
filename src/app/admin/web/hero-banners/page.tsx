@@ -28,7 +28,7 @@ export default async function HeroBannersPage() {
         <HeaderPage
           title="Gestión de Hero Banners"
           description="Administra los banners promocionales del carrusel principal."
-          action={<AddHeroBannerModal />}
+          action={<AddHeroBannerModal buttonFloatingMobile />}
         />
 
         {/* <!-- Filters Bento --> */}

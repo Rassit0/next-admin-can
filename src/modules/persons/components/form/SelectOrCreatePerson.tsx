@@ -16,11 +16,8 @@ import {
 } from "@heroui/react";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { useAsyncList } from "@react-stately/data";
-import {
-  getPersonsOptions,
-  IPersonOption,
-} from "@/common/actions/get-persons-options";
-import { AddModal } from "@/modules/persons";
+
+import { AddModal, getPersonsOptions, IPersonOption } from "@/modules/persons";
 
 interface Props {
   isRequired?: boolean;
@@ -56,7 +53,11 @@ export const SelectOrCreatePerson = ({
 }: Props) => {
   const list = useAsyncList<IPersonOption>({
     async load({ cursor: page = "1", filterText, signal }) {
-      const res = await getPersonsOptions({ search: filterText, page, excludeRole });
+      const res = await getPersonsOptions({
+        search: filterText,
+        page,
+        excludeRole,
+      });
       if (!res) {
         return {
           cursor: undefined,
@@ -65,7 +66,7 @@ export const SelectOrCreatePerson = ({
       }
       let items = res.data?.data || [];
       if (defaultPerson) {
-        items = items.filter(p => p.id !== defaultPerson.id);
+        items = items.filter((p) => p.id !== defaultPerson.id);
         if (page === "1" && !filterText) {
           items = [defaultPerson, ...items];
         }
@@ -77,8 +78,13 @@ export const SelectOrCreatePerson = ({
       };
     },
   });
-  
-  const uniqueItems = Array.from(new Map(list.items.map(item => [item.id, item])).values());
+
+  const uniqueItems = Array.from(
+    new Map([
+      ...(defaultPerson ? [[defaultPerson.id, defaultPerson] as const] : []),
+      ...list.items.map((item) => [item.id, item] as const),
+    ]).values(),
+  );
 
   useEffect(() => {
     if (defaultPerson && !personId) {
@@ -150,10 +156,14 @@ export const SelectOrCreatePerson = ({
             >
               <Collection items={uniqueItems}>
                 {(item) => (
-                  <ListBox.Item key={item.id} id={item.id} textValue={item.fullName}>
+                  <ListBox.Item
+                    key={item.id}
+                    id={item.id}
+                    textValue={item.fullName}
+                  >
                     <div className="flex items-center gap-3 w-full">
                       <Avatar className="shrink-0" size="sm">
-                         <Avatar.Image
+                        <Avatar.Image
                           alt={item.fullName}
                           src={item.imageUrl ?? undefined}
                         />
@@ -171,7 +181,7 @@ export const SelectOrCreatePerson = ({
                           </span>
                           {item.birthDate && (
                             <span className="text-xs text-default-500 truncate">
-                              • Edad deportiva: {calculateAge(item.birthDate)}{" "}
+                              - Edad deportiva: {calculateAge(item.birthDate)}{" "}
                               años
                             </span>
                           )}
@@ -211,7 +221,10 @@ export const SelectOrCreatePerson = ({
               gender: person.gender,
               birthDate: person.birthDate,
               imageUrl: person.imageUrl,
-              fullName: `${person.lastName} ${person.secondLastName || ""} ${person.name}`.replace(/\s+/g, " ").trim(),
+              fullName:
+                `${person.lastName} ${person.secondLastName || ""} ${person.name}`
+                  .replace(/\s+/g, " ")
+                  .trim(),
             };
             list.append(newPersonOption);
             list.setSelectedKeys(new Set([person.id]));

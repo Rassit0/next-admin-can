@@ -20,7 +20,7 @@ interface UpdateSessionPayload {
 export const updateSession = async (
   id: string,
   payload: UpdateSessionPayload,
-  scope: "single" | "following" | "all" = "single"
+  scope: "single" | "following" | "all" = "single",
 ): Promise<ServiceResponse<any>> => {
   return handleServerAction(async () => {
     const res = await api.patch<{ message: string; data: any }>(

@@ -70,7 +70,11 @@ export const EditModalActionTable = ({
               >
                 Cancelar
               </Button>
-              <Button type="submit" form="edit-school-form" isPending={isLoading}>
+              <Button
+                type="submit"
+                form="edit-school-form"
+                isPending={isLoading}
+              >
                 {isLoading && (
                   <ProgressCircle isIndeterminate aria-label="Loading">
                     <ProgressCircle.Track>

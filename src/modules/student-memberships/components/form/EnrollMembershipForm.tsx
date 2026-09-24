@@ -42,7 +42,7 @@ import {
 import { calculateInitialCharges } from "@/modules/student-memberships/helpers/initial-charges";
 import { InvoicePreview } from "@/modules/student-memberships/components/invoice/InvoicePreview";
 import { SelectOrCreatePerson } from "@/modules/persons";
-import { IPersonOption } from "@/common/actions/get-persons-options";
+import { IPersonOption } from "@/modules/persons";
 
 interface Props {
   courseSeason: ICourseSeason;
@@ -237,20 +237,20 @@ export const EnrollMembershipForm = ({
           (isNaN(season) || season < 0 || season > 100)
         ) {
           err.seasonDiscountPercent =
-            "El descuento debe ser mayor o igual a 0 y máximo 100.";
+            "El descuento debe ser mayor o igual a 0 y miÂ¡ximo 100.";
         }
       } else {
         if (!regDiscountPercent && !recDiscountPercent) {
           err.discountPercent =
-            "Debe ingresar al menos un porcentaje de descuento (Matrícula o Mensualidad).";
+            "Debe ingresar al menos un porcentaje de descuento (MatriÂ­cula o Mensualidad).";
         }
         if (regDiscountPercent && (isNaN(reg) || reg < 0 || reg > 100)) {
           err.regDiscountPercent =
-            "El descuento debe ser mayor o igual a 0 y máximo 100.";
+            "El descuento debe ser mayor o igual a 0 y miÂ¡ximo 100.";
         }
         if (recDiscountPercent && (isNaN(rec) || rec < 0 || rec > 100)) {
           err.recDiscountPercent =
-            "El descuento debe ser mayor o igual a 0 y máximo 100.";
+            "El descuento debe ser mayor o igual a 0 y miÂ¡ximo 100.";
         }
       }
 
@@ -259,7 +259,7 @@ export const EnrollMembershipForm = ({
       }
 
       if (discountType === "OTHER" && !discountReason.trim()) {
-        err.discountReason = "Especifique una razón o justificación.";
+        err.discountReason = "Especifique una raziÂ³n o justificaciiÂ³n.";
       }
 
       if (discountEndDate) {
@@ -522,10 +522,10 @@ export const EnrollMembershipForm = ({
               Turno / Horario
               {selectedShift && (
                 <InfoTooltip
-                  text={`Categoría: ${selectedShift.category?.name || "Sin categoría"}. ${
+                  text={`CategoriÂ­a: ${selectedShift.category?.name || "Sin categoriÂ­a"}. ${
                     selectedShift.minBirthYear || selectedShift.maxBirthYear
                       ? `Nacidos: ${selectedShift.minBirthYear || "Cualquiera"} al ${selectedShift.maxBirthYear || "Cualquiera"}`
-                      : `Edades: ${selectedShift.category?.minAge || 0} a ${selectedShift.category?.maxAge || "Sin límite"} años`
+                      : `Edades: ${selectedShift.category?.minAge || 0} a ${selectedShift.category?.maxAge || "Sin liÂ­mite"} aiÂ±os`
                   }. Temporada: ${new Date(courseSeason.season.startDate).toLocaleDateString()} - ${new Date(courseSeason.season.endDate).toLocaleDateString()}.`}
                 />
               )}
@@ -589,9 +589,9 @@ export const EnrollMembershipForm = ({
                         {plan.isSinglePayment
                           ? courseSeason.billingConfig?.billingType ===
                             "MONTHLY_ONLY"
-                            ? `Pago Único (Adelantado) • -${plan.recurringDiscountPercent}% (Mensualidades)`
-                            : `Pago Único • -${plan.seasonFeeDiscountPercent}% (Temporada)`
-                          : `Insc. -${plan.registrationDiscountPercent}% • Mens. -${plan.recurringDiscountPercent}%`}
+                            ? `Pago iÂnico (Adelantado) - -${plan.recurringDiscountPercent}% (Mensualidades)`
+                            : `Pago iÂnico - -${plan.seasonFeeDiscountPercent}% (Temporada)`
+                          : `Insc. -${plan.registrationDiscountPercent}% - Mens. -${plan.recurringDiscountPercent}%`}
                       </span>
                     </div>
                   </ListBox.Item>
@@ -609,7 +609,7 @@ export const EnrollMembershipForm = ({
             >
               <Label className="text-sm font-semibold flex items-center">
                 Fecha de inicio
-                <InfoTooltip text="Fecha en la que el sistema se basa para cobrar. Si la fecha cae a la mitad de un ciclo mensual (y el prorrateo está activo), el cobro será parcial." />
+                <InfoTooltip text="Fecha en la que el sistema se basa para cobrar. Si la fecha cae a la mitad de un ciclo mensual (y el prorrateo estiÂ¡ activo), el cobro seriÂ¡ parcial." />
               </Label>
               <Input
                 variant="secondary"
@@ -689,7 +689,7 @@ export const EnrollMembershipForm = ({
                 </Checkbox.Control>
                 <Label className="text-sm font-semibold flex items-center">
                   Cobrar ciclo completo (Sin prorrateo)
-                  <InfoTooltip text="Si se marca, se cobrará la cuota completa sin importar la fecha de inicio en el ciclo actual." />
+                  <InfoTooltip text="Si se marca, se cobrariÂ¡ la cuota completa sin importar la fecha de inicio en el ciclo actual." />
                 </Label>
               </Checkbox.Content>
             </Checkbox>
@@ -705,7 +705,7 @@ export const EnrollMembershipForm = ({
                   </Switch.Control>
                   <Label className="text-sm font-semibold flex items-center">
                     Aplicar Descuento Excepcional
-                    <InfoTooltip text="Estos descuentos se sumarán a los que ya otorga el plan elegido (el total acumulado no puede exceder el 100%)." />
+                    <InfoTooltip text="Estos descuentos se sumariÂ¡n a los que ya otorga el plan elegido (el total acumulado no puede exceder el 100%)." />
                   </Label>
                 </Switch.Content>
               </Switch>
@@ -757,7 +757,7 @@ export const EnrollMembershipForm = ({
                         }
                       >
                         <Label className="text-sm font-semibold">
-                          Desc. Matrícula (%)
+                          Desc. MatriÂ­cula (%)
                         </Label>
                         <Input
                           variant="secondary"
@@ -769,7 +769,7 @@ export const EnrollMembershipForm = ({
                           }
                         />
                         <p className="text-xs text-muted mt-1 leading-tight">
-                          Dejar vacío si no aplica.
+                          Dejar vaciÂ­o si no aplica.
                         </p>
                         {(errors.regDiscountPercent ||
                           errors.discountPercent) && (
@@ -800,7 +800,7 @@ export const EnrollMembershipForm = ({
                           }
                         />
                         <p className="text-xs text-muted mt-1 leading-tight">
-                          Dejar vacío si no aplica.
+                          Dejar vaciÂ­o si no aplica.
                         </p>
                         {(errors.recDiscountPercent ||
                           (errors.discountPercent &&
@@ -844,15 +844,15 @@ export const EnrollMembershipForm = ({
                       </ListBox.Item>
                       <ListBox.Item
                         id="FINANCIAL_AID"
-                        textValue="Ayuda económica"
+                        textValue="Ayuda econiÂ³mica"
                       >
-                        Ayuda económica
+                        Ayuda econiÂ³mica
                       </ListBox.Item>
                       <ListBox.Item id="AGREEMENT" textValue="Convenio">
                         Convenio
                       </ListBox.Item>
-                      <ListBox.Item id="EXEMPTION" textValue="Exoneración">
-                        Exoneración
+                      <ListBox.Item id="EXEMPTION" textValue="ExoneraciiÂ³n">
+                        ExoneraciiÂ³n
                       </ListBox.Item>
                       <ListBox.Item id="OTHER" textValue="Otro">
                         Otro
@@ -866,7 +866,7 @@ export const EnrollMembershipForm = ({
                   isInvalid={!!errors.discountReason || undefined}
                 >
                   <Label className="text-sm font-semibold">
-                    Razón / Justificación
+                    RaziÂ³n / JustificaciiÂ³n
                   </Label>
                   <Input
                     variant="secondary"
@@ -896,8 +896,8 @@ export const EnrollMembershipForm = ({
                     onChange={(e) => setDiscountEndDate(e.target.value)}
                   />
                   <p className="text-xs text-muted mt-1 leading-tight">
-                    Si se deja en blanco, el descuento será permanente hasta que
-                    termine la temporada.
+                    Si se deja en blanco, el descuento seriÂ¡ permanente hasta
+                    que termine la temporada.
                   </p>
                   {errors.discountEndDate && (
                     <FieldError>{errors.discountEndDate}</FieldError>
@@ -916,8 +916,8 @@ export const EnrollMembershipForm = ({
                     <Switch.Thumb />
                   </Switch.Control>
                   <Label className="text-sm flex items-center">
-                    Es Migración (omitir cargos anteriores)
-                    <InfoTooltip text="Activa esta opción si el atleta ya inició su temporada en otro sistema, y sólo deseas facturarle desde el mes actual en adelante. Ignorará cuotas de meses previos." />
+                    Es MigraciiÂ³n (omitir cargos anteriores)
+                    <InfoTooltip text="Activa esta opciiÂ³n si el atleta ya iniciiÂ³ su temporada en otro sistema, y siÂ³lo deseas facturarle desde el mes actual en adelante. IgnorariÂ¡ cuotas de meses previos." />
                   </Label>
                 </Switch.Content>
               </Switch>
@@ -934,8 +934,8 @@ export const EnrollMembershipForm = ({
                         <Switch.Thumb />
                       </Switch.Control>
                       <Label className="text-sm flex items-center">
-                        Cobrar Matrícula (Opcional)
-                        <InfoTooltip text="Fuerza la creación de la factura por inscripción/matrícula a pesar de ser migrado, en caso de que aún deba la inscripción." />
+                        Cobrar MatriÂ­cula (Opcional)
+                        <InfoTooltip text="Fuerza la creaciiÂ³n de la factura por inscripciiÂ³n/matriÂ­cula a pesar de ser migrado, en caso de que aiÂºn deba la inscripciiÂ³n." />
                       </Label>
                     </Switch.Content>
                   </Switch>
@@ -951,7 +951,7 @@ export const EnrollMembershipForm = ({
                       </Switch.Control>
                       <Label className="text-sm flex items-center">
                         Cobrar Mes Actual (Opcional)
-                        <InfoTooltip text="Por defecto la migración asume que este mes ya está pagado. Si activas esto, se generará la cuota del mes correspondiente a la fecha de inicio seleccionada." />
+                        <InfoTooltip text="Por defecto la migraciiÂ³n asume que este mes ya estiÂ¡ pagado. Si activas esto, se generariÂ¡ la cuota del mes correspondiente a la fecha de inicio seleccionada." />
                       </Label>
                     </Switch.Content>
                   </Switch>
@@ -987,7 +987,7 @@ export const EnrollMembershipForm = ({
             <Alert status="danger">
               <Alert.Indicator />
               <Alert.Content>
-                <Alert.Title>Formulario incompleto o inválido</Alert.Title>
+                <Alert.Title>Formulario incompleto o inviÂ¡lido</Alert.Title>
                 <Alert.Description>
                   <ul className="list-disc pl-5 mt-1 text-sm space-y-1">
                     {Object.entries(errors).map(([field, msg]) => (
@@ -1004,9 +1004,7 @@ export const EnrollMembershipForm = ({
             <InvoicePreview
               breakdown={breakdown}
               planName={selectedPlan?.name}
-              studentName={
-                selectedPerson ? selectedPerson.fullName : null
-              }
+              studentName={selectedPerson ? selectedPerson.fullName : null}
             />
           )}
         </Surface>

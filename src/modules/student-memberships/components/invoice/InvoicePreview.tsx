@@ -125,8 +125,9 @@ export const InvoicePreview = ({
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <p className="text-sm font-semibold text-foreground">
-                      {line.type === "REGISTRATION" || line.type === "REGISTRATION_FEE"
-                        ? "Matrícula de inscripción"
+                      {line.type === "REGISTRATION" ||
+                      line.type === "REGISTRATION_FEE"
+                        ? "Matri­cula de inscripción"
                         : line.type === "RECURRING_FEE"
                           ? "Cuota Recurrente"
                           : line.type === "SEASON_FEE"
@@ -181,10 +182,16 @@ export const InvoicePreview = ({
                 </span>
               </div>
               {breakdown.data.breakdown.totalDiscount !== 0 ? (
-                <div className={`flex items-center justify-between ${breakdown.data.breakdown.totalDiscount < 0 ? 'text-success' : 'text-danger'}`}>
-                  <span>{breakdown.data.breakdown.totalDiscount < 0 ? 'Descuentos' : 'Recargos'}</span>
+                <div
+                  className={`flex items-center justify-between ${breakdown.data.breakdown.totalDiscount < 0 ? "text-success" : "text-danger"}`}
+                >
+                  <span>
+                    {breakdown.data.breakdown.totalDiscount < 0
+                      ? "Descuentos"
+                      : "Recargos"}
+                  </span>
                   <span className="tabular-nums">
-                    {breakdown.data.breakdown.totalDiscount > 0 ? '+' : '-'}
+                    {breakdown.data.breakdown.totalDiscount > 0 ? "+" : "-"}
                     {formatCurrency(
                       Math.abs(breakdown.data.breakdown.totalDiscount),
                       breakdown.data.breakdown.currency,

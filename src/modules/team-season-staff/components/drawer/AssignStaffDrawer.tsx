@@ -40,14 +40,18 @@ const toLocalIso = (dateStr: string) => {
   return new Date(`${dateStr}T00:00:00`).toISOString();
 };
 
-export const AssignStaffDrawer = ({ teamSeason, categories, size = "md" }: Props) => {
+export const AssignStaffDrawer = ({
+  teamSeason,
+  categories,
+  size = "md",
+}: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const [staffId, setStaffId] = useState<string | null>(null);
   const [selectedStaff, setSelectedStaff] = useState<IStaffOption | null>(null);
   const [teamSeasonCategoryId, setTeamSeasonCategoryId] = useState<string>("");
-  
+
   const [role, setRole] = useState<string>("HEAD_COACH");
   const [customRole, setCustomRole] = useState<string>("");
   const [startedAt, setStartedAt] = useState<string>(today());
@@ -64,13 +68,14 @@ export const AssignStaffDrawer = ({ teamSeason, categories, size = "md" }: Props
     const err: Record<string, string> = {};
 
     if (!staffId) err.staffId = "Debe seleccionar a un miembro del personal.";
-    if (!teamSeasonCategoryId) err.teamSeasonCategoryId = "La categoría es obligatoria.";
+    if (!teamSeasonCategoryId)
+      err.teamSeasonCategoryId = "La categoriÂ­a es obligatoria.";
     if (!role) err.role = "El rol es obligatorio.";
     if (role === "OTHER" && !customRole.trim()) {
-      err.customRole = "Debe especificar el rol si seleccionó 'Otro'.";
+      err.customRole = "Debe especificar el rol si seleccioniÂ³ 'Otro'.";
     }
     if (!startedAt) err.startedAt = "La fecha de inicio es obligatoria.";
-    
+
     if (endedAt && startedAt && endedAt < startedAt) {
       err.endedAt = "La fecha de fin no puede ser anterior a la de inicio.";
     }
@@ -170,7 +175,7 @@ export const AssignStaffDrawer = ({ teamSeason, categories, size = "md" }: Props
                   Asignar personal
                 </Drawer.Heading>
                 <p className="mt-1 text-xs font-medium text-muted">
-                  {teamSeason.team.name} · {teamSeason.season.name}
+                  {teamSeason.team.name} ÃÂ· {teamSeason.season.name}
                 </p>
               </div>
             </Drawer.Header>
@@ -210,27 +215,34 @@ export const AssignStaffDrawer = ({ teamSeason, categories, size = "md" }: Props
                   isInvalid={!!errors.teamSeasonCategoryId || undefined}
                 >
                   <Label className="text-sm font-semibold flex items-center">
-                    Categoría
+                    CategoriÂ­a
                   </Label>
                   <Select.Trigger />
                   <Select.Popover>
                     <ListBox>
                       {categories.map((c) => (
-                        <ListBox.Item id={c.id} textValue={`${c.category.name} (${c.gender})`}>
+                        <ListBox.Item
+                          id={c.id}
+                          textValue={`${c.category.name} (${c.gender})`}
+                        >
                           {c.category.name} ({c.gender})
                         </ListBox.Item>
                       ))}
                     </ListBox>
                   </Select.Popover>
                 </Select>
-                {errors.teamSeasonCategoryId && <FieldError>{errors.teamSeasonCategoryId}</FieldError>}
+                {errors.teamSeasonCategoryId && (
+                  <FieldError>{errors.teamSeasonCategoryId}</FieldError>
+                )}
 
                 <ComboBox
                   className="w-full"
                   variant="secondary"
                   menuTrigger="focus"
                   selectedKey={role}
-                  onSelectionChange={(key) => setRole(key ? String(key) : "HEAD_COACH")}
+                  onSelectionChange={(key) =>
+                    setRole(key ? String(key) : "HEAD_COACH")
+                  }
                   isInvalid={!!errors.role || undefined}
                 >
                   <Label className="text-sm font-semibold flex items-center">
@@ -242,13 +254,22 @@ export const AssignStaffDrawer = ({ teamSeason, categories, size = "md" }: Props
                   </ComboBox.InputGroup>
                   <ComboBox.Popover>
                     <ListBox>
-                      <ListBox.Item id="HEAD_COACH" textValue="Entrenador Principal (Head Coach)">
+                      <ListBox.Item
+                        id="HEAD_COACH"
+                        textValue="Entrenador Principal (Head Coach)"
+                      >
                         Entrenador Principal (Head Coach)
                       </ListBox.Item>
-                      <ListBox.Item id="ASSISTANT_COACH" textValue="Entrenador Asistente">
+                      <ListBox.Item
+                        id="ASSISTANT_COACH"
+                        textValue="Entrenador Asistente"
+                      >
                         Entrenador Asistente
                       </ListBox.Item>
-                      <ListBox.Item id="ASSISTANT" textValue="Auxiliar / Asistente">
+                      <ListBox.Item
+                        id="ASSISTANT"
+                        textValue="Auxiliar / Asistente"
+                      >
                         Auxiliar / Asistente
                       </ListBox.Item>
                       <ListBox.Item id="DELEGATE" textValue="Delegado">
@@ -269,14 +290,18 @@ export const AssignStaffDrawer = ({ teamSeason, categories, size = "md" }: Props
                     className="w-full"
                     isInvalid={!!errors.customRole || undefined}
                   >
-                    <Label className="text-sm font-semibold">Rol Personalizado</Label>
+                    <Label className="text-sm font-semibold">
+                      Rol Personalizado
+                    </Label>
                     <Input
                       variant="secondary"
-                      placeholder="Ej: Preparador Físico"
+                      placeholder="Ej: Preparador FiÂ­sico"
                       value={customRole}
                       onChange={(e) => setCustomRole(e.target.value)}
                     />
-                    {errors.customRole && <FieldError>{errors.customRole}</FieldError>}
+                    {errors.customRole && (
+                      <FieldError>{errors.customRole}</FieldError>
+                    )}
                   </TextField>
                 )}
 
@@ -293,7 +318,9 @@ export const AssignStaffDrawer = ({ teamSeason, categories, size = "md" }: Props
                     value={startedAt}
                     onChange={(e) => setStartedAt(e.target.value)}
                   />
-                  {errors.startedAt && <FieldError>{errors.startedAt}</FieldError>}
+                  {errors.startedAt && (
+                    <FieldError>{errors.startedAt}</FieldError>
+                  )}
                 </TextField>
 
                 <TextField
@@ -320,7 +347,7 @@ export const AssignStaffDrawer = ({ teamSeason, categories, size = "md" }: Props
                       </Switch.Control>
                       <Label className="text-sm font-semibold flex items-center">
                         Es el profesor principal (Delegado principal)
-                        <InfoTooltip text="El profesor marcado como principal representará a esta categoría/equipo en la App para funciones oficiales (ej. llamado de asistencia principal)." />
+                        <InfoTooltip text="El profesor marcado como principal representariÂ¡ a esta categoriÂ­a/equipo en la App para funciones oficiales (ej. llamado de asistencia principal)." />
                       </Label>
                     </Switch.Content>
                   </Switch>

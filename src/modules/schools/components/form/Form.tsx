@@ -12,7 +12,12 @@ import {
   ListBox,
 } from "@heroui/react";
 import React, { useState } from "react";
-import { addSchool, editSchool, ISchool, IDisciplineOptions } from "@/modules/schools";
+import {
+  addSchool,
+  editSchool,
+  ISchool,
+  IDisciplineOptions,
+} from "@/modules/schools";
 
 interface Props {
   school?: ISchool;
@@ -67,7 +72,7 @@ export const FormSchool = ({
 
       if (res.errors) {
         // Convertimos el objeto { type: ["msg"] } en una lista de strings limpia
-        errorDescription = "Error de Validación"; // Los separamos por saltos de línea para el toast
+        errorDescription = "Error de Validación"; // Los separamos por saltos de li­nea para el toast
       }
 
       // 2. Pasamos la descripción formateada al componente de notificaciones

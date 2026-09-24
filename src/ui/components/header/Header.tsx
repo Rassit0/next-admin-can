@@ -22,7 +22,13 @@ interface HeaderProps {
   user?: AuthIdentity;
   person?: CurrentPerson | null;
 }
-export const Header = ({ title, actions, showLogo, user, person }: HeaderProps) => {
+export const Header = ({
+  title,
+  actions,
+  showLogo,
+  user,
+  person,
+}: HeaderProps) => {
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
 
@@ -31,7 +37,7 @@ export const Header = ({ title, actions, showLogo, user, person }: HeaderProps) 
     const direction = latest - previous;
 
     // 1. Prioridad: Si estamos en el tope (hasta 70px), siempre visible.
-    // Esto es el "cerrojo": no dejamos que nada más pase si estamos arriba.
+    // Esto es el "cerrojo": no dejamos que nada mi¡s pase si estamos arriba.
     if (latest <= 70) {
       setHidden(false);
       return;
@@ -42,7 +48,7 @@ export const Header = ({ title, actions, showLogo, user, person }: HeaderProps) 
       setHidden(true);
     }
     // 3. Si subimos (dirección negativa), NO hacemos nada.
-    // Al no haber un 'setHidden(false)' aquí, el header se mantiene oculto
+    // Al no haber un 'setHidden(false)' aqui­, el header se mantiene oculto
     // hasta que vuelvas a tocar el tope y se ejecute el punto 1.
   });
   return (

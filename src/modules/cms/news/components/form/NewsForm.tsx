@@ -86,7 +86,7 @@ export const NewsForm = ({
     if ((e.target as HTMLFormElement).id !== formId) return;
 
     const newErrors: Record<string, string> = {};
-    if (!formData.title) newErrors.title = "El título es obligatorio";
+    if (!formData.title) newErrors.title = "El tiÂ­tulo es obligatorio";
     if (!formData.excerpt) newErrors.excerpt = "El extracto es obligatorio";
     if (!formData.content) newErrors.content = "El contenido es obligatorio";
 
@@ -102,9 +102,12 @@ export const NewsForm = ({
     if (formData.categoryId) payload.append("categoryId", formData.categoryId);
     if (formData.authorName) payload.append("authorName", formData.authorName);
     payload.append("status", formData.status || "DRAFT");
-    
+
     if (formData.publishedAt) {
-      payload.append("publishedAt", new Date(formData.publishedAt).toISOString());
+      payload.append(
+        "publishedAt",
+        new Date(formData.publishedAt).toISOString(),
+      );
     }
 
     if (files.length > 0) {
@@ -144,7 +147,7 @@ export const NewsForm = ({
     >
       <div className="flex flex-col gap-4 w-full">
         <TextField isRequired variant="secondary">
-          <Label>Título</Label>
+          <Label>TiÂ­tulo</Label>
           <Input
             placeholder="Ej: Nuevo Torneo Apertura"
             value={formData.title}
@@ -192,13 +195,13 @@ export const NewsForm = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Select
             variant="secondary"
-            placeholder="Seleccione una categoría"
+            placeholder="Seleccione una categoriÂ­a"
             selectedKey={formData.categoryId || ""}
             onSelectionChange={(key) => {
               if (key) setFormData({ ...formData, categoryId: String(key) });
             }}
           >
-            <Label>Categoría</Label>
+            <Label>CategoriÂ­a</Label>
             <Select.Trigger>
               <Select.Value />
               <Select.Indicator />
@@ -256,7 +259,7 @@ export const NewsForm = ({
           </Select>
 
           <TextField variant="secondary">
-            <Label>Fecha de Publicación (Opcional)</Label>
+            <Label>Fecha de PublicaciiÂ³n (Opcional)</Label>
             <Input
               type="datetime-local"
               value={formData.publishedAt}
@@ -279,7 +282,7 @@ export const NewsForm = ({
           {formData.imageUrl && (
             <div className="mt-2 text-sm text-success flex items-center justify-between">
               <span>
-                ✓ Imagen lista. URL:{" "}
+                Ã¢ÂÂ Imagen lista. URL:{" "}
                 <a
                   href={formData.imageUrl}
                   target="_blank"

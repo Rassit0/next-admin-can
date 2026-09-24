@@ -8,7 +8,11 @@ interface Props {
   children: React.ReactNode;
 }
 
-export const ModuleGuard = async ({ moduleId, childRouteId, children }: Props) => {
+export const ModuleGuard = async ({
+  moduleId,
+  childRouteId,
+  children,
+}: Props) => {
   const userPermissions = await getCurrentUserPermissions();
 
   if (!hasModuleAccess(moduleId, userPermissions, childRouteId)) {

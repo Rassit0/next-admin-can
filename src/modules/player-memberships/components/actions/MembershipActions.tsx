@@ -12,7 +12,13 @@ import {
   Calendar,
   Alert,
 } from "@heroui/react";
-import { getLocalTimeZone, today, fromDate, toCalendarDate, parseDate } from "@internationalized/date";
+import {
+  getLocalTimeZone,
+  today,
+  fromDate,
+  toCalendarDate,
+  parseDate,
+} from "@internationalized/date";
 import { toast } from "sonner";
 import {
   MoreVerticalSquare01Icon,
@@ -56,7 +62,7 @@ const ACTIONS_BY_STATUS: Record<IPlayerMembership["status"], ActionDef[]> = {
     { key: "edit_start_date", label: "Modificar inicio", icon: Calendar01Icon },
     { key: "pause", label: "Programar pausa", icon: Calendar01Icon },
     { key: "advance", label: "Adelantar cuota", icon: PlayIcon },
-    { key: "regularize", label: "Regularizar Histórico", icon: Note01Icon },
+    { key: "regularize", label: "Regularizar HistiÂ³rico", icon: Note01Icon },
     { key: "suspend", label: "Suspender", icon: PauseIcon },
     { key: "finish", label: "Finalizar", icon: CheckmarkCircle02Icon },
     { key: "withdraw", label: "Dar de baja", icon: Logout01Icon, danger: true },
@@ -89,7 +95,9 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
   const [selectedAction, setSelectedAction] = useState<ActionDef | null>(null);
 
   const localStartedAt = membership.startedAt
-    ? toCalendarDate(fromDate(new Date(membership.startedAt), getLocalTimeZone()))
+    ? toCalendarDate(
+        fromDate(new Date(membership.startedAt), getLocalTimeZone()),
+      )
     : today(getLocalTimeZone());
 
   const allActions: ActionDef[] = [
@@ -100,7 +108,7 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
   if (membership.totalPaidAmount === 0) {
     allActions.push({
       key: "remove",
-      label: "Eliminar Membresía",
+      label: "Eliminar MembresiÂ­a",
       icon: Logout01Icon, // Using Logout01Icon as standard for danger
       danger: true,
     });
@@ -148,8 +156,13 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
       return;
     }
 
-    if (action !== "remove" && action !== "activate" && action !== "edit_start_date" && !reason?.trim()) {
-      toast.error("El motivo es obligatorio para esta acción");
+    if (
+      action !== "remove" &&
+      action !== "activate" &&
+      action !== "edit_start_date" &&
+      !reason?.trim()
+    ) {
+      toast.error("El motivo es obligatorio para esta acciiÂ³n");
       setLoading(false);
       return;
     }
@@ -165,9 +178,9 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
         setLoading(false);
         return;
       }
-      
+
       const localMidnightDate = parseDate(startDate).toDate(getLocalTimeZone());
-      
+
       res = await updatePlayerMembership(membership.id, {
         startedAt: localMidnightDate.toISOString(),
       });
@@ -212,7 +225,7 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
     <>
       <Dropdown>
         <Button
-          aria-label="Acciones de membresía"
+          aria-label="Acciones de membresiÂ­a"
           isIconOnly
           size="sm"
           variant="ghost"
@@ -261,9 +274,9 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
               </AlertDialog.Header>
               <AlertDialog.Body className="gap-4 p-2">
                 <p>
-                  ¿Estás seguro de que deseas ejecutar la acción{" "}
+                  ÃÂ¿EstiÂ¡s seguro de que deseas ejecutar la acciiÂ³n{" "}
                   <strong>{selectedAction?.label.toLowerCase()}</strong> para
-                  esta membresía?
+                  esta membresiÂ­a?
                 </p>
 
                 {selectedAction?.key === "edit_start_date" && (
@@ -272,7 +285,9 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
                       <Alert.Indicator />
                       <Alert.Content>
                         <Alert.Description>
-                          Esta acción afectará los cargos que se puedan regularizar. Solo se permiten fechas pasadas para evitar desajustes con cargos ya cobrados.
+                          Esta acciiÂ³n afectariÂ¡ los cargos que se puedan
+                          regularizar. Solo se permiten fechas pasadas para
+                          evitar desajustes con cargos ya cobrados.
                         </Alert.Description>
                       </Alert.Content>
                     </Alert>
@@ -442,28 +457,29 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
                   </TextField>
                 )}
 
-                {selectedAction?.key !== "remove" && selectedAction?.key !== "edit_start_date" && (
-                  <TextField
-                    name="reason"
-                    className="w-full"
-                    isRequired={selectedAction?.key !== "activate"}
-                  >
-                    <Label className="text-sm font-semibold">
-                      Motivo u Observación{" "}
-                      {selectedAction?.key === "activate" && "(Opcional)"}
-                    </Label>
-                    <InputGroup>
-                      <InputGroup.Prefix>
-                        <HugeiconsIcon
-                          icon={Note01Icon}
-                          size={18}
-                          className="text-muted-foreground"
-                        />
-                      </InputGroup.Prefix>
-                      <InputGroup.Input placeholder="Ej. Retiro voluntario, Falta de pago..." />
-                    </InputGroup>
-                  </TextField>
-                )}
+                {selectedAction?.key !== "remove" &&
+                  selectedAction?.key !== "edit_start_date" && (
+                    <TextField
+                      name="reason"
+                      className="w-full"
+                      isRequired={selectedAction?.key !== "activate"}
+                    >
+                      <Label className="text-sm font-semibold">
+                        Motivo u ObservaciiÂ³n{" "}
+                        {selectedAction?.key === "activate" && "(Opcional)"}
+                      </Label>
+                      <InputGroup>
+                        <InputGroup.Prefix>
+                          <HugeiconsIcon
+                            icon={Note01Icon}
+                            size={18}
+                            className="text-muted-foreground"
+                          />
+                        </InputGroup.Prefix>
+                        <InputGroup.Input placeholder="Ej. Retiro voluntario, Falta de pago..." />
+                      </InputGroup>
+                    </TextField>
+                  )}
               </AlertDialog.Body>
               <AlertDialog.Footer>
                 <Button

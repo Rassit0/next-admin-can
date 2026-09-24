@@ -2,12 +2,15 @@ import { CinematicLoader } from "@/modules/portal/home/components/cinematic-load
 import { SiteHeader } from "@/modules/portal/shared/components/site-header";
 import { ParticlesBackground } from "@/modules/portal/home/components/particles-background";
 import NoticiasContent from "@/modules/portal/news/components/noticias-content";
-import { getPublicNews, getPublicNewsCategories } from "@/modules/portal/news/actions/news.action";
+import {
+  getPublicNews,
+  getPublicNewsCategories,
+} from "@/modules/portal/news/actions/news.action";
 
 export const metadata = {
-  title: "Central de Anuncios y Noticias | Club Atlético Nacional",
+  title: "Central de Anuncios y Noticias | Club Atli©tico Nacional",
   description:
-    "Últimas noticias, anuncios y resultados del Club Atlético Nacional.",
+    "iltimas noticias, anuncios y resultados del Club Atli©tico Nacional.",
   openGraph: {
     images: ["/logo.png"],
   },
@@ -24,11 +27,17 @@ export default async function NoticiasPage({ searchParams }: Props) {
   // Obtenemos todas las noticias y categorías activas
   const [newsResponse, categoriesResponse] = await Promise.all([
     getPublicNews(undefined, categoryId), // Filtramos por categoryId en el backend si viene en los params (o removemos param para client-side)
-    getPublicNewsCategories()
+    getPublicNewsCategories(),
   ]);
-  
+
   const initialNews = newsResponse?.data || [];
   const categories = categoriesResponse?.data || [];
 
-  return <NoticiasContent initialNews={initialNews} categories={categories} initialCategoryId={categoryId} />;
+  return (
+    <NoticiasContent
+      initialNews={initialNews}
+      categories={categories}
+      initialCategoryId={categoryId}
+    />
+  );
 }

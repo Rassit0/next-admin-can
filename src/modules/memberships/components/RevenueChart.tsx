@@ -27,7 +27,7 @@ export const RevenueChart = ({ data }: RevenueChartProps) => {
     <Card className="border-none bg-background/60 dark:bg-default-100/50 w-full h-full shadow-sm">
       <Card.Header className="px-6 pt-6">
         <Card.Title className="text-lg font-semibold">
-          Ingresos vs Deuda (Últimos 6 Meses)
+          Ingresos vs Deuda (iltimos 6 Meses)
         </Card.Title>
       </Card.Header>
       <div className="px-6 pb-6 pt-0 flex-1">

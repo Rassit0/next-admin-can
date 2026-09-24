@@ -25,9 +25,9 @@ export const TableActions = ({ actions, mode = "responsive" }: Props) => {
   const permissions = usePermissions();
   const router = useRouter();
 
-  // Filtrar las acciones según los permisos del usuario
+  // Filtrar las acciones segiºn los permisos del usuario
   const allowedActions = actions.filter(
-    (action) => !action.permission || permissions.includes(action.permission)
+    (action) => !action.permission || permissions.includes(action.permission),
   );
 
   if (allowedActions.length === 0) return null;
@@ -90,7 +90,13 @@ export const TableActions = ({ actions, mode = "responsive" }: Props) => {
                     className={action.danger ? "text-danger" : undefined}
                     icon={action.icon}
                   />
-                  <Label className={action.danger ? "text-danger w-full cursor-pointer" : "w-full cursor-pointer"}>
+                  <Label
+                    className={
+                      action.danger
+                        ? "text-danger w-full cursor-pointer"
+                        : "w-full cursor-pointer"
+                    }
+                  >
                     {action.label}
                   </Label>
                 </div>

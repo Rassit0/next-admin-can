@@ -10,7 +10,12 @@ export const deleteHomeDiscipline = async (
 ): Promise<ServiceResponse<void>> => {
   const session = await auth();
 
-  if (!session?.user) return { error: true, statusCode: 401, message: "Su sesión ha expirado." } as any;
+  if (!session?.user)
+    return {
+      error: true,
+      statusCode: 401,
+      message: "Su sesión ha expirado.",
+    } as any;
 
   return handleServerAction(async () => {
     await api.delete(`home-disciplines/${id}`, {
@@ -21,7 +26,7 @@ export const deleteHomeDiscipline = async (
 
     updateTag("public-home-disciplines");
     updateTag("admin-home-disciplines");
-    
+
     return {
       error: false,
       data: undefined,

@@ -40,7 +40,9 @@ export const TransferShiftDrawer = ({
   const [isLoadingSeasons, setIsLoadingSeasons] = useState(false);
 
   // Form state
-  const [targetCourseSeasonShiftId, setTargetCourseSeasonShiftId] = useState<string | null>(null);
+  const [targetCourseSeasonShiftId, setTargetCourseSeasonShiftId] = useState<
+    string | null
+  >(null);
   const [effectiveDate, setEffectiveDate] = useState<any>(
     today(getLocalTimeZone()),
   );
@@ -67,13 +69,13 @@ export const TransferShiftDrawer = ({
     try {
       const res = await getStudentMembershipById({ id: membershipId });
       if (res.error || !res.data) {
-        setMembershipError(res.message || "Error al cargar la membresía");
+        setMembershipError(res.message || "Error al cargar la membresiÂ­a");
       } else {
         setMembership(res.data);
         await loadCourseSeasons(res.data);
       }
     } catch (error) {
-      setMembershipError("Ocurrió un error al obtener la membresía");
+      setMembershipError("OcurriiÂ³ un error al obtener la membresiÂ­a");
     } finally {
       setIsLoadingMembership(false);
     }
@@ -82,20 +84,20 @@ export const TransferShiftDrawer = ({
   const loadCourseSeasons = async (loadedMembership: IStudentMembership) => {
     setIsLoadingSeasons(true);
     try {
-      // Filtrar por el mismo curso en base a la membresía actual para simplificar la selección
-      // NOTA: La validación final recae en el backend
+      // Filtrar por el mismo curso en base a la membresiÂ­a actual para simplificar la selecciiÂ³n
+      // NOTA: La validaciiÂ³n final recae en el backend
       const res = await getCourseSeasons({
         per_page: "100",
       });
 
       if (!res.error) {
         // Filtrar los que pertenecen al mismo nombre de curso (asumiendo courseSeason.course.name)
-        // El backend realiza validación estricta, pero esto ayuda a UX
+        // El backend realiza validaciiÂ³n estricta, pero esto ayuda a UX
         // Filtrar Ofertas del mismo curso
         const sameCourseSeasons = res.data.data.filter(
           (cs) =>
             cs.course.name === loadedMembership.courseSeason.course.name &&
-            cs.status === "ACTIVE"
+            cs.status === "ACTIVE",
         );
         setCourseSeasons(sameCourseSeasons);
       }
@@ -118,8 +120,10 @@ export const TransferShiftDrawer = ({
     }
 
     const selectedShiftObj = courseSeasons
-      .flatMap(cs => cs.shifts?.map(s => ({ ...s, courseSeason: cs })) || [])
-      .find(s => s.id === targetCourseSeasonShiftId);
+      .flatMap(
+        (cs) => cs.shifts?.map((s) => ({ ...s, courseSeason: cs })) || [],
+      )
+      .find((s) => s.id === targetCourseSeasonShiftId);
 
     if (!selectedShiftObj) return;
 
@@ -153,14 +157,18 @@ export const TransferShiftDrawer = ({
         <Drawer.Dialog className="w-full sm:max-w-md">
           <Drawer.CloseTrigger />
           <Drawer.Header className="border-b border-border">
-            <Drawer.Heading className="text-lg font-bold">Transferir Turno</Drawer.Heading>
+            <Drawer.Heading className="text-lg font-bold">
+              Transferir Turno
+            </Drawer.Heading>
           </Drawer.Header>
-          
+
           <Drawer.Body className="gap-6 py-5">
             {isLoadingMembership ? (
               <div className="flex flex-col items-center justify-center flex-1 min-h-[300px]">
                 <Spinner size="lg" />
-                <p className="mt-4 text-sm text-muted">Cargando datos de membresía...</p>
+                <p className="mt-4 text-sm text-muted">
+                  Cargando datos de membresiÂ­a...
+                </p>
               </div>
             ) : membershipError ? (
               <Alert status="danger">
@@ -174,146 +182,183 @@ export const TransferShiftDrawer = ({
               </Alert>
             ) : membership ? (
               <>
-            <Alert status="accent">
-              <Alert.Indicator>
-                <HugeiconsIcon icon={InformationCircleIcon} />
-              </Alert.Indicator>
-              <Alert.Content>
-                <Alert.Title>Información de Transferencia</Alert.Title>
-                <Alert.Description>
-                  <p className="mb-2">
-                    Estás a punto de transferir a{" "}
-                    <strong>
-                      {membership.student?.person.name}{" "}
-                      {membership.student?.person.lastName}
-                    </strong>{" "}
-                    hacia un nuevo turno.
-                  </p>
-                  
-                  {targetCourseSeasonShiftId && (
-                    <div className="mt-4 mb-2">
-                      {courseSeasons
-                        .flatMap(cs => cs.shifts?.map(s => ({ ...s, courseSeason: cs })) || [])
-                        .find(s => s.id === targetCourseSeasonShiftId)?.courseSeason.id === membership.courseSeasonId ? (
-                        <div className="bg-success-100 text-success-800 p-2 rounded text-sm border border-success-200 font-medium">
-                          🔄 Cambio de turno logístico (no afecta precios ni configuración comercial).
-                        </div>
-                      ) : (
-                        <div className="bg-warning-100 text-warning-800 p-2 rounded text-sm border border-warning-200 font-medium">
-                          ⚠️ Cambio de Oferta Comercial: Esto aplicará las reglas de facturación de la nueva oferta para los cobros futuros (ej. nuevos montos). Los cargos históricos permanecerán intactos.
+                <Alert status="accent">
+                  <Alert.Indicator>
+                    <HugeiconsIcon icon={InformationCircleIcon} />
+                  </Alert.Indicator>
+                  <Alert.Content>
+                    <Alert.Title>InformaciiÂ³n de Transferencia</Alert.Title>
+                    <Alert.Description>
+                      <p className="mb-2">
+                        EstiÂ¡s a punto de transferir a{" "}
+                        <strong>
+                          {membership.student?.person.name}{" "}
+                          {membership.student?.person.lastName}
+                        </strong>{" "}
+                        hacia un nuevo turno.
+                      </p>
+
+                      {targetCourseSeasonShiftId && (
+                        <div className="mt-4 mb-2">
+                          {courseSeasons
+                            .flatMap(
+                              (cs) =>
+                                cs.shifts?.map((s) => ({
+                                  ...s,
+                                  courseSeason: cs,
+                                })) || [],
+                            )
+                            .find((s) => s.id === targetCourseSeasonShiftId)
+                            ?.courseSeason.id === membership.courseSeasonId ? (
+                            <div className="bg-success-100 text-success-800 p-2 rounded text-sm border border-success-200 font-medium">
+                              Ã°ÂÂÂ Cambio de turno logiÂ­stico (no afecta precios ni
+                              configuraciiÂ³n comercial).
+                            </div>
+                          ) : (
+                            <div className="bg-warning-100 text-warning-800 p-2 rounded text-sm border border-warning-200 font-medium">
+                              Ã¢ÂÂ Ã¯Â¸Â Cambio de Oferta Comercial: Esto aplicariÂ¡
+                              las reglas de facturaciiÂ³n de la nueva oferta para
+                              los cobros futuros (ej. nuevos montos). Los cargos
+                              histiÂ³ricos permaneceriÂ¡n intactos.
+                            </div>
+                          )}
                         </div>
                       )}
-                    </div>
-                  )}
 
-                  <ul className="list-disc pl-5 mt-2">
-                    <li>Los ciclos futuros serán trasladados al nuevo turno.</li>
-                    <li>Los cargos y pagos existentes <strong>no serán modificados</strong>.</li>
-                    <li>La capacidad será evaluada por el sistema.</li>
-                  </ul>
-                </Alert.Description>
-              </Alert.Content>
-            </Alert>
+                      <ul className="list-disc pl-5 mt-2">
+                        <li>
+                          Los ciclos futuros seriÂ¡n trasladados al nuevo turno.
+                        </li>
+                        <li>
+                          Los cargos y pagos existentes{" "}
+                          <strong>no seriÂ¡n modificados</strong>.
+                        </li>
+                        <li>La capacidad seriÂ¡ evaluada por el sistema.</li>
+                      </ul>
+                    </Alert.Description>
+                  </Alert.Content>
+                </Alert>
 
-            <div className="flex flex-col gap-2 p-3 bg-muted/30 rounded-lg">
-              <p className="text-sm font-semibold text-muted">Turno Actual</p>
-              <p className="text-md font-medium">
-                {membership.courseSeason.name} - {membership.courseSeasonShift?.shift?.name}
-              </p>
-              <p className="text-sm text-muted">
-                {membership.courseSeason.course.name} ({membership.courseSeason.season.name})
-              </p>
-            </div>
+                <div className="flex flex-col gap-2 p-3 bg-muted/30 rounded-lg">
+                  <p className="text-sm font-semibold text-muted">
+                    Turno Actual
+                  </p>
+                  <p className="text-md font-medium">
+                    {membership.courseSeason.name} -{" "}
+                    {membership.courseSeasonShift?.shift?.name}
+                  </p>
+                  <p className="text-sm text-muted">
+                    {membership.courseSeason.course.name} (
+                    {membership.courseSeason.season.name})
+                  </p>
+                </div>
 
-            <div className="flex flex-col gap-2">
-              <Select
-                value={targetCourseSeasonShiftId}
-                onChange={(key) =>
-                  setTargetCourseSeasonShiftId(key ? String(key) : null)
-                }
-                isDisabled={isLoadingSeasons}
-                placeholder={
-                  isLoadingSeasons ? "Cargando..." : "Selecciona un turno"
-                }
-                variant="secondary"
-                className="w-full"
-              >
-                <Label className="text-sm font-semibold">Turno Destino</Label>
-                <Select.Trigger>
-                  <Select.Value />
-                  <Select.Indicator />
-                </Select.Trigger>
-                <Select.Popover>
-                  <ListBox>
-                    {courseSeasons.flatMap((cs) => 
-                      (cs.shifts || []).filter(s => s.id !== membership.courseSeasonShiftId).map(shiftItem => (
-                        <ListBox.Item
-                          key={shiftItem.id}
-                          id={shiftItem.id}
-                          textValue={`${cs.name} - ${shiftItem.shift.name}`}
-                        >
-                          <div className="flex flex-col">
-                            <span className="font-bold">{cs.name} - {shiftItem.shift.name}</span>
-                            <span className="text-xs text-muted">{cs.season.name}</span>
-                          </div>
-                          <ListBox.ItemIndicator />
-                        </ListBox.Item>
-                      ))
-                    )}
-                  </ListBox>
-                </Select.Popover>
-              </Select>
-            </div>
+                <div className="flex flex-col gap-2">
+                  <Select
+                    value={targetCourseSeasonShiftId}
+                    onChange={(key) =>
+                      setTargetCourseSeasonShiftId(key ? String(key) : null)
+                    }
+                    isDisabled={isLoadingSeasons}
+                    placeholder={
+                      isLoadingSeasons ? "Cargando..." : "Selecciona un turno"
+                    }
+                    variant="secondary"
+                    className="w-full"
+                  >
+                    <Label className="text-sm font-semibold">
+                      Turno Destino
+                    </Label>
+                    <Select.Trigger>
+                      <Select.Value />
+                      <Select.Indicator />
+                    </Select.Trigger>
+                    <Select.Popover>
+                      <ListBox>
+                        {courseSeasons.flatMap((cs) =>
+                          (cs.shifts || [])
+                            .filter(
+                              (s) => s.id !== membership.courseSeasonShiftId,
+                            )
+                            .map((shiftItem) => (
+                              <ListBox.Item
+                                key={shiftItem.id}
+                                id={shiftItem.id}
+                                textValue={`${cs.name} - ${shiftItem.shift.name}`}
+                              >
+                                <div className="flex flex-col">
+                                  <span className="font-bold">
+                                    {cs.name} - {shiftItem.shift.name}
+                                  </span>
+                                  <span className="text-xs text-muted">
+                                    {cs.season.name}
+                                  </span>
+                                </div>
+                                <ListBox.ItemIndicator />
+                              </ListBox.Item>
+                            )),
+                        )}
+                      </ListBox>
+                    </Select.Popover>
+                  </Select>
+                </div>
 
-            <div className="flex flex-col gap-2">
-              <DatePicker
-                value={effectiveDate}
-                onChange={setEffectiveDate}
-                isRequired
-                className="w-full"
-              >
-                <Label className="text-sm font-semibold">Fecha Efectiva</Label>
-                <DateField.Group variant="secondary">
-                  <DateField.Input>
-                    {(segment) => <DateField.Segment segment={segment} />}
-                  </DateField.Input>
-                  <DateField.Suffix>
-                    <DatePicker.Trigger>
-                      <DatePicker.TriggerIndicator />
-                    </DatePicker.Trigger>
-                  </DateField.Suffix>
-                </DateField.Group>
-                <DatePicker.Popover>
-                  <Calendar aria-label="Seleccionar fecha">
-                    <Calendar.Header>
-                      <Calendar.YearPickerTrigger>
-                        <Calendar.YearPickerTriggerHeading />
-                        <Calendar.YearPickerTriggerIndicator />
-                      </Calendar.YearPickerTrigger>
-                      <Calendar.NavButton slot="previous" />
-                      <Calendar.NavButton slot="next" />
-                    </Calendar.Header>
-                    <Calendar.Grid>
-                      <Calendar.GridHeader>
-                        {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
-                      </Calendar.GridHeader>
-                      <Calendar.GridBody>
-                        {(date) => <Calendar.Cell date={date} />}
-                      </Calendar.GridBody>
-                    </Calendar.Grid>
-                    <Calendar.YearPickerGrid>
-                      <Calendar.YearPickerGridBody>
-                        {({year}) => <Calendar.YearPickerCell year={year} />}
-                      </Calendar.YearPickerGridBody>
-                    </Calendar.YearPickerGrid>
-                  </Calendar>
-                </DatePicker.Popover>
-              </DatePicker>
-              <p className="text-xs text-muted">
-                ¿Desde qué fecha el alumno ocupará un cupo en el turno destino?
-              </p>
-            </div>
-            </>
+                <div className="flex flex-col gap-2">
+                  <DatePicker
+                    value={effectiveDate}
+                    onChange={setEffectiveDate}
+                    isRequired
+                    className="w-full"
+                  >
+                    <Label className="text-sm font-semibold">
+                      Fecha Efectiva
+                    </Label>
+                    <DateField.Group variant="secondary">
+                      <DateField.Input>
+                        {(segment) => <DateField.Segment segment={segment} />}
+                      </DateField.Input>
+                      <DateField.Suffix>
+                        <DatePicker.Trigger>
+                          <DatePicker.TriggerIndicator />
+                        </DatePicker.Trigger>
+                      </DateField.Suffix>
+                    </DateField.Group>
+                    <DatePicker.Popover>
+                      <Calendar aria-label="Seleccionar fecha">
+                        <Calendar.Header>
+                          <Calendar.YearPickerTrigger>
+                            <Calendar.YearPickerTriggerHeading />
+                            <Calendar.YearPickerTriggerIndicator />
+                          </Calendar.YearPickerTrigger>
+                          <Calendar.NavButton slot="previous" />
+                          <Calendar.NavButton slot="next" />
+                        </Calendar.Header>
+                        <Calendar.Grid>
+                          <Calendar.GridHeader>
+                            {(day) => (
+                              <Calendar.HeaderCell>{day}</Calendar.HeaderCell>
+                            )}
+                          </Calendar.GridHeader>
+                          <Calendar.GridBody>
+                            {(date) => <Calendar.Cell date={date} />}
+                          </Calendar.GridBody>
+                        </Calendar.Grid>
+                        <Calendar.YearPickerGrid>
+                          <Calendar.YearPickerGridBody>
+                            {({ year }) => (
+                              <Calendar.YearPickerCell year={year} />
+                            )}
+                          </Calendar.YearPickerGridBody>
+                        </Calendar.YearPickerGrid>
+                      </Calendar>
+                    </DatePicker.Popover>
+                  </DatePicker>
+                  <p className="text-xs text-muted">
+                    ÃÂ¿Desde quiÂ© fecha el alumno ocupariÂ¡ un cupo en el turno
+                    destino?
+                  </p>
+                </div>
+              </>
             ) : null}
           </Drawer.Body>
 
@@ -326,7 +371,17 @@ export const TransferShiftDrawer = ({
             >
               Cancelar
             </Button>
-            <Button onPress={handleSubmit} isDisabled={isSubmitting || !targetCourseSeasonShiftId || !effectiveDate || isLoadingSeasons || isLoadingMembership || !!membershipError}>
+            <Button
+              onPress={handleSubmit}
+              isDisabled={
+                isSubmitting ||
+                !targetCourseSeasonShiftId ||
+                !effectiveDate ||
+                isLoadingSeasons ||
+                isLoadingMembership ||
+                !!membershipError
+              }
+            >
               {isSubmitting && <Spinner size="sm" className="text-current" />}
               {isSubmitting ? "Transfiriendo..." : "Confirmar Transferencia"}
             </Button>

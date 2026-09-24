@@ -17,7 +17,9 @@ export const getPersonMembershipHistory = async ({
   personId,
   playerId,
   studentId,
-}: GetPersonMembershipHistoryParams): Promise<ServiceResponse<IMembershipHistoryItem[]>> => {
+}: GetPersonMembershipHistoryParams): Promise<
+  ServiceResponse<IMembershipHistoryItem[]>
+> => {
   return handleServerAction(async () => {
     if (!playerId && !studentId) {
       return {
@@ -27,7 +29,9 @@ export const getPersonMembershipHistory = async ({
       };
     }
 
-    const fetchAllPlayerMemberships = async (pid: string): Promise<IMembershipHistoryItem[]> => {
+    const fetchAllPlayerMemberships = async (
+      pid: string,
+    ): Promise<IMembershipHistoryItem[]> => {
       let allItems: IMembershipHistoryItem[] = [];
       let currentPage = 1;
       let hasNext = true;
@@ -47,23 +51,25 @@ export const getPersonMembershipHistory = async ({
                 tags: [`person-${personId}-membership-history`],
                 revalidate: 3600,
               },
-            }
+            },
           );
 
           if (res.data) {
-            const mapped = res.data.map((m: any): IMembershipHistoryItem => ({
-              id: m.id,
-              type: "team",
-              status: m.status,
-              startedAt: m.startedAt,
-              endedAt: m.finishedAt || m.endedAt || null,
-              createdAt: m.createdAt,
-              teamName: m.teamSeason?.team?.name,
-              categoryName: m.teamSeasonCategories?.category?.name,
-              seasonName: m.teamSeason?.season?.name,
-              totalPendingAmount: m.totalPendingAmount,
-              totalPaidAmount: m.totalPaidAmount,
-            }));
+            const mapped = res.data.map(
+              (m: any): IMembershipHistoryItem => ({
+                id: m.id,
+                type: "team",
+                status: m.status,
+                startedAt: m.startedAt,
+                endedAt: m.finishedAt || m.endedAt || null,
+                createdAt: m.createdAt,
+                teamName: m.teamSeason?.team?.name,
+                categoryName: m.teamSeasonCategories?.category?.name,
+                seasonName: m.teamSeason?.season?.name,
+                totalPendingAmount: m.totalPendingAmount,
+                totalPaidAmount: m.totalPaidAmount,
+              }),
+            );
             allItems = [...allItems, ...mapped];
           }
           hasNext = res.meta?.hasNextPage || false;
@@ -78,7 +84,9 @@ export const getPersonMembershipHistory = async ({
       return allItems;
     };
 
-    const fetchAllStudentMemberships = async (sid: string): Promise<IMembershipHistoryItem[]> => {
+    const fetchAllStudentMemberships = async (
+      sid: string,
+    ): Promise<IMembershipHistoryItem[]> => {
       let allItems: IMembershipHistoryItem[] = [];
       let currentPage = 1;
       let hasNext = true;
@@ -98,23 +106,27 @@ export const getPersonMembershipHistory = async ({
                 tags: [`person-${personId}-membership-history`],
                 revalidate: 3600,
               },
-            }
+            },
           );
 
           if (res.data) {
-            const mapped = res.data.map((m: any): IMembershipHistoryItem => ({
-              id: m.id,
-              type: "course",
-              status: m.status,
-              startedAt: m.startedAt,
-              endedAt: m.finishedAt || m.endedAt || null,
-              createdAt: m.createdAt,
-              courseName: m.courseSeason?.course?.name,
-              institutionName: m.courseSeason?.course?.school?.name || m.courseSeason?.season?.institution?.name,
-              shiftName: m.courseSeasonShift?.shift?.name,
-              seasonName: m.courseSeason?.season?.name,
-              cycleEnrollments: m.cycleEnrollments,
-            }));
+            const mapped = res.data.map(
+              (m: any): IMembershipHistoryItem => ({
+                id: m.id,
+                type: "course",
+                status: m.status,
+                startedAt: m.startedAt,
+                endedAt: m.finishedAt || m.endedAt || null,
+                createdAt: m.createdAt,
+                courseName: m.courseSeason?.course?.name,
+                institutionName:
+                  m.courseSeason?.course?.school?.name ||
+                  m.courseSeason?.season?.institution?.name,
+                shiftName: m.courseSeasonShift?.shift?.name,
+                seasonName: m.courseSeason?.season?.name,
+                cycleEnrollments: m.cycleEnrollments,
+              }),
+            );
             allItems = [...allItems, ...mapped];
           }
           hasNext = res.meta?.hasNextPage || false;
@@ -134,13 +146,13 @@ export const getPersonMembershipHistory = async ({
     if (playerId) {
       promises.push(fetchAllPlayerMemberships(playerId));
     }
-    
+
     if (studentId) {
       promises.push(fetchAllStudentMemberships(studentId));
     }
 
     const results = await Promise.all(promises);
-    
+
     const combinedHistory = results.flat();
 
     combinedHistory.sort((a, b) => {
@@ -161,5 +173,3 @@ export const getPersonMembershipHistory = async ({
     };
   });
 };
-
-

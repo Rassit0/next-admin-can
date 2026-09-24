@@ -76,7 +76,7 @@ export const CategoryConfigBlock = ({
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <SelectCategory
-          label="Categoría"
+          label="Categori­a"
           categoriesOptions={categoriesOptions}
           categoryId={category.categoryId || null}
           setCategoryId={(val) => {
@@ -93,7 +93,7 @@ export const CategoryConfigBlock = ({
           isRequired
           className="w-full"
           name="gender"
-          placeholder="Seleccione un género"
+          placeholder="Seleccione un gi©nero"
           variant="secondary"
           isInvalid={!!getError("gender") || undefined}
           value={category.gender || ""}
@@ -147,7 +147,7 @@ export const CategoryConfigBlock = ({
           isInvalid={!!getError("minBirthYear") || undefined}
           isDisabled={!category.validateAge}
         >
-          <Label>Año Nac. Mínimo (Opcional)</Label>
+          <Label>Ai±o Nac. Mi­nimo (Opcional)</Label>
           <Input
             min={1900}
             placeholder="Ej: 2015"
@@ -176,7 +176,7 @@ export const CategoryConfigBlock = ({
           isInvalid={!!getError("maxBirthYear") || undefined}
           isDisabled={!category.validateAge}
         >
-          <Label>Año Nac. Máximo (Opcional)</Label>
+          <Label>Ai±o Nac. Mi¡ximo (Opcional)</Label>
           <Input
             min={1900}
             placeholder="Ej: 2016"

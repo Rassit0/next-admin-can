@@ -287,7 +287,7 @@ export function FixtureSection({
     fetchFixtures();
   }, [dateRange]);
 
-  // Derivar disciplinas únicas
+  // Derivar disciplinas iºnicas
   const derivedDisciplines = useMemo(
     () =>
       Array.from(new Set(fixtures.map((f) => f.discipline).filter(Boolean))),
@@ -313,7 +313,7 @@ export function FixtureSection({
       matches = matches.filter((f) => f.discipline === selectedDiscipline);
     }
 
-    // 2. Filtro Rango de Fechas (Delegado al backend, aquí no filtramos fechas ya que vienen pre-filtradas del Server Action)
+    // 2. Filtro Rango de Fechas (Delegado al backend, aqui­ no filtramos fechas ya que vienen pre-filtradas del Server Action)
 
     // 3. Filtro Estado
     matches = matches.filter((match) => {

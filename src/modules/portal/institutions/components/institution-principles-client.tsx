@@ -8,37 +8,39 @@ const principles = [
     id: 1,
     title: "Misión",
     icon: Target,
-    description: "Fomentar el desarrollo integral de nuestros atletas a través de la práctica deportiva de alto rendimiento, inculcando disciplina, trabajo en equipo y valores éticos que trasciendan más allá del campo de juego.",
+    description:
+      "Fomentar el desarrollo integral de nuestros atletas a travi©s de la pri¡ctica deportiva de alto rendimiento, inculcando disciplina, trabajo en equipo y valores i©ticos que trasciendan mi¡s alli¡ del campo de juego.",
   },
   {
     id: 2,
     title: "Visión",
     icon: Eye,
-    description: "Ser reconocidos a nivel nacional e internacional como el club líder en formación deportiva y competitividad, marcando un estándar de excelencia y siendo un referente de innovación y pasión por el deporte.",
-  }
+    description:
+      "Ser reconocidos a nivel nacional e internacional como el club li­der en formación deportiva y competitividad, marcando un esti¡ndar de excelencia y siendo un referente de innovación y pasión por el deporte.",
+  },
 ];
 
 const values = [
   {
     name: "Pasión",
     icon: Heart,
-    desc: "Entregamos el corazón en cada entrenamiento y competencia."
+    desc: "Entregamos el corazón en cada entrenamiento y competencia.",
   },
   {
     name: "Integridad",
     icon: Shield,
-    desc: "Actuamos con honestidad, transparencia y respeto."
+    desc: "Actuamos con honestidad, transparencia y respeto.",
   },
   {
     name: "Excelencia",
     icon: Star,
-    desc: "Buscamos constantemente la mejora y el máximo rendimiento."
+    desc: "Buscamos constantemente la mejora y el mi¡ximo rendimiento.",
   },
   {
-    name: "Compañerismo",
+    name: "Compai±erismo",
     icon: Users,
-    desc: "Trabajamos unidos como una verdadera familia deportiva."
-  }
+    desc: "Trabajamos unidos como una verdadera familia deportiva.",
+  },
 ];
 
 export function InstitutionPrinciplesClient() {
@@ -95,7 +97,7 @@ export function InstitutionPrinciplesClient() {
           <span className="w-1.5 h-8 bg-neon rounded-full inline-block"></span>
           Nuestros Valores
         </motion.h2>
-        
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {values.map((v, idx) => (
             <motion.div
@@ -109,9 +111,7 @@ export function InstitutionPrinciplesClient() {
               <h3 className="font-heading text-xl font-700 uppercase text-primary mb-2 group-hover:text-neon transition-colors">
                 {v.name}
               </h3>
-              <p className="text-sm font-500 text-muted-foreground">
-                {v.desc}
-              </p>
+              <p className="text-sm font-500 text-muted-foreground">{v.desc}</p>
             </motion.div>
           ))}
         </div>

@@ -7,7 +7,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { TiltCard } from "@/modules/portal/shared/components/tilt-card";
 import { cn } from "@/lib/utils";
-import type { PublicNews, PublicNewsCategory } from "@/modules/portal/news/actions/news.action";
+import type {
+  PublicNews,
+  PublicNewsCategory,
+} from "@/modules/portal/news/actions/news.action";
 import { useRouter, useSearchParams } from "next/navigation";
 
 interface NoticiasProps {
@@ -16,9 +19,13 @@ interface NoticiasProps {
   initialCategoryId?: string;
 }
 
-export function Noticias({ initialNews = [], categories = [], initialCategoryId }: NoticiasProps) {
+export function Noticias({
+  initialNews = [],
+  categories = [],
+  initialCategoryId,
+}: NoticiasProps) {
   const router = useRouter();
-  
+
   // Agregamos "Todas" al inicio de las categorías
   const dynamicFilters = [
     { label: "Todas", value: "Todas" },
@@ -26,16 +33,17 @@ export function Noticias({ initialNews = [], categories = [], initialCategoryId 
   ];
 
   const [filter, setFilter] = useState(initialCategoryId || "Todas");
-  
+
   // Si filtramos del lado del servidor (initialCategoryId), initialNews ya viene filtrado,
   // pero si el usuario selecciona otro filtro en el cliente, aplicamos el filtrado local.
   const filtered = initialNews.filter(
-    (n) => filter === "Todas" || n.categoryId === filter || n.category === filter,
+    (n) =>
+      filter === "Todas" || n.categoryId === filter || n.category === filter,
   );
 
   const handleFilterChange = (value: string) => {
     setFilter(value);
-    
+
     // Opcional: actualizar URL sin recargar para que pueda ser compartida
     if (value === "Todas") {
       router.push("/present", { scroll: false });

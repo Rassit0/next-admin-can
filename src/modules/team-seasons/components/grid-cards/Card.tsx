@@ -61,21 +61,30 @@ export const CardTeamOffering = ({ teamSeason }: Props) => {
           {teamSeason._count?.playerMemberships || 0} Atletas Inscritos
         </div>
       </div>
-      
+
       {(() => {
-        const allStaffs = teamSeason.categories?.flatMap(c => c.teamSeasonStaffs || []);
-        const primaryStaff = allStaffs?.find((s) => s.isPrimary)?.staff.person || allStaffs?.[0]?.staff.person;
+        const allStaffs = teamSeason.categories?.flatMap(
+          (c) => c.teamSeasonStaffs || [],
+        );
+        const primaryStaff =
+          allStaffs?.find((s) => s.isPrimary)?.staff.person ||
+          allStaffs?.[0]?.staff.person;
         if (!primaryStaff) return null;
         return (
           <div className="flex items-center gap-3 mb-4 bg-surface-container-low p-2 rounded-lg border border-border/50">
             <Avatar size="sm">
               {primaryStaff.imageUrl && (
-                <Avatar.Image src={primaryStaff.imageUrl} alt={`${primaryStaff.name} ${primaryStaff.lastName}`} />
+                <Avatar.Image
+                  src={primaryStaff.imageUrl}
+                  alt={`${primaryStaff.name} ${primaryStaff.lastName}`}
+                />
               )}
               <Avatar.Fallback>{`${primaryStaff.name.charAt(0)}${primaryStaff.lastName.charAt(0)}`}</Avatar.Fallback>
             </Avatar>
             <div className="flex flex-col">
-              <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Entrenador Principal</span>
+              <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+                Entrenador Principal
+              </span>
               <span className="text-xs font-semibold text-foreground">
                 {primaryStaff.name} {primaryStaff.lastName}
               </span>

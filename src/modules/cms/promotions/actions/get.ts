@@ -5,10 +5,17 @@ import { handleServerAction } from "@/utils";
 import { IPromotion } from "@/modules/cms/promotions/interfaces/promotions.interface";
 import { auth } from "@/auth";
 
-export const getPromotions = async (): Promise<ServiceResponse<IPromotion[]>> => {
+export const getPromotions = async (): Promise<
+  ServiceResponse<IPromotion[]>
+> => {
   const session = await auth();
 
-  if (!session?.user) return { error: true, statusCode: 401, message: "Su sesión ha expirado." } as any;
+  if (!session?.user)
+    return {
+      error: true,
+      statusCode: 401,
+      message: "Su sesión ha expirado.",
+    } as any;
 
   return handleServerAction(async () => {
     const res = await api.get<IPromotion[]>("promotions", {

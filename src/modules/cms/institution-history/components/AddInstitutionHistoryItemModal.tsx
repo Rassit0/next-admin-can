@@ -15,8 +15,19 @@ import { createInstitutionHistoryItemAction } from "../actions";
 import { Add01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { toast } from "sonner";
+import { ButtonFloating } from "@/ui";
 
-export const AddInstitutionHistoryItemModal = () => {
+interface Props {
+  label?: string;
+  isIcon?: boolean;
+  buttonFloatingMobile?: boolean;
+}
+
+export const AddInstitutionHistoryItemModal = ({
+  label,
+  isIcon = false,
+  buttonFloatingMobile,
+}: Props) => {
   const state = useOverlayState();
   const [loading, setLoading] = useState(false);
   const [isActive, setIsActive] = useState(true);
@@ -52,10 +63,39 @@ export const AddInstitutionHistoryItemModal = () => {
 
   return (
     <>
-      <Button onPress={() => state.open()}>
-        <HugeiconsIcon icon={Add01Icon} />
-        Nuevo Hito
-      </Button>
+      {!isIcon && (
+        <Button
+          className="hidden lg:flex"
+          variant="primary"
+          onPress={() => state.open()}
+          isIconOnly={isIcon}
+        >
+          <HugeiconsIcon icon={Add01Icon} />
+          {label || "Agregar Historia"}
+        </Button>
+      )}
+      {isIcon && (
+        <Button
+          variant="primary"
+          onPress={() => state.open()}
+          isIconOnly={isIcon}
+        >
+          <HugeiconsIcon icon={Add01Icon} />
+        </Button>
+      )}
+      {buttonFloatingMobile && (
+        <ButtonFloating
+          className="lg:hidden"
+          icon={
+            <HugeiconsIcon
+              icon={Add01Icon}
+              className="h-6 w-6 text-background"
+            />
+          }
+          onPress={() => state.open()}
+          // text="Agregar Disciplina"
+        />
+      )}
 
       <Modal.Backdrop isOpen={state.isOpen} onOpenChange={state.setOpen}>
         <Modal.Container placement="auto" scroll="outside">
@@ -67,12 +107,12 @@ export const AddInstitutionHistoryItemModal = () => {
             <form onSubmit={handleSubmit}>
               <Modal.Body className="px-6 py-4 flex flex-col gap-4">
                 <TextField name="year" isRequired>
-                  <Label>Año / Periodo</Label>
+                  <Label>Ai±o / Periodo</Label>
                   <Input placeholder="Ej. 1950" />
                 </TextField>
-                
+
                 <TextField name="title" isRequired>
-                  <Label>Título</Label>
+                  <Label>Ti­tulo</Label>
                   <Input placeholder="Ej. Fundación del Club" />
                 </TextField>
 
@@ -80,8 +120,13 @@ export const AddInstitutionHistoryItemModal = () => {
                   <Label>Descripción</Label>
                   <TextArea placeholder="Detalles del hito..." />
                 </TextField>
-                
-                <TextField name="sortOrder" type="number" defaultValue="0" isRequired>
+
+                <TextField
+                  name="sortOrder"
+                  type="number"
+                  defaultValue="0"
+                  isRequired
+                >
                   <Label>Ordenamiento</Label>
                   <Input />
                 </TextField>
@@ -92,7 +137,9 @@ export const AddInstitutionHistoryItemModal = () => {
                       <Switch.Thumb />
                     </Switch.Control>
                     <Switch.Content>
-                      <span className="text-sm font-medium">Activo / Visible</span>
+                      <span className="text-sm font-medium">
+                        Activo / Visible
+                      </span>
                     </Switch.Content>
                   </Switch>
                 </div>

@@ -1,13 +1,17 @@
 "use client";
 import { Avatar, Button, Checkbox, Chip, Table } from "@heroui/react";
-import { EyeIcon , Search01Icon } from "@hugeicons/core-free-icons";
+import { EyeIcon, Search01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useEffect, useState } from "react";
 import { ButtonGestion } from "./ButtonGestion";
 import { SortableColumnHeader } from "@/ui";
 import { DeleteModal } from "../modal/DeleteModal";
 import { iconMap } from "@/utils";
-import { ButtonOfferings, Gender, ICourseSeason } from "@/modules/course-seasons";
+import {
+  ButtonOfferings,
+  Gender,
+  ICourseSeason,
+} from "@/modules/course-seasons";
 
 interface Props {
   courseSeasons: ICourseSeason[];
@@ -17,7 +21,7 @@ interface Props {
 export const TableCourseSeasons = ({ courseSeasons, urlBase }: Props) => {
   const [isClient, setIsClient] = useState(false);
 
-  // Evitamos la hidratación fallida
+  // Evitamos la hidrataciiÂ³n fallida
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -75,7 +79,7 @@ export const TableCourseSeasons = ({ courseSeasons, urlBase }: Props) => {
 
             <Table.Column allowsSorting id="categoryName">
               <SortableColumnHeader id="categoryName">
-                CATEGORÍAS
+                CATEGORiÂAS
               </SortableColumnHeader>
             </Table.Column>
 
@@ -108,7 +112,7 @@ export const TableCourseSeasons = ({ courseSeasons, urlBase }: Props) => {
                     No se encontraron registros
                   </span>
                   <span className="text-sm text-default-400">
-                    Intenta con otros términos de búsqueda o agrega uno nuevo.
+                    Intenta con otros tiÂ©rminos de biÂºsqueda o agrega uno nuevo.
                   </span>
                 </div>
               </div>
@@ -133,7 +137,13 @@ export const TableCourseSeasons = ({ courseSeasons, urlBase }: Props) => {
                   })}
                 </Table.Cell>
                 <Table.Cell>
-                  {Array.from(new Set(courseSeason.shifts?.map((s) => s.category?.name).filter(Boolean))).join(' · ') || "-"}
+                  {Array.from(
+                    new Set(
+                      courseSeason.shifts
+                        ?.map((s) => s.category?.name)
+                        .filter(Boolean),
+                    ),
+                  ).join(" ÃÂ· ") || "-"}
                 </Table.Cell>
                 <Table.Cell>
                   <Chip size="sm" color="default" variant="secondary">

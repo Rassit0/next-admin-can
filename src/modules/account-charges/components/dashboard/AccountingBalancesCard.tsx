@@ -1,7 +1,12 @@
 "use client";
 
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Wallet02Icon, Building04Icon, SafeIcon, Activity01Icon } from "@hugeicons/core-free-icons";
+import {
+  Wallet02Icon,
+  Building04Icon,
+  SafeIcon,
+  Activity01Icon,
+} from "@hugeicons/core-free-icons";
 import { InfoTooltip } from "@/ui";
 import clsx from "clsx";
 
@@ -39,40 +44,66 @@ export const AccountingBalancesCard = ({ accounts }: Props) => {
     }
   };
 
-  const activeAccounts = accounts?.filter(acc => acc.isActive) || [];
+  const activeAccounts = accounts?.filter((acc) => acc.isActive) || [];
 
   // Agrupamos por tipo (Cajas vs Bancos/Billeteras) para mejor visualización
-  const cashAccounts = activeAccounts.filter(acc => acc.type === "CASH");
-  const bankAccounts = activeAccounts.filter(acc => acc.type === "BANK" || acc.type === "DIGITAL_WALLET");
+  const cashAccounts = activeAccounts.filter((acc) => acc.type === "CASH");
+  const bankAccounts = activeAccounts.filter(
+    (acc) => acc.type === "BANK" || acc.type === "DIGITAL_WALLET",
+  );
 
-  const renderAccountGroup = (title: string, groupAccounts: AccountDetail[]) => {
+  const renderAccountGroup = (
+    title: string,
+    groupAccounts: AccountDetail[],
+  ) => {
     if (groupAccounts.length === 0) return null;
-    
+
     return (
       <div className="flex flex-col gap-3">
-        <h4 className="text-xs font-semibold text-default-500 uppercase tracking-wider">{title}</h4>
+        <h4 className="text-xs font-semibold text-default-500 uppercase tracking-wider">
+          {title}
+        </h4>
         <div className="flex flex-col gap-2">
-          {groupAccounts.map(acc => (
-            <div key={acc.id} className="flex justify-between items-center p-3 rounded-lg bg-default-100/50 hover:bg-default-100 transition-colors">
+          {groupAccounts.map((acc) => (
+            <div
+              key={acc.id}
+              className="flex justify-between items-center p-3 rounded-lg bg-default-100/50 hover:bg-default-100 transition-colors"
+            >
               <div className="flex items-center gap-3">
-                <div className={clsx(
-                  "p-2 rounded-md",
-                  acc.type === "CASH" ? "bg-success/10 text-success" : "bg-primary/10 text-primary"
-                )}>
+                <div
+                  className={clsx(
+                    "p-2 rounded-md",
+                    acc.type === "CASH"
+                      ? "bg-success/10 text-success"
+                      : "bg-primary/10 text-primary",
+                  )}
+                >
                   {getAccountIcon(acc.type)}
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-foreground">{acc.name}</p>
+                  <p className="text-sm font-medium text-foreground">
+                    {acc.name}
+                  </p>
                   <p className="text-[10px] text-default-400">
-                    {acc.type === "CASH" ? "Caja" : acc.type === "BANK" ? "Banco" : "Billetera Digital"}
+                    {acc.type === "CASH"
+                      ? "Caja"
+                      : acc.type === "BANK"
+                        ? "Banco"
+                        : "Billetera Digital"}
                   </p>
                 </div>
               </div>
               <div className="text-right">
-                <p className={clsx(
-                  "text-sm font-bold",
-                  acc.balance === 0 ? "text-default-400" : acc.balance < 0 ? "text-danger" : "text-foreground"
-                )}>
+                <p
+                  className={clsx(
+                    "text-sm font-bold",
+                    acc.balance === 0
+                      ? "text-default-400"
+                      : acc.balance < 0
+                        ? "text-danger"
+                        : "text-foreground",
+                  )}
+                >
                   {formatCurrency(acc.balance, acc.currency)}
                 </p>
               </div>
@@ -93,7 +124,9 @@ export const AccountingBalancesCard = ({ accounts }: Props) => {
       </div>
       <div className="p-4 sm:p-5 flex flex-col gap-6 overflow-y-auto">
         {activeAccounts.length === 0 ? (
-          <p className="text-sm text-default-500 text-center py-4">No hay cuentas activas registradas.</p>
+          <p className="text-sm text-default-500 text-center py-4">
+            No hay cuentas activas registradas.
+          </p>
         ) : (
           <>
             {renderAccountGroup("Cajas", cashAccounts)}

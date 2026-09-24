@@ -2,7 +2,7 @@
 import { Button, Drawer } from "@heroui/react";
 import { ICourseSeason } from "@/modules/course-seasons";
 import { IPaymentPlan } from "@/modules/payment-plans";
-import { IPersonOption } from "@/common/actions/get-persons-options";
+import { IPersonOption } from "@/modules/persons";
 import { EnrollMembershipForm } from "../form/EnrollMembershipForm";
 import { useState } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";

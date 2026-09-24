@@ -1,6 +1,9 @@
 import { CardLouncher } from "@/modules/module-louncher";
 import { NavigationConfig } from "@/config/navigation";
-import { NavigationIcon, NavigationIconKey } from "@/ui/components/navigation/IconRegistry";
+import {
+  NavigationIcon,
+  NavigationIconKey,
+} from "@/ui/components/navigation/IconRegistry";
 
 export interface ModuleGridProps {
   items?: NavigationConfig[];
@@ -13,9 +16,16 @@ export const ModuleGrid = ({ items = [] }: ModuleGridProps) => {
         <CardLouncher
           key={item.id}
           href={item.href.startsWith("/") ? item.href : `/admin/${item.href}`}
-          iconNode={<NavigationIcon iconKey={item.icon as NavigationIconKey} size={40} />}
+          iconNode={
+            <NavigationIcon
+              iconKey={item.icon as NavigationIconKey}
+              size={40}
+            />
+          }
           title={item.label}
-          description={item.description || "Gestione esta sección de la plataforma."}
+          description={
+            item.description || "Gestione esta sección de la plataforma."
+          }
           tagText={item.tagText || "Módulo"}
         />
       ))}

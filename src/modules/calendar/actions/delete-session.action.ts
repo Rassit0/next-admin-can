@@ -7,7 +7,7 @@ import { updateTag } from "next/cache";
 
 export const deleteSession = async (
   id: string,
-  scope: "single" | "following" | "all" = "single"
+  scope: "single" | "following" | "all" = "single",
 ): Promise<ServiceResponse<any>> => {
   return handleServerAction(async () => {
     const res = await api.delete<{ message: string; data: any }>(

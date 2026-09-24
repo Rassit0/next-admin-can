@@ -28,11 +28,11 @@ export const deleteDiscipline = async ({
     if (error instanceof ApiError) {
       console.warn(`[ApiError ${error.statusCode}]: ${error.message}`);
 
-      // Devolvemos el error en un formato que el frontend pueda procesar fácilmente
+      // Devolvemos el error en un formato que el frontend pueda procesar fi¡cilmente
       return {
         error: true,
         message: error.message,
-        errors: error.errors, // Aquí vienen los errores de validación (ej: campos requeridos)
+        errors: error.errors, // Aqui­ vienen los errores de validación (ej: campos requeridos)
         statusCode: error.statusCode,
       };
     }
@@ -42,7 +42,7 @@ export const deleteDiscipline = async ({
 
     return {
       error: true,
-      message: "Ocurrió un error inesperado. Por favor, intenta más tarde.",
+      message: "Ocurrió un error inesperado. Por favor, intenta mi¡s tarde.",
       statusCode: 500,
     };
   }

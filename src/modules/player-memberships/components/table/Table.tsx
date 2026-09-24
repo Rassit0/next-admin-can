@@ -43,7 +43,10 @@ export const TableMemberships = ({
   return (
     <Table>
       <Table.ScrollContainer>
-        <Table.Content aria-label="Membresías de atletas" className="min-w-200">
+        <Table.Content
+          aria-label="MembresiÂ­as de atletas"
+          className="min-w-200"
+        >
           <Table.Header className="bg-surface-secondary">
             {showPlayerDetail && (
               <Table.Column isRowHeader allowsSorting id="name">
@@ -58,7 +61,7 @@ export const TableMemberships = ({
               <Table.Column allowsSorting id="teamSeason">
                 <SortableColumnHeader id="teamSeason">
                   <span className="text-xs font-semibold uppercase tracking-wide">
-                    Equipo / Categoría
+                    Equipo / CategoriÂ­a
                   </span>
                 </SortableColumnHeader>
               </Table.Column>
@@ -103,7 +106,7 @@ export const TableMemberships = ({
           <Table.Body
             renderEmptyState={() => (
               <div className="py-10 text-center text-sm text-muted">
-                Aún no hay atletas inscritos en esta temporada.
+                AiÂºn no hay atletas inscritos en esta temporada.
               </div>
             )}
           >
@@ -156,16 +159,20 @@ export const TableMemberships = ({
                       <div className="flex flex-col min-w-0">
                         {(() => {
                           const teamObj = membership.teamSeason?.team;
-                          const url = teamObj && 'club' in teamObj && teamObj.club 
-                            ? `/admin/teams/${teamObj.club.disciplineId}/${teamObj.clubId}/${teamObj.id}/team-seasons/${membership.teamSeasonId}/player-memberships?teamSeasonCategoryId=${membership.teamSeasonCategoryId}` 
-                            : "#";
+                          const url =
+                            teamObj && "club" in teamObj && teamObj.club
+                              ? `/admin/teams/${teamObj.club.disciplineId}/${teamObj.clubId}/${teamObj.id}/team-seasons/${membership.teamSeasonId}/player-memberships?teamSeasonCategoryId=${membership.teamSeasonCategoryId}`
+                              : "#";
                           const innerContent = (
                             <>
                               <span className="font-medium text-foreground truncate group-hover:text-primary transition-colors">
-                                {teamObj?.name ?? "—"}
+                                {teamObj?.name ?? "Ã¢ÂÂ"}
                               </span>
                               <span className="text-xs text-muted truncate group-hover:text-primary/80 transition-colors">
-                                {membership.teamSeasonCategories?.category?.name ?? "—"} • {membership.teamSeason?.season?.name ?? "—"}
+                                {membership.teamSeasonCategories?.category
+                                  ?.name ?? "Ã¢ÂÂ"}{" "}
+                                -{" "}
+                                {membership.teamSeason?.season?.name ?? "Ã¢ÂÂ"}
                               </span>
                             </>
                           );
@@ -175,7 +182,10 @@ export const TableMemberships = ({
                               {innerContent}
                             </div>
                           ) : (
-                            <Link href={url} className="group flex flex-col min-w-0 hover:opacity-80 transition-opacity">
+                            <Link
+                              href={url}
+                              className="group flex flex-col min-w-0 hover:opacity-80 transition-opacity"
+                            >
                               {innerContent}
                             </Link>
                           );
@@ -185,7 +195,7 @@ export const TableMemberships = ({
                   )}
                   <Table.Cell className="py-3">
                     <span className="font-medium text-foreground">
-                      {membership.paymentPlan?.name ?? "—"}
+                      {membership.paymentPlan?.name ?? "Ã¢ÂÂ"}
                     </span>
                   </Table.Cell>
                   <Table.Cell className="py-3 text-right">

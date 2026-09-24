@@ -71,7 +71,7 @@ export const TableTeams = ({ teams, urlBase }: Props) => {
             </Table.Column>
 
             <Table.Column allowsSorting id="description">
-              DESCRIPCIÓN
+              DESCRIPCIiN
             </Table.Column>
 
             <Table.Column className="text-center">ACCIONES</Table.Column>
@@ -87,7 +87,7 @@ export const TableTeams = ({ teams, urlBase }: Props) => {
                     No se encontraron registros
                   </span>
                   <span className="text-sm text-default-400">
-                    Intenta con otros términos de búsqueda o agrega uno nuevo.
+                    Intenta con otros ti©rminos de biºsqueda o agrega uno nuevo.
                   </span>
                 </div>
               </div>

@@ -99,7 +99,7 @@ export const AccountingAlerts = ({ alerts }: Props) => {
             <HugeiconsIcon icon={Calendar03Icon} size={20} />
             <h3 className="font-semibold text-foreground flex items-center">
               Atención: Por Pagar
-              <InfoTooltip text="Muestra alertas sobre obligaciones y cuentas por pagar que están vencidas o próximas a su fecha límite." />
+              <InfoTooltip text="Muestra alertas sobre obligaciones y cuentas por pagar que esti¡n vencidas o próximas a su fecha li­mite." />
             </h3>
           </div>
           <Chip size="sm" color="danger">

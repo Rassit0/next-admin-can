@@ -26,10 +26,7 @@ export const TableShifts = ({ shifts }: Props) => {
   return (
     <Table>
       <Table.ScrollContainer>
-        <Table.Content
-          aria-label="Table with shifts"
-          className="min-w-200"
-        >
+        <Table.Content aria-label="Table with shifts" className="min-w-200">
           <Table.Header>
             <Table.Column isRowHeader allowsSorting id="name">
               <SortableColumnHeader id="name">TURNO</SortableColumnHeader>
@@ -57,7 +54,7 @@ export const TableShifts = ({ shifts }: Props) => {
                     No se encontraron registros
                   </span>
                   <span className="text-sm text-default-400">
-                    Intenta con otros términos de búsqueda o agrega uno nuevo.
+                    Intenta con otros ti©rminos de biºsqueda o agrega uno nuevo.
                   </span>
                 </div>
               </div>
@@ -66,12 +63,8 @@ export const TableShifts = ({ shifts }: Props) => {
             {shifts.map((shift) => (
               <Table.Row key={shift.id} id={shift.id}>
                 <Table.Cell>{shift.name}</Table.Cell>
-                <Table.Cell>
-                  {shift.createdAt.toLocaleDateString()}
-                </Table.Cell>
-                <Table.Cell>
-                  {shift.updatedAt.toLocaleDateString()}
-                </Table.Cell>
+                <Table.Cell>{shift.createdAt.toLocaleDateString()}</Table.Cell>
+                <Table.Cell>{shift.updatedAt.toLocaleDateString()}</Table.Cell>
                 <Table.Cell>
                   <div className="flex items-center justify-center gap-1">
                     <Button isIconOnly size="sm" variant="tertiary">

@@ -11,7 +11,12 @@ export const addHomeDiscipline = async (
 ): Promise<ServiceResponse<IHomeDiscipline>> => {
   const session = await auth();
 
-  if (!session?.user) return { error: true, statusCode: 401, message: "Su sesión ha expirado." } as any;
+  if (!session?.user)
+    return {
+      error: true,
+      statusCode: 401,
+      message: "Su sesión ha expirado.",
+    } as any;
 
   return handleServerAction(async () => {
     const response = await api.post<IHomeDiscipline>("home-disciplines", data, {
@@ -22,7 +27,7 @@ export const addHomeDiscipline = async (
 
     updateTag("public-home-disciplines");
     updateTag("admin-home-disciplines");
-    
+
     return {
       error: false,
       data: response,

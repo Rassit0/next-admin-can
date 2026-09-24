@@ -39,7 +39,8 @@ export const getPaymentRecords = async (
 ): Promise<ServiceResponse<IPaymentRecordResponse>> => {
   return handleServerAction(async () => {
     const queryParams = new URLSearchParams();
-    if (params.assignmentId) queryParams.set("assignmentId", params.assignmentId);
+    if (params.assignmentId)
+      queryParams.set("assignmentId", params.assignmentId);
     if (params.status) queryParams.set("status", params.status);
     if (params.page) queryParams.set("page", params.page);
     if (params.per_page) queryParams.set("per_page", params.per_page);
@@ -145,7 +146,7 @@ export const getPaymentMetrics = async (
     return {
       error: false,
       data: res,
-      message: "Métricas obtenidas exitosamente",
+      message: "Mi©tricas obtenidas exitosamente",
     };
   });
 };

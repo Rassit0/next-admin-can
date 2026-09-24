@@ -98,8 +98,8 @@ export const ButtonToggleBillingEngine = ({
                   {isEngineActive ? "Pausar" : "Reanudar"} Motor de Cobros
                 </span>
                 <span className="text-muted">
-                  Estás por {isEngineActive ? "detener" : "iniciar"} la
-                  generación automática
+                  EstiÂ¡s por {isEngineActive ? "detener" : "iniciar"} la
+                  generaciiÂ³n automiÂ¡tica
                 </span>
               </AlertDialog.Heading>
             </AlertDialog.Header>
@@ -108,14 +108,14 @@ export const ButtonToggleBillingEngine = ({
                 <Alert.Indicator />
                 <Alert.Content>
                   <Alert.Title>
-                    ¿Estás seguro de {isEngineActive ? "pausar" : "reanudar"} el
-                    motor de cobros para esta temporada?
+                    ÃÂ¿EstiÂ¡s seguro de {isEngineActive ? "pausar" : "reanudar"}{" "}
+                    el motor de cobros para esta temporada?
                   </Alert.Title>
 
                   <Alert.Description>
                     {isEngineActive
-                      ? "Al pausarlo, no se generarán nuevos cargos mensuales ni se aplicarán multas por atrasos a los miembros de esta temporada hasta que lo reanudes manualmente. Ideal si necesitas corregir configuraciones de precios."
-                      : "Al reanudarlo, el sistema volverá a evaluar a todos los miembros de esta temporada para emitir sus mensualidades y multas correspondientes según el cronograma."}
+                      ? "Al pausarlo, no se generariÂ¡n nuevos cargos mensuales ni se aplicariÂ¡n multas por atrasos a los miembros de esta temporada hasta que lo reanudes manualmente. Ideal si necesitas corregir configuraciones de precios."
+                      : "Al reanudarlo, el sistema volveriÂ¡ a evaluar a todos los miembros de esta temporada para emitir sus mensualidades y multas correspondientes segiÂºn el cronograma."}
                   </Alert.Description>
                 </Alert.Content>
               </Alert>
@@ -133,7 +133,7 @@ export const ButtonToggleBillingEngine = ({
                     : "bg-success text-success-foreground hover:bg-success-hover"
                 }
               >
-                Sí, {isEngineActive ? "pausar" : "reanudar"} motor
+                SiÂ­, {isEngineActive ? "pausar" : "reanudar"} motor
               </Button>
             </AlertDialog.Footer>
           </AlertDialog.Dialog>

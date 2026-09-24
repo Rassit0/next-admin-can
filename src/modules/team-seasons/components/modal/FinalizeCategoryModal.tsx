@@ -5,7 +5,10 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { CheckmarkBadge01Icon } from "@hugeicons/core-free-icons";
 import React, { useState } from "react";
 import { toast } from "sonner";
-import { ITeamSeasonCategory, finalizeTeamSeasonCategory } from "@/modules/team-seasons";
+import {
+  ITeamSeasonCategory,
+  finalizeTeamSeasonCategory,
+} from "@/modules/team-seasons";
 
 interface Props {
   teamSeasonId: string;
@@ -13,7 +16,11 @@ interface Props {
   onSuccess?: () => void;
 }
 
-export const FinalizeCategoryModal = ({ teamSeasonId, category, onSuccess }: Props) => {
+export const FinalizeCategoryModal = ({
+  teamSeasonId,
+  category,
+  onSuccess,
+}: Props) => {
   const state = useOverlayState();
   const [loading, setLoading] = useState(false);
   const [notes, setNotes] = useState("");
@@ -21,17 +28,23 @@ export const FinalizeCategoryModal = ({ teamSeasonId, category, onSuccess }: Pro
   const handleFinish = async () => {
     setLoading(true);
     try {
-      const res = await finalizeTeamSeasonCategory(teamSeasonId, category.id, notes);
+      const res = await finalizeTeamSeasonCategory(
+        teamSeasonId,
+        category.id,
+        notes,
+      );
 
       if (res.error) {
-        toast.error(res.message || "Ocurrió un error al finalizar la categoría");
+        toast.error(
+          res.message || "OcurriiÂ³ un error al finalizar la categoriÂ­a",
+        );
       } else {
-        toast.success("Categoría finalizada exitosamente");
+        toast.success("CategoriÂ­a finalizada exitosamente");
         state.close();
         if (onSuccess) onSuccess();
       }
     } catch (error) {
-      toast.error("Error de conexión");
+      toast.error("Error de conexiiÂ³n");
     } finally {
       setLoading(false);
     }
@@ -58,7 +71,9 @@ export const FinalizeCategoryModal = ({ teamSeasonId, category, onSuccess }: Pro
                 <Modal.Icon className="bg-warning/20 text-warning">
                   <HugeiconsIcon icon={CheckmarkBadge01Icon} />
                 </Modal.Icon>
-                <Modal.Heading>Finalizar Categoría Anticipadamente</Modal.Heading>
+                <Modal.Heading>
+                  Finalizar CategoriÂ­a Anticipadamente
+                </Modal.Heading>
                 <p className="mt-1.5 text-sm leading-5 text-muted">
                   {category.category.name} - {category.gender}
                 </p>
@@ -66,16 +81,27 @@ export const FinalizeCategoryModal = ({ teamSeasonId, category, onSuccess }: Pro
               <Modal.Body className="p-4 md:p-6 overflow-y-auto">
                 <div className="flex flex-col gap-4">
                   <div className="p-4 bg-warning/10 text-warning-600 rounded-lg text-xs">
-                    <p className="font-bold mb-1">¡Atención! Esta acción es irreversible.</p>
+                    <p className="font-bold mb-1">
+                      ÃÂ¡AtenciiÂ³n! Esta acciiÂ³n es irreversible.
+                    </p>
                     <ul className="list-disc pl-4 space-y-1 mt-2 text-warning-700">
-                      <li>Todas las membresías activas serán finalizadas de inmediato.</li>
-                      <li>Los cargos generados para meses futuros serán cancelados.</li>
-                      <li>Los cargos del mes vigente (y anteriores) se mantendrán.</li>
+                      <li>
+                        Todas las membresiÂ­as activas seriÂ¡n finalizadas de
+                        inmediato.
+                      </li>
+                      <li>
+                        Los cargos generados para meses futuros seriÂ¡n
+                        cancelados.
+                      </li>
+                      <li>
+                        Los cargos del mes vigente (y anteriores) se
+                        mantendriÂ¡n.
+                      </li>
                     </ul>
                   </div>
 
                   <textarea
-                    placeholder="Notas / Motivo de la finalización... (Opcional)"
+                    placeholder="Notas / Motivo de la finalizaciiÂ³n... (Opcional)"
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     rows={3}
@@ -91,7 +117,7 @@ export const FinalizeCategoryModal = ({ teamSeasonId, category, onSuccess }: Pro
                       onPress={handleFinish}
                       isPending={loading}
                     >
-                      Confirmar Finalización
+                      Confirmar FinalizaciiÂ³n
                     </Button>
                   </div>
                 </div>

@@ -41,7 +41,9 @@ export const FinancialAccountDrawer = ({
   const [isDefault, setIsDefault] = useState(false);
   const [isActive, setIsActive] = useState(true);
   const [initialBalance, setInitialBalance] = useState("");
-  const [allowedPaymentMethods, setAllowedPaymentMethods] = useState<string[]>([]);
+  const [allowedPaymentMethods, setAllowedPaymentMethods] = useState<string[]>(
+    [],
+  );
 
   const router = useRouter();
 
@@ -75,7 +77,7 @@ export const FinancialAccountDrawer = ({
       return;
     }
     if (allowedPaymentMethods.length === 0) {
-      toast.error("Debe seleccionar al menos un método de pago permitido");
+      toast.error("Debe seleccionar al menos un mi©todo de pago permitido");
       return;
     }
 
@@ -116,7 +118,7 @@ export const FinancialAccountDrawer = ({
   };
 
   const accountTypes = [
-    { value: "CASH", label: "Caja Físico / Efectivo" },
+    { value: "CASH", label: "Caja Fi­sico / Efectivo" },
     { value: "BANK", label: "Cuenta Bancaria" },
     { value: "DIGITAL_WALLET", label: "Billetera Digital" },
   ];
@@ -174,7 +176,7 @@ export const FinancialAccountDrawer = ({
 
               <div>
                 <Label className="mb-2 text-sm font-semibold block">
-                  Métodos de Pago Permitidos
+                  Mi©todos de Pago Permitidos
                 </Label>
                 <CheckboxGroup
                   value={allowedPaymentMethods}
@@ -207,13 +209,13 @@ export const FinancialAccountDrawer = ({
                   </Checkbox>
                 </CheckboxGroup>
                 <span className="text-xs text-default-500 mt-1 block">
-                  Seleccione qué métodos puede recibir esta cuenta.
+                  Seleccione qui© mi©todos puede recibir esta cuenta.
                 </span>
               </div>
 
               <div>
                 <Label className="mb-1 text-sm font-semibold">
-                  Número de Cuenta (Opcional)
+                  Niºmero de Cuenta (Opcional)
                 </Label>
                 <Input
                   placeholder="Ej: 4010123456"
@@ -236,7 +238,7 @@ export const FinancialAccountDrawer = ({
                     variant="secondary"
                   />
                   <span className="text-xs text-default-500 mt-1 block">
-                    Este saldo generará un Asiento de Apertura
+                    Este saldo generari¡ un Asiento de Apertura
                   </span>
                 </div>
               )}
@@ -264,7 +266,8 @@ export const FinancialAccountDrawer = ({
                         Cuenta por Defecto
                       </span>
                       <span className="text-xs text-default-500">
-                        Se seleccionará automáticamente en nuevos cobros y pagos
+                        Se seleccionari¡ automi¡ticamente en nuevos cobros y
+                        pagos
                       </span>
                     </div>
                   </Switch.Content>
@@ -276,7 +279,7 @@ export const FinancialAccountDrawer = ({
                   <div className="flex flex-col">
                     <span className="text-sm font-medium">Cuenta Activa</span>
                     <span className="text-xs text-default-500">
-                      Si se desactiva, no podrá usarse en nuevas transacciones
+                      Si se desactiva, no podri¡ usarse en nuevas transacciones
                     </span>
                   </div>
                   <Switch isSelected={isActive} onChange={setIsActive} />

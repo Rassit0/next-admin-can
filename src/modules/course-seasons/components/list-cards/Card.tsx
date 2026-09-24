@@ -68,13 +68,19 @@ export const CardCourseSeason = ({ courseSeason, urlBase }: Props) => {
       </div>
       <div className="p-5 flex-1 flex flex-col">
         <h3 className="font-display font-bold text-headline-sm text-primary mb-1">
-          {courseSeason.course?.name || "Curso"} - {Array.from(new Set(courseSeason.shifts?.map((s) => s.category?.name).filter(Boolean))).join(' · ') || "Varias Categorías"}
+          {courseSeason.course?.name || "Curso"} -{" "}
+          {Array.from(
+            new Set(
+              courseSeason.shifts?.map((s) => s.category?.name).filter(Boolean),
+            ),
+          ).join(" ÃÂ· ") || "Varias CategoriÂ­as"}
         </h3>
         <p className="text-on-surface-variant text-xs mb-1 font-bold">
           {courseSeason.name}
         </p>
         <p className="text-on-surface-variant text-xs mb-4 italic opacity-80">
-          {courseSeason.season?.name} • {courseSeason.shifts?.length || 0} turnos
+          {courseSeason.season?.name} - {courseSeason.shifts?.length || 0}{" "}
+          turnos
         </p>
 
         <div className="mt-2">
@@ -90,7 +96,10 @@ export const CardCourseSeason = ({ courseSeason, urlBase }: Props) => {
                 />
               </div>
               <div className="flex-1 min-w-35">
-                <ManageShiftsModal courseSeason={courseSeason} urlBase={urlBase} />
+                <ManageShiftsModal
+                  courseSeason={courseSeason}
+                  urlBase={urlBase}
+                />
               </div>
             </div>
           </div>

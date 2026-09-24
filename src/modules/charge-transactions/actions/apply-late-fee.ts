@@ -6,8 +6,8 @@ import { auth } from "@/auth";
 
 export const applyLateFee = async (
   chargeId: string,
-  type: 'student' | 'membership' = 'student',
-  customAmount?: number
+  type: "student" | "membership" = "student",
+  customAmount?: number,
 ): Promise<ServiceResponse<boolean>> => {
   const session = await auth();
 
@@ -19,7 +19,8 @@ export const applyLateFee = async (
     };
 
   return handleServerAction(async () => {
-    const endpointPrefix = type === 'membership' ? 'membership-charges' : 'student-charges';
+    const endpointPrefix =
+      type === "membership" ? "membership-charges" : "student-charges";
     const res = await api.post<any>(
       `${endpointPrefix}/${chargeId}/late-fee/apply`,
       { customAmount },
@@ -27,7 +28,7 @@ export const applyLateFee = async (
         headers: {
           Authorization: `Bearer ${session.user.token}`,
         },
-      }
+      },
     );
 
     return {

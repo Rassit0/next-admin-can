@@ -59,13 +59,13 @@ export const DeleteModal = ({
             <AlertDialog.CloseTrigger />
             <AlertDialog.Header>
               <AlertDialog.Icon status="danger" />
-              <AlertDialog.Heading>¿Eliminar disciplina?</AlertDialog.Heading>
+              <AlertDialog.Heading>ÃÂ¿Eliminar disciplina?</AlertDialog.Heading>
             </AlertDialog.Header>
             <AlertDialog.Body>
               <p>
-                Se eliminará permanentemente la disciplina{" "}
+                Se eliminariÂ¡ permanentemente la disciplina{" "}
                 <strong>{discipline.name}</strong> si no tiene datos asociados a
-                ella. Esta acción no se puede deshacer.
+                ella. Esta acciiÂ³n no se puede deshacer.
               </p>
             </AlertDialog.Body>
             <AlertDialog.Footer>

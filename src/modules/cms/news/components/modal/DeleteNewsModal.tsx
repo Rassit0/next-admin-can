@@ -1,10 +1,5 @@
 "use client";
-import {
-  Button,
-  Modal,
-  ProgressCircle,
-  useOverlayState,
-} from "@heroui/react";
+import { Button, Modal, ProgressCircle, useOverlayState } from "@heroui/react";
 import { Delete02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Dispatch, SetStateAction, useState } from "react";
@@ -26,12 +21,12 @@ export const DeleteNewsModal = ({ id, slug, isOpen, setIsOpen }: Props) => {
     setIsLoading(true);
     const res = await deleteNews(id, slug);
     setIsLoading(false);
-    
+
     if (res.error) {
       toast.error("Error al eliminar", { description: res.message });
       return;
     }
-    
+
     toast.success("Noticia eliminada correctamente");
     state.close();
   };
@@ -51,7 +46,8 @@ export const DeleteNewsModal = ({ id, slug, isOpen, setIsOpen }: Props) => {
           </Modal.Header>
           <Modal.Body className="p-6">
             <p className="text-sm text-muted">
-              ¿Estás seguro de que deseas eliminar esta noticia? Esta acción no se puede deshacer.
+              ÃÂ¿EstiÂ¡s seguro de que deseas eliminar esta noticia? Esta acciiÂ³n
+              no se puede deshacer.
             </p>
           </Modal.Body>
           <Modal.Footer>

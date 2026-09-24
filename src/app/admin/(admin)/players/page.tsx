@@ -1,4 +1,4 @@
-﻿import { AddModal, getPlayers, TablePlayers } from "@/modules/players";
+import { AddModal, getPlayers, TablePlayers } from "@/modules/players";
 import { ErrorPage, HeaderPage, PaginationSection, SectionFilters } from "@/ui";
 import {
   Alert01Icon,
@@ -61,7 +61,7 @@ export default async function PlayersPage({ searchParams }: Props) {
             </div>
             <div>
               <p className="text-xs font-bold text-default-foreground/50 uppercase tracking-widest">
-                BÃ¡squet
+                Básquet
               </p>
               <p className="text-xl font-black font-headline text-default-foreground">
                 142
@@ -74,7 +74,7 @@ export default async function PlayersPage({ searchParams }: Props) {
             </div>
             <div>
               <p className="text-xs font-bold text-default-foreground/50 uppercase tracking-widest">
-                VÃ³ley
+                Vóley
               </p>
               <p className="text-xl font-black font-headline text-default-foreground">
                 89
@@ -118,10 +118,10 @@ export default async function PlayersPage({ searchParams }: Props) {
               Todos
             </button>
             <button className="px-4 py-1.5 text-slate-500 font-bold text-xs rounded-full hover:bg-slate-100">
-              BÃ¡squet
+              Básquet
             </button>
             <button className="px-4 py-1.5 text-slate-500 font-bold text-xs rounded-full hover:bg-slate-100">
-              VÃ³ley
+              Vóley
             </button>
           </div>
           <div className="flex items-center gap-3">
@@ -129,7 +129,7 @@ export default async function PlayersPage({ searchParams }: Props) {
               <span className="material-symbols-outlined text-sm">
                 filter_list
               </span>
-              MÃ¡s Filtros
+              Más Filtros
             </button>
             <button className="flex items-center gap-2 text-xs font-bold text-slate-500 border border-outline-variant/20 px-3 py-1.5 rounded-lg hover:bg-slate-50">
               <span className="material-symbols-outlined text-sm">

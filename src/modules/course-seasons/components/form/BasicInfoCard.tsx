@@ -1,4 +1,11 @@
-import { Calendar, Card, Select, Switch, TextArea, TextField } from "@heroui/react";
+import {
+  Calendar,
+  Card,
+  Select,
+  Switch,
+  TextArea,
+  TextField,
+} from "@heroui/react";
 import { Calendar04Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
@@ -51,7 +58,7 @@ export const BasicInfoCard = ({
           <HugeiconsIcon icon={Calendar04Icon} className="text-accent" />
         </div>
         <Card.Title className="font-headline font-bold text-lg">
-          Información Básica
+          Información Bi¡sica
         </Card.Title>
       </Card.Header>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

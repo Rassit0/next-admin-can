@@ -5,14 +5,18 @@ import { Table, Chip } from "@heroui/react";
 import { EditInstitutionHistoryItemModal } from "./EditInstitutionHistoryItemModal";
 import { ConfirmDeleteHistoryItemModal } from "./ConfirmDeleteHistoryItemModal";
 
-export const TableInstitutionHistory = ({ items }: { items: InstitutionHistoryItem[] }) => {
+export const TableInstitutionHistory = ({
+  items,
+}: {
+  items: InstitutionHistoryItem[];
+}) => {
   return (
     <Table>
       <Table.ScrollContainer>
-        <Table.Content aria-label="Línea de tiempo">
+        <Table.Content aria-label="Li­nea de tiempo">
           <Table.Header>
-            <Table.Column isRowHeader>AÑO</Table.Column>
-            <Table.Column>TÍTULO</Table.Column>
+            <Table.Column isRowHeader>AiO</Table.Column>
+            <Table.Column>TiTULO</Table.Column>
             <Table.Column>ORDEN</Table.Column>
             <Table.Column>ESTADO</Table.Column>
             <Table.Column className="text-right">ACCIONES</Table.Column>
@@ -25,9 +29,13 @@ export const TableInstitutionHistory = ({ items }: { items: InstitutionHistoryIt
                 <Table.Cell>{item.sortOrder}</Table.Cell>
                 <Table.Cell>
                   {item.isActive ? (
-                    <Chip color="success" variant="soft" size="sm">Activo</Chip>
+                    <Chip color="success" variant="soft" size="sm">
+                      Activo
+                    </Chip>
                   ) : (
-                    <Chip color="default" variant="soft" size="sm">Oculto</Chip>
+                    <Chip color="default" variant="soft" size="sm">
+                      Oculto
+                    </Chip>
                   )}
                 </Table.Cell>
                 <Table.Cell>

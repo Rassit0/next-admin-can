@@ -1,9 +1,5 @@
 "use client";
-import {
-  Button,
-  Chip,
-  Table,
-} from "@heroui/react";
+import { Button, Chip, Table } from "@heroui/react";
 import {
   Copy01Icon,
   Search01Icon,
@@ -23,8 +19,18 @@ interface Props {
   onCancel?: (charge: IAccountCharge) => void;
 }
 
-export const AccountChargesTable = ({ accountCharges, onEdit, onCancel }: Props) => {
-  const statusMap: Record<string, { label: string; color: "default" | "accent" | "success" | "warning" | "danger" }> = {
+export const AccountChargesTable = ({
+  accountCharges,
+  onEdit,
+  onCancel,
+}: Props) => {
+  const statusMap: Record<
+    string,
+    {
+      label: string;
+      color: "default" | "accent" | "success" | "warning" | "danger";
+    }
+  > = {
     PENDING: { label: "Pendiente", color: "warning" },
     PARTIAL: { label: "Parcial", color: "accent" },
     PAID: { label: "Pagado", color: "success" },
@@ -34,10 +40,7 @@ export const AccountChargesTable = ({ accountCharges, onEdit, onCancel }: Props)
   return (
     <Table>
       <Table.ScrollContainer>
-        <Table.Content
-          aria-label="Cuentas"
-          className="min-w-200"
-        >
+        <Table.Content aria-label="Cuentas" className="min-w-200">
           <Table.Header>
             <Table.Column
               allowsSorting
@@ -45,7 +48,7 @@ export const AccountChargesTable = ({ accountCharges, onEdit, onCancel }: Props)
               className="after:hidden"
               id="id"
             >
-              <SortableColumnHeader id="id">N° Ref.</SortableColumnHeader>
+              <SortableColumnHeader id="id">NÃÂ° Ref.</SortableColumnHeader>
             </Table.Column>
 
             <Table.Column allowsSorting id="title">
@@ -53,11 +56,15 @@ export const AccountChargesTable = ({ accountCharges, onEdit, onCancel }: Props)
             </Table.Column>
 
             <Table.Column allowsSorting id="category">
-              <SortableColumnHeader id="category">Categoría</SortableColumnHeader>
+              <SortableColumnHeader id="category">
+                CategoriÂ­a
+              </SortableColumnHeader>
             </Table.Column>
 
             <Table.Column allowsSorting id="entity">
-              <SortableColumnHeader id="entity">Entidad / Persona</SortableColumnHeader>
+              <SortableColumnHeader id="entity">
+                Entidad / Persona
+              </SortableColumnHeader>
             </Table.Column>
 
             <Table.Column allowsSorting id="dueDate">
@@ -67,9 +74,7 @@ export const AccountChargesTable = ({ accountCharges, onEdit, onCancel }: Props)
             </Table.Column>
 
             <Table.Column allowsSorting id="amount">
-              <SortableColumnHeader id="amount">
-                Monto
-              </SortableColumnHeader>
+              <SortableColumnHeader id="amount">Monto</SortableColumnHeader>
             </Table.Column>
 
             <Table.Column allowsSorting id="pendingAmount">
@@ -95,84 +100,111 @@ export const AccountChargesTable = ({ accountCharges, onEdit, onCancel }: Props)
                     No se encontraron registros
                   </span>
                   <span className="text-sm text-default-400">
-                    Intenta con otros términos de búsqueda o registra una nueva cuenta.
+                    Intenta con otros tiÂ©rminos de biÂºsqueda o registra una
+                    nueva cuenta.
                   </span>
                 </div>
               </div>
             )}
           >
             {accountCharges.map((accountCharge) => {
-              const statusData = statusMap[accountCharge.charge?.status || "PENDING"];
+              const statusData =
+                statusMap[accountCharge.charge?.status || "PENDING"];
               return (
                 <Table.Row key={accountCharge.id} id={accountCharge.id}>
                   <Table.Cell className="font-medium">
                     <div className="flex items-center gap-2">
                       <span className="text-default-500 text-xs">
-                        {accountCharge.referenceNumber || accountCharge.id.slice(0, 8)}
+                        {accountCharge.referenceNumber ||
+                          accountCharge.id.slice(0, 8)}
                       </span>
                     </div>
                   </Table.Cell>
-                  
+
                   <Table.Cell>
                     <div className="font-medium">{accountCharge.title}</div>
                     {accountCharge.description && (
-                      <div className="text-xs text-default-500 max-w-[200px] truncate">{accountCharge.description}</div>
+                      <div className="text-xs text-default-500 max-w-[200px] truncate">
+                        {accountCharge.description}
+                      </div>
                     )}
                   </Table.Cell>
-                  
+
                   <Table.Cell>
-                    <Chip size="sm" variant="soft">{accountCharge.category?.name || "-"}</Chip>
+                    <Chip size="sm" variant="soft">
+                      {accountCharge.category?.name || "-"}
+                    </Chip>
                   </Table.Cell>
-                  
+
                   <Table.Cell>
                     {accountCharge.person ? (
-                      <span>{accountCharge.person.name} {accountCharge.person.lastName}</span>
+                      <span>
+                        {accountCharge.person.name}{" "}
+                        {accountCharge.person.lastName}
+                      </span>
                     ) : (
                       <span>{accountCharge.externalEntity || "-"}</span>
                     )}
                   </Table.Cell>
-                  
+
                   <Table.Cell>
-                    {accountCharge.charge?.dueDate 
-                      ? new Date(accountCharge.charge.dueDate).toLocaleDateString()
+                    {accountCharge.charge?.dueDate
+                      ? new Date(
+                          accountCharge.charge.dueDate,
+                        ).toLocaleDateString()
                       : "-"}
                   </Table.Cell>
-                  
+
                   <Table.Cell className="font-medium">
                     {formatCurrency(Number(accountCharge.charge?.amount) || 0)}
                   </Table.Cell>
 
                   <Table.Cell className="font-semibold">
-                    {formatCurrency(Number(accountCharge.charge?.pendingAmount) || 0)}
+                    {formatCurrency(
+                      Number(accountCharge.charge?.pendingAmount) || 0,
+                    )}
                   </Table.Cell>
-                  
+
                   <Table.Cell className="min-w-25">
-                    <Chip
-                      size="sm"
-                      variant="soft"
-                      color={statusData.color}
-                    >
+                    <Chip size="sm" variant="soft" color={statusData.color}>
                       {statusData.label}
                     </Chip>
                   </Table.Cell>
-                  
+
                   <Table.Cell>
                     <div className="flex justify-center gap-2">
-                      <Link href={`/admin/accounting/charges/${accountCharge.id}`}>
+                      <Link
+                        href={`/admin/accounting/charges/${accountCharge.id}`}
+                      >
                         <Button isIconOnly size="sm" variant="ghost">
                           <HugeiconsIcon icon={ViewIcon} size={18} />
                         </Button>
                       </Link>
                       {onEdit && (
-                        <Button isIconOnly size="sm" variant="ghost" onPress={() => onEdit(accountCharge)}>
-                          <HugeiconsIcon icon={Edit02Icon} size={18} className="text-default-500" />
+                        <Button
+                          isIconOnly
+                          size="sm"
+                          variant="ghost"
+                          onPress={() => onEdit(accountCharge)}
+                        >
+                          <HugeiconsIcon
+                            icon={Edit02Icon}
+                            size={18}
+                            className="text-default-500"
+                          />
                         </Button>
                       )}
-                      {onCancel && accountCharge.charge?.status !== "CANCELLED" && (
-                        <Button isIconOnly size="sm" variant="danger-soft" onPress={() => onCancel(accountCharge)}>
-                          <HugeiconsIcon icon={Delete01Icon} size={18} />
-                        </Button>
-                      )}
+                      {onCancel &&
+                        accountCharge.charge?.status !== "CANCELLED" && (
+                          <Button
+                            isIconOnly
+                            size="sm"
+                            variant="danger-soft"
+                            onPress={() => onCancel(accountCharge)}
+                          >
+                            <HugeiconsIcon icon={Delete01Icon} size={18} />
+                          </Button>
+                        )}
                     </div>
                   </Table.Cell>
                 </Table.Row>

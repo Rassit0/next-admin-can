@@ -2,7 +2,10 @@
 
 import { useState } from "react";
 import { toast } from "@heroui/react";
-import { addTeamSeasonCategory, updateTeamSeasonCategory } from "../../actions/categories.actions";
+import {
+  addTeamSeasonCategory,
+  updateTeamSeasonCategory,
+} from "../../actions/categories.actions";
 import { ICategoryOption, ITeamSeasonCategory } from "@/modules/team-seasons";
 
 interface Props {
@@ -36,7 +39,9 @@ export const FormCategory = ({
     const maxBirthYearRaw = formData.get("maxBirthYear");
     const minBirthYear = minBirthYearRaw ? Number(minBirthYearRaw) : null;
     const maxBirthYear = maxBirthYearRaw ? Number(maxBirthYearRaw) : null;
-    const validateAge = formData.get("validateAge") === "true" || formData.get("validateAge") === "on";
+    const validateAge =
+      formData.get("validateAge") === "true" ||
+      formData.get("validateAge") === "on";
 
     const payload = {
       categoryId,
@@ -51,7 +56,11 @@ export const FormCategory = ({
     let response;
     if (isEditing) {
       const { categoryId, gender, ...updatePayload } = payload;
-      response = await updateTeamSeasonCategory(teamSeasonId, category.id, updatePayload as any);
+      response = await updateTeamSeasonCategory(
+        teamSeasonId,
+        category.id,
+        updatePayload as any,
+      );
     } else {
       response = await addTeamSeasonCategory(teamSeasonId, payload as any);
     }
@@ -59,18 +68,22 @@ export const FormCategory = ({
     setIsLoading(false);
 
     if (response.error) {
-      toast.danger(response.message || "Ocurrió un error al guardar la categoría");
+      toast.danger(
+        response.message || "Ocurrió un error al guardar la categori­a",
+      );
       return;
     }
 
-    toast.success(`Categoría ${isEditing ? "actualizada" : "creada"} exitosamente`);
+    toast.success(
+      `Categori­a ${isEditing ? "actualizada" : "creada"} exitosamente`,
+    );
     if (onSuccess) onSuccess();
   };
 
   return (
     <form className="w-full flex flex-col gap-4" onSubmit={handleSubmit}>
       <div className="flex flex-col gap-1 w-full">
-        <label className="text-sm font-medium">Categoría</label>
+        <label className="text-sm font-medium">Categori­a</label>
         <select
           name="categoryId"
           className="h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
@@ -78,7 +91,9 @@ export const FormCategory = ({
           required
           disabled={isEditing}
         >
-          <option value="" disabled>Seleccione una categoría</option>
+          <option value="" disabled>
+            Seleccione una categori­a
+          </option>
           {categoriesOptions.map((opt) => (
             <option key={opt.id} value={opt.id}>
               {opt.name}
@@ -88,7 +103,7 @@ export const FormCategory = ({
       </div>
 
       <div className="flex flex-col gap-1 w-full">
-        <label className="text-sm font-medium">Género</label>
+        <label className="text-sm font-medium">Gi©nero</label>
         <select
           name="gender"
           className="h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
@@ -96,7 +111,9 @@ export const FormCategory = ({
           required
           disabled={isEditing}
         >
-          <option value="" disabled>Seleccione el género</option>
+          <option value="" disabled>
+            Seleccione el gi©nero
+          </option>
           <option value="MALE">Masculino</option>
           <option value="FEMALE">Femenino</option>
           <option value="MIXED">Mixto</option>
@@ -105,7 +122,7 @@ export const FormCategory = ({
 
       <div className="grid grid-cols-2 gap-4 w-full">
         <div className="flex flex-col gap-1 w-full">
-          <label className="text-sm font-medium">Mínimo de atletas</label>
+          <label className="text-sm font-medium">Mi­nimo de atletas</label>
           <input
             className="h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
             name="minMembers"
@@ -116,7 +133,7 @@ export const FormCategory = ({
           />
         </div>
         <div className="flex flex-col gap-1 w-full">
-          <label className="text-sm font-medium">Máximo de atletas</label>
+          <label className="text-sm font-medium">Mi¡ximo de atletas</label>
           <input
             className="h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
             name="maxMembers"
@@ -130,7 +147,9 @@ export const FormCategory = ({
 
       <div className="grid grid-cols-2 gap-4 w-full">
         <div className="flex flex-col gap-1 w-full">
-          <label className="text-sm font-medium">Año Mín. de Nacimiento</label>
+          <label className="text-sm font-medium">
+            Ai±o Mi­n. de Nacimiento
+          </label>
           <input
             className="h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
             name="minBirthYear"
@@ -139,7 +158,9 @@ export const FormCategory = ({
           />
         </div>
         <div className="flex flex-col gap-1 w-full">
-          <label className="text-sm font-medium">Año Máx. de Nacimiento</label>
+          <label className="text-sm font-medium">
+            Ai±o Mi¡x. de Nacimiento
+          </label>
           <input
             className="h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
             name="maxBirthYear"
@@ -150,14 +171,17 @@ export const FormCategory = ({
       </div>
 
       <div className="flex items-center gap-2 mt-2">
-        <input 
-          type="checkbox" 
-          id="validateAge" 
-          name="validateAge" 
-          defaultChecked={category?.validateAge ?? true} 
+        <input
+          type="checkbox"
+          id="validateAge"
+          name="validateAge"
+          defaultChecked={category?.validateAge ?? true}
           className="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary"
         />
-        <label htmlFor="validateAge" className="text-sm font-medium leading-none">
+        <label
+          htmlFor="validateAge"
+          className="text-sm font-medium leading-none"
+        >
           Validar Edad en la Inscripción
         </label>
       </div>
@@ -178,7 +202,7 @@ export const FormCategory = ({
           className="h-10 px-4 py-2 rounded-md bg-primary text-white text-sm font-medium hover:bg-primary-dark transition-colors disabled:opacity-50"
           disabled={isLoading}
         >
-          {isEditing ? "Actualizar" : "Crear"} Categoría
+          {isEditing ? "Actualizar" : "Crear"} Categori­a
         </button>
       </div>
     </form>

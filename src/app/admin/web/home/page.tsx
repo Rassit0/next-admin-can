@@ -18,12 +18,13 @@ import {
 } from "@hugeicons/core-free-icons";
 
 export default async function AdminHomeDashboard() {
-  const [heroBannersRes, homeDisciplinesRes, newsRes, promotionsRes] = await resolvePageData([
-    getHeroBanners(),
-    getHomeDisciplines(),
-    getNews(),
-    getPromotions(),
-  ]);
+  const [heroBannersRes, homeDisciplinesRes, newsRes, promotionsRes] =
+    await resolvePageData([
+      getHeroBanners(),
+      getHomeDisciplines(),
+      getNews(),
+      getPromotions(),
+    ]);
 
   const fixtureRes = await getPublicFixture();
 
@@ -58,29 +59,31 @@ export default async function AdminHomeDashboard() {
     <div className="space-y-8">
       <HeaderPage
         title="Dashboard de Inicio"
-        description="Gestión centralizada del contenido de la página Home."
-        breadcrumb={[
-          { label: "Web Pública" },
-          { label: "Inicio" },
-        ]}
+        description="Gestión centralizada del contenido de la pi¡gina Home."
+        breadcrumb={[{ label: "Web Piºblica" }, { label: "Inicio" }]}
       />
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        
         {/* HERO */}
         <div className="bg-default/50 border border-default-200 rounded-xl p-6 flex flex-col justify-between gap-4">
           <div className="flex items-start gap-4">
             <div className="bg-white dark:bg-default p-3 rounded-lg shadow-sm">
-              <HugeiconsIcon icon={Image01Icon} className="text-primary size-6" />
+              <HugeiconsIcon
+                icon={Image01Icon}
+                className="text-primary size-6"
+              />
             </div>
             <div>
               <h3 className="text-lg font-bold">Hero / Carousel</h3>
-              <p className="text-sm text-default-500">Carrusel principal 16:9</p>
+              <p className="text-sm text-default-500">
+                Carrusel principal 16:9
+              </p>
             </div>
           </div>
           <div className="py-2">
             <p className="text-sm">
-              <span className="font-bold text-lg">{heroBanners.length}</span> banners en total
+              <span className="font-bold text-lg">{heroBanners.length}</span>{" "}
+              banners en total
             </p>
             <p className="text-sm text-default-500">
               {activeHero} activo{activeHero !== 1 && "s"}
@@ -98,7 +101,10 @@ export default async function AdminHomeDashboard() {
         <div className="bg-default/50 border border-default-200 rounded-xl p-6 flex flex-col justify-between gap-4">
           <div className="flex items-start gap-4">
             <div className="bg-white dark:bg-default p-3 rounded-lg shadow-sm">
-              <HugeiconsIcon icon={Structure04Icon} className="text-secondary size-6" />
+              <HugeiconsIcon
+                icon={Structure04Icon}
+                className="text-secondary size-6"
+              />
             </div>
             <div>
               <h3 className="text-lg font-bold">Equipos y Escuela</h3>
@@ -107,11 +113,16 @@ export default async function AdminHomeDashboard() {
           </div>
           <div className="py-2">
             <p className="text-sm">
-              <span className="font-bold text-lg">{activeDisciplines}</span> elemento{activeDisciplines !== 1 && "s"} activo{activeDisciplines !== 1 && "s"}
+              <span className="font-bold text-lg">{activeDisciplines}</span>{" "}
+              elemento{activeDisciplines !== 1 && "s"} activo
+              {activeDisciplines !== 1 && "s"}
             </p>
             {activeDisciplines > 0 && (
               <p className="text-xs text-default-500 mt-1 line-clamp-2">
-                {disciplineBanners.filter(b => b.isActive).map(b => b.title).join(", ")}
+                {disciplineBanners
+                  .filter((b) => b.isActive)
+                  .map((b) => b.title)
+                  .join(", ")}
               </p>
             )}
           </div>
@@ -136,7 +147,12 @@ export default async function AdminHomeDashboard() {
           </div>
           <div className="py-2">
             <p className="text-sm">
-              Estado: <span className="font-semibold">{activePromo1 > 0 ? "Configurado (Activo)" : "Vacío o Inactivo"}</span>
+              Estado:{" "}
+              <span className="font-semibold">
+                {activePromo1 > 0
+                  ? "Configurado (Activo)"
+                  : "Vaci­o o Inactivo"}
+              </span>
             </p>
           </div>
           <ButtonRedirect
@@ -160,7 +176,8 @@ export default async function AdminHomeDashboard() {
           </div>
           <div className="py-2">
             <p className="text-sm">
-              <span className="font-bold text-lg">{homeNewsCount}</span> noticia{homeNewsCount !== 1 && "s"} en portada
+              <span className="font-bold text-lg">{homeNewsCount}</span> noticia
+              {homeNewsCount !== 1 && "s"} en portada
             </p>
             <p className="text-sm text-default-500">
               ({publishedNews.length} publicadas en total)
@@ -178,7 +195,10 @@ export default async function AdminHomeDashboard() {
         <div className="bg-default/10 border border-default-200 rounded-xl p-6 flex flex-col justify-between gap-4 relative overflow-hidden">
           <div className="flex items-start gap-4 opacity-80">
             <div className="bg-white dark:bg-default p-3 rounded-lg shadow-sm">
-              <HugeiconsIcon icon={Calendar03Icon} className="text-default-500 size-6" />
+              <HugeiconsIcon
+                icon={Calendar03Icon}
+                className="text-default-500 size-6"
+              />
             </div>
             <div>
               <h3 className="text-lg font-bold">Fixture</h3>
@@ -187,7 +207,8 @@ export default async function AdminHomeDashboard() {
           </div>
           <div className="py-2 opacity-80">
             <p className="text-sm">
-              <span className="font-bold text-lg">{totalMatches}</span> partido{totalMatches !== 1 && "s"} público{totalMatches !== 1 && "s"}
+              <span className="font-bold text-lg">{totalMatches}</span> partido
+              {totalMatches !== 1 && "s"} piºblico{totalMatches !== 1 && "s"}
             </p>
             <p className="text-xs text-default-500 mt-1 uppercase tracking-wider font-semibold">
               Solo lectura
@@ -207,7 +228,10 @@ export default async function AdminHomeDashboard() {
         <div className="bg-default/50 border border-default-200 rounded-xl p-6 flex flex-col justify-between gap-4">
           <div className="flex items-start gap-4">
             <div className="bg-white dark:bg-default p-3 rounded-lg shadow-sm">
-              <HugeiconsIcon icon={Megaphone01Icon} className="text-warning size-6" />
+              <HugeiconsIcon
+                icon={Megaphone01Icon}
+                className="text-warning size-6"
+              />
             </div>
             <div>
               <h3 className="text-lg font-bold">Promo 2</h3>
@@ -216,7 +240,12 @@ export default async function AdminHomeDashboard() {
           </div>
           <div className="py-2">
             <p className="text-sm">
-              Estado: <span className="font-semibold">{activePromo2 > 0 ? "Configurado (Activo)" : "Vacío o Inactivo"}</span>
+              Estado:{" "}
+              <span className="font-semibold">
+                {activePromo2 > 0
+                  ? "Configurado (Activo)"
+                  : "Vaci­o o Inactivo"}
+              </span>
             </p>
           </div>
           <ButtonRedirect
@@ -231,7 +260,10 @@ export default async function AdminHomeDashboard() {
         <div className="bg-default/10 border border-default-200 rounded-xl p-6 flex flex-col justify-between gap-4">
           <div className="flex items-start gap-4 opacity-70">
             <div className="bg-white dark:bg-default p-3 rounded-lg shadow-sm">
-              <HugeiconsIcon icon={FavouriteIcon} className="text-default-400 size-6" />
+              <HugeiconsIcon
+                icon={FavouriteIcon}
+                className="text-default-400 size-6"
+              />
             </div>
             <div>
               <h3 className="text-lg font-bold">Sponsors</h3>
@@ -240,7 +272,7 @@ export default async function AdminHomeDashboard() {
           </div>
           <div className="py-2 opacity-70">
             <p className="text-xs text-default-500 uppercase tracking-wider font-semibold">
-              Contenido estático
+              Contenido esti¡tico
             </p>
           </div>
           <div className="w-full pt-2"></div>
@@ -250,21 +282,23 @@ export default async function AdminHomeDashboard() {
         <div className="bg-default/10 border border-default-200 rounded-xl p-6 flex flex-col justify-between gap-4">
           <div className="flex items-start gap-4 opacity-70">
             <div className="bg-white dark:bg-default p-3 rounded-lg shadow-sm">
-              <HugeiconsIcon icon={LayoutBottomIcon} className="text-default-400 size-6" />
+              <HugeiconsIcon
+                icon={LayoutBottomIcon}
+                className="text-default-400 size-6"
+              />
             </div>
             <div>
               <h3 className="text-lg font-bold">Footer</h3>
-              <p className="text-sm text-default-500">Pie de página global</p>
+              <p className="text-sm text-default-500">Pie de pi¡gina global</p>
             </div>
           </div>
           <div className="py-2 opacity-70">
             <p className="text-xs text-default-500 uppercase tracking-wider font-semibold">
-              Contenido estático
+              Contenido esti¡tico
             </p>
           </div>
           <div className="w-full pt-2"></div>
         </div>
-
       </div>
     </div>
   );

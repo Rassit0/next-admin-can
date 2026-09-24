@@ -17,7 +17,7 @@ const getChargeLabel = (type: string) => {
     case "LATE_FEE":
       return "Mora";
     case "REGISTRATION":
-      return "Matrícula";
+      return "MatriÂ­cula";
     case "MANUAL":
       return "Manual";
     default:
@@ -112,7 +112,7 @@ export function PaymentMatrixTable({
       toast.success("Reporte generado exitosamente");
     } catch (error: any) {
       toast.error(
-        error.message || "Ocurrió un error inesperado al descargar el reporte",
+        error.message || "OcurriiÂ³ un error inesperado al descargar el reporte",
       );
     } finally {
       setIsDownloading(false);
@@ -150,7 +150,7 @@ export function PaymentMatrixTable({
                   Estudiante
                 </Table.Column>
                 <Table.Column className="text-center min-w-25 border-x border-default-200 bg-default-100">
-                  Matrícula
+                  MatriÂ­cula
                 </Table.Column>
                 {periods.map((period) => (
                   <Table.Column
@@ -170,8 +170,9 @@ export function PaymentMatrixTable({
                     <Table.Cell className="font-medium border-x border-b border-default-200 align-top py-3">
                       {student.name}
                     </Table.Cell>
-                    
-                    {!student.registration || student.registration.totalPaid === 0 ? (
+
+                    {!student.registration ||
+                    student.registration.totalPaid === 0 ? (
                       <Table.Cell className="text-center text-default-300 border-x border-b border-default-200 align-top py-3"></Table.Cell>
                     ) : (
                       <Table.Cell className="text-center min-w-30 border-x border-b border-default-200 align-top py-3">
@@ -184,16 +185,22 @@ export function PaymentMatrixTable({
                               const uniqueKey = idx;
                               let receiptLine = p.receiptNumber || "";
                               if (p.date) {
-                                if (receiptLine) receiptLine += " · ";
+                                if (receiptLine) receiptLine += " ÃÂ· ";
                                 receiptLine += formatUTCDate(p.date);
                               }
                               return (
-                                <div key={uniqueKey} className="flex flex-col text-xs text-center">
+                                <div
+                                  key={uniqueKey}
+                                  className="flex flex-col text-xs text-center"
+                                >
                                   <span className="font-medium text-default-700">
-                                    {formatCurrency(p.amount)} {getChargeLabel(p.chargeType)}
+                                    {formatCurrency(p.amount)}{" "}
+                                    {getChargeLabel(p.chargeType)}
                                   </span>
                                   {receiptLine && (
-                                    <span className="text-default-500 mt-0.5">{receiptLine}</span>
+                                    <span className="text-default-500 mt-0.5">
+                                      {receiptLine}
+                                    </span>
                                   )}
                                 </div>
                               );
@@ -225,13 +232,13 @@ export function PaymentMatrixTable({
 
                             <div className="flex flex-col gap-3 flex-1">
                               {periodData.payments.map((p, idx) => {
-                                // Fallback a index si no hay ID, aunque idealmente debería haber un ID.
-                                // Si en el futuro backend añade ID, se puede usar p.id.
+                                // Fallback a index si no hay ID, aunque idealmente deberiÂ­a haber un ID.
+                                // Si en el futuro backend aiÂ±ade ID, se puede usar p.id.
                                 const uniqueKey = idx;
 
                                 let receiptLine = p.receiptNumber || "";
                                 if (p.date) {
-                                  if (receiptLine) receiptLine += " · ";
+                                  if (receiptLine) receiptLine += " ÃÂ· ";
                                   receiptLine += formatUTCDate(p.date);
                                 }
 
@@ -261,10 +268,10 @@ export function PaymentMatrixTable({
                       <span className="font-bold text-success-600">
                         {formatCurrency(
                           (student.registration?.totalPaid ?? 0) +
-                          Object.values(student.paymentsByPeriod).reduce(
-                            (sum, periodData) => sum + periodData.totalPaid,
-                            0,
-                          ),
+                            Object.values(student.paymentsByPeriod).reduce(
+                              (sum, periodData) => sum + periodData.totalPaid,
+                              0,
+                            ),
                         )}
                       </span>
                     </Table.Cell>

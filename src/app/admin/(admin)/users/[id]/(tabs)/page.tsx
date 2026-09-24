@@ -28,11 +28,19 @@ export default async function UserAccountPage({ params }: Props) {
       </div>
       <div className="lg:col-span-1">
         <div className="bg-content1 p-6 rounded-xl border border-divider">
-          <h3 className="font-semibold text-lg mb-4">Información del Sistema</h3>
+          <h3 className="font-semibold text-lg mb-4">
+            Información del Sistema
+          </h3>
           <div className="space-y-3 text-sm text-default-600">
             <div className="flex justify-between">
               <span>Estado:</span>
-              <span className={user.isActive ? "text-success font-medium" : "text-danger font-medium"}>
+              <span
+                className={
+                  user.isActive
+                    ? "text-success font-medium"
+                    : "text-danger font-medium"
+                }
+              >
                 {user.isActive ? "Activo" : "Inactivo"}
               </span>
             </div>
@@ -41,13 +49,14 @@ export default async function UserAccountPage({ params }: Props) {
               <span>{new Date(user.createdAt).toLocaleDateString()}</span>
             </div>
             <div className="flex justify-between">
-              <span>Última mod:</span>
+              <span>iltima mod:</span>
               <span>{new Date(user.updatedAt).toLocaleDateString()}</span>
             </div>
             {user.role?.isSystem && (
               <div className="mt-4 p-3 bg-warning-50 text-warning-800 rounded-lg text-xs">
-                Este usuario posee un rol protegido por el sistema ({user.role.name}). 
-                Sus permisos y acceso no deben alterarse sin precaución.
+                Este usuario posee un rol protegido por el sistema (
+                {user.role.name}). Sus permisos y acceso no deben alterarse sin
+                precaución.
               </div>
             )}
           </div>

@@ -15,7 +15,6 @@ interface LayoutProps {
   }>;
 }
 
-
 export default async function CourseSeasonDetailLayout({
   children,
   params,
@@ -36,9 +35,9 @@ export default async function CourseSeasonDetailLayout({
   const actionsBaseUrl = `/admin/courses/${disciplineId}/${schoolId}/${courseId}/course-seasons`;
 
   const tabsRoutes = [
-    { value: "/", title: "Información General" },
+    { value: "/", title: "InformaciiÂ³n General" },
     { value: "/staff", title: "Personal" },
-    { value: "/student-memberships", title: "Matrículas" },
+    { value: "/student-memberships", title: "MatriÂ­culas" },
     { value: "/payment-plans", title: "Planes de Pago" },
     { value: "/payments", title: "Transacciones" },
     { value: "/pagos", title: "Control de Pagos" },
@@ -48,10 +47,13 @@ export default async function CourseSeasonDetailLayout({
   return (
     <>
       <HeaderPage
-        title={`${courseSeason.name || courseSeason.course.name} · ${courseSeason.season.name}`}
-        description={`Curso: ${courseSeason.course.name} · Detalle de la temporada`}
+        title={`${courseSeason.name || courseSeason.course.name} ÃÂ· ${courseSeason.season.name}`}
+        description={`Curso: ${courseSeason.course.name} ÃÂ· Detalle de la temporada`}
         action={
-          <CourseSeasonActions courseSeason={courseSeason} baseUrl={actionsBaseUrl} />
+          <CourseSeasonActions
+            courseSeason={courseSeason}
+            baseUrl={actionsBaseUrl}
+          />
         }
         breadcrumb={[
           { label: "Cursos", href: `/` },

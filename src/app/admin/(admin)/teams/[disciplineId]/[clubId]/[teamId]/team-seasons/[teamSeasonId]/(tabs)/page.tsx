@@ -4,7 +4,7 @@ import {
   getTeamSeasonSummary,
   getTeamSeasonCategories,
   getCategoriesByDisciplineOptions,
-  ListCardsCategories
+  ListCardsCategories,
 } from "@/modules/team-seasons";
 import { MetricsCards } from "@/modules/player-memberships";
 import { Avatar, Button, Card, Alert, Chip, Popover } from "@heroui/react";
@@ -45,7 +45,12 @@ interface Props {
 export default async function TeamSeasonDashboardPage({ params }: Props) {
   const { teamSeasonId } = await params;
 
-  const [teamSeasonResponse, summaryResponse, categoriesResponse, categoriesOptionsResponse] = await Promise.all([
+  const [
+    teamSeasonResponse,
+    summaryResponse,
+    categoriesResponse,
+    categoriesOptionsResponse,
+  ] = await Promise.all([
     getTeamSeasonById({ id: teamSeasonId }),
     getTeamSeasonSummary({ id: teamSeasonId }),
     getTeamSeasonCategories(teamSeasonId),
@@ -75,19 +80,31 @@ export default async function TeamSeasonDashboardPage({ params }: Props) {
           <hr className="border-border" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {allStaffs.map((staffAssignment: any) => (
-              <div key={staffAssignment.id} className="flex items-center gap-3 bg-surface-container-low p-3 rounded-xl border border-border/50">
+              <div
+                key={staffAssignment.id}
+                className="flex items-center gap-3 bg-surface-container-low p-3 rounded-xl border border-border/50"
+              >
                 <Avatar size="md">
                   {staffAssignment.staff.person.imageUrl && (
-                    <Avatar.Image src={staffAssignment.staff.person.imageUrl} alt={`${staffAssignment.staff.person.name} ${staffAssignment.staff.person.lastName}`} />
+                    <Avatar.Image
+                      src={staffAssignment.staff.person.imageUrl}
+                      alt={`${staffAssignment.staff.person.name} ${staffAssignment.staff.person.lastName}`}
+                    />
                   )}
                   <Avatar.Fallback>{`${staffAssignment.staff.person.name.charAt(0)}${staffAssignment.staff.person.lastName.charAt(0)}`}</Avatar.Fallback>
                 </Avatar>
                 <div className="flex flex-col">
                   <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
-                    {staffAssignment.isPrimary ? "Entrenador Principal" : "Staff"} • {STAFF_ROLES_TRANSLATOR[staffAssignment.role] || staffAssignment.role}
+                    {staffAssignment.isPrimary
+                      ? "Entrenador Principal"
+                      : "Staff"}{" "}
+                    -{" "}
+                    {STAFF_ROLES_TRANSLATOR[staffAssignment.role] ||
+                      staffAssignment.role}
                   </span>
                   <span className="text-sm font-semibold text-foreground">
-                    {staffAssignment.staff.person.name} {staffAssignment.staff.person.lastName}
+                    {staffAssignment.staff.person.name}{" "}
+                    {staffAssignment.staff.person.lastName}
                   </span>
                 </div>
               </div>
@@ -112,7 +129,6 @@ export default async function TeamSeasonDashboardPage({ params }: Props) {
                 ? "Inscripciones Abiertas"
                 : "Inscripciones Cerradas"}
             </Chip>
-
           </div>
         </div>
         <hr className="border-border" />
@@ -124,19 +140,19 @@ export default async function TeamSeasonDashboardPage({ params }: Props) {
             </p>
             <p className="font-bold text-sm">
               {teamSeason.billingConfig?.billingType === "MONTHLY_ONLY" &&
-                "Sólo Recurrente"}
+                "SiÂ³lo Recurrente"}
               {teamSeason.billingConfig?.billingType === "SINGLE_ONLY" &&
-                "Sólo Pago Único"}
+                "SiÂ³lo Pago iÂnico"}
               {teamSeason.billingConfig?.billingType === "BOTH" &&
-                "Pago Único o Recurrente"}
+                "Pago iÂnico o Recurrente"}
             </p>
           </div>
           {teamSeason.billingConfig?.billingType !== "SINGLE_ONLY" && (
             <>
               <div>
                 <p className="text-xs text-muted-foreground mb-1 uppercase font-semibold flex items-center">
-                  Matrícula
-                  <InfoTooltip text="Costo único que se cobra al inicio (o prorrateado) por ingresar al equipo en esta temporada." />
+                  MatriÂ­cula
+                  <InfoTooltip text="Costo iÂºnico que se cobra al inicio (o prorrateado) por ingresar al equipo en esta temporada." />
                 </p>
                 <p className="font-bold text-sm">
                   {teamSeason.billingConfig?.registrationFee
@@ -153,7 +169,7 @@ export default async function TeamSeasonDashboardPage({ params }: Props) {
                       ? "Quincenal"
                       : "Mensual"}
                   )
-                  <InfoTooltip text="Monto recurrente base que se cobrará periódicamente (antes de aplicar planes o descuentos)." />
+                  <InfoTooltip text="Monto recurrente base que se cobrariÂ¡ periiÂ³dicamente (antes de aplicar planes o descuentos)." />
                 </p>
                 <p className="font-bold text-sm">
                   {teamSeason.billingConfig?.recurringFee
@@ -168,7 +184,7 @@ export default async function TeamSeasonDashboardPage({ params }: Props) {
             <div>
               <p className="text-xs text-muted-foreground mb-1 uppercase font-semibold flex items-center">
                 Tarifa Temporada Completa
-                <InfoTooltip text="Costo de la temporada completa si el modelo permite o requiere Pago Único (esquema cerrado)." />
+                <InfoTooltip text="Costo de la temporada completa si el modelo permite o requiere Pago iÂnico (esquema cerrado)." />
               </p>
               <p className="font-bold text-sm">
                 {teamSeason.billingConfig?.seasonFee
@@ -180,12 +196,12 @@ export default async function TeamSeasonDashboardPage({ params }: Props) {
           <div className="col-span-full">
             <p className="text-xs text-muted-foreground mb-2 uppercase font-semibold flex items-center">
               Opciones de Prorrateo Activas
-              <InfoTooltip text="Si el jugador ingresa tarde (después de la fecha de inicio del ciclo), el sistema cobrará la fracción correspondiente matemáticamente a los días activos de las opciones que veas aquí marcadas." />
+              <InfoTooltip text="Si el jugador ingresa tarde (despuiÂ©s de la fecha de inicio del ciclo), el sistema cobrariÂ¡ la fracciiÂ³n correspondiente matemiÂ¡ticamente a los diÂ­as activos de las opciones que veas aquiÂ­ marcadas." />
             </p>
             <div className="flex flex-wrap gap-2">
               {teamSeason.billingConfig?.prorateRegistrationFee && (
                 <Chip size="sm" variant="soft" color="default">
-                  Matrícula
+                  MatriÂ­cula
                 </Chip>
               )}
               {teamSeason.billingConfig?.prorateFirstRecurringFee && (
@@ -195,12 +211,12 @@ export default async function TeamSeasonDashboardPage({ params }: Props) {
               )}
               {teamSeason.billingConfig?.prorateLastRecurringFee && (
                 <Chip size="sm" variant="soft" color="default">
-                  Último Cargo Recurrente
+                  iÂltimo Cargo Recurrente
                 </Chip>
               )}
               {teamSeason.billingConfig?.prorateSeasonFee && (
                 <Chip size="sm" variant="soft" color="default">
-                  Tarifa Temporada (Pago Único)
+                  Tarifa Temporada (Pago iÂnico)
                 </Chip>
               )}
               {!teamSeason.billingConfig?.prorateRegistrationFee &&
@@ -218,9 +234,11 @@ export default async function TeamSeasonDashboardPage({ params }: Props) {
         <Alert status="accent">
           <Alert.Indicator />
           <Alert.Content>
-            <Alert.Title>Arquitectura Multi-Categoría</Alert.Title>
+            <Alert.Title>Arquitectura Multi-CategoriÂ­a</Alert.Title>
             <Alert.Description>
-              Esta temporada es un contenedor global comercial y financiero. Las restricciones de edades, cupos y género se definen individualmente en cada Categoría de esta temporada.
+              Esta temporada es un contenedor global comercial y financiero. Las
+              restricciones de edades, cupos y giÂ©nero se definen
+              individualmente en cada CategoriÂ­a de esta temporada.
             </Alert.Description>
           </Alert.Content>
         </Alert>

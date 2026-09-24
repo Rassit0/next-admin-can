@@ -1,7 +1,13 @@
 import React from "react";
 import { Card } from "@heroui/react";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { UserIcon, Mail01Icon, SmartPhone01Icon, IdentificationIcon, Home01Icon } from "@hugeicons/core-free-icons";
+import {
+  UserIcon,
+  Mail01Icon,
+  SmartPhone01Icon,
+  IdentificationIcon,
+  Home01Icon,
+} from "@hugeicons/core-free-icons";
 import { AvatarEditor } from "./AvatarEditor";
 import { updateSelfAvatar } from "@/modules/users/actions/update-self-avatar";
 import { ISelfProfile } from "@/modules/users/actions/get-detailed-profile";
@@ -19,10 +25,10 @@ export function SelfProfileContent({ profile }: Props) {
       <Card className="col-span-1 shadow-sm border border-outline-variant/30 h-fit">
         <div className="flex flex-col items-center justify-center p-6 gap-4">
           {person ? (
-            <AvatarEditor 
-              initialImageUrl={person.imageUrl} 
-              initials={person.name.charAt(0).toUpperCase()} 
-              altText={`Avatar de ${person.name}`} 
+            <AvatarEditor
+              initialImageUrl={person.imageUrl}
+              initials={person.name.charAt(0).toUpperCase()}
+              altText={`Avatar de ${person.name}`}
               updateAction={updateSelfAvatar}
             />
           ) : (
@@ -32,7 +38,7 @@ export function SelfProfileContent({ profile }: Props) {
               </span>
             </div>
           )}
-          
+
           <div className="text-center mt-2">
             <h3 className="font-bold text-lg text-on-surface">
               {person ? `${person.name} ${person.lastName}` : user.email}
@@ -55,46 +61,68 @@ export function SelfProfileContent({ profile }: Props) {
         <Card.Content className="p-6">
           {!person ? (
             <div className="flex flex-col items-center justify-center py-10 text-on-surface-variant">
-              <HugeiconsIcon icon={UserIcon} className="w-12 h-12 mb-4 opacity-50" />
+              <HugeiconsIcon
+                icon={UserIcon}
+                className="w-12 h-12 mb-4 opacity-50"
+              />
               <p>Sin información personal vinculada.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
-                <p className="text-xs font-semibold text-on-surface-variant mb-1 uppercase tracking-wide">Nombres</p>
+                <p className="text-xs font-semibold text-on-surface-variant mb-1 uppercase tracking-wide">
+                  Nombres
+                </p>
                 <p className="font-medium text-on-surface">{person.name}</p>
               </div>
               <div>
-                <p className="text-xs font-semibold text-on-surface-variant mb-1 uppercase tracking-wide">Apellidos</p>
+                <p className="text-xs font-semibold text-on-surface-variant mb-1 uppercase tracking-wide">
+                  Apellidos
+                </p>
                 <p className="font-medium text-on-surface">
                   {person.lastName} {person.secondLastName || ""}
                 </p>
               </div>
               <div>
-                <p className="text-xs font-semibold text-on-surface-variant mb-1 uppercase tracking-wide">Tipo de Documento</p>
-                <p className="font-medium text-on-surface">{person.documentType || "-"}</p>
+                <p className="text-xs font-semibold text-on-surface-variant mb-1 uppercase tracking-wide">
+                  Tipo de Documento
+                </p>
+                <p className="font-medium text-on-surface">
+                  {person.documentType || "-"}
+                </p>
               </div>
               <div>
-                <p className="text-xs font-semibold text-on-surface-variant mb-1 uppercase tracking-wide">Nro. de Documento</p>
-                <p className="font-medium text-on-surface">{person.documentNumber || "-"}</p>
+                <p className="text-xs font-semibold text-on-surface-variant mb-1 uppercase tracking-wide">
+                  Nro. de Documento
+                </p>
+                <p className="font-medium text-on-surface">
+                  {person.documentNumber || "-"}
+                </p>
               </div>
               <div>
                 <p className="text-xs font-semibold text-on-surface-variant mb-1 uppercase tracking-wide flex items-center gap-1">
-                  <HugeiconsIcon icon={Mail01Icon} className="w-3 h-3" /> Email de Cuenta
+                  <HugeiconsIcon icon={Mail01Icon} className="w-3 h-3" /> Email
+                  de Cuenta
                 </p>
                 <p className="font-medium text-on-surface">{user.email}</p>
               </div>
               <div>
                 <p className="text-xs font-semibold text-on-surface-variant mb-1 uppercase tracking-wide flex items-center gap-1">
-                  <HugeiconsIcon icon={SmartPhone01Icon} className="w-3 h-3" /> Teléfono
+                  <HugeiconsIcon icon={SmartPhone01Icon} className="w-3 h-3" />{" "}
+                  Teli©fono
                 </p>
-                <p className="font-medium text-on-surface">{person.phone || "-"}</p>
+                <p className="font-medium text-on-surface">
+                  {person.phone || "-"}
+                </p>
               </div>
               <div className="sm:col-span-2">
                 <p className="text-xs font-semibold text-on-surface-variant mb-1 uppercase tracking-wide flex items-center gap-1">
-                  <HugeiconsIcon icon={Home01Icon} className="w-3 h-3" /> Dirección
+                  <HugeiconsIcon icon={Home01Icon} className="w-3 h-3" />{" "}
+                  Dirección
                 </p>
-                <p className="font-medium text-on-surface">{person.address || "-"}</p>
+                <p className="font-medium text-on-surface">
+                  {person.address || "-"}
+                </p>
               </div>
             </div>
           )}
