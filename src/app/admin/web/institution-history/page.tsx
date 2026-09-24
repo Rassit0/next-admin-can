@@ -8,6 +8,7 @@ import {
 import { HeaderPage } from "@/ui";
 import { resolvePageData } from "@/utils/resolvePageData";
 
+// aqui es el formulario de la historia de la institucion
 export default async function InstitutionHistoryPage() {
   const [settingsResponse, itemsResponse] = await resolvePageData([
     getInstitutionHistorySettings(),
@@ -33,7 +34,9 @@ export default async function InstitutionHistoryPage() {
           </div>
 
           <div className="lg:col-span-2">
-            <h2 className="text-xl font-bold mb-4">Línea de Tiempo (Timeline)</h2>
+            <h2 className="text-xl font-bold mb-4">
+              Línea de Tiempo (Timeline)
+            </h2>
             <TableInstitutionHistory items={itemsData} />
           </div>
         </div>
