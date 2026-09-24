@@ -427,6 +427,7 @@ export const itemsWebNavigation: NavigationConfig[] = [
     icon: "categories",
     requiredPermissions: { anyOf: ["READ_PROMOTIONS"] },
   },
+  // enlace al crud de la historia de la institution
   {
     id: "web-institution-history",
     label: "Historia",
