@@ -112,7 +112,7 @@ export function PaymentMatrixTable({
       toast.success("Reporte generado exitosamente");
     } catch (error: any) {
       toast.error(
-        error.message || "OcurriiÂ³ un error inesperado al descargar el reporte",
+        error.message || "Ocurrió un error inesperado al descargar el reporte",
       );
     } finally {
       setIsDownloading(false);

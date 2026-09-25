@@ -37,11 +37,11 @@ export const ExtendModal = ({ isOpen, onOpenChange, teamSeason }: Props) => {
 
   const handleExtend = async () => {
     if (!reason) {
-      toast.danger("Debe ingresar un motivo de extensiiÂ³n");
+      toast.danger("Debe ingresar un motivo de extensión");
       return;
     }
     if (!newEndDate) {
-      toast.danger("Debe seleccionar una fecha de finalizaciiÂ³n");
+      toast.danger("Debe seleccionar una fecha de finalización");
       return;
     }
     setIsLoading(true);
@@ -65,7 +65,7 @@ export const ExtendModal = ({ isOpen, onOpenChange, teamSeason }: Props) => {
           .join("\n"); // Los separamos por saltos de liÂ­nea para el toast
       }
 
-      // 2. Pasamos la descripciiÂ³n formateada al componente de notificaciones
+      // 2. Pasamos la descripción formateada al componente de notificaciones
       toast.danger(
         res.errors ? "Error al extender la temporada" : res.message,
         {
@@ -97,7 +97,7 @@ export const ExtendModal = ({ isOpen, onOpenChange, teamSeason }: Props) => {
             <AlertDialog.Heading className="flex flex-col">
               <span>Extender Temporada</span>
               <span className="text-muted">
-                EstiÂ¡s por extender el ciclo de {teamSeason.season.name}
+                Estás por extender el ciclo de {teamSeason.season.name}
               </span>
             </AlertDialog.Heading>
           </AlertDialog.Header>
@@ -106,11 +106,11 @@ export const ExtendModal = ({ isOpen, onOpenChange, teamSeason }: Props) => {
               <Alert.Indicator />
               <Alert.Content>
                 <Alert.Title>
-                  ÃÂ¿EstiÂ¡s seguro de extender la temporada?
+                  ÃÂ¿Estás seguro de extender la temporada?
                 </Alert.Title>
                 <Alert.Description>
-                  Se extenderiÂ¡ la temporada y las membresiÂ­as se actualizariÂ¡n
-                  automiÂ¡ticamente.
+                  Se extenderá la temporada y las membresiÂ­as se actualizarán
+                  automáticamente.
                 </Alert.Description>
               </Alert.Content>
             </Alert>
@@ -142,7 +142,7 @@ export const ExtendModal = ({ isOpen, onOpenChange, teamSeason }: Props) => {
                 value={newEndDate}
                 onChange={setNewEndDate}
               >
-                <Label>Nueva Fecha de FinalizaciiÂ³n</Label>
+                <Label>Nueva Fecha de Finalización</Label>
                 <DateField.Group variant="secondary" fullWidth>
                   <DateField.Input>
                     {(segment) => <DateField.Segment segment={segment} />}
@@ -156,7 +156,7 @@ export const ExtendModal = ({ isOpen, onOpenChange, teamSeason }: Props) => {
                 <FieldError
                   children={
                     !newEndDate && (
-                      <>Debe seleccionar una fecha de finalizaciiÂ³n</>
+                      <>Debe seleccionar una fecha de finalización</>
                     )
                   }
                 />
@@ -198,10 +198,10 @@ export const ExtendModal = ({ isOpen, onOpenChange, teamSeason }: Props) => {
                 value={reason}
                 onChange={setReason}
               >
-                <Label>Motivo de FinalizaciiÂ³n</Label>
-                <TextArea placeholder="Describe brevemente los motivos de la finalizaciiÂ³n anticipada..." />
+                <Label>Motivo de Finalización</Label>
+                <TextArea placeholder="Describe brevemente los motivos de la finalización anticipada..." />
                 <FieldError>
-                  {!reason && "Debe ingresar un motivo de cancelaciiÂ³n"}
+                  {!reason && "Debe ingresar un motivo de cancelación"}
                 </FieldError>
               </TextField>
             </div>

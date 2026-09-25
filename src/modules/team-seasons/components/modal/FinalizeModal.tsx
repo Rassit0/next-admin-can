@@ -28,7 +28,7 @@ export const FinalizeModal = ({ isOpen, onOpenChange, teamSeason }: Props) => {
 
   const handleFinalize = async () => {
     if (!statusNotes) {
-      toast.danger("Debe ingresar un motivo de finalizaciiÂ³n");
+      toast.danger("Debe ingresar un motivo de finalización");
       return;
     }
     setIsLoading(true);
@@ -49,7 +49,7 @@ export const FinalizeModal = ({ isOpen, onOpenChange, teamSeason }: Props) => {
           .join("\n"); // Los separamos por saltos de liÂ­nea para el toast
       }
 
-      // 2. Pasamos la descripciiÂ³n formateada al componente de notificaciones
+      // 2. Pasamos la descripción formateada al componente de notificaciones
       toast.danger(res.message, {
         description: errorDescription,
       });
@@ -78,8 +78,8 @@ export const FinalizeModal = ({ isOpen, onOpenChange, teamSeason }: Props) => {
             <AlertDialog.Heading className="flex flex-col">
               <span>Finalizar Temporada Anticipadamente</span>
               <span className="text-muted">
-                EstiÂ¡s por cerrar el ciclo de {teamSeason.season.name}: Esta
-                acciiÂ³n es irreversible
+                Estás por cerrar el ciclo de {teamSeason.season.name}: Esta
+                acción es irreversible
               </span>
             </AlertDialog.Heading>
           </AlertDialog.Header>
@@ -88,11 +88,11 @@ export const FinalizeModal = ({ isOpen, onOpenChange, teamSeason }: Props) => {
               <Alert.Indicator />
               <Alert.Content>
                 <Alert.Title>
-                  ÃÂ¿EstiÂ¡s seguro de finalizar la temporada?
+                  ÃÂ¿Estás seguro de finalizar la temporada?
                 </Alert.Title>
                 <Alert.Description>
-                  Se bloqueariÂ¡n nuevas inscripciones y las membresiÂ­as activas
-                  se moveriÂ¡n al historial.
+                  Se bloquearán nuevas inscripciones y las membresiÂ­as activas
+                  se moverán al historial.
                 </Alert.Description>
               </Alert.Content>
             </Alert>
@@ -122,10 +122,10 @@ export const FinalizeModal = ({ isOpen, onOpenChange, teamSeason }: Props) => {
               value={statusNotes}
               onChange={setStatusNotes}
             >
-              <Label>Motivo de FinalizaciiÂ³n</Label>
-              <TextArea placeholder="Describe brevemente los motivos de la finalizaciiÂ³n anticipada..." />
+              <Label>Motivo de Finalización</Label>
+              <TextArea placeholder="Describe brevemente los motivos de la finalización anticipada..." />
               <FieldError>
-                {!statusNotes && "Debe ingresar un motivo de cancelaciiÂ³n"}
+                {!statusNotes && "Debe ingresar un motivo de cancelación"}
               </FieldError>
             </TextField>
           </AlertDialog.Body>

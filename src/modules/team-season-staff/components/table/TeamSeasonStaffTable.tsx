@@ -42,7 +42,7 @@ export const TeamSeasonStaffTable = ({ staffList, teamSeason }: Props) => {
   }, []);
 
   const handleRemove = async (id: string) => {
-    if (!confirm("ÃÂ¿EstiÂ¡ seguro de remover a este miembro del personal?"))
+    if (!confirm("ÃÂ¿Está seguro de remover a este miembro del personal?"))
       return;
 
     setLoadingId(id);

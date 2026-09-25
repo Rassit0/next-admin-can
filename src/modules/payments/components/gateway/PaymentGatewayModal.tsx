@@ -39,7 +39,7 @@ const BANKS = [
   { id: "bnb", name: "Banco Nacional de Bolivia" },
   { id: "bmsc", name: "Banco Mercantil Santa Cruz" },
   { id: "bcp", name: "Banco de CriÂ©dito BCP" },
-  { id: "bu", name: "Banco UniiÂ³n" },
+  { id: "bu", name: "Banco Unión" },
 ];
 
 const formatCardNumber = (value: string): string =>
@@ -217,8 +217,8 @@ export const PaymentGatewayModal = ({
                           </TextField>
                         </div>
                         <p className="text-[11px] leading-relaxed text-muted">
-                          Entorno de simulaciiÂ³n seguro. No ingreses datos
-                          reales de tarjetas.
+                          Entorno de simulación seguro. No ingreses datos reales
+                          de tarjetas.
                         </p>
                       </div>
                     </Tabs.Panel>

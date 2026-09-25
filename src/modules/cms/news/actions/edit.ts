@@ -11,21 +11,8 @@ export const editNews = async (
   slug: string,
   data: FormData,
 ): Promise<ServiceResponse<INews>> => {
-  const session = await auth();
-
-  if (!session?.user)
-    return {
-      error: true,
-      statusCode: 401,
-      message: "Su sesión ha expirado.",
-    } as any;
-
   return handleServerAction(async () => {
-    const response = await api.patch<INews>(`news/${id}`, data, {
-      headers: {
-        Authorization: `Bearer ${session.user.token}`,
-      },
-    });
+    const response = await api.patch<INews>(`news/${id}`, data);
 
     updateTag("public-news");
     updateTag(`public-news-detail-${slug}`);

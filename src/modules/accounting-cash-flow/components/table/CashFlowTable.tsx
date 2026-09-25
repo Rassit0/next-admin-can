@@ -44,7 +44,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
         if (groups.has(t.paymentId)) {
           const group = groups.get(t.paymentId)!;
           group.amount += t.amount;
-          group._isGrouped = true; // Solo es agrupado si hay miÂ¡s de 1
+          group._isGrouped = true; // Solo es agrupado si hay más de 1
           group._groupedDetails!.push({
             method: t.paymentMethod,
             account: t.financialAccountName || "Sin asignar",
@@ -53,7 +53,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
         } else {
           const newGroup: ITransaction = {
             ...t,
-            _isGrouped: false, // Inicialmente falso, es una transacciiÂ³n normal
+            _isGrouped: false, // Inicialmente falso, es una transacción normal
             _groupedDetails: [
               {
                 method: t.paymentMethod,
@@ -84,7 +84,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
         setVoidTransactionId(null);
       }
     } catch (error) {
-      toast.error("OcurriiÂ³ un error al anular el pago");
+      toast.error("Ocurrió un error al anular el pago");
     } finally {
       setIsVoiding(false);
     }
@@ -373,7 +373,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
                           </Button>
                           <Dropdown.Popover>
                             <Dropdown.Menu
-                              aria-label="Acciones de TransacciiÂ³n"
+                              aria-label="Acciones de Transacción"
                               onAction={(key) => {
                                 if (key === "print") {
                                   setPrintTransactionId(transaction.id);
@@ -436,17 +436,17 @@ export const CashFlowTable = ({ transactions }: Props) => {
             <AlertDialog.Header>
               <AlertDialog.Icon status="danger" />
               <AlertDialog.Heading>
-                Anular Pago / TransacciiÂ³n
+                Anular Pago / Transacción
               </AlertDialog.Heading>
             </AlertDialog.Header>
             <AlertDialog.Body>
               <p>
-                ÃÂ¿EstiÂ¡s seguro que deseas anular esta transacciiÂ³n? Esta
-                acciiÂ³n reversariÂ¡ el saldo aplicado a los cargos asociados y
-                devolveriÂ¡ la transacciiÂ³n a su estado anterior.
+                ÃÂ¿Estás seguro que deseas anular esta transacción? Esta acción
+                reversará el saldo aplicado a los cargos asociados y devolverá
+                la transacción a su estado anterior.
               </p>
               <p className="mt-2 text-sm text-default-500">
-                Esta acciiÂ³n no se puede deshacer.
+                Esta acción no se puede deshacer.
               </p>
             </AlertDialog.Body>
             <AlertDialog.Footer>

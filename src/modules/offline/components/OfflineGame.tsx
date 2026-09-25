@@ -34,18 +34,18 @@ export const OfflineGame = () => {
       {/* Escenario / LiÂ­nea del suelo */}
       <div className="absolute bottom-7 left-0 w-full h-0.5 bg-slate-200/80 dark:bg-slate-700/80 rounded-full" />
 
-      {/* Jugador (El BaliÂ³n CAN) */}
+      {/* Jugador (El Balón CAN) */}
       <motion.div
         className="absolute w-6 h-6 bg-emerald-500 rounded-full shadow-[0_4px_10px_rgba(16,185,129,0.4)] flex items-center justify-center overflow-hidden z-10"
         style={{ left: 50, top: playerY - 24 }}
         animate={isPlaying ? { rotate: 360 } : { rotate: 0 }}
         transition={{ repeat: Infinity, duration: 0.8, ease: "linear" }}
       >
-        {/* PatriÂ³n decorativo del baliÂ³n */}
+        {/* Patrón decorativo del balón */}
         <div className="w-2 h-2 bg-white/90 rounded-sm rotate-45" />
       </motion.div>
 
-      {/* ObstiÂ¡culos (Conos) */}
+      {/* Obstáculos (Conos) */}
       {obstacles.map((obs) => (
         <div
           key={obs.id}
@@ -88,7 +88,7 @@ export const OfflineGame = () => {
               ÃÂ¡Auch!
             </span>
             <span className="text-sm font-medium text-slate-600 dark:text-slate-300">
-              PuntuaciiÂ³n:{" "}
+              Puntuación:{" "}
               <span className="text-sky-600 dark:text-sky-400">{score}</span>
             </span>
             <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-4 animate-pulse bg-white dark:bg-slate-800 px-4 py-2 rounded-full shadow-sm">

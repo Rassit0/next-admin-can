@@ -60,7 +60,7 @@ export const CardTeamSeason = ({ teamSeason, urlBase }: Props) => {
         <div className="space-y-4 mb-8">
           <div>
             <div className="flex justify-between text-[10px] font-label-sm mb-1 uppercase text-outline">
-              OcupaciiÂ³n del Clan
+              Ocupación del Clan
             </div>
             <div className="w-full h-2.5 bg-surface rounded-full overflow-hidden relative">
               <div className="absolute inset-y-0 left-0 bg-accent rounded-full w-full"></div>

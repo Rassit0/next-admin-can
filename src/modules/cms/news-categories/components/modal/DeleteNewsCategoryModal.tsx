@@ -23,7 +23,7 @@ export const DeleteNewsCategoryModal = ({ id, isOpen, setIsOpen }: Props) => {
 
     if (res.error) {
       if (res.statusCode === 409) {
-        toast.error("AcciiÂ³n denegada", {
+        toast.error("Acción denegada", {
           description:
             "No se puede eliminar esta categoriÂ­a porque tiene noticias asociadas.",
         });
@@ -52,8 +52,8 @@ export const DeleteNewsCategoryModal = ({ id, isOpen, setIsOpen }: Props) => {
           </Modal.Header>
           <Modal.Body className="p-6">
             <p className="text-sm text-muted">
-              ÃÂ¿EstiÂ¡s seguro de que deseas eliminar esta categoriÂ­a? Esta
-              acciiÂ³n no se puede deshacer.
+              ÃÂ¿Estás seguro de que deseas eliminar esta categoriÂ­a? Esta
+              acción no se puede deshacer.
             </p>
           </Modal.Body>
           <Modal.Footer>

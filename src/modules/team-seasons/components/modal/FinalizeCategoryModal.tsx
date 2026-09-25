@@ -36,7 +36,7 @@ export const FinalizeCategoryModal = ({
 
       if (res.error) {
         toast.error(
-          res.message || "OcurriiÂ³ un error al finalizar la categoriÂ­a",
+          res.message || "Ocurrió un error al finalizar la categoriÂ­a",
         );
       } else {
         toast.success("CategoriÂ­a finalizada exitosamente");
@@ -44,7 +44,7 @@ export const FinalizeCategoryModal = ({
         if (onSuccess) onSuccess();
       }
     } catch (error) {
-      toast.error("Error de conexiiÂ³n");
+      toast.error("Error de conexión");
     } finally {
       setLoading(false);
     }
@@ -82,26 +82,25 @@ export const FinalizeCategoryModal = ({
                 <div className="flex flex-col gap-4">
                   <div className="p-4 bg-warning/10 text-warning-600 rounded-lg text-xs">
                     <p className="font-bold mb-1">
-                      ÃÂ¡AtenciiÂ³n! Esta acciiÂ³n es irreversible.
+                      ÃÂ¡Atención! Esta acción es irreversible.
                     </p>
                     <ul className="list-disc pl-4 space-y-1 mt-2 text-warning-700">
                       <li>
-                        Todas las membresiÂ­as activas seriÂ¡n finalizadas de
+                        Todas las membresiÂ­as activas serán finalizadas de
                         inmediato.
                       </li>
                       <li>
-                        Los cargos generados para meses futuros seriÂ¡n
+                        Los cargos generados para meses futuros serán
                         cancelados.
                       </li>
                       <li>
-                        Los cargos del mes vigente (y anteriores) se
-                        mantendriÂ¡n.
+                        Los cargos del mes vigente (y anteriores) se mantendrán.
                       </li>
                     </ul>
                   </div>
 
                   <textarea
-                    placeholder="Notas / Motivo de la finalizaciiÂ³n... (Opcional)"
+                    placeholder="Notas / Motivo de la finalización... (Opcional)"
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     rows={3}
@@ -117,7 +116,7 @@ export const FinalizeCategoryModal = ({
                       onPress={handleFinish}
                       isPending={loading}
                     >
-                      Confirmar FinalizaciiÂ³n
+                      Confirmar Finalización
                     </Button>
                   </div>
                 </div>

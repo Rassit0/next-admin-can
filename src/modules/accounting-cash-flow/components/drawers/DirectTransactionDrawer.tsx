@@ -32,7 +32,7 @@ import { FinancialAccountOption } from "@/modules/financial-accounts/actions/get
 const PAYMENT_METHOD_LABELS: Record<string, string> = {
   CASH: "Efectivo",
   TRANSFER: "Transferencia",
-  QR: "CiÂ³digo QR",
+  QR: "Código QR",
 };
 
 interface Props {
@@ -119,7 +119,7 @@ export const DirectTransactionDrawer = ({
 
     if (isSplitPayment) {
       if (splits.length === 0) {
-        toast.error("Debe existir al menos una distribuciiÂ³n");
+        toast.error("Debe existir al menos una distribución");
         return;
       }
       let totalSplits = 0;
@@ -217,7 +217,7 @@ export const DirectTransactionDrawer = ({
         onSuccess?.();
       }
     } catch (error) {
-      toast.error("OcurriiÂ³ un error inesperado");
+      toast.error("Ocurrió un error inesperado");
     } finally {
       setIsLoading(false);
     }

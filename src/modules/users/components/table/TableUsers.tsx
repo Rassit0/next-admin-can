@@ -62,7 +62,7 @@ export const TableUsers: React.FC<Props> = ({ users }) => {
     setConfirmDialog({
       isOpen: true,
       title: user.isActive ? "Desactivar Usuario" : "Reactivar Usuario",
-      description: `ÃÂ¿EstiÂ¡s seguro de ${user.isActive ? "desactivar" : "reactivar"} a este usuario?`,
+      description: `ÃÂ¿Estás seguro de ${user.isActive ? "desactivar" : "reactivar"} a este usuario?`,
       status: user.isActive ? "warning" : "success",
       confirmText: user.isActive ? "Desactivar" : "Reactivar",
       onConfirm: async () => {
@@ -85,7 +85,7 @@ export const TableUsers: React.FC<Props> = ({ users }) => {
     setConfirmDialog({
       isOpen: true,
       title: "Restablecer ContraseiÂ±a",
-      description: `ÃÂ¿EstiÂ¡s seguro de restablecer la contraseiÂ±a para ${user.email}? Esta acciiÂ³n invalidariÂ¡ su contraseiÂ±a actual inmediatamente.`,
+      description: `ÃÂ¿Estás seguro de restablecer la contraseiÂ±a para ${user.email}? Esta acción invalidará su contraseiÂ±a actual inmediatamente.`,
       status: "danger",
       confirmText: "Restablecer",
       onConfirm: async () => {
@@ -114,7 +114,7 @@ export const TableUsers: React.FC<Props> = ({ users }) => {
     setConfirmDialog({
       isOpen: true,
       title: "Desbloquear Cuenta",
-      description: `ÃÂ¿Deseas desbloquear la cuenta de ${user.email}? Se restableceriÂ¡ el contador de intentos fallidos y podriÂ¡ volver a intentar iniciar sesiiÂ³n inmediatamente.`,
+      description: `ÃÂ¿Deseas desbloquear la cuenta de ${user.email}? Se restablecerá el contador de intentos fallidos y podrá volver a intentar iniciar sesión inmediatamente.`,
       status: "accent",
       confirmText: "Desbloquear",
       onConfirm: async () => {

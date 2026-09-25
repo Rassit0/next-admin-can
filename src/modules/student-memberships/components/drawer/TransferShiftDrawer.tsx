@@ -75,7 +75,7 @@ export const TransferShiftDrawer = ({
         await loadCourseSeasons(res.data);
       }
     } catch (error) {
-      setMembershipError("OcurriiÂ³ un error al obtener la membresiÂ­a");
+      setMembershipError("Ocurrió un error al obtener la membresiÂ­a");
     } finally {
       setIsLoadingMembership(false);
     }
@@ -84,15 +84,15 @@ export const TransferShiftDrawer = ({
   const loadCourseSeasons = async (loadedMembership: IStudentMembership) => {
     setIsLoadingSeasons(true);
     try {
-      // Filtrar por el mismo curso en base a la membresiÂ­a actual para simplificar la selecciiÂ³n
-      // NOTA: La validaciiÂ³n final recae en el backend
+      // Filtrar por el mismo curso en base a la membresiÂ­a actual para simplificar la selección
+      // NOTA: La validación final recae en el backend
       const res = await getCourseSeasons({
         per_page: "100",
       });
 
       if (!res.error) {
         // Filtrar los que pertenecen al mismo nombre de curso (asumiendo courseSeason.course.name)
-        // El backend realiza validaciiÂ³n estricta, pero esto ayuda a UX
+        // El backend realiza validación estricta, pero esto ayuda a UX
         // Filtrar Ofertas del mismo curso
         const sameCourseSeasons = res.data.data.filter(
           (cs) =>
@@ -187,10 +187,10 @@ export const TransferShiftDrawer = ({
                     <HugeiconsIcon icon={InformationCircleIcon} />
                   </Alert.Indicator>
                   <Alert.Content>
-                    <Alert.Title>InformaciiÂ³n de Transferencia</Alert.Title>
+                    <Alert.Title>Información de Transferencia</Alert.Title>
                     <Alert.Description>
                       <p className="mb-2">
-                        EstiÂ¡s a punto de transferir a{" "}
+                        Estás a punto de transferir a{" "}
                         <strong>
                           {membership.student?.person.name}{" "}
                           {membership.student?.person.lastName}
@@ -211,15 +211,16 @@ export const TransferShiftDrawer = ({
                             .find((s) => s.id === targetCourseSeasonShiftId)
                             ?.courseSeason.id === membership.courseSeasonId ? (
                             <div className="bg-success-100 text-success-800 p-2 rounded text-sm border border-success-200 font-medium">
-                              Ã°ÂÂÂ Cambio de turno logiÂ­stico (no afecta precios ni
-                              configuraciiÂ³n comercial).
+                              Ã°ÂÂÂ Cambio de turno logiÂ­stico (no afecta
+                              precios ni configuración comercial).
                             </div>
                           ) : (
                             <div className="bg-warning-100 text-warning-800 p-2 rounded text-sm border border-warning-200 font-medium">
-                              Ã¢ÂÂ Ã¯Â¸Â Cambio de Oferta Comercial: Esto aplicariÂ¡
-                              las reglas de facturaciiÂ³n de la nueva oferta para
-                              los cobros futuros (ej. nuevos montos). Los cargos
-                              histiÂ³ricos permaneceriÂ¡n intactos.
+                              Ã¢ÂÂ Ã¯Â¸Â Cambio de Oferta Comercial: Esto
+                              aplicará las reglas de facturación de la nueva
+                              oferta para los cobros futuros (ej. nuevos
+                              montos). Los cargos históricos permanecerán
+                              intactos.
                             </div>
                           )}
                         </div>
@@ -227,13 +228,13 @@ export const TransferShiftDrawer = ({
 
                       <ul className="list-disc pl-5 mt-2">
                         <li>
-                          Los ciclos futuros seriÂ¡n trasladados al nuevo turno.
+                          Los ciclos futuros serán trasladados al nuevo turno.
                         </li>
                         <li>
                           Los cargos y pagos existentes{" "}
-                          <strong>no seriÂ¡n modificados</strong>.
+                          <strong>no serán modificados</strong>.
                         </li>
-                        <li>La capacidad seriÂ¡ evaluada por el sistema.</li>
+                        <li>La capacidad será evaluada por el sistema.</li>
                       </ul>
                     </Alert.Description>
                   </Alert.Content>
@@ -354,7 +355,7 @@ export const TransferShiftDrawer = ({
                     </DatePicker.Popover>
                   </DatePicker>
                   <p className="text-xs text-muted">
-                    ÃÂ¿Desde quiÂ© fecha el alumno ocupariÂ¡ un cupo en el turno
+                    ÃÂ¿Desde quiÂ© fecha el alumno ocupará un cupo en el turno
                     destino?
                   </p>
                 </div>

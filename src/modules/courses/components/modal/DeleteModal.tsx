@@ -63,9 +63,9 @@ export const DeleteModal = ({
             </AlertDialog.Header>
             <AlertDialog.Body>
               <p>
-                Se eliminariÂ¡ permanentemente el equipo{" "}
+                Se eliminará permanentemente el equipo{" "}
                 <strong>{course.name}</strong> si no tiene datos asociados a
-                este. Esta acciiÂ³n no se puede deshacer.
+                este. Esta acción no se puede deshacer.
               </p>
             </AlertDialog.Body>
             <AlertDialog.Footer>

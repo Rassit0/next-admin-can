@@ -139,9 +139,9 @@ export default async function CourseSeasonDashboardPage({ params }: Props) {
             </p>
             <p className="font-bold text-sm">
               {courseSeason.billingConfig?.billingType === "MONTHLY_ONLY" &&
-                "SiÂ³lo Recurrente"}
+                "Sólo Recurrente"}
               {courseSeason.billingConfig?.billingType === "SINGLE_ONLY" &&
-                "SiÂ³lo Pago iÂnico"}
+                "Sólo Pago iÂnico"}
               {courseSeason.billingConfig?.billingType === "BOTH" &&
                 "Pago iÂnico o Recurrente"}
             </p>
@@ -169,7 +169,7 @@ export default async function CourseSeasonDashboardPage({ params }: Props) {
                       ? "Quincenal"
                       : "Mensual"}
                   )
-                  <InfoTooltip text="Monto recurrente base que se cobrariÂ¡ periiÂ³dicamente (antes de aplicar planes o descuentos)." />
+                  <InfoTooltip text="Monto recurrente base que se cobrará periódicamente (antes de aplicar planes o descuentos)." />
                 </p>
                 <p className="font-bold text-sm">
                   {courseSeason.billingConfig?.recurringFee
@@ -196,7 +196,7 @@ export default async function CourseSeasonDashboardPage({ params }: Props) {
           <div className="col-span-full">
             <p className="text-xs text-muted-foreground mb-2 uppercase font-semibold flex items-center">
               Opciones de Prorrateo Activas
-              <InfoTooltip text="Si el jugador ingresa tarde (despuiÂ©s de la fecha de inicio del ciclo), el sistema cobrariÂ¡ la fracciiÂ³n correspondiente matemiÂ¡ticamente a los diÂ­as activos de las opciones que veas aquiÂ­ marcadas." />
+              <InfoTooltip text="Si el jugador ingresa tarde (despuiÂ©s de la fecha de inicio del ciclo), el sistema cobrará la fracción correspondiente matemáticamente a los diÂ­as activos de las opciones que veas aquiÂ­ marcadas." />
             </p>
             <div className="flex flex-wrap gap-2">
               {courseSeason.billingConfig?.prorateRegistrationFee && (
@@ -235,7 +235,7 @@ export default async function CourseSeasonDashboardPage({ params }: Props) {
       <Card className="p-6 shadow-[0px_4px_12px_rgba(0,0,0,0.06)] border border-border flex flex-col gap-5 bg-surface-container-lowest">
         <div className="flex items-center justify-between">
           <h3 className="font-headline font-bold text-lg">
-            Turnos y Reglas de ParticipaciiÂ³n
+            Turnos y Reglas de Participación
           </h3>
         </div>
         <hr className="border-border" />

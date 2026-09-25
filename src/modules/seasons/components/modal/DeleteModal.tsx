@@ -63,9 +63,9 @@ export const DeleteModal = ({
             </AlertDialog.Header>
             <AlertDialog.Body>
               <p>
-                Se eliminariÂ¡ permanentemente la temporada{" "}
+                Se eliminará permanentemente la temporada{" "}
                 <strong>{season.name}</strong> si no tiene datos asociados a
-                este. Esta acciiÂ³n no se puede deshacer.
+                este. Esta acción no se puede deshacer.
               </p>
             </AlertDialog.Body>
             <AlertDialog.Footer>

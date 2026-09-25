@@ -123,7 +123,7 @@ export const FormPaymentPlan = ({
     } else if (billingType === "MONTHLY_ONLY") {
       if (!registrationDiscountPercent) {
         newErrors.registrationDiscountPercent =
-          "Debe ingresar un descuento de inscripciiÂ³n";
+          "Debe ingresar un descuento de inscripción";
       } else if (isInvalidPercent(registration)) {
         newErrors.registrationDiscountPercent =
           "El porcentaje debe estar entre 0 y 100";
@@ -152,7 +152,7 @@ export const FormPaymentPlan = ({
       } else {
         if (!registrationDiscountPercent) {
           newErrors.registrationDiscountPercent =
-            "Debe ingresar un descuento de inscripciiÂ³n";
+            "Debe ingresar un descuento de inscripción";
         } else if (isInvalidPercent(registration)) {
           newErrors.registrationDiscountPercent =
             "El porcentaje debe estar entre 0 y 100";
@@ -238,7 +238,7 @@ export const FormPaymentPlan = ({
           .join("\n"); // Los separamos por saltos de liÂ­nea para el toast
       }
 
-      // 2. Pasamos la descripciiÂ³n formateada al componente de notificaciones
+      // 2. Pasamos la descripción formateada al componente de notificaciones
       toast.danger(res.message, {
         description: errorDescription,
       });
@@ -291,8 +291,8 @@ export const FormPaymentPlan = ({
               {billingType === "MONTHLY_ONLY"
                 ? "Un plan de pago define las mensualidades y descuentos recurrentes o promociones por pagos adelantados para el atleta."
                 : billingType === "SINGLE_ONLY"
-                  ? "Un plan de pago permite configurar los descuentos que obtendriÂ¡n los atletas al pagar el costo total de la temporada por adelantado."
-                  : "Un plan de pago define ciÂ³mo y cuiÂ¡ndo se generariÂ¡n los cobros recurrentes para el jugador. Permite establecer descuentos automiÂ¡ticos para incentivar pagos adelantados o por temporada completa."}
+                  ? "Un plan de pago permite configurar los descuentos que obtendrán los atletas al pagar el costo total de la temporada por adelantado."
+                  : "Un plan de pago define cómo y cuándo se generarán los cobros recurrentes para el jugador. Permite establecer descuentos automáticos para incentivar pagos adelantados o por temporada completa."}
             </Alert.Description>
           </Alert.Content>
         </Alert>
@@ -304,12 +304,12 @@ export const FormPaymentPlan = ({
           <Alert.Indicator />
           <Alert.Content>
             <Alert.Title>
-              ÃÂ¿Necesitas inspiraciiÂ³n o quieres ahorrar tiempo?
+              ÃÂ¿Necesitas inspiración o quieres ahorrar tiempo?
             </Alert.Title>
             <Alert.Description className="flex flex-col gap-3 mt-1">
               <p>
                 Puedes explorar nuestras plantillas sugeridas y{" "}
-                <strong>aplicar una configuraciiÂ³n con un solo clic</strong>.
+                <strong>aplicar una configuración con un solo clic</strong>.
                 Tenemos plantillas preconfiguradas para promociones 2x1, pagos
                 trimestrales, becas completas y temporadas anuales.
               </p>
@@ -406,8 +406,8 @@ export const FormPaymentPlan = ({
               isInvalid={!!errors.registrationDiscountPercent || undefined}
             >
               <Label>
-                Descuento InscripciiÂ³n (%){" "}
-                <InfoTooltip text="Descuento aplicado al cargo iÂºnico de inscripciiÂ³n (MatriÂ­cula) al momento de registrarse en la temporada." />
+                Descuento Inscripción (%){" "}
+                <InfoTooltip text="Descuento aplicado al cargo iÂºnico de inscripción (MatriÂ­cula) al momento de registrarse en la temporada." />
               </Label>
               <Input
                 variant="secondary"
@@ -430,7 +430,7 @@ export const FormPaymentPlan = ({
                 }
               />
               <Description className="text-xs text-muted-foreground mt-1">
-                Porcentaje a descontar del costo de la inscripciiÂ³n al equipo (0
+                Porcentaje a descontar del costo de la inscripción al equipo (0
                 - 100).
               </Description>
             </TextField>
@@ -443,7 +443,7 @@ export const FormPaymentPlan = ({
             >
               <Label>
                 Descuento Cuota Recurrente (%){" "}
-                <InfoTooltip text="Descuento aplicado automiÂ¡ticamente a cada una de las cuotas recurrentes que se generen." />
+                <InfoTooltip text="Descuento aplicado automáticamente a cada una de las cuotas recurrentes que se generen." />
               </Label>
               <Input
                 variant="secondary"
@@ -484,7 +484,7 @@ export const FormPaymentPlan = ({
             >
               <Label>
                 Agrupar Cuotas (Pago Adelantado){" "}
-                <InfoTooltip text="Agrupa miÂºltiples meses en un solo recibo inicial. Ej: Si pones 2, al atleta se le cobrariÂ¡ el mes 1 y el mes 2 juntos en su primer diÂ­a." />
+                <InfoTooltip text="Agrupa miÂºltiples meses en un solo recibo inicial. Ej: Si pones 2, al atleta se le cobrará el mes 1 y el mes 2 juntos en su primer diÂ­a." />
               </Label>
               <Input
                 variant="secondary"
@@ -503,7 +503,7 @@ export const FormPaymentPlan = ({
                 children={errors.advanceCycles && <> {errors.advanceCycles}</>}
               />
               <Description className="text-xs text-muted-foreground mt-1">
-                NiÂºmero de cuotas recurrentes que se cobrariÂ¡n juntas en el
+                NiÂºmero de cuotas recurrentes que se cobrarán juntas en el
                 recibo inicial (Ej: 2 para adelantar un mes). MiÂ­nimo 1.
               </Description>
             </TextField>
@@ -517,7 +517,7 @@ export const FormPaymentPlan = ({
             >
               <Label>
                 Ciclos con Descuento{" "}
-                <InfoTooltip text="ÃÂ¿A cuiÂ¡ntas de las cuotas adelantadas se les aplicariÂ¡ el descuento? Ej: En un 2x1, agrupas 2 cuotas pero solo 1 tiene descuento." />
+                <InfoTooltip text="ÃÂ¿A cuántas de las cuotas adelantadas se les aplicará el descuento? Ej: En un 2x1, agrupas 2 cuotas pero solo 1 tiene descuento." />
               </Label>
               <Input
                 variant="secondary"
@@ -538,7 +538,7 @@ export const FormPaymentPlan = ({
                 }
               />
               <Description className="text-xs text-muted-foreground mt-1">
-                Cantidad de cuotas (dentro de las adelantadas) que recibiriÂ¡n la
+                Cantidad de cuotas (dentro de las adelantadas) que recibirán la
                 rebaja promocional.
               </Description>
             </TextField>
@@ -552,7 +552,7 @@ export const FormPaymentPlan = ({
             >
               <Label>
                 Descuento en Cuotas Adelantadas (%){" "}
-                <InfoTooltip text="Aplica un descuento AL TOTAL de las cuotas agrupadas arriba. Ej: Agrupar 2 cuotas con 50% de descuento = Paga 1 mes y se le adelantan 2 (PromociiÂ³n de inicio gratis)." />
+                <InfoTooltip text="Aplica un descuento AL TOTAL de las cuotas agrupadas arriba. Ej: Agrupar 2 cuotas con 50% de descuento = Paga 1 mes y se le adelantan 2 (Promoción de inicio gratis)." />
               </Label>
               <Input
                 variant="secondary"
@@ -592,11 +592,11 @@ export const FormPaymentPlan = ({
             <div className="flex flex-col">
               <Label className="text-sm text-foreground font-medium flex items-center">
                 Marcar como plan por defecto
-                <InfoTooltip text="Si marcas esto, este plan apareceriÂ¡ preseleccionado al registrar un atleta." />
+                <InfoTooltip text="Si marcas esto, este plan aparecerá preseleccionado al registrar un atleta." />
               </Label>
               <p className="text-xs text-muted-foreground mt-1">
-                Si estiÂ¡ activo, este plan se seleccionariÂ¡ automiÂ¡ticamente
-                cuando registres a un nuevo atleta en esta temporada.
+                Si está activo, este plan se seleccionará automáticamente cuando
+                registres a un nuevo atleta en esta temporada.
               </p>
             </div>
           </Switch.Content>
@@ -615,7 +615,7 @@ export const FormPaymentPlan = ({
               <div className="flex flex-col">
                 <Label className="text-sm text-foreground font-medium flex items-center">
                   Obligar Pago iÂnico (Toda la temporada por adelantado)
-                  <InfoTooltip text="Fuerza a cobrar toda la temporada en un iÂºnico pago al momento de inscripciiÂ³n." />
+                  <InfoTooltip text="Fuerza a cobrar toda la temporada en un iÂºnico pago al momento de inscripción." />
                 </Label>
                 <p className="text-xs text-muted-foreground mt-1">
                   Activa esto para cobrar toda la temporada en un solo pago

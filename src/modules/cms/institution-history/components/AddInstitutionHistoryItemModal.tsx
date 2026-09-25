@@ -71,7 +71,7 @@ export const AddInstitutionHistoryItemModal = ({
           isIconOnly={isIcon}
         >
           <HugeiconsIcon icon={Add01Icon} />
-          {label || "Agregar Historia"}
+          {label || "Agregar Hito"}
         </Button>
       )}
       {isIcon && (

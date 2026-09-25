@@ -140,9 +140,9 @@ export default async function TeamSeasonDashboardPage({ params }: Props) {
             </p>
             <p className="font-bold text-sm">
               {teamSeason.billingConfig?.billingType === "MONTHLY_ONLY" &&
-                "SiÂ³lo Recurrente"}
+                "Sólo Recurrente"}
               {teamSeason.billingConfig?.billingType === "SINGLE_ONLY" &&
-                "SiÂ³lo Pago iÂnico"}
+                "Sólo Pago iÂnico"}
               {teamSeason.billingConfig?.billingType === "BOTH" &&
                 "Pago iÂnico o Recurrente"}
             </p>
@@ -169,7 +169,7 @@ export default async function TeamSeasonDashboardPage({ params }: Props) {
                       ? "Quincenal"
                       : "Mensual"}
                   )
-                  <InfoTooltip text="Monto recurrente base que se cobrariÂ¡ periiÂ³dicamente (antes de aplicar planes o descuentos)." />
+                  <InfoTooltip text="Monto recurrente base que se cobrará periódicamente (antes de aplicar planes o descuentos)." />
                 </p>
                 <p className="font-bold text-sm">
                   {teamSeason.billingConfig?.recurringFee
@@ -196,7 +196,7 @@ export default async function TeamSeasonDashboardPage({ params }: Props) {
           <div className="col-span-full">
             <p className="text-xs text-muted-foreground mb-2 uppercase font-semibold flex items-center">
               Opciones de Prorrateo Activas
-              <InfoTooltip text="Si el jugador ingresa tarde (despuiÂ©s de la fecha de inicio del ciclo), el sistema cobrariÂ¡ la fracciiÂ³n correspondiente matemiÂ¡ticamente a los diÂ­as activos de las opciones que veas aquiÂ­ marcadas." />
+              <InfoTooltip text="Si el jugador ingresa tarde (despuiÂ©s de la fecha de inicio del ciclo), el sistema cobrará la fracción correspondiente matemáticamente a los diÂ­as activos de las opciones que veas aquiÂ­ marcadas." />
             </p>
             <div className="flex flex-wrap gap-2">
               {teamSeason.billingConfig?.prorateRegistrationFee && (

@@ -39,10 +39,10 @@ export function Escuelas({
       <div className="mb-8">
         <h1 className="font-heading text-5xl font-700 uppercase tracking-tight text-primary sm:text-6xl">
           Escuelas de{" "}
-          <span className="text-neon text-glow-neon">FormaciiÂ³n</span>
+          <span className="text-neon text-glow-neon">Formación</span>
         </h1>
         <p className="mt-3 max-w-xl text-muted-foreground text-pretty">
-          IngresiÂ¡ la edad del deportista y encontraremos al instante los cursos
+          Ingresá la edad del deportista y encontraremos al instante los cursos
           que mejor se ajustan a su etapa.
         </p>
       </div>
@@ -180,7 +180,7 @@ export function Escuelas({
 
       {filtered.length === 0 && (
         <p className="py-16 text-center text-muted-foreground">
-          No encontramos cursos para esa edad. ProbiÂ¡ con otra.
+          No encontramos cursos para esa edad. Probá con otra.
         </p>
       )}
     </div>

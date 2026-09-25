@@ -79,7 +79,7 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
     });
     statusActions.push({
       key: "regularize",
-      label: "Regularizar HistiÂ³rico",
+      label: "Regularizar Histórico",
       icon: Note01Icon,
     });
     statusActions.push({ key: "suspend", label: "Suspender", icon: PauseIcon });
@@ -205,7 +205,7 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
     }
 
     if (action !== "remove" && action !== "activate" && !reason?.trim()) {
-      toast.error("El motivo es obligatorio para esta acciiÂ³n");
+      toast.error("El motivo es obligatorio para esta acción");
       setLoading(false);
       return;
     }
@@ -321,7 +321,7 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
               </AlertDialog.Header>
               <AlertDialog.Body className="gap-4 p-2">
                 <p>
-                  ÃÂ¿EstiÂ¡s seguro de que deseas ejecutar la acciiÂ³n{" "}
+                  ÃÂ¿Estás seguro de que deseas ejecutar la acción{" "}
                   <strong>{selectedAction?.label.toLowerCase()}</strong> para
                   esta membresiÂ­a?
                 </p>
@@ -508,7 +508,7 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
                       isRequired={selectedAction?.key !== "activate"}
                     >
                       <Label className="text-sm font-semibold">
-                        Motivo u ObservaciiÂ³n{" "}
+                        Motivo u Observación{" "}
                         {selectedAction?.key === "activate" && "(Opcional)"}
                       </Label>
                       <InputGroup>

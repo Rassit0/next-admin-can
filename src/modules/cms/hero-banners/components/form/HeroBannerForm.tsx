@@ -101,7 +101,7 @@ export const HeroBannerForm = ({
     const newErrors: Record<string, string> = {};
     if (!formData.title) newErrors.title = "El tiÂ­tulo es obligatorio";
 
-    // ValidaciiÂ³n de imagen 16x9
+    // Validación de imagen 16x9
     if (!heroBanner && files16x9.length === 0) {
       newErrors.image16x9 = "La imagen principal 16:9 es obligatoria";
     }
@@ -117,7 +117,7 @@ export const HeroBannerForm = ({
 
     setIsLoading?.(true);
 
-    // Validar aspect ratio nativamente (comentado porque el backend recorta automiÂ¡ticamente)
+    // Validar aspect ratio nativamente (comentado porque el backend recorta automáticamente)
     /*
     if (files16x9.length > 0) {
       const isValid = await validateImageAspectRatio(files16x9[0], 16 / 9);
@@ -138,7 +138,7 @@ export const HeroBannerForm = ({
     if (files3x4.length > 0) {
       const isValid = await validateImageAspectRatio(files3x4[0], 3 / 4);
       if (!isValid) {
-        toast.error("La imagen MiÂ³vil debe tener un aspect ratio de 3:4.");
+        toast.error("La imagen Móvil debe tener un aspect ratio de 3:4.");
         setIsLoading?.(false);
         return;
       }
@@ -222,9 +222,9 @@ export const HeroBannerForm = ({
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <TextField variant="secondary">
-            <Label>Texto de botiÂ³n (CTA)</Label>
+            <Label>Texto de botón (CTA)</Label>
             <Input
-              placeholder="Ej: Ver miÂ¡s"
+              placeholder="Ej: Ver más"
               value={formData.ctaText || ""}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               onChange={(e: any) =>
@@ -234,7 +234,7 @@ export const HeroBannerForm = ({
           </TextField>
 
           <TextField variant="secondary">
-            <Label>RedirecciiÂ³n (URL o Ruta)</Label>
+            <Label>Redirección (URL o Ruta)</Label>
             <Input
               placeholder="Ej: /actualidad o https://google.com"
               value={formData.redirectTo || ""}
@@ -251,7 +251,7 @@ export const HeroBannerForm = ({
             <Label>
               <span className="flex items-center gap-2">
                 Orden (Sort Order)
-                <InfoTooltip text="Define el orden de apariciiÂ³n visual. Valores menores (ej: 0, 1) apareceriÂ¡n primero en la lista." />
+                <InfoTooltip text="Define el orden de aparición visual. Valores menores (ej: 0, 1) aparecerán primero en la lista." />
               </span>
             </Label>
             <Input
@@ -333,7 +333,7 @@ export const HeroBannerForm = ({
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium">Imagen MiÂ³vil (3:4)</label>
+            <label className="text-sm font-medium">Imagen Móvil (3:4)</label>
             <span className="text-xs text-default-400">
               Opcional. Formato vertical.
             </span>

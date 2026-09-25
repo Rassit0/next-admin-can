@@ -169,7 +169,7 @@ export const Person360EnrollPlayerDrawer = ({
             <Drawer.CloseTrigger />
             <Drawer.Header className="border-b border-border">
               <Drawer.Heading slot="title" className="text-lg font-bold">
-                InscripciiÂ³n de Jugador
+                Inscripción de Jugador
               </Drawer.Heading>
               <p className="mt-1 text-xs text-muted">
                 Selecciona la disciplina y el equipo para inscribir a la

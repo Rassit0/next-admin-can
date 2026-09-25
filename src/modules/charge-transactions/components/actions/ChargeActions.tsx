@@ -218,7 +218,7 @@ export const ChargeActions = ({
           }
           if (res.data?.alreadyHasLateFee) {
             toast.error(
-              "Este cargo ya tiene una mora generada que estiÂ¡ pendiente de pago.",
+              "Este cargo ya tiene una mora generada que está pendiente de pago.",
             );
             return;
           }
@@ -288,7 +288,7 @@ export const ChargeActions = ({
       const chargeAmountNum = Number(charge.amount);
 
       if (isNaN(amountNum) || adjustmentAmount === "") {
-        setErrors({ adjustmentAmount: "Monto inviÂ¡lido." });
+        setErrors({ adjustmentAmount: "Monto inválido." });
         setLoading(false);
         return;
       }
@@ -451,15 +451,15 @@ export const ChargeActions = ({
                   selectedAction?.key === "delete-charge") && (
                   <p>
                     {selectedAction?.key === "remove-adjustment"
-                      ? "ÃÂ¿EstiÂ¡s seguro de que deseas remover el ajuste de este cargo? El saldo pendiente se actualizariÂ¡ automiÂ¡ticamente."
-                      : "ÃÂ¿EstiÂ¡s seguro de que deseas eliminar este cargo permanentemente? Esta acciiÂ³n no se puede deshacer."}
+                      ? "ÃÂ¿Estás seguro de que deseas remover el ajuste de este cargo? El saldo pendiente se actualizará automáticamente."
+                      : "ÃÂ¿Estás seguro de que deseas eliminar este cargo permanentemente? Esta acción no se puede deshacer."}
                   </p>
                 )}
 
                 {selectedAction?.key === "apply-late-fee" && lateFeePreview && (
                   <>
                     <p className="text-sm mb-2">
-                      EstiÂ¡s a punto de aplicar una mora a este cargo vencido.
+                      Estás a punto de aplicar una mora a este cargo vencido.
                     </p>
                     <div className="bg-surface-secondary p-3 rounded-lg flex flex-col gap-1 text-sm">
                       <div className="flex justify-between">
@@ -553,7 +553,7 @@ export const ChargeActions = ({
                           setChargeDescription(e.target.value);
                           setErrors({});
                         }}
-                        placeholder="Ej. InscripciiÂ³n, Mensualidad..."
+                        placeholder="Ej. Inscripción, Mensualidad..."
                       />
                       <FieldError
                         children={
@@ -623,7 +623,7 @@ export const ChargeActions = ({
                   <>
                     <p className="text-sm mb-4">
                       Modificar la fecha de vencimiento de este cargo no
-                      afectariÂ¡ su estado contable.
+                      afectará su estado contable.
                     </p>
                     <TextField
                       name="updateDueDateValue"
@@ -700,7 +700,7 @@ export const ChargeActions = ({
                       isInvalid={!!errors.adjustmentReason || undefined}
                     >
                       <Label className="text-sm font-semibold">
-                        Motivo u ObservaciiÂ³n
+                        Motivo u Observación
                       </Label>
                       <InputGroup>
                         <InputGroup.Prefix>

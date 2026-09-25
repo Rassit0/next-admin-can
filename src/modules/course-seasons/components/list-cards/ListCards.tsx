@@ -45,12 +45,12 @@ export const ListCards = ({ courseSeasons, urlBase }: Props) => {
             Hawaiian Waves 2024
           </h3>
           <p className="text-on-surface-variant text-sm mb-6 italic opacity-80">
-            "Ohana significa familia, y ningiÂºn jugador se queda atriÂ¡s."
+            "Ohana significa familia, y ningiÂºn jugador se queda atrás."
           </p>
           <div className="space-y-4 mb-8">
             <div>
               <div className="flex justify-between text-[10px] font-label-sm mb-1 uppercase text-outline">
-                OcupaciiÂ³n del Clan
+                Ocupación del Clan
               </div>
               <div className="w-full h-2.5 bg-surface rounded-full overflow-hidden relative">
                 <div className="absolute inset-y-0 left-0 shimmer-bar rounded-full w-[80%]"></div>
@@ -104,7 +104,7 @@ export const ListCards = ({ courseSeasons, urlBase }: Props) => {
           <div className="space-y-4 mb-8">
             <div>
               <div className="flex justify-between text-[10px] font-label-sm mb-1 uppercase text-outline">
-                OcupaciiÂ³n del Clan
+                Ocupación del Clan
               </div>
               <div className="w-full h-2.5 bg-surface rounded-full overflow-hidden relative">
                 <div className="absolute inset-y-0 left-0 bg-accent rounded-full w-full"></div>
@@ -147,7 +147,7 @@ export const ListCards = ({ courseSeasons, urlBase }: Props) => {
             Galaxy Smash Cup
           </h3>
           <p className="text-on-surface-variant text-sm mb-6 italic opacity-80">
-            Configurando pariÂ¡metros de la liga...
+            Configurando parámetros de la liga...
           </p>
           <div className="space-y-4 mb-8">
             <div className="p-4 bg-surface-container rounded-full border border-outline-variant/20 border-dashed">

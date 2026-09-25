@@ -23,7 +23,7 @@ export default async function StudentSeasonDetailLayout({
   const membership = membershipRes.data;
 
   const tabsRoutes = [
-    { value: "/", title: "InformaciiÂ³n General" },
+    { value: "/", title: "Información General" },
     { value: "/charges", title: "Cargos" },
     // { value: "/player-memberships", title: "MembresiÂ­as" },
     // { value: "/payment-plans", title: "Planes de Pago" },

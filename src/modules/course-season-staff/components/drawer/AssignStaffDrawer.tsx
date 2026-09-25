@@ -75,7 +75,7 @@ export const AssignStaffDrawer = ({
       err.courseSeasonShiftId = "El turno es obligatorio.";
     if (!role) err.role = "El rol es obligatorio.";
     if (role === "OTHER" && !customRole.trim()) {
-      err.customRole = "Debe especificar el rol si seleccioniÂ³ 'Otro'.";
+      err.customRole = "Debe especificar el rol si seleccionó 'Otro'.";
     }
     if (!startedAt) err.startedAt = "La fecha de inicio es obligatoria.";
 
@@ -356,7 +356,7 @@ export const AssignStaffDrawer = ({
                       </Switch.Control>
                       <Label className="text-sm font-semibold flex items-center">
                         Es el profesor principal
-                        <InfoTooltip text="El profesor marcado como principal representariÂ¡ a esta clase/curso en la App para funciones oficiales (ej. llamado de asistencia principal)." />
+                        <InfoTooltip text="El profesor marcado como principal representará a esta clase/curso en la App para funciones oficiales (ej. llamado de asistencia principal)." />
                       </Label>
                     </Switch.Content>
                   </Switch>

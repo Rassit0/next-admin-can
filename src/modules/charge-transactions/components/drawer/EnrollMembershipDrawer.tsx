@@ -154,7 +154,7 @@ export const EnrollMembershipDrawer = ({
           (isNaN(season) || season < 0 || season > 100)
         ) {
           err.seasonDiscountPercent =
-            "El descuento debe ser mayor o igual a 0 y miÂ¡ximo 100.";
+            "El descuento debe ser mayor o igual a 0 y máximo 100.";
         }
       } else {
         if (!regDiscountPercent && !recDiscountPercent) {
@@ -163,11 +163,11 @@ export const EnrollMembershipDrawer = ({
         }
         if (regDiscountPercent && (isNaN(reg) || reg < 0 || reg > 100)) {
           err.regDiscountPercent =
-            "El descuento debe ser mayor o igual a 0 y miÂ¡ximo 100.";
+            "El descuento debe ser mayor o igual a 0 y máximo 100.";
         }
         if (recDiscountPercent && (isNaN(rec) || rec < 0 || rec > 100)) {
           err.recDiscountPercent =
-            "El descuento debe ser mayor o igual a 0 y miÂ¡ximo 100.";
+            "El descuento debe ser mayor o igual a 0 y máximo 100.";
         }
       }
 
@@ -176,7 +176,7 @@ export const EnrollMembershipDrawer = ({
       }
 
       if (discountType === "OTHER" && !discountReason.trim()) {
-        err.discountReason = "Especifique una raziÂ³n o justificaciiÂ³n.";
+        err.discountReason = "Especifique una razón o justificación.";
       }
 
       if (discountEndDate) {
@@ -336,7 +336,7 @@ export const EnrollMembershipDrawer = ({
       .substring(0, 10);
 
     if (startedAt < sStartStr || startedAt > sEndStr) {
-      toast.danger("Fecha inviÂ¡lida", {
+      toast.danger("Fecha inválida", {
         description: `La fecha de inicio de la membresiÂ­a debe estar dentro de la temporada (${sStartStr} al ${sEndStr}).`,
       });
       return;
@@ -344,14 +344,14 @@ export const EnrollMembershipDrawer = ({
 
     if (hasDiscount && discountEndDate) {
       if (discountEndDate < startedAt) {
-        toast.danger("Fecha de descuento inviÂ¡lida", {
+        toast.danger("Fecha de descuento inválida", {
           description:
             "La fecha de fin del descuento no puede ser menor a la fecha de inicio.",
         });
         return;
       }
       if (discountEndDate > sEndStr) {
-        toast.danger("Fecha de descuento inviÂ¡lida", {
+        toast.danger("Fecha de descuento inválida", {
           description: `La fecha de fin del descuento no puede exceder el final de la temporada (${sEndStr}).`,
         });
         return;
@@ -359,7 +359,7 @@ export const EnrollMembershipDrawer = ({
     }
 
     if (Object.keys(errors).length > 0) {
-      toast.danger("Existen campos inviÂ¡lidos", {
+      toast.danger("Existen campos inválidos", {
         description: "Revisa el formulario para corregir los errores.",
       });
       return;
@@ -521,7 +521,7 @@ export const EnrollMembershipDrawer = ({
                 >
                   <Label className="text-sm font-semibold flex items-center">
                     CategoriÂ­a
-                    <InfoTooltip text="La categoriÂ­a en la que el jugador seriÂ¡ inscrito." />
+                    <InfoTooltip text="La categoriÂ­a en la que el jugador será inscrito." />
                   </Label>
                   <ComboBox.InputGroup>
                     <Input
@@ -722,18 +722,18 @@ export const EnrollMembershipDrawer = ({
                             </ListBox.Item>
                             <ListBox.Item
                               id="FINANCIAL_AID"
-                              textValue="Ayuda econiÂ³mica"
+                              textValue="Ayuda económica"
                             >
-                              Ayuda econiÂ³mica
+                              Ayuda económica
                             </ListBox.Item>
                             <ListBox.Item id="AGREEMENT" textValue="Convenio">
                               Convenio
                             </ListBox.Item>
                             <ListBox.Item
                               id="EXEMPTION"
-                              textValue="ExoneraciiÂ³n"
+                              textValue="Exoneración"
                             >
-                              ExoneraciiÂ³n
+                              Exoneración
                             </ListBox.Item>
                             <ListBox.Item id="OTHER" textValue="Otro">
                               Otro
@@ -747,7 +747,7 @@ export const EnrollMembershipDrawer = ({
                         isInvalid={!!errors.discountReason || undefined}
                       >
                         <Label className="text-sm font-semibold">
-                          RaziÂ³n / JustificaciiÂ³n
+                          Razón / Justificación
                         </Label>
                         <Input
                           variant="secondary"
@@ -777,7 +777,7 @@ export const EnrollMembershipDrawer = ({
                           onChange={(e) => setDiscountEndDate(e.target.value)}
                         />
                         <p className="text-xs text-muted mt-1 leading-tight">
-                          Si se deja en blanco, el descuento seriÂ¡ permanente
+                          Si se deja en blanco, el descuento será permanente
                           hasta que termine la temporada.
                         </p>
                         {errors.discountEndDate && (
@@ -796,7 +796,7 @@ export const EnrollMembershipDrawer = ({
                     </Switch.Control>
                     <Switch.Content>
                       <Label className="text-sm">
-                        Es MigraciiÂ³n (omitir cargos iniciales)
+                        Es Migración (omitir cargos iniciales)
                       </Label>
                     </Switch.Content>
                   </Switch>
@@ -818,7 +818,7 @@ export const EnrollMembershipDrawer = ({
                     <Alert.Indicator />
                     <Alert.Content>
                       <Alert.Title>
-                        Formulario incompleto o inviÂ¡lido
+                        Formulario incompleto o inválido
                       </Alert.Title>
                       <Alert.Description>
                         <ul className="list-disc pl-5 mt-1 text-sm space-y-1">

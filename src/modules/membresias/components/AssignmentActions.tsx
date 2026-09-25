@@ -123,7 +123,7 @@ export const AssignmentActions = ({
           <HugeiconsIcon icon={MoreVerticalIcon} size={18} />
         )}
       </Button>
-      <Dropdown.Menu aria-label="Acciones de asignaciiÂ³n">
+      <Dropdown.Menu aria-label="Acciones de asignación">
         {availableActions.map((action) => (
           <Dropdown.Item
             key={action.key}

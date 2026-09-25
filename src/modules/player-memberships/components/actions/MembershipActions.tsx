@@ -62,7 +62,7 @@ const ACTIONS_BY_STATUS: Record<IPlayerMembership["status"], ActionDef[]> = {
     { key: "edit_start_date", label: "Modificar inicio", icon: Calendar01Icon },
     { key: "pause", label: "Programar pausa", icon: Calendar01Icon },
     { key: "advance", label: "Adelantar cuota", icon: PlayIcon },
-    { key: "regularize", label: "Regularizar HistiÂ³rico", icon: Note01Icon },
+    { key: "regularize", label: "Regularizar Histórico", icon: Note01Icon },
     { key: "suspend", label: "Suspender", icon: PauseIcon },
     { key: "finish", label: "Finalizar", icon: CheckmarkCircle02Icon },
     { key: "withdraw", label: "Dar de baja", icon: Logout01Icon, danger: true },
@@ -162,7 +162,7 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
       action !== "edit_start_date" &&
       !reason?.trim()
     ) {
-      toast.error("El motivo es obligatorio para esta acciiÂ³n");
+      toast.error("El motivo es obligatorio para esta acción");
       setLoading(false);
       return;
     }
@@ -274,7 +274,7 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
               </AlertDialog.Header>
               <AlertDialog.Body className="gap-4 p-2">
                 <p>
-                  ÃÂ¿EstiÂ¡s seguro de que deseas ejecutar la acciiÂ³n{" "}
+                  ÃÂ¿Estás seguro de que deseas ejecutar la acción{" "}
                   <strong>{selectedAction?.label.toLowerCase()}</strong> para
                   esta membresiÂ­a?
                 </p>
@@ -285,7 +285,7 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
                       <Alert.Indicator />
                       <Alert.Content>
                         <Alert.Description>
-                          Esta acciiÂ³n afectariÂ¡ los cargos que se puedan
+                          Esta acción afectará los cargos que se puedan
                           regularizar. Solo se permiten fechas pasadas para
                           evitar desajustes con cargos ya cobrados.
                         </Alert.Description>
@@ -465,7 +465,7 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
                       isRequired={selectedAction?.key !== "activate"}
                     >
                       <Label className="text-sm font-semibold">
-                        Motivo u ObservaciiÂ³n{" "}
+                        Motivo u Observación{" "}
                         {selectedAction?.key === "activate" && "(Opcional)"}
                       </Label>
                       <InputGroup>

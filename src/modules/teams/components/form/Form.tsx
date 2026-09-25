@@ -87,7 +87,7 @@ export const FormTeam = ({
           .join("\n"); // Los separamos por saltos de liÂ­nea para el toast
       }
 
-      // 2. Pasamos la descripciiÂ³n formateada al componente de notificaciones
+      // 2. Pasamos la descripción formateada al componente de notificaciones
       toast.danger(res.message, {
         description: errorDescription,
       });
@@ -156,8 +156,8 @@ export const FormTeam = ({
           }}
           variant="secondary"
         >
-          <Label>DescripciiÂ³n</Label>
-          <TextArea placeholder="Ingrese la descripciiÂ³n" />
+          <Label>Descripción</Label>
+          <TextArea placeholder="Ingrese la descripción" />
           <FieldError
             children={errors.description && <> {errors.description}</>}
           />

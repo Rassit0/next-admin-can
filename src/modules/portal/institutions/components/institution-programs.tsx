@@ -49,7 +49,7 @@ export function InstitutionPrograms({ clubs, schools }: Props) {
           <div>
             <h2 className="font-heading text-3xl font-700 uppercase text-primary mb-8 flex items-center gap-3">
               <span className="w-1.5 h-8 bg-neon rounded-full inline-block"></span>
-              Academias de FormaciiÂ³n
+              Academias de Formación
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {schools.map((school) => (

@@ -259,7 +259,7 @@ export const NewsForm = ({
           </Select>
 
           <TextField variant="secondary">
-            <Label>Fecha de PublicaciiÂ³n (Opcional)</Label>
+            <Label>Fecha de Publicación (Opcional)</Label>
             <Input
               type="datetime-local"
               value={formData.publishedAt}

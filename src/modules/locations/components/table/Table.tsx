@@ -31,7 +31,7 @@ export const TableLocations = ({ locations }: Props) => {
     direction: "ascending",
   });
 
-  // Evitamos la hidrataciiÂ³n fallida
+  // Evitamos la hidratación fallida
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -73,7 +73,9 @@ export const TableLocations = ({ locations }: Props) => {
             </Table.Column> */}
 
             <Table.Column allowsSorting isRowHeader id="name">
-              <SortableColumnHeader id="name">INSTALACIiÂN</SortableColumnHeader>
+              <SortableColumnHeader id="name">
+                INSTALACIiÂN
+              </SortableColumnHeader>
             </Table.Column>
 
             <Table.Column allowsSorting id="address">
@@ -119,7 +121,8 @@ export const TableLocations = ({ locations }: Props) => {
                     No se encontraron registros
                   </span>
                   <span className="text-sm text-default-400">
-                    Intenta con otros tiÂ©rminos de biÂºsqueda o agrega uno nuevo.
+                    Intenta con otros tiÂ©rminos de biÂºsqueda o agrega uno
+                    nuevo.
                   </span>
                 </div>
               </div>

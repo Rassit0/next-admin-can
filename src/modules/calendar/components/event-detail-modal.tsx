@@ -103,7 +103,7 @@ export const EventDetailModal = ({
 
                 <div className="text-sm">
                   <strong>Tipo:</strong> {type} <br />
-                  <strong>UbicaciiÂ³n:</strong>{" "}
+                  <strong>Ubicación:</strong>{" "}
                   {location ? location.name : "Por definir"} <br />
                   <strong>Estado:</strong> {event.extendedProps.status} <br />
                   {event.extendedProps.series && (
@@ -116,7 +116,7 @@ export const EventDetailModal = ({
                 <div className="bg-default-100 p-3 rounded-md text-sm">
                   {type === "SESSION" && (
                     <>
-                      <strong>DuraciiÂ³n:</strong>{" "}
+                      <strong>Duración:</strong>{" "}
                       {(metadata as ISessionCalendarMetadata).durationMin} min{" "}
                       <br />
                       <strong>Equipos:</strong>{" "}
@@ -157,7 +157,7 @@ export const EventDetailModal = ({
                   )}
                   {type === "GENERAL" && (
                     <>
-                      <strong>InstituciiÂ³n:</strong>{" "}
+                      <strong>Institución:</strong>{" "}
                       {(metadata as IGeneralEventCalendarMetadata)
                         .institutionId || "N/A"}
                     </>
@@ -278,7 +278,7 @@ export const EventDetailModal = ({
                       <div className="bg-warning/10 p-3 rounded-lg flex flex-col gap-2">
                         <p className="text-sm text-warning font-semibold">
                           {type === "SESSION"
-                            ? "Esta sesiiÂ³n pertenece a una serie recurrente."
+                            ? "Esta sesión pertenece a una serie recurrente."
                             : "Este evento pertenece a una serie recurrente."}
                         </p>
                         <Select
@@ -298,12 +298,12 @@ export const EventDetailModal = ({
                                 id="single"
                                 textValue={
                                   type === "SESSION"
-                                    ? "Solo esta sesiiÂ³n"
+                                    ? "Solo esta sesión"
                                     : "Solo este evento"
                                 }
                               >
                                 {type === "SESSION"
-                                  ? "Solo esta sesiiÂ³n"
+                                  ? "Solo esta sesión"
                                   : "Solo este evento"}
                               </ListBox.Item>
                               <ListBox.Item
@@ -364,7 +364,7 @@ export const EventDetailModal = ({
                             type === "MATCH"
                               ? "Partido eliminado con iÂ©xito"
                               : type === "SESSION"
-                                ? "SesiiÂ³n eliminada con iÂ©xito"
+                                ? "Sesión eliminada con iÂ©xito"
                                 : "Evento eliminado con iÂ©xito",
                           );
                           setConfirmDelete(false);
@@ -383,13 +383,13 @@ export const EventDetailModal = ({
                   <div className="bg-warning/10 p-3 rounded-lg flex flex-col gap-2">
                     <p className="text-sm text-warning font-semibold">
                       {confirmAction === "COMPLETE" &&
-                        "Al completar el partido se bloqueariÂ¡n el resultado, la convocatoria y la planilla. PodriÂ¡s corregirlo posteriormente reabriendo el partido. ÃÂ¿Deseas continuar?"}
+                        "Al completar el partido se bloquearán el resultado, la convocatoria y la planilla. Podrás corregirlo posteriormente reabriendo el partido. ÃÂ¿Deseas continuar?"}
                       {confirmAction === "CANCEL" &&
-                        "El partido quedariÂ¡ cancelado y en modo solo lectura. PodriÂ¡s restaurarlo posteriormente. ÃÂ¿Deseas continuar?"}
+                        "El partido quedará cancelado y en modo solo lectura. Podrás restaurarlo posteriormente. ÃÂ¿Deseas continuar?"}
                       {confirmAction === "REOPEN" &&
-                        "El partido volveriÂ¡ a estar programado y podriÂ¡ editarse nuevamente. ÃÂ¿Deseas continuar?"}
+                        "El partido volverá a estar programado y podrá editarse nuevamente. ÃÂ¿Deseas continuar?"}
                       {confirmAction === "RESTORE" &&
-                        "El partido volveriÂ¡ a estar programado y podriÂ¡ editarse nuevamente. ÃÂ¿Deseas continuar?"}
+                        "El partido volverá a estar programado y podrá editarse nuevamente. ÃÂ¿Deseas continuar?"}
                     </p>
                   </div>
                   <div className="flex items-center gap-2 justify-end w-full">

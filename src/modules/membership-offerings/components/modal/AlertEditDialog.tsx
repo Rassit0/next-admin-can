@@ -50,7 +50,7 @@ export const AlertEditDialog = ({ isLoading, category, formId }: Props) => {
               <AlertDialog.Heading className="flex flex-col">
                 <span>Actualizar CategoriÂ­a</span>
                 <span className="text-muted">
-                  EstiÂ¡s por modificar la configuraciiÂ³n de {category.name}
+                  Estás por modificar la configuración de {category.name}
                 </span>
               </AlertDialog.Heading>
             </AlertDialog.Header>
@@ -59,15 +59,15 @@ export const AlertEditDialog = ({ isLoading, category, formId }: Props) => {
                 <Alert.Indicator />
                 <Alert.Content>
                   <Alert.Title>
-                    ÃÂ¿EstiÂ¡s seguro de modificar la configuraciiÂ³n de{" "}
+                    ÃÂ¿Estás seguro de modificar la configuración de{" "}
                     {category.name}?
                   </Alert.Title>
 
                   <Alert.Description>
                     Los cambios en los liÂ­mites de edad pueden afectar a los
                     jugadores asociados a esta categoriÂ­a. Los pases que ya no
-                    cumplan con los criterios establecidos podriÂ¡n ser marcados
-                    para revisiiÂ³n o inactivados.
+                    cumplan con los criterios establecidos podrán ser marcados
+                    para revisión o inactivados.
                   </Alert.Description>
                 </Alert.Content>
               </Alert>

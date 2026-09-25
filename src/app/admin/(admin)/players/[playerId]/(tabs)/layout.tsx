@@ -28,7 +28,7 @@ export default async function PlayerGestionLayout({
   const basePath = `/admin/players/${playerId}`;
 
   const tabsRoutes = [
-    { value: "/", title: "InformaciiÂ³n General" },
+    { value: "/", title: "Información General" },
     { value: "/player-memberships", title: "MembresiÂ­as" },
     // { value: "/charges", title: "Cargos" },
     // { value: "/payments", title: "Transacciones" },

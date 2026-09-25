@@ -78,7 +78,7 @@ export const Dashboard = ({
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-2xl font-extrabold text-foreground">
-              GestiiÂ³n de Miembros
+              Gestión de Miembros
             </h2>
             <p className="mt-1 text-sm text-muted">
               {teamSeason.team?.name} ÃÂ· {teamSeason.season?.name}

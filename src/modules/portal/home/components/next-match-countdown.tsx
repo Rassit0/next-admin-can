@@ -101,7 +101,7 @@ export function NextMatchCountdown({ match }: NextMatchCountdownProps) {
         {/* PANEL CENTRAL COUNTDOWN */}
         <div className="relative z-20 flex shrink-0 flex-col items-center justify-center border-y border-white/10 bg-black/90 p-8 shadow-[0_0_40px_rgba(0,0,0,0.8)] md:border-x md:border-y-0 md:p-10">
           <div className="mb-6 inline-flex items-center rounded-full border border-neon/20 bg-neon/10 px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest text-neon backdrop-blur-md md:text-xs">
-            {isToday ? "Ã°ÂÂÂ¥ Hoy" : "Ã¢Â­Â PriÂ³ximo Partido"}
+            {isToday ? "Ã°ÂÂÂ¥ Hoy" : "Ã¢Â­Â Próximo Partido"}
           </div>
 
           <span className="mb-6 text-center text-[10px] font-bold uppercase tracking-widest text-neon/80">

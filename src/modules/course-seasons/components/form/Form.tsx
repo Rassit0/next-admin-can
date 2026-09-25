@@ -212,7 +212,7 @@ export const FormCourseSeason = ({
               "Debe ingresar cupo miÂ­nimo";
           if (!shift.maxMembers)
             newErrors[`shift_${index}_maxMembers`] =
-              "Debe ingresar cupo miÂ¡ximo";
+              "Debe ingresar cupo máximo";
           if (
             shift.validateAge &&
             shift.minBirthYear &&
@@ -241,7 +241,7 @@ export const FormCourseSeason = ({
         newErrors.recurringFee = "Debe ingresar el valor de la cuota mensual";
       }
       if (!registrationFee) {
-        newErrors.registrationFee = "Debe ingresar el valor de la inscripciiÂ³n";
+        newErrors.registrationFee = "Debe ingresar el valor de la inscripción";
       }
     }
     if (
@@ -261,7 +261,7 @@ export const FormCourseSeason = ({
     if (billingType !== "SINGLE_ONLY") {
       if (!billingFrequency) {
         newErrors.billingFrequency =
-          "Debe ingresar la frecuencia de facturaciiÂ³n";
+          "Debe ingresar la frecuencia de facturación";
       }
     }
     if (status === null) {
@@ -303,7 +303,7 @@ export const FormCourseSeason = ({
     };
 
     if (courseSeason && !isClone) {
-      // Modo ediciiÂ³n: omitimos los turnos y capacidades
+      // Modo edición: omitimos los turnos y capacidades
       const res = await editCourseSeason({
         id: courseSeason.id,
         data: baseData,
@@ -332,7 +332,7 @@ export const FormCourseSeason = ({
       });
       router.push(urlRedirect);
     } else {
-      // Modo creaciiÂ³n: la Oferta se crea con el primer turno, los demiÂ¡s se agregan como turnos adicionales
+      // Modo creación: la Oferta se crea con el primer turno, los demás se agregan como turnos adicionales
       const firstShift = shifts[0];
       const res = await addCourseSeason({
         ...baseData,
@@ -408,12 +408,12 @@ export const FormCourseSeason = ({
 
       if (failures > 0) {
         toast.danger("Error parcial", {
-          description: `La Oferta se creiÂ³, pero ${failures} turnos adicionales fallaron. ${lastErrorMessage}`,
+          description: `La Oferta se creó, pero ${failures} turnos adicionales fallaron. ${lastErrorMessage}`,
         });
         router.push(urlRedirect);
       } else {
         toast.success("ÃÂ¡Oferta Comercial Creada!", {
-          description: `Se creiÂ³ exitosamente la oferta con ${successes} turno(s).`,
+          description: `Se creó exitosamente la oferta con ${successes} turno(s).`,
         });
         router.push(urlRedirect);
       }
@@ -444,25 +444,25 @@ export const FormCourseSeason = ({
               <Alert.Indicator />
               <Alert.Content>
                 <Alert.Title>
-                  Modo de EdiciiÂ³n Restringido (Temporada Activa)
+                  Modo de Edición Restringido (Temporada Activa)
                 </Alert.Title>
                 <Alert.Description>
                   Esta temporada se encuentra actualmente{" "}
                   <strong>Activa</strong>. Por seguridad e integridad de los
                   registros financieros y de membresiÂ­as, los datos
                   estructurales (CategoriÂ­a, Temporada, GiÂ©nero) y la
-                  configuraciiÂ³n base de facturaciiÂ³n estiÂ¡n{" "}
+                  configuración base de facturación están{" "}
                   <strong>bloqueados</strong>. <br />
                   AiÂºn puedes ajustar los <strong>montos de cobro</strong>{" "}
                   (MatriÂ­cula, Cuotas), cupos y liÂ­mites de edades, pero estos
-                  cambios afectariÂ¡n{" "}
+                  cambios afectarán{" "}
                   <strong>iÂºnicamente a las nuevas inscripciones</strong>.
                 </Alert.Description>
               </Alert.Content>
             </Alert>
           </div>
         )}
-        {/* <!-- Section 1: InformaciiÂ³n BiÂ¡sica & Capacidad --> */}
+        {/* <!-- Section 1: Información Básica & Capacidad --> */}
         <div className="lg:col-span-7 space-y-6">
           {/* <!-- Basic Info Card --> */}
           <BasicInfoCard
@@ -517,7 +517,7 @@ export const FormCourseSeason = ({
           />
         </div>
 
-        {/* <!-- Section 3: ConfiguraciiÂ³n de Turnos (Solo en CreaciiÂ³n) --> */}
+        {/* <!-- Section 3: Configuración de Turnos (Solo en Creación) --> */}
         {!isEditMode && (
           <div className="lg:col-span-12 space-y-4">
             <div className="flex justify-between items-center mb-2">

@@ -192,7 +192,7 @@ export const SessionFormModal = ({
         setShifts(mappedShifts);
       }
     } catch (e) {
-      toast.error("Error cargando catiÂ¡logos");
+      toast.error("Error cargando catálogos");
     } finally {
       setLoadingData(false);
     }
@@ -200,7 +200,7 @@ export const SessionFormModal = ({
 
   const handleSubmit = async () => {
     if (!startDate || !startTime || !durationMin) {
-      toast.error("Fechas y duraciiÂ³n requeridas");
+      toast.error("Fechas y duración requeridas");
       return;
     }
 
@@ -210,7 +210,7 @@ export const SessionFormModal = ({
 
     // Validate valid date
     if (isNaN(startDateTime.getTime())) {
-      toast.error("Fecha u hora inviÂ¡lida");
+      toast.error("Fecha u hora inválida");
       return;
     }
 
@@ -256,7 +256,7 @@ export const SessionFormModal = ({
         if (onSuccess) onSuccess();
       }
     } catch (err: any) {
-      toast.error(err.message || "Error guardando la sesiiÂ³n");
+      toast.error(err.message || "Error guardando la sesión");
     } finally {
       setLoading(false);
     }
@@ -270,7 +270,7 @@ export const SessionFormModal = ({
             <Modal.Header>
               <div className="flex justify-between items-center w-full">
                 <h3 className="font-semibold text-lg">
-                  {mode === "create" ? "Crear SesiiÂ³n" : "Editar SesiiÂ³n"}
+                  {mode === "create" ? "Crear Sesión" : "Editar Sesión"}
                 </h3>
                 <CloseButton onPress={() => state.close()} />
               </div>
@@ -294,7 +294,7 @@ export const SessionFormModal = ({
                 {mode === "edit" && initialData?.seriesId && (
                   <div className="bg-warning/10 p-3 rounded-lg flex flex-col gap-2">
                     <p className="text-sm text-warning font-semibold">
-                      Esta sesiiÂ³n pertenece a una serie recurrente.
+                      Esta sesión pertenece a una serie recurrente.
                     </p>
                     <Select
                       variant="secondary"
@@ -311,9 +311,9 @@ export const SessionFormModal = ({
                         <ListBox>
                           <ListBox.Item
                             id="single"
-                            textValue="Solo esta sesiiÂ³n"
+                            textValue="Solo esta sesión"
                           >
-                            Solo esta sesiiÂ³n
+                            Solo esta sesión
                           </ListBox.Item>
                           <ListBox.Item
                             id="following"
@@ -356,7 +356,7 @@ export const SessionFormModal = ({
                   </TextField>
                   <TextField>
                     <Label className="font-semibold text-sm">
-                      DuraciiÂ³n (min) *
+                      Duración (min) *
                     </Label>
                     <Input
                       type="number"
@@ -375,7 +375,7 @@ export const SessionFormModal = ({
                   onSelectionChange={(k) => setLocationId(k ? String(k) : "")}
                   isDisabled={loadingData}
                 >
-                  <Label className="font-semibold text-sm">UbicaciiÂ³n</Label>
+                  <Label className="font-semibold text-sm">Ubicación</Label>
                   <Select.Trigger />
                   <Select.Popover>
                     <ListBox
@@ -463,7 +463,7 @@ export const SessionFormModal = ({
                         onChange={(e) => setIsRecurrent(e.target.checked)}
                       />
                       <span className="font-semibold text-sm">
-                        SesiiÂ³n Recurrente (Semanal)
+                        Sesión Recurrente (Semanal)
                       </span>
                     </label>
 
@@ -475,14 +475,14 @@ export const SessionFormModal = ({
                           className="flex flex-row flex-wrap gap-2"
                         >
                           <Label className="text-sm font-semibold w-full">
-                            DiÂ­as de repeticiiÂ³n
+                            DiÂ­as de repetición
                           </Label>
                           <Checkbox value="MO">Lun</Checkbox>
                           <Checkbox value="TU">Mar</Checkbox>
                           <Checkbox value="WE">MiiÂ©</Checkbox>
                           <Checkbox value="TH">Jue</Checkbox>
                           <Checkbox value="FR">Vie</Checkbox>
-                          <Checkbox value="SA">SiÂ¡b</Checkbox>
+                          <Checkbox value="SA">Sáb</Checkbox>
                           <Checkbox value="SU">Dom</Checkbox>
                         </CheckboxGroup>
 
@@ -524,7 +524,7 @@ export const SessionFormModal = ({
                   icon={mode === "create" ? Add01Icon : Edit02Icon}
                   size={18}
                 />
-                {mode === "create" ? "Guardar SesiiÂ³n" : "Actualizar SesiiÂ³n"}
+                {mode === "create" ? "Guardar Sesión" : "Actualizar Sesión"}
               </Button>
             </Modal.Footer>
           </Modal.Dialog>

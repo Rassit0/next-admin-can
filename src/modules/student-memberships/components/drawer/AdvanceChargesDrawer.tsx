@@ -195,7 +195,7 @@ export const AdvanceChargesDrawer = ({
         }
       }
     } catch (error) {
-      setPreviewError("OcurriiÂ³ un error al obtener la previsualizaciiÂ³n.");
+      setPreviewError("Ocurrió un error al obtener la previsualización.");
       setPreviewData(null);
     } finally {
       setIsLoadingPreview(false);
@@ -244,7 +244,7 @@ export const AdvanceChargesDrawer = ({
       }
     } catch (error) {
       toast.error(
-        "OcurriiÂ³ un error inesperado al realizar la compra de los ciclos.",
+        "Ocurrió un error inesperado al realizar la compra de los ciclos.",
       );
     } finally {
       setIsGenerating(false);
@@ -274,7 +274,7 @@ export const AdvanceChargesDrawer = ({
             <div>
               <Drawer.Heading className="text-lg font-bold flex items-center gap-2">
                 <HugeiconsIcon icon={Money01Icon} />
-                InscripciiÂ³n a Ciclo
+                Inscripción a Ciclo
               </Drawer.Heading>
               <p className="mt-1 text-xs font-medium text-muted">
                 Inscribe al estudiante en el siguiente ciclo (mes) de esta
@@ -291,10 +291,10 @@ export const AdvanceChargesDrawer = ({
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-foreground">
-                    ÃÂ¿Confirmar inscripciiÂ³n?
+                    ÃÂ¿Confirmar inscripción?
                   </h3>
                   <p className="text-sm text-muted mt-2">
-                    EstiÂ¡s a punto de inscribir{" "}
+                    Estás a punto de inscribir{" "}
                     <strong>{previewData?.charges.length} ciclos</strong> por un
                     total de{" "}
                     <strong>
@@ -304,8 +304,8 @@ export const AdvanceChargesDrawer = ({
                     .
                   </p>
                   <p className="text-xs text-muted mt-2">
-                    Esta acciiÂ³n creariÂ¡ los cargos en el sistema y no se puede
-                    deshacer automiÂ¡ticamente.
+                    Esta acción creará los cargos en el sistema y no se puede
+                    deshacer automáticamente.
                   </p>
                 </div>
               </div>
@@ -314,12 +314,12 @@ export const AdvanceChargesDrawer = ({
                 <Alert status="accent" className="mb-2">
                   <Alert.Indicator />
                   <Alert.Content>
-                    <Alert.Title>Acerca de la InscripciiÂ³n</Alert.Title>
+                    <Alert.Title>Acerca de la Inscripción</Alert.Title>
                     <Alert.Description>
-                      Esta acciiÂ³n buscariÂ¡ el siguiente mes (ciclo) disponible
-                      de la temporada al que aiÂºn no estiÂ¡s inscrito y te
-                      generariÂ¡ la cuota correspondiente. iÂsalo para continuar
-                      en el curso.
+                      Esta acción buscará el siguiente mes (ciclo) disponible de
+                      la temporada al que aiÂºn no estás inscrito y te generará
+                      la cuota correspondiente. iÂsalo para continuar en el
+                      curso.
                     </Alert.Description>
                   </Alert.Content>
                 </Alert>
@@ -473,7 +473,7 @@ export const AdvanceChargesDrawer = ({
                               {isSelected && (
                                 <div className="pl-7 mt-1">
                                   <Label className="text-xs mb-1">
-                                    Fecha de InscripciiÂ³n (Prorrateo)
+                                    Fecha de Inscripción (Prorrateo)
                                   </Label>
                                   <DatePicker
                                     value={
@@ -556,7 +556,7 @@ export const AdvanceChargesDrawer = ({
                     <Alert.Content>
                       <Alert.Title>Sin ciclos disponibles</Alert.Title>
                       <Alert.Description>
-                        No hay miÂ¡s ciclos futuros disponibles en esta temporada
+                        No hay más ciclos futuros disponibles en esta temporada
                         para inscribirse por adelantado.
                       </Alert.Description>
                     </Alert.Content>
@@ -565,7 +565,7 @@ export const AdvanceChargesDrawer = ({
 
                 <div className="flex flex-col gap-3 mt-4">
                   <h4 className="text-sm font-semibold text-foreground border-b border-border pb-2">
-                    PrevisualizaciiÂ³n
+                    Previsualización
                   </h4>
 
                   {isLoadingPreview ? (
@@ -639,8 +639,7 @@ export const AdvanceChargesDrawer = ({
                     </div>
                   ) : (
                     <p className="text-sm text-muted text-center py-4">
-                      Selecciona al menos un ciclo para ver la
-                      previsualizaciiÂ³n.
+                      Selecciona al menos un ciclo para ver la previsualización.
                     </p>
                   )}
                 </div>

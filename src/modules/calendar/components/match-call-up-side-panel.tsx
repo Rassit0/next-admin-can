@@ -67,7 +67,7 @@ export const MatchCallUpSidePanel = ({
     }
 
     setSelectedIds(ids);
-    // DIRTY NO SE MARCA AL INICIO, ya que la preselecciiÂ³n automiÂ¡tica no es un cambio manual del usuario
+    // DIRTY NO SE MARCA AL INICIO, ya que la preselección automática no es un cambio manual del usuario
     onDirtyChange(false);
   }, [initialCallUps, hasCategory, candidates, configuredAt]);
 
@@ -141,7 +141,7 @@ export const MatchCallUpSidePanel = ({
         onSuccess(res.data); // Return specific updated data
       }
     } catch (e) {
-      toast.error("OcurriiÂ³ un error inesperado al guardar.");
+      toast.error("Ocurrió un error inesperado al guardar.");
     } finally {
       setIsSaving(false);
     }

@@ -24,7 +24,7 @@ interface Props {
 }
 
 /**
- * Componente reutilizable para descargar/imprimir el recibo PDF de un pago o transacciiÂ³n.
+ * Componente reutilizable para descargar/imprimir el recibo PDF de un pago o transacción.
  * Se puede usar desde cualquier lugar pasando el transactionId y el tipo de reporte.
  */
 export const PrintReportDialog = ({
@@ -40,7 +40,7 @@ export const PrintReportDialog = ({
   const openPdf = useCallback(
     async (action: "print" | "download") => {
       if (!transactionId && (!paymentIds || paymentIds.length === 0)) {
-        toast.danger("No hay pagos seleccionados o el ID es inviÂ¡lido.");
+        toast.danger("No hay pagos seleccionados o el ID es inválido.");
         return;
       }
       setIsLoading(true);
@@ -98,7 +98,7 @@ export const PrintReportDialog = ({
         setTimeout(() => URL.revokeObjectURL(url), 10000);
         onOpenChange(false);
       } catch (error) {
-        toast.danger("OcurriiÂ³ un error al generar el recibo.");
+        toast.danger("Ocurrió un error al generar el recibo.");
       } finally {
         setIsLoading(false);
         onSuccess?.();
@@ -131,7 +131,7 @@ export const PrintReportDialog = ({
             <p className="text-sm text-muted">
               {paymentIds && paymentIds.length > 0
                 ? "Los pagos se registraron exitosamente. ÃÂ¿QuiÂ© deseas hacer con el recibo miÂºltiple consolidado?"
-                : "El pago se registriÂ³ exitosamente. ÃÂ¿QuiÂ© deseas hacer con el recibo?"}
+                : "El pago se registró exitosamente. ÃÂ¿QuiÂ© deseas hacer con el recibo?"}
             </p>
           </AlertDialog.Body>
           <AlertDialog.Footer className="flex flex-col gap-2 sm:flex-row">

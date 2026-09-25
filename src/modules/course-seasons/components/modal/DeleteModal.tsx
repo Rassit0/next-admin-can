@@ -48,7 +48,7 @@ export const DeleteModal = ({ isOpen, onOpenChange, courseSeason }: Props) => {
           .join("\n"); // Los separamos por saltos de liÂ­nea para el toast
       }
 
-      // 2. Pasamos la descripciiÂ³n formateada al componente de notificaciones
+      // 2. Pasamos la descripción formateada al componente de notificaciones
       toast.danger(res.message, {
         description: errorDescription,
       });
@@ -73,9 +73,9 @@ export const DeleteModal = ({ isOpen, onOpenChange, courseSeason }: Props) => {
           </AlertDialog.Header>
           <AlertDialog.Body>
             <p>
-              Se eliminariÂ¡ permanentemente la temporada{" "}
+              Se eliminará permanentemente la temporada{" "}
               <strong>{courseSeason.season.name}</strong> y todos sus datos.
-              Esta acciiÂ³n no se puede deshacer.
+              Esta acción no se puede deshacer.
             </p>
           </AlertDialog.Body>
           <AlertDialog.Footer>

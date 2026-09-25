@@ -98,8 +98,8 @@ export const ButtonToggleBillingEngine = ({
                   {isEngineActive ? "Pausar" : "Reanudar"} Motor de Cobros
                 </span>
                 <span className="text-muted">
-                  EstiÂ¡s por {isEngineActive ? "detener" : "iniciar"} la
-                  generaciiÂ³n automiÂ¡tica
+                  Estás por {isEngineActive ? "detener" : "iniciar"} la
+                  generación automática
                 </span>
               </AlertDialog.Heading>
             </AlertDialog.Header>
@@ -108,14 +108,14 @@ export const ButtonToggleBillingEngine = ({
                 <Alert.Indicator />
                 <Alert.Content>
                   <Alert.Title>
-                    ÃÂ¿EstiÂ¡s seguro de {isEngineActive ? "pausar" : "reanudar"}{" "}
+                    ÃÂ¿Estás seguro de {isEngineActive ? "pausar" : "reanudar"}{" "}
                     el motor de cobros para esta temporada?
                   </Alert.Title>
 
                   <Alert.Description>
                     {isEngineActive
-                      ? "Al pausarlo, no se generariÂ¡n nuevos cargos mensuales ni se aplicariÂ¡n multas por atrasos a los miembros de esta temporada hasta que lo reanudes manualmente. Ideal si necesitas corregir configuraciones de precios."
-                      : "Al reanudarlo, el sistema volveriÂ¡ a evaluar a todos los miembros de esta temporada para emitir sus mensualidades y multas correspondientes segiÂºn el cronograma."}
+                      ? "Al pausarlo, no se generarán nuevos cargos mensuales ni se aplicarán multas por atrasos a los miembros de esta temporada hasta que lo reanudes manualmente. Ideal si necesitas corregir configuraciones de precios."
+                      : "Al reanudarlo, el sistema volverá a evaluar a todos los miembros de esta temporada para emitir sus mensualidades y multas correspondientes segiÂºn el cronograma."}
                   </Alert.Description>
                 </Alert.Content>
               </Alert>

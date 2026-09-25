@@ -25,7 +25,7 @@ export default async function TeamSeasonDetailLayout({
 
   const baseUrl = `/admin/players/${playerId}/player-memberships/${playerMembershipId}`;
   const tabsRoutes = [
-    { value: "/", title: "InformaciiÂ³n General" },
+    { value: "/", title: "Información General" },
     { value: "/charges", title: "Cargos" },
     // { value: "/player-memberships", title: "MembresiÂ­as" },
     // { value: "/payment-plans", title: "Planes de Pago" },

@@ -4,6 +4,7 @@ import { Add01Icon, File01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { NewsForm } from "../form/NewsForm";
+import { ButtonFloating } from "@/ui";
 
 interface Props {
   label?: string;
@@ -29,7 +30,7 @@ export const AddNewsModal = ({
           isIconOnly={isIcon}
         >
           <HugeiconsIcon icon={Add01Icon} />
-          {label || "Crear Nota"}
+          {label || "Agregar Nota"}
         </Button>
       )}
       {isIcon && (
@@ -40,6 +41,19 @@ export const AddNewsModal = ({
         >
           <HugeiconsIcon icon={Add01Icon} />
         </Button>
+      )}
+      {buttonFloatingMobile && (
+        <ButtonFloating
+          className="lg:hidden"
+          icon={
+            <HugeiconsIcon
+              icon={Add01Icon}
+              className="h-6 w-6 text-background"
+            />
+          }
+          onPress={() => state.open()}
+          // text="Agregar Disciplina"
+        />
       )}
 
       <Modal.Backdrop isOpen={state.isOpen} onOpenChange={state.setOpen}>

@@ -133,7 +133,7 @@ export const SplitViewRoles: React.FC<Props> = ({
     setConfirmDialog({
       isOpen: true,
       title: "Eliminar Rol",
-      description: `ÃÂ¿EstiÂ¡ seguro de eliminar el rol "${selectedRole.name}"? Esta acciiÂ³n fallariÂ¡ si hay usuarios asignados a iÂ©l.`,
+      description: `ÃÂ¿Está seguro de eliminar el rol "${selectedRole.name}"? Esta acción fallará si hay usuarios asignados a iÂ©l.`,
       status: "danger",
       confirmText: "Eliminar",
       onConfirm: async () => {
@@ -207,7 +207,7 @@ export const SplitViewRoles: React.FC<Props> = ({
               <span
                 className={`text-xs truncate ${selectedRole?.id === role.id && !isCreating ? "text-accent-soft-foreground/70" : "text-muted"}`}
               >
-                {role.description || "Sin descripciiÂ³n"}
+                {role.description || "Sin descripción"}
               </span>
             </button>
           ))}
@@ -255,8 +255,8 @@ export const SplitViewRoles: React.FC<Props> = ({
                 </h2>
                 <p className="text-sm text-muted mt-1">
                   {isCreating
-                    ? "Configure los datos biÂ¡sicos y asigne los permisos."
-                    : "Gestione la configuraciiÂ³n de este rol."}
+                    ? "Configure los datos básicos y asigne los permisos."
+                    : "Gestione la configuración de este rol."}
                 </p>
               </div>
 
@@ -313,11 +313,11 @@ export const SplitViewRoles: React.FC<Props> = ({
                 </TextField>
 
                 <TextField className="w-full">
-                  <Label>DescripciiÂ³n</Label>
+                  <Label>Descripción</Label>
                   <TextArea
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    placeholder="Describe el propiÂ³sito del rol"
+                    placeholder="Describe el propósito del rol"
                     readOnly={!isEditing}
                     variant={!isEditing ? undefined : "secondary"}
                     className={
@@ -348,7 +348,7 @@ export const SplitViewRoles: React.FC<Props> = ({
                   <p className="text-danger/80 max-w-md mt-2">
                     Este rol tiene privilegios de Super Administrador. No es
                     necesario (ni posible) asignarle permisos individuales
-                    porque hereda todos automiÂ¡ticamente.
+                    porque hereda todos automáticamente.
                   </p>
                 </div>
               ) : (

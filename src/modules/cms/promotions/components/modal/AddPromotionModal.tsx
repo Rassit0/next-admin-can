@@ -4,28 +4,57 @@ import { Add01Icon, Image01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { PromotionForm } from "../form/PromotionForm";
+import { ButtonFloating } from "@/ui";
 
 interface Props {
-  buttonLabel?: string;
-  buttonIcon?: any;
+  label?: string;
+  isIcon?: boolean;
+  buttonFloatingMobile?: boolean;
 }
 
 export const AddPromotionModal = ({
-  buttonLabel = "Ai±adir Promotion",
-  buttonIcon = Add01Icon,
+  label,
+  isIcon = false,
+  buttonFloatingMobile,
 }: Props) => {
   const state = useOverlayState();
   const [isLoading, setIsLoading] = useState(false);
 
   return (
     <>
-      <Button
-        onPress={() => state.open()}
-        className="bg-on-surface text-surface hover:bg-on-surface-variant flex"
-      >
-        <HugeiconsIcon icon={buttonIcon} />
-        {buttonLabel}
-      </Button>
+      {!isIcon && (
+        <Button
+          className="hidden lg:flex"
+          variant="primary"
+          onPress={() => state.open()}
+          isIconOnly={isIcon}
+        >
+          <HugeiconsIcon icon={Add01Icon} />
+          {label || "Agregar Promoción"}
+        </Button>
+      )}
+      {isIcon && (
+        <Button
+          variant="primary"
+          onPress={() => state.open()}
+          isIconOnly={isIcon}
+        >
+          <HugeiconsIcon icon={Add01Icon} />
+        </Button>
+      )}
+      {buttonFloatingMobile && (
+        <ButtonFloating
+          className="lg:hidden"
+          icon={
+            <HugeiconsIcon
+              icon={Add01Icon}
+              className="h-6 w-6 text-background"
+            />
+          }
+          onPress={() => state.open()}
+          // text="Agregar Disciplina"
+        />
+      )}
 
       <Modal.Backdrop isOpen={state.isOpen} onOpenChange={state.setOpen}>
         <Modal.Container placement="auto" scroll="outside">

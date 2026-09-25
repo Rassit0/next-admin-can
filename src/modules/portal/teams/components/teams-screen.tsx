@@ -60,11 +60,11 @@ export function Teams({ teams }: { teams: Team[] }) {
       <div className="mb-8">
         <h1 className="font-heading text-5xl font-700 uppercase tracking-tight text-primary sm:text-6xl">
           Equipos y{" "}
-          <span className="text-neon text-glow-neon">CompeticiiÂ³n</span>
+          <span className="text-neon text-glow-neon">Competición</span>
         </h1>
         <p className="mt-3 max-w-xl text-muted-foreground text-pretty">
-          FiltriÂ¡ por disciplina, sede y categoriÂ­a. GiriÂ¡ cada tarjeta para ver
-          la membresiÂ­a y solicitiÂ¡ tu cupo.
+          Filtrá por disciplina, sede y categoriÂ­a. Girá cada tarjeta para ver
+          la membresiÂ­a y solicitá tu cupo.
         </p>
       </div>
 
@@ -114,7 +114,7 @@ export function Teams({ teams }: { teams: Team[] }) {
 
       {filtered.length === 0 && (
         <p className="py-16 text-center text-muted-foreground">
-          No hay equipos para esta combinaciiÂ³n de filtros.
+          No hay equipos para esta combinación de filtros.
         </p>
       )}
 
@@ -302,8 +302,8 @@ function MembershipModal({
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground text-pretty">
               Recibimos tu solicitud de membresiÂ­a para{" "}
               <span className="font-600 text-primary">{team.name}</span>.
-              Nuestro equipo se pondriÂ¡ en contacto para coordinar la
-              incorporaciiÂ³n.
+              Nuestro equipo se pondrá en contacto para coordinar la
+              incorporación.
             </p>
             <button
               onClick={onClose}

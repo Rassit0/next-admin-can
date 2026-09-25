@@ -18,7 +18,12 @@ export const editShift = async ({
 }): Promise<ServiceResponse<IShift>> => {
   const session = await auth();
 
-  if (!session?.user) return { error: true, statusCode: 401, message: "Su sesiiÂ³n ha expirado. Por favor, inicie sesiiÂ³n nuevamente." } as any;
+  if (!session?.user)
+    return {
+      error: true,
+      statusCode: 401,
+      message: "Su sesión ha expirado. Por favor, inicie sesión nuevamente.",
+    } as any;
   return handleServerAction(async () => {
     const response = await api.patch<{ message: string; data: IShift }>(
       `shifts/${id}`,

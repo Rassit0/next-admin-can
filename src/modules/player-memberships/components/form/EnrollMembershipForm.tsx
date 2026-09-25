@@ -155,7 +155,7 @@ export const EnrollMembershipForm = ({
           (isNaN(season) || season < 0 || season > 100)
         ) {
           err.seasonDiscountPercent =
-            "El descuento debe ser mayor o igual a 0 y miÂ¡ximo 100.";
+            "El descuento debe ser mayor o igual a 0 y máximo 100.";
         }
       } else {
         if (!regDiscountPercent && !recDiscountPercent) {
@@ -164,11 +164,11 @@ export const EnrollMembershipForm = ({
         }
         if (regDiscountPercent && (isNaN(reg) || reg < 0 || reg > 100)) {
           err.regDiscountPercent =
-            "El descuento debe ser mayor o igual a 0 y miÂ¡ximo 100.";
+            "El descuento debe ser mayor o igual a 0 y máximo 100.";
         }
         if (recDiscountPercent && (isNaN(rec) || rec < 0 || rec > 100)) {
           err.recDiscountPercent =
-            "El descuento debe ser mayor o igual a 0 y miÂ¡ximo 100.";
+            "El descuento debe ser mayor o igual a 0 y máximo 100.";
         }
       }
 
@@ -177,7 +177,7 @@ export const EnrollMembershipForm = ({
       }
 
       if (discountType === "OTHER" && !discountReason.trim()) {
-        err.discountReason = "Especifique una raziÂ³n o justificaciiÂ³n.";
+        err.discountReason = "Especifique una razón o justificación.";
       }
 
       if (discountEndDate) {
@@ -545,7 +545,7 @@ export const EnrollMembershipForm = ({
           >
             <Label className="text-sm font-semibold flex items-center">
               Fecha de inicio
-              <InfoTooltip text="Fecha en la que el sistema se basa para cobrar. Si la fecha cae a la mitad de un ciclo mensual (y el prorrateo estiÂ¡ activo), el cobro seriÂ¡ parcial." />
+              <InfoTooltip text="Fecha en la que el sistema se basa para cobrar. Si la fecha cae a la mitad de un ciclo mensual (y el prorrateo está activo), el cobro será parcial." />
             </Label>
             <Input
               variant="secondary"
@@ -566,7 +566,7 @@ export const EnrollMembershipForm = ({
                   </Switch.Control>
                   <Label className="text-sm font-semibold flex items-center">
                     Aplicar Descuento Excepcional
-                    <InfoTooltip text="Estos descuentos se sumariÂ¡n a los que ya otorga el plan elegido (el total acumulado no puede exceder el 100%)." />
+                    <InfoTooltip text="Estos descuentos se sumarán a los que ya otorga el plan elegido (el total acumulado no puede exceder el 100%)." />
                   </Label>
                 </Switch.Content>
               </Switch>
@@ -705,15 +705,15 @@ export const EnrollMembershipForm = ({
                       </ListBox.Item>
                       <ListBox.Item
                         id="FINANCIAL_AID"
-                        textValue="Ayuda econiÂ³mica"
+                        textValue="Ayuda económica"
                       >
-                        Ayuda econiÂ³mica
+                        Ayuda económica
                       </ListBox.Item>
                       <ListBox.Item id="AGREEMENT" textValue="Convenio">
                         Convenio
                       </ListBox.Item>
-                      <ListBox.Item id="EXEMPTION" textValue="ExoneraciiÂ³n">
-                        ExoneraciiÂ³n
+                      <ListBox.Item id="EXEMPTION" textValue="Exoneración">
+                        Exoneración
                       </ListBox.Item>
                       <ListBox.Item id="OTHER" textValue="Otro">
                         Otro
@@ -727,7 +727,7 @@ export const EnrollMembershipForm = ({
                   isInvalid={!!errors.discountReason || undefined}
                 >
                   <Label className="text-sm font-semibold">
-                    RaziÂ³n / JustificaciiÂ³n
+                    Razón / Justificación
                   </Label>
                   <Input
                     variant="secondary"
@@ -757,8 +757,8 @@ export const EnrollMembershipForm = ({
                     onChange={(e) => setDiscountEndDate(e.target.value)}
                   />
                   <p className="text-xs text-muted mt-1 leading-tight">
-                    Si se deja en blanco, el descuento seriÂ¡ permanente hasta
-                    que termine la temporada.
+                    Si se deja en blanco, el descuento será permanente hasta que
+                    termine la temporada.
                   </p>
                   {errors.discountEndDate && (
                     <FieldError>{errors.discountEndDate}</FieldError>
@@ -777,8 +777,8 @@ export const EnrollMembershipForm = ({
                     <Switch.Thumb />
                   </Switch.Control>
                   <Label className="text-sm flex items-center">
-                    Es MigraciiÂ³n (omitir cargos anteriores)
-                    <InfoTooltip text="Activa esta opciiÂ³n si el jugador ya iniciiÂ³ su temporada en otro sistema, y siÂ³lo deseas facturarle desde el mes actual en adelante. IgnorariÂ¡cuotas de meses previos." />
+                    Es Migración (omitir cargos anteriores)
+                    <InfoTooltip text="Activa esta opción si el jugador ya inició su temporada en otro sistema, y sólo deseas facturarle desde el mes actual en adelante. Ignorarácuotas de meses previos." />
                   </Label>
                 </Switch.Content>
               </Switch>
@@ -796,7 +796,7 @@ export const EnrollMembershipForm = ({
                       </Switch.Control>
                       <Label className="text-sm flex items-center">
                         Cobrar MatriÂ­cula (Opcional)
-                        <InfoTooltip text="Fuerza la creaciiÂ³n de la factura por inscripciiÂ³n/matriÂ­cula a pesar de ser migrado, en caso de que aiÂºn deba la inscripciiÂ³n." />
+                        <InfoTooltip text="Fuerza la creación de la factura por inscripción/matriÂ­cula a pesar de ser migrado, en caso de que aiÂºn deba la inscripción." />
                       </Label>
                     </Switch.Content>
                   </Switch>
@@ -812,7 +812,7 @@ export const EnrollMembershipForm = ({
                       </Switch.Control>
                       <Label className="text-sm flex items-center">
                         Cobrar Mes Actual (Opcional)
-                        <InfoTooltip text="Por defecto la migraciiÂ³n asume que este mes ya estiÂ¡ pagado. Si activas esto, se generariÂ¡la cuota del mes correspondiente a la fecha de inicio seleccionada." />
+                        <InfoTooltip text="Por defecto la migración asume que este mes ya está pagado. Si activas esto, se generarála cuota del mes correspondiente a la fecha de inicio seleccionada." />
                       </Label>
                     </Switch.Content>
                   </Switch>
@@ -848,7 +848,7 @@ export const EnrollMembershipForm = ({
             <Alert status="danger">
               <Alert.Indicator />
               <Alert.Content>
-                <Alert.Title>Formulario incompleto o inviÂ¡lido</Alert.Title>
+                <Alert.Title>Formulario incompleto o inválido</Alert.Title>
                 <Alert.Description>
                   <ul className="list-disc pl-5 mt-1 text-sm space-y-1">
                     {Object.entries(errors).map(([field, msg]) => (

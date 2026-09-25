@@ -56,7 +56,7 @@ export const MatchLineupSidePanel = ({
   const [editStates, setEditStates] = useState<Record<string, EditState>>({});
 
   useEffect(() => {
-    // Inicializar el estado de ediciiÂ³n desde la base de datos (lo persistido)
+    // Inicializar el estado de edición desde la base de datos (lo persistido)
     const newStates: Record<string, EditState> = {};
     for (const c of callUps) {
       if (c.lineup) {
@@ -131,7 +131,7 @@ export const MatchLineupSidePanel = ({
     const destructiveRemovals = [];
     for (const c of callUps) {
       if (c.lineup && !editStates[c.id]?.participated) {
-        // Estaba persistido y ahora se le quitiÂ³ participiÂ³
+        // Estaba persistido y ahora se le quitó participó
         const L = c.lineup;
         if (
           L.isStarter ||
@@ -151,8 +151,8 @@ export const MatchLineupSidePanel = ({
     if (destructiveRemovals.length > 0) {
       const isMultiple = destructiveRemovals.length > 1;
       const msg = isMultiple
-        ? `Se eliminariÂ¡n la participaciiÂ³n y estadiÂ­sticas de ${destructiveRemovals.length} jugadores.\n\nÃÂ¿Deseas continuar?`
-        : `Se eliminariÂ¡n la participaciiÂ³n y estadiÂ­sticas de ${destructiveRemovals[0]}.\n\nÃÂ¿Deseas continuar?`;
+        ? `Se eliminarán la participación y estadiÂ­sticas de ${destructiveRemovals.length} jugadores.\n\nÃÂ¿Deseas continuar?`
+        : `Se eliminarán la participación y estadiÂ­sticas de ${destructiveRemovals[0]}.\n\nÃÂ¿Deseas continuar?`;
       if (!window.confirm(msg)) return;
     }
 
@@ -182,7 +182,7 @@ export const MatchLineupSidePanel = ({
         onSuccess(res.data as IMatchLineupsResponse);
       }
     } catch (e) {
-      toast.error("OcurriiÂ³ un error inesperado al guardar.");
+      toast.error("Ocurrió un error inesperado al guardar.");
     } finally {
       setIsSaving(false);
     }
@@ -210,7 +210,7 @@ export const MatchLineupSidePanel = ({
         <div className="flex flex-col items-center justify-center text-center h-48 text-muted bg-default-50 rounded-lg p-4">
           <p className="text-sm font-medium">No hay convocados</p>
           <p className="text-xs mt-1">
-            Primero debes guardar la convocatoria para registrar participaciiÂ³n.
+            Primero debes guardar la convocatoria para registrar participación.
           </p>
         </div>
       ) : (
@@ -296,7 +296,7 @@ export const MatchLineupSidePanel = ({
                             <Checkbox.Indicator />
                           </Checkbox.Control>
                           <Checkbox.Content>
-                            <span className="text-sm">ParticipiÂ³</span>
+                            <span className="text-sm">Participó</span>
                           </Checkbox.Content>
                         </Checkbox>
 

@@ -83,7 +83,7 @@ export const PromotionForm = ({
     const newErrors: Record<string, string> = {};
     if (!formData.title) newErrors.title = "El tiÂ­tulo es obligatorio";
 
-    // ValidaciiÂ³n de imagen 16x9
+    // Validación de imagen 16x9
     if (!promotion && files16x9.length === 0) {
       newErrors.image16x9 = "La imagen principal 16:9 es obligatoria";
     }
@@ -168,9 +168,9 @@ export const PromotionForm = ({
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <TextField variant="secondary">
-            <Label>Texto de botiÂ³n (CTA)</Label>
+            <Label>Texto de botón (CTA)</Label>
             <Input
-              placeholder="Ej: Ver miÂ¡s"
+              placeholder="Ej: Ver más"
               value={formData.ctaText}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               onChange={(e: any) =>
@@ -180,7 +180,7 @@ export const PromotionForm = ({
           </TextField>
 
           <TextField variant="secondary">
-            <Label>RedirecciiÂ³n (URL o Ruta)</Label>
+            <Label>Redirección (URL o Ruta)</Label>
             <Input
               placeholder="Ej: /actualidad o https://google.com"
               value={formData.redirectTo}
@@ -195,7 +195,7 @@ export const PromotionForm = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Select
             variant="secondary"
-            placeholder="Seleccione una posiciiÂ³n"
+            placeholder="Seleccione una posición"
             selectedKey={formData.position}
             onSelectionChange={(key) => {
               if (key)
@@ -205,7 +205,7 @@ export const PromotionForm = ({
                 });
             }}
           >
-            <Label>PosiciiÂ³n</Label>
+            <Label>Posición</Label>
             <Select.Trigger>
               <Select.Value />
               <Select.Indicator />
@@ -286,7 +286,7 @@ export const PromotionForm = ({
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium">Imagen MiÂ³vil (3:4)</label>
+            <label className="text-sm font-medium">Imagen Móvil (3:4)</label>
             <span className="text-xs text-default-400">
               Opcional. Formato vertical.
             </span>

@@ -47,9 +47,9 @@ export const DeleteHeroBannerModal = ({ isOpen, setIsOpen, id }: Props) => {
           </Modal.Header>
           <Modal.Body className="px-6 py-4">
             <p className="text-sm text-default-500">
-              ÃÂ¿EstiÂ¡s seguro de que deseas eliminar este Hero Banner? Esta
-              acciiÂ³n no se puede deshacer y el Hero Banner dejariÂ¡ de ser
-              visible de inmediato.
+              ÃÂ¿Estás seguro de que deseas eliminar este Hero Banner? Esta
+              acción no se puede deshacer y el Hero Banner dejará de ser visible
+              de inmediato.
             </p>
           </Modal.Body>
           <Modal.Footer>
