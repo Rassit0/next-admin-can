@@ -23,7 +23,12 @@ export const getSecretarySummary = async (
       `persons/${personId}/secretary-summary`,
       {
         next: {
-          tags: [`person-${personId}-summary`, `charges`],
+          tags: [
+            `person-${personId}-summary`,
+            `charges`,
+            "player-memberships",
+            "student-memberships",
+          ],
           revalidate: 60, // Revalidate every minute or when invalidated manually
         },
         headers: {

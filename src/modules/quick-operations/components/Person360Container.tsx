@@ -219,6 +219,7 @@ export const Person360Container = ({
         isOpen={isHistoryDrawerOpen}
         onOpenChange={setIsHistoryDrawerOpen}
         person={selectedPerson}
+        onSuccess={refreshSummary}
       />
 
       <MembershipHistoryDrawer

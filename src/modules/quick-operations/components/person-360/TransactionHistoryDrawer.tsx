@@ -9,12 +9,14 @@ interface Props {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
   person: IPersonOption | null;
+  onSuccess?: () => void;
 }
 
 export const TransactionHistoryDrawer = ({
   isOpen,
   onOpenChange,
   person,
+  onSuccess,
 }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [transactions, setTransactions] = useState<any[]>([]);
@@ -94,7 +96,13 @@ export const TransactionHistoryDrawer = ({
               ) : (
                 <div className="flex flex-col h-full w-full">
                   <div className="flex-1 overflow-auto w-full [&_table]:w-full">
-                    <TableTransactions transactions={transactions} />
+                    <TableTransactions 
+                      transactions={transactions} 
+                      onChange={() => {
+                        fetchTransactions();
+                        if (onSuccess) onSuccess();
+                      }} 
+                    />
                   </div>
                 </div>
               )}

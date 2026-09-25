@@ -27,9 +27,10 @@ import { PrintReportDialog } from "../dialog/PrintReportDialog";
 
 interface Props {
   transactions: ITransaction[];
+  onChange?: () => void;
 }
 
-export const TableTransactions = ({ transactions }: Props) => {
+export const TableTransactions = ({ transactions, onChange }: Props) => {
   const router = useRouter();
   const [transactionToVoid, setTransactionToVoid] = useState<string | null>(
     null,
@@ -100,6 +101,8 @@ export const TableTransactions = ({ transactions }: Props) => {
       toast.danger(res.message);
     } else {
       toast.success(res.message);
+      if (onChange) onChange();
+      router.refresh();
     }
   };
 
