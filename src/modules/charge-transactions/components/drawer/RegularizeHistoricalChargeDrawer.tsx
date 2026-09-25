@@ -201,10 +201,13 @@ export const RegularizeHistoricalChargeDrawer = ({
                               <span className="font-medium text-sm">
                                 {cycle.title}
                               </span>
-                              <span className="text-xs text-muted">
-                                Importe oficial: Bs{" "}
-                                {Number(cycle.amount).toFixed(2)}
-                              </span>
+                              <div className="text-xs text-muted flex gap-2">
+                                <span>Cuota: Bs {Number(cycle.amount).toFixed(2)}</span>
+                                {cycle.lateFeeAmount ? (
+                                  <span className="text-danger font-medium">Mora: Bs {Number(cycle.lateFeeAmount).toFixed(2)}</span>
+                                ) : null}
+                                <span className="font-bold">Total: Bs {Number(cycle.totalAmount || cycle.amount).toFixed(2)}</span>
+                              </div>
                             </div>
                           </ListBox.Item>
                         ))}
@@ -213,13 +216,19 @@ export const RegularizeHistoricalChargeDrawer = ({
                   </Select>
 
                   {selectedCycle && (
-                    <div className="bg-default-100 p-4 rounded-lg flex justify-between items-center">
-                      <span className="text-sm font-medium">
-                        Importe oficial:
-                      </span>
-                      <span className="text-lg font-bold">
-                        Bs {Number(selectedCycle.amount).toFixed(2)}
-                      </span>
+                    <div className="bg-default-100 p-4 rounded-lg flex flex-col gap-2">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm font-medium">Cuota Base:</span>
+                        <span className="text-sm">Bs {Number(selectedCycle.amount).toFixed(2)}</span>
+                      </div>
+                      <div className="flex justify-between items-center text-danger">
+                        <span className="text-sm font-medium">Mora Generada:</span>
+                        <span className="text-sm font-semibold">Bs {Number(selectedCycle.lateFeeAmount || 0).toFixed(2)}</span>
+                      </div>
+                      <div className="flex justify-between items-center border-t border-border pt-2 mt-1">
+                        <span className="text-sm font-bold">Total a Regularizar:</span>
+                        <span className="text-lg font-bold">Bs {Number(selectedCycle.totalAmount || selectedCycle.amount).toFixed(2)}</span>
+                      </div>
                     </div>
                   )}
 
@@ -294,16 +303,21 @@ export const RegularizeHistoricalChargeDrawer = ({
                             </strong>
                           </>
                         )}{" "}
-                        por el importe de{" "}
+                        por un Total de{" "}
                         <strong className="text-foreground">
                           Bs{" "}
                           {hasOverridePermission &&
                           useOverride &&
                           overrideAmount !== ""
-                            ? Number(overrideAmount).toFixed(2)
-                            : Number(selectedCycle.amount).toFixed(2)}
+                            ? (Number(overrideAmount) + Number(selectedCycle.lateFeeAmount || 0)).toFixed(2)
+                            : Number(selectedCycle.totalAmount || selectedCycle.amount).toFixed(2)}
                         </strong>
                         .
+                        {selectedCycle.lateFeeAmount! > 0 && (
+                          <div className="mt-2 text-danger">
+                            * Incluye la creacón inmediata del recargo por mora.
+                          </div>
+                        )}
                       </p>
                     </div>
                   )}

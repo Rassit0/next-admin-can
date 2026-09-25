@@ -15,6 +15,8 @@ export interface RegularizableCycle {
   sequence: number;
   status: string;
   title: string;
+  lateFeeAmount?: number;
+  totalAmount?: number;
 }
 
 export const getRegularizableCycles = async (
@@ -47,6 +49,8 @@ export const getRegularizableCycles = async (
         c.title ||
         c.description ||
         `Ciclo: ${c.billingYear} - Mes ${c.billingMonth}`,
+      lateFeeAmount: c.lateFeeAmount,
+      totalAmount: c.totalAmount,
     }));
 
     return {
