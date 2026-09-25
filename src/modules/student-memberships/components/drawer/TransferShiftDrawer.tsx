@@ -84,15 +84,15 @@ export const TransferShiftDrawer = ({
   const loadCourseSeasons = async (loadedMembership: IStudentMembership) => {
     setIsLoadingSeasons(true);
     try {
-      // Filtrar por el mismo curso en base a la membresí­a actual para simplificar la seleccón
-      // NOTA: La validacón final recae en el backend
+      // Filtrar por el mismo curso en base a la membresí­a actual para simplificar la selección
+      // NOTA: La validación final recae en el backend
       const res = await getCourseSeasons({
         per_page: "100",
       });
 
       if (!res.error) {
         // Filtrar los que pertenecen al mismo nombre de curso (asumiendo courseSeason.course.name)
-        // El backend realiza validacón estricta, pero esto ayuda a UX
+        // El backend realiza validación estricta, pero esto ayuda a UX
         // Filtrar Ofertas del mismo curso
         const sameCourseSeasons = res.data.data.filter(
           (cs) =>
@@ -187,7 +187,7 @@ export const TransferShiftDrawer = ({
                     <HugeiconsIcon icon={InformationCircleIcon} />
                   </Alert.Indicator>
                   <Alert.Content>
-                    <Alert.Title>Informacón de Transferencia</Alert.Title>
+                    <Alert.Title>Información de Transferencia</Alert.Title>
                     <Alert.Description>
                       <p className="mb-2">
                         Estás a punto de transferir a{" "}
@@ -211,16 +211,15 @@ export const TransferShiftDrawer = ({
                             .find((s) => s.id === targetCourseSeasonShiftId)
                             ?.courseSeason.id === membership.courseSeasonId ? (
                             <div className="bg-success-100 text-success-800 p-2 rounded text-sm border border-success-200 font-medium">
-                              🔄 Cambio de turno logí­stico (no afecta
-                              precios ni configuracón comercial).
+                              🔄 Cambio de turno logí­stico (no afecta precios
+                              ni configuración comercial).
                             </div>
                           ) : (
                             <div className="bg-warning-100 text-warning-800 p-2 rounded text-sm border border-warning-200 font-medium">
-                              ⚠️ Cambio de Oferta Comercial: Esto
-                              aplicará las reglas de facturacón de la nueva
-                              oferta para los cobros futuros (ej. nuevos
-                              montos). Los cargos históricos permanecerán
-                              intactos.
+                              ⚠️ Cambio de Oferta Comercial: Esto aplicará las
+                              reglas de facturación de la nueva oferta para los
+                              cobros futuros (ej. nuevos montos). Los cargos
+                              históricos permanecerán intactos.
                             </div>
                           )}
                         </div>

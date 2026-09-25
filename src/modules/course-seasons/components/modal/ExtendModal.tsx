@@ -41,7 +41,7 @@ export const ExtendModal = ({ isOpen, onOpenChange, courseSeason }: Props) => {
       return;
     }
     if (!newEndDate) {
-      toast.danger("Debe seleccionar una fecha de finalizacón");
+      toast.danger("Debe seleccionar una fecha de finalización");
       return;
     }
     setIsLoading(true);
@@ -65,7 +65,7 @@ export const ExtendModal = ({ isOpen, onOpenChange, courseSeason }: Props) => {
           .join("\n"); // Los separamos por saltos de lí­nea para el toast
       }
 
-      // 2. Pasamos la descripcón formateada al componente de notificaciones
+      // 2. Pasamos la descripción formateada al componente de notificaciones
       toast.danger(
         res.errors ? "Error al extender la temporada" : res.message,
         {
@@ -142,7 +142,7 @@ export const ExtendModal = ({ isOpen, onOpenChange, courseSeason }: Props) => {
                 value={newEndDate}
                 onChange={setNewEndDate}
               >
-                <Label>Nueva Fecha de Finalizacón</Label>
+                <Label>Nueva Fecha de Finalización</Label>
                 <DateField.Group variant="secondary" fullWidth>
                   <DateField.Input>
                     {(segment) => <DateField.Segment segment={segment} />}
@@ -156,7 +156,7 @@ export const ExtendModal = ({ isOpen, onOpenChange, courseSeason }: Props) => {
                 <FieldError
                   children={
                     !newEndDate && (
-                      <>Debe seleccionar una fecha de finalizacón</>
+                      <>Debe seleccionar una fecha de finalización</>
                     )
                   }
                 />
@@ -198,10 +198,10 @@ export const ExtendModal = ({ isOpen, onOpenChange, courseSeason }: Props) => {
                 value={reason}
                 onChange={setReason}
               >
-                <Label>Motivo de Finalizacón</Label>
-                <TextArea placeholder="Describe brevemente los motivos de la finalizacón anticipada..." />
+                <Label>Motivo de Finalización</Label>
+                <TextArea placeholder="Describe brevemente los motivos de la finalización anticipada..." />
                 <FieldError>
-                  {!reason && "Debe ingresar un motivo de cancelacón"}
+                  {!reason && "Debe ingresar un motivo de cancelación"}
                 </FieldError>
               </TextField>
             </div>

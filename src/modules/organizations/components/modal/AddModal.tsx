@@ -18,7 +18,7 @@ export const AddModal = () => {
         onPress={() => state.open()}
       >
         <HugeiconsIcon icon={Add01Icon} />
-        Agregar Organizacón
+        Agregar Organización
       </Button>
       <ButtonFloating
         icon={
@@ -35,9 +35,9 @@ export const AddModal = () => {
               <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
                 <HugeiconsIcon icon={Layers01Icon} />
               </Modal.Icon>
-              <Modal.Heading>Agregar Organizacón</Modal.Heading>
+              <Modal.Heading>Agregar Organización</Modal.Heading>
               <p className="mt-1.5 text-sm leading-5 text-muted">
-                Agrega una nueva organizacón al sistema.
+                Agrega una nueva organización al sistema.
               </p>
             </Modal.Header>
             <Modal.Body className="p-6">

@@ -202,7 +202,7 @@ export const TeamSeasonActions = ({ teamSeason, baseUrl }: Props) => {
               </AlertDialog.Header>
               <AlertDialog.Body className="gap-4 p-2">
                 <p>
-                  ¿Estás seguro de que deseas ejecutar la accón{" "}
+                  ¿Estás seguro de que deseas ejecutar la acción{" "}
                   <strong>{selectedAction?.label.toLowerCase()}</strong> para
                   este equipo?
                 </p>
@@ -313,7 +313,7 @@ export const TeamSeasonActions = ({ teamSeason, baseUrl }: Props) => {
                   selectedAction?.key !== "close_registration" && (
                     <TextField name="reason" className="w-full" isRequired>
                       <Label className="text-sm font-semibold">
-                        Motivo u Observacón
+                        Motivo u Observación
                       </Label>
                       <InputGroup>
                         <InputGroup.Prefix>

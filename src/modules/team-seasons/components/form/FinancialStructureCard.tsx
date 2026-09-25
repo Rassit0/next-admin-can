@@ -86,7 +86,7 @@ export const FinancialStructureCard = ({
             <Alert.Title>Cobros Automatizados</Alert.Title>
             <Alert.Description>
               Configura cómo el sistema facturará automáticamente a los atletas
-              de esta temporada. El modelo de facturacón determina si se cobra
+              de esta temporada. El modelo de facturación determina si se cobra
               cada ciclo de tiempo o si se hace un único pago por adelantado.
             </Alert.Description>
           </Alert.Content>
@@ -106,7 +106,7 @@ export const FinancialStructureCard = ({
             handleRemoveError("billingType");
           }}
         >
-          <Label>Modelo de Facturacón</Label>
+          <Label>Modelo de Facturación</Label>
           <Select.Trigger>
             <Select.Value />
             <Select.Indicator />
@@ -129,9 +129,9 @@ export const FinancialStructureCard = ({
               </ListBox.Item>
               <ListBox.Item
                 id="BOTH"
-                textValue="Ambos (A eleccón del cliente)"
+                textValue="Ambos (A elección del cliente)"
               >
-                Ambos (A eleccón del cliente)
+                Ambos (A elección del cliente)
                 <ListBox.ItemIndicator />
               </ListBox.Item>
             </ListBox>
@@ -163,7 +163,7 @@ export const FinancialStructureCard = ({
               handleRemoveError("billingFrequency");
             }}
           >
-            <Label>Frecuencia de Facturacón</Label>
+            <Label>Frecuencia de Facturación</Label>
             <Select.Trigger>
               <Select.Value />
               <Select.Indicator />
@@ -351,7 +351,7 @@ export const FinancialStructureCard = ({
           >
             <Label className="flex items-center gap-2 text-sm font-label font-bold">
               <HugeiconsIcon icon={UnavailableIcon} />
-              Día de Facturacón Mensual
+              Día de Facturación Mensual
             </Label>
             <NumberField.Group>
               <NumberField.DecrementButton />
@@ -379,7 +379,7 @@ export const FinancialStructureCard = ({
               <Alert.Title>Cálculos Proporcionales (Prorrateos)</Alert.Title>
               <Alert.Description>
                 Activa estas opciones para que el motor de pagos asigne montos
-                justos en funcón del día exacto en que el atleta inicie o
+                justos en función del día exacto en que el atleta inicie o
                 termine su membresía.
                 <br />
                 <strong>Ejemplo:</strong> Si la cuota mensual es de 100 Bs. y el
@@ -430,7 +430,7 @@ export const FinancialStructureCard = ({
                     <Switch.Thumb />
                   </Switch.Control>
                   <span className="text-sm">
-                    Prorratear matrícula en funcón del avance de temporada
+                    Prorratear matrícula en función del avance de temporada
                   </span>
                 </Switch.Content>
               </Switch>
@@ -448,7 +448,7 @@ export const FinancialStructureCard = ({
                   <Switch.Thumb />
                 </Switch.Control>
                 <span className="text-sm">
-                  Prorratear tarifa de temporada (Pago único) en funcón del
+                  Prorratear tarifa de temporada (Pago único) en función del
                   avance
                 </span>
               </Switch.Content>

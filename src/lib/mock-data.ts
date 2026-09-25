@@ -30,7 +30,7 @@ export const mockContacts: MockInstitutionContact[] = [
   },
   {
     id: "3",
-    department: "Prensa y Comunicacón",
+    department: "Prensa y Comunicación",
     contactName: "Carlos Gómez",
     phone: "+591 11223344",
     email: "prensa@can.edu.bo",

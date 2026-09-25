@@ -108,7 +108,7 @@ export const EditShiftModal = ({ courseSeasonId, urlBase, shift }: Props) => {
       <button
         onClick={() => state.open()}
         className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-surface-container-high transition-colors"
-        title="Editar Configuracón"
+        title="Editar Configuración"
       >
         <HugeiconsIcon
           icon={Edit02Icon}
@@ -133,7 +133,7 @@ export const EditShiftModal = ({ courseSeasonId, urlBase, shift }: Props) => {
               <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
                 <HugeiconsIcon icon={Edit02Icon} />
               </Modal.Icon>
-              <Modal.Heading>Editar Configuracón de Turno</Modal.Heading>
+              <Modal.Heading>Editar Configuración de Turno</Modal.Heading>
               <p className="mt-1.5 text-sm leading-5 text-muted">
                 Turno: <span className="font-bold">{shift.shift?.name}</span>
               </p>

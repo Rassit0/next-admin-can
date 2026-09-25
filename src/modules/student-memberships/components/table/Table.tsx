@@ -99,7 +99,7 @@ export const TableMemberships = ({
             </Table.Column>
             <Table.Column id="participation">
               <span className="text-xs font-semibold uppercase tracking-wide">
-                Participacón
+                Participación
               </span>
             </Table.Column>
             <Table.Column className="text-center">

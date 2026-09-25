@@ -40,7 +40,7 @@ export default async function TeamSeasonDetailLayout({
     <>
       <HeaderPage
         title="Membresías"
-        description="Gestiona las membresías de los jugadores y estudiantes de tu organizacón."
+        description="Gestiona las membresías de los jugadores y estudiantes de tu organización."
       />
       <div className="flex flex-col page-content">
         <TabsRouteNavigation

@@ -24,7 +24,7 @@ interface Props {
 }
 
 /**
- * Componente reutilizable para descargar/imprimir el recibo PDF de un pago o transaccón.
+ * Componente reutilizable para descargar/imprimir el recibo PDF de un pago o transacción.
  * Se puede usar desde cualquier lugar pasando el transactionId y el tipo de reporte.
  */
 export const PrintReportDialog = ({

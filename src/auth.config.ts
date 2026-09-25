@@ -9,7 +9,7 @@ export interface BackendUser extends AuthUser {
   token?: string;
 }
 
-// Configuracón de acceso: Rutas de Next.js -> Módulos del Backend
+// Configuración de acceso: Rutas de Next.js -> Módulos del Backend
 // Puedes ir agregando aquí las rutas y qué módulo de tu backend necesitan para entrar
 export const moduleAccessControl: {
   path: string;
@@ -18,14 +18,14 @@ export const moduleAccessControl: {
   // Dashboard principal
   { path: "/admin/dashboard", requiredModule: "DASHBOARD" },
 
-  // Administracón de Accesos
+  // Administración de Accesos
   { path: "/admin/users", requiredModule: "USERS" },
   { path: "/admin/roles", requiredModule: "ROLES" },
 
-  // Configuracón de la Institucón y Sitios
+  // Configuración de la Institución y Sitios
   { path: "/admin/settings", requiredModule: "INSTITUTIONS" },
   { path: "/admin/locations", requiredModule: "LOCATIONS" },
-  { path: "/admin/web", requiredModule: "INSTITUTIONS" }, // Asume que la web se gestiona a nivel institucón
+  { path: "/admin/web", requiredModule: "INSTITUTIONS" }, // Asume que la web se gestiona a nivel institución
 
   // Estructura Deportiva y Académica
   { path: "/admin/disciplines", requiredModule: "DISCIPLINES" },
@@ -106,7 +106,7 @@ export const authConfig = {
           token: backendUser.token,
         };
 
-        // Decodificamos el token JWT del backend para obtener su expiracón (exp)
+        // Decodificamos el token JWT del backend para obtener su expiración (exp)
         if (backendUser.token) {
           try {
             const payload = JSON.parse(
@@ -132,7 +132,7 @@ export const authConfig = {
 
       return token;
     },
-    // Expone la informacón del token hacia la sesón final (auth.user)
+    // Expone la información del token hacia la sesón final (auth.user)
     async session({ session, token }) {
       if (token?.user) {
         session.user = { ...session.user, ...token.user };

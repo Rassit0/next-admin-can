@@ -135,7 +135,7 @@ export const ScheduleForm = ({
         selectedKey={formData.locationId || undefined}
         onSelectionChange={(key) => handleChange("locationId", key as string)}
       >
-        <Label>Ubicacón</Label>
+        <Label>Ubicación</Label>
         <Select.Trigger>
           <Select.Value />
           <Select.Indicator />
@@ -279,7 +279,7 @@ export const ScheduleForm = ({
           className="w-full"
           isInvalid={!!errors.durationMin}
         >
-          <Label>Duracón (Minutos)</Label>
+          <Label>Duración (Minutos)</Label>
           <Input
             type="number"
             variant="secondary"

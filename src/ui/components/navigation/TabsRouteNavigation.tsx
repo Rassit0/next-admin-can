@@ -60,7 +60,7 @@ export const TabsRouteNavigation = ({
       isDisabled={isPending}
     >
       <Tabs.ListContainer>
-        <Tabs.List aria-label="Navegacón de secciones">
+        <Tabs.List aria-label="Navegación de secciones">
           {routes.map((route) => (
             <Tabs.Tab
               key={route.value}

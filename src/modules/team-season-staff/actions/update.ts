@@ -28,7 +28,7 @@ export const updateTeamSeasonStaff = async (
     return {
       error: false,
       data: response.data,
-      message: response.message || "Asignacón actualizada exitosamente",
+      message: response.message || "Asignación actualizada exitosamente",
     };
   });
 };

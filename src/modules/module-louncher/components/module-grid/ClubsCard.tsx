@@ -48,7 +48,7 @@ export const ClubsCard = async () => {
         </h3>
 
         <p className="text-sm text-gray-500 font-body leading-relaxed mb-6">
-          Administracón de entidades afiliadas, delegaciones y equipos
+          Administración de entidades afiliadas, delegaciones y equipos
           competitivos.
         </p>
 

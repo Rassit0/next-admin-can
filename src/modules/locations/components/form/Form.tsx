@@ -60,7 +60,7 @@ export const FormLocation = ({
       newErrors.name = "Debe ingresar un nombre";
     }
     if (!address) {
-      newErrors.address = "Debe ingresar una direccón";
+      newErrors.address = "Debe ingresar una dirección";
     }
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) {
@@ -93,8 +93,8 @@ export const FormLocation = ({
     }
     toast.success(res.message, {
       description: location
-        ? "La instalacón se ha editado exitosamente"
-        : "La instalacón se ha agregado exitosamente",
+        ? "La instalación se ha editado exitosamente"
+        : "La instalación se ha agregado exitosamente",
     });
     onSubmited?.();
   };
@@ -116,7 +116,7 @@ export const FormLocation = ({
               setName(e.target.value);
               setErrors({});
             }}
-            placeholder="Ingrese el nombre de la instalacón"
+            placeholder="Ingrese el nombre de la instalación"
           />
           <FieldError children={errors.name && <> {errors.name}</>} />
         </TextField>
@@ -126,10 +126,10 @@ export const FormLocation = ({
           name="address"
           isInvalid={!!errors.address || undefined}
         >
-          <Label>Direccón</Label>
+          <Label>Dirección</Label>
           <TextArea
             variant="secondary"
-            placeholder="Ingrese la direccón de la instalacón"
+            placeholder="Ingrese la dirección de la instalación"
             rows={4}
             value={address}
             onChange={(e) => {
@@ -146,10 +146,10 @@ export const FormLocation = ({
           name="description"
           isInvalid={!!errors.description || undefined}
         >
-          <Label>Descripcón</Label>
+          <Label>Descripción</Label>
           <TextArea
             variant="secondary"
-            placeholder="Ingrese la descripcón de la categorí­a"
+            placeholder="Ingrese la descripción de la categorí­a"
             rows={4}
             value={description}
             onChange={(e) => {

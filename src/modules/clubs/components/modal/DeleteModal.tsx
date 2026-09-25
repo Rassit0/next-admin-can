@@ -65,7 +65,7 @@ export const DeleteModal = ({
               <p>
                 Se eliminará permanentemente el club{" "}
                 <strong>{club.name}</strong> si no tiene datos asociados a este.
-                Esta accón no se puede deshacer.
+                Esta acción no se puede deshacer.
               </p>
             </AlertDialog.Body>
             <AlertDialog.Footer>

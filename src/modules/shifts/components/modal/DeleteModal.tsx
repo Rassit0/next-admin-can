@@ -44,8 +44,8 @@ export const DeleteModal = ({ id }: Props) => {
               </Modal.Icon>
               <Modal.Heading>Eliminar Turno</Modal.Heading>
               <p className="mt-1.5 text-sm leading-5 text-muted">
-                ¿Estás seguro de que deseas eliminar este turno? Esta accón
-                no se puede deshacer.
+                ¿Estás seguro de que deseas eliminar este turno? Esta acción no
+                se puede deshacer.
               </p>
             </Modal.Header>
             <Modal.Body className="hidden" />

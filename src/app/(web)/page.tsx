@@ -45,7 +45,7 @@ export default async function Page() {
   const promo1Banners = promotions.promo1 ? [promotions.promo1] : [];
   const promo2Banners = promotions.promo2 ? [promotions.promo2] : [];
 
-  // Transformacón de Fixture
+  // Transformación de Fixture
   // Obtenemos disciplinas únicas del fixture
   const uniqueDisciplines = Array.from(
     new Set(matches.map((m) => m.discipline).filter(Boolean)),

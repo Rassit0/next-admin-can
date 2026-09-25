@@ -31,7 +31,7 @@ export const addLocation = async ({
     return {
       error: false,
       data: res.data,
-      message: res.message || "Instalacón agregada exitosamente",
+      message: res.message || "Instalación agregada exitosamente",
     };
   } catch (error: any) {
     // 1. Manejo de Errores Controlados (API)
@@ -45,7 +45,7 @@ export const addLocation = async ({
       return {
         error: true,
         message: error.message,
-        errors: error.errors, // Aquí vienen los errores de validacón (ej: campos requeridos)
+        errors: error.errors, // Aquí vienen los errores de validación (ej: campos requeridos)
         statusCode: error.statusCode,
       };
     }

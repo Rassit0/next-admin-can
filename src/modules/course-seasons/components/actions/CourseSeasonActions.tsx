@@ -207,15 +207,15 @@ export const CourseSeasonActions = ({ courseSeason, baseUrl }: Props) => {
               </AlertDialog.Header>
               <AlertDialog.Body className="gap-4 p-2">
                 <p>
-                  ¿Estás seguro de que deseas ejecutar la accón{" "}
+                  ¿Estás seguro de que deseas ejecutar la acción{" "}
                   <strong>{selectedAction?.label.toLowerCase()}</strong> para
                   este turno?
                 </p>
 
                 {selectedAction?.key === "cancel" && (
                   <div className="p-3 bg-warning/20 border border-warning/50 rounded-lg text-sm text-warning-800">
-                    <strong>Atencón:</strong> Cancelar el turno no lo elimina.
-                    La informacón histórica, membresí­as, ciclos, deudas y
+                    <strong>Atención:</strong> Cancelar el turno no lo elimina.
+                    La información histórica, membresí­as, ciclos, deudas y
                     cobros relacionados se conservan.
                   </div>
                 )}
@@ -327,7 +327,7 @@ export const CourseSeasonActions = ({ courseSeason, baseUrl }: Props) => {
                   selectedAction?.key !== "delete" && (
                     <TextField name="reason" className="w-full" isRequired>
                       <Label className="text-sm font-semibold">
-                        Motivo u Observacón
+                        Motivo u Observación
                       </Label>
                       <InputGroup>
                         <InputGroup.Prefix>

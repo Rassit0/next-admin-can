@@ -96,7 +96,7 @@ export const MetricsCards = ({
       bg: "bg-surface-secondary",
     },
     {
-      label: "Inscripcón (Bs)",
+      label: "Inscripción (Bs)",
       value: String(Number(courseSeason.billingConfig?.registrationFee)),
       hint: "Costo fijo único de matrícula establecido para ingresar a esta temporada.",
       icon: Ticket01Icon,

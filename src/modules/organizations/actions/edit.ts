@@ -28,7 +28,7 @@ export const editOrganization = async ({
     return {
       error: false,
       data: response.data,
-      message: response.message || "Organizacón editada exitosamente",
+      message: response.message || "Organización editada exitosamente",
     };
   });
 };

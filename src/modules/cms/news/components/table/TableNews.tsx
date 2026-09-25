@@ -44,7 +44,7 @@ export const TableNews = ({ news }: Props) => {
             </Table.Column>
             <Table.Column allowsSorting id="publishedAt">
               <SortableColumnHeader id="publishedAt">
-                Fecha de Publicacón
+                Fecha de Publicación
               </SortableColumnHeader>
             </Table.Column>
             <Table.Column className="text-center">ACCIONES</Table.Column>

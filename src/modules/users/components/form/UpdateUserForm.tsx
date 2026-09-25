@@ -61,7 +61,7 @@ export const UpdateUserForm: React.FC<Props> = ({ user }) => {
 
   return (
     <div className="flex flex-col gap-6 bg-content1 p-6 rounded-xl border border-divider">
-      <h3 className="text-lg font-semibold">Datos de Autenticacón y Acceso</h3>
+      <h3 className="text-lg font-semibold">Datos de Autenticación y Acceso</h3>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <TextField isRequired variant="secondary" className="w-full">

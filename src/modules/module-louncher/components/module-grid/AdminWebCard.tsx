@@ -27,7 +27,7 @@ export const AdminWebCard = () => {
         </span>
       </div>
       <h3 className="text-xl font-headline font-bold text-on-surface mb-2">
-        Administracón Web
+        Administración Web
       </h3>
       <p className="text-sm text-gray-500 font-body leading-relaxed mb-6">
         Mantenimiento de portales oficiales y contenido digital para socios.

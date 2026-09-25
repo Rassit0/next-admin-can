@@ -47,7 +47,7 @@ export const addTransaction = async (
     return {
       error: false,
       data: response.data,
-      message: response.message || "Transaccón registrada exitosamente",
+      message: response.message || "Transacción registrada exitosamente",
     };
   });
 };

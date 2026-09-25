@@ -28,14 +28,14 @@ export const SiteFooter = ({ institution }: { institution: Institution }) => {
             </div>
           </div>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-white">
-            Institucón polideportiva. Formando deportistas y comunidad desde
+            Institución polideportiva. Formando deportistas y comunidad desde
             hace casi nueve décadas.
           </p>
         </div>
 
         <div>
           <h4 className="font-heading text-sm font-700 uppercase tracking-[0.2em] text-neon">
-            Navegacón
+            Navegación
           </h4>
           <ul className="mt-4 space-y-2">
             {navLinks.map((item) => (
@@ -57,7 +57,7 @@ export const SiteFooter = ({ institution }: { institution: Institution }) => {
           </h4>
           <ul className="mt-4 space-y-3 text-sm text-white/90">
             <li>
-              <strong className="text-neon">Direccón:</strong>{" "}
+              <strong className="text-neon">Dirección:</strong>{" "}
               {institution.address}
             </li>
             {defaultContact?.email && (

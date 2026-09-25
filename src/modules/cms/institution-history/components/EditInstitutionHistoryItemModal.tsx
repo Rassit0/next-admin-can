@@ -85,7 +85,7 @@ export const EditInstitutionHistoryItemModal = ({
                   defaultValue={item.description}
                   isRequired
                 >
-                  <Label>Descripcón</Label>
+                  <Label>Descripción</Label>
                   <TextArea />
                 </TextField>
 

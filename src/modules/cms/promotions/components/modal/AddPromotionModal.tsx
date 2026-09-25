@@ -30,7 +30,7 @@ export const AddPromotionModal = ({
           isIconOnly={isIcon}
         >
           <HugeiconsIcon icon={Add01Icon} />
-          {label || "Agregar Promocón"}
+          {label || "Agregar Promoción"}
         </Button>
       )}
       {isIcon && (

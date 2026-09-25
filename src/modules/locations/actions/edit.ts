@@ -33,7 +33,7 @@ export const editLocation = async ({
     return {
       error: false,
       data: res.data,
-      message: res.message || "Instalacón editada exitosamente",
+      message: res.message || "Instalación editada exitosamente",
     };
   });
 };

@@ -5,11 +5,11 @@ import { LoginForm } from "@/modules/auth";
 export default function LoginPage() {
   return (
     <div className="flex min-h-dvh w-full bg-background overflow-hidden">
-      {/* Zona Izquierda - Branding y Motivacón (Solo Desktop) */}
+      {/* Zona Izquierda - Branding y Motivación (Solo Desktop) */}
       <div className="hidden lg:flex lg:w-1/2 relative flex-col justify-between p-12 xl:p-16 bg-linear-to-br from-background to-surface-secondary">
         <ParticlesBackground />
 
-        {/* Decoracón abstracta superior sutil */}
+        {/* Decoración abstracta superior sutil */}
         <div className="absolute top-[-5%] left-[-5%] w-96 h-96 bg-accent/15 rounded-full blur-[100px] pointer-events-none animate-pulse" />
         <div className="absolute bottom-[-5%] right-[-5%] w-96 h-96 bg-success/15 rounded-full blur-[100px] pointer-events-none" />
 
@@ -29,7 +29,7 @@ export default function LoginPage() {
           </h2>
           <p className="text-lg text-muted/90 leading-relaxed">
             Una plataforma integral diseñada para potenciar el rendimiento,
-            optimizar la administracón y conectar a toda tu comunidad deportiva
+            optimizar la administración y conectar a toda tu comunidad deportiva
             en un solo lugar.
           </p>
         </div>

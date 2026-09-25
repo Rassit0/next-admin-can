@@ -217,7 +217,7 @@ export const PaymentGatewayModal = ({
                           </TextField>
                         </div>
                         <p className="text-[11px] leading-relaxed text-muted">
-                          Entorno de simulacón seguro. No ingreses datos reales
+                          Entorno de simulación seguro. No ingreses datos reales
                           de tarjetas.
                         </p>
                       </div>

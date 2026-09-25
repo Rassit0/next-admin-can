@@ -20,7 +20,7 @@ interface Props {
 export const TableClubs = ({ clubs, disciplineId }: Props) => {
   const [isClient, setIsClient] = useState(false);
 
-  // Evitamos la hidratacón fallida
+  // Evitamos la hidratación fallida
   useEffect(() => {
     setIsClient(true);
   }, []);

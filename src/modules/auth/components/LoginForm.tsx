@@ -191,7 +191,7 @@ export const LoginForm = () => {
             <Alert status="danger">
               <Alert.Indicator />
               <Alert.Content>
-                <Alert.Title>Error de autenticacón</Alert.Title>
+                <Alert.Title>Error de autenticación</Alert.Title>
                 <Alert.Description>{errorMessage}</Alert.Description>
               </Alert.Content>
             </Alert>

@@ -35,7 +35,7 @@ export default async function CourseSeasonDetailLayout({
   const actionsBaseUrl = `/admin/courses/${disciplineId}/${schoolId}/${courseId}/course-seasons`;
 
   const tabsRoutes = [
-    { value: "/", title: "Informacón General" },
+    { value: "/", title: "Información General" },
     { value: "/staff", title: "Personal" },
     { value: "/student-memberships", title: "Matrí­culas" },
     { value: "/payment-plans", title: "Planes de Pago" },

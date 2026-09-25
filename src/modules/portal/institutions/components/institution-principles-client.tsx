@@ -16,7 +16,7 @@ const principles = [
     title: "Visón",
     icon: Eye,
     description:
-      "Ser reconocidos a nivel nacional e internacional como el club líder en formacón deportiva y competitividad, marcando un estándar de excelencia y siendo un referente de innovacón y pasón por el deporte.",
+      "Ser reconocidos a nivel nacional e internacional como el club líder en formación deportiva y competitividad, marcando un estándar de excelencia y siendo un referente de innovación y pasón por el deporte.",
   },
 ];
 

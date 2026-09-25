@@ -30,7 +30,7 @@ export const useMobileNavigation = (items: NavItem[], urlBase?: string) => {
   // 1. Eliminar los que explícitamente tienen mobile.visible = false
   const visibleItems = items.filter((item) => item.mobile?.visible !== false);
 
-  // 2. Ordenar por prioridad (mayor primero), luego posicón, luego orden original
+  // 2. Ordenar por prioridad (mayor primero), luego posición, luego orden original
   // Conservamos el índice original para desempatar manteniendo el orden inicial
   const itemsWithIndex = visibleItems.map((item, index) => ({ item, index }));
   const sortedItems = itemsWithIndex

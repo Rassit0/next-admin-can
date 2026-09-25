@@ -30,7 +30,7 @@ export const TableSeasons = ({
     direction: "ascending",
   });
 
-  // Evitamos la hidratacón fallida
+  // Evitamos la hidratación fallida
   useEffect(() => {
     setIsClient(true);
   }, []);

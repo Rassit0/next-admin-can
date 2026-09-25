@@ -79,7 +79,7 @@ export const CashClosureFormModal = ({
     if (difference !== 0 && (!observations || observations.trim() === "")) {
       setErrors({
         observations:
-          "Debe proporcionar una observacón para justificar la diferencia.",
+          "Debe proporcionar una observación para justificar la diferencia.",
       });
       return;
     }

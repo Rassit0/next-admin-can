@@ -49,7 +49,7 @@ export const AlertEditDialog = ({ isLoading, course, formId }: Props) => {
               <AlertDialog.Heading className="flex flex-col">
                 <span>Actualizar Equipo</span>
                 <span className="text-muted">
-                  Estás por modificar la configuracón de {course.name}
+                  Estás por modificar la configuración de {course.name}
                 </span>
               </AlertDialog.Heading>
             </AlertDialog.Header>
@@ -58,7 +58,7 @@ export const AlertEditDialog = ({ isLoading, course, formId }: Props) => {
                 <Alert.Indicator />
                 <Alert.Content>
                   <Alert.Title>
-                    ¿Estás seguro de modificar la configuracón del equipo?
+                    ¿Estás seguro de modificar la configuración del equipo?
                   </Alert.Title>
 
                   <Alert.Description>

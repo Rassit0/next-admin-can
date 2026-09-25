@@ -21,7 +21,7 @@ interface Props {
 export const TableCourseSeasons = ({ courseSeasons, urlBase }: Props) => {
   const [isClient, setIsClient] = useState(false);
 
-  // Evitamos la hidratacón fallida
+  // Evitamos la hidratación fallida
   useEffect(() => {
     setIsClient(true);
   }, []);

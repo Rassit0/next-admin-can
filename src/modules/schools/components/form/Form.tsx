@@ -72,10 +72,10 @@ export const FormSchool = ({
 
       if (res.errors) {
         // Convertimos el objeto { type: ["msg"] } en una lista de strings limpia
-        errorDescription = "Error de Validacón"; // Los separamos por saltos de línea para el toast
+        errorDescription = "Error de Validación"; // Los separamos por saltos de línea para el toast
       }
 
-      // 2. Pasamos la descripcón formateada al componente de notificaciones
+      // 2. Pasamos la descripción formateada al componente de notificaciones
       toast.danger(res.message, {
         description: errorDescription,
       });

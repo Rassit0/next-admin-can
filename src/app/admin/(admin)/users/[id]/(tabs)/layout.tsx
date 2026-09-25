@@ -40,7 +40,7 @@ export default async function UserGestionLayout({
     <>
       <HeaderPage
         title={`Gestón de Usuario: ${userEmail}`}
-        description="Administre la informacón de acceso y el perfil personal asociado."
+        description="Administre la información de acceso y el perfil personal asociado."
         breadcrumb={[
           { label: "Usuarios", href: `/admin/users` },
           { label: "Gestón" },

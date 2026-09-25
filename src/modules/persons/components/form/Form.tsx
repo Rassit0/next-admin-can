@@ -234,7 +234,7 @@ export const FormPerson = ({
           .join("\n"); // Los separamos por saltos de línea para el toast
       }
 
-      // 2. Pasamos la descripcón formateada al componente de notificaciones
+      // 2. Pasamos la descripción formateada al componente de notificaciones
       toast.error(res.message, {
         description: errorDescription,
       });
@@ -260,7 +260,7 @@ export const FormPerson = ({
       >
         {/* <!-- Basic Information: Bento Layout --> */}
         <div className="flex flex-col gap-8 w-full">
-          {/* Seccón de Foto (Compacta pero llamativa) */}
+          {/* Sección de Foto (Compacta pero llamativa) */}
           <div className="flex flex-col sm:flex-row items-center gap-6 bg-surface-container-low p-6 rounded-2xl border border-outline-variant/30">
             <div className="relative group shrink-0">
               <input
@@ -298,7 +298,7 @@ export const FormPerson = ({
                 Foto de Perfil
               </h3>
               <p className="text-sm text-on-surface-variant">
-                Sube una foto profesional para la identificacón institucional.
+                Sube una foto profesional para la identificación institucional.
                 Tamaño máximo: 5 MB.
               </p>
             </div>
@@ -309,7 +309,7 @@ export const FormPerson = ({
             <div className="flex items-center gap-2">
               <div className="w-1.5 h-6 bg-primary rounded-full"></div>
               <h2 className="font-headline text-xl font-bold">
-                Informacón Básica
+                Información Básica
               </h2>
             </div>
 

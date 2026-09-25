@@ -41,7 +41,7 @@ export default async function EditCourseSeasonPage({ params }: Props) {
     <>
       <HeaderPage
         title={`Crear Oferta de Temporada - ${courseResponse.data.name}`}
-        description="Formulario para la creacón de una nueva oferta de temporada."
+        description="Formulario para la creación de una nueva oferta de temporada."
         action={
           <ButtonsSubmit
             cancelHref={`/admin/courses/${disciplineId}/${schoolId}/${courseId}/course-seasons`}

@@ -10,7 +10,7 @@ export const navLinks: NavLinkDef[] = [
     href: "/institution",
     label: "El Club",
     subLinks: [
-      { href: "/institution/information", label: "Informacón" },
+      { href: "/institution/information", label: "Información" },
       { href: "/institution/history", label: "Historia" },
       { href: "/institution/beginning", label: "Principios" },
     ],

@@ -113,7 +113,7 @@ export const useOfflineGame = () => {
         height: obs.height,
       };
 
-      // Deteccón AABB
+      // Detección AABB
       if (
         playerRect.x < obsRect.x + obsRect.width &&
         playerRect.x + playerRect.width > obsRect.x &&
@@ -123,7 +123,7 @@ export const useOfflineGame = () => {
         collision = true;
       }
 
-      // Puntuacón
+      // Puntuación
       if (!obs.passed && obs.x + obs.width < playerRect.x) {
         obs.passed = true;
         scoreRef.current += 10;

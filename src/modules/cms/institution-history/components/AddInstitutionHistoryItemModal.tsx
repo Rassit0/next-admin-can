@@ -113,11 +113,11 @@ export const AddInstitutionHistoryItemModal = ({
 
                 <TextField name="title" isRequired>
                   <Label>Título</Label>
-                  <Input placeholder="Ej. Fundacón del Club" />
+                  <Input placeholder="Ej. Fundación del Club" />
                 </TextField>
 
                 <TextField name="description" isRequired>
-                  <Label>Descripcón</Label>
+                  <Label>Descripción</Label>
                   <TextArea placeholder="Detalles del hito..." />
                 </TextField>
 

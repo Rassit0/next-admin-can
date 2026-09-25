@@ -195,7 +195,7 @@ export const FormTeamSeason = ({
         newErrors.recurringFee = "Debe ingresar el valor de la cuota mensual";
       }
       if (!registrationFee) {
-        newErrors.registrationFee = "Debe ingresar el valor de la inscripcón";
+        newErrors.registrationFee = "Debe ingresar el valor de la inscripción";
       }
     }
     if (
@@ -219,11 +219,11 @@ export const FormTeamSeason = ({
     if (billingType !== "SINGLE_ONLY") {
       if (!billingFrequency) {
         newErrors.billingFrequency =
-          "Debe ingresar la frecuencia de facturacón";
+          "Debe ingresar la frecuencia de facturación";
       }
 
       if (billingDay === null) {
-        newErrors.billingDay = "Debe ingresar el día de facturacón";
+        newErrors.billingDay = "Debe ingresar el día de facturación";
       } else {
         if (
           billingFrequency === "MONTHLY" &&
@@ -239,8 +239,7 @@ export const FormTeamSeason = ({
           billingFrequency === "BIWEEKLY" &&
           (billingDay < 1 || billingDay > 14)
         ) {
-          newErrors.billingDay =
-            "Para quincenal, el día debe ser entre 1 y 14";
+          newErrors.billingDay = "Para quincenal, el día debe ser entre 1 y 14";
         }
       }
     }
@@ -329,7 +328,7 @@ export const FormTeamSeason = ({
     };
 
     if (teamSeason) {
-      // Modo edicón
+      // Modo edición
       const { teamId, seasonId, ...restBaseData } = baseData;
       const baseEditData = {
         ...restBaseData,
@@ -385,7 +384,7 @@ export const FormTeamSeason = ({
           .join("\n"); // Los separamos por saltos de línea para el toast
       }
 
-      // 2. Pasamos la descripcón formateada al componente de notificaciones
+      // 2. Pasamos la descripción formateada al componente de notificaciones
       toast.danger(res.message, {
         description: errorDescription,
       });
@@ -413,14 +412,14 @@ export const FormTeamSeason = ({
               <Alert.Indicator />
               <Alert.Content>
                 <Alert.Title>
-                  Modo de Edicón Restringido (Temporada Activa)
+                  Modo de Edición Restringido (Temporada Activa)
                 </Alert.Title>
                 <Alert.Description>
                   Esta temporada se encuentra actualmente{" "}
                   <strong>Activa</strong>. Por seguridad e integridad de los
                   registros financieros y de membresías, los datos estructurales
-                  (Categoría, Temporada, Género) y la configuracón base de
-                  facturacón están <strong>bloqueados</strong>. <br />
+                  (Categoría, Temporada, Género) y la configuración base de
+                  facturación están <strong>bloqueados</strong>. <br />
                   Aún puedes ajustar los <strong>montos de cobro</strong>{" "}
                   (Matrícula, Cuotas), cupos y límites de edades, pero estos
                   cambios afectarán{" "}
@@ -430,7 +429,7 @@ export const FormTeamSeason = ({
             </Alert>
           </div>
         )}
-        {/* <!-- Section 1: Informacón Básica --> */}
+        {/* <!-- Section 1: Información Básica --> */}
         <div className="lg:col-span-7 space-y-6">
           {/* <!-- Basic Info Card --> */}
           <BasicInfoCard

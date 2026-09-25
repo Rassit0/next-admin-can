@@ -6,7 +6,7 @@ import { getPublicInstitutionHistory } from "@/modules/portal/institutions/actio
 import { resolvePageData } from "@/utils/resolvePageData";
 
 export const metadata = {
-  title: "Nuestra Historia e Institucón | Club Atlético Nacional",
+  title: "Nuestra Historia e Institución | Club Atlético Nacional",
   description:
     "Conoce la historia, valores y trayectoria del Club Atlético Nacional.",
   openGraph: {

@@ -3,7 +3,7 @@ import {
   VolleyballIcon,
   BasketballIcon,
   FootballIcon, // itil para Futsal
-  BookOpenIcon, // itil para Cursos/Educacón
+  BookOpenIcon, // itil para Cursos/Educación
   ActivityIcon, // El genérico por defecto
   TennisBallIcon,
   TennisRacketIcon,

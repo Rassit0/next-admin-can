@@ -175,7 +175,7 @@ export const Person360EnrollStudentDrawer = ({
             <Drawer.CloseTrigger />
             <Drawer.Header className="border-b border-border">
               <Drawer.Heading slot="title" className="text-lg font-bold">
-                Inscripcón de Estudiante
+                Inscripción de Estudiante
               </Drawer.Heading>
               <p className="mt-1 text-xs text-muted">
                 Selecciona la disciplina y el curso para inscribir a la persona.

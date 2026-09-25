@@ -106,7 +106,7 @@ export default async function StudentMembershipInfoPage({
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground mb-1">
-                  Participacón
+                  Participación
                 </p>
                 <ParticipationChip membership={membership} />
               </div>

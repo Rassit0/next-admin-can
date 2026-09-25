@@ -32,7 +32,7 @@ export const deleteDiscipline = async ({
       return {
         error: true,
         message: error.message,
-        errors: error.errors, // Aquí vienen los errores de validacón (ej: campos requeridos)
+        errors: error.errors, // Aquí vienen los errores de validación (ej: campos requeridos)
         statusCode: error.statusCode,
       };
     }

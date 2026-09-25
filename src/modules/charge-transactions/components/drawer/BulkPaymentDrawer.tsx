@@ -153,7 +153,7 @@ export const BulkPaymentDrawer = ({
           Number(Number(charge.pendingAmount).toFixed(2))
         ) {
           newErrors[`charge_${charge.id}`] =
-            "La suma de la distribucón no coincide con el saldo del cargo.";
+            "La suma de la distribución no coincide con el saldo del cargo.";
         }
         const hasInvalidMethod = splits.some(
           (s) =>
@@ -161,7 +161,7 @@ export const BulkPaymentDrawer = ({
         );
         if (hasInvalidMethod) {
           newErrors[`charge_${charge.id}`] =
-            "La distribucón tiene cuentas, métodos o montos inválidos.";
+            "La distribución tiene cuentas, métodos o montos inválidos.";
         }
       }
     }
@@ -270,10 +270,10 @@ export const BulkPaymentDrawer = ({
                   </div>
                 )}
 
-                {/* Seleccón Global Default */}
+                {/* Selección Global Default */}
                 <div className="flex flex-col gap-4">
                   <h3 className="text-sm font-semibold flex items-center gap-2 border-b border-default-200 pb-2">
-                    Distribucón por Defecto
+                    Distribución por Defecto
                   </h3>
 
                   {/* Cuenta Financiera */}
@@ -370,14 +370,14 @@ export const BulkPaymentDrawer = ({
                         <span className="text-danger ml-1">*</span>
                       )} */}
                     </Label>
-                    <Input placeholder="Ej. Número de operacón" />
+                    <Input placeholder="Ej. Número de operación" />
                     {errors.reference && (
                       <FieldError>{errors.reference}</FieldError>
                     )}
                   </TextField>
                 </div>
 
-                {/* Resumen de Cargos y Personalizacón */}
+                {/* Resumen de Cargos y Personalización */}
                 <Card className="border border-outline-variant/30 shadow-none bg-surface-container-low mb-2">
                   <div className="p-4 flex flex-col gap-2">
                     <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
@@ -506,7 +506,7 @@ export const BulkPaymentDrawer = ({
                                       setExpandedChargeId(null);
                                     }}
                                   >
-                                    Quitar personalizacón (Usar Default)
+                                    Quitar personalización (Usar Default)
                                   </Button>
                                 )}
                               </div>

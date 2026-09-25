@@ -247,9 +247,7 @@ export const AccountChargeDrawer = ({
           </Drawer.Header>
           <Drawer.Body className="gap-6 pt-6 pb-6">
             <TextField className="w-full" isRequired>
-              <Label className="text-sm font-semibold">
-                Título / Concepto
-              </Label>
+              <Label className="text-sm font-semibold">Título / Concepto</Label>
               <Input
                 placeholder={`Ej. ${isReceivable ? "Cobro por alquiler" : "Pago de servicio eléctrico"}`}
                 value={title}
@@ -488,7 +486,7 @@ export const AccountChargeDrawer = ({
             )}
 
             <TextField className="w-full">
-              <Label className="text-sm font-semibold">Descripcón</Label>
+              <Label className="text-sm font-semibold">Descripción</Label>
               <TextArea
                 placeholder="Detalles adicionales sobre este registro"
                 value={description}

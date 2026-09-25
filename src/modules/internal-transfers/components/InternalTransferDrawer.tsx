@@ -247,7 +247,7 @@ export const InternalTransferDrawer = ({
               </DatePicker>
 
               <TextField className="w-full" name="description" type="text">
-                <Label>Descripcón</Label>
+                <Label>Descripción</Label>
                 <Input
                   variant="secondary"
                   value={description}

@@ -200,7 +200,7 @@ export const SessionFormModal = ({
 
   const handleSubmit = async () => {
     if (!startDate || !startTime || !durationMin) {
-      toast.error("Fechas y duracón requeridas");
+      toast.error("Fechas y duración requeridas");
       return;
     }
 
@@ -303,16 +303,11 @@ export const SessionFormModal = ({
                         setUpdateScope(k as "single" | "following" | "all")
                       }
                     >
-                      <Label className="text-sm">
-                        ¿Qué deseas modificar?
-                      </Label>
+                      <Label className="text-sm">¿Qué deseas modificar?</Label>
                       <Select.Trigger />
                       <Select.Popover>
                         <ListBox>
-                          <ListBox.Item
-                            id="single"
-                            textValue="Solo esta sesón"
-                          >
+                          <ListBox.Item id="single" textValue="Solo esta sesón">
                             Solo esta sesón
                           </ListBox.Item>
                           <ListBox.Item
@@ -356,7 +351,7 @@ export const SessionFormModal = ({
                   </TextField>
                   <TextField>
                     <Label className="font-semibold text-sm">
-                      Duracón (min) *
+                      Duración (min) *
                     </Label>
                     <Input
                       type="number"
@@ -375,7 +370,7 @@ export const SessionFormModal = ({
                   onSelectionChange={(k) => setLocationId(k ? String(k) : "")}
                   isDisabled={loadingData}
                 >
-                  <Label className="font-semibold text-sm">Ubicacón</Label>
+                  <Label className="font-semibold text-sm">Ubicación</Label>
                   <Select.Trigger />
                   <Select.Popover>
                     <ListBox
@@ -475,7 +470,7 @@ export const SessionFormModal = ({
                           className="flex flex-row flex-wrap gap-2"
                         >
                           <Label className="text-sm font-semibold w-full">
-                            Dí­as de repeticón
+                            Dí­as de repetición
                           </Label>
                           <Checkbox value="MO">Lun</Checkbox>
                           <Checkbox value="TU">Mar</Checkbox>

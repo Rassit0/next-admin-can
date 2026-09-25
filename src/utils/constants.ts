@@ -140,7 +140,7 @@ export const PERMISSIONS = [
     ],
   },
   {
-    name: "Devolucón",
+    name: "Devolución",
     permissions: [
       {
         name: "Disponible",

@@ -58,7 +58,7 @@ export const DeleteContactModal = ({
               <strong>
                 {contact?.contactPerson.name} {contact?.contactPerson.lastName}
               </strong>{" "}
-              de los contactos? Esta accón no se puede deshacer.
+              de los contactos? Esta acción no se puede deshacer.
             </p>
           </AlertDialog.Body>
           <AlertDialog.Footer>

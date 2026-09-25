@@ -51,7 +51,7 @@ export default async function ReportsPage({
             </div>
             <p className="text-sm text-default-500">
               Reporte contable gerencial en Excel. Resumen de flujos,
-              distribucón contable y sábana detallada para reconciliacón.
+              distribución contable y sábana detallada para reconciliación.
             </p>
           </div>
           <div className="h-px bg-default-200 w-full" />
@@ -68,16 +68,14 @@ export default async function ReportsPage({
               <p className="text-md font-bold">Informe de Arqueos de Caja</p>
             </div>
             <p className="text-sm text-default-500">
-              Auditoría financiera de tesorería. Historial de cierres,
-              sobrantes y faltantes agrupados por caja física.
+              Auditoría financiera de tesorería. Historial de cierres, sobrantes
+              y faltantes agrupados por caja física.
             </p>
           </div>
           <div className="h-px bg-default-200 w-full" />
           <div className="flex-1 space-y-4 p-6">
             <div className="space-y-2">
-              <label className="text-sm font-medium">
-                Período de análisis
-              </label>
+              <label className="text-sm font-medium">Período de análisis</label>
               <DateRangeFilter
                 startKey="closures_start"
                 endKey="closures_end"
@@ -103,15 +101,13 @@ export default async function ReportsPage({
             </div>
             <p className="text-sm text-default-500">
               Desglose de ingresos por grupos concepto (Escuelas, Equipos),
-              detallando recibos y distribucón en cuentas financieras.
+              detallando recibos y distribución en cuentas financieras.
             </p>
           </div>
           <div className="h-px bg-default-200 w-full" />
           <div className="flex-1 space-y-4 p-6">
             <div className="space-y-2">
-              <label className="text-sm font-medium">
-                Período de análisis
-              </label>
+              <label className="text-sm font-medium">Período de análisis</label>
               <DateRangeFilter
                 startKey="detailed_start"
                 endKey="detailed_end"

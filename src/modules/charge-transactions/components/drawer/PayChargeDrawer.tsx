@@ -187,7 +187,7 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
 
         console.log("PAYMENT RESPONSE DATA:", res.data);
 
-        // Mostrar diálogo de impresón con el ID de la transaccón creada
+        // Mostrar diálogo de impresón con el ID de la transacción creada
         if (res.data?.transaction?.id) {
           setPrintTransactionId(res.data.transaction.id);
           setShowPrintDialog(true);
@@ -347,7 +347,7 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
                     value={transactionDate}
                     onChange={setTransactionDate}
                   >
-                    <Label>Fecha de Recepcón (Comprobante)</Label>
+                    <Label>Fecha de Recepción (Comprobante)</Label>
                     <DateField.Group fullWidth>
                       <DateField.Input>
                         {(segment) => <DateField.Segment segment={segment} />}

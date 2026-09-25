@@ -205,7 +205,7 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
     }
 
     if (action !== "remove" && action !== "activate" && !reason?.trim()) {
-      toast.error("El motivo es obligatorio para esta accón");
+      toast.error("El motivo es obligatorio para esta acción");
       setLoading(false);
       return;
     }
@@ -321,7 +321,7 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
               </AlertDialog.Header>
               <AlertDialog.Body className="gap-4 p-2">
                 <p>
-                  ¿Estás seguro de que deseas ejecutar la accón{" "}
+                  ¿Estás seguro de que deseas ejecutar la acción{" "}
                   <strong>{selectedAction?.label.toLowerCase()}</strong> para
                   esta membresí­a?
                 </p>
@@ -508,7 +508,7 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
                       isRequired={selectedAction?.key !== "activate"}
                     >
                       <Label className="text-sm font-semibold">
-                        Motivo u Observacón{" "}
+                        Motivo u Observación{" "}
                         {selectedAction?.key === "activate" && "(Opcional)"}
                       </Label>
                       <InputGroup>

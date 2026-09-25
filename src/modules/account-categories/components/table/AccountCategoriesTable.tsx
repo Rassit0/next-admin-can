@@ -32,7 +32,7 @@ export const AccountCategoriesTable = ({
               <SortableColumnHeader id="code">Código</SortableColumnHeader>
             </Table.Column>
             <Table.Column allowsSorting id="description">
-              Descripcón
+              Descripción
             </Table.Column>
             <Table.Column allowsSorting id="type">
               <SortableColumnHeader id="type">Tipo</SortableColumnHeader>

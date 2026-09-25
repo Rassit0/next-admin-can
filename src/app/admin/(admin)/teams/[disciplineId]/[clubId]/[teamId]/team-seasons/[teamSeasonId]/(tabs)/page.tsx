@@ -196,7 +196,7 @@ export default async function TeamSeasonDashboardPage({ params }: Props) {
           <div className="col-span-full">
             <p className="text-xs text-muted-foreground mb-2 uppercase font-semibold flex items-center">
               Opciones de Prorrateo Activas
-              <InfoTooltip text="Si el jugador ingresa tarde (después de la fecha de inicio del ciclo), el sistema cobrará la fraccón correspondiente matemáticamente a los dí­as activos de las opciones que veas aquí­ marcadas." />
+              <InfoTooltip text="Si el jugador ingresa tarde (después de la fecha de inicio del ciclo), el sistema cobrará la fracción correspondiente matemáticamente a los dí­as activos de las opciones que veas aquí­ marcadas." />
             </p>
             <div className="flex flex-wrap gap-2">
               {teamSeason.billingConfig?.prorateRegistrationFee && (

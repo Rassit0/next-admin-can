@@ -58,15 +58,15 @@ export const InstitutionHistorySettingsForm = ({
 
       const res = await updateInstitutionHistorySettingsAction(form);
       if (res.error) {
-        toast.error(res.message || "Error al actualizar la configuracón");
+        toast.error(res.message || "Error al actualizar la configuración");
       } else {
-        toast.success(res.message || "Configuracón actualizada correctamente");
+        toast.success(res.message || "Configuración actualizada correctamente");
         setFiles([]);
         setRemoveImage(false);
       }
     } catch (error) {
       console.error(error);
-      toast.error("Ocurró un error inesperado al guardar la configuracón");
+      toast.error("Ocurró un error inesperado al guardar la configuración");
     } finally {
       setLoading(false);
     }
@@ -85,8 +85,8 @@ export const InstitutionHistorySettingsForm = ({
       </TextField>
 
       <TextField name="description" defaultValue={defaultValues.description}>
-        <Label>Descripcón (Texto corto)</Label>
-        <TextArea placeholder="Breve introduccón histórica..." />
+        <Label>Descripción (Texto corto)</Label>
+        <TextArea placeholder="Breve introducción histórica..." />
       </TextField>
 
       <div className="mt-2 space-y-2">
@@ -140,7 +140,7 @@ export const InstitutionHistorySettingsForm = ({
           isPending={loading}
           className="mt-4 text-primary-foreground"
         >
-          Guardar Configuracón
+          Guardar Configuración
         </Button>
       )}
     </form>

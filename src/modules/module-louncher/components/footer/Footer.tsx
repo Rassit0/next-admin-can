@@ -16,7 +16,7 @@ export const Footer = () => {
           Privacidad
         </a>
         <a className="hover:text-primary transition-colors" href="#">
-          Documentacón
+          Documentación
         </a>
       </div>
     </footer>

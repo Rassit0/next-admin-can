@@ -71,7 +71,7 @@ export const AdvanceChargesDrawer = ({
         }
       }
     } catch (error) {
-      setPreviewError("Ocurró un error al obtener la previsualizacón.");
+      setPreviewError("Ocurró un error al obtener la previsualización.");
       setPreviewData(null);
     } finally {
       setIsLoadingPreview(false);
@@ -155,7 +155,7 @@ export const AdvanceChargesDrawer = ({
                     .
                   </p>
                   <p className="text-xs text-muted mt-2">
-                    Esta accón creará los cargos en el sistema y no se puede
+                    Esta acción creará los cargos en el sistema y no se puede
                     deshacer automáticamente.
                   </p>
                 </div>
@@ -184,7 +184,7 @@ export const AdvanceChargesDrawer = ({
 
                 <div className="flex flex-col gap-3">
                   <h4 className="text-sm font-semibold text-foreground border-b border-border pb-2">
-                    Previsualizacón
+                    Previsualización
                   </h4>
 
                   {isLoadingPreview ? (
@@ -258,7 +258,7 @@ export const AdvanceChargesDrawer = ({
                     </div>
                   ) : (
                     <p className="text-sm text-muted text-center py-4">
-                      Ingresa una cantidad para ver la previsualizacón.
+                      Ingresa una cantidad para ver la previsualización.
                     </p>
                   )}
                 </div>

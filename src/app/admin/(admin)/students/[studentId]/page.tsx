@@ -36,7 +36,7 @@ export default async function StudentPage({ params }: Props) {
         <Tabs.ListContainer>
           <Tabs.List aria-label="Info General">
             <Tabs.Tab id="info-general" className="py-6 md:py-2">
-              Informacón General
+              Información General
               <Tabs.Indicator />
             </Tabs.Tab>
             <Tabs.Tab id="contact-info" className="py-6 md:py-2">
@@ -44,7 +44,7 @@ export default async function StudentPage({ params }: Props) {
               <Tabs.Indicator />
             </Tabs.Tab>
             <Tabs.Tab id="medical-info" className="py-6 md:py-2">
-              Informacón Médica
+              Información Médica
               <Tabs.Indicator />
             </Tabs.Tab>
             <Tabs.Tab id="memberships" className="py-6 md:py-2">
@@ -63,10 +63,10 @@ export default async function StudentPage({ params }: Props) {
           </div>
         </Tabs.Panel>
         <Tabs.Panel className="pt-4" id="contact-info">
-          <p>Informacón de Contacto.</p>
+          <p>Información de Contacto.</p>
         </Tabs.Panel>
         <Tabs.Panel className="pt-4" id="medical-info">
-          <p>Informacón Médica.</p>
+          <p>Información Médica.</p>
         </Tabs.Panel>
         <Tabs.Panel className="pt-4" id="memberships">
           <p>Membresías.</p>

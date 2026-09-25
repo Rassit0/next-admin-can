@@ -56,7 +56,7 @@ export default async function QuickOperationsLayout({ children }: LayoutProps) {
             actions={
               <Link href="/admin/dashboard">
                 <Button variant="outline" size="sm">
-                  Administracón
+                  Administración
                 </Button>
               </Link>
             }

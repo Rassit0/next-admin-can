@@ -119,7 +119,7 @@ export class CANApiAdapter implements HttpAdapter {
     data: FormData | Record<string, any>,
     options?: RequestInit,
   ): Promise<T> {
-    // console.log("URL de peticón:", `${this.baseUrl}${endpoint}`);
+    // console.log("URL de petición:", `${this.baseUrl}${endpoint}`);
     const isFormData = data instanceof FormData;
     return this.request<T>(endpoint, {
       method: "POST",

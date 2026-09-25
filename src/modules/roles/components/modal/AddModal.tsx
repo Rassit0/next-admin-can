@@ -105,7 +105,7 @@ export const AddModal: React.FC<Props> = ({ permissions }) => {
                     />
                   </TextField>
                   <TextField className="w-full" variant="secondary">
-                    <Label>Descripcón</Label>
+                    <Label>Descripción</Label>
                     <TextArea
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}

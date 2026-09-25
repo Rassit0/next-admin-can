@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import { Skeleton } from "@heroui/react";
 
-// Deshabilita SSR para evitar problemas de rehidratacón o conflictos
+// Deshabilita SSR para evitar problemas de rehidratación o conflictos
 // con los constructores de clases internas de FullCalendar en Next.js (ej. DayTableView)
 export const CalendarWrapper = dynamic(
   () => import("./calendar-view").then((mod) => mod.CalendarView),

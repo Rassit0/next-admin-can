@@ -18,7 +18,7 @@ export const ContactRelationshipLabels: Record<ContactRelationship, string> = {
   [ContactRelationship.MOTHER]: "Madre",
   [ContactRelationship.BROTHER]: "Hermano",
   [ContactRelationship.SISTER]: "Hermana",
-  [ContactRelationship.SPOUSE]: "Cónyuge",
+  [ContactRelationship.SPOUSE]: "ciónyuge",
   [ContactRelationship.PARTNER]: "Pareja",
   [ContactRelationship.UNCLE]: "Tío",
   [ContactRelationship.AUNT]: "Tía",

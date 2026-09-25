@@ -73,8 +73,8 @@ export const calculateInitialCharges = (
   const lines: ChargeLine[] = [
     {
       key: "registration",
-      label: "Matrícula de inscripcón",
-      description: "Cargo único al momento de la inscripcón",
+      label: "Matrícula de inscripción",
+      description: "Cargo único al momento de la inscripción",
       gross: registrationGross,
       discountPercent: registrationDiscountPercent,
       adjustmentAmount: -registrationDiscount,

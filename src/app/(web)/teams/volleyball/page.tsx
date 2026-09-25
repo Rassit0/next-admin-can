@@ -6,12 +6,12 @@ export default function VolleyballPage() {
           Equipo de <span className="text-neon text-glow-neon">Voleibol</span>
         </h1>
         <p className="mt-4 text-muted-foreground mx-auto max-w-2xl text-lg uppercase tracking-widest font-600">
-          En Construccón
+          En Construcción
         </p>
       </div>
       <div className="flex min-h-[40vh] items-center justify-center rounded-3xl border border-neon/30 bg-primary/90 px-8 py-16 shadow-2xl">
         <p className="text-slate-300 text-xl font-300 text-center">
-          Próximamente encontrarás aquí toda la informacón sobre nuestros
+          Próximamente encontrarás aquí toda la información sobre nuestros
           equipos, torneos y entrenamientos de voleibol.
         </p>
       </div>

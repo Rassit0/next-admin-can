@@ -39,7 +39,7 @@ export function Escuelas({
       <div className="mb-8">
         <h1 className="font-heading text-5xl font-700 uppercase tracking-tight text-primary sm:text-6xl">
           Escuelas de{" "}
-          <span className="text-neon text-glow-neon">Formacón</span>
+          <span className="text-neon text-glow-neon">Formación</span>
         </h1>
         <p className="mt-3 max-w-xl text-muted-foreground text-pretty">
           Ingresá la edad del deportista y encontraremos al instante los cursos

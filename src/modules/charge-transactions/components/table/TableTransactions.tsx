@@ -60,14 +60,14 @@ export const TableTransactions = ({ transactions, onChange }: Props) => {
             account: t.financialAccountName || "Sin asignar",
             amount: t.amount,
           });
-          // Fix: Si alguna transaccón del grupo sigue completada, el recibo entero sigue activo
+          // Fix: Si alguna transacción del grupo sigue completada, el recibo entero sigue activo
           if (t.status === "COMPLETED") {
             group.status = "COMPLETED";
           }
         } else {
           const newGroup: ITransaction = {
             ...t,
-            _isGrouped: false, // Inicialmente falso, es una transaccón normal
+            _isGrouped: false, // Inicialmente falso, es una transacción normal
             _groupedDetails: [
               {
                 method: t.paymentMethod,
@@ -430,7 +430,7 @@ export const TableTransactions = ({ transactions, onChange }: Props) => {
                     <div className="relative flex justify-center items-center gap-2">
                       <Dropdown>
                         <Button
-                          aria-label="Acciones de transaccón"
+                          aria-label="Acciones de transacción"
                           isIconOnly
                           size="sm"
                           variant="ghost"
@@ -439,7 +439,7 @@ export const TableTransactions = ({ transactions, onChange }: Props) => {
                         </Button>
                         <Dropdown.Popover>
                           <Dropdown.Menu
-                            aria-label="Acciones de Transaccón"
+                            aria-label="Acciones de Transacción"
                             onAction={(key) => {
                               if (key === "print") {
                                 setPrintPaymentIds([]);
@@ -495,7 +495,7 @@ export const TableTransactions = ({ transactions, onChange }: Props) => {
             </AlertDialog.Header>
             <AlertDialog.Body>
               <p>
-                ¿Estás seguro de que deseas anular esta transaccón? El monto
+                ¿Estás seguro de que deseas anular esta transacción? El monto
                 será devuelto al saldo pendiente de la cuota.
               </p>
             </AlertDialog.Body>
@@ -515,7 +515,7 @@ export const TableTransactions = ({ transactions, onChange }: Props) => {
                 onPress={handleConfirmVoid}
               >
                 {isLoading && <Spinner color="current" />}
-                Anular Transaccón
+                Anular Transacción
               </Button>
             </AlertDialog.Footer>
           </AlertDialog.Dialog>

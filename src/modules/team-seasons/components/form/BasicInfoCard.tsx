@@ -33,7 +33,7 @@ export const BasicInfoCard = ({
           <HugeiconsIcon icon={Calendar04Icon} className="text-accent" />
         </div>
         <Card.Title className="font-headline font-bold text-lg">
-          Informacón Básica
+          Información Básica
         </Card.Title>
       </Card.Header>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -52,10 +52,10 @@ export const BasicInfoCard = ({
           name="description"
           isInvalid={!!errors.description || undefined}
         >
-          <Label>Descripcón</Label>
+          <Label>Descripción</Label>
           <TextArea
             variant="secondary"
-            placeholder="Ingrese la descripcón de la oferta"
+            placeholder="Ingrese la descripción de la oferta"
             rows={4}
             value={description || ""}
             onChange={(e) => {

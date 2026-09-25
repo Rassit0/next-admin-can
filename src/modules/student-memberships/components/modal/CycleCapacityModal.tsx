@@ -102,7 +102,7 @@ export const CycleCapacityModal = ({ courseSeasonId }: Props) => {
               </Modal.Icon>
               <Modal.Heading>Capacidad por Ciclo</Modal.Heading>
               <p className="mt-1.5 text-sm leading-5 text-muted">
-                Visualizacón general de cupos ocupados y disponibles por turno.
+                Visualización general de cupos ocupados y disponibles por turno.
               </p>
             </Modal.Header>
             <Modal.Body className="p-0 md:p-6 overflow-y-auto">

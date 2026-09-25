@@ -142,16 +142,14 @@ export default async function AdminHomeDashboard() {
             </div>
             <div>
               <h3 className="text-lg font-bold">Promo 1</h3>
-              <p className="text-sm text-default-500">Promocón posicón 1</p>
+              <p className="text-sm text-default-500">Promoción posición 1</p>
             </div>
           </div>
           <div className="py-2">
             <p className="text-sm">
               Estado:{" "}
               <span className="font-semibold">
-                {activePromo1 > 0
-                  ? "Configurado (Activo)"
-                  : "Vacío o Inactivo"}
+                {activePromo1 > 0 ? "Configurado (Activo)" : "Vacío o Inactivo"}
               </span>
             </p>
           </div>
@@ -235,16 +233,14 @@ export default async function AdminHomeDashboard() {
             </div>
             <div>
               <h3 className="text-lg font-bold">Promo 2</h3>
-              <p className="text-sm text-default-500">Promocón posicón 2</p>
+              <p className="text-sm text-default-500">Promoción posición 2</p>
             </div>
           </div>
           <div className="py-2">
             <p className="text-sm">
               Estado:{" "}
               <span className="font-semibold">
-                {activePromo2 > 0
-                  ? "Configurado (Activo)"
-                  : "Vacío o Inactivo"}
+                {activePromo2 > 0 ? "Configurado (Activo)" : "Vacío o Inactivo"}
               </span>
             </p>
           </div>

@@ -156,8 +156,8 @@ export const NewsCategoryForm = ({
         >
           <Label>
             <span className="flex items-center gap-2">
-              Orden de Visualizacón
-              <InfoTooltip text="Define el orden de aparicón visual. Valores menores (ej: 0, 1) aparecerán primero en la lista." />
+              Orden de Visualización
+              <InfoTooltip text="Define el orden de aparición visual. Valores menores (ej: 0, 1) aparecerán primero en la lista." />
             </span>
           </Label>
           <Input

@@ -48,7 +48,7 @@ export default async function AccountsReceivablePage({
         <Card className="shadow-[0px_4px_12px_rgba(0,0,0,0.06)] border border-border">
           <HeaderPage
             title="Listado de Cuentas por Cobrar"
-            description="Gestiona las cuentas administrativas a favor de la institucón."
+            description="Gestiona las cuentas administrativas a favor de la institución."
             showButtonBack={false}
             action={<CreateChargeButton direction="RECEIVABLE" />}
           />

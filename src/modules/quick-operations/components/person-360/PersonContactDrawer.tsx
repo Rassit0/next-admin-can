@@ -83,7 +83,7 @@ export const PersonContactDrawer = ({
       return;
     }
     if (!relationship) {
-      toast.error("Debe seleccionar la relacón");
+      toast.error("Debe seleccionar la relación");
       return;
     }
 
@@ -173,11 +173,11 @@ export const PersonContactDrawer = ({
               }}
               isRequired
             >
-              <Label className="text-sm font-semibold">Relacón</Label>
+              <Label className="text-sm font-semibold">Relación</Label>
               <ComboBox.InputGroup>
                 <Input
                   variant="secondary"
-                  placeholder="Seleccione la relacón"
+                  placeholder="Seleccione la relación"
                 />
                 <ComboBox.Trigger />
               </ComboBox.InputGroup>
@@ -215,7 +215,7 @@ export const PersonContactDrawer = ({
               >
                 <div className="flex flex-col">
                   <span className="font-medium text-sm">
-                    Contacto de Facturacón
+                    Contacto de Facturación
                   </span>
                   <span className="text-xs text-default-500">
                     Recibe notificaciones sobre estados de cuenta y

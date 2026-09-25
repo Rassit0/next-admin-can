@@ -25,7 +25,7 @@ export const TableHeroBanners = ({ heroBanners }: Props) => {
               <th className="px-4 py-3 rounded-l-xl w-32">Imagen 16:9</th>
               <th className="px-4 py-3 min-w-50">Título</th>
               <th className="px-4 py-3">CTA</th>
-              <th className="px-4 py-3">Redireccón</th>
+              <th className="px-4 py-3">Redirección</th>
               <th className="px-4 py-3">Orden</th>
               <th className="px-4 py-3 text-center">Estado</th>
               <th className="px-4 py-3 rounded-r-xl w-16">Acciones</th>

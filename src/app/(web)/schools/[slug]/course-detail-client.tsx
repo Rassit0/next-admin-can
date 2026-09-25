@@ -228,7 +228,7 @@ export function CourseDetailClient({ course }: CourseDetailClientProps) {
         isOpen={contactOpen}
         onClose={() => setContactOpen(false)}
         title="Consultar Disponibilidad"
-        message={`Te ayudaremos con la inscripcón al curso de ${course.name}. Contáctanos para conocer los detalles y disponibilidad.`}
+        message={`Te ayudaremos con la inscripción al curso de ${course.name}. Contáctanos para conocer los detalles y disponibilidad.`}
       />
     </div>
   );

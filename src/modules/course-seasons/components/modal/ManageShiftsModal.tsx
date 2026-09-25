@@ -146,7 +146,7 @@ export const ManageShiftsModal = ({ courseSeason, urlBase }: Props) => {
               </Modal.Icon>
               <Modal.Heading>Agregar Turno Adicional</Modal.Heading>
               <p className="mt-1.5 text-sm leading-5 text-muted">
-                Agrega una nueva opcón logística (horario) para esta oferta.
+                Agrega una nueva opción logística (horario) para esta oferta.
               </p>
             </Modal.Header>
             <Modal.Body className="p-0 md:p-6">

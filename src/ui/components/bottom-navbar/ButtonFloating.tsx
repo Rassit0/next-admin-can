@@ -60,7 +60,7 @@ export const ButtonFloating = ({ className, icon, onPress, text }: Props) => {
       return;
     }
 
-    // C. Prioridad 3: Lógica de direccón (Solo si estamos en el medio)
+    // C. Prioridad 3: Lógica de dirección (Solo si estamos en el medio)
     if (direction > 0) {
       setHidden(true); // Bajando -> Ocultar/Mover abajo
     } else {

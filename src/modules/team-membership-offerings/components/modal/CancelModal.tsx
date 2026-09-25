@@ -31,7 +31,7 @@ export const CancelModal = ({ isOpen, onOpenChange, teamSeason }: Props) => {
   const [statusNotes, setStatusNotes] = useState("");
   const handleFinalize = async () => {
     if (!statusNotes) {
-      toast.danger("Debe ingresar un motivo de cancelacón");
+      toast.danger("Debe ingresar un motivo de cancelación");
       return;
     }
     setIsLoading(true);
@@ -52,7 +52,7 @@ export const CancelModal = ({ isOpen, onOpenChange, teamSeason }: Props) => {
           .join("\n"); // Los separamos por saltos de lí­nea para el toast
       }
 
-      // 2. Pasamos la descripcón formateada al componente de notificaciones
+      // 2. Pasamos la descripción formateada al componente de notificaciones
       toast.danger(res.message, {
         description: errorDescription,
       });
@@ -81,7 +81,7 @@ export const CancelModal = ({ isOpen, onOpenChange, teamSeason }: Props) => {
             <AlertDialog.Heading className="flex flex-col">
               <span>Cancelar Temporada</span>
               <span className="text-muted">
-                Estás por cancelar el ciclo de {teamSeason.name}: Esta accón es
+                Estás por cancelar el ciclo de {teamSeason.name}: Esta acción es
                 irreversible
               </span>
             </AlertDialog.Heading>
@@ -125,10 +125,10 @@ export const CancelModal = ({ isOpen, onOpenChange, teamSeason }: Props) => {
               value={statusNotes}
               onChange={setStatusNotes}
             >
-              <Label>Motivo de Cancelacón</Label>
-              <TextArea placeholder="Describe brevemente los motivos de la cancelacón..." />
+              <Label>Motivo de Cancelación</Label>
+              <TextArea placeholder="Describe brevemente los motivos de la cancelación..." />
               <FieldError>
-                {!statusNotes && "Debe ingresar un motivo de cancelacón"}
+                {!statusNotes && "Debe ingresar un motivo de cancelación"}
               </FieldError>
             </TextField>
           </AlertDialog.Body>

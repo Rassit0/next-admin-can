@@ -13,7 +13,7 @@ export const MEMBERSHIP_STATUS_CONFIG: Record<
   StatusConfig
 > = {
   PENDING_ACTIVE: {
-    label: "Pendiente de activacón",
+    label: "Pendiente de activación",
     color: "accent",
     dot: "bg-accent",
   },

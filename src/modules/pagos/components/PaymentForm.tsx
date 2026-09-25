@@ -135,14 +135,14 @@ export const PaymentForm = ({
       if (selectedTab === "card") {
         isValid = validateCardForm();
         if (!isValid) {
-          toast.danger("Validacón fallida");
+          toast.danger("Validación fallida");
           return;
         }
         payload = { ...payload, ...cardData };
       } else {
         isValid = validateTransferForm();
         if (!isValid) {
-          toast.danger("Validacón fallida");
+          toast.danger("Validación fallida");
           return;
         }
         payload = { ...payload, ...transferData };
@@ -180,7 +180,7 @@ export const PaymentForm = ({
         <div className="text-sm text-accent">
           <p className="font-semibold">Pago Seguro</p>
           <p className="text-xs opacity-80">
-            Tu informacón está encriptada y protegida
+            Tu información está encriptada y protegida
           </p>
         </div>
       </motion.div>

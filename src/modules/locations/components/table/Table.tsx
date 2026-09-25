@@ -31,7 +31,7 @@ export const TableLocations = ({ locations }: Props) => {
     direction: "ascending",
   });
 
-  // Evitamos la hidratacón fallida
+  // Evitamos la hidratación fallida
   useEffect(() => {
     setIsClient(true);
   }, []);

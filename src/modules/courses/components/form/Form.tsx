@@ -83,7 +83,7 @@ export const FormCourse = ({
           .join("\n"); // Los separamos por saltos de línea para el toast
       }
 
-      // 2. Pasamos la descripcón formateada al componente de notificaciones
+      // 2. Pasamos la descripción formateada al componente de notificaciones
       toast.danger(res.message, {
         description: errorDescription,
       });
@@ -152,8 +152,8 @@ export const FormCourse = ({
           }}
           variant="secondary"
         >
-          <Label>Descripcón</Label>
-          <TextArea placeholder="Ingrese la descripcón" />
+          <Label>Descripción</Label>
+          <TextArea placeholder="Ingrese la descripción" />
           <FieldError
             children={errors.description && <> {errors.description}</>}
           />

@@ -165,7 +165,7 @@ export const MatchCallUpsDrawer = ({
             ) : (
               <div className="flex justify-center items-center h-64 flex-col gap-2">
                 <p className="text-sm text-muted">
-                  No se pudo cargar la informacón.
+                  No se pudo cargar la información.
                 </p>
                 <button
                   onClick={fetchAll}

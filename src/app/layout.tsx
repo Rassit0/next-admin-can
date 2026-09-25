@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   ),
   title: "Admin CAN - Club Atlético Nacional",
   description:
-    "Sistema Administrativo Integral del Club Atlético Nacional (CAN). Plataforma de gestón de deportistas, equipos, escuelas de formacón, membresías y control institucional.",
+    "Sistema Administrativo Integral del Club Atlético Nacional (CAN). Plataforma de gestón de deportistas, equipos, escuelas de formación, membresías y control institucional.",
   generator: "v0.app",
   openGraph: {
     images: ["/logo.png"],

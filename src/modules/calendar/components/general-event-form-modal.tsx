@@ -325,7 +325,7 @@ export const GeneralEventFormModal = ({
             </TextField>
 
             <TextField className="mb-4">
-              <Label>Descripcón (Opcional)</Label>
+              <Label>Descripción (Opcional)</Label>
               <Input
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -354,7 +354,7 @@ export const GeneralEventFormModal = ({
             </div>
 
             <TextField className="mb-4">
-              <Label>Locacón (Opcional)</Label>
+              <Label>Locación (Opcional)</Label>
               <Select
                 selectedKey={locationId || ""}
                 onSelectionChange={(key) => setLocationId(key as string)}
@@ -362,8 +362,8 @@ export const GeneralEventFormModal = ({
                 <Select.Trigger />
                 <Select.Popover>
                   <ListBox>
-                    <ListBox.Item id="" textValue="Sin locacón">
-                      Sin locacón
+                    <ListBox.Item id="" textValue="Sin locación">
+                      Sin locación
                     </ListBox.Item>
                     {locations.map((loc) => (
                       <ListBox.Item
@@ -408,7 +408,7 @@ export const GeneralEventFormModal = ({
 
               {contextType === "INSTITUTION" && (
                 <TextField className="mb-4">
-                  <Label>Institucón</Label>
+                  <Label>Institución</Label>
                   <Select
                     selectedKey={institutionId}
                     onSelectionChange={(key) => setInstitutionId(key as string)}

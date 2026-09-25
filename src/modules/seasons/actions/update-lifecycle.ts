@@ -51,7 +51,7 @@ export const updateSeasonLifecycle = async ({
           updatedAt: new Date(res.data.updatedAt),
         },
       },
-      message: res.message || "Accón ejecutada correctamente",
+      message: res.message || "Acción ejecutada correctamente",
     };
   });
 };

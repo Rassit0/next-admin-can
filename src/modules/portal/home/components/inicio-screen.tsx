@@ -47,7 +47,7 @@ export function Inicio({
       {promo1 && (
         <PromoBanner
           title={promo1.title}
-          subtitle={"Promocón Especial"}
+          subtitle={"Promoción Especial"}
           image={promo1.image16x9}
           ctaText={promo1.ctaText || "Ver más"}
           ctaHref={promo1.redirectTo || "#"}
@@ -65,7 +65,7 @@ export function Inicio({
       {promo2 && (
         <PromoBanner
           title={promo2.title}
-          subtitle={"Promocón Especial"}
+          subtitle={"Promoción Especial"}
           image={promo2.image16x9}
           className="pb-16"
           fullWidth={true}

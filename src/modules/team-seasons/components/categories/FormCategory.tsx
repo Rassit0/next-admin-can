@@ -147,9 +147,7 @@ export const FormCategory = ({
 
       <div className="grid grid-cols-2 gap-4 w-full">
         <div className="flex flex-col gap-1 w-full">
-          <label className="text-sm font-medium">
-            Año Mín. de Nacimiento
-          </label>
+          <label className="text-sm font-medium">Año Mín. de Nacimiento</label>
           <input
             className="h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
             name="minBirthYear"
@@ -180,7 +178,7 @@ export const FormCategory = ({
           htmlFor="validateAge"
           className="text-sm font-medium leading-none"
         >
-          Validar Edad en la Inscripcón
+          Validar Edad en la Inscripción
         </label>
       </div>
 

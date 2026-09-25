@@ -78,10 +78,10 @@ export const DelayPoliciesCard = ({
             <Alert.Content>
               <Alert.Title>Motor de Recargos</Alert.Title>
               <Alert.Description>
-                Si habilitas esta opcón, el sistema penalizará automáticamente
+                Si habilitas esta opción, el sistema penalizará automáticamente
                 a los atletas que no paguen a tiempo una vez transcurridos los
-                Días de Gracia permitidos, sumando el costo de Mora por cada
-                día de retraso a su factura. Adicionalmente, puede suspender
+                Días de Gracia permitidos, sumando el costo de Mora por cada día
+                de retraso a su factura. Adicionalmente, puede suspender
                 automáticamente membresías que excedan el límite de deudas.
               </Alert.Description>
             </Alert.Content>

@@ -27,7 +27,7 @@ export const TablePaymentPlans = ({
 }: Props) => {
   const [isClient, setIsClient] = useState(false);
 
-  // Evitamos la hidratacón fallida
+  // Evitamos la hidratación fallida
   useEffect(() => {
     setIsClient(true);
   }, []);

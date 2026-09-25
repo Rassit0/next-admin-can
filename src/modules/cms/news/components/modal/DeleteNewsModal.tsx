@@ -46,8 +46,8 @@ export const DeleteNewsModal = ({ id, slug, isOpen, setIsOpen }: Props) => {
           </Modal.Header>
           <Modal.Body className="p-6">
             <p className="text-sm text-muted">
-              ¿Estás seguro de que deseas eliminar esta noticia? Esta accón
-              no se puede deshacer.
+              ¿Estás seguro de que deseas eliminar esta noticia? Esta acción no
+              se puede deshacer.
             </p>
           </Modal.Body>
           <Modal.Footer>

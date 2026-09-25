@@ -144,7 +144,7 @@ export const AccountCategoryDrawer = ({
             </ComboBox>
 
             <TextField className="w-full">
-              <Label className="text-sm font-semibold">Descripcón</Label>
+              <Label className="text-sm font-semibold">Descripción</Label>
               <TextArea
                 placeholder="Detalles adicionales sobre esta categoría"
                 value={description}

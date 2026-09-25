@@ -59,7 +59,7 @@ export const InvoicePreview = ({
               Cargos Iniciales
             </p>
             <p className="text-[11px] text-muted">
-              Vista previa de facturacón
+              Vista previa de facturación
             </p>
           </div>
         </div>
@@ -127,7 +127,7 @@ export const InvoicePreview = ({
                     <p className="text-sm font-semibold text-foreground">
                       {line.type === "REGISTRATION" ||
                       line.type === "REGISTRATION_FEE"
-                        ? "Matrícula de inscripcón"
+                        ? "Matrícula de inscripción"
                         : line.type === "RECURRING_FEE"
                           ? "Cuota Recurrente"
                           : line.type === "SEASON_FEE"
@@ -187,7 +187,8 @@ export const InvoicePreview = ({
                 <div className="flex items-center justify-between text-warning">
                   <span>Moras</span>
                   <span className="tabular-nums">
-                    +{formatCurrency(
+                    +
+                    {formatCurrency(
                       breakdown.data.breakdown.totalLateFee,
                       breakdown.data.breakdown.currency,
                     )}

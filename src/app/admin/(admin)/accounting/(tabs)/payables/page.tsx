@@ -48,7 +48,7 @@ export default async function PayablesPage({
         <Card className="shadow-[0px_4px_12px_rgba(0,0,0,0.06)] border border-border">
           <HeaderPage
             title="Listado de Cuentas por Pagar"
-            description="Gestiona las obligaciones de pago de la institucón (proveedores, servicios, etc.)."
+            description="Gestiona las obligaciones de pago de la institución (proveedores, servicios, etc.)."
             showButtonBack={false}
             action={<CreateChargeButton direction="PAYABLE" />}
           />

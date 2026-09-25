@@ -103,7 +103,7 @@ export const CreateMassiveManualChargeDrawer = ({
                     Generar Cargo Masivo
                   </Drawer.Heading>
                   <p className="mt-1 text-xs font-medium text-warning-500">
-                    Atencón: Se aplicará este cargo a TODOS los miembros
+                    Atención: Se aplicará este cargo a TODOS los miembros
                     activos y pendientes de esta temporada.
                   </p>
                 </div>
@@ -117,7 +117,7 @@ export const CreateMassiveManualChargeDrawer = ({
                   variant="secondary"
                 >
                   <Label className="text-sm font-semibold">
-                    Descripcón del Cargo
+                    Descripción del Cargo
                   </Label>
                   <InputGroup>
                     <InputGroup.Prefix>
@@ -127,7 +127,7 @@ export const CreateMassiveManualChargeDrawer = ({
                         className="text-muted-foreground"
                       />
                     </InputGroup.Prefix>
-                    <InputGroup.Input placeholder="Ej. Inscripcón a Torneo, Equipamiento General..." />
+                    <InputGroup.Input placeholder="Ej. Inscripción a Torneo, Equipamiento General..." />
                   </InputGroup>
                 </TextField>
 
@@ -232,7 +232,7 @@ export const CreateMassiveManualChargeDrawer = ({
             <AlertDialog.Header>
               <AlertDialog.Icon status="danger" />
               <AlertDialog.Heading>
-                Confirmar Generacón Masiva
+                Confirmar Generación Masiva
               </AlertDialog.Heading>
             </AlertDialog.Header>
             <AlertDialog.Body>
@@ -242,7 +242,7 @@ export const CreateMassiveManualChargeDrawer = ({
                 activos y pendientes?
                 <br />
                 <br />
-                Esta accón no se puede deshacer de forma masiva.
+                Esta acción no se puede deshacer de forma masiva.
               </p>
             </AlertDialog.Body>
             <AlertDialog.Footer>

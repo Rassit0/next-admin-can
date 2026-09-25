@@ -29,8 +29,8 @@ export default async function MembershipsIndexPage() {
   if (!firstAllowedChild) {
     return (
       <ErrorPage
-        message="403 - No tienes permisos para acceder a ninguna seccón de Membresí­as."
-        path={{ href: "/admin", label: "Volver a Administracón" }}
+        message="403 - No tienes permisos para acceder a ninguna sección de Membresí­as."
+        path={{ href: "/admin", label: "Volver a Administración" }}
       />
     );
   }

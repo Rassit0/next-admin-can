@@ -29,7 +29,7 @@ export default async function TeamSeasonDetailLayout({
   const basePath = `/admin/teams/${disciplineId}/${clubId}/${teamId}/team-seasons/${teamSeasonId}`;
 
   const tabsRoutes = [
-    { value: "/", title: "Informacón General" },
+    { value: "/", title: "Información General" },
     { value: "/staff", title: "Personal" },
     { value: "/player-memberships", title: "Membresí­as" },
     { value: "/payment-plans", title: "Planes de Pago" },

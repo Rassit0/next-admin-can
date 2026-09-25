@@ -3,7 +3,7 @@ import TeamsContent from "@/modules/portal/teams/components/teams-content";
 import { getPublicTeams } from "@/modules/portal/teams/actions/teams.action";
 
 export const metadata = {
-  title: "Equipos y Competicón | Club Atlético Nacional",
+  title: "Equipos y Competición | Club Atlético Nacional",
   description:
     "Conoce nuestros equipos, categorías y oportunidades de membresía en el Club Atlético Nacional.",
   openGraph: {

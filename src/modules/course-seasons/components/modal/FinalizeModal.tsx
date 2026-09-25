@@ -32,7 +32,7 @@ export const FinalizeModal = ({
 
   const handleFinalize = async () => {
     if (!statusNotes) {
-      toast.danger("Debe ingresar un motivo de finalizacón");
+      toast.danger("Debe ingresar un motivo de finalización");
       return;
     }
     setIsLoading(true);
@@ -53,7 +53,7 @@ export const FinalizeModal = ({
           .join("\n"); // Los separamos por saltos de lí­nea para el toast
       }
 
-      // 2. Pasamos la descripcón formateada al componente de notificaciones
+      // 2. Pasamos la descripción formateada al componente de notificaciones
       toast.danger(res.message, {
         description: errorDescription,
       });
@@ -83,7 +83,7 @@ export const FinalizeModal = ({
               <span>Finalizar Temporada Anticipadamente</span>
               <span className="text-muted">
                 Estás por cerrar el ciclo de {courseSeason.season.name}: Esta
-                accón es irreversible
+                acción es irreversible
               </span>
             </AlertDialog.Heading>
           </AlertDialog.Header>
@@ -126,10 +126,10 @@ export const FinalizeModal = ({
               value={statusNotes}
               onChange={setStatusNotes}
             >
-              <Label>Motivo de Finalizacón</Label>
-              <TextArea placeholder="Describe brevemente los motivos de la finalizacón anticipada..." />
+              <Label>Motivo de Finalización</Label>
+              <TextArea placeholder="Describe brevemente los motivos de la finalización anticipada..." />
               <FieldError>
-                {!statusNotes && "Debe ingresar un motivo de cancelacón"}
+                {!statusNotes && "Debe ingresar un motivo de cancelación"}
               </FieldError>
             </TextField>
           </AlertDialog.Body>

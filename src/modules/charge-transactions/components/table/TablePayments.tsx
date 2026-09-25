@@ -279,9 +279,9 @@ export const TablePayments = ({ payments }: Props) => {
             </AlertDialog.Header>
             <AlertDialog.Body>
               <p>
-                ¿Anular este pago? Esta operacón revertirá el efecto
-                financiero del pago, pero el comprobante permanecerá registrado
-                como "Anulado" para fines de auditorí­a.
+                ¿Anular este pago? Esta operación revertirá el efecto financiero
+                del pago, pero el comprobante permanecerá registrado como
+                "Anulado" para fines de auditorí­a.
               </p>
             </AlertDialog.Body>
             <AlertDialog.Footer>
@@ -339,7 +339,7 @@ export const TablePayments = ({ payments }: Props) => {
 
                   <div>
                     <h3 className="text-sm font-semibold mb-2">
-                      Distribucón Financiera
+                      Distribución Financiera
                     </h3>
                     <div className="border border-border rounded-lg divide-y divide-border overflow-hidden">
                       {paymentToView.transactions?.map((t, idx) => (

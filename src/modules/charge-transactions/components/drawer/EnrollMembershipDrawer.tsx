@@ -176,7 +176,7 @@ export const EnrollMembershipDrawer = ({
       }
 
       if (discountType === "OTHER" && !discountReason.trim()) {
-        err.discountReason = "Especifique una razón o justificacón.";
+        err.discountReason = "Especifique una razón o justificación.";
       }
 
       if (discountEndDate) {
@@ -731,9 +731,9 @@ export const EnrollMembershipDrawer = ({
                             </ListBox.Item>
                             <ListBox.Item
                               id="EXEMPTION"
-                              textValue="Exoneracón"
+                              textValue="Exoneración"
                             >
-                              Exoneracón
+                              Exoneración
                             </ListBox.Item>
                             <ListBox.Item id="OTHER" textValue="Otro">
                               Otro
@@ -747,7 +747,7 @@ export const EnrollMembershipDrawer = ({
                         isInvalid={!!errors.discountReason || undefined}
                       >
                         <Label className="text-sm font-semibold">
-                          Razón / Justificacón
+                          Razón / Justificación
                         </Label>
                         <Input
                           variant="secondary"
@@ -796,7 +796,7 @@ export const EnrollMembershipDrawer = ({
                     </Switch.Control>
                     <Switch.Content>
                       <Label className="text-sm">
-                        Es Migracón (omitir cargos iniciales)
+                        Es Migración (omitir cargos iniciales)
                       </Label>
                     </Switch.Content>
                   </Switch>

@@ -34,8 +34,7 @@ export const itemsNavigation: NavigationConfig[] = [
     mobile: { priority: 1 },
     entryStrategy: "self",
     showInLauncher: true,
-    description:
-      "Gestón unificada de secretaría, operaciones y flujo de caja.",
+    description: "Gestón unificada de secretaría, operaciones y flujo de caja.",
     tagText: "Secretaría",
     requiredPermissions: { anyOf: ["READ_PERSONS"] },
     routes: [
@@ -87,7 +86,7 @@ export const itemsNavigation: NavigationConfig[] = [
     mobile: { priority: 10 },
     showInLauncher: true,
     description:
-      "Gestiona la configuracón, estructura y operacón de la organizacón deportiva desde un único panel centralizado.",
+      "Gestiona la configuración, estructura y operación de la organización deportiva desde un único panel centralizado.",
     tagText: "Panel Administrativo",
     requiredPermissions: {
       anyOf: [
@@ -348,14 +347,14 @@ export const itemsNavigation: NavigationConfig[] = [
     showInLauncher: true,
     description:
       "Gestione y visualice todos los eventos, entrenamientos y partidos del club.",
-    tagText: "Organizacón",
+    tagText: "Organización",
     requiredPermissions: {
       anyOf: ["READ_SCHEDULES", "READ_MATCHES", "READ_SESSIONS"],
     },
   },
   {
     id: "web",
-    label: "Administracón Web",
+    label: "Administración Web",
     href: "web",
     action: "web",
     subject: "home",
@@ -363,7 +362,7 @@ export const itemsNavigation: NavigationConfig[] = [
     hiddenInSidebar: true,
     showInLauncher: true,
     description:
-      "Gestiona las noticias, publicaciones, anuncios, historia e informacón de 'Nosotros' en el portal web del club.",
+      "Gestiona las noticias, publicaciones, anuncios, historia e información de 'Nosotros' en el portal web del club.",
     tagText: "CMS y Portales",
     requiredPermissions: {
       anyOf: ["READ_BANNERS", "READ_NEWS", "READ_PROMOTIONS"],
@@ -434,7 +433,7 @@ export const itemsWebNavigation: NavigationConfig[] = [
     href: "institution-history",
     action: "web_banners",
     subject: "home",
-    icon: "calendar", // using calendar as an icon, or dashboard. The user said: "Elegir icon existente coherente con: Historia / Timeline / Institucón". I'll check available icons later.
+    icon: "calendar", // using calendar as an icon, or dashboard. The user said: "Elegir icon existente coherente con: Historia / Timeline / Institución". I'll check available icons later.
     requiredPermissions: { anyOf: ["READ_INSTITUTION_HISTORY"] },
   },
 ];

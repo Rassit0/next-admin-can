@@ -32,7 +32,7 @@ export default async function ShiftsPage({ searchParams }: Props) {
       {/* <!-- Header --> */}
       <HeaderPage
         title="Gestón de Turnos"
-        description="Administra los turnos de la institucón"
+        description="Administra los turnos de la institución"
         action={<AddModal buttonFloatingMobile />}
       />
 

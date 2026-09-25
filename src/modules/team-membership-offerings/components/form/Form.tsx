@@ -135,7 +135,7 @@ export const FormTeamOffering = ({ team, teamSeason, urlRedirect }: Props) => {
       newErrors.recurringFee = "Debe ingresar el valor de la cuota mensual";
     }
     if (registrationFee === null) {
-      newErrors.registrationFee = "Debe ingresar el valor de la inscripcón";
+      newErrors.registrationFee = "Debe ingresar el valor de la inscripción";
     }
     if (fullPaymentDiscountPercent === null) {
       newErrors.fullPaymentDiscountPercent =
@@ -201,7 +201,7 @@ export const FormTeamOffering = ({ team, teamSeason, urlRedirect }: Props) => {
           .join("\n"); // Los separamos por saltos de línea para el toast
       }
 
-      // 2. Pasamos la descripcón formateada al componente de notificaciones
+      // 2. Pasamos la descripción formateada al componente de notificaciones
       toast.danger(res.message, {
         description: errorDescription,
       });
@@ -223,7 +223,7 @@ export const FormTeamOffering = ({ team, teamSeason, urlRedirect }: Props) => {
         onSubmit={handleSubmit}
         className="grid grid-cols-1 lg:grid-cols-12 gap-6"
       >
-        {/* <!-- Section 1: Informacón Básica & Capacidad --> */}
+        {/* <!-- Section 1: Información Básica & Capacidad --> */}
         <div className="lg:col-span-7 space-y-6">
           {/* <!-- Basic Info Card --> */}
           <BasicInfoCard

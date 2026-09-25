@@ -17,7 +17,7 @@ export const deleteSchool = async (
     return {
       error: false,
       data: response.data,
-      message: response.message || "Organizacón eliminada exitosamente",
+      message: response.message || "Organización eliminada exitosamente",
     };
   });
 };

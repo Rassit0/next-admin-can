@@ -3,7 +3,7 @@ import { ServiceResponse } from "@/types/api";
 import { logoutAction } from "@/modules/auth/actions/logout";
 
 /**
- * Funcón centralizada para resolver múltiples ServiceResponses en una página (Server Component).
+ * Función centralizada para resolver múltiples ServiceResponses en una página (Server Component).
  * Automáticamente extrae la data, o maneja los errores redirigiendo a /api/logout si es 401,
  * o lanzando un error (para que lo capture el error.tsx de Next.js).
  */

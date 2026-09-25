@@ -60,7 +60,7 @@ export function Teams({ teams }: { teams: Team[] }) {
       <div className="mb-8">
         <h1 className="font-heading text-5xl font-700 uppercase tracking-tight text-primary sm:text-6xl">
           Equipos y{" "}
-          <span className="text-neon text-glow-neon">Competicón</span>
+          <span className="text-neon text-glow-neon">Competición</span>
         </h1>
         <p className="mt-3 max-w-xl text-muted-foreground text-pretty">
           Filtrá por disciplina, sede y categorí­a. Girá cada tarjeta para ver
@@ -114,7 +114,7 @@ export function Teams({ teams }: { teams: Team[] }) {
 
       {filtered.length === 0 && (
         <p className="py-16 text-center text-muted-foreground">
-          No hay equipos para esta combinacón de filtros.
+          No hay equipos para esta combinación de filtros.
         </p>
       )}
 
@@ -303,7 +303,7 @@ function MembershipModal({
               Recibimos tu solicitud de membresí­a para{" "}
               <span className="font-600 text-primary">{team.name}</span>.
               Nuestro equipo se pondrá en contacto para coordinar la
-              incorporacón.
+              incorporación.
             </p>
             <button
               onClick={onClose}

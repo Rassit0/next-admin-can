@@ -21,7 +21,7 @@ const oswald = Oswald({
 export const metadata: Metadata = {
   title: "CAN - Club Atlético Nacional",
   description:
-    "Portal institucional del CAN - +1.000 deportistas activos, +50 equipos en competicón, escuelas de formacón y membresías deportivas.",
+    "Portal institucional del CAN - +1.000 deportistas activos, +50 equipos en competición, escuelas de formación y membresías deportivas.",
   generator: "v0.app",
   openGraph: {
     images: ["/logo.png"],

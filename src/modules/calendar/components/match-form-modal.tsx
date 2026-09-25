@@ -553,7 +553,7 @@ export const MatchFormModal = ({
                   onChange={(key) => setLocationId(key ? String(key) : "")}
                   isDisabled={loadingData}
                 >
-                  <Label className="font-semibold text-sm">Ubicacón</Label>
+                  <Label className="font-semibold text-sm">Ubicación</Label>
                   <Select.Trigger>
                     <Select.Value />
                     <Select.Indicator />
@@ -610,7 +610,7 @@ export const MatchFormModal = ({
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <TextField>
                     <Label className="font-semibold text-sm">
-                      Puntuacón Local
+                      Puntuación Local
                     </Label>
                     <Input
                       type="number"
@@ -622,7 +622,7 @@ export const MatchFormModal = ({
                   </TextField>
                   <TextField>
                     <Label className="font-semibold text-sm">
-                      Puntuacón Visitante
+                      Puntuación Visitante
                     </Label>
                     <Input
                       type="number"

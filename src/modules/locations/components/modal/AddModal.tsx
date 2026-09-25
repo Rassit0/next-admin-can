@@ -37,7 +37,7 @@ export const AddModal = () => {
         onPress={() => state.open()}
       >
         <HugeiconsIcon icon={Add01Icon} />
-        Agregar Instalacón
+        Agregar Instalación
       </Button>
       <ButtonFloating
         className="lg:hidden"
@@ -55,9 +55,9 @@ export const AddModal = () => {
               <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
                 <HugeiconsIcon icon={Layers01Icon} />
               </Modal.Icon>
-              <Modal.Heading>Agregar Instalacón</Modal.Heading>
+              <Modal.Heading>Agregar Instalación</Modal.Heading>
               <p className="mt-1.5 text-sm leading-5 text-muted">
-                Agrega una nueva instalacón al sistema.
+                Agrega una nueva instalación al sistema.
               </p>
             </Modal.Header>
             <Modal.Body className="p-0 md:p-6">

@@ -114,7 +114,7 @@ export const AccountChargesClient = ({
             <AlertDialog.Body>
               <p>
                 ¿Estás seguro de que deseas anular el registro{" "}
-                <strong>{chargeToCancel?.title}</strong>? Esta accón no se
+                <strong>{chargeToCancel?.title}</strong>? Esta acción no se
                 puede deshacer.
               </p>
             </AlertDialog.Body>

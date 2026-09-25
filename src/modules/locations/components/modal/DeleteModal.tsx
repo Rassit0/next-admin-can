@@ -60,15 +60,13 @@ export const DeleteModal = ({
             <AlertDialog.CloseTrigger />
             <AlertDialog.Header>
               <AlertDialog.Icon status="danger" />
-              <AlertDialog.Heading>
-                ¿Eliminar instalacón?
-              </AlertDialog.Heading>
+              <AlertDialog.Heading>¿Eliminar instalación?</AlertDialog.Heading>
             </AlertDialog.Header>
             <AlertDialog.Body>
               <p>
-                Se eliminará permanentemente la instalacón{" "}
+                Se eliminará permanentemente la instalación{" "}
                 <strong>{location.name}</strong> si no tiene datos asociados a
-                ella. Esta accón no se puede deshacer.
+                ella. Esta acción no se puede deshacer.
               </p>
             </AlertDialog.Body>
             <AlertDialog.Footer>

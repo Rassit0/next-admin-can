@@ -48,7 +48,7 @@ export const BasicInfoCard = ({
           <HugeiconsIcon icon={Calendar04Icon} className="text-accent" />
         </div>
         <Card.Title className="font-headline font-bold text-lg">
-          Informacón Básica
+          Información Básica
         </Card.Title>
       </Card.Header>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

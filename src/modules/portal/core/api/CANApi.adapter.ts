@@ -114,7 +114,7 @@ export class CANApiAdapter implements HttpAdapter {
       if ((error as Error).name === "AbortError") {
         throw new ApiError(
           408,
-          "La peticón ha tardado demasiado tiempo (Timeout).",
+          "La petición ha tardado demasiado tiempo (Timeout).",
         );
       }
 
@@ -157,7 +157,7 @@ export class CANApiAdapter implements HttpAdapter {
     }
 
     const errorMap: Record<number, string> = {
-      400: "Peticón incorrecta",
+      400: "Petición incorrecta",
       401: "Token inválido o expirado",
       403: "Acceso denegado",
       404: "Recurso no encontrado",

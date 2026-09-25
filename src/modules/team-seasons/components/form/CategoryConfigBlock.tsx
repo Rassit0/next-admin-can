@@ -58,7 +58,7 @@ export const CategoryConfigBlock = ({
             <HugeiconsIcon icon={Calendar04Icon} size={18} />
           </div>
           <Card.Title className="font-headline font-bold text-lg">
-            Configuracón #{index + 1}
+            Configuración #{index + 1}
           </Card.Title>
         </div>
         {canRemove && (

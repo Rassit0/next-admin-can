@@ -72,9 +72,9 @@ export const DelayPoliciesCard = ({
           <Alert status="accent" className="mb-2">
             <Alert.Indicator />
             <Alert.Content>
-              <Alert.Title>Configuracón de Recargos</Alert.Title>
+              <Alert.Title>Configuración de Recargos</Alert.Title>
               <Alert.Description>
-                Si habilitas esta opcón, podrás aplicar recargos por mora de
+                Si habilitas esta opción, podrás aplicar recargos por mora de
                 forma explícita a los atletas que se atrasen en sus pagos de
                 ciclos, sumando el costo de Mora por cada día de retraso.
               </Alert.Description>
@@ -88,7 +88,7 @@ export const DelayPoliciesCard = ({
             </Switch.Control>
             <Switch.Content>
               <Label className="text-sm">
-                Habilitar Mora (Aplicacón Explícita)
+                Habilitar Mora (Aplicación Explícita)
               </Label>
             </Switch.Content>
           </Switch>

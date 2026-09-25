@@ -162,7 +162,7 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
       action !== "edit_start_date" &&
       !reason?.trim()
     ) {
-      toast.error("El motivo es obligatorio para esta accón");
+      toast.error("El motivo es obligatorio para esta acción");
       setLoading(false);
       return;
     }
@@ -274,7 +274,7 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
               </AlertDialog.Header>
               <AlertDialog.Body className="gap-4 p-2">
                 <p>
-                  ¿Estás seguro de que deseas ejecutar la accón{" "}
+                  ¿Estás seguro de que deseas ejecutar la acción{" "}
                   <strong>{selectedAction?.label.toLowerCase()}</strong> para
                   esta membresí­a?
                 </p>
@@ -285,7 +285,7 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
                       <Alert.Indicator />
                       <Alert.Content>
                         <Alert.Description>
-                          Esta accón afectará los cargos que se puedan
+                          Esta acción afectará los cargos que se puedan
                           regularizar. Solo se permiten fechas pasadas para
                           evitar desajustes con cargos ya cobrados.
                         </Alert.Description>
@@ -465,7 +465,7 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
                       isRequired={selectedAction?.key !== "activate"}
                     >
                       <Label className="text-sm font-semibold">
-                        Motivo u Observacón{" "}
+                        Motivo u Observación{" "}
                         {selectedAction?.key === "activate" && "(Opcional)"}
                       </Label>
                       <InputGroup>

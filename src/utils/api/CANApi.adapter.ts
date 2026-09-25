@@ -44,7 +44,7 @@ export interface HttpAdapter {
 }
 
 const ERROR_MESSAGES: Readonly<Record<number, string>> = {
-  400: "Peticón incorrecta",
+  400: "Petición incorrecta",
   401: "Token inválido o expirado",
   403: "Acceso denegado",
   404: "Recurso no encontrado",
@@ -69,7 +69,7 @@ export class CANApiAdapter implements HttpAdapter {
   }
 
   /**
-   * Método centralizador: Contiene TODA la lógica de comunicacón HTTP.
+   * Método centralizador: Contiene TODA la lógica de comunicación HTTP.
    * Construye la URL, query params, timeout, AbortController, token,
    * headers, body, cache, ejecuta el fetch y maneja errores de conexón.
    * Retorna el Response crudo sin procesarlo.
@@ -145,7 +145,7 @@ export class CANApiAdapter implements HttpAdapter {
       if ((error as Error).name === "AbortError") {
         throw new ApiError(
           408,
-          "La peticón ha tardado demasiado tiempo (Timeout).",
+          "La petición ha tardado demasiado tiempo (Timeout).",
         );
       }
 
@@ -160,7 +160,7 @@ export class CANApiAdapter implements HttpAdapter {
   }
 
   /**
-   * Ejecuta la peticón HTTP y procesa la respuesta como JSON.
+   * Ejecuta la petición HTTP y procesa la respuesta como JSON.
    */
   private async request<T>(
     endpoint: string,
@@ -222,7 +222,7 @@ export class CANApiAdapter implements HttpAdapter {
 
   /**
    * Descarga contenido binario (PDFs, imágenes, etc.).
-   * Reutiliza requestRaw() para la comunicacón y handleResponse() para errores.
+   * Reutiliza requestRaw() para la comunicación y handleResponse() para errores.
    */
   async getBlob(endpoint: string, options?: HttpRequestOptions): Promise<Blob> {
     const response = await this.requestRaw(endpoint, "GET", undefined, options);

@@ -196,7 +196,7 @@ export default async function CourseSeasonDashboardPage({ params }: Props) {
           <div className="col-span-full">
             <p className="text-xs text-muted-foreground mb-2 uppercase font-semibold flex items-center">
               Opciones de Prorrateo Activas
-              <InfoTooltip text="Si el jugador ingresa tarde (después de la fecha de inicio del ciclo), el sistema cobrará la fraccón correspondiente matemáticamente a los dí­as activos de las opciones que veas aquí­ marcadas." />
+              <InfoTooltip text="Si el jugador ingresa tarde (después de la fecha de inicio del ciclo), el sistema cobrará la fracción correspondiente matemáticamente a los dí­as activos de las opciones que veas aquí­ marcadas." />
             </p>
             <div className="flex flex-wrap gap-2">
               {courseSeason.billingConfig?.prorateRegistrationFee && (
@@ -235,7 +235,7 @@ export default async function CourseSeasonDashboardPage({ params }: Props) {
       <Card className="p-6 shadow-[0px_4px_12px_rgba(0,0,0,0.06)] border border-border flex flex-col gap-5 bg-surface-container-lowest">
         <div className="flex items-center justify-between">
           <h3 className="font-headline font-bold text-lg">
-            Turnos y Reglas de Participacón
+            Turnos y Reglas de Participación
           </h3>
         </div>
         <hr className="border-border" />

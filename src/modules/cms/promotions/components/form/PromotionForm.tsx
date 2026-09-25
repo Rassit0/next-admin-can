@@ -83,7 +83,7 @@ export const PromotionForm = ({
     const newErrors: Record<string, string> = {};
     if (!formData.title) newErrors.title = "El tí­tulo es obligatorio";
 
-    // Validacón de imagen 16x9
+    // Validación de imagen 16x9
     if (!promotion && files16x9.length === 0) {
       newErrors.image16x9 = "La imagen principal 16:9 es obligatoria";
     }
@@ -180,7 +180,7 @@ export const PromotionForm = ({
           </TextField>
 
           <TextField variant="secondary">
-            <Label>Redireccón (URL o Ruta)</Label>
+            <Label>Redirección (URL o Ruta)</Label>
             <Input
               placeholder="Ej: /actualidad o https://google.com"
               value={formData.redirectTo}
@@ -195,7 +195,7 @@ export const PromotionForm = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Select
             variant="secondary"
-            placeholder="Seleccione una posicón"
+            placeholder="Seleccione una posición"
             selectedKey={formData.position}
             onSelectionChange={(key) => {
               if (key)
@@ -205,7 +205,7 @@ export const PromotionForm = ({
                 });
             }}
           >
-            <Label>Posicón</Label>
+            <Label>Posición</Label>
             <Select.Trigger>
               <Select.Value />
               <Select.Indicator />

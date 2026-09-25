@@ -27,7 +27,7 @@ export const disciplines = [
   "Raqueta Frontón",
   "Atletismo",
   "Básquet",
-  "Natacón",
+  "Natación",
   "Tenis",
 ];
 
@@ -36,7 +36,7 @@ export const heroDisciplines = [
   "Raqueta Frontón",
   "Atletismo",
   "Básquet de Alto Rendimiento",
-  "Natacón Competitiva",
+  "Natación Competitiva",
   "Tenis",
 ];
 
@@ -45,9 +45,9 @@ export const heroDisciplines = [
 export const navItems = [
   "Inicio",
   "Noticias",
-  "Institucón",
-  "Equipos y Competicón",
-  "Escuelas de Formacón",
+  "Institución",
+  "Equipos y Competición",
+  "Escuelas de Formación",
 ] as const;
 
 export type NavItem = (typeof navItems)[number];
@@ -121,7 +121,7 @@ export const courseDetails: CourseDetail[] = [
     monthlyFee: 2500,
     slug: "volley-sub12",
     description:
-      "Curso de voleibol para niños y niñas de 10 a 12 años. Aprenderemos los fundamentos del juego, técnica de pase, saque y remate. Una excelente introduccón al deporte colectivo con énfasis en el trabajo en equipo y el disfrute del juego.",
+      "Curso de voleibol para niños y niñas de 10 a 12 años. Aprenderemos los fundamentos del juego, técnica de pase, saque y remate. Una excelente introducción al deporte colectivo con énfasis en el trabajo en equipo y el disfrute del juego.",
     weeklySchedule: ["Lunes 17:00-18:00", "Mércoles 17:00-18:00"],
     requirements: ["Ropa cómoda", "Zapatillas deportivas", "Botella de agua"],
     professors: [
@@ -131,7 +131,7 @@ export const courseDetails: CourseDetail[] = [
   },
   {
     id: "c2",
-    name: "Raqueta Frontón - Iniciacón",
+    name: "Raqueta Frontón - Iniciación",
     discipline: "Raqueta Frontón",
     minAge: 15,
     maxAge: 65,
@@ -183,7 +183,7 @@ export const courseDetails: CourseDetail[] = [
         name: "Diego Morales",
         specialty: "Técnica y Táctica de Fútbol",
       },
-      { id: "p5", name: "Andrés Silva", specialty: "Preparacón Física" },
+      { id: "p5", name: "Andrés Silva", specialty: "Preparación Física" },
     ],
   },
 ];
@@ -202,7 +202,7 @@ export const eventDetails: EventDetail[] = [
     discipline: "Voleibol",
     category: "Senior Masculino",
     description:
-      "Enfrentamiento histórico entre dos grandes potencias del voleibol metropolitano. Un partido que promete intensidad, emocón y espectáculo. Entrada libre para miembros del club. Transmisón en vivo.",
+      "Enfrentamiento histórico entre dos grandes potencias del voleibol metropolitano. Un partido que promete intensidad, emoción y espectáculo. Entrada libre para miembros del club. Transmisón en vivo.",
     countdownTargetDate: "2026-01-18T20:30:00",
     imageUrl: "/news-volley-champions.png",
   },

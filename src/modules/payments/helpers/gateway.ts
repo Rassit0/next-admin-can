@@ -134,7 +134,7 @@ export const processPayment = (input: PaymentInput): Promise<PaymentResult> => {
         reference: success ? generateReference() : "",
         message: success
           ? "Pago procesado exitosamente."
-          : "El emisor rechazó la transaccón. Verifica los datos o usa otro método.",
+          : "El emisor rechazó la transacción. Verifica los datos o usa otro método.",
       });
     }, 1400);
   });

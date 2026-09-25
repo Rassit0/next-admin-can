@@ -493,13 +493,13 @@ export default async function MemberPage({
                       Miembro
                     </th>
                     <th className="px-6 py-4 text-left text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-                      Identificacón
+                      Identificación
                     </th>
                     <th className="px-6 py-4 text-left text-[10px] font-bold text-slate-500 uppercase tracking-widest">
                       Parentesco / Rol
                     </th>
                     <th className="px-6 py-4 text-right text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-                      Accón
+                      Acción
                     </th>
                   </tr>
                 </thead>
@@ -549,7 +549,7 @@ export default async function MemberPage({
                     </td>
                     <td className="px-6 py-4">
                       <span className="text-sm text-slate-600">
-                        Hija / Jugadora Natacón
+                        Hija / Jugadora Natación
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right">
@@ -663,7 +663,7 @@ export default async function MemberPage({
                   Baloncesto
                 </span>
                 <span className="px-3 py-1 bg-slate-100 rounded-full text-xs font-semibold text-slate-700">
-                  Natacón
+                  Natación
                 </span>
                 <span className="px-3 py-1 bg-slate-100 rounded-full text-xs font-semibold text-slate-700">
                   Gimnasio
@@ -675,7 +675,7 @@ export default async function MemberPage({
           <div className="bg-surface-container-low rounded-2xl p-6 space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="font-black text-lg tracking-tight">
-                Documentacón
+                Documentación
               </h3>
               <span
                 className="material-symbols-outlined text-on-surface-variant"

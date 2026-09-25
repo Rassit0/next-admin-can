@@ -245,7 +245,7 @@ export const FinancialAccountDrawer = ({
 
               <div>
                 <Label className="mb-1 text-sm font-semibold">
-                  Descripcón (Opcional)
+                  Descripción (Opcional)
                 </Label>
                 <Input
                   placeholder="Ej: Cuenta principal del club"

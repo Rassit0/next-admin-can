@@ -65,7 +65,7 @@ export const DeleteModal = ({
               <p>
                 Se eliminará permanentemente la disciplina{" "}
                 <strong>{discipline.name}</strong> si no tiene datos asociados a
-                ella. Esta accón no se puede deshacer.
+                ella. Esta acción no se puede deshacer.
               </p>
             </AlertDialog.Body>
             <AlertDialog.Footer>

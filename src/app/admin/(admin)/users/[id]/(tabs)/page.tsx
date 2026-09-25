@@ -29,7 +29,7 @@ export default async function UserAccountPage({ params }: Props) {
       <div className="lg:col-span-1">
         <div className="bg-content1 p-6 rounded-xl border border-divider">
           <h3 className="font-semibold text-lg mb-4">
-            Informacón del Sistema
+            Información del Sistema
           </h3>
           <div className="space-y-3 text-sm text-default-600">
             <div className="flex justify-between">
@@ -56,7 +56,7 @@ export default async function UserAccountPage({ params }: Props) {
               <div className="mt-4 p-3 bg-warning-50 text-warning-800 rounded-lg text-xs">
                 Este usuario posee un rol protegido por el sistema (
                 {user.role.name}). Sus permisos y acceso no deben alterarse sin
-                precaucón.
+                precaución.
               </div>
             )}
           </div>

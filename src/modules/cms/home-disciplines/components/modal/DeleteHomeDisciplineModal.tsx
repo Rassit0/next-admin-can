@@ -47,7 +47,7 @@ export const DeleteHomeDisciplineModal = ({ isOpen, setIsOpen, id }: Props) => {
           </Modal.Header>
           <Modal.Body className="px-6 py-4">
             <p className="text-sm text-default-500">
-              ¿Estás seguro de que deseas eliminar este bloque? Esta accón no
+              ¿Estás seguro de que deseas eliminar este bloque? Esta acción no
               se puede deshacer y el bloque dejará de ser visible de inmediato.
             </p>
           </Modal.Body>

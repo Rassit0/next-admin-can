@@ -101,7 +101,7 @@ export const HeroBannerForm = ({
     const newErrors: Record<string, string> = {};
     if (!formData.title) newErrors.title = "El tí­tulo es obligatorio";
 
-    // Validacón de imagen 16x9
+    // Validación de imagen 16x9
     if (!heroBanner && files16x9.length === 0) {
       newErrors.image16x9 = "La imagen principal 16:9 es obligatoria";
     }
@@ -234,7 +234,7 @@ export const HeroBannerForm = ({
           </TextField>
 
           <TextField variant="secondary">
-            <Label>Redireccón (URL o Ruta)</Label>
+            <Label>Redirección (URL o Ruta)</Label>
             <Input
               placeholder="Ej: /actualidad o https://google.com"
               value={formData.redirectTo || ""}
@@ -251,7 +251,7 @@ export const HeroBannerForm = ({
             <Label>
               <span className="flex items-center gap-2">
                 Orden (Sort Order)
-                <InfoTooltip text="Define el orden de aparicón visual. Valores menores (ej: 0, 1) aparecerán primero en la lista." />
+                <InfoTooltip text="Define el orden de aparición visual. Valores menores (ej: 0, 1) aparecerán primero en la lista." />
               </span>
             </Label>
             <Input

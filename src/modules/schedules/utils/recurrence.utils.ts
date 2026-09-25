@@ -14,7 +14,7 @@ export const buildSchedulePayload = (
 
   const startDateTime = new Date(`${values.startDate}T${values.startTime}:00`);
 
-  // 2. Calcular endDate sumando los minutos de duracón a startDateTime
+  // 2. Calcular endDate sumando los minutos de duración a startDateTime
   const endDateTime = new Date(
     startDateTime.getTime() + values.durationMin * 60000,
   );

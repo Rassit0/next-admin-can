@@ -48,7 +48,7 @@ export const EditModal = ({
                 <Modal.Heading>Editar Escuela {organization.id}</Modal.Heading>
               </div>
               <p className="mt-1.5 text-sm leading-5 text-muted">
-                Edita la informacón de la escuela {organization.name}.
+                Edita la información de la escuela {organization.name}.
               </p>
             </Modal.Header>
             <Modal.Body className="p-6">

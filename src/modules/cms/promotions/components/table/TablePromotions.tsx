@@ -24,7 +24,7 @@ export const TablePromotions = ({ promotions }: Props) => {
             </Table.Column>
             <Table.Column allowsSorting id="position">
               <SortableColumnHeader id="position">
-                Posicón
+                Posición
               </SortableColumnHeader>
             </Table.Column>
             <Table.Column allowsSorting id="isActive">

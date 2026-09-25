@@ -51,7 +51,7 @@ export function InstitutionDescription() {
           variants={itemVariants}
           className="mb-8 font-heading text-3xl font-700 uppercase tracking-widest text-white sm:text-4xl md:text-5xl"
         >
-          Nuestra <span className="text-neon text-glow-neon">Institucón</span>
+          Nuestra <span className="text-neon text-glow-neon">Institución</span>
         </motion.h2>
 
         <motion.div
@@ -61,18 +61,17 @@ export function InstitutionDescription() {
 
         <div className="space-y-6 font-sans text-lg font-300 leading-relaxed text-slate-300 sm:text-xl sm:leading-loose">
           <motion.p variants={itemVariants}>
-            Somos el corazón deportivo de la comunidad, una institucón dedicada
+            Somos el corazón deportivo de la comunidad, una institución dedicada
             a fomentar el talento, la disciplina y los valores a través de la
             actividad física. Nuestro compromiso va más allá de las canchas:
             buscamos formar líderes, atletas íntegros y ciudadanos
             excepcionales.
           </motion.p>
           <motion.p variants={itemVariants}>
-            Con una visón enfocada en la excelencia y un equipo de
-            profesionales apasionados, ofrecemos un espacio dinámico donde
-            deportistas de todas las edades pueden desarrollarse, competir y
-            alcanzar su máximo potencial en un ambiente seguro, competitivo y
-            familiar.
+            Con una visón enfocada en la excelencia y un equipo de profesionales
+            apasionados, ofrecemos un espacio dinámico donde deportistas de
+            todas las edades pueden desarrollarse, competir y alcanzar su máximo
+            potencial en un ambiente seguro, competitivo y familiar.
           </motion.p>
           <motion.p
             variants={itemVariants}

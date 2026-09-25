@@ -148,7 +148,7 @@ export const CreateManualChargeDrawer = ({
                 variant="secondary"
               >
                 <Label className="text-sm font-semibold">
-                  Descripcón del Cargo
+                  Descripción del Cargo
                 </Label>
                 <InputGroup>
                   <InputGroup.Prefix>

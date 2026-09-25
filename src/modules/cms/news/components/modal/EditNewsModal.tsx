@@ -48,7 +48,7 @@ export const EditNewsModal = ({
                 <Modal.Heading>Actualizar Noticia</Modal.Heading>
               </div>
               <p className="mt-1.5 text-sm leading-5 text-muted">
-                Actualiza la informacón de la noticia seleccionada.
+                Actualiza la información de la noticia seleccionada.
               </p>
             </Modal.Header>
             <Modal.Body className="p-6">

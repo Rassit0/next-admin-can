@@ -20,7 +20,7 @@ export const Footer = () => {
       >
         <HugeiconsIcon icon={Settings02Icon} />
         <span className="text-sm font-semibold hidden lg:block nav-text">
-          Configuracón
+          Configuración
         </span>
       </a>
       {/* <form action={logoutAction} className="w-full"> */}

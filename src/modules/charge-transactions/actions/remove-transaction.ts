@@ -33,7 +33,7 @@ export const removeTransaction = async (
     return {
       error: false,
       data: response.data,
-      message: response.message || "Transaccón anulada exitosamente",
+      message: response.message || "Transacción anulada exitosamente",
     };
   });
 };

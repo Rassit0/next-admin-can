@@ -30,7 +30,7 @@ export interface IUser {
   updatedAt: string;
   role: IRole | null;
   person: IPerson | null;
-  tempPassword?: string; // Solo en creacón
+  tempPassword?: string; // Solo en creación
   isLocked?: boolean;
 }
 

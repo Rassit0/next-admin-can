@@ -73,8 +73,8 @@ export const AccountingAlerts = ({ alerts }: Props) => {
           <div className="flex gap-2 items-center text-primary">
             <HugeiconsIcon icon={Calendar03Icon} size={20} />
             <h3 className="font-semibold text-foreground flex items-center">
-              Atencón: Por Cobrar
-              <InfoTooltip text="Muestra alertas sobre cuentas por cobrar que requieren tu atencón, como cobros vencidos o cercanos a vencer." />
+              Atención: Por Cobrar
+              <InfoTooltip text="Muestra alertas sobre cuentas por cobrar que requieren tu atención, como cobros vencidos o cercanos a vencer." />
             </h3>
           </div>
           <Chip size="sm" color="default">
@@ -98,7 +98,7 @@ export const AccountingAlerts = ({ alerts }: Props) => {
           <div className="flex gap-2 items-center text-danger">
             <HugeiconsIcon icon={Calendar03Icon} size={20} />
             <h3 className="font-semibold text-foreground flex items-center">
-              Atencón: Por Pagar
+              Atención: Por Pagar
               <InfoTooltip text="Muestra alertas sobre obligaciones y cuentas por pagar que están vencidas o próximas a su fecha límite." />
             </h3>
           </div>

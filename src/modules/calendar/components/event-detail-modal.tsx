@@ -103,7 +103,7 @@ export const EventDetailModal = ({
 
                 <div className="text-sm">
                   <strong>Tipo:</strong> {type} <br />
-                  <strong>Ubicacón:</strong>{" "}
+                  <strong>Ubicación:</strong>{" "}
                   {location ? location.name : "Por definir"} <br />
                   <strong>Estado:</strong> {event.extendedProps.status} <br />
                   {event.extendedProps.series && (
@@ -116,7 +116,7 @@ export const EventDetailModal = ({
                 <div className="bg-default-100 p-3 rounded-md text-sm">
                   {type === "SESSION" && (
                     <>
-                      <strong>Duracón:</strong>{" "}
+                      <strong>Duración:</strong>{" "}
                       {(metadata as ISessionCalendarMetadata).durationMin} min{" "}
                       <br />
                       <strong>Equipos:</strong>{" "}
@@ -157,7 +157,7 @@ export const EventDetailModal = ({
                   )}
                   {type === "GENERAL" && (
                     <>
-                      <strong>Institucón:</strong>{" "}
+                      <strong>Institución:</strong>{" "}
                       {(metadata as IGeneralEventCalendarMetadata)
                         .institutionId || "N/A"}
                     </>

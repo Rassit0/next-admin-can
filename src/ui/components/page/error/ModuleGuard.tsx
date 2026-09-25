@@ -18,8 +18,8 @@ export const ModuleGuard = async ({
   if (!hasModuleAccess(moduleId, userPermissions, childRouteId)) {
     return (
       <ErrorPage
-        message="403 - No tienes permisos para acceder a esta seccón."
-        path={{ href: "/admin", label: "Volver a Administracón" }}
+        message="403 - No tienes permisos para acceder a esta sección."
+        path={{ href: "/admin", label: "Volver a Administración" }}
       />
     );
   }

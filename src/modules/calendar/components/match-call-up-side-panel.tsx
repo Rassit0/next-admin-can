@@ -67,7 +67,7 @@ export const MatchCallUpSidePanel = ({
     }
 
     setSelectedIds(ids);
-    // DIRTY NO SE MARCA AL INICIO, ya que la preseleccón automática no es un cambio manual del usuario
+    // DIRTY NO SE MARCA AL INICIO, ya que la preselección automática no es un cambio manual del usuario
     onDirtyChange(false);
   }, [initialCallUps, hasCategory, candidates, configuredAt]);
 

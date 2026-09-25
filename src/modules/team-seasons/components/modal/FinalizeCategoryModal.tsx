@@ -82,7 +82,7 @@ export const FinalizeCategoryModal = ({
                 <div className="flex flex-col gap-4">
                   <div className="p-4 bg-warning/10 text-warning-600 rounded-lg text-xs">
                     <p className="font-bold mb-1">
-                      ¡Atencón! Esta accón es irreversible.
+                      ¡Atención! Esta acción es irreversible.
                     </p>
                     <ul className="list-disc pl-4 space-y-1 mt-2 text-warning-700">
                       <li>
@@ -100,7 +100,7 @@ export const FinalizeCategoryModal = ({
                   </div>
 
                   <textarea
-                    placeholder="Notas / Motivo de la finalizacón... (Opcional)"
+                    placeholder="Notas / Motivo de la finalización... (Opcional)"
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     rows={3}
@@ -116,7 +116,7 @@ export const FinalizeCategoryModal = ({
                       onPress={handleFinish}
                       isPending={loading}
                     >
-                      Confirmar Finalizacón
+                      Confirmar Finalización
                     </Button>
                   </div>
                 </div>

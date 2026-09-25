@@ -48,7 +48,7 @@ export const ConfirmDeleteHistoryItemModal = ({
               <Modal.Icon className="bg-danger/20 text-danger">
                 <HugeiconsIcon icon={Delete02Icon} size={24} />
               </Modal.Icon>
-              <Modal.Heading>Confirmar Eliminacón</Modal.Heading>
+              <Modal.Heading>Confirmar Eliminación</Modal.Heading>
             </Modal.Header>
             <Modal.Body className="px-6 py-4">
               <p>
@@ -56,7 +56,7 @@ export const ConfirmDeleteHistoryItemModal = ({
                 <strong>
                   {item.year} - {item.title}
                 </strong>
-                ? Esta accón no se puede deshacer.
+                ? Esta acción no se puede deshacer.
               </p>
             </Modal.Body>
             <Modal.Footer>

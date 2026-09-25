@@ -85,7 +85,7 @@ export const TableUsers: React.FC<Props> = ({ users }) => {
     setConfirmDialog({
       isOpen: true,
       title: "Restablecer Contraseña",
-      description: `¿Estás seguro de restablecer la contraseña para ${user.email}? Esta accón invalidará su contraseña actual inmediatamente.`,
+      description: `¿Estás seguro de restablecer la contraseña para ${user.email}? Esta acción invalidará su contraseña actual inmediatamente.`,
       status: "danger",
       confirmText: "Restablecer",
       onConfirm: async () => {

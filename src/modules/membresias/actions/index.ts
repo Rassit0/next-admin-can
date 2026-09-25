@@ -102,7 +102,7 @@ export const suspendMemberAssignment = async (
     return {
       error: false,
       data: assignment,
-      message: "Asignacón suspendida exitosamente",
+      message: "Asignación suspendida exitosamente",
     };
   });
 };
@@ -123,7 +123,7 @@ export const reactivateMemberAssignment = async (
     return {
       error: false,
       data: assignment,
-      message: "Asignacón reactivada exitosamente",
+      message: "Asignación reactivada exitosamente",
     };
   });
 };
@@ -144,7 +144,7 @@ export const completeMemberAssignment = async (
     return {
       error: false,
       data: assignment,
-      message: "Asignacón completada exitosamente",
+      message: "Asignación completada exitosamente",
     };
   });
 };

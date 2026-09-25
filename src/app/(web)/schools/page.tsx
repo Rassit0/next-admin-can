@@ -5,9 +5,9 @@ import EscuelasContent from "@/modules/portal/schools/components/escuelas-conten
 import { getPublicCourses } from "@/modules/portal/schools/actions/schools.action";
 
 export const metadata = {
-  title: "Escuelas de Formacón y Cursos | Club Atlético Nacional",
+  title: "Escuelas de Formación y Cursos | Club Atlético Nacional",
   description:
-    "Programas de formacón deportiva para todas las edades en el Club Atlético Nacional.",
+    "Programas de formación deportiva para todas las edades en el Club Atlético Nacional.",
   openGraph: {
     images: ["/logo.png"],
   },

@@ -10,7 +10,7 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Categorías Contables | Gestón CAN",
   description:
-    "Categorías para organizar los ingresos y egresos de la institucón",
+    "Categorías para organizar los ingresos y egresos de la institución",
 };
 
 export default async function CategoriesPage({

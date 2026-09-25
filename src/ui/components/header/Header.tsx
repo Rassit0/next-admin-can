@@ -43,11 +43,11 @@ export const Header = ({
       return;
     }
 
-    // 2. Si bajamos (direccón positiva), ocultar.
+    // 2. Si bajamos (dirección positiva), ocultar.
     if (direction > 0) {
       setHidden(true);
     }
-    // 3. Si subimos (direccón negativa), NO hacemos nada.
+    // 3. Si subimos (dirección negativa), NO hacemos nada.
     // Al no haber un 'setHidden(false)' aquí, el header se mantiene oculto
     // hasta que vuelvas a tocar el tope y se ejecute el punto 1.
   });

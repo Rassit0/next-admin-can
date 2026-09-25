@@ -24,7 +24,7 @@ export const ModuleGrid = ({ items = [] }: ModuleGridProps) => {
           }
           title={item.label}
           description={
-            item.description || "Gestione esta seccón de la plataforma."
+            item.description || "Gestione esta sección de la plataforma."
           }
           tagText={item.tagText || "Módulo"}
         />

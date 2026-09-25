@@ -53,7 +53,7 @@ export const SectionProfiles = () => {
             <div className="grid grid-cols-2 gap-2 mt-4">
               <div className="bg-white/50 p-2 rounded">
                 <div className="text-[10px] text-on-surface-variant uppercase">
-                  Posicón
+                  Posición
                 </div>
                 <div className="text-xs font-bold">Base (Point Guard)</div>
               </div>
@@ -86,7 +86,7 @@ export const SectionProfiles = () => {
             <div className="grid grid-cols-2 gap-2 mt-4">
               <div className="bg-white/50 p-2 rounded">
                 <div className="text-[10px] text-on-surface-variant uppercase">
-                  Posicón
+                  Posición
                 </div>
                 <div className="text-xs font-bold">Libero</div>
               </div>
@@ -108,7 +108,7 @@ export const SectionProfiles = () => {
               Perfiles de Estudiante
             </h3>
             <p className="text-xs text-on-surface-variant font-medium mt-1">
-              Formacón académica y deportiva
+              Formación académica y deportiva
             </p>
           </div>
           <button className="flex items-center gap-1.5 px-3 py-1.5 bg-tertiary-container/10 text-tertiary font-bold text-xs rounded-full hover:bg-tertiary-container/20 transition-colors">
@@ -153,7 +153,7 @@ export const SectionProfiles = () => {
               Perfiles de Profesor
             </h3>
             <p className="text-xs text-on-surface-variant font-medium mt-1">
-              Roles de instruccón y liderazgo
+              Roles de instrucción y liderazgo
             </p>
           </div>
           <button className="flex items-center gap-1.5 px-3 py-1.5 bg-secondary-container/30 text-secondary font-bold text-xs rounded-full hover:bg-secondary-container/50 transition-colors">

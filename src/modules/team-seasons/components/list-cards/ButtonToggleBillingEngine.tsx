@@ -99,7 +99,7 @@ export const ButtonToggleBillingEngine = ({
                 </span>
                 <span className="text-muted">
                   Estás por {isEngineActive ? "detener" : "iniciar"} la
-                  generacón automática
+                  generación automática
                 </span>
               </AlertDialog.Heading>
             </AlertDialog.Header>
@@ -108,8 +108,8 @@ export const ButtonToggleBillingEngine = ({
                 <Alert.Indicator />
                 <Alert.Content>
                   <Alert.Title>
-                    ¿Estás seguro de {isEngineActive ? "pausar" : "reanudar"}{" "}
-                    el motor de cobros para esta temporada?
+                    ¿Estás seguro de {isEngineActive ? "pausar" : "reanudar"} el
+                    motor de cobros para esta temporada?
                   </Alert.Title>
 
                   <Alert.Description>

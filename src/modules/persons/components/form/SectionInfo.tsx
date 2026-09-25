@@ -9,7 +9,7 @@ export const SectionInfo = () => {
     <div className="w-full md:w-1/3 p-8 border-r border-outline-variant/15  space-y-8 bg-surface-container-low/30">
       <section>
         <h3 className="text-xs font-black text-sky-700 uppercase tracking-widest mb-6">
-          Informacón Básica
+          Información Básica
         </h3>
         <div className="flex justify-center mb-6">
           <div className="relative group">

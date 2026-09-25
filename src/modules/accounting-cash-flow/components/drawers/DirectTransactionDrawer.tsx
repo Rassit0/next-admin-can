@@ -119,7 +119,7 @@ export const DirectTransactionDrawer = ({
 
     if (isSplitPayment) {
       if (splits.length === 0) {
-        toast.error("Debe existir al menos una distribucón");
+        toast.error("Debe existir al menos una distribución");
         return;
       }
       let totalSplits = 0;

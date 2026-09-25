@@ -57,7 +57,7 @@ export const EditModal = ({
                 <Modal.Heading>Actualizar jugador</Modal.Heading>
               </div>
               <p className="mt-1.5 text-sm leading-5 text-muted">
-                Actualiza la informacón del jugador.
+                Actualiza la información del jugador.
               </p>
             </Modal.Header>
             <Modal.Body className="p-6">

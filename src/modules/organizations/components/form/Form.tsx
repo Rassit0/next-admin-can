@@ -101,7 +101,7 @@ export const FormOrganization = ({
           .join("\n"); // Los separamos por saltos de línea para el toast
       }
 
-      // 2. Pasamos la descripcón formateada al componente de notificaciones
+      // 2. Pasamos la descripción formateada al componente de notificaciones
       toast.danger(res.message, {
         description: errorDescription,
       });
@@ -134,7 +134,7 @@ export const FormOrganization = ({
               setName(e.target.value);
               setErrors({});
             }}
-            placeholder="Ingrese el nombre de la institucón"
+            placeholder="Ingrese el nombre de la institución"
           />
           <FieldError children={errors.name && <> {errors.name}</>} />
         </TextField>
@@ -166,9 +166,9 @@ export const FormOrganization = ({
           name="address"
           isInvalid={!!errors.address || undefined}
         >
-          <Label>Direccón</Label>
+          <Label>Dirección</Label>
           <TextArea
-            placeholder="Ingrese la direccón de la escuela"
+            placeholder="Ingrese la dirección de la escuela"
             rows={4}
             value={address}
             onChange={(e) => {
@@ -185,9 +185,9 @@ export const FormOrganization = ({
           name="description"
           isInvalid={!!errors.description || undefined}
         >
-          <Label>Descripcón</Label>
+          <Label>Descripción</Label>
           <TextArea
-            placeholder="Ingrese la descripcón de la categoría"
+            placeholder="Ingrese la descripción de la categoría"
             rows={4}
             value={description}
             onChange={(e) => {
@@ -223,7 +223,7 @@ export const FormOrganization = ({
               {/* <Alert.Title>Scheduled maintenance</Alert.Title> */}
               <Alert.Description>
                 Las escuelas inactivas no se mostrarán en los formularios de
-                inscripcón.
+                inscripción.
               </Alert.Description>
             </Alert.Content>
           </Alert>
