@@ -277,7 +277,7 @@ export const NewsForm = ({
             onFilesChange={handleUploadImage}
             maxFiles={1}
             accept="image/jpeg, image/png, image/webp"
-            maxSizeMB={5}
+            maxSizeMB={20}
           />
           {formData.imageUrl && (
             <div className="mt-2 text-sm text-success flex items-center justify-between">

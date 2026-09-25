@@ -129,7 +129,7 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     serverActions: {
-      bodySizeLimit: "10mb",
+      bodySizeLimit: "20mb",
     },
     cpus: 1,
     memoryBasedWorkersCount: true,

@@ -297,7 +297,7 @@ export const HeroBannerForm = ({
               onFilesChange={(f) => handleUploadImage(f, "16x9")}
               maxFiles={1}
               accept="image/jpeg, image/png, image/webp"
-              maxSizeMB={5}
+              maxSizeMB={20}
             />
             {formData.image16x9 && (
               <div className="mt-2 text-sm text-success">✅ Cargada</div>
@@ -314,7 +314,7 @@ export const HeroBannerForm = ({
               onFilesChange={(f) => handleUploadImage(f, "1x1")}
               maxFiles={1}
               accept="image/jpeg, image/png, image/webp"
-              maxSizeMB={5}
+              maxSizeMB={20}
             />
             {formData.image1x1 && (
               <div className="mt-2 text-sm text-success flex items-center justify-between">
@@ -342,7 +342,7 @@ export const HeroBannerForm = ({
               onFilesChange={(f) => handleUploadImage(f, "3x4")}
               maxFiles={1}
               accept="image/jpeg, image/png, image/webp"
-              maxSizeMB={5}
+              maxSizeMB={20}
             />
             {formData.image3x4 && (
               <div className="mt-2 text-sm text-success flex items-center justify-between">

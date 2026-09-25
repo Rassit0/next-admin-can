@@ -115,7 +115,7 @@ export const InstitutionHistorySettingsForm = ({
           }}
           accept="image/jpeg, image/png, image/webp"
           maxFiles={1}
-          maxSizeMB={5}
+          maxSizeMB={20}
         />
         {defaultValues.imageUrl && (
           <div className="flex items-center gap-3">

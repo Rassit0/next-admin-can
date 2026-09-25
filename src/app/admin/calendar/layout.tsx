@@ -26,7 +26,7 @@ export default async function CalendarLayout({ children }: LayoutProps) {
           actions={
             <Link href="/admin">
               <Button variant="outline" size="sm">
-                Volver al Meníº
+                Volver al Menú
               </Button>
             </Link>
           }

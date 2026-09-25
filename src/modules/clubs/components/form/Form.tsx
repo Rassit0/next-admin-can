@@ -144,7 +144,7 @@ export const FormClub = ({
             files={files}
             onFilesChange={setFiles}
             maxFiles={1}
-            maxSizeMB={5}
+            maxSizeMB={20}
             accept="image/png, image/jpeg, image/webp"
           />
           {club?.imageUrl && files.length === 0 && (

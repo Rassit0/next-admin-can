@@ -22,7 +22,7 @@ export function FileUploader({
   onFilesChange,
   maxFiles = 5,
   accept = "image/jpeg, image/png, image/webp, application/pdf",
-  maxSizeMB = 5,
+  maxSizeMB = 20,
   className,
 }: FileUploaderProps) {
   const inputRef = useRef<HTMLInputElement>(null);

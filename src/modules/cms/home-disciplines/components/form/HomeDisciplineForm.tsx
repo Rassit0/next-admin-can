@@ -228,7 +228,7 @@ export const HomeDisciplineForm = ({
             onFilesChange={(f) => handleUploadImage(f)}
             maxFiles={1}
             accept="image/jpeg, image/png, image/webp"
-            maxSizeMB={5}
+            maxSizeMB={20}
           />
           {formData.image4x3 && (
             <div className="mt-2 text-sm text-success">✅ Cargada</div>

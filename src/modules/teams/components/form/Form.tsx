@@ -169,7 +169,7 @@ export const FormTeam = ({
             files={files}
             onFilesChange={setFiles}
             maxFiles={1}
-            maxSizeMB={5}
+            maxSizeMB={20}
             accept="image/png, image/jpeg, image/webp"
           />
           {team?.imageUrl && files.length === 0 && (
