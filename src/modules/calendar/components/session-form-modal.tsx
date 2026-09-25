@@ -200,7 +200,7 @@ export const SessionFormModal = ({
 
   const handleSubmit = async () => {
     if (!startDate || !startTime || !durationMin) {
-      toast.error("Fechas y duración requeridas");
+      toast.error("Fechas y duracón requeridas");
       return;
     }
 
@@ -256,7 +256,7 @@ export const SessionFormModal = ({
         if (onSuccess) onSuccess();
       }
     } catch (err: any) {
-      toast.error(err.message || "Error guardando la sesión");
+      toast.error(err.message || "Error guardando la sesón");
     } finally {
       setLoading(false);
     }
@@ -270,7 +270,7 @@ export const SessionFormModal = ({
             <Modal.Header>
               <div className="flex justify-between items-center w-full">
                 <h3 className="font-semibold text-lg">
-                  {mode === "create" ? "Crear Sesión" : "Editar Sesión"}
+                  {mode === "create" ? "Crear Sesón" : "Editar Sesón"}
                 </h3>
                 <CloseButton onPress={() => state.close()} />
               </div>
@@ -294,7 +294,7 @@ export const SessionFormModal = ({
                 {mode === "edit" && initialData?.seriesId && (
                   <div className="bg-warning/10 p-3 rounded-lg flex flex-col gap-2">
                     <p className="text-sm text-warning font-semibold">
-                      Esta sesión pertenece a una serie recurrente.
+                      Esta sesón pertenece a una serie recurrente.
                     </p>
                     <Select
                       variant="secondary"
@@ -304,16 +304,16 @@ export const SessionFormModal = ({
                       }
                     >
                       <Label className="text-sm">
-                        ÃÂ¿Qué deseas modificar?
+                        ¿Qué deseas modificar?
                       </Label>
                       <Select.Trigger />
                       <Select.Popover>
                         <ListBox>
                           <ListBox.Item
                             id="single"
-                            textValue="Solo esta sesión"
+                            textValue="Solo esta sesón"
                           >
-                            Solo esta sesión
+                            Solo esta sesón
                           </ListBox.Item>
                           <ListBox.Item
                             id="following"
@@ -356,7 +356,7 @@ export const SessionFormModal = ({
                   </TextField>
                   <TextField>
                     <Label className="font-semibold text-sm">
-                      Duración (min) *
+                      Duracón (min) *
                     </Label>
                     <Input
                       type="number"
@@ -375,7 +375,7 @@ export const SessionFormModal = ({
                   onSelectionChange={(k) => setLocationId(k ? String(k) : "")}
                   isDisabled={loadingData}
                 >
-                  <Label className="font-semibold text-sm">Ubicación</Label>
+                  <Label className="font-semibold text-sm">Ubicacón</Label>
                   <Select.Trigger />
                   <Select.Popover>
                     <ListBox
@@ -463,7 +463,7 @@ export const SessionFormModal = ({
                         onChange={(e) => setIsRecurrent(e.target.checked)}
                       />
                       <span className="font-semibold text-sm">
-                        Sesión Recurrente (Semanal)
+                        Sesón Recurrente (Semanal)
                       </span>
                     </label>
 
@@ -475,11 +475,11 @@ export const SessionFormModal = ({
                           className="flex flex-row flex-wrap gap-2"
                         >
                           <Label className="text-sm font-semibold w-full">
-                            Dí­as de repetición
+                            Dí­as de repeticón
                           </Label>
                           <Checkbox value="MO">Lun</Checkbox>
                           <Checkbox value="TU">Mar</Checkbox>
-                          <Checkbox value="WE">Mié</Checkbox>
+                          <Checkbox value="WE">Mé</Checkbox>
                           <Checkbox value="TH">Jue</Checkbox>
                           <Checkbox value="FR">Vie</Checkbox>
                           <Checkbox value="SA">Sáb</Checkbox>
@@ -524,7 +524,7 @@ export const SessionFormModal = ({
                   icon={mode === "create" ? Add01Icon : Edit02Icon}
                   size={18}
                 />
-                {mode === "create" ? "Guardar Sesión" : "Actualizar Sesión"}
+                {mode === "create" ? "Guardar Sesón" : "Actualizar Sesón"}
               </Button>
             </Modal.Footer>
           </Modal.Dialog>

@@ -247,7 +247,7 @@ export const FormPlayerPass = ({
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleRemoveError = (fieldName: string) => {
-    // Limpiar solo el error de este campo especi­fico
+    // Limpiar solo el error de este campo específico
     if (errors[fieldName]) {
       setErrors((prev) => {
         const newErrors = { ...prev };
@@ -335,10 +335,10 @@ export const FormPlayerPass = ({
               : messages;
             return `${field}: ${msgList}`;
           })
-          .join("\n"); // Los separamos por saltos de li­nea para el toast
+          .join("\n"); // Los separamos por saltos de línea para el toast
       }
 
-      // 2. Pasamos la descripción formateada al componente de notificaciones
+      // 2. Pasamos la descripcón formateada al componente de notificaciones
       toast.danger(res.message, {
         description: errorDescription,
       });

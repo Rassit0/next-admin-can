@@ -56,7 +56,7 @@ export const MatchLineupSidePanel = ({
   const [editStates, setEditStates] = useState<Record<string, EditState>>({});
 
   useEffect(() => {
-    // Inicializar el estado de edición desde la base de datos (lo persistido)
+    // Inicializar el estado de edicón desde la base de datos (lo persistido)
     const newStates: Record<string, EditState> = {};
     for (const c of callUps) {
       if (c.lineup) {
@@ -151,8 +151,8 @@ export const MatchLineupSidePanel = ({
     if (destructiveRemovals.length > 0) {
       const isMultiple = destructiveRemovals.length > 1;
       const msg = isMultiple
-        ? `Se eliminarán la participación y estadí­sticas de ${destructiveRemovals.length} jugadores.\n\nÃÂ¿Deseas continuar?`
-        : `Se eliminarán la participación y estadí­sticas de ${destructiveRemovals[0]}.\n\nÃÂ¿Deseas continuar?`;
+        ? `Se eliminarán la participacón y estadí­sticas de ${destructiveRemovals.length} jugadores.\n\n¿Deseas continuar?`
+        : `Se eliminarán la participacón y estadí­sticas de ${destructiveRemovals[0]}.\n\n¿Deseas continuar?`;
       if (!window.confirm(msg)) return;
     }
 
@@ -182,7 +182,7 @@ export const MatchLineupSidePanel = ({
         onSuccess(res.data as IMatchLineupsResponse);
       }
     } catch (e) {
-      toast.error("Ocurrió un error inesperado al guardar.");
+      toast.error("Ocurró un error inesperado al guardar.");
     } finally {
       setIsSaving(false);
     }
@@ -210,7 +210,7 @@ export const MatchLineupSidePanel = ({
         <div className="flex flex-col items-center justify-center text-center h-48 text-muted bg-default-50 rounded-lg p-4">
           <p className="text-sm font-medium">No hay convocados</p>
           <p className="text-xs mt-1">
-            Primero debes guardar la convocatoria para registrar participación.
+            Primero debes guardar la convocatoria para registrar participacón.
           </p>
         </div>
       ) : (

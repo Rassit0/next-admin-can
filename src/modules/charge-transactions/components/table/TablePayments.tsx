@@ -61,7 +61,7 @@ export const TablePayments = ({ payments }: Props) => {
   );
   const [isLoading, setIsLoading] = useState(false);
 
-  // Estado para el diálogo de impresión de recibo
+  // Estado para el diálogo de impresón de recibo
   const [printTransactionId, setPrintTransactionId] = useState<string | null>(
     null,
   );
@@ -104,7 +104,7 @@ export const TablePayments = ({ payments }: Props) => {
             <Table.Header className="bg-surface-secondary">
               <Table.Column isRowHeader>
                 <span className="text-xs font-semibold uppercase tracking-wide">
-                  NÃÂ° Recibo
+                  N° Recibo
                 </span>
               </Table.Column>
               <Table.Column>
@@ -279,7 +279,7 @@ export const TablePayments = ({ payments }: Props) => {
             </AlertDialog.Header>
             <AlertDialog.Body>
               <p>
-                ÃÂ¿Anular este pago? Esta operación revertirá el efecto
+                ¿Anular este pago? Esta operacón revertirá el efecto
                 financiero del pago, pero el comprobante permanecerá registrado
                 como "Anulado" para fines de auditorí­a.
               </p>
@@ -339,7 +339,7 @@ export const TablePayments = ({ payments }: Props) => {
 
                   <div>
                     <h3 className="text-sm font-semibold mb-2">
-                      Distribución Financiera
+                      Distribucón Financiera
                     </h3>
                     <div className="border border-border rounded-lg divide-y divide-border overflow-hidden">
                       {paymentToView.transactions?.map((t, idx) => (

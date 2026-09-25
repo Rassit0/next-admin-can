@@ -58,15 +58,15 @@ export const InstitutionHistorySettingsForm = ({
 
       const res = await updateInstitutionHistorySettingsAction(form);
       if (res.error) {
-        toast.error(res.message || "Error al actualizar la configuración");
+        toast.error(res.message || "Error al actualizar la configuracón");
       } else {
-        toast.success(res.message || "Configuración actualizada correctamente");
+        toast.success(res.message || "Configuracón actualizada correctamente");
         setFiles([]);
         setRemoveImage(false);
       }
     } catch (error) {
       console.error(error);
-      toast.error("Ocurrió un error inesperado al guardar la configuración");
+      toast.error("Ocurró un error inesperado al guardar la configuracón");
     } finally {
       setLoading(false);
     }
@@ -80,13 +80,13 @@ export const InstitutionHistorySettingsForm = ({
       className="flex flex-col gap-4"
     >
       <TextField name="title" defaultValue={defaultValues.title} isRequired>
-        <Label>Ti­tulo</Label>
+        <Label>Título</Label>
         <Input placeholder="Ej. Nuestra Historia" />
       </TextField>
 
       <TextField name="description" defaultValue={defaultValues.description}>
-        <Label>Descripción (Texto corto)</Label>
-        <TextArea placeholder="Breve introducción histórica..." />
+        <Label>Descripcón (Texto corto)</Label>
+        <TextArea placeholder="Breve introduccón histórica..." />
       </TextField>
 
       <div className="mt-2 space-y-2">
@@ -140,7 +140,7 @@ export const InstitutionHistorySettingsForm = ({
           isPending={loading}
           className="mt-4 text-primary-foreground"
         >
-          Guardar Configuración
+          Guardar Configuracón
         </Button>
       )}
     </form>

@@ -57,7 +57,7 @@ export function DateRangeFilter({
           end: parseDate(endStr),
         };
       } catch (e) {
-        // Fallback si la fecha es invi¡lida
+        // Fallback si la fecha es inválida
       }
     }
 
@@ -79,7 +79,7 @@ export function DateRangeFilter({
 
       const tz = getLocalTimeZone();
 
-      // Convertir a Date nativo para obtener el li­mite inferior y superior exacto
+      // Convertir a Date nativo para obtener el límite inferior y superior exacto
       const startLocal = value.start.toDate(tz);
 
       const endLocal = value.end.toDate(tz);
@@ -177,7 +177,7 @@ export function DateRangeFilter({
                 iltimos 6 meses
               </Button>
               <Button size="sm" variant="ghost" onPress={setThisYear}>
-                Este ai±o
+                Este año
               </Button>
             </div>
             <RangeCalendar aria-label="Fechas">

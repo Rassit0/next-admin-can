@@ -31,7 +31,7 @@ export const ButtonOfferings = ({ urlBase, teamSeasonId }: Props) => {
       </Button>
       <Tooltip.Content showArrow placement="bottom">
         <Tooltip.Arrow />
-        <p>Ofertas de Membresi­a</p>
+        <p>Ofertas de Membresía</p>
       </Tooltip.Content>
     </Tooltip>
   );

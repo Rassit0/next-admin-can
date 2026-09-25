@@ -15,7 +15,7 @@ export const removeTransaction = async (
     return {
       error: true,
       statusCode: 401,
-      message: "Su sesión ha expirado. Por favor, inicie sesión nuevamente.",
+      message: "Su sesón ha expirado. Por favor, inicie sesón nuevamente.",
     };
 
   return handleServerAction(async () => {
@@ -33,7 +33,7 @@ export const removeTransaction = async (
     return {
       error: false,
       data: response.data,
-      message: response.message || "Transacción anulada exitosamente",
+      message: response.message || "Transaccón anulada exitosamente",
     };
   });
 };

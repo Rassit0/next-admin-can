@@ -41,7 +41,7 @@ export class CANApiAdapter implements HttpAdapter {
     this.defaultTimeout = defaultTimeout;
   }
 
-  // MiTODO CENTRALIZADOR: Aqui­ controlas la conexión
+  // MiTODO CENTRALIZADOR: Aquí controlas la conexón
   private async request<T>(
     endpoint: string,
     method: string,
@@ -54,7 +54,7 @@ export class CANApiAdapter implements HttpAdapter {
       );
       throw new ApiError(
         500,
-        "El servicio no esti¡ disponible en este momento.",
+        "El servicio no está disponible en este momento.",
       );
     }
 
@@ -114,13 +114,13 @@ export class CANApiAdapter implements HttpAdapter {
       if ((error as Error).name === "AbortError") {
         throw new ApiError(
           408,
-          "La petición ha tardado demasiado tiempo (Timeout).",
+          "La peticón ha tardado demasiado tiempo (Timeout).",
         );
       }
 
       throw new ApiError(
         503,
-        "No se pudo establecer conexión con el servidor.",
+        "No se pudo establecer conexón con el servidor.",
         { originalError: error instanceof Error ? error.message : error },
       );
     } finally {
@@ -157,8 +157,8 @@ export class CANApiAdapter implements HttpAdapter {
     }
 
     const errorMap: Record<number, string> = {
-      400: "Petición incorrecta",
-      401: "Token invi¡lido o expirado",
+      400: "Peticón incorrecta",
+      401: "Token inválido o expirado",
       403: "Acceso denegado",
       404: "Recurso no encontrado",
       500: "Error interno del servidor",

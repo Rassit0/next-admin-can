@@ -71,7 +71,7 @@ export const AdvanceChargesDrawer = ({
         }
       }
     } catch (error) {
-      setPreviewError("Ocurrió un error al obtener la previsualización.");
+      setPreviewError("Ocurró un error al obtener la previsualizacón.");
       setPreviewData(null);
     } finally {
       setIsLoadingPreview(false);
@@ -97,7 +97,7 @@ export const AdvanceChargesDrawer = ({
         onSuccess?.();
       }
     } catch (error) {
-      toast.error("Ocurrió un error inesperado al generar los cargos.");
+      toast.error("Ocurró un error inesperado al generar los cargos.");
     } finally {
       setIsGenerating(false);
     }
@@ -142,7 +142,7 @@ export const AdvanceChargesDrawer = ({
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-foreground">
-                    ÃÂ¿Confirmar adelanto?
+                    ¿Confirmar adelanto?
                   </h3>
                   <p className="text-sm text-muted mt-2">
                     Estás a punto de generar{" "}
@@ -155,7 +155,7 @@ export const AdvanceChargesDrawer = ({
                     .
                   </p>
                   <p className="text-xs text-muted mt-2">
-                    Esta acción creará los cargos en el sistema y no se puede
+                    Esta accón creará los cargos en el sistema y no se puede
                     deshacer automáticamente.
                   </p>
                 </div>
@@ -184,7 +184,7 @@ export const AdvanceChargesDrawer = ({
 
                 <div className="flex flex-col gap-3">
                   <h4 className="text-sm font-semibold text-foreground border-b border-border pb-2">
-                    Previsualización
+                    Previsualizacón
                   </h4>
 
                   {isLoadingPreview ? (
@@ -258,7 +258,7 @@ export const AdvanceChargesDrawer = ({
                     </div>
                   ) : (
                     <p className="text-sm text-muted text-center py-4">
-                      Ingresa una cantidad para ver la previsualización.
+                      Ingresa una cantidad para ver la previsualizacón.
                     </p>
                   )}
                 </div>

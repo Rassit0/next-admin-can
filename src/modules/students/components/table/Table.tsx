@@ -106,7 +106,7 @@ export const TableStudents = ({ students }: Props) => {
                     No se encontraron estudiantes
                   </span>
                   <span className="text-sm text-default-400">
-                    Intenta con otros ti©rminos de biºsqueda o agrega un nuevo
+                    Intenta con otros términos de búsqueda o agrega un nuevo
                     estudiante.
                   </span>
                 </div>

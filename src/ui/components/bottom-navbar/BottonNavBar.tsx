@@ -35,7 +35,7 @@ export const BottonNavBar = ({ items, urlBase }: Props) => {
 
   const pathname = usePathname();
 
-  // Cerrar el meniº "Mi¡s" si la ruta cambia
+  // Cerrar el menú "Más" si la ruta cambia
   useEffect(() => {
     setIsMoreOpen(false);
   }, [pathname, setIsMoreOpen]);
@@ -86,7 +86,7 @@ export const BottonNavBar = ({ items, urlBase }: Props) => {
                       : "shadow-sm",
                   )}
                 >
-                  {/* Indicador Activo Fi­sico que viaja al centro */}
+                  {/* Indicador Activo Físico que viaja al centro */}
                   {(isMoreActive || isMoreOpen) && (
                     <motion.div
                       layoutId="mobile-active-pill"

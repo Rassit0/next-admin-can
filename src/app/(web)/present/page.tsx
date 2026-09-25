@@ -8,9 +8,9 @@ import {
 } from "@/modules/portal/news/actions/news.action";
 
 export const metadata = {
-  title: "Central de Anuncios y Noticias | Club Atli©tico Nacional",
+  title: "Central de Anuncios y Noticias | Club Atlético Nacional",
   description:
-    "iltimas noticias, anuncios y resultados del Club Atli©tico Nacional.",
+    "iltimas noticias, anuncios y resultados del Club Atlético Nacional.",
   openGraph: {
     images: ["/logo.png"],
   },

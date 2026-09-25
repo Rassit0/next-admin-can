@@ -165,7 +165,7 @@ export const TableCharges = ({
                                 .person;
                             return `${person.name} ${person.lastName}`;
                           }
-                          return "Ã¢ÂÂ";
+                          return "—";
                         })()}
                       </span>
                     </Table.Cell>

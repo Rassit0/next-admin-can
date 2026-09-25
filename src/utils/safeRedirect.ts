@@ -4,7 +4,7 @@ export function getSafeRedirectUrl(
 ): string {
   if (!url) return fallback;
 
-  // Aceptar rutas relativas vi¡lidas (empiezan con / pero no con //)
+  // Aceptar rutas relativas válidas (empiezan con / pero no con //)
   if (url.startsWith("/") && !url.startsWith("//")) {
     return url;
   }

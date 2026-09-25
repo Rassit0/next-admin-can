@@ -7,7 +7,7 @@ export function CinematicLoader() {
   // 0: Escudo exterior, 1: Escudo interno, 2: Letra C, 3: Letra A, 4: Letra N, 5: Estrella superior
   const paths = [
     "M60 10 L112 28 V72 C112 105 89 128 60 138 C31 128 8 105 8 72 V28 Z", // Escudo Exterior
-    "M60 18 L104 33 V69 C104 98 84 118 60 127 C36 118 16 98 16 69 V33 Z", // Li­nea Interna
+    "M60 18 L104 33 V69 C104 98 84 118 60 127 C36 118 16 98 16 69 V33 Z", // Línea Interna
     "M46 54 H36 V92 H46", // Letra C
     "M54 92 V54 H66 V92 M54 73 H66", // Letra A
     "M74 92 V54 L86 92 V54", // Letra N
@@ -36,13 +36,13 @@ export function CinematicLoader() {
             viewBox="0 0 120 140"
             fill="none"
             className="h-36 w-32"
-            aria-label="Club Atli©tico Nacional - CAN"
+            aria-label="Club Atlético Nacional - CAN"
           >
             {paths.map((d, i) => {
-              // Ajustes de grosor especi­ficos por elemento
+              // Ajustes de grosor específicos por elemento
               let strokeWidth = 3;
-              if (i === 0) strokeWidth = 4.5; // Escudo exterior mi¡s fuerte
-              if (i === 1) strokeWidth = 1.5; // Li­nea elegante interna
+              if (i === 0) strokeWidth = 4.5; // Escudo exterior más fuerte
+              if (i === 1) strokeWidth = 1.5; // Línea elegante interna
               if (i === 5) strokeWidth = 2; // Estrella detallada
               return (
                 <motion.path
@@ -55,7 +55,7 @@ export function CinematicLoader() {
                   initial={{ pathLength: 0, opacity: 0 }}
                   animate={{ pathLength: 1, opacity: 1 }}
                   transition={{
-                    duration: i < 2 ? 1.4 : 0.9, // Los escudos se dibujan mi¡s lento, las letras mi¡s ri¡pido
+                    duration: i < 2 ? 1.4 : 0.9, // Los escudos se dibujan más lento, las letras más rápido
                     delay: 0.1 + i * 0.22, // Cascada perfecta entre trazos
                     ease: [0.22, 1, 0.36, 1], // Curva de velocidad "cubic-bezier" ultra suave
                   }}
@@ -72,7 +72,7 @@ export function CinematicLoader() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1, duration: 0.5 }}
       >
-        Club Atli©tico Nacional
+        Club Atlético Nacional
       </motion.p>
     </motion.div>
   );

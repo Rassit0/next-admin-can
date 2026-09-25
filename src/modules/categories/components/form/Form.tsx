@@ -61,10 +61,10 @@ export const FormCategory = ({
       newErrors.name = "Debe ingresar un nombre";
     }
     if (!minAge) {
-      newErrors.minAge = "Debe ingresar un ai±o minimo";
+      newErrors.minAge = "Debe ingresar un año minimo";
     }
     if (minAge && maxAge && minAge > maxAge) {
-      newErrors.maxAge = "El ai±o maximo debe ser mayor al ai±o minimo";
+      newErrors.maxAge = "El año maximo debe ser mayor al año minimo";
     }
     if (!disciplineId) {
       newErrors.disciplineId = "Debe seleccionar una disciplina";
@@ -100,10 +100,10 @@ export const FormCategory = ({
               : messages;
             return `${field}: ${msgList}`;
           })
-          .join("\n"); // Los separamos por saltos de li­nea para el toast
+          .join("\n"); // Los separamos por saltos de línea para el toast
       }
 
-      // 2. Pasamos la descripción formateada al componente de notificaciones
+      // 2. Pasamos la descripcón formateada al componente de notificaciones
       toast.danger(res.message, {
         // description: errorDescription,
       });
@@ -160,7 +160,7 @@ export const FormCategory = ({
             }}
           />
           <Description>
-            Deje vaci­o si la categori­a no tiene li­mite de edad mi¡xima.
+            Deje vacío si la categoría no tiene límite de edad máxima.
           </Description>
           <FieldError children={errors.maxAge && <> {errors.maxAge}</>} />
         </TextField>

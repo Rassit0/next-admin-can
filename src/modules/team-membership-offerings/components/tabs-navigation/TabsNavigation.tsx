@@ -32,10 +32,10 @@ export const TabsNavigation = () => {
   const currentPage = searchParams.get("status") || "all";
 
   const handleChange = (value: string | "all") => {
-    // Si hacen clic en la pestai±a que ya esti¡ activa, no hacemos nada
+    // Si hacen clic en la pestaña que ya está activa, no hacemos nada
     if (value === currentPage) return;
 
-    // Usamos startTransition para que Next.js priorice la respuesta visual de la pestai±a
+    // Usamos startTransition para que Next.js priorice la respuesta visual de la pestaña
     startTransition(() => {
       const params = new URLSearchParams(searchParams.toString());
 

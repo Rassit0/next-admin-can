@@ -79,7 +79,7 @@ export const CashClosureFormModal = ({
     if (difference !== 0 && (!observations || observations.trim() === "")) {
       setErrors({
         observations:
-          "Debe proporcionar una observación para justificar la diferencia.",
+          "Debe proporcionar una observacón para justificar la diferencia.",
       });
       return;
     }
@@ -117,7 +117,7 @@ export const CashClosureFormModal = ({
               <div className="flex items-center gap-2">
                 <Modal.Heading>
                   {step === 1
-                    ? "Arqueo de Caja (Conteo Fi­sico)"
+                    ? "Arqueo de Caja (Conteo Físico)"
                     : "Resumen del Arqueo"}
                 </Modal.Heading>
               </div>
@@ -130,7 +130,7 @@ export const CashClosureFormModal = ({
                   className="flex flex-col gap-4 w-full"
                 >
                   <p className="text-sm text-on-surface-variant">
-                    Realice el conteo fi­sico del dinero en caja (monedas y
+                    Realice el conteo físico del dinero en caja (monedas y
                     billetes) y registre el monto total.
                   </p>
                   <TextField
@@ -140,7 +140,7 @@ export const CashClosureFormModal = ({
                     type="number"
                     isInvalid={!!errors.actualBalance || undefined}
                   >
-                    <Label>Dinero fi­sico en caja</Label>
+                    <Label>Dinero físico en caja</Label>
                     <InputGroup>
                       <InputGroup.Prefix>
                         <span className="text-on-surface-variant text-sm pr-2">
@@ -235,7 +235,7 @@ export const CashClosureFormModal = ({
                       placeholder={
                         difference !== 0
                           ? "Justifique la diferencia de dinero..."
-                          : "Algiºn comentario adicional..."
+                          : "Algún comentario adicional..."
                       }
                     />
                     <FieldError
@@ -268,7 +268,7 @@ export const CashClosureFormModal = ({
                     onPress={() => setStep(1)}
                     isDisabled={isSubmitting}
                   >
-                    Atri¡s
+                    Atrás
                   </Button>
                   <Button
                     type="submit"

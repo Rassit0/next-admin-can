@@ -6,23 +6,23 @@ import { Target, Eye, Heart, Shield, Star, Users } from "lucide-react";
 const principles = [
   {
     id: 1,
-    title: "Misión",
+    title: "Misón",
     icon: Target,
     description:
-      "Fomentar el desarrollo integral de nuestros atletas a travi©s de la pri¡ctica deportiva de alto rendimiento, inculcando disciplina, trabajo en equipo y valores i©ticos que trasciendan mi¡s alli¡ del campo de juego.",
+      "Fomentar el desarrollo integral de nuestros atletas a través de la práctica deportiva de alto rendimiento, inculcando disciplina, trabajo en equipo y valores éticos que trasciendan más allá del campo de juego.",
   },
   {
     id: 2,
-    title: "Visión",
+    title: "Visón",
     icon: Eye,
     description:
-      "Ser reconocidos a nivel nacional e internacional como el club li­der en formación deportiva y competitividad, marcando un esti¡ndar de excelencia y siendo un referente de innovación y pasión por el deporte.",
+      "Ser reconocidos a nivel nacional e internacional como el club líder en formacón deportiva y competitividad, marcando un estándar de excelencia y siendo un referente de innovacón y pasón por el deporte.",
   },
 ];
 
 const values = [
   {
-    name: "Pasión",
+    name: "Pasón",
     icon: Heart,
     desc: "Entregamos el corazón en cada entrenamiento y competencia.",
   },
@@ -34,10 +34,10 @@ const values = [
   {
     name: "Excelencia",
     icon: Star,
-    desc: "Buscamos constantemente la mejora y el mi¡ximo rendimiento.",
+    desc: "Buscamos constantemente la mejora y el máximo rendimiento.",
   },
   {
-    name: "Compai±erismo",
+    name: "Compañerismo",
     icon: Users,
     desc: "Trabajamos unidos como una verdadera familia deportiva.",
   },

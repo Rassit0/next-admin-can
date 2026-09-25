@@ -114,7 +114,7 @@ export const TablePlayers = ({ players }: Props) => {
                     No se encontraron jugadores
                   </span>
                   <span className="text-sm text-default-400">
-                    Intenta con otros ti©rminos de biºsqueda o agrega un nuevo
+                    Intenta con otros términos de búsqueda o agrega un nuevo
                     jugador.
                   </span>
                 </div>

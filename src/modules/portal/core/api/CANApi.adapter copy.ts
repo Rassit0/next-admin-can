@@ -14,7 +14,7 @@ export class CANApiAdapter implements HttpAdapter {
   constructor() {
     this.baseUrl = process.env.NEXT_PUBLIC_CAN_API_URL || "";
   }
-  // MiTODO CENTRALIZADOR: Aqui­ controlas la conexión
+  // MiTODO CENTRALIZADOR: Aquí controlas la conexón
   private async request<T>(endpoint: string, options: RequestInit): Promise<T> {
     if (!this.baseUrl) {
       if (!this.baseUrl) {
@@ -23,10 +23,10 @@ export class CANApiAdapter implements HttpAdapter {
           "CRITICAL: NEXT_PUBLIC_CAN_API_URL is missing in environment variables",
         );
 
-        // Lanza un error geni©rico para el usuario
+        // Lanza un error genérico para el usuario
         throw new ApiError(
           500,
-          "El servicio no esti¡ disponible en este momento.",
+          "El servicio no está disponible en este momento.",
         );
       }
     }
@@ -52,10 +52,10 @@ export class CANApiAdapter implements HttpAdapter {
       // Si el error ya es una instancia de ApiError, lo relanzamos
       if (error instanceof ApiError) throw error;
 
-      // Si llegamos aqui­, es un fallo de conexión o red
+      // Si llegamos aquí, es un fallo de conexón o red
       throw new ApiError(
         503,
-        "No se pudo establecer conexión con el servidor.",
+        "No se pudo establecer conexón con el servidor.",
         { originalError: error instanceof Error ? error.message : error },
       );
     } finally {
@@ -91,7 +91,7 @@ export class CANApiAdapter implements HttpAdapter {
     }
 
     const errorMap: Record<number, string> = {
-      401: "Token invi¡lido o expirado",
+      401: "Token inválido o expirado",
       403: "Acceso denegado",
       404: "Recurso no encontrado",
     };
@@ -119,7 +119,7 @@ export class CANApiAdapter implements HttpAdapter {
     data: FormData | Record<string, any>,
     options?: RequestInit,
   ): Promise<T> {
-    // console.log("URL de petición:", `${this.baseUrl}${endpoint}`);
+    // console.log("URL de peticón:", `${this.baseUrl}${endpoint}`);
     const isFormData = data instanceof FormData;
     return this.request<T>(endpoint, {
       method: "POST",

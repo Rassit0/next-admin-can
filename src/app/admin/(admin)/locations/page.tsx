@@ -31,7 +31,7 @@ export default async function LocationsPage({ searchParams }: Props) {
     <>
       {/* <!-- Header --> */}
       <HeaderPage
-        title="Gestión de Instalaciones"
+        title="Gestón de Instalaciones"
         description="Administra las instalaciones del club"
         action={<AddModal />}
       />

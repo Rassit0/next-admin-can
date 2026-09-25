@@ -3,7 +3,7 @@ import { z } from "zod";
 export const scheduleFormSchema = z.object({
   locationId: z
     .string()
-    .uuid("Seleccione una ubicación vi¡lida")
+    .uuid("Seleccione una ubicacón válida")
     .nullable()
     .optional(),
   title: z.string().optional(),
@@ -14,17 +14,17 @@ export const scheduleFormSchema = z.object({
   // Hora de inicio del entrenamiento (ej. "15:00")
   startTime: z.string().min(1, "La hora de inicio es requerida"),
 
-  // Duración
+  // Duracón
   durationMin: z.coerce
     .number()
-    .min(1, "La duración debe ser mayor a 0")
+    .min(1, "La duracón debe ser mayor a 0")
     .default(90),
 
   // Días de recurrencia en formato RRULE (MO, TU, WE, TH, FR, SA, SU)
-  days: z.array(z.string()).min(1, "Seleccione al menos un di­a de la semana"),
+  days: z.array(z.string()).min(1, "Seleccione al menos un día de la semana"),
 
-  // Hasta cui¡ndo se repite
-  untilDate: z.string().min(1, "La fecha li­mite es requerida"),
+  // Hasta cuándo se repite
+  untilDate: z.string().min(1, "La fecha límite es requerida"),
 
   timezone: z.string().optional().default("America/La_Paz"),
 });

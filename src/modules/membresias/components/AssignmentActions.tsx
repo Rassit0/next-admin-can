@@ -103,7 +103,7 @@ export const AssignmentActions = ({
         isDisabled
         className="text-muted"
       >
-        Ã¢ÂÂ
+        —
       </Button>
     );
   }
@@ -123,7 +123,7 @@ export const AssignmentActions = ({
           <HugeiconsIcon icon={MoreVerticalIcon} size={18} />
         )}
       </Button>
-      <Dropdown.Menu aria-label="Acciones de asignación">
+      <Dropdown.Menu aria-label="Acciones de asignacón">
         {availableActions.map((action) => (
           <Dropdown.Item
             key={action.key}

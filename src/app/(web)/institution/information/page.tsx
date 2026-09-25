@@ -11,7 +11,7 @@ export default async function InformationInstitutionPage() {
     return (
       <div className="min-h-screen flex items-center justify-center text-center px-4">
         <p className="text-xl font-600 text-gray-500">
-          No se pudo cargar la información de la institución.
+          No se pudo cargar la informacón de la institucón.
         </p>
       </div>
     );

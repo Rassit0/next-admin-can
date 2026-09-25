@@ -2,8 +2,8 @@ import React from "react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Operaciones Ri¡pidas | Next Admin CAN",
-  description: "Centro de biºsqueda y operaciones de secretari­a",
+  title: "Operaciones Rápidas | Next Admin CAN",
+  description: "Centro de búsqueda y operaciones de secretaría",
 };
 
 export default function QuickOperationsPage() {

@@ -34,7 +34,7 @@ export const EditHomeDisciplineModal = ({
               <Modal.Heading>Editar Bloque</Modal.Heading>
             </div>
             <p className="mt-1.5 text-sm leading-5 text-muted">
-              Actualice la información del bloque seleccionado.
+              Actualice la informacón del bloque seleccionado.
             </p>
           </Modal.Header>
           <Modal.Body className="p-6">

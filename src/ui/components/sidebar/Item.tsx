@@ -35,7 +35,7 @@ export const Item = ({ item, index, urlBase }: Props) => {
   // Obtener el primer segmento del item
   const itemSegment = item.href.split("/").filter(Boolean)[0] ?? "/";
 
-  // Si hay un pari¡metro 'from', sobreescribe el segmento actual para mantener el sidebar en contexto
+  // Si hay un parámetro 'from', sobreescribe el segmento actual para mantener el sidebar en contexto
   const effectiveSegment = fromContext || currentSegment;
 
   // Si el primer segmento efectivo es igual al primer segmento del item, el item esta activo

@@ -138,7 +138,7 @@ export const PERMISSIONS = [
     ],
   },
   {
-    name: "Devolución",
+    name: "Devolucón",
     permissions: [
       {
         name: "Disponible",

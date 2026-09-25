@@ -39,7 +39,7 @@ const BANKS = [
   { id: "bnb", name: "Banco Nacional de Bolivia" },
   { id: "bmsc", name: "Banco Mercantil Santa Cruz" },
   { id: "bcp", name: "Banco de Crédito BCP" },
-  { id: "bu", name: "Banco Unión" },
+  { id: "bu", name: "Banco Unón" },
 ];
 
 const formatCardNumber = (value: string): string =>
@@ -128,7 +128,7 @@ export const PaymentGatewayModal = ({
             <Modal.Heading>Procesar pago</Modal.Heading>
             <p className="mt-1.5 text-sm leading-5 text-muted">
               {payment
-                ? `${payment.concept} ÃÂ· ${payment.athleteName}`
+                ? `${payment.concept} · ${payment.athleteName}`
                 : "Selecciona un cargo pendiente"}
             </p>
           </Modal.Header>
@@ -217,7 +217,7 @@ export const PaymentGatewayModal = ({
                           </TextField>
                         </div>
                         <p className="text-[11px] leading-relaxed text-muted">
-                          Entorno de simulación seguro. No ingreses datos reales
+                          Entorno de simulacón seguro. No ingreses datos reales
                           de tarjetas.
                         </p>
                       </div>
@@ -315,7 +315,7 @@ export const PaymentGatewayModal = ({
                     <HugeiconsIcon icon={CheckmarkCircle02Icon} size={36} />
                   </motion.span>
                   <p className="text-base font-bold text-foreground">
-                    ÃÂ¡Pago aprobado!
+                    ¡Pago aprobado!
                   </p>
                   <p className="text-xs text-muted">{feedback}</p>
                   <p className="rounded-lg bg-surface px-3 py-1 text-[11px] font-medium text-muted">

@@ -24,7 +24,7 @@ export const CategorySelectFilter = ({
   const handleSelectionChange = (value: string) => {
     const params = new URLSearchParams(searchParams);
 
-    params.set("page", "1"); // Reset a pi¡gina 1
+    params.set("page", "1"); // Reset a página 1
 
     if (value && value !== "all") {
       params.set("teamSeasonCategoryId", value);
@@ -40,11 +40,11 @@ export const CategorySelectFilter = ({
       aria-label="Filtro de categorías"
       variant="secondary"
       className="md:w-64 w-full"
-      placeholder="Categori­a"
+      placeholder="Categoría"
       value={currentCategoryId as Key}
       onChange={(value) => handleSelectionChange(value?.toString() || "all")}
     >
-      <Label>Categori­a</Label>
+      <Label>Categoría</Label>
       <Select.Trigger>
         <Select.Value />
         <Select.Indicator />

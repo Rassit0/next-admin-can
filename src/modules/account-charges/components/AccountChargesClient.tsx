@@ -109,12 +109,12 @@ export const AccountChargesClient = ({
             <AlertDialog.CloseTrigger />
             <AlertDialog.Header>
               <AlertDialog.Icon status="danger" />
-              <AlertDialog.Heading>ÃÂ¿Anular registro?</AlertDialog.Heading>
+              <AlertDialog.Heading>¿Anular registro?</AlertDialog.Heading>
             </AlertDialog.Header>
             <AlertDialog.Body>
               <p>
-                ÃÂ¿Estás seguro de que deseas anular el registro{" "}
-                <strong>{chargeToCancel?.title}</strong>? Esta acción no se
+                ¿Estás seguro de que deseas anular el registro{" "}
+                <strong>{chargeToCancel?.title}</strong>? Esta accón no se
                 puede deshacer.
               </p>
             </AlertDialog.Body>

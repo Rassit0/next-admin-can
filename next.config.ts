@@ -39,7 +39,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "https://pub-38a41e7136394ef3bc6fbee7f3f957b7.r2.dev",
+        hostname: "pub-38a41e7136394ef3bc6fbee7f3f957b7.r2.dev",
         port: "",
         pathname: "/**",
       },
@@ -63,15 +63,15 @@ const nextConfig: NextConfig = {
   async headers() {
     const isDev = process.env.NODE_ENV === "development";
     const scriptSrc = isDev
-      ? "'self' 'unsafe-inline' 'unsafe-eval'"
-      : "'self' 'unsafe-inline'"; // unsafe-inline needed by Next.js without nonces
+      ? "'self' 'unsafe-inline' 'unsafe-eval' https://static.cloudflareinsights.com"
+      : "'self' 'unsafe-inline' https://static.cloudflareinsights.com"; // unsafe-inline needed by Next.js without nonces
 
     const connectSrc = isDev
       ? "'self' ws: wss: http://localhost:3001 https:"
       : "'self' https:"; // API connections
 
     const imgSrc =
-      "'self' data: blob: https://lh3.googleusercontent.com https://images.unsplash.com https://pub-d9fd1557230b4f54993890de726c12af.r2.dev";
+      "'self' data: blob: https://lh3.googleusercontent.com https://images.unsplash.com https://pub-d9fd1557230b4f54993890de726c12af.r2.dev https://pub-38a41e7136394ef3bc6fbee7f3f957b7.r2.dev";
 
     const csp = `
       default-src 'self';

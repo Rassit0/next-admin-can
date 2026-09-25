@@ -70,7 +70,7 @@ export const ViewShiftsModal = ({ courseSeason, urlBase }: Props) => {
               size="sm"
               className="flex-1 bg-surface-container-highest text-on-surface-variant rounded-full font-bold text-xs"
             >
-              Estadi­sticas
+              Estadísticas
             </Button>
             <ButtonMemberships
               courseSeasonId={courseSeason.id}

@@ -98,10 +98,10 @@ export const FormOrganization = ({
               : messages;
             return `${field}: ${msgList}`;
           })
-          .join("\n"); // Los separamos por saltos de li­nea para el toast
+          .join("\n"); // Los separamos por saltos de línea para el toast
       }
 
-      // 2. Pasamos la descripción formateada al componente de notificaciones
+      // 2. Pasamos la descripcón formateada al componente de notificaciones
       toast.danger(res.message, {
         description: errorDescription,
       });
@@ -134,7 +134,7 @@ export const FormOrganization = ({
               setName(e.target.value);
               setErrors({});
             }}
-            placeholder="Ingrese el nombre de la institución"
+            placeholder="Ingrese el nombre de la institucón"
           />
           <FieldError children={errors.name && <> {errors.name}</>} />
         </TextField>
@@ -166,9 +166,9 @@ export const FormOrganization = ({
           name="address"
           isInvalid={!!errors.address || undefined}
         >
-          <Label>Dirección</Label>
+          <Label>Direccón</Label>
           <TextArea
-            placeholder="Ingrese la dirección de la escuela"
+            placeholder="Ingrese la direccón de la escuela"
             rows={4}
             value={address}
             onChange={(e) => {
@@ -185,9 +185,9 @@ export const FormOrganization = ({
           name="description"
           isInvalid={!!errors.description || undefined}
         >
-          <Label>Descripción</Label>
+          <Label>Descripcón</Label>
           <TextArea
-            placeholder="Ingrese la descripción de la categori­a"
+            placeholder="Ingrese la descripcón de la categoría"
             rows={4}
             value={description}
             onChange={(e) => {
@@ -222,8 +222,8 @@ export const FormOrganization = ({
             <Alert.Content>
               {/* <Alert.Title>Scheduled maintenance</Alert.Title> */}
               <Alert.Description>
-                Las escuelas inactivas no se mostrari¡n en los formularios de
-                inscripción.
+                Las escuelas inactivas no se mostrarán en los formularios de
+                inscripcón.
               </Alert.Description>
             </Alert.Content>
           </Alert>

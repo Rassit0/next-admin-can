@@ -85,7 +85,7 @@ export const CreateManualChargeDrawer = ({
         onOpenChange(false);
       }
     } catch (error) {
-      toast.error("Ocurrió un error inesperado al registrar el cargo extra.");
+      toast.error("Ocurró un error inesperado al registrar el cargo extra.");
     } finally {
       setIsLoading(false);
     }
@@ -121,10 +121,10 @@ export const CreateManualChargeDrawer = ({
                 isRequired
               >
                 <Label className="text-sm font-semibold">
-                  Categori­a Contable
+                  Categoría Contable
                 </Label>
                 <ComboBox.InputGroup>
-                  <InputGroup.Input placeholder="Seleccione una categori­a" />
+                  <InputGroup.Input placeholder="Seleccione una categoría" />
                   <ComboBox.Trigger />
                 </ComboBox.InputGroup>
                 <ComboBox.Popover>
@@ -148,7 +148,7 @@ export const CreateManualChargeDrawer = ({
                 variant="secondary"
               >
                 <Label className="text-sm font-semibold">
-                  Descripción del Cargo
+                  Descripcón del Cargo
                 </Label>
                 <InputGroup>
                   <InputGroup.Prefix>
@@ -186,7 +186,7 @@ export const CreateManualChargeDrawer = ({
                 defaultValue={today(getLocalTimeZone())}
               >
                 <Label className="text-sm font-semibold">
-                  Fecha Li­mite de Pago (Vencimiento)
+                  Fecha Límite de Pago (Vencimiento)
                 </Label>
                 <DateField.Group variant="secondary">
                   <DateField.Input>
@@ -199,7 +199,7 @@ export const CreateManualChargeDrawer = ({
                   </DateField.Suffix>
                 </DateField.Group>
                 <DatePicker.Popover>
-                  <Calendar aria-label="Fecha Li­mite de Pago">
+                  <Calendar aria-label="Fecha Límite de Pago">
                     <Calendar.Header>
                       <Calendar.YearPickerTrigger>
                         <Calendar.YearPickerTriggerHeading />

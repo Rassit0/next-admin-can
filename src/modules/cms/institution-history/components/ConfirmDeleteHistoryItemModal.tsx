@@ -28,7 +28,7 @@ export const ConfirmDeleteHistoryItemModal = ({
       }
     } catch (error) {
       console.error(error);
-      toast.error("Ocurrió un error inesperado al eliminar");
+      toast.error("Ocurró un error inesperado al eliminar");
     } finally {
       setLoading(false);
     }
@@ -48,15 +48,15 @@ export const ConfirmDeleteHistoryItemModal = ({
               <Modal.Icon className="bg-danger/20 text-danger">
                 <HugeiconsIcon icon={Delete02Icon} size={24} />
               </Modal.Icon>
-              <Modal.Heading>Confirmar Eliminación</Modal.Heading>
+              <Modal.Heading>Confirmar Eliminacón</Modal.Heading>
             </Modal.Header>
             <Modal.Body className="px-6 py-4">
               <p>
-                ÃÂ¿Estás seguro de que deseas eliminar el hito{" "}
+                ¿Estás seguro de que deseas eliminar el hito{" "}
                 <strong>
                   {item.year} - {item.title}
                 </strong>
-                ? Esta acción no se puede deshacer.
+                ? Esta accón no se puede deshacer.
               </p>
             </Modal.Body>
             <Modal.Footer>

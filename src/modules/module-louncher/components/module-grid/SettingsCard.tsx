@@ -32,7 +32,7 @@ export const SettingsCard = () => {
           Configuraciones
         </h3>
         <p className="text-sm text-gray-500 font-body leading-relaxed mb-6">
-          Pari¡metros globales del sistema, seguridad y gestión de roles.
+          Parámetros globales del sistema, seguridad y gestón de roles.
         </p>
         <div className="mt-auto pt-6 border-t border-gray-50 flex items-center justify-between">
           <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">

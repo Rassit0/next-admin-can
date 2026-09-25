@@ -62,7 +62,7 @@ export const getMemberTeamSeasonAssignments = async (
   });
 };
 
-// Alias para compatibilidad con nomenclatura de pi¡ginas
+// Alias para compatibilidad con nomenclatura de páginas
 export const getMembershipsForTeamSeason = getMemberTeamSeasonAssignments;
 
 export const assignMemberToTeamSeason = async (
@@ -102,7 +102,7 @@ export const suspendMemberAssignment = async (
     return {
       error: false,
       data: assignment,
-      message: "Asignación suspendida exitosamente",
+      message: "Asignacón suspendida exitosamente",
     };
   });
 };
@@ -123,7 +123,7 @@ export const reactivateMemberAssignment = async (
     return {
       error: false,
       data: assignment,
-      message: "Asignación reactivada exitosamente",
+      message: "Asignacón reactivada exitosamente",
     };
   });
 };
@@ -144,7 +144,7 @@ export const completeMemberAssignment = async (
     return {
       error: false,
       data: assignment,
-      message: "Asignación completada exitosamente",
+      message: "Asignacón completada exitosamente",
     };
   });
 };

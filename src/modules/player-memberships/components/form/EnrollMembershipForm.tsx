@@ -177,7 +177,7 @@ export const EnrollMembershipForm = ({
       }
 
       if (discountType === "OTHER" && !discountReason.trim()) {
-        err.discountReason = "Especifique una razón o justificación.";
+        err.discountReason = "Especifique una razón o justificacón.";
       }
 
       if (discountEndDate) {
@@ -504,10 +504,10 @@ export const EnrollMembershipForm = ({
               Categorí­a
               {selectedCategoryData ? (
                 <InfoTooltip
-                  text={`Categorí­a: ${selectedCategoryData.category.name}. Edades: ${selectedCategoryData.category.minAge} a ${selectedCategoryData.category.maxAge || "Sin lÃ¯Â¿Â½mite"} aÃ¯Â¿Â½os. Temporada: ${new Date(teamSeason.season.startDate).toLocaleDateString()} - ${new Date(teamSeason.season.endDate).toLocaleDateString()}.`}
+                  text={`Categorí­a: ${selectedCategoryData.category.name}. Edades: ${selectedCategoryData.category.minAge} a ${selectedCategoryData.category.maxAge || "Sin lmite"} aos. Temporada: ${new Date(teamSeason.season.startDate).toLocaleDateString()} - ${new Date(teamSeason.season.endDate).toLocaleDateString()}.`}
                 />
               ) : (
-                <InfoTooltip text="La categorÃ¯Â¿Â½a en la que el jugador serÃ¯Â¿Â½ inscrito." />
+                <InfoTooltip text="La categora en la que el jugador ser inscrito." />
               )}
             </Label>
             <Select.Trigger>
@@ -712,8 +712,8 @@ export const EnrollMembershipForm = ({
                       <ListBox.Item id="AGREEMENT" textValue="Convenio">
                         Convenio
                       </ListBox.Item>
-                      <ListBox.Item id="EXEMPTION" textValue="Exoneración">
-                        Exoneración
+                      <ListBox.Item id="EXEMPTION" textValue="Exoneracón">
+                        Exoneracón
                       </ListBox.Item>
                       <ListBox.Item id="OTHER" textValue="Otro">
                         Otro
@@ -727,7 +727,7 @@ export const EnrollMembershipForm = ({
                   isInvalid={!!errors.discountReason || undefined}
                 >
                   <Label className="text-sm font-semibold">
-                    Razón / Justificación
+                    Razón / Justificacón
                   </Label>
                   <Input
                     variant="secondary"
@@ -777,8 +777,8 @@ export const EnrollMembershipForm = ({
                     <Switch.Thumb />
                   </Switch.Control>
                   <Label className="text-sm flex items-center">
-                    Es Migración (omitir cargos anteriores)
-                    <InfoTooltip text="Activa esta opción si el jugador ya inició su temporada en otro sistema, y sólo deseas facturarle desde el mes actual en adelante. Ignorarácuotas de meses previos." />
+                    Es Migracón (omitir cargos anteriores)
+                    <InfoTooltip text="Activa esta opcón si el jugador ya inicó su temporada en otro sistema, y sólo deseas facturarle desde el mes actual en adelante. Ignorarácuotas de meses previos." />
                   </Label>
                 </Switch.Content>
               </Switch>
@@ -796,7 +796,7 @@ export const EnrollMembershipForm = ({
                       </Switch.Control>
                       <Label className="text-sm flex items-center">
                         Cobrar Matrí­cula (Opcional)
-                        <InfoTooltip text="Fuerza la creación de la factura por inscripción/matrí­cula a pesar de ser migrado, en caso de que aún deba la inscripción." />
+                        <InfoTooltip text="Fuerza la creacón de la factura por inscripcón/matrí­cula a pesar de ser migrado, en caso de que aún deba la inscripcón." />
                       </Label>
                     </Switch.Content>
                   </Switch>
@@ -812,7 +812,7 @@ export const EnrollMembershipForm = ({
                       </Switch.Control>
                       <Label className="text-sm flex items-center">
                         Cobrar Mes Actual (Opcional)
-                        <InfoTooltip text="Por defecto la migración asume que este mes ya está pagado. Si activas esto, se generarála cuota del mes correspondiente a la fecha de inicio seleccionada." />
+                        <InfoTooltip text="Por defecto la migracón asume que este mes ya está pagado. Si activas esto, se generarála cuota del mes correspondiente a la fecha de inicio seleccionada." />
                       </Label>
                     </Switch.Content>
                   </Switch>

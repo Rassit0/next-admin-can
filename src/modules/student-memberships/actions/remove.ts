@@ -18,7 +18,7 @@ export const removeStudentMembership = async (
     return {
       error: false,
       data: response.data,
-      message: response.message || "Membresi­a eliminada exitosamente",
+      message: response.message || "Membresía eliminada exitosamente",
     };
   });
 };

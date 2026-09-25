@@ -123,7 +123,7 @@ export const FormDiscipline = ({
                   >
                     <HugeiconsIcon
                       icon={iconMap[key]}
-                      className="w-6 h-6" // El signo '!' obliga a Tailwind a aplicar este tamai±o sobre cualquier otro
+                      className="w-6 h-6" // El signo '!' obliga a Tailwind a aplicar este tamaño sobre cualquier otro
                     />
                   </Tag>
                 ))}

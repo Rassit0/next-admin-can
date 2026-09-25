@@ -79,7 +79,7 @@ export const AccountCategoryDrawer = ({
         onSuccess?.();
       }
     } catch (error) {
-      toast.error("Ocurrió un error inesperado");
+      toast.error("Ocurró un error inesperado");
     } finally {
       setIsLoading(false);
     }
@@ -92,7 +92,7 @@ export const AccountCategoryDrawer = ({
           <Drawer.CloseTrigger />
           <Drawer.Header className="border-b border-border">
             <Drawer.Heading className="text-lg font-bold">
-              {category ? "Editar Categori­a" : "Nueva Categori­a"}
+              {category ? "Editar Categoría" : "Nueva Categoría"}
             </Drawer.Heading>
           </Drawer.Header>
           <Drawer.Body className="gap-6 pt-6">
@@ -109,7 +109,7 @@ export const AccountCategoryDrawer = ({
             <TextField className="w-full">
               <Label className="text-sm font-semibold">Código / Serie</Label>
               <Input
-                placeholder="Ej. MAT (Se genera automi¡tico si se deja vaci­o)"
+                placeholder="Ej. MAT (Se genera automático si se deja vacío)"
                 value={code}
                 onChange={(e) => setCode(e.target.value.toUpperCase())}
                 variant="secondary"
@@ -144,9 +144,9 @@ export const AccountCategoryDrawer = ({
             </ComboBox>
 
             <TextField className="w-full">
-              <Label className="text-sm font-semibold">Descripción</Label>
+              <Label className="text-sm font-semibold">Descripcón</Label>
               <TextArea
-                placeholder="Detalles adicionales sobre esta categori­a"
+                placeholder="Detalles adicionales sobre esta categoría"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />

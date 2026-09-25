@@ -176,7 +176,7 @@ export const EnrollMembershipDrawer = ({
       }
 
       if (discountType === "OTHER" && !discountReason.trim()) {
-        err.discountReason = "Especifique una razón o justificación.";
+        err.discountReason = "Especifique una razón o justificacón.";
       }
 
       if (discountEndDate) {
@@ -433,7 +433,7 @@ export const EnrollMembershipDrawer = ({
                   Inscribir atleta
                 </Drawer.Heading>
                 <p className="mt-1 text-xs font-medium text-muted">
-                  {teamSeason.team.name} ÃÂ· {teamSeason.season.name}
+                  {teamSeason.team.name} · {teamSeason.season.name}
                 </p>
               </div>
             </Drawer.Header>
@@ -731,9 +731,9 @@ export const EnrollMembershipDrawer = ({
                             </ListBox.Item>
                             <ListBox.Item
                               id="EXEMPTION"
-                              textValue="Exoneración"
+                              textValue="Exoneracón"
                             >
-                              Exoneración
+                              Exoneracón
                             </ListBox.Item>
                             <ListBox.Item id="OTHER" textValue="Otro">
                               Otro
@@ -747,7 +747,7 @@ export const EnrollMembershipDrawer = ({
                         isInvalid={!!errors.discountReason || undefined}
                       >
                         <Label className="text-sm font-semibold">
-                          Razón / Justificación
+                          Razón / Justificacón
                         </Label>
                         <Input
                           variant="secondary"
@@ -796,7 +796,7 @@ export const EnrollMembershipDrawer = ({
                     </Switch.Control>
                     <Switch.Content>
                       <Label className="text-sm">
-                        Es Migración (omitir cargos iniciales)
+                        Es Migracón (omitir cargos iniciales)
                       </Label>
                     </Switch.Content>
                   </Switch>

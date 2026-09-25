@@ -109,7 +109,7 @@ export const FormShift = ({
               setName(e.target.value || null);
               handleRemoveError("name");
             }}
-            placeholder="Ingrese el nombre del turno (ej. Mai±ana, Tarde)"
+            placeholder="Ingrese el nombre del turno (ej. Mañana, Tarde)"
           />
           <FieldError children={errors.name && <> {errors.name}</>} />
         </TextField>

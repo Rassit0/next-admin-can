@@ -50,8 +50,8 @@ export default async function CourseSeasonsPage({
   return (
     <>
       <HeaderPage
-        title={`Gestión de Temporadas - ${courseResponse.data.name}`}
-        description="Gestión integral de las temporadas del curso."
+        title={`Gestón de Temporadas - ${courseResponse.data.name}`}
+        description="Gestón integral de las temporadas del curso."
         action={
           <>
             <ButtonAdd

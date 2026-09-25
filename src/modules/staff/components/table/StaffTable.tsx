@@ -89,7 +89,7 @@ export const StaffTable = ({ staffs }: Props) => {
                     No se encontró personal
                   </span>
                   <span className="text-sm text-default-400">
-                    Intenta con otros ti©rminos de biºsqueda o agrega nuevo
+                    Intenta con otros términos de búsqueda o agrega nuevo
                     personal.
                   </span>
                 </div>

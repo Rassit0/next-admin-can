@@ -33,7 +33,7 @@ export const TabsTypeFilter = ({ paths }: Props) => {
       isDisabled={isPending} // Evita clics repetidos mientras carga el Server Component
     >
       <Tabs.ListContainer>
-        <Tabs.List aria-label="Pestai±as">
+        <Tabs.List aria-label="Pestañas">
           {paths.map((path) => (
             <Tabs.Tab key={path.href} id={path.href}>
               {path.label}

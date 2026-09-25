@@ -2,8 +2,8 @@ import { itemsNavigation, itemsWebNavigation } from "@/config/navigation";
 import { hasRequiredPermissions } from "@/shared/helpers/permissions";
 
 /**
- * Retorna true si el usuario tiene acceso al módulo segiºn las reglas de NavigationConfig.
- * Si se especifica childRouteId, tambii©n verifica el acceso a esa subruta.
+ * Retorna true si el usuario tiene acceso al módulo según las reglas de NavigationConfig.
+ * Si se especifica childRouteId, tambén verifica el acceso a esa subruta.
  * Si el módulo no existe, se deniega el acceso por defecto (fail-closed).
  */
 export const hasModuleAccess = (
@@ -11,7 +11,7 @@ export const hasModuleAccess = (
   userPermissions: string[],
   childRouteId?: string,
 ): boolean => {
-  // Manejo especial para el módulo web que fue extrai­do a itemsWebNavigation
+  // Manejo especial para el módulo web que fue extraído a itemsWebNavigation
   if (moduleId === "web") {
     if (!childRouteId) return true;
 
@@ -45,7 +45,7 @@ export const hasModuleAccess = (
     }
   }
 
-  // Si se pide una ruta hija especi­fica, verificarla
+  // Si se pide una ruta hija específica, verificarla
   if (childRouteId) {
     if (!moduleItem.routes) return false; // Fail-closed si no tiene rutas definidas
     const childRoute = moduleItem.routes.find((r) => r.id === childRouteId);

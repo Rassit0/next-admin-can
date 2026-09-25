@@ -30,7 +30,7 @@ export interface IUser {
   updatedAt: string;
   role: IRole | null;
   person: IPerson | null;
-  tempPassword?: string; // Solo en creación
+  tempPassword?: string; // Solo en creacón
   isLocked?: boolean;
 }
 
@@ -202,7 +202,7 @@ export const resetPassword = async (
     return {
       error: false,
       data: user,
-      message: res.message || "Contrasei±a restablecida exitosamente",
+      message: res.message || "Contraseña restablecida exitosamente",
     };
   });
 };

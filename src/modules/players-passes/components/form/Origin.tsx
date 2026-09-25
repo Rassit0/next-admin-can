@@ -77,7 +77,7 @@ export const Origin = ({
     value: "FREE_AGENT",
     icon: UserCircleIcon,
     label: "Agente Libre",
-    description: "El jugador no pertenece a ningiºn club.",
+    description: "El jugador no pertenece a ningún club.",
   } satisfies TTypeOriginPass;
 
   const ownOption = {

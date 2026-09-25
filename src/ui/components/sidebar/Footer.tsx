@@ -20,7 +20,7 @@ export const Footer = () => {
       >
         <HugeiconsIcon icon={Settings02Icon} />
         <span className="text-sm font-semibold hidden lg:block nav-text">
-          Configuración
+          Configuracón
         </span>
       </a>
       {/* <form action={logoutAction} className="w-full"> */}
@@ -31,7 +31,7 @@ export const Footer = () => {
       >
         <HugeiconsIcon icon={Logout01Icon} />
         <span className="text-sm font-semibold hidden lg:block nav-text">
-          Cerrar Sesión
+          Cerrar Sesón
         </span>
       </button>
       {/* </form> */}

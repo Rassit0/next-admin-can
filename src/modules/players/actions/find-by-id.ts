@@ -17,7 +17,7 @@ export const getPlayerById = async ({
     const res = await api.get<{ data: IPlayer; message: string }>(
       `players/${id}`, // 1er argumento: el endpoint
       {
-        // 2do argumento: options (aqui­ va el cachi©)
+        // 2do argumento: options (aquí va el caché)
         // next: {
         //   tags: ["players"],
         //   revalidate: 3600,

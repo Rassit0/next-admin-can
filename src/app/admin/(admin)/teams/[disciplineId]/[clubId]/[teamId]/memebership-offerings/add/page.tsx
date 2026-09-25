@@ -53,7 +53,7 @@ export default async function AddBidManagementPage({ params }: Props) {
             <span className="text-accent">{teamResponse.data.name}</span>
           </span>
         }
-        description="Configuración de la nueva oferta para el equipo."
+        description="Configuracón de la nueva oferta para el equipo."
         action={
           <ButtonsSubmit
             cancelHref={`/admin/teams/${disciplineId}/${clubId}/${teamId}/team-seasons`}

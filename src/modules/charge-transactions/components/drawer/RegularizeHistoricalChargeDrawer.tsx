@@ -79,7 +79,7 @@ export const RegularizeHistoricalChargeDrawer = ({
         setCycles(res.data || []);
       }
     } catch (e) {
-      toast.error("Ocurrió un error al cargar los ciclos regularizables.");
+      toast.error("Ocurró un error al cargar los ciclos regularizables.");
       setCycles([]);
     } finally {
       setIsLoadingCycles(false);
@@ -99,7 +99,7 @@ export const RegularizeHistoricalChargeDrawer = ({
     if (hasOverridePermission && useOverride && overrideAmount !== "") {
       parsedOverrideAmount = Number(overrideAmount);
       if (isNaN(parsedOverrideAmount) || parsedOverrideAmount < 0) {
-        toast.error("El monto modificado no es vi¡lido.");
+        toast.error("El monto modificado no es válido.");
         return;
       }
     }
@@ -122,21 +122,21 @@ export const RegularizeHistoricalChargeDrawer = ({
           router.refresh();
         } else if (res.statusCode === 403) {
           toast.error(
-            "No tienes autorización para modificar el importe histórico.",
+            "No tienes autorizacón para modificar el importe histórico.",
           );
         } else {
           toast.error(res.message || "Error al regularizar el cargo.");
         }
       } else {
         toast.success(
-          res.message || "Regularización histórica creada exitosamente.",
+          res.message || "Regularizacón histórica creada exitosamente.",
         );
         if (onSuccess) onSuccess();
         router.refresh();
         onOpenChange(false);
       }
     } catch (error) {
-      toast.error("Ocurrió un error inesperado al regularizar el cargo.");
+      toast.error("Ocurró un error inesperado al regularizar el cargo.");
     } finally {
       setIsSubmitting(false);
     }
@@ -169,8 +169,8 @@ export const RegularizeHistoricalChargeDrawer = ({
                 </div>
               ) : cycles.length === 0 ? (
                 <Alert color="warning">
-                  No existen cuotas históricas pendientes de regularización para
-                  esta membresi­a.
+                  No existen cuotas históricas pendientes de regularizacón para
+                  esta membresía.
                 </Alert>
               ) : (
                 <>
@@ -232,15 +232,14 @@ export const RegularizeHistoricalChargeDrawer = ({
                           onChange={(e) => setUseOverride(e.target.checked)}
                           className="rounded border-border text-primary focus:ring-primary"
                         />
-                        Modificar importe histórico (Excepción administrativa)
+                        Modificar importe histórico (Excepcón administrativa)
                       </label>
 
                       {useOverride && (
                         <div className="pl-6 flex flex-col gap-2">
                           <Alert color="warning" className="text-xs mb-2">
-                            Esti¡s a punto de alterar el importe oficial de esta
-                            cuota. Esta acción quedari¡ registrada en
-                            auditori­a.
+                            Estás a punto de alterar el importe oficial de esta
+                            cuota. Esta accón quedará registrada en auditoría.
                           </Alert>
                           <TextField
                             name="overrideAmount"
@@ -276,15 +275,15 @@ export const RegularizeHistoricalChargeDrawer = ({
                   {selectedCycle && (
                     <div className="mt-4 border-t border-border pt-4 text-sm">
                       <p className="font-semibold mb-2">
-                        Resumen de la acción:
+                        Resumen de la accón:
                       </p>
                       <p className="text-muted">
-                        Se generari¡ un cargo PENDIENTE correspondiente{" "}
+                        Se generará un cargo PENDIENTE correspondiente{" "}
                         {selectedCycle.cycleId === "REGISTRATION" ? (
                           <>
                             a la{" "}
                             <strong className="text-foreground">
-                              Matri­cula de inscripción
+                              Matrícula de inscripcón
                             </strong>
                           </>
                         ) : (

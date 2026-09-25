@@ -23,7 +23,7 @@ export const OfflineIllustration = () => {
         className="absolute w-40 h-40 bg-indigo-500/10 dark:bg-indigo-500/5 rounded-full blur-3xl"
       />
 
-      {/* Parti­culas orbitales animadas */}
+      {/* Partículas orbitales animadas */}
       <OfflineParticles />
 
       {/* Isla Flotante (Icono Principal) */}
@@ -56,7 +56,7 @@ export const OfflineIllustration = () => {
           />
         </svg>
 
-        {/* Ondas de radar simulando biºsqueda de red */}
+        {/* Ondas de radar simulando búsqueda de red */}
         <motion.div
           animate={{ scale: [1, 2.2], opacity: [0.6, 0] }}
           transition={{ duration: 2.5, repeat: Infinity, ease: "easeOut" }}

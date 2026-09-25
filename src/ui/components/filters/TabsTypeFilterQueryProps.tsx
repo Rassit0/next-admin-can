@@ -47,7 +47,7 @@ export const TabsTypeFilterQueryProps = ({
       isDisabled={isPending} // Evita clics repetidos mientras carga el Server Component
     >
       <Tabs.ListContainer>
-        <Tabs.List aria-label="Pestai±as">
+        <Tabs.List aria-label="Pestañas">
           {props.map((prop) => (
             <Tabs.Tab key={prop.value} id={prop.value}>
               {prop.title}

@@ -48,7 +48,7 @@ export const AccountChargesTable = ({
               className="after:hidden"
               id="id"
             >
-              <SortableColumnHeader id="id">NÃÂ° Ref.</SortableColumnHeader>
+              <SortableColumnHeader id="id">N° Ref.</SortableColumnHeader>
             </Table.Column>
 
             <Table.Column allowsSorting id="title">

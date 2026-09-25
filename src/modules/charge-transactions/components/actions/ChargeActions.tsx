@@ -451,8 +451,8 @@ export const ChargeActions = ({
                   selectedAction?.key === "delete-charge") && (
                   <p>
                     {selectedAction?.key === "remove-adjustment"
-                      ? "ÃÂ¿Estás seguro de que deseas remover el ajuste de este cargo? El saldo pendiente se actualizará automáticamente."
-                      : "ÃÂ¿Estás seguro de que deseas eliminar este cargo permanentemente? Esta acción no se puede deshacer."}
+                      ? "¿Estás seguro de que deseas remover el ajuste de este cargo? El saldo pendiente se actualizará automáticamente."
+                      : "¿Estás seguro de que deseas eliminar este cargo permanentemente? Esta accón no se puede deshacer."}
                   </p>
                 )}
 
@@ -553,7 +553,7 @@ export const ChargeActions = ({
                           setChargeDescription(e.target.value);
                           setErrors({});
                         }}
-                        placeholder="Ej. Inscripción, Mensualidad..."
+                        placeholder="Ej. Inscripcón, Mensualidad..."
                       />
                       <FieldError
                         children={
@@ -700,7 +700,7 @@ export const ChargeActions = ({
                       isInvalid={!!errors.adjustmentReason || undefined}
                     >
                       <Label className="text-sm font-semibold">
-                        Motivo u Observación
+                        Motivo u Observacón
                       </Label>
                       <InputGroup>
                         <InputGroup.Prefix>

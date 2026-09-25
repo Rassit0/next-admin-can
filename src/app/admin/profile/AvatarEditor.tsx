@@ -30,14 +30,14 @@ export const AvatarEditor = ({
 
     // Validate size (5MB max)
     if (file.size > 5 * 1024 * 1024) {
-      toast.danger("El tamai±o mi¡ximo permitido es 5MB");
+      toast.danger("El tamaño máximo permitido es 5MB");
       return;
     }
 
     // Validate MIME
     const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
     if (!allowedTypes.includes(file.type)) {
-      toast.danger("Solo se permiten imi¡genes JPEG, PNG o WEBP");
+      toast.danger("Solo se permiten imágenes JPEG, PNG o WEBP");
       return;
     }
 

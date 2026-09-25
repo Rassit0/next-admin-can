@@ -36,7 +36,7 @@ export const FinalizeCategoryModal = ({
 
       if (res.error) {
         toast.error(
-          res.message || "Ocurrió un error al finalizar la categorí­a",
+          res.message || "Ocurró un error al finalizar la categorí­a",
         );
       } else {
         toast.success("Categorí­a finalizada exitosamente");
@@ -44,7 +44,7 @@ export const FinalizeCategoryModal = ({
         if (onSuccess) onSuccess();
       }
     } catch (error) {
-      toast.error("Error de conexión");
+      toast.error("Error de conexón");
     } finally {
       setLoading(false);
     }
@@ -82,7 +82,7 @@ export const FinalizeCategoryModal = ({
                 <div className="flex flex-col gap-4">
                   <div className="p-4 bg-warning/10 text-warning-600 rounded-lg text-xs">
                     <p className="font-bold mb-1">
-                      ÃÂ¡Atención! Esta acción es irreversible.
+                      ¡Atencón! Esta accón es irreversible.
                     </p>
                     <ul className="list-disc pl-4 space-y-1 mt-2 text-warning-700">
                       <li>
@@ -100,7 +100,7 @@ export const FinalizeCategoryModal = ({
                   </div>
 
                   <textarea
-                    placeholder="Notas / Motivo de la finalización... (Opcional)"
+                    placeholder="Notas / Motivo de la finalizacón... (Opcional)"
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     rows={3}
@@ -116,7 +116,7 @@ export const FinalizeCategoryModal = ({
                       onPress={handleFinish}
                       isPending={loading}
                     >
-                      Confirmar Finalización
+                      Confirmar Finalizacón
                     </Button>
                   </div>
                 </div>

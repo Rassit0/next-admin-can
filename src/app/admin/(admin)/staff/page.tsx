@@ -48,7 +48,7 @@ export default async function StaffPage({ searchParams }: Props) {
       <div className="space-y-8">
         <HeaderPage
           title="Directorio del Personal (Staff)"
-          description="Gestión del personal."
+          description="Gestón del personal."
           action={<CreateStaffModal />}
         />
 

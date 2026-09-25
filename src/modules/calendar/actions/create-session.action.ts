@@ -31,7 +31,7 @@ export const createSession = async (
     return {
       error: false,
       data: res.data,
-      message: res.message || "Sesión creada exitosamente",
+      message: res.message || "Sesón creada exitosamente",
     };
   });
 };

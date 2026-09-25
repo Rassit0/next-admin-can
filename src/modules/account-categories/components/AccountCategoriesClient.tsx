@@ -49,7 +49,7 @@ export const AccountCategoriesClient = ({
 
   const handleDelete = async (category: IAccountCategory) => {
     if (
-      confirm(`ÃÂ¿Estás seguro de eliminar la categorí­a "${category.name}"?`)
+      confirm(`¿Estás seguro de eliminar la categorí­a "${category.name}"?`)
     ) {
       const res = await deleteAccountCategory(category.id);
       if (res.error) {

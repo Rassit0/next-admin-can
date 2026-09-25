@@ -142,7 +142,7 @@ export const CourseSeasonActions = ({ courseSeason, baseUrl }: Props) => {
     }
 
     if (!res || res.error) {
-      toast.error(res?.message || "Ocurrió un error");
+      toast.error(res?.message || "Ocurró un error");
       setLoading(false);
       return;
     }
@@ -207,15 +207,15 @@ export const CourseSeasonActions = ({ courseSeason, baseUrl }: Props) => {
               </AlertDialog.Header>
               <AlertDialog.Body className="gap-4 p-2">
                 <p>
-                  ÃÂ¿Estás seguro de que deseas ejecutar la acción{" "}
+                  ¿Estás seguro de que deseas ejecutar la accón{" "}
                   <strong>{selectedAction?.label.toLowerCase()}</strong> para
                   este turno?
                 </p>
 
                 {selectedAction?.key === "cancel" && (
                   <div className="p-3 bg-warning/20 border border-warning/50 rounded-lg text-sm text-warning-800">
-                    <strong>Atención:</strong> Cancelar el turno no lo elimina.
-                    La información histórica, membresí­as, ciclos, deudas y
+                    <strong>Atencón:</strong> Cancelar el turno no lo elimina.
+                    La informacón histórica, membresí­as, ciclos, deudas y
                     cobros relacionados se conservan.
                   </div>
                 )}
@@ -327,7 +327,7 @@ export const CourseSeasonActions = ({ courseSeason, baseUrl }: Props) => {
                   selectedAction?.key !== "delete" && (
                     <TextField name="reason" className="w-full" isRequired>
                       <Label className="text-sm font-semibold">
-                        Motivo u Observación
+                        Motivo u Observacón
                       </Label>
                       <InputGroup>
                         <InputGroup.Prefix>
@@ -337,7 +337,7 @@ export const CourseSeasonActions = ({ courseSeason, baseUrl }: Props) => {
                             className="text-muted-foreground"
                           />
                         </InputGroup.Prefix>
-                        <InputGroup.Input placeholder="Ej. Falta de alumnos, decisión técnica..." />
+                        <InputGroup.Input placeholder="Ej. Falta de alumnos, decisón técnica..." />
                       </InputGroup>
                     </TextField>
                   )}

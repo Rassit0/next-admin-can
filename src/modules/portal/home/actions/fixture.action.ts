@@ -53,7 +53,7 @@ export const getPublicFixture = async (
     return {
       error: false,
       data: res.data || [],
-      message: res.message || "Fixture piºblico obtenido exitosamente",
+      message: res.message || "Fixture público obtenido exitosamente",
     };
   });
 };

@@ -15,7 +15,7 @@ export const getShiftById = async (
     return {
       error: true,
       statusCode: 401,
-      message: "Su sesión ha expirado. Por favor, inicie sesión nuevamente.",
+      message: "Su sesón ha expirado. Por favor, inicie sesón nuevamente.",
     } as any;
 
   return handleServerAction(async () => {

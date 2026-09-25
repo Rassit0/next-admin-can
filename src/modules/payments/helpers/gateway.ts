@@ -90,11 +90,11 @@ export const validatePaymentInput = (
     if (!input.cardholder.trim())
       return { valid: false, error: "Ingresa el nombre del titular." };
     if (!luhnValid(input.cardNumber))
-      return { valid: false, error: "El niºmero de tarjeta no es vi¡lido." };
+      return { valid: false, error: "El número de tarjeta no es válido." };
     if (!/^\d{2}\/\d{2}$/.test(input.expiry))
       return { valid: false, error: "La fecha debe tener el formato MM/AA." };
     if (!/^\d{3,4}$/.test(input.cvc))
-      return { valid: false, error: "El CVC no es vi¡lido." };
+      return { valid: false, error: "El CVC no es válido." };
     return { valid: true };
   }
   if (!input.bank.trim())
@@ -117,7 +117,7 @@ export const processPayment = (input: PaymentInput): Promise<PaymentResult> => {
       resolve({
         success: false,
         reference: "",
-        message: validation.error ?? "Datos de pago invi¡lidos.",
+        message: validation.error ?? "Datos de pago inválidos.",
       });
       return;
     }
@@ -134,7 +134,7 @@ export const processPayment = (input: PaymentInput): Promise<PaymentResult> => {
         reference: success ? generateReference() : "",
         message: success
           ? "Pago procesado exitosamente."
-          : "El emisor rechazó la transacción. Verifica los datos o usa otro mi©todo.",
+          : "El emisor rechazó la transaccón. Verifica los datos o usa otro método.",
       });
     }, 1400);
   });

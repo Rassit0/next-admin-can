@@ -31,7 +31,7 @@ export const CancelModal = ({ isOpen, onOpenChange, courseSeason }: Props) => {
   const [statusNotes, setStatusNotes] = useState("");
   const handleFinalize = async () => {
     if (!statusNotes) {
-      toast.danger("Debe ingresar un motivo de cancelación");
+      toast.danger("Debe ingresar un motivo de cancelacón");
       return;
     }
     setIsLoading(true);
@@ -52,7 +52,7 @@ export const CancelModal = ({ isOpen, onOpenChange, courseSeason }: Props) => {
           .join("\n"); // Los separamos por saltos de lí­nea para el toast
       }
 
-      // 2. Pasamos la descripción formateada al componente de notificaciones
+      // 2. Pasamos la descripcón formateada al componente de notificaciones
       toast.danger(res.message, {
         description: errorDescription,
       });
@@ -82,7 +82,7 @@ export const CancelModal = ({ isOpen, onOpenChange, courseSeason }: Props) => {
               <span>Cancelar Temporada</span>
               <span className="text-muted">
                 Estás por cancelar el ciclo de {courseSeason.season.name}: Esta
-                acción es irreversible
+                accón es irreversible
               </span>
             </AlertDialog.Heading>
           </AlertDialog.Header>
@@ -91,7 +91,7 @@ export const CancelModal = ({ isOpen, onOpenChange, courseSeason }: Props) => {
               <Alert.Indicator />
               <Alert.Content>
                 <Alert.Title>
-                  ÃÂ¿Estás seguro de cancelar la temporada?
+                  ¿Estás seguro de cancelar la temporada?
                 </Alert.Title>
                 <Alert.Description>
                   Se bloquearán nuevas inscripciones y las membresí­as activas
@@ -125,10 +125,10 @@ export const CancelModal = ({ isOpen, onOpenChange, courseSeason }: Props) => {
               value={statusNotes}
               onChange={setStatusNotes}
             >
-              <Label>Motivo de Cancelación</Label>
-              <TextArea placeholder="Describe brevemente los motivos de la cancelación..." />
+              <Label>Motivo de Cancelacón</Label>
+              <TextArea placeholder="Describe brevemente los motivos de la cancelacón..." />
               <FieldError>
-                {!statusNotes && "Debe ingresar un motivo de cancelación"}
+                {!statusNotes && "Debe ingresar un motivo de cancelacón"}
               </FieldError>
             </TextField>
           </AlertDialog.Body>

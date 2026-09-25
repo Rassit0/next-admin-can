@@ -23,11 +23,11 @@ export async function handleServerAction<T>(
       );
 
       if (error.statusCode === 401 && !skip401Redirect) {
-        // Obtenemos la URL actual automi¡ticamente desde los headers
+        // Obtenemos la URL actual automáticamente desde los headers
         const headersList = await headers();
         const referer = headersList.get("referer");
 
-        // Next.js envi­a este header exclusivamente cuando se ejecuta un Server Action
+        // Next.js envía este header exclusivamente cuando se ejecuta un Server Action
         const isServerAction =
           headersList.has("next-action") ||
           headersList.has("next-router-state-tree");
@@ -38,7 +38,7 @@ export async function handleServerAction<T>(
           // Si estamos en un Server Action (ej. click en botón), Si podemos modificar cookies
           await logoutAction(finalRedirectTo);
         } else {
-          // Si estamos en un Server Component (ej. cargando la pi¡gina), NO podemos modificar cookies
+          // Si estamos en un Server Component (ej. cargando la página), NO podemos modificar cookies
           redirect(
             `/login?expired=true&redirectTo=${encodeURIComponent(finalRedirectTo || "/")}`,
           );
@@ -57,7 +57,7 @@ export async function handleServerAction<T>(
 
     return {
       error: true,
-      message: "Ocurrió un error inesperado. Por favor, intenta mi¡s tarde.",
+      message: "Ocurró un error inesperado. Por favor, intenta más tarde.",
       statusCode: 500,
     };
   }

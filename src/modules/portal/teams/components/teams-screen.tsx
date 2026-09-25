@@ -60,7 +60,7 @@ export function Teams({ teams }: { teams: Team[] }) {
       <div className="mb-8">
         <h1 className="font-heading text-5xl font-700 uppercase tracking-tight text-primary sm:text-6xl">
           Equipos y{" "}
-          <span className="text-neon text-glow-neon">Competición</span>
+          <span className="text-neon text-glow-neon">Competicón</span>
         </h1>
         <p className="mt-3 max-w-xl text-muted-foreground text-pretty">
           Filtrá por disciplina, sede y categorí­a. Girá cada tarjeta para ver
@@ -114,7 +114,7 @@ export function Teams({ teams }: { teams: Team[] }) {
 
       {filtered.length === 0 && (
         <p className="py-16 text-center text-muted-foreground">
-          No hay equipos para esta combinación de filtros.
+          No hay equipos para esta combinacón de filtros.
         </p>
       )}
 
@@ -192,7 +192,7 @@ function FlipCard({ team, onApply }: { team: Team; onApply: () => void }) {
             </h3>
             <div className="mt-3 flex items-center gap-1.5 text-sm text-muted-foreground">
               <MapPin className="h-3.5 w-3.5" />
-              {team.club} ÃÂ· {team.gender}
+              {team.club} · {team.gender}
             </div>
           </div>
 
@@ -211,13 +211,13 @@ function FlipCard({ team, onApply }: { team: Team; onApply: () => void }) {
               {full
                 ? "Cupos Completos"
                 : lastSlots
-                  ? `ÃÂ¡Últimos Cupos! ${slotsLeft}/${team.capacity}`
+                  ? `¡Últimos Cupos! ${slotsLeft}/${team.capacity}`
                   : `Cupos: ${slotsLeft}/${team.capacity}`}
             </span>
           </div>
         </div>
 
-        {/* Back Ã¢ÂÂ Membership card */}
+        {/* Back — Membership card */}
         <div className="absolute inset-0 flex flex-col justify-between overflow-hidden rounded-2xl border border-neon/50 bg-primary p-6 text-white shadow-neon backface-hidden transform-[rotateY(180deg)]">
           <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-neon/20 blur-2xl" />
           <div>
@@ -303,7 +303,7 @@ function MembershipModal({
               Recibimos tu solicitud de membresí­a para{" "}
               <span className="font-600 text-primary">{team.name}</span>.
               Nuestro equipo se pondrá en contacto para coordinar la
-              incorporación.
+              incorporacón.
             </p>
             <button
               onClick={onClose}

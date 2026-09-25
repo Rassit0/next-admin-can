@@ -37,7 +37,7 @@ export const getPublicCourses = async (): Promise<
     return {
       error: false,
       data: res.data || [],
-      message: res.message || "Cursos piºblicos obtenidos exitosamente",
+      message: res.message || "Cursos públicos obtenidos exitosamente",
     };
   });
 };

@@ -48,13 +48,13 @@ export const ClubsCard = async () => {
         </h3>
 
         <p className="text-sm text-gray-500 font-body leading-relaxed mb-6">
-          Administración de entidades afiliadas, delegaciones y equipos
+          Administracón de entidades afiliadas, delegaciones y equipos
           competitivos.
         </p>
 
         <div className="mt-auto pt-6 border-t border-gray-50 flex items-center justify-between">
           <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">
-            Gestión de Afiliados
+            Gestón de Afiliados
           </span>
 
           <HugeiconsIcon

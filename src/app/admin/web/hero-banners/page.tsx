@@ -26,7 +26,7 @@ export default async function HeroBannersPage() {
     <>
       <div className="space-y-8">
         <HeaderPage
-          title="Gestión de Hero Banners"
+          title="Gestón de Hero Banners"
           description="Administra los banners promocionales del carrusel principal."
           action={<AddHeroBannerModal buttonFloatingMobile />}
         />

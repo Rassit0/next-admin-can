@@ -68,7 +68,7 @@ export const AddHomeDisciplineModal = ({
                 <Modal.Heading>Agregar Bloque (Equipos/Escuela)</Modal.Heading>
               </div>
               <p className="mt-1.5 text-sm leading-5 text-muted">
-                Agrega un nuevo bloque de Equipos o Escuela de Fiºtbol para el
+                Agrega un nuevo bloque de Equipos o Escuela de Fútbol para el
                 Home.
               </p>
             </Modal.Header>

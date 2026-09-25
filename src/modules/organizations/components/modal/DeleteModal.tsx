@@ -60,13 +60,13 @@ export const DeleteModal = ({
             <AlertDialog.CloseTrigger />
             <AlertDialog.Header>
               <AlertDialog.Icon status="danger" />
-              <AlertDialog.Heading>ÃÂ¿Eliminar escuela?</AlertDialog.Heading>
+              <AlertDialog.Heading>¿Eliminar escuela?</AlertDialog.Heading>
             </AlertDialog.Header>
             <AlertDialog.Body>
               <p>
                 Se eliminará permanentemente la escuela{" "}
                 <strong>{school.name}</strong> si no tiene datos asociados a
-                ella. Esta acción no se puede deshacer.
+                ella. Esta accón no se puede deshacer.
               </p>
             </AlertDialog.Body>
             <AlertDialog.Footer>

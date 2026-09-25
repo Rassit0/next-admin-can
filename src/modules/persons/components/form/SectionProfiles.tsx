@@ -43,7 +43,7 @@ export const SectionProfiles = () => {
               </div>
               <div>
                 <div className="text-sm font-bold text-on-surface">
-                  Bi¡squetbol
+                  Básquetbol
                 </div>
                 <div className="text-[10px] text-on-surface-variant uppercase font-black tracking-wider">
                   Sub-18 Masculino
@@ -53,7 +53,7 @@ export const SectionProfiles = () => {
             <div className="grid grid-cols-2 gap-2 mt-4">
               <div className="bg-white/50 p-2 rounded">
                 <div className="text-[10px] text-on-surface-variant uppercase">
-                  Posición
+                  Posicón
                 </div>
                 <div className="text-xs font-bold">Base (Point Guard)</div>
               </div>
@@ -86,7 +86,7 @@ export const SectionProfiles = () => {
             <div className="grid grid-cols-2 gap-2 mt-4">
               <div className="bg-white/50 p-2 rounded">
                 <div className="text-[10px] text-on-surface-variant uppercase">
-                  Posición
+                  Posicón
                 </div>
                 <div className="text-xs font-bold">Libero</div>
               </div>
@@ -108,7 +108,7 @@ export const SectionProfiles = () => {
               Perfiles de Estudiante
             </h3>
             <p className="text-xs text-on-surface-variant font-medium mt-1">
-              Formación acadi©mica y deportiva
+              Formacón académica y deportiva
             </p>
           </div>
           <button className="flex items-center gap-1.5 px-3 py-1.5 bg-tertiary-container/10 text-tertiary font-bold text-xs rounded-full hover:bg-tertiary-container/20 transition-colors">
@@ -124,14 +124,14 @@ export const SectionProfiles = () => {
               </div>
               <div>
                 <div className="font-bold text-on-surface">
-                  Ti¡ctica Aplicada al Fiºtbol
+                  Táctica Aplicada al Fútbol
                 </div>
                 <div className="text-xs text-on-surface-variant">
                   Escuela de Verano CAN - Módulo II
                 </div>
                 <div className="flex gap-4 mt-2">
                   <span className="text-[11px] font-bold px-2 py-0.5 bg-tertiary-fixed-dim/30 rounded text-tertiary uppercase tracking-tighter">
-                    Turno: Mai±ana
+                    Turno: Mañana
                   </span>
                   <span className="text-[11px] font-bold px-2 py-0.5 bg-tertiary-fixed-dim/30 rounded text-tertiary uppercase tracking-tighter">
                     Ciclo: 2024-B
@@ -153,7 +153,7 @@ export const SectionProfiles = () => {
               Perfiles de Profesor
             </h3>
             <p className="text-xs text-on-surface-variant font-medium mt-1">
-              Roles de instrucción y liderazgo
+              Roles de instruccón y liderazgo
             </p>
           </div>
           <button className="flex items-center gap-1.5 px-3 py-1.5 bg-secondary-container/30 text-secondary font-bold text-xs rounded-full hover:bg-secondary-container/50 transition-colors">
@@ -167,10 +167,10 @@ export const SectionProfiles = () => {
               <HugeiconsIcon icon={Dumbbell01Icon} className="text-secondary" />
               <div>
                 <div className="text-sm font-bold">
-                  Preparador Fi­sico - Atletismo
+                  Preparador Físico - Atletismo
                 </div>
                 <div className="text-[10px] text-on-surface-variant uppercase font-bold">
-                  Categori­a: Senior Elite
+                  Categoría: Senior Elite
                 </div>
               </div>
             </div>

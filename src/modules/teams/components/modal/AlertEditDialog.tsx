@@ -49,7 +49,7 @@ export const AlertEditDialog = ({ isLoading, team, formId }: Props) => {
               <AlertDialog.Heading className="flex flex-col">
                 <span>Actualizar Equipo</span>
                 <span className="text-muted">
-                  Estás por modificar la configuración de {team.name}
+                  Estás por modificar la configuracón de {team.name}
                 </span>
               </AlertDialog.Heading>
             </AlertDialog.Header>
@@ -58,14 +58,14 @@ export const AlertEditDialog = ({ isLoading, team, formId }: Props) => {
                 <Alert.Indicator />
                 <Alert.Content>
                   <Alert.Title>
-                    ÃÂ¿Estás seguro de modificar la configuración del equipo?
+                    ¿Estás seguro de modificar la configuracón del equipo?
                   </Alert.Title>
 
                   <Alert.Description>
                     Los cambios en el género o en los lí­mites de edad pueden
                     afectar a los jugadores asociados a este equipo. Los pases
                     que ya no cumplan con los criterios establecidos podrán ser
-                    marcados para revisión o inactivados.
+                    marcados para revisón o inactivados.
                   </Alert.Description>
                 </Alert.Content>
               </Alert>

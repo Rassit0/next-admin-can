@@ -32,8 +32,8 @@ export function ContactClient({ institution }: ContactClientProps) {
           transition={{ delay: 0.1 }}
           className="mt-4 text-muted-foreground mx-auto max-w-2xl text-lg"
         >
-          Estamos aquí­ para ayudarte. Contáctate con la institución para más
-          información sobre inscripciones, eventos o consultas generales.
+          Estamos aquí­ para ayudarte. Contáctate con la institucón para más
+          informacón sobre inscripciones, eventos o consultas generales.
         </motion.p>
       </div>
 
@@ -48,11 +48,11 @@ export function ContactClient({ institution }: ContactClientProps) {
           <div className="rounded-3xl border border-border bg-card p-8 shadow-neon-soft relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-neon to-transparent" />
             <h2 className="font-heading text-2xl font-700 uppercase text-primary mb-6 flex items-center gap-3">
-              <MapPin className="text-neon h-6 w-6" /> Ubicación Principal
+              <MapPin className="text-neon h-6 w-6" /> Ubicacón Principal
             </h2>
             <div className="space-y-4 text-muted-foreground">
               <p className="font-500">
-                {institution?.address || "Parque de la Unión Nacional"}
+                {institution?.address || "Parque de la Unón Nacional"}
               </p>
               {!institution?.address && <p>Oruro, Bolivia</p>}
             </div>
@@ -201,7 +201,7 @@ export function ContactClient({ institution }: ContactClientProps) {
                 id="message"
                 rows={4}
                 className="w-full resize-none rounded-xl border border-border bg-background px-4 py-3 text-sm transition-colors focus:border-neon focus:outline-none focus:ring-1 focus:ring-neon"
-                placeholder="ÃÂ¿En qué te podemos ayudar?"
+                placeholder="¿En qué te podemos ayudar?"
               />
             </div>
 

@@ -33,7 +33,7 @@ export const SortableColumnHeader = ({ children, id, className }: Props) => {
 
     let nextOrder: "asc" | "desc" = "asc";
 
-    // Si ya esti¡ ordenado por esta columna
+    // Si ya está ordenado por esta columna
     if (currentField === id) {
       nextOrder = currentOrder === "asc" ? "desc" : "asc";
     }

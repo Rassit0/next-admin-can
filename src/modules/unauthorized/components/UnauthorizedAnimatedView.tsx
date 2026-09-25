@@ -60,7 +60,7 @@ export const UnauthorizedAnimatedView = () => {
         </motion.span>
       </div>
 
-      {/* Parti­culas Reutilizadas */}
+      {/* Partículas Reutilizadas */}
       <div className="absolute inset-0 z-0 opacity-40">
         <ParticlesBackground />
       </div>
@@ -88,7 +88,7 @@ export const UnauthorizedAnimatedView = () => {
           403 &bull; Protected Route
         </motion.div>
 
-        {/* Ilustración Central con animación de Flotación */}
+        {/* Ilustracón Central con animacón de Flotacón */}
         <motion.div
           variants={imageContainerVariants}
           className="mb-8 relative w-45 h-45 sm:w-55 sm:h-55 md:w-65 md:h-65"
@@ -107,14 +107,14 @@ export const UnauthorizedAnimatedView = () => {
           </motion.div>
         </motion.div>
 
-        {/* Ti­tulo y Descripción con mejor jerarqui­a */}
+        {/* Título y Descripcón con mejor jerarquía */}
         <motion.div variants={itemVariants} className="space-y-4 mb-10">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground tracking-tight">
             Acceso restringido
           </h1>
           <p className="text-muted-foreground text-sm sm:text-base max-w-85 leading-relaxed mx-auto">
-            No tienes permisos para acceder a esta sección. Si crees que esto es
-            un error, comuni­cate con un administrador del sistema.
+            No tienes permisos para acceder a esta seccón. Si crees que esto es
+            un error, comunícate con un administrador del sistema.
           </p>
         </motion.div>
 

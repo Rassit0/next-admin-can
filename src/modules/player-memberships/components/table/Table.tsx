@@ -166,13 +166,13 @@ export const TableMemberships = ({
                           const innerContent = (
                             <>
                               <span className="font-medium text-foreground truncate group-hover:text-primary transition-colors">
-                                {teamObj?.name ?? "Ã¢ÂÂ"}
+                                {teamObj?.name ?? "—"}
                               </span>
                               <span className="text-xs text-muted truncate group-hover:text-primary/80 transition-colors">
                                 {membership.teamSeasonCategories?.category
-                                  ?.name ?? "Ã¢ÂÂ"}{" "}
+                                  ?.name ?? "—"}{" "}
                                 -{" "}
-                                {membership.teamSeason?.season?.name ?? "Ã¢ÂÂ"}
+                                {membership.teamSeason?.season?.name ?? "—"}
                               </span>
                             </>
                           );
@@ -195,7 +195,7 @@ export const TableMemberships = ({
                   )}
                   <Table.Cell className="py-3">
                     <span className="font-medium text-foreground">
-                      {membership.paymentPlan?.name ?? "Ã¢ÂÂ"}
+                      {membership.paymentPlan?.name ?? "—"}
                     </span>
                   </Table.Cell>
                   <Table.Cell className="py-3 text-right">

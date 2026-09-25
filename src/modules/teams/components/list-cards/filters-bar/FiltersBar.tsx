@@ -15,7 +15,7 @@ export const FiltersBar = () => {
       </Card>
       <select className="bg-transparent border-none text-sm font-semibold text-on-surface focus:ring-0 cursor-pointer hover:text-primary transition-colors">
         <option>Todas las Disciplinas</option>
-        <option>Fiºtbol</option>
+        <option>Fútbol</option>
         <option>Baloncesto</option>
         <option>Voleibol</option>
       </select>

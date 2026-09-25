@@ -37,13 +37,13 @@ export const CardCategory = ({ teamSeasonId, category, onEdit }: Props) => {
 
     if (res.error) {
       toast.danger(
-        res.message || "Ocurrió un error al cambiar el estado de la categori­a",
+        res.message || "Ocurró un error al cambiar el estado de la categoría",
       );
       return;
     }
 
     toast.success(
-      `Categori­a ${category.isActive ? "desactivada" : "activada"} exitosamente`,
+      `Categoría ${category.isActive ? "desactivada" : "activada"} exitosamente`,
     );
   };
 
@@ -75,7 +75,7 @@ export const CardCategory = ({ teamSeasonId, category, onEdit }: Props) => {
           </p>
         </div>
         <div>
-          <p className="text-xs text-muted-foreground mb-1">Ai±o de Nac.</p>
+          <p className="text-xs text-muted-foreground mb-1">Año de Nac.</p>
           <p className="font-semibold text-foreground">
             {category.minBirthYear || "-"} - {category.maxBirthYear || "-"}
           </p>

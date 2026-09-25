@@ -49,7 +49,7 @@ export const EditInstitutionHistoryItemModal = ({
       }
     } catch (error) {
       console.error(error);
-      toast.error("Ocurrió un error inesperado al actualizar");
+      toast.error("Ocurró un error inesperado al actualizar");
     } finally {
       setLoading(false);
     }
@@ -71,12 +71,12 @@ export const EditInstitutionHistoryItemModal = ({
             <form onSubmit={handleSubmit}>
               <Modal.Body className="px-6 py-4 flex flex-col gap-4">
                 <TextField name="year" defaultValue={item.year} isRequired>
-                  <Label>Ai±o / Periodo</Label>
+                  <Label>Año / Periodo</Label>
                   <Input />
                 </TextField>
 
                 <TextField name="title" defaultValue={item.title} isRequired>
-                  <Label>Ti­tulo</Label>
+                  <Label>Título</Label>
                   <Input />
                 </TextField>
 
@@ -85,7 +85,7 @@ export const EditInstitutionHistoryItemModal = ({
                   defaultValue={item.description}
                   isRequired
                 >
-                  <Label>Descripción</Label>
+                  <Label>Descripcón</Label>
                   <TextArea />
                 </TextField>
 

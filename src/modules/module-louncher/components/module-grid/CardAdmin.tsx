@@ -37,12 +37,12 @@ export const CardAdmin = async () => {
         </div>
 
         <h3 className="text-xl font-headline font-bold text-on-surface mb-2">
-          Administración General
+          Administracón General
         </h3>
 
         <p className="text-sm text-gray-500 font-body leading-relaxed mb-6">
-          Gestiona la configuración, estructura y operación de la organización
-          deportiva desde un iºnico panel centralizado.
+          Gestiona la configuracón, estructura y operacón de la organizacón
+          deportiva desde un único panel centralizado.
         </p>
 
         <div className="mt-auto pt-6 border-t border-gray-50 flex items-center justify-between">

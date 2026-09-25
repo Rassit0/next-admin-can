@@ -24,7 +24,7 @@ const formatCurrency = (amount: number, currency: string = "BOB") =>
   }).format(amount);
 
 const formatDate = (date: Date | null | undefined) => {
-  if (!date) return "Ã¢ÂÂ";
+  if (!date) return "—";
   return new Date(date).toLocaleDateString("es-BO", {
     year: "numeric",
     month: "short",

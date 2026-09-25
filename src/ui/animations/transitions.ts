@@ -12,7 +12,7 @@ export const staggerContainer: Variants = {
   },
 };
 
-// Animación de entrada de abajo hacia arriba (ri¡pida y sutil)
+// Animacón de entrada de abajo hacia arriba (rápida y sutil)
 export const fadeInUp: Variants = {
   hidden: {
     opacity: 0,
@@ -44,7 +44,7 @@ export const cardHover = {
   },
 };
 
-// Transición para items de listas dini¡micas (ej: cargos pagados que desaparecen)
+// Transicón para items de listas dinámicas (ej: cargos pagados que desaparecen)
 export const listItemTransition: Variants = {
   hidden: { opacity: 0, height: 0, overflow: "hidden" },
   show: {

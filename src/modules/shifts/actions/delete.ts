@@ -15,7 +15,7 @@ export const deleteShift = async (
     return {
       error: true,
       statusCode: 401,
-      message: "Su sesión ha expirado. Por favor, inicie sesión nuevamente.",
+      message: "Su sesón ha expirado. Por favor, inicie sesón nuevamente.",
     } as any;
   return handleServerAction(async () => {
     const response = await api.delete<{ message: string; data: any }>(

@@ -18,9 +18,9 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
   ),
-  title: "Admin CAN - Club Atli©tico Nacional",
+  title: "Admin CAN - Club Atlético Nacional",
   description:
-    "Sistema Administrativo Integral del Club Atli©tico Nacional (CAN). Plataforma de gestión de deportistas, equipos, escuelas de formación, membresías y control institucional.",
+    "Sistema Administrativo Integral del Club Atlético Nacional (CAN). Plataforma de gestón de deportistas, equipos, escuelas de formacón, membresías y control institucional.",
   generator: "v0.app",
   openGraph: {
     images: ["/logo.png"],

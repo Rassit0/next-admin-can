@@ -23,7 +23,7 @@ export const getInstitution = async (): Promise<
     return {
       error: false,
       data: res.data,
-      message: res.message || "Institución obtenida exitosamente",
+      message: res.message || "Institucón obtenida exitosamente",
     };
   }) as unknown as Promise<ServiceResponse<Institution>>;
 };

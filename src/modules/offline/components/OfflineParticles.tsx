@@ -15,7 +15,7 @@ export const OfflineParticles = () => {
   const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
-    // Generar parti­culas de forma segura solo en el cliente
+    // Generar partículas de forma segura solo en el cliente
     // Esto evita el error de "Hydration Mismatch" (SSR vs CSR) causado por Math.random()
     const generated = Array.from({ length: 12 }).map((_, i) => ({
       id: i,

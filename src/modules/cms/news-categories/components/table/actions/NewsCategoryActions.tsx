@@ -39,7 +39,7 @@ export const NewsCategoryActions = ({ item }: Props) => {
     <>
       <Dropdown>
         <Button
-          aria-label="Acciones de categori­a"
+          aria-label="Acciones de categoría"
           isIconOnly
           size="sm"
           variant="ghost"

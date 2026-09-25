@@ -25,7 +25,7 @@ export const TableActions = ({ actions, mode = "responsive" }: Props) => {
   const permissions = usePermissions();
   const router = useRouter();
 
-  // Filtrar las acciones segiºn los permisos del usuario
+  // Filtrar las acciones según los permisos del usuario
   const allowedActions = actions.filter(
     (action) => !action.permission || permissions.includes(action.permission),
   );

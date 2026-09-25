@@ -48,7 +48,7 @@ export default async function SchoolsPage({ searchParams, params }: Props) {
     getDisciplinesOptions(),
   ]);
 
-  // 1. Manejo de error especi­fico (Ej: 401 no autorizado)
+  // 1. Manejo de error específico (Ej: 401 no autorizado)
   if (schoolsResponse.error && schoolsResponse.statusCode === 401) {
     redirect("/login");
   }
@@ -63,7 +63,7 @@ export default async function SchoolsPage({ searchParams, params }: Props) {
     );
   }
 
-  // 1. Manejo de error especi­fico (Ej: 401 no autorizado)
+  // 1. Manejo de error específico (Ej: 401 no autorizado)
   if (
     disciplinesOptionsResponse.error &&
     disciplinesOptionsResponse.statusCode === 401
@@ -96,7 +96,7 @@ export default async function SchoolsPage({ searchParams, params }: Props) {
         </Card.Content>
       </Card>
       <HeaderPage
-        title={`Gestión de Schooles de "${disciplinesOptionsResponse.data.data.find((d) => d.id === disciplineId)?.name}"`}
+        title={`Gestón de Schooles de "${disciplinesOptionsResponse.data.data.find((d) => d.id === disciplineId)?.name}"`}
         description="Administra los schooles deportivos"
         action={<AddModal disciplineId={disciplineId} />}
       />

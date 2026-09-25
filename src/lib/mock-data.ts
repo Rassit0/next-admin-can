@@ -1,4 +1,4 @@
-export type Discipline = "Bi¡squetbol" | "Voleibol" | "Escuela";
+export type Discipline = "Básquetbol" | "Voleibol" | "Escuela";
 
 // (Removed mockNews as it is now obsolete)
 
@@ -14,8 +14,8 @@ export interface MockInstitutionContact {
 export const mockContacts: MockInstitutionContact[] = [
   {
     id: "1",
-    department: "Secretari­a General",
-    contactName: "Mari­a López",
+    department: "Secretaría General",
+    contactName: "María López",
     phone: "+591 12345678",
     email: "secretaria@can.edu.bo",
     isDefault: true,
@@ -23,14 +23,14 @@ export const mockContacts: MockInstitutionContact[] = [
   {
     id: "2",
     department: "Directorio",
-    contactName: "Juan Pi©rez",
+    contactName: "Juan Pérez",
     phone: "+591 87654321",
     email: "directorio@can.edu.bo",
     isDefault: false,
   },
   {
     id: "3",
-    department: "Prensa y Comunicación",
+    department: "Prensa y Comunicacón",
     contactName: "Carlos Gómez",
     phone: "+591 11223344",
     email: "prensa@can.edu.bo",

@@ -52,7 +52,7 @@ export default async function AddTeamSeasonPage({ params }: Props) {
     <>
       <HeaderPage
         title={`Crear Oferta de Temporada - ${teamResponse.data.name}`}
-        description="Formulario para la creación de una nueva oferta de temporada."
+        description="Formulario para la creacón de una nueva oferta de temporada."
         action={
           <>
             <ButtonsSubmit

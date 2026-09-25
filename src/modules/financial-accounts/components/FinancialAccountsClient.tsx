@@ -76,7 +76,7 @@ export const FinancialAccountsClient = ({ accounts }: Props) => {
         <div>
           <h2 className="text-2xl font-bold">Cuentas Financieras</h2>
           <p className="text-default-500">
-            Gestiona cajas fi­sicas, cuentas bancarias y billeteras digitales.
+            Gestiona cajas físicas, cuentas bancarias y billeteras digitales.
           </p>
         </div>
         <Button variant="primary" onPress={handleOpenCreate}>
@@ -97,7 +97,7 @@ export const FinancialAccountsClient = ({ accounts }: Props) => {
                   <p className="text-md font-bold">{acc.name}</p>
                   <p className="text-small text-default-500">
                     {acc.accountNumber ||
-                      (acc.type === "CASH" ? "Efectivo" : "Sin niºmero")}
+                      (acc.type === "CASH" ? "Efectivo" : "Sin número")}
                   </p>
                 </div>
               </div>

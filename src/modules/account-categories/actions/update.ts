@@ -27,7 +27,7 @@ export const updateAccountCategory = async (
     return {
       error: false,
       data: res.data,
-      message: res.message || "Categori­a actualizada exitosamente",
+      message: res.message || "Categoría actualizada exitosamente",
     };
   });
 };

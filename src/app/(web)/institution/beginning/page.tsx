@@ -1,8 +1,8 @@
 import { InstitutionPrinciplesClient } from "@/modules/portal/institutions/components/institution-principles-client";
 
 export const metadata = {
-  title: "Nuestros Principios | Club Atli©tico Nacional",
-  description: "Misión, visión y valores del Club Atli©tico Nacional.",
+  title: "Nuestros Principios | Club Atlético Nacional",
+  description: "Misón, visón y valores del Club Atlético Nacional.",
 };
 
 export default function BeginningPage() {

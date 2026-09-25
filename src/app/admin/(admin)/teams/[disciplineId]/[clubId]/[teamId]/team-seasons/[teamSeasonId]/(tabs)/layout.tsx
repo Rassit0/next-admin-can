@@ -29,7 +29,7 @@ export default async function TeamSeasonDetailLayout({
   const basePath = `/admin/teams/${disciplineId}/${clubId}/${teamId}/team-seasons/${teamSeasonId}`;
 
   const tabsRoutes = [
-    { value: "/", title: "Información General" },
+    { value: "/", title: "Informacón General" },
     { value: "/staff", title: "Personal" },
     { value: "/player-memberships", title: "Membresí­as" },
     { value: "/payment-plans", title: "Planes de Pago" },
@@ -42,7 +42,7 @@ export default async function TeamSeasonDetailLayout({
     <>
       <HeaderPage
         title={`Temporada: ${teamSeason.season.name}`}
-        description={`Equipo: ${teamSeason.team.name} ÃÂ· Detalle de la temporada`}
+        description={`Equipo: ${teamSeason.team.name} · Detalle de la temporada`}
         action={
           <TeamSeasonActions teamSeason={teamSeason} baseUrl={basePath} />
         }

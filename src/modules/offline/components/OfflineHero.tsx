@@ -51,22 +51,22 @@ export const OfflineHero = () => {
         variants={itemVariants}
         className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-3"
       >
-        Conexión en pausa
+        Conexón en pausa
       </motion.h1>
 
       <motion.p
         variants={itemVariants}
         className="text-[17px] font-medium text-slate-600 dark:text-slate-300 mb-2 leading-relaxed"
       >
-        No te preocupes. Seguiremos aqui­ cuando Internet vuelva.
+        No te preocupes. Seguiremos aquí cuando Internet vuelva.
       </motion.p>
 
       <motion.p
         variants={itemVariants}
         className="text-sm text-slate-500 dark:text-slate-500 mb-8 max-w-sm mx-auto"
       >
-        Tus funciones volveri¡n a estar disponibles automi¡ticamente en cuanto
-        se restablezca la red.
+        Tus funciones volverán a estar disponibles automáticamente en cuanto se
+        restablezca la red.
       </motion.p>
 
       <motion.div variants={itemVariants}>

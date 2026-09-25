@@ -147,7 +147,7 @@ export const SelectOrCreateStaff = ({
               >
                 <div className="flex items-center justify-center gap-2 py-2">
                   <Spinner size="sm" />
-                  <span className="muted text-sm">Cargando mi¡s...</span>
+                  <span className="muted text-sm">Cargando más...</span>
                 </div>
               </ListBoxLoadMoreItem>
             </ListBox>

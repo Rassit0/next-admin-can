@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, ReactNode } from "react";
 
-// Contexto geni©rico para almacenar un array de permisos (strings)
+// Contexto genérico para almacenar un array de permisos (strings)
 const PermissionsContext = createContext<string[]>([]);
 
 export const PermissionsProvider = ({
@@ -19,7 +19,7 @@ export const PermissionsProvider = ({
   );
 };
 
-// Hook personalizado para acceder fi¡cilmente a los permisos
+// Hook personalizado para acceder fácilmente a los permisos
 export const usePermissions = () => {
   const context = useContext(PermissionsContext);
   if (context === undefined) {

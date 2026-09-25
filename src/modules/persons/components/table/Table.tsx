@@ -93,7 +93,7 @@ export const TablePersons = ({ persons }: Props) => {
                     No se encontraron personas
                   </span>
                   <span className="text-sm text-default-400">
-                    Intenta con otros ti©rminos de biºsqueda o agrega una nueva
+                    Intenta con otros términos de búsqueda o agrega una nueva
                     persona.
                   </span>
                 </div>

@@ -68,7 +68,7 @@ export const CycleCapacityModal = ({ courseSeasonId }: Props) => {
 
   // Asegurar que la fecha se formatea sin shift de timezone (considerando que vienen en UTC a las 00:00:00)
   const formatCycleDate = (dateString: string) => {
-    // Si viene sin Z, asume local, lo forzamos a UTC para mostrar exactamente el mes/ai±o
+    // Si viene sin Z, asume local, lo forzamos a UTC para mostrar exactamente el mes/año
     const normalized = dateString.endsWith("Z") ? dateString : `${dateString}Z`;
     const date = new Date(normalized);
     const formatter = new Intl.DateTimeFormat("es-ES", {
@@ -102,7 +102,7 @@ export const CycleCapacityModal = ({ courseSeasonId }: Props) => {
               </Modal.Icon>
               <Modal.Heading>Capacidad por Ciclo</Modal.Heading>
               <p className="mt-1.5 text-sm leading-5 text-muted">
-                Visualización general de cupos ocupados y disponibles por turno.
+                Visualizacón general de cupos ocupados y disponibles por turno.
               </p>
             </Modal.Header>
             <Modal.Body className="p-0 md:p-6 overflow-y-auto">

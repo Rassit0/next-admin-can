@@ -27,7 +27,7 @@ export default async function PromotionsPage() {
     <>
       <div className="space-y-8">
         <HeaderPage
-          title="Gestión de Promociones"
+          title="Gestón de Promociones"
           description="Administra las promociones PROMO_1 y PROMO_2 del Home."
           action={
             <>

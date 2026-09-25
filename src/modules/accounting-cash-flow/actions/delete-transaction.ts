@@ -13,7 +13,7 @@ export const deleteTransaction = async (
     return {
       error: false,
       data: null,
-      message: res?.message || "Transacción anulada exitosamente",
+      message: res?.message || "Transaccón anulada exitosamente",
     };
   });
 };

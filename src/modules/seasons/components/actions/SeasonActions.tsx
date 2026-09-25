@@ -174,7 +174,7 @@ export const SeasonActions = ({ season }: Props) => {
               </AlertDialog.Header>
               <AlertDialog.Body className="gap-4 p-2 overflow-visible">
                 <p>
-                  ÃÂ¿Estás seguro de que deseas ejecutar la acción{" "}
+                  ¿Estás seguro de que deseas ejecutar la accón{" "}
                   <strong>{selectedAction?.label.toLowerCase()}</strong> para la
                   temporada <strong>{season.name}</strong>?
                 </p>
@@ -235,7 +235,7 @@ export const SeasonActions = ({ season }: Props) => {
 
                 <TextField name="reason" className="w-full" isRequired>
                   <Label className="text-sm font-semibold">
-                    Motivo u Observación
+                    Motivo u Observacón
                   </Label>
                   <InputGroup>
                     <InputGroup.Prefix>

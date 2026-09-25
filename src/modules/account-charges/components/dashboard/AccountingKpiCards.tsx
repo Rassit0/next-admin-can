@@ -27,7 +27,7 @@ export const AccountingKpiCards = ({ data }: Props) => {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-4">
-      {/* 4. Resultado del Peri­odo */}
+      {/* 4. Resultado del Período */}
       <div className="border-none bg-default-50 rounded-large shadow-sm">
         <div className="p-3 sm:p-4 gap-2 sm:gap-3 flex flex-col">
           <div className="flex justify-between items-start">
@@ -36,8 +36,8 @@ export const AccountingKpiCards = ({ data }: Props) => {
                 <HugeiconsIcon icon={Activity01Icon} size={20} />
               </div>
               <p className="text-xs sm:text-sm text-default-500 font-medium flex items-center gap-1">
-                Resultado del Peri­odo
-                <InfoTooltip text="Ingresos menos egresos generados dentro del peri­odo seleccionado." />
+                Resultado del Período
+                <InfoTooltip text="Ingresos menos egresos generados dentro del período seleccionado." />
               </p>
             </div>
           </div>
@@ -61,7 +61,7 @@ export const AccountingKpiCards = ({ data }: Props) => {
                 <HugeiconsIcon icon={Wallet02Icon} size={20} />
               </div>
               <p className="text-xs sm:text-sm text-default-500 font-medium flex items-center gap-1">
-                Ingresos Peri­odo
+                Ingresos Período
                 <InfoTooltip text="Dinero real que ingresó a caja o bancos en lo que va del periodo seleccionado." />
               </p>
             </div>
@@ -86,8 +86,8 @@ export const AccountingKpiCards = ({ data }: Props) => {
                 <HugeiconsIcon icon={Activity01Icon} size={20} />
               </div>
               <p className="text-xs sm:text-sm text-default-500 font-medium flex items-center gap-1">
-                Egresos Peri­odo
-                <InfoTooltip text="Dinero real que salió de caja o bancos para gastos durante el periodo seleccionado." />
+                Egresos Período
+                <InfoTooltip text="Dinero real que saló de caja o bancos para gastos durante el periodo seleccionado." />
               </p>
             </div>
           </div>

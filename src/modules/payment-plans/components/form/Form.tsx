@@ -123,7 +123,7 @@ export const FormPaymentPlan = ({
     } else if (billingType === "MONTHLY_ONLY") {
       if (!registrationDiscountPercent) {
         newErrors.registrationDiscountPercent =
-          "Debe ingresar un descuento de inscripción";
+          "Debe ingresar un descuento de inscripcón";
       } else if (isInvalidPercent(registration)) {
         newErrors.registrationDiscountPercent =
           "El porcentaje debe estar entre 0 y 100";
@@ -152,7 +152,7 @@ export const FormPaymentPlan = ({
       } else {
         if (!registrationDiscountPercent) {
           newErrors.registrationDiscountPercent =
-            "Debe ingresar un descuento de inscripción";
+            "Debe ingresar un descuento de inscripcón";
         } else if (isInvalidPercent(registration)) {
           newErrors.registrationDiscountPercent =
             "El porcentaje debe estar entre 0 y 100";
@@ -238,7 +238,7 @@ export const FormPaymentPlan = ({
           .join("\n"); // Los separamos por saltos de lí­nea para el toast
       }
 
-      // 2. Pasamos la descripción formateada al componente de notificaciones
+      // 2. Pasamos la descripcón formateada al componente de notificaciones
       toast.danger(res.message, {
         description: errorDescription,
       });
@@ -304,12 +304,12 @@ export const FormPaymentPlan = ({
           <Alert.Indicator />
           <Alert.Content>
             <Alert.Title>
-              ÃÂ¿Necesitas inspiración o quieres ahorrar tiempo?
+              ¿Necesitas inspiracón o quieres ahorrar tiempo?
             </Alert.Title>
             <Alert.Description className="flex flex-col gap-3 mt-1">
               <p>
                 Puedes explorar nuestras plantillas sugeridas y{" "}
-                <strong>aplicar una configuración con un solo clic</strong>.
+                <strong>aplicar una configuracón con un solo clic</strong>.
                 Tenemos plantillas preconfiguradas para promociones 2x1, pagos
                 trimestrales, becas completas y temporadas anuales.
               </p>
@@ -406,8 +406,8 @@ export const FormPaymentPlan = ({
               isInvalid={!!errors.registrationDiscountPercent || undefined}
             >
               <Label>
-                Descuento Inscripción (%){" "}
-                <InfoTooltip text="Descuento aplicado al cargo único de inscripción (Matrí­cula) al momento de registrarse en la temporada." />
+                Descuento Inscripcón (%){" "}
+                <InfoTooltip text="Descuento aplicado al cargo único de inscripcón (Matrí­cula) al momento de registrarse en la temporada." />
               </Label>
               <Input
                 variant="secondary"
@@ -430,7 +430,7 @@ export const FormPaymentPlan = ({
                 }
               />
               <Description className="text-xs text-muted-foreground mt-1">
-                Porcentaje a descontar del costo de la inscripción al equipo (0
+                Porcentaje a descontar del costo de la inscripcón al equipo (0
                 - 100).
               </Description>
             </TextField>
@@ -517,7 +517,7 @@ export const FormPaymentPlan = ({
             >
               <Label>
                 Ciclos con Descuento{" "}
-                <InfoTooltip text="ÃÂ¿A cuántas de las cuotas adelantadas se les aplicará el descuento? Ej: En un 2x1, agrupas 2 cuotas pero solo 1 tiene descuento." />
+                <InfoTooltip text="¿A cuántas de las cuotas adelantadas se les aplicará el descuento? Ej: En un 2x1, agrupas 2 cuotas pero solo 1 tiene descuento." />
               </Label>
               <Input
                 variant="secondary"
@@ -552,7 +552,7 @@ export const FormPaymentPlan = ({
             >
               <Label>
                 Descuento en Cuotas Adelantadas (%){" "}
-                <InfoTooltip text="Aplica un descuento AL TOTAL de las cuotas agrupadas arriba. Ej: Agrupar 2 cuotas con 50% de descuento = Paga 1 mes y se le adelantan 2 (Promoción de inicio gratis)." />
+                <InfoTooltip text="Aplica un descuento AL TOTAL de las cuotas agrupadas arriba. Ej: Agrupar 2 cuotas con 50% de descuento = Paga 1 mes y se le adelantan 2 (Promocón de inicio gratis)." />
               </Label>
               <Input
                 variant="secondary"
@@ -615,7 +615,7 @@ export const FormPaymentPlan = ({
               <div className="flex flex-col">
                 <Label className="text-sm text-foreground font-medium flex items-center">
                   Obligar Pago Único (Toda la temporada por adelantado)
-                  <InfoTooltip text="Fuerza a cobrar toda la temporada en un único pago al momento de inscripción." />
+                  <InfoTooltip text="Fuerza a cobrar toda la temporada en un único pago al momento de inscripcón." />
                 </Label>
                 <p className="text-xs text-muted-foreground mt-1">
                   Activa esto para cobrar toda la temporada en un solo pago

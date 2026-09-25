@@ -35,7 +35,7 @@ export const EditNewsCategoryModal = ({
           className="text-default-600 w-full justify-start"
         >
           <HugeiconsIcon icon={PencilEdit02Icon} size={16} />
-          Editar Categori­a
+          Editar Categoría
         </Button>
       )}
 
@@ -48,10 +48,10 @@ export const EditNewsCategoryModal = ({
                 <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
                   <HugeiconsIcon icon={Folder01Icon} />
                 </Modal.Icon>
-                <Modal.Heading>Editar Categori­a</Modal.Heading>
+                <Modal.Heading>Editar Categoría</Modal.Heading>
               </div>
               <p className="mt-1.5 text-sm leading-5 text-muted">
-                Modifica los datos de la categori­a. El slug no puede ser
+                Modifica los datos de la categoría. El slug no puede ser
                 alterado.
               </p>
             </Modal.Header>

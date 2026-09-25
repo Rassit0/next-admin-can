@@ -145,7 +145,7 @@ export const ParticipationChip = ({ membership, size = "sm" }: Props) => {
   return (
     <Chip color="default" variant="soft" size={size}>
       <span className="size-1.5 rounded-full bg-muted" aria-hidden />
-      <Chip.Label>Sin participación</Chip.Label>
+      <Chip.Label>Sin participacón</Chip.Label>
     </Chip>
   );
 };

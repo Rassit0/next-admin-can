@@ -35,7 +35,7 @@ export default async function CourseSeasonDetailLayout({
   const actionsBaseUrl = `/admin/courses/${disciplineId}/${schoolId}/${courseId}/course-seasons`;
 
   const tabsRoutes = [
-    { value: "/", title: "Información General" },
+    { value: "/", title: "Informacón General" },
     { value: "/staff", title: "Personal" },
     { value: "/student-memberships", title: "Matrí­culas" },
     { value: "/payment-plans", title: "Planes de Pago" },
@@ -47,8 +47,8 @@ export default async function CourseSeasonDetailLayout({
   return (
     <>
       <HeaderPage
-        title={`${courseSeason.name || courseSeason.course.name} ÃÂ· ${courseSeason.season.name}`}
-        description={`Curso: ${courseSeason.course.name} ÃÂ· Detalle de la temporada`}
+        title={`${courseSeason.name || courseSeason.course.name} · ${courseSeason.season.name}`}
+        description={`Curso: ${courseSeason.course.name} · Detalle de la temporada`}
         action={
           <CourseSeasonActions
             courseSeason={courseSeason}

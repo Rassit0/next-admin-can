@@ -23,13 +23,13 @@ export default async function InstitutionHistoryPage() {
       <div className="space-y-8">
         <HeaderPage
           title="Historia Institucional"
-          description="Administra la sección introductoria y los hitos históricos (timeline) del portal público."
+          description="Administra la seccón introductoria y los hitos históricos (timeline) del portal público."
           action={<AddInstitutionHistoryItemModal buttonFloatingMobile />}
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-1 border border-default-200 rounded-xl p-6 bg-default-50">
-            <h2 className="text-xl font-bold mb-4">Configuración de Intro</h2>
+            <h2 className="text-xl font-bold mb-4">Configuracón de Intro</h2>
             <InstitutionHistorySettingsForm defaultValues={settingsData} />
           </div>
 

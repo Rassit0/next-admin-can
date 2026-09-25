@@ -137,7 +137,7 @@ export const TeamSeasonActions = ({ teamSeason, baseUrl }: Props) => {
     }
 
     if (!res || res.error) {
-      toast.error(res?.message || "Ocurrió un error");
+      toast.error(res?.message || "Ocurró un error");
       setLoading(false);
       return;
     }
@@ -202,7 +202,7 @@ export const TeamSeasonActions = ({ teamSeason, baseUrl }: Props) => {
               </AlertDialog.Header>
               <AlertDialog.Body className="gap-4 p-2">
                 <p>
-                  ÃÂ¿Estás seguro de que deseas ejecutar la acción{" "}
+                  ¿Estás seguro de que deseas ejecutar la accón{" "}
                   <strong>{selectedAction?.label.toLowerCase()}</strong> para
                   este equipo?
                 </p>
@@ -313,7 +313,7 @@ export const TeamSeasonActions = ({ teamSeason, baseUrl }: Props) => {
                   selectedAction?.key !== "close_registration" && (
                     <TextField name="reason" className="w-full" isRequired>
                       <Label className="text-sm font-semibold">
-                        Motivo u Observación
+                        Motivo u Observacón
                       </Label>
                       <InputGroup>
                         <InputGroup.Prefix>
@@ -323,7 +323,7 @@ export const TeamSeasonActions = ({ teamSeason, baseUrl }: Props) => {
                             className="text-muted-foreground"
                           />
                         </InputGroup.Prefix>
-                        <InputGroup.Input placeholder="Ej. Falta de alumnos, decisión técnica..." />
+                        <InputGroup.Input placeholder="Ej. Falta de alumnos, decisón técnica..." />
                       </InputGroup>
                     </TextField>
                   )}

@@ -53,7 +53,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
         } else {
           const newGroup: ITransaction = {
             ...t,
-            _isGrouped: false, // Inicialmente falso, es una transacción normal
+            _isGrouped: false, // Inicialmente falso, es una transaccón normal
             _groupedDetails: [
               {
                 method: t.paymentMethod,
@@ -84,7 +84,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
         setVoidTransactionId(null);
       }
     } catch (error) {
-      toast.error("Ocurrió un error al anular el pago");
+      toast.error("Ocurró un error al anular el pago");
     } finally {
       setIsVoiding(false);
     }
@@ -182,7 +182,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
                           ? `${transaction.receiptSeries}-${transaction.receiptNumber}`
                           : transaction.receiptNumber
                             ? `${transaction.receiptNumber}`
-                            : "Ã¢ÂÂ"}
+                            : "—"}
                       </span>
                     </Table.Cell>
                     <Table.Cell>
@@ -312,7 +312,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
                               .replace(/\s+/g, " ")
                               .trim()
                           ) : (
-                            <span className="text-default-400">Ã¢ÂÂ</span>
+                            <span className="text-default-400">—</span>
                           )}
                         </span>
                       </div>
@@ -323,7 +323,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
                           {transaction.thirdParty ? (
                             transaction.thirdParty.name
                           ) : (
-                            <span className="text-default-400">Ã¢ÂÂ</span>
+                            <span className="text-default-400">—</span>
                           )}
                         </span>
                       </div>
@@ -373,7 +373,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
                           </Button>
                           <Dropdown.Popover>
                             <Dropdown.Menu
-                              aria-label="Acciones de Transacción"
+                              aria-label="Acciones de Transaccón"
                               onAction={(key) => {
                                 if (key === "print") {
                                   setPrintTransactionId(transaction.id);
@@ -436,17 +436,17 @@ export const CashFlowTable = ({ transactions }: Props) => {
             <AlertDialog.Header>
               <AlertDialog.Icon status="danger" />
               <AlertDialog.Heading>
-                Anular Pago / Transacción
+                Anular Pago / Transaccón
               </AlertDialog.Heading>
             </AlertDialog.Header>
             <AlertDialog.Body>
               <p>
-                ÃÂ¿Estás seguro que deseas anular esta transacción? Esta acción
+                ¿Estás seguro que deseas anular esta transaccón? Esta accón
                 reversará el saldo aplicado a los cargos asociados y devolverá
-                la transacción a su estado anterior.
+                la transaccón a su estado anterior.
               </p>
               <p className="mt-2 text-sm text-default-500">
-                Esta acción no se puede deshacer.
+                Esta accón no se puede deshacer.
               </p>
             </AlertDialog.Body>
             <AlertDialog.Footer>

@@ -70,7 +70,7 @@ export const CurrentStateKpis = ({ data }: Props) => {
               </div>
               <p className="text-xs sm:text-sm text-default-500 font-medium flex items-center gap-1">
                 Saldo Disponible
-                <InfoTooltip text="Total de dinero li­quido disponible inmediatamente en todas las cuentas y cajas." />
+                <InfoTooltip text="Total de dinero líquido disponible inmediatamente en todas las cuentas y cajas." />
               </p>
             </div>
           </div>
@@ -95,7 +95,7 @@ export const CurrentStateKpis = ({ data }: Props) => {
               </div>
               <p className="text-xs sm:text-sm text-default-500 font-medium flex items-center gap-1">
                 Total por Cobrar
-                <InfoTooltip text="Suma total de deudas a favor (mensualidades, matri­culas y cuentas administrativas pendientes)." />
+                <InfoTooltip text="Suma total de deudas a favor (mensualidades, matrículas y cuentas administrativas pendientes)." />
               </p>
             </div>
             {renderTrend(data.financial.receivablesTrend, false)}

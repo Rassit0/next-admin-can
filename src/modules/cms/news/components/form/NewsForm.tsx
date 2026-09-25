@@ -259,7 +259,7 @@ export const NewsForm = ({
           </Select>
 
           <TextField variant="secondary">
-            <Label>Fecha de Publicación (Opcional)</Label>
+            <Label>Fecha de Publicacón (Opcional)</Label>
             <Input
               type="datetime-local"
               value={formData.publishedAt}
@@ -282,7 +282,7 @@ export const NewsForm = ({
           {formData.imageUrl && (
             <div className="mt-2 text-sm text-success flex items-center justify-between">
               <span>
-                Ã¢ÂÂ Imagen lista. URL:{" "}
+                ✓ Imagen lista. URL:{" "}
                 <a
                   href={formData.imageUrl}
                   target="_blank"

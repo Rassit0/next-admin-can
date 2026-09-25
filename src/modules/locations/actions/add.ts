@@ -31,7 +31,7 @@ export const addLocation = async ({
     return {
       error: false,
       data: res.data,
-      message: res.message || "Instalación agregada exitosamente",
+      message: res.message || "Instalacón agregada exitosamente",
     };
   } catch (error: any) {
     // 1. Manejo de Errores Controlados (API)
@@ -41,11 +41,11 @@ export const addLocation = async ({
         `[ApiError ${error.statusCode}]: ${JSON.stringify(error.errors)}`,
       );
 
-      // Devolvemos el error en un formato que el frontend pueda procesar fi¡cilmente
+      // Devolvemos el error en un formato que el frontend pueda procesar fácilmente
       return {
         error: true,
         message: error.message,
-        errors: error.errors, // Aqui­ vienen los errores de validación (ej: campos requeridos)
+        errors: error.errors, // Aquí vienen los errores de validacón (ej: campos requeridos)
         statusCode: error.statusCode,
       };
     }
@@ -55,7 +55,7 @@ export const addLocation = async ({
 
     return {
       error: true,
-      message: "Ocurrió un error inesperado. Por favor, intenta mi¡s tarde.",
+      message: "Ocurró un error inesperado. Por favor, intenta más tarde.",
       statusCode: 500,
     };
   }

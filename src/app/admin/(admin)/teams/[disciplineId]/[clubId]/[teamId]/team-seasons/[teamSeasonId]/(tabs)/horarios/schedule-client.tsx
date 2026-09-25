@@ -27,7 +27,7 @@ export const ScheduleClientPage = ({
 
       <div className="bg-content1 rounded-xl shadow-sm border border-divider p-6 text-center text-default-500">
         <p>
-          Aiºn no has programado horarios. Agrega uno nuevo para configurar la
+          Aún no has programado horarios. Agrega uno nuevo para configurar la
           recurrencia de entrenamientos o clases en el calendario.
         </p>
         <p className="text-sm mt-2">

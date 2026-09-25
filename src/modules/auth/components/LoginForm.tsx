@@ -41,7 +41,7 @@ export const LoginForm = () => {
   const toggleVisibility = () => setIsVisible(!isVisible);
 
   useEffect(() => {
-    // Si fuimos redirigidos aquÃÂ­ porque expiró la sesión, limpiamos la cookie local de NextAuth
+    // Si fuimos redirigidos aquí porque expiró la sesón, limpiamos la cookie local de NextAuth
     if (searchParams.get("expired") === "true") {
       signOut({ redirect: false });
     }
@@ -178,7 +178,7 @@ export const LoginForm = () => {
             color="primary"
             className="text-sm font-semibold hover:text-accent transition-colors"
           >
-            ÃÂ¿Olvidaste tu contraseña?
+            ¿Olvidaste tu contraseña?
           </Link>
         </motion.div> */}
 
@@ -191,7 +191,7 @@ export const LoginForm = () => {
             <Alert status="danger">
               <Alert.Indicator />
               <Alert.Content>
-                <Alert.Title>Error de autenticación</Alert.Title>
+                <Alert.Title>Error de autenticacón</Alert.Title>
                 <Alert.Description>{errorMessage}</Alert.Description>
               </Alert.Content>
             </Alert>

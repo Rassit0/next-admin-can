@@ -98,7 +98,7 @@ export const MatchCallUpsDrawer = ({
   const handleOpenChange = (open: boolean) => {
     if (!open && (isHomeDirty || isAwayDirty)) {
       if (
-        !window.confirm("Tienes cambios sin guardar. ÃÂ¿Cerrar de todos modos?")
+        !window.confirm("Tienes cambios sin guardar. ¿Cerrar de todos modos?")
       ) {
         return; // Prevent closing
       }
@@ -165,7 +165,7 @@ export const MatchCallUpsDrawer = ({
             ) : (
               <div className="flex justify-center items-center h-64 flex-col gap-2">
                 <p className="text-sm text-muted">
-                  No se pudo cargar la información.
+                  No se pudo cargar la informacón.
                 </p>
                 <button
                   onClick={fetchAll}

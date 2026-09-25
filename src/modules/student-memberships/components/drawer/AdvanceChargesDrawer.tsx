@@ -195,7 +195,7 @@ export const AdvanceChargesDrawer = ({
         }
       }
     } catch (error) {
-      setPreviewError("Ocurrió un error al obtener la previsualización.");
+      setPreviewError("Ocurró un error al obtener la previsualizacón.");
       setPreviewData(null);
     } finally {
       setIsLoadingPreview(false);
@@ -244,7 +244,7 @@ export const AdvanceChargesDrawer = ({
       }
     } catch (error) {
       toast.error(
-        "Ocurrió un error inesperado al realizar la compra de los ciclos.",
+        "Ocurró un error inesperado al realizar la compra de los ciclos.",
       );
     } finally {
       setIsGenerating(false);
@@ -274,7 +274,7 @@ export const AdvanceChargesDrawer = ({
             <div>
               <Drawer.Heading className="text-lg font-bold flex items-center gap-2">
                 <HugeiconsIcon icon={Money01Icon} />
-                Inscripción a Ciclo
+                Inscripcón a Ciclo
               </Drawer.Heading>
               <p className="mt-1 text-xs font-medium text-muted">
                 Inscribe al estudiante en el siguiente ciclo (mes) de esta
@@ -291,7 +291,7 @@ export const AdvanceChargesDrawer = ({
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-foreground">
-                    ÃÂ¿Confirmar inscripción?
+                    ¿Confirmar inscripcón?
                   </h3>
                   <p className="text-sm text-muted mt-2">
                     Estás a punto de inscribir{" "}
@@ -304,7 +304,7 @@ export const AdvanceChargesDrawer = ({
                     .
                   </p>
                   <p className="text-xs text-muted mt-2">
-                    Esta acción creará los cargos en el sistema y no se puede
+                    Esta accón creará los cargos en el sistema y no se puede
                     deshacer automáticamente.
                   </p>
                 </div>
@@ -314,9 +314,9 @@ export const AdvanceChargesDrawer = ({
                 <Alert status="accent" className="mb-2">
                   <Alert.Indicator />
                   <Alert.Content>
-                    <Alert.Title>Acerca de la Inscripción</Alert.Title>
+                    <Alert.Title>Acerca de la Inscripcón</Alert.Title>
                     <Alert.Description>
-                      Esta acción buscará el siguiente mes (ciclo) disponible de
+                      Esta accón buscará el siguiente mes (ciclo) disponible de
                       la temporada al que aún no estás inscrito y te generará la
                       cuota correspondiente. Úsalo para continuar en el curso.
                     </Alert.Description>
@@ -472,7 +472,7 @@ export const AdvanceChargesDrawer = ({
                               {isSelected && (
                                 <div className="pl-7 mt-1">
                                   <Label className="text-xs mb-1">
-                                    Fecha de Inscripción (Prorrateo)
+                                    Fecha de Inscripcón (Prorrateo)
                                   </Label>
                                   <DatePicker
                                     value={
@@ -564,7 +564,7 @@ export const AdvanceChargesDrawer = ({
 
                 <div className="flex flex-col gap-3 mt-4">
                   <h4 className="text-sm font-semibold text-foreground border-b border-border pb-2">
-                    Previsualización
+                    Previsualizacón
                   </h4>
 
                   {isLoadingPreview ? (
@@ -638,7 +638,7 @@ export const AdvanceChargesDrawer = ({
                     </div>
                   ) : (
                     <p className="text-sm text-muted text-center py-4">
-                      Selecciona al menos un ciclo para ver la previsualización.
+                      Selecciona al menos un ciclo para ver la previsualizacón.
                     </p>
                   )}
                 </div>

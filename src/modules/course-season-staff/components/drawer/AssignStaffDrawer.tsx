@@ -183,7 +183,7 @@ export const AssignStaffDrawer = ({
                   Asignar personal
                 </Drawer.Heading>
                 <p className="mt-1 text-xs font-medium text-muted">
-                  {courseSeason.course.name} ÃÂ· {courseSeason.season.name}
+                  {courseSeason.course.name} · {courseSeason.season.name}
                 </p>
               </div>
             </Drawer.Header>

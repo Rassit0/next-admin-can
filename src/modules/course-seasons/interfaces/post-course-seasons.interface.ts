@@ -23,8 +23,8 @@ export interface IPostCourseSeason {
     registrationFee?: string | null; // Precio de la matricula
     recurringFee?: string | null; // precio de la mensualidad
     seasonFee?: string | null; // Tarifa completa de temporada
-    billingType: SeasonBillingType; // Tipo de facturación
-    billingFrequency: BillingFrequency; // Frecuencia de facturación
+    billingType: SeasonBillingType; // Tipo de facturacón
+    billingFrequency: BillingFrequency; // Frecuencia de facturacón
     prorateFirstRecurringFee: boolean;
     prorateLastRecurringFee: boolean;
     prorateRegistrationFee: boolean;

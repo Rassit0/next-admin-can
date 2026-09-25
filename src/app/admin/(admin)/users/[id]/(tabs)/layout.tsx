@@ -39,11 +39,11 @@ export default async function UserGestionLayout({
   return (
     <>
       <HeaderPage
-        title={`Gestión de Usuario: ${userEmail}`}
-        description="Administre la información de acceso y el perfil personal asociado."
+        title={`Gestón de Usuario: ${userEmail}`}
+        description="Administre la informacón de acceso y el perfil personal asociado."
         breadcrumb={[
           { label: "Usuarios", href: `/admin/users` },
-          { label: "Gestión" },
+          { label: "Gestón" },
         ]}
       />
       <div className="flex flex-col page-content">

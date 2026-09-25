@@ -34,7 +34,7 @@ export const EditPromotionModal = ({
               <Modal.Heading>Editar Promotion</Modal.Heading>
             </div>
             <p className="mt-1.5 text-sm leading-5 text-muted">
-              Actualice la información del promotion seleccionado.
+              Actualice la informacón del promotion seleccionado.
             </p>
           </Modal.Header>
           <Modal.Body className="p-6">

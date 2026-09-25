@@ -130,13 +130,13 @@ export const BulkPaymentDrawer = ({
     if (hasUncustomizedCharges) {
       if (!paymentMethod)
         newErrors.paymentMethod =
-          "Seleccione un mi©todo de pago global por defecto";
+          "Seleccione un método de pago global por defecto";
       if (!financialAccountId)
         newErrors.financialAccountId =
           "Seleccione una cuenta financiera global por defecto";
       // TODO: (Opcional temporalmente) Volver a obligar a ingresar Referencia Global para transferencias/QR en el futuro
       // if ((paymentMethod === "TRANSFER" || paymentMethod === "QR") && !reference.trim()) {
-      //   newErrors.reference = "La referencia es obligatoria para este mi©todo de pago";
+      //   newErrors.reference = "La referencia es obligatoria para este método de pago";
       // }
     }
 
@@ -153,7 +153,7 @@ export const BulkPaymentDrawer = ({
           Number(Number(charge.pendingAmount).toFixed(2))
         ) {
           newErrors[`charge_${charge.id}`] =
-            "La suma de la distribución no coincide con el saldo del cargo.";
+            "La suma de la distribucón no coincide con el saldo del cargo.";
         }
         const hasInvalidMethod = splits.some(
           (s) =>
@@ -161,7 +161,7 @@ export const BulkPaymentDrawer = ({
         );
         if (hasInvalidMethod) {
           newErrors[`charge_${charge.id}`] =
-            "La distribución tiene cuentas, mi©todos o montos invi¡lidos.";
+            "La distribucón tiene cuentas, métodos o montos inválidos.";
         }
       }
     }
@@ -249,17 +249,17 @@ export const BulkPaymentDrawer = ({
         <Drawer.Content placement="right">
           <Drawer.Dialog
             className="w-full sm:max-w-md"
-            aria-label="Cobrar Miºltiples Cargos"
+            aria-label="Cobrar Múltiples Cargos"
           >
             <Drawer.CloseTrigger />
             <form onSubmit={handleConfirm} className="flex flex-col h-full">
               <Drawer.Header className="flex flex-col gap-1 border-b border-border">
                 <Drawer.Heading className="text-xl font-bold flex items-center gap-2">
                   <HugeiconsIcon icon={Wallet01Icon} />
-                  Cobrar Miºltiples Cargos
+                  Cobrar Múltiples Cargos
                 </Drawer.Heading>
                 <p className="text-sm text-default-500">
-                  Esti¡ a punto de cobrar {charges.length} cargos.
+                  Está a punto de cobrar {charges.length} cargos.
                 </p>
               </Drawer.Header>
 
@@ -270,10 +270,10 @@ export const BulkPaymentDrawer = ({
                   </div>
                 )}
 
-                {/* Selección Global Default */}
+                {/* Seleccón Global Default */}
                 <div className="flex flex-col gap-4">
                   <h3 className="text-sm font-semibold flex items-center gap-2 border-b border-default-200 pb-2">
-                    Distribución por Defecto
+                    Distribucón por Defecto
                   </h3>
 
                   {/* Cuenta Financiera */}
@@ -321,7 +321,7 @@ export const BulkPaymentDrawer = ({
                     </Select.Popover>
                   </Select>
 
-                  {/* Mi©todo de Pago */}
+                  {/* Método de Pago */}
                   <Select
                     className="w-full"
                     variant="secondary"
@@ -332,7 +332,7 @@ export const BulkPaymentDrawer = ({
                     }}
                     isInvalid={!!errors.paymentMethod}
                   >
-                    <Label>Mi©todo de Pago Global</Label>
+                    <Label>Método de Pago Global</Label>
                     <Select.Trigger>
                       <Select.Value />
                       <Select.Indicator />
@@ -370,14 +370,14 @@ export const BulkPaymentDrawer = ({
                         <span className="text-danger ml-1">*</span>
                       )} */}
                     </Label>
-                    <Input placeholder="Ej. Niºmero de operación" />
+                    <Input placeholder="Ej. Número de operacón" />
                     {errors.reference && (
                       <FieldError>{errors.reference}</FieldError>
                     )}
                   </TextField>
                 </div>
 
-                {/* Resumen de Cargos y Personalización */}
+                {/* Resumen de Cargos y Personalizacón */}
                 <Card className="border border-outline-variant/30 shadow-none bg-surface-container-low mb-2">
                   <div className="p-4 flex flex-col gap-2">
                     <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
@@ -506,7 +506,7 @@ export const BulkPaymentDrawer = ({
                                       setExpandedChargeId(null);
                                     }}
                                   >
-                                    Quitar personalización (Usar Default)
+                                    Quitar personalizacón (Usar Default)
                                   </Button>
                                 )}
                               </div>

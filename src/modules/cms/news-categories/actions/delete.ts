@@ -14,7 +14,7 @@ export const deleteNewsCategory = async (
     return {
       error: true,
       statusCode: 401,
-      message: "Su sesión ha expirado",
+      message: "Su sesón ha expirado",
     } as any;
 
   return handleServerAction(async () => {
@@ -31,7 +31,7 @@ export const deleteNewsCategory = async (
     return {
       error: false,
       data: undefined as any,
-      message: "Categori­a eliminada exitosamente",
+      message: "Categoría eliminada exitosamente",
     };
   });
 };

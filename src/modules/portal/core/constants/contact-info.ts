@@ -1,5 +1,5 @@
 export const CLUB_CONTACT = {
-  name: "Club Atli©tico Nacional",
+  name: "Club Atlético Nacional",
   phone: "+54 11 4567-8900",
   whatsapp: "+54 9 11 1234-5678",
   email: "secretaria@verticeatletico.ar",

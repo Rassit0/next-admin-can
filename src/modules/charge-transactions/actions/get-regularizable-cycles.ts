@@ -29,7 +29,7 @@ export const getRegularizableCycles = async (
 
     const response = await api.get<any>(endpoint);
 
-    // Si el backend devuelve un arreglo directo o esti¡ envuelto en { data }
+    // Si el backend devuelve un arreglo directo o está envuelto en { data }
     const rawCycles = Array.isArray(response) ? response : response?.data || [];
 
     const mappedCycles = rawCycles.map((c: any) => ({

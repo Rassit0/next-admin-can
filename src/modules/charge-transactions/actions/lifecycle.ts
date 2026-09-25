@@ -14,11 +14,11 @@ export type MembershipLifecycleAction =
   | "activate";
 
 const messages: Record<MembershipLifecycleAction, string> = {
-  finish: "Membresi­a finalizada exitosamente",
-  suspend: "Membresi­a suspendida exitosamente",
+  finish: "Membresía finalizada exitosamente",
+  suspend: "Membresía suspendida exitosamente",
   withdraw: "Atleta dado de baja exitosamente",
-  reactivate: "Membresi­a reactivada exitosamente",
-  activate: "Membresi­a activada exitosamente",
+  reactivate: "Membresía reactivada exitosamente",
+  activate: "Membresía activada exitosamente",
 };
 
 export const updateMembershipLifecycle = async ({
@@ -34,7 +34,7 @@ export const updateMembershipLifecycle = async ({
     return {
       error: true,
       statusCode: 401,
-      message: "Su sesión ha expirado. Por favor, inicie sesión nuevamente.",
+      message: "Su sesón ha expirado. Por favor, inicie sesón nuevamente.",
     };
 
   return handleServerAction(async () => {

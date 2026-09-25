@@ -40,7 +40,7 @@ export const TableCategories = ({ categories, disciplinesOptions }: Props) => {
 
   const [isClient, setIsClient] = useState(false);
 
-  // Evitamos la hidratación fallida
+  // Evitamos la hidratacón fallida
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -110,7 +110,7 @@ export const TableCategories = ({ categories, disciplinesOptions }: Props) => {
                     No se encontraron registros
                   </span>
                   <span className="text-sm text-default-400">
-                    Intenta con otros ti©rminos de biºsqueda o agrega uno nuevo.
+                    Intenta con otros términos de búsqueda o agrega uno nuevo.
                   </span>
                 </div>
               </div>

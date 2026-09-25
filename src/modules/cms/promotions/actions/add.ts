@@ -18,7 +18,7 @@ export const addPromotion = async (
     return {
       error: true,
       statusCode: 401,
-      message: "Su sesión ha expirado.",
+      message: "Su sesón ha expirado.",
     } as any;
 
   return handleServerAction(async () => {

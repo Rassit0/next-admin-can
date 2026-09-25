@@ -133,7 +133,7 @@ export const SplitViewRoles: React.FC<Props> = ({
     setConfirmDialog({
       isOpen: true,
       title: "Eliminar Rol",
-      description: `ÃÂ¿Está seguro de eliminar el rol "${selectedRole.name}"? Esta acción fallará si hay usuarios asignados a él.`,
+      description: `¿Está seguro de eliminar el rol "${selectedRole.name}"? Esta accón fallará si hay usuarios asignados a él.`,
       status: "danger",
       confirmText: "Eliminar",
       onConfirm: async () => {
@@ -207,7 +207,7 @@ export const SplitViewRoles: React.FC<Props> = ({
               <span
                 className={`text-xs truncate ${selectedRole?.id === role.id && !isCreating ? "text-accent-soft-foreground/70" : "text-muted"}`}
               >
-                {role.description || "Sin descripción"}
+                {role.description || "Sin descripcón"}
               </span>
             </button>
           ))}
@@ -256,7 +256,7 @@ export const SplitViewRoles: React.FC<Props> = ({
                 <p className="text-sm text-muted mt-1">
                   {isCreating
                     ? "Configure los datos básicos y asigne los permisos."
-                    : "Gestione la configuración de este rol."}
+                    : "Gestione la configuracón de este rol."}
                 </p>
               </div>
 
@@ -313,7 +313,7 @@ export const SplitViewRoles: React.FC<Props> = ({
                 </TextField>
 
                 <TextField className="w-full">
-                  <Label>Descripción</Label>
+                  <Label>Descripcón</Label>
                   <TextArea
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}

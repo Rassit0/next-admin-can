@@ -16,7 +16,7 @@ export const AssignmentModal = ({
       size="md"
       className="font-semibold bg-accent text-accent-foreground"
     >
-      Asignar Membresi­a
+      Asignar Membresía
     </Button>
   );
 };

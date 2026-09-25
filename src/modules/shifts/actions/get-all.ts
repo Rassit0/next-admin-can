@@ -13,7 +13,7 @@ export const getAllShifts = async (): Promise<ServiceResponse<IShift[]>> => {
     return {
       error: true,
       statusCode: 401,
-      message: "Su sesión ha expirado. Por favor, inicie sesiÃƒÂ³n nuevamente.",
+      message: "Su sesón ha expirado. Por favor, inicie sesón nuevamente.",
     } as any;
 
   return handleServerAction(async () => {

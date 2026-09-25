@@ -26,7 +26,7 @@ export const createAccountCategory = async (
     return {
       error: false,
       data: res.data,
-      message: res.message || "Categori­a creada exitosamente",
+      message: res.message || "Categoría creada exitosamente",
     };
   });
 };

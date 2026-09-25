@@ -67,7 +67,7 @@ export const MatchCallUpSidePanel = ({
     }
 
     setSelectedIds(ids);
-    // DIRTY NO SE MARCA AL INICIO, ya que la preselección automática no es un cambio manual del usuario
+    // DIRTY NO SE MARCA AL INICIO, ya que la preseleccón automática no es un cambio manual del usuario
     onDirtyChange(false);
   }, [initialCallUps, hasCategory, candidates, configuredAt]);
 
@@ -118,7 +118,7 @@ export const MatchCallUpSidePanel = ({
   const handleSave = async () => {
     if (selectedIds.size === 0 && initialCallUps.length > 0) {
       const isConfirmed = window.confirm(
-        `ÃÂ¿Vaciar toda la convocatoria ${side === "HOME" ? "local" : "visitante"}?`,
+        `¿Vaciar toda la convocatoria ${side === "HOME" ? "local" : "visitante"}?`,
       );
       if (!isConfirmed) return;
     }
@@ -141,7 +141,7 @@ export const MatchCallUpSidePanel = ({
         onSuccess(res.data); // Return specific updated data
       }
     } catch (e) {
-      toast.error("Ocurrió un error inesperado al guardar.");
+      toast.error("Ocurró un error inesperado al guardar.");
     } finally {
       setIsSaving(false);
     }

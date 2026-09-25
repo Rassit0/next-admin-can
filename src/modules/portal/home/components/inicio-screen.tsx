@@ -47,9 +47,9 @@ export function Inicio({
       {promo1 && (
         <PromoBanner
           title={promo1.title}
-          subtitle={"Promoción Especial"}
+          subtitle={"Promocón Especial"}
           image={promo1.image16x9}
-          ctaText={promo1.ctaText || "Ver mi¡s"}
+          ctaText={promo1.ctaText || "Ver más"}
           ctaHref={promo1.redirectTo || "#"}
           fullWidth
         />
@@ -58,18 +58,18 @@ export function Inicio({
       {/* 4. Actualidad (Noticias) */}
       <ActualidadSection news={news} />
 
-      {/* 5. Fixture (Bi¡squetbol y Voleibol) */}
+      {/* 5. Fixture (Básquetbol y Voleibol) */}
       <FixtureSection initialFixtures={matches} />
 
       {/* 6. Banner promocional 2 */}
       {promo2 && (
         <PromoBanner
           title={promo2.title}
-          subtitle={"Promoción Especial"}
+          subtitle={"Promocón Especial"}
           image={promo2.image16x9}
           className="pb-16"
           fullWidth={true}
-          ctaText={promo2.ctaText || "Ver mi¡s"}
+          ctaText={promo2.ctaText || "Ver más"}
           ctaHref={promo2.redirectTo || "#"}
         />
       )}

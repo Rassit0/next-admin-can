@@ -133,7 +133,7 @@ export const PaymentDistributionsList = ({
                         setSplits(newSplits);
                       }}
                     >
-                      <Label>Mi©todo de Pago</Label>
+                      <Label>Método de Pago</Label>
                       <Select.Trigger>
                         <Select.Value />
                         <Select.Indicator />
@@ -211,7 +211,7 @@ export const PaymentDistributionsList = ({
           ]);
         }}
       >
-        + Agregar Mi©todo de Pago
+        + Agregar Método de Pago
       </Button>
     </>
   );

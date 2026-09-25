@@ -149,7 +149,7 @@ export const CreateUserModal: React.FC<Props> = ({
 
                   <p className="text-xs text-default-500">
                     La contraseña se generará automáticamente y se mostrará al
-                    finalizar la creación.
+                    finalizar la creacón.
                   </p>
                 </div>
               </Modal.Body>

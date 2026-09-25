@@ -64,7 +64,7 @@ export const ManageShiftsModal = ({ courseSeason, urlBase }: Props) => {
     }
   }, [state.isOpen, urlBase]);
 
-  // Filtrar los turnos que ya esti¡n asignados a esta temporada
+  // Filtrar los turnos que ya están asignados a esta temporada
   const assignedShiftIds =
     courseSeason.shifts?.map((s) => s.shift?.id).filter(Boolean) || [];
   const availableShifts = shiftsOptions.filter(
@@ -74,10 +74,10 @@ export const ManageShiftsModal = ({ courseSeason, urlBase }: Props) => {
   const handleAddShift = async () => {
     const newErrors: Record<string, string> = {};
     if (!selectedShiftId) newErrors.selectedShiftId = "Seleccione un turno";
-    if (!categoryId) newErrors.categoryId = "Seleccione una categori­a";
-    if (!gender) newErrors.gender = "Seleccione un gi©nero";
+    if (!categoryId) newErrors.categoryId = "Seleccione una categoría";
+    if (!gender) newErrors.gender = "Seleccione un género";
     if (minBirthYear && maxBirthYear && minBirthYear > maxBirthYear) {
-      newErrors.minBirthYear = "Error en rango de ai±os";
+      newErrors.minBirthYear = "Error en rango de años";
     }
 
     setErrors(newErrors);
@@ -146,7 +146,7 @@ export const ManageShiftsModal = ({ courseSeason, urlBase }: Props) => {
               </Modal.Icon>
               <Modal.Heading>Agregar Turno Adicional</Modal.Heading>
               <p className="mt-1.5 text-sm leading-5 text-muted">
-                Agrega una nueva opción logi­stica (horario) para esta oferta.
+                Agrega una nueva opcón logística (horario) para esta oferta.
               </p>
             </Modal.Header>
             <Modal.Body className="p-0 md:p-6">
@@ -198,7 +198,7 @@ export const ManageShiftsModal = ({ courseSeason, urlBase }: Props) => {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="col-span-2">
                     <SelectCategory
-                      label="Categori­a"
+                      label="Categoría"
                       categoriesOptions={categoriesOptions}
                       categoryId={categoryId}
                       setCategoryId={setCategoryId}
@@ -252,7 +252,7 @@ export const ManageShiftsModal = ({ courseSeason, urlBase }: Props) => {
                   </div>
                   <div className="col-span-1">
                     <label className="text-xs font-bold mb-1 block">
-                      Ai±o Nacimiento Min (Opcional)
+                      Año Nacimiento Min (Opcional)
                     </label>
                     <input
                       type="number"
@@ -268,7 +268,7 @@ export const ManageShiftsModal = ({ courseSeason, urlBase }: Props) => {
                   </div>
                   <div className="col-span-1">
                     <label className="text-xs font-bold mb-1 block">
-                      Ai±o Nacimiento Max (Opcional)
+                      Año Nacimiento Max (Opcional)
                     </label>
                     <input
                       type="number"
@@ -284,7 +284,7 @@ export const ManageShiftsModal = ({ courseSeason, urlBase }: Props) => {
                   </div>
                   <div>
                     <label className="text-xs font-bold mb-1 block">
-                      Cupo Mi¡ximo
+                      Cupo Máximo
                     </label>
                     <input
                       type="number"
@@ -296,7 +296,7 @@ export const ManageShiftsModal = ({ courseSeason, urlBase }: Props) => {
                   </div>
                   <div>
                     <label className="text-xs font-bold mb-1 block">
-                      Cupo Mi­nimo
+                      Cupo Mínimo
                     </label>
                     <input
                       type="number"

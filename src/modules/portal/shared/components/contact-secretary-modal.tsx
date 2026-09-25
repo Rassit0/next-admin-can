@@ -20,8 +20,8 @@ interface ContactSecretaryModalProps {
 export function ContactSecretaryModal({
   isOpen,
   onClose,
-  title = "Contacta a Nuestra Secretari­a",
-  message = "Estamos disponibles para responder tus preguntas sobre inscripciones, aranceles y mi¡s información sobre nuestros programas.",
+  title = "Contacta a Nuestra Secretaría",
+  message = "Estamos disponibles para responder tus preguntas sobre inscripciones, aranceles y más informacón sobre nuestros programas.",
 }: ContactSecretaryModalProps) {
   // Close on Escape
   useEffect(() => {
@@ -83,13 +83,13 @@ export function ContactSecretaryModal({
                   <Clock className="mt-1 h-5 w-5 flex-shrink-0 text-neon" />
                   <div>
                     <p className="font-semibold text-primary">
-                      Horarios de Atención
+                      Horarios de Atencón
                     </p>
                     <p className="text-sm text-primary/70">
                       Lunes a Viernes: {CLUB_CONTACT.hours.weekday}
                     </p>
                     <p className="text-sm text-primary/70">
-                      Si¡bados: {CLUB_CONTACT.hours.saturday}
+                      Sábados: {CLUB_CONTACT.hours.saturday}
                     </p>
                   </div>
                 </div>

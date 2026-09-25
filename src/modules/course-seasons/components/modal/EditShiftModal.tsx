@@ -68,13 +68,13 @@ export const EditShiftModal = ({ courseSeasonId, urlBase, shift }: Props) => {
 
   const handleEditShift = async () => {
     const newErrors: Record<string, string> = {};
-    if (!categoryId) newErrors.categoryId = "Seleccione una categori­a";
-    if (!gender) newErrors.gender = "Seleccione un gi©nero";
+    if (!categoryId) newErrors.categoryId = "Seleccione una categoría";
+    if (!gender) newErrors.gender = "Seleccione un género";
     if (minBirthYear && maxBirthYear && minBirthYear > maxBirthYear) {
-      newErrors.minBirthYear = "Error en rango de ai±os";
+      newErrors.minBirthYear = "Error en rango de años";
     }
     if (minMembers > maxMembers) {
-      newErrors.minMembers = "Mi­nimo no puede ser mayor que el mi¡ximo";
+      newErrors.minMembers = "Mínimo no puede ser mayor que el máximo";
     }
 
     setErrors(newErrors);
@@ -108,7 +108,7 @@ export const EditShiftModal = ({ courseSeasonId, urlBase, shift }: Props) => {
       <button
         onClick={() => state.open()}
         className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-surface-container-high transition-colors"
-        title="Editar Configuración"
+        title="Editar Configuracón"
       >
         <HugeiconsIcon
           icon={Edit02Icon}
@@ -133,7 +133,7 @@ export const EditShiftModal = ({ courseSeasonId, urlBase, shift }: Props) => {
               <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
                 <HugeiconsIcon icon={Edit02Icon} />
               </Modal.Icon>
-              <Modal.Heading>Editar Configuración de Turno</Modal.Heading>
+              <Modal.Heading>Editar Configuracón de Turno</Modal.Heading>
               <p className="mt-1.5 text-sm leading-5 text-muted">
                 Turno: <span className="font-bold">{shift.shift?.name}</span>
               </p>
@@ -143,7 +143,7 @@ export const EditShiftModal = ({ courseSeasonId, urlBase, shift }: Props) => {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="col-span-2">
                     <SelectCategory
-                      label="Categori­a"
+                      label="Categoría"
                       categoriesOptions={categoriesOptions}
                       categoryId={categoryId}
                       setCategoryId={setCategoryId}
@@ -213,7 +213,7 @@ export const EditShiftModal = ({ courseSeasonId, urlBase, shift }: Props) => {
 
                   <div className="col-span-1">
                     <label className="text-xs font-bold mb-1 block">
-                      Ai±o Nacimiento Min (Opcional)
+                      Año Nacimiento Min (Opcional)
                     </label>
                     <input
                       type="number"
@@ -234,7 +234,7 @@ export const EditShiftModal = ({ courseSeasonId, urlBase, shift }: Props) => {
                   </div>
                   <div className="col-span-1">
                     <label className="text-xs font-bold mb-1 block">
-                      Ai±o Nacimiento Max (Opcional)
+                      Año Nacimiento Max (Opcional)
                     </label>
                     <input
                       type="number"
@@ -250,7 +250,7 @@ export const EditShiftModal = ({ courseSeasonId, urlBase, shift }: Props) => {
                   </div>
                   <div>
                     <label className="text-xs font-bold mb-1 block">
-                      Cupo Mi¡ximo
+                      Cupo Máximo
                     </label>
                     <input
                       type="number"
@@ -262,7 +262,7 @@ export const EditShiftModal = ({ courseSeasonId, urlBase, shift }: Props) => {
                   </div>
                   <div>
                     <label className="text-xs font-bold mb-1 block">
-                      Cupo Mi­nimo
+                      Cupo Mínimo
                     </label>
                     <input
                       type="number"

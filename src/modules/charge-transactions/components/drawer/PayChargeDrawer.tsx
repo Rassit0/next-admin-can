@@ -84,7 +84,7 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
   const [notes, setNotes] = useState<string>("");
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  // Estado para el dii¡logo de impresión de recibo
+  // Estado para el diálogo de impresón de recibo
   const [printTransactionId, setPrintTransactionId] = useState<string | null>(
     null,
   );
@@ -129,7 +129,7 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
       const hasInvalidMethod = splits.some((s) => !s.paymentMethod);
       if (hasInvalidMethod) {
         toast.danger(
-          "Debe seleccionar un mi©todo de pago vi¡lido para cada cuenta.",
+          "Debe seleccionar un método de pago válido para cada cuenta.",
         );
         setIsLoading(false);
         return;
@@ -187,7 +187,7 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
 
         console.log("PAYMENT RESPONSE DATA:", res.data);
 
-        // Mostrar dii¡logo de impresión con el ID de la transacción creada
+        // Mostrar diálogo de impresón con el ID de la transaccón creada
         if (res.data?.transaction?.id) {
           setPrintTransactionId(res.data.transaction.id);
           setShowPrintDialog(true);
@@ -197,7 +197,7 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
         onOpenChange(false);
       }
     } catch (error) {
-      toast.danger("Ocurrió un error inesperado al registrar el pago.");
+      toast.danger("Ocurró un error inesperado al registrar el pago.");
     } finally {
       setIsLoading(false);
     }
@@ -347,7 +347,7 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
                     value={transactionDate}
                     onChange={setTransactionDate}
                   >
-                    <Label>Fecha de Recepción (Comprobante)</Label>
+                    <Label>Fecha de Recepcón (Comprobante)</Label>
                     <DateField.Group fullWidth>
                       <DateField.Input>
                         {(segment) => <DateField.Segment segment={segment} />}

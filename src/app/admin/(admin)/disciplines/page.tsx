@@ -32,7 +32,7 @@ export default async function DisciplinesPage({ searchParams }: Props) {
     <>
       {/* <!-- Header --> */}
       <HeaderPage
-        title="Gestión de Disciplinas"
+        title="Gestón de Disciplinas"
         description="Administra los deportes y actividades del club"
         action={<AddModal />}
       />

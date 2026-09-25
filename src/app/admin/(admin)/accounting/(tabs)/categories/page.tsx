@@ -8,9 +8,9 @@ import { Card } from "@heroui/react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Categorías Contables | Gestión CAN",
+  title: "Categorías Contables | Gestón CAN",
   description:
-    "Categorías para organizar los ingresos y egresos de la institución",
+    "Categorías para organizar los ingresos y egresos de la institucón",
 };
 
 export default async function CategoriesPage({

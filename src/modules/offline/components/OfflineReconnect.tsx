@@ -29,7 +29,7 @@ export const OfflineReconnect = () => {
           >
             <polyline points="20 6 9 17 4 12" />
           </svg>
-          <span>Conexión restaurada</span>
+          <span>Conexón restaurada</span>
         </motion.div>
       )}
     </AnimatePresence>

@@ -17,7 +17,7 @@ export default function NotFound() {
           404
         </h1>
         <h2 className="mt-4 font-heading text-3xl font-700 uppercase tracking-tight text-primary sm:text-4xl">
-          Pi¡gina no encontrada
+          Página no encontrada
         </h2>
         <p className="mt-4 max-w-md text-muted-foreground text-pretty">
           Lo sentimos, la ruta a la que intentas acceder no existe o fue movida.

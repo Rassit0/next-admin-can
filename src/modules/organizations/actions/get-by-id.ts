@@ -32,7 +32,7 @@ export const getOrganizationById = async ({
         createdAt: new Date(res.data.createdAt),
         updatedAt: new Date(res.data.updatedAt),
       },
-      message: "Organización obtenida exitosamente",
+      message: "Organizacón obtenida exitosamente",
     };
   });
 };

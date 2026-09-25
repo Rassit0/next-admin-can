@@ -11,7 +11,7 @@ export const SupportContactCard = () => {
           Soporte IT
         </p>
         <h3 className="text-lg font-headline font-bold mb-4 leading-tight">
-          ÃÂ¿Necesita asistencia técnica?
+          ¿Necesita asistencia técnica?
         </h3>
         <Button className="px-6 py-2.5 text-xs font-bold rounded-xl hover:bg-gray-50 transition-all flex items-center space-x-2 w-fit">
           <span>Contactar Soporte</span>

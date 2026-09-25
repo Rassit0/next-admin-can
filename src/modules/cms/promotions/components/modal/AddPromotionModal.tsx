@@ -30,7 +30,7 @@ export const AddPromotionModal = ({
           isIconOnly={isIcon}
         >
           <HugeiconsIcon icon={Add01Icon} />
-          {label || "Agregar Promoción"}
+          {label || "Agregar Promocón"}
         </Button>
       )}
       {isIcon && (
@@ -68,7 +68,7 @@ export const AddPromotionModal = ({
                 <Modal.Heading>Agregar Promotion</Modal.Heading>
               </div>
               <p className="mt-1.5 text-sm leading-5 text-muted">
-                Agrega un nuevo promotion para el carrusel de la pi¡gina
+                Agrega un nuevo promotion para el carrusel de la página
                 principal.
               </p>
             </Modal.Header>

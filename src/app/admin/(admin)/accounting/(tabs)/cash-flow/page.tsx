@@ -9,7 +9,7 @@ import { getFinancialAccountOptions } from "@/modules/financial-accounts/actions
 import { resolvePageData } from "@/utils/resolvePageData";
 
 export const metadata: Metadata = {
-  title: "Flujo de Caja | Sistema de Gestión CAN",
+  title: "Flujo de Caja | Sistema de Gestón CAN",
   description: "Historial de movimientos directos de ingresos y egresos.",
 };
 

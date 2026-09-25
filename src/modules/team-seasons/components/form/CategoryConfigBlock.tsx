@@ -58,7 +58,7 @@ export const CategoryConfigBlock = ({
             <HugeiconsIcon icon={Calendar04Icon} size={18} />
           </div>
           <Card.Title className="font-headline font-bold text-lg">
-            Configuración #{index + 1}
+            Configuracón #{index + 1}
           </Card.Title>
         </div>
         {canRemove && (
@@ -76,7 +76,7 @@ export const CategoryConfigBlock = ({
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <SelectCategory
-          label="Categori­a"
+          label="Categoría"
           categoriesOptions={categoriesOptions}
           categoryId={category.categoryId || null}
           setCategoryId={(val) => {
@@ -93,7 +93,7 @@ export const CategoryConfigBlock = ({
           isRequired
           className="w-full"
           name="gender"
-          placeholder="Seleccione un gi©nero"
+          placeholder="Seleccione un género"
           variant="secondary"
           isInvalid={!!getError("gender") || undefined}
           value={category.gender || ""}
@@ -147,7 +147,7 @@ export const CategoryConfigBlock = ({
           isInvalid={!!getError("minBirthYear") || undefined}
           isDisabled={!category.validateAge}
         >
-          <Label>Ai±o Nac. Mi­nimo (Opcional)</Label>
+          <Label>Año Nac. Mínimo (Opcional)</Label>
           <Input
             min={1900}
             placeholder="Ej: 2015"
@@ -176,7 +176,7 @@ export const CategoryConfigBlock = ({
           isInvalid={!!getError("maxBirthYear") || undefined}
           isDisabled={!category.validateAge}
         >
-          <Label>Ai±o Nac. Mi¡ximo (Opcional)</Label>
+          <Label>Año Nac. Máximo (Opcional)</Label>
           <Input
             min={1900}
             placeholder="Ej: 2016"

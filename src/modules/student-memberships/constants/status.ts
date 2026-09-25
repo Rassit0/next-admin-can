@@ -16,7 +16,7 @@ export const MEMBERSHIP_STATUS_CONFIG: Record<
   StatusConfig
 > = {
   PENDING_ACTIVE: {
-    label: "Pendiente de activación",
+    label: "Pendiente de activacón",
     color: "accent",
     dot: "bg-accent",
   },
@@ -33,14 +33,14 @@ export const getStatusConfig = (
   if (status === "SUSPENDED") {
     if (suspensionReason === "PAUSE") {
       return {
-        label: "Suspendida Ã¢ÂÂ Pausa programada",
+        label: "Suspendida — Pausa programada",
         color: "warning",
         dot: "bg-warning",
       };
     }
     if (suspensionReason === "MANUAL") {
       return {
-        label: "Suspendida Ã¢ÂÂ Manual",
+        label: "Suspendida — Manual",
         color: "warning",
         dot: "bg-warning",
       };

@@ -49,7 +49,7 @@ export const EditModalActionTable = ({
                 <Modal.Heading>Editar Club</Modal.Heading>
               </div>
               <p className="mt-1.5 text-sm leading-5 text-muted">
-                Editar información del club.
+                Editar informacón del club.
               </p>
             </Modal.Header>
             <Modal.Body className="p-6">

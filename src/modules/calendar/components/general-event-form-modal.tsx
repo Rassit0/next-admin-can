@@ -201,7 +201,7 @@ export const GeneralEventFormModal = ({
     }
 
     if (contextType === "TEAM" && !teamSeasonCategoryId) {
-      setApiError("Debes seleccionar una categori­a/equipo.");
+      setApiError("Debes seleccionar una categoría/equipo.");
       return;
     }
     if (contextType === "SCHOOL") {
@@ -269,14 +269,14 @@ export const GeneralEventFormModal = ({
       } else {
         toast.success(
           mode === "create"
-            ? "Evento general creado con i©xito"
-            : "Evento general actualizado con i©xito",
+            ? "Evento general creado con éxito"
+            : "Evento general actualizado con éxito",
         );
         state.setOpen(false);
         if (onSuccess) onSuccess();
       }
     } catch (error) {
-      setApiError("Ocurrió un error inesperado.");
+      setApiError("Ocurró un error inesperado.");
     } finally {
       setLoading(false);
     }
@@ -316,16 +316,16 @@ export const GeneralEventFormModal = ({
             )}
 
             <TextField className="mb-4">
-              <Label>Ti­tulo (Opcional)</Label>
+              <Label>Título (Opcional)</Label>
               <Input
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="Ej: Reunión Institucional"
+                placeholder="Ej: Reunón Institucional"
               />
             </TextField>
 
             <TextField className="mb-4">
-              <Label>Descripción (Opcional)</Label>
+              <Label>Descripcón (Opcional)</Label>
               <Input
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -354,7 +354,7 @@ export const GeneralEventFormModal = ({
             </div>
 
             <TextField className="mb-4">
-              <Label>Locación (Opcional)</Label>
+              <Label>Locacón (Opcional)</Label>
               <Select
                 selectedKey={locationId || ""}
                 onSelectionChange={(key) => setLocationId(key as string)}
@@ -362,8 +362,8 @@ export const GeneralEventFormModal = ({
                 <Select.Trigger />
                 <Select.Popover>
                   <ListBox>
-                    <ListBox.Item id="" textValue="Sin locación">
-                      Sin locación
+                    <ListBox.Item id="" textValue="Sin locacón">
+                      Sin locacón
                     </ListBox.Item>
                     {locations.map((loc) => (
                       <ListBox.Item
@@ -395,8 +395,8 @@ export const GeneralEventFormModal = ({
                       <ListBox.Item id="INSTITUTION" textValue="Institucional">
                         Institucional
                       </ListBox.Item>
-                      <ListBox.Item id="TEAM" textValue="Equipo / Categori­a">
-                        Equipo / Categori­a
+                      <ListBox.Item id="TEAM" textValue="Equipo / Categoría">
+                        Equipo / Categoría
                       </ListBox.Item>
                       <ListBox.Item id="SCHOOL" textValue="Escuela / Temporada">
                         Escuela / Temporada
@@ -408,7 +408,7 @@ export const GeneralEventFormModal = ({
 
               {contextType === "INSTITUTION" && (
                 <TextField className="mb-4">
-                  <Label>Institución</Label>
+                  <Label>Institucón</Label>
                   <Select
                     selectedKey={institutionId}
                     onSelectionChange={(key) => setInstitutionId(key as string)}
@@ -433,7 +433,7 @@ export const GeneralEventFormModal = ({
 
               {contextType === "TEAM" && (
                 <TextField className="mb-4">
-                  <Label>Equipo / Categori­a</Label>
+                  <Label>Equipo / Categoría</Label>
                   <Select
                     selectedKey={teamSeasonCategoryId}
                     onSelectionChange={(key) =>
@@ -501,9 +501,9 @@ export const GeneralEventFormModal = ({
                           </ListBox.Item>
                           <ListBox.Item
                             id="SHIFT"
-                            textValue="Un turno especi­fico"
+                            textValue="Un turno específico"
                           >
-                            Un turno especi­fico
+                            Un turno específico
                           </ListBox.Item>
                         </ListBox>
                       </Select.Popover>
@@ -512,7 +512,7 @@ export const GeneralEventFormModal = ({
 
                   {schoolScope === "SHIFT" && (
                     <TextField className="mb-4">
-                      <Label>Turno Especi­fico</Label>
+                      <Label>Turno Específico</Label>
                       <Select
                         selectedKey={courseSeasonShiftId}
                         onSelectionChange={(key) =>

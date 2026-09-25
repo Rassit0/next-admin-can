@@ -8,7 +8,7 @@ import { Card } from "@heroui/react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Cuentas por Cobrar | Gestión CAN",
+  title: "Cuentas por Cobrar | Gestón CAN",
   description: "Cuentas administrativas por cobrar del club",
 };
 
@@ -48,7 +48,7 @@ export default async function AccountsReceivablePage({
         <Card className="shadow-[0px_4px_12px_rgba(0,0,0,0.06)] border border-border">
           <HeaderPage
             title="Listado de Cuentas por Cobrar"
-            description="Gestiona las cuentas administrativas a favor de la institución."
+            description="Gestiona las cuentas administrativas a favor de la institucón."
             showButtonBack={false}
             action={<CreateChargeButton direction="RECEIVABLE" />}
           />

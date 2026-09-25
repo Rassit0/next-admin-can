@@ -60,7 +60,7 @@ export const MembershipHistoryDrawer = ({
         setHistory(res.data || []);
       }
     } catch (err) {
-      setError("OcurriÃ¯Â¿Â½ un error al cargar el Historial de Membresí­as.");
+      setError("Ocurri un error al cargar el Historial de Membresí­as.");
     } finally {
       setIsLoading(false);
     }
@@ -69,7 +69,7 @@ export const MembershipHistoryDrawer = ({
   const formatDate = (dateString?: string | null) => {
     if (!dateString) return "";
     try {
-      // Usamos getUTC* methods para no tener desplazamiento de dÃ¯Â¿Â½a por zona horaria local
+      // Usamos getUTC* methods para no tener desplazamiento de da por zona horaria local
       const d = new Date(dateString);
       return `${d.getUTCDate().toString().padStart(2, "0")}/${(d.getUTCMonth() + 1).toString().padStart(2, "0")}/${d.getUTCFullYear()}`;
     } catch {

@@ -51,7 +51,7 @@ export default async function QuickOperationsDashboardPage({
       <section className="flex flex-col gap-4 bg-default-50/50 p-4 rounded-xl border border-default-100">
         <div className="flex flex-col">
           <h2 className="text-xl font-bold flex items-center gap-2">
-            ⚡Situación Actual
+            ⚡Situacón Actual
           </h2>
           <p className="text-default-500 text-sm mt-1">
             Estado financiero actual de las cuentas y obligaciones.

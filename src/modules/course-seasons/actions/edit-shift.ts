@@ -30,7 +30,7 @@ export const editShiftAction = async (
     return {
       error: false,
       message:
-        response.message || "Configuración del turno actualizada exitosamente",
+        response.message || "Configuracón del turno actualizada exitosamente",
       data: response.data,
     };
   });

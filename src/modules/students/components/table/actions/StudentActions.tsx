@@ -114,7 +114,7 @@ export const StudentActions = ({ student }: Props) => {
     <>
       <Dropdown>
         <Button
-          aria-label="Acciones de membresi­a"
+          aria-label="Acciones de membresía"
           isIconOnly
           size="sm"
           variant="ghost"

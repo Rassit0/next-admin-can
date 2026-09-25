@@ -37,7 +37,7 @@ export default async function ProfilePage() {
     <div className="max-w-4xl mx-auto flex flex-col gap-6 p-6">
       <HeaderPage
         title="Mi Perfil"
-        description="Información personal de tu cuenta."
+        description="Informacón personal de tu cuenta."
         breadcrumb={[
           { label: "Dashboard", href: "/admin" },
           { label: "Mi Perfil" },

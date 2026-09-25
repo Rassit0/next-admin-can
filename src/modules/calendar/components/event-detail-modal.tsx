@@ -103,7 +103,7 @@ export const EventDetailModal = ({
 
                 <div className="text-sm">
                   <strong>Tipo:</strong> {type} <br />
-                  <strong>Ubicación:</strong>{" "}
+                  <strong>Ubicacón:</strong>{" "}
                   {location ? location.name : "Por definir"} <br />
                   <strong>Estado:</strong> {event.extendedProps.status} <br />
                   {event.extendedProps.series && (
@@ -116,7 +116,7 @@ export const EventDetailModal = ({
                 <div className="bg-default-100 p-3 rounded-md text-sm">
                   {type === "SESSION" && (
                     <>
-                      <strong>Duración:</strong>{" "}
+                      <strong>Duracón:</strong>{" "}
                       {(metadata as ISessionCalendarMetadata).durationMin} min{" "}
                       <br />
                       <strong>Equipos:</strong>{" "}
@@ -157,7 +157,7 @@ export const EventDetailModal = ({
                   )}
                   {type === "GENERAL" && (
                     <>
-                      <strong>Institución:</strong>{" "}
+                      <strong>Institucón:</strong>{" "}
                       {(metadata as IGeneralEventCalendarMetadata)
                         .institutionId || "N/A"}
                     </>
@@ -278,7 +278,7 @@ export const EventDetailModal = ({
                       <div className="bg-warning/10 p-3 rounded-lg flex flex-col gap-2">
                         <p className="text-sm text-warning font-semibold">
                           {type === "SESSION"
-                            ? "Esta sesión pertenece a una serie recurrente."
+                            ? "Esta sesón pertenece a una serie recurrente."
                             : "Este evento pertenece a una serie recurrente."}
                         </p>
                         <Select
@@ -289,7 +289,7 @@ export const EventDetailModal = ({
                           }
                         >
                           <Label className="text-sm">
-                            ÃÂ¿Qué deseas eliminar?
+                            ¿Qué deseas eliminar?
                           </Label>
                           <Select.Trigger />
                           <Select.Popover>
@@ -298,12 +298,12 @@ export const EventDetailModal = ({
                                 id="single"
                                 textValue={
                                   type === "SESSION"
-                                    ? "Solo esta sesión"
+                                    ? "Solo esta sesón"
                                     : "Solo este evento"
                                 }
                               >
                                 {type === "SESSION"
-                                  ? "Solo esta sesión"
+                                  ? "Solo esta sesón"
                                   : "Solo este evento"}
                               </ListBox.Item>
                               <ListBox.Item
@@ -322,7 +322,7 @@ export const EventDetailModal = ({
                     )}
                   <div className="flex items-center gap-2 justify-end w-full">
                     <span className="text-sm text-danger font-semibold">
-                      ÃÂ¿Seguro que deseas eliminar?
+                      ¿Seguro que deseas eliminar?
                     </span>
                     <Button
                       variant="ghost"
@@ -364,7 +364,7 @@ export const EventDetailModal = ({
                             type === "MATCH"
                               ? "Partido eliminado con éxito"
                               : type === "SESSION"
-                                ? "Sesión eliminada con éxito"
+                                ? "Sesón eliminada con éxito"
                                 : "Evento eliminado con éxito",
                           );
                           setConfirmDelete(false);
@@ -383,13 +383,13 @@ export const EventDetailModal = ({
                   <div className="bg-warning/10 p-3 rounded-lg flex flex-col gap-2">
                     <p className="text-sm text-warning font-semibold">
                       {confirmAction === "COMPLETE" &&
-                        "Al completar el partido se bloquearán el resultado, la convocatoria y la planilla. Podrás corregirlo posteriormente reabriendo el partido. ÃÂ¿Deseas continuar?"}
+                        "Al completar el partido se bloquearán el resultado, la convocatoria y la planilla. Podrás corregirlo posteriormente reabriendo el partido. ¿Deseas continuar?"}
                       {confirmAction === "CANCEL" &&
-                        "El partido quedará cancelado y en modo solo lectura. Podrás restaurarlo posteriormente. ÃÂ¿Deseas continuar?"}
+                        "El partido quedará cancelado y en modo solo lectura. Podrás restaurarlo posteriormente. ¿Deseas continuar?"}
                       {confirmAction === "REOPEN" &&
-                        "El partido volverá a estar programado y podrá editarse nuevamente. ÃÂ¿Deseas continuar?"}
+                        "El partido volverá a estar programado y podrá editarse nuevamente. ¿Deseas continuar?"}
                       {confirmAction === "RESTORE" &&
-                        "El partido volverá a estar programado y podrá editarse nuevamente. ÃÂ¿Deseas continuar?"}
+                        "El partido volverá a estar programado y podrá editarse nuevamente. ¿Deseas continuar?"}
                     </p>
                   </div>
                   <div className="flex items-center gap-2 justify-end w-full">

@@ -140,7 +140,7 @@ export const PERMISSIONS = [
     ],
   },
   {
-    name: "Devolución",
+    name: "Devolucón",
     permissions: [
       {
         name: "Disponible",
@@ -222,7 +222,7 @@ export const formatCurrency = (amount: number) => {
 
 export const STAFF_ROLES_TRANSLATOR: Record<string, string> = {
   HEAD_COACH: "Entrenador Principal",
-  ASSISTANT_COACH: "Asistente Ti©cnico",
+  ASSISTANT_COACH: "Asistente Técnico",
   ASSISTANT: "Asistente",
   VOLUNTEER: "Voluntario",
   DELEGATE: "Delegado",

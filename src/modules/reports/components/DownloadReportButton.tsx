@@ -55,7 +55,7 @@ export function DownloadReportButton({
       toast.success("Reporte generado exitosamente");
     } catch (error: any) {
       toast.error(
-        error.message || "Ocurrió un error inesperado al descargar el reporte",
+        error.message || "Ocurró un error inesperado al descargar el reporte",
       );
     } finally {
       setIsLoading(false);

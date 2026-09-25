@@ -21,8 +21,8 @@ export default async function DisciplinesPage({ searchParams }: Props) {
   const { search, page, per_page = "5" } = await searchParams;
 
   // Usamos resolvePageData para extraer la data directamente.
-  // Si hay un error, Next.js capturari¡ la excepción y mostrari¡ `app/admin/error.tsx`.
-  // Si es 401, nos redirigiri¡ automi¡ticamente a `/api/logout`.
+  // Si hay un error, Next.js capturará la excepcón y mostrará `app/admin/error.tsx`.
+  // Si es 401, nos redirigirá automáticamente a `/api/logout`.
   const [categoriesRes, disciplinesOptionsRes] = await resolvePageData([
     getCategories({ search, page, per_page }),
     getDisciplinesOptions(),
@@ -35,7 +35,7 @@ export default async function DisciplinesPage({ searchParams }: Props) {
     <>
       {/* <!-- Header --> */}
       <HeaderPage
-        title="Gestión de Categorí­as"
+        title="Gestón de Categorí­as"
         description="Administra las categorías del club"
         action={
           <AddModal

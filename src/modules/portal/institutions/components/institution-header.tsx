@@ -24,7 +24,7 @@ export function InstitutionHeader({ institution }: Props) {
         transition={{ delay: 0.1 }}
         className="mt-4 text-muted-foreground mx-auto max-w-2xl text-lg uppercase tracking-widest font-600"
       >
-        Tradición y Excelencia Deportiva
+        Tradicón y Excelencia Deportiva
       </motion.p>
     </div>
   );

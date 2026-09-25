@@ -151,7 +151,7 @@ export function CourseDetailClient({ course }: CourseDetailClientProps) {
                     className="flex items-start gap-3 text-primary/80"
                   >
                     <span className="mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-neon/20 text-neon">
-                      Ã¢ÂÂ
+                      ✓
                     </span>
                     {req}
                   </li>
@@ -228,7 +228,7 @@ export function CourseDetailClient({ course }: CourseDetailClientProps) {
         isOpen={contactOpen}
         onClose={() => setContactOpen(false)}
         title="Consultar Disponibilidad"
-        message={`Te ayudaremos con la inscripción al curso de ${course.name}. Contáctanos para conocer los detalles y disponibilidad.`}
+        message={`Te ayudaremos con la inscripcón al curso de ${course.name}. Contáctanos para conocer los detalles y disponibilidad.`}
       />
     </div>
   );

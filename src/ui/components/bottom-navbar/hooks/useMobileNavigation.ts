@@ -20,18 +20,18 @@ export const useMobileNavigation = (items: NavItem[], urlBase?: string) => {
 
     if (direction > 0 && latest > 70 && !isAtBottom) {
       setHidden(true);
-      setIsMoreOpen(false); // Cerrar meniº Mi¡s al scrollear
+      setIsMoreOpen(false); // Cerrar menú Más al scrollear
     } else if (direction < 0 || isAtBottom) {
       setHidden(false);
     }
   });
 
   // Procesamiento de prioridad para móviles
-  // 1. Eliminar los que expli­citamente tienen mobile.visible = false
+  // 1. Eliminar los que explícitamente tienen mobile.visible = false
   const visibleItems = items.filter((item) => item.mobile?.visible !== false);
 
-  // 2. Ordenar por prioridad (mayor primero), luego posición, luego orden original
-  // Conservamos el i­ndice original para desempatar manteniendo el orden inicial
+  // 2. Ordenar por prioridad (mayor primero), luego posicón, luego orden original
+  // Conservamos el índice original para desempatar manteniendo el orden inicial
   const itemsWithIndex = visibleItems.map((item, index) => ({ item, index }));
   const sortedItems = itemsWithIndex
     .sort((a, b) => {
@@ -47,17 +47,17 @@ export const useMobileNavigation = (items: NavItem[], urlBase?: string) => {
     })
     .map((x) => x.item);
 
-  // 3. Seleccionar los primeros 4 para la barra principal y el resto para el meniº "Mi¡s"
+  // 3. Seleccionar los primeros 4 para la barra principal y el resto para el menú "Más"
   const MAX_MAIN_ITEMS = 4;
   const showMoreButton = sortedItems.length > MAX_MAIN_ITEMS;
 
-  // Si no exceden el mi¡ximo, mostrar todos como principales
+  // Si no exceden el máximo, mostrar todos como principales
   const mainItems = showMoreButton
     ? sortedItems.slice(0, MAX_MAIN_ITEMS)
     : sortedItems;
   const moreItems = showMoreButton ? sortedItems.slice(MAX_MAIN_ITEMS) : [];
 
-  // Lógica para determinar si un elemento o ruta esti¡ activa
+  // Lógica para determinar si un elemento o ruta está activa
   const fromContext = searchParams.get("from");
   const currentPath = pathname.replace(urlBase ?? "", "");
   const currentSegment = currentPath.split("/").filter(Boolean)[0] ?? "/";

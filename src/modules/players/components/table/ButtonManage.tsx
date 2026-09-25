@@ -15,11 +15,11 @@ export const ButtonManage = ({ id }: Props) => {
   deleteCookie("playerBackUrl");
 
   const handleGestion = () => {
-    // Obtenemos todos los pari¡metros de la URL actual
+    // Obtenemos todos los parámetros de la URL actual
     const currentQuery = searchParams.toString();
     const currentUrl = `${pathname}${currentQuery ? `?${currentQuery}` : ""}`;
 
-    // Guardamos la ruta en el cachi© de sesión (sessionStorage)
+    // Guardamos la ruta en el caché de sesón (sessionStorage)
     setCookie("playerBackUrl", currentUrl);
 
     router.push(`${pathname}/${id}`, { scroll: false });

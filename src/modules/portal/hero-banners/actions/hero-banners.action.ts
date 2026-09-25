@@ -19,7 +19,7 @@ export const getPublicHeroBanners = async (): Promise<
   } catch (error: any) {
     return {
       error: true,
-      message: error?.message || "Ocurrió un error al obtener los Hero Banners",
+      message: error?.message || "Ocurró un error al obtener los Hero Banners",
       statusCode: error?.statusCode || 500,
     };
   }

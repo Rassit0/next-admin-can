@@ -199,7 +199,7 @@ export function SiteHeader({ institution }: { institution: Institution }) {
   });
 
   useEffect(() => {
-    // Pequei±o timeout para asegurar que el DOM se actualizó tras el cambio de ruta
+    // Pequeño timeout para asegurar que el DOM se actualizó tras el cambio de ruta
     const timeout = setTimeout(() => {
       if (navRef.current) {
         const activeLink = navRef.current.querySelector<HTMLElement>(
@@ -275,7 +275,7 @@ export function SiteHeader({ institution }: { institution: Institution }) {
           <button
             className="rounded-md p-2 text-primary lg:hidden"
             onClick={() => setMobileOpen((v) => !v)}
-            aria-label="Abrir meniº"
+            aria-label="Abrir menú"
           >
             {mobileOpen ? (
               <X className="h-6 w-6" />

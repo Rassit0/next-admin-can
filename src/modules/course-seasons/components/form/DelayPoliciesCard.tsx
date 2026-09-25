@@ -58,7 +58,7 @@ export const DelayPoliciesCard = ({
           </div>
           <div>
             <h3 className="font-headline font-bold text-lg text-on-surface">
-              Poli­ticas de Mora
+              Políticas de Mora
             </h3>
             <p className="text-xs text-on-surface-variant font-medium">
               Aplica recargos por mora en la compra o pago de los ciclos
@@ -72,11 +72,11 @@ export const DelayPoliciesCard = ({
           <Alert status="accent" className="mb-2">
             <Alert.Indicator />
             <Alert.Content>
-              <Alert.Title>Configuración de Recargos</Alert.Title>
+              <Alert.Title>Configuracón de Recargos</Alert.Title>
               <Alert.Description>
-                Si habilitas esta opción, podri¡s aplicar recargos por mora de
-                forma expli­cita a los atletas que se atrasen en sus pagos de
-                ciclos, sumando el costo de Mora por cada di­a de retraso.
+                Si habilitas esta opcón, podrás aplicar recargos por mora de
+                forma explícita a los atletas que se atrasen en sus pagos de
+                ciclos, sumando el costo de Mora por cada día de retraso.
               </Alert.Description>
             </Alert.Content>
           </Alert>
@@ -88,7 +88,7 @@ export const DelayPoliciesCard = ({
             </Switch.Control>
             <Switch.Content>
               <Label className="text-sm">
-                Habilitar Mora (Aplicación Expli­cita)
+                Habilitar Mora (Aplicacón Explícita)
               </Label>
             </Switch.Content>
           </Switch>

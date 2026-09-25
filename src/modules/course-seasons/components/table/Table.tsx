@@ -21,7 +21,7 @@ interface Props {
 export const TableCourseSeasons = ({ courseSeasons, urlBase }: Props) => {
   const [isClient, setIsClient] = useState(false);
 
-  // Evitamos la hidratación fallida
+  // Evitamos la hidratacón fallida
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -143,7 +143,7 @@ export const TableCourseSeasons = ({ courseSeasons, urlBase }: Props) => {
                         ?.map((s) => s.category?.name)
                         .filter(Boolean),
                     ),
-                  ).join(" ÃÂ· ") || "-"}
+                  ).join(" · ") || "-"}
                 </Table.Cell>
                 <Table.Cell>
                   <Chip size="sm" color="default" variant="secondary">

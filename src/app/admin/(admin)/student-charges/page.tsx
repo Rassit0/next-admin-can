@@ -4,7 +4,7 @@ import { Metadata } from "next";
 import { getCharges, TableCharges } from "@/modules/charge-transactions";
 
 export const metadata: Metadata = {
-  title: "Cuotas Estudiantiles | Gestión CAN",
+  title: "Cuotas Estudiantiles | Gestón CAN",
   description: "Listado de cuotas estudiantiles y colegiaturas (CourseSeason)",
 };
 

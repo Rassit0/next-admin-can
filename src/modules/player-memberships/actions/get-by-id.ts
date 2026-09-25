@@ -19,7 +19,7 @@ export const getPlayerMembershipById = async ({
     return {
       error: true,
       statusCode: 401,
-      message: "Su sesión ha expirado. Por favor, inicie sesión nuevamente.",
+      message: "Su sesón ha expirado. Por favor, inicie sesón nuevamente.",
     };
   return handleServerAction(async () => {
     const res = await api.get<{ message: string; data: IPlayerMembership }>(
@@ -42,7 +42,7 @@ export const getPlayerMembershipById = async ({
         createdAt: new Date(res.data.createdAt),
         updatedAt: new Date(res.data.updatedAt),
       },
-      message: "Membresi­a de jugador obtenida exitosamente",
+      message: "Membresía de jugador obtenida exitosamente",
     };
   });
 };

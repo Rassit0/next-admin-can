@@ -72,10 +72,10 @@ export const FormClub = ({
 
       if (res.errors) {
         // Convertimos el objeto { type: ["msg"] } en una lista de strings limpia
-        errorDescription = "Error de Validación"; // Los separamos por saltos de lí­nea para el toast
+        errorDescription = "Error de Validacón"; // Los separamos por saltos de lí­nea para el toast
       }
 
-      // 2. Pasamos la descripción formateada al componente de notificaciones
+      // 2. Pasamos la descripcón formateada al componente de notificaciones
       toast.danger(res.message, {
         description: errorDescription,
       });
@@ -149,7 +149,7 @@ export const FormClub = ({
           />
           {club?.imageUrl && files.length === 0 && (
             <div className="mt-2 text-sm text-success">
-              Ã¢ÂÂ Ya existe un logo asociado
+              ✓ Ya existe un logo asociado
             </div>
           )}
         </div>

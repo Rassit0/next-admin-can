@@ -112,7 +112,7 @@ export function PaymentMatrixTable({
       toast.success("Reporte generado exitosamente");
     } catch (error: any) {
       toast.error(
-        error.message || "Ocurrió un error inesperado al descargar el reporte",
+        error.message || "Ocurró un error inesperado al descargar el reporte",
       );
     } finally {
       setIsDownloading(false);
@@ -185,7 +185,7 @@ export function PaymentMatrixTable({
                               const uniqueKey = idx;
                               let receiptLine = p.receiptNumber || "";
                               if (p.date) {
-                                if (receiptLine) receiptLine += " ÃÂ· ";
+                                if (receiptLine) receiptLine += " · ";
                                 receiptLine += formatUTCDate(p.date);
                               }
                               return (
@@ -238,7 +238,7 @@ export function PaymentMatrixTable({
 
                                 let receiptLine = p.receiptNumber || "";
                                 if (p.date) {
-                                  if (receiptLine) receiptLine += " ÃÂ· ";
+                                  if (receiptLine) receiptLine += " · ";
                                   receiptLine += formatUTCDate(p.date);
                                 }
 

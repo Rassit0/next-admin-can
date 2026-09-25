@@ -73,8 +73,8 @@ export const calculateInitialCharges = (
   const lines: ChargeLine[] = [
     {
       key: "registration",
-      label: "Matri­cula de inscripción",
-      description: "Cargo iºnico al momento de la inscripción",
+      label: "Matrícula de inscripcón",
+      description: "Cargo único al momento de la inscripcón",
       gross: registrationGross,
       discountPercent: registrationDiscountPercent,
       adjustmentAmount: -registrationDiscount,
@@ -103,12 +103,12 @@ export const calculateInitialCharges = (
     });
   }
   if (registrationGross === 0) {
-    flags.push({ type: "info", label: "Temporada sin matri­cula" });
+    flags.push({ type: "info", label: "Temporada sin matrícula" });
   }
   if (courseSeason.billingConfig?.lateFeeEnabled) {
     flags.push({
       type: "warning",
-      label: "Aplica recargo por mora en pagos tardi­os",
+      label: "Aplica recargo por mora en pagos tardíos",
     });
   }
 

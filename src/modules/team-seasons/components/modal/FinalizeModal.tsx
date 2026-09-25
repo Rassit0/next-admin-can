@@ -28,7 +28,7 @@ export const FinalizeModal = ({ isOpen, onOpenChange, teamSeason }: Props) => {
 
   const handleFinalize = async () => {
     if (!statusNotes) {
-      toast.danger("Debe ingresar un motivo de finalización");
+      toast.danger("Debe ingresar un motivo de finalizacón");
       return;
     }
     setIsLoading(true);
@@ -49,7 +49,7 @@ export const FinalizeModal = ({ isOpen, onOpenChange, teamSeason }: Props) => {
           .join("\n"); // Los separamos por saltos de lí­nea para el toast
       }
 
-      // 2. Pasamos la descripción formateada al componente de notificaciones
+      // 2. Pasamos la descripcón formateada al componente de notificaciones
       toast.danger(res.message, {
         description: errorDescription,
       });
@@ -79,7 +79,7 @@ export const FinalizeModal = ({ isOpen, onOpenChange, teamSeason }: Props) => {
               <span>Finalizar Temporada Anticipadamente</span>
               <span className="text-muted">
                 Estás por cerrar el ciclo de {teamSeason.season.name}: Esta
-                acción es irreversible
+                accón es irreversible
               </span>
             </AlertDialog.Heading>
           </AlertDialog.Header>
@@ -88,7 +88,7 @@ export const FinalizeModal = ({ isOpen, onOpenChange, teamSeason }: Props) => {
               <Alert.Indicator />
               <Alert.Content>
                 <Alert.Title>
-                  ÃÂ¿Estás seguro de finalizar la temporada?
+                  ¿Estás seguro de finalizar la temporada?
                 </Alert.Title>
                 <Alert.Description>
                   Se bloquearán nuevas inscripciones y las membresí­as activas
@@ -122,10 +122,10 @@ export const FinalizeModal = ({ isOpen, onOpenChange, teamSeason }: Props) => {
               value={statusNotes}
               onChange={setStatusNotes}
             >
-              <Label>Motivo de Finalización</Label>
-              <TextArea placeholder="Describe brevemente los motivos de la finalización anticipada..." />
+              <Label>Motivo de Finalizacón</Label>
+              <TextArea placeholder="Describe brevemente los motivos de la finalizacón anticipada..." />
               <FieldError>
-                {!statusNotes && "Debe ingresar un motivo de cancelación"}
+                {!statusNotes && "Debe ingresar un motivo de cancelacón"}
               </FieldError>
             </TextField>
           </AlertDialog.Body>

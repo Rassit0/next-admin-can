@@ -103,8 +103,8 @@ export const FormPerson = ({
     const file = e.target.files?.[0];
     if (file) {
       if (!file.type.startsWith("image/")) {
-        toast.error("Formato invÃÂÃÂ¡lido", {
-          description: "Por favor, seleccione un archivo de imagen vÃÂÃÂ¡lido.",
+        toast.error("Formato inválido", {
+          description: "Por favor, seleccione un archivo de imagen válido.",
         });
         return;
       }
@@ -165,7 +165,7 @@ export const FormPerson = ({
   };
 
   const handleRemoveError = (fieldName: string) => {
-    // Limpiar solo el error de este campo especÃÂÃÂ­fico
+    // Limpiar solo el error de este campo específico
     if (errors[fieldName]) {
       setErrors((prev) => {
         const newErrors = { ...prev };
@@ -231,10 +231,10 @@ export const FormPerson = ({
               : messages;
             return `${field}: ${msgList}`;
           })
-          .join("\n"); // Los separamos por saltos de lÃÂÃÂ­nea para el toast
+          .join("\n"); // Los separamos por saltos de línea para el toast
       }
 
-      // 2. Pasamos la descripciÃÂÃÂ³n formateada al componente de notificaciones
+      // 2. Pasamos la descripcón formateada al componente de notificaciones
       toast.error(res.message, {
         description: errorDescription,
       });
@@ -260,7 +260,7 @@ export const FormPerson = ({
       >
         {/* <!-- Basic Information: Bento Layout --> */}
         <div className="flex flex-col gap-8 w-full">
-          {/* SecciÃÂÃÂ³n de Foto (Compacta pero llamativa) */}
+          {/* Seccón de Foto (Compacta pero llamativa) */}
           <div className="flex flex-col sm:flex-row items-center gap-6 bg-surface-container-low p-6 rounded-2xl border border-outline-variant/30">
             <div className="relative group shrink-0">
               <input
@@ -298,8 +298,8 @@ export const FormPerson = ({
                 Foto de Perfil
               </h3>
               <p className="text-sm text-on-surface-variant">
-                Sube una foto profesional para la identificaciÃÂÃÂ³n
-                institucional. TamaÃÂÃÂ±o mÃÂÃÂ¡ximo: 5 MB.
+                Sube una foto profesional para la identificacón institucional.
+                Tamaño máximo: 5 MB.
               </p>
             </div>
           </div>
@@ -309,7 +309,7 @@ export const FormPerson = ({
             <div className="flex items-center gap-2">
               <div className="w-1.5 h-6 bg-primary rounded-full"></div>
               <h2 className="font-headline text-xl font-bold">
-                InformaciÃÂÃÂ³n BÃÂÃÂ¡sica
+                Informacón Básica
               </h2>
             </div>
 

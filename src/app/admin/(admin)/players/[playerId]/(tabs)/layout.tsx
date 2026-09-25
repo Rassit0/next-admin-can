@@ -28,7 +28,7 @@ export default async function PlayerGestionLayout({
   const basePath = `/admin/players/${playerId}`;
 
   const tabsRoutes = [
-    { value: "/", title: "Información General" },
+    { value: "/", title: "Informacón General" },
     { value: "/player-memberships", title: "Membresí­as" },
     // { value: "/charges", title: "Cargos" },
     // { value: "/payments", title: "Transacciones" },
@@ -38,7 +38,7 @@ export default async function PlayerGestionLayout({
     <>
       <HeaderPage
         title={`${player.person.name} ${player.person.lastName}`}
-        description={`Jugador ÃÂ· ${player.person.documentNumber || "Sin documento"}`}
+        description={`Jugador · ${player.person.documentNumber || "Sin documento"}`}
         breadcrumb={[
           { label: "Lista", href: `/admin/players` },
           {

@@ -22,20 +22,20 @@ export const SiteFooter = ({ institution }: { institution: Institution }) => {
                 CAN
               </span>
               <span className="text-[10px] font-500 uppercase tracking-[0.25em] text-white/60">
-                {institution.name} ÃÂ·{" "}
+                {institution.name} ·{" "}
                 {new Date(institution.createdAt).getFullYear()}
               </span>
             </div>
           </div>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-white">
-            Institución polideportiva. Formando deportistas y comunidad desde
+            Institucón polideportiva. Formando deportistas y comunidad desde
             hace casi nueve décadas.
           </p>
         </div>
 
         <div>
           <h4 className="font-heading text-sm font-700 uppercase tracking-[0.2em] text-neon">
-            Navegación
+            Navegacón
           </h4>
           <ul className="mt-4 space-y-2">
             {navLinks.map((item) => (
@@ -57,7 +57,7 @@ export const SiteFooter = ({ institution }: { institution: Institution }) => {
           </h4>
           <ul className="mt-4 space-y-3 text-sm text-white/90">
             <li>
-              <strong className="text-neon">Dirección:</strong>{" "}
+              <strong className="text-neon">Direccón:</strong>{" "}
               {institution.address}
             </li>
             {defaultContact?.email && (
@@ -138,7 +138,7 @@ export const SiteFooter = ({ institution }: { institution: Institution }) => {
         </div>
       </div>
       <div className="border-t border-white/10 py-5 text-center text-xs text-white/40">
-        ÃÂ© {new Date().getFullYear()} {institution.name}. Todos los derechos
+        © {new Date().getFullYear()} {institution.name}. Todos los derechos
         reservados.
       </div>
     </footer>

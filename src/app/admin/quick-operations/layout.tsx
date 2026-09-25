@@ -56,7 +56,7 @@ export default async function QuickOperationsLayout({ children }: LayoutProps) {
             actions={
               <Link href="/admin/dashboard">
                 <Button variant="outline" size="sm">
-                  Administración
+                  Administracón
                 </Button>
               </Link>
             }
@@ -68,7 +68,7 @@ export default async function QuickOperationsLayout({ children }: LayoutProps) {
               <div className="mb-2">
                 <HeaderPage
                   title="Operaciones Rápidas"
-                  description="Gestión unificada de secretarí­a, operaciones y flujo de caja."
+                  description="Gestón unificada de secretarí­a, operaciones y flujo de caja."
                 />
               </div>
 

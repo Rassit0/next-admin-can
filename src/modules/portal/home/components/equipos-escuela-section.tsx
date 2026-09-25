@@ -8,7 +8,7 @@ import type { IHomeDiscipline } from "@/modules/cms/home-disciplines";
 
 const fallbackSections = [
   {
-    title: "Bi¡squetbol",
+    title: "Básquetbol",
     href: "/teams/basketball",
   },
   {
@@ -38,7 +38,7 @@ export function EquiposEscuelaSection({
         </h2>
         <p className="mt-4 max-w-2xl text-lg font-500 text-muted-foreground">
           Descubre los deportes que ofrecemos, forma parte de nuestros equipos y
-          lleva tu pasión al siguiente nivel.
+          lleva tu pasón al siguiente nivel.
         </p>
       </div>
 

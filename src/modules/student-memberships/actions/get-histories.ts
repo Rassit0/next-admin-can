@@ -13,7 +13,7 @@ const parseHistory = (
 });
 
 /**
- * Obtiene el historial de cambios de estado y transferencias de una membresi­a.
+ * Obtiene el historial de cambios de estado y transferencias de una membresía.
  */
 export async function getStudentMembershipHistories(
   id: string,
@@ -27,7 +27,7 @@ export async function getStudentMembershipHistories(
 
     return {
       error: false,
-      message: "Historial de membresi­a obtenido exitosamente",
+      message: "Historial de membresía obtenido exitosamente",
       data: parsedData,
     };
   });

@@ -95,7 +95,7 @@ export const getPaymentMethods = async (): Promise<
     return {
       error: false,
       data: res,
-      message: "Mi©todos de pago obtenidos",
+      message: "Métodos de pago obtenidos",
     };
   });
 };

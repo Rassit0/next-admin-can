@@ -146,7 +146,7 @@ export const getPaymentMetrics = async (
     return {
       error: false,
       data: res,
-      message: "Mi©tricas obtenidas exitosamente",
+      message: "Métricas obtenidas exitosamente",
     };
   });
 };

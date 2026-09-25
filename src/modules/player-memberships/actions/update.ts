@@ -7,7 +7,7 @@ import { IPlayerMembership } from "@/modules/player-memberships";
 
 export interface UpdatePlayerMembershipData {
   startedAt?: string;
-  // Ai±adir otros campos si es necesario
+  // Añadir otros campos si es necesario
 }
 
 export const updatePlayerMembership = async (
@@ -25,7 +25,7 @@ export const updatePlayerMembership = async (
     return {
       error: false,
       data: response.data,
-      message: response.message || "Membresi­a actualizada exitosamente",
+      message: response.message || "Membresía actualizada exitosamente",
     };
   });
 };

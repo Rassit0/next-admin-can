@@ -43,7 +43,7 @@ export default async function AddCourseSeasonPage({
     <>
       <HeaderPage
         title={`Crear Oferta de Temporada - ${courseResponse.data.name}`}
-        description="Formulario para la creación de una nueva oferta de temporada."
+        description="Formulario para la creacón de una nueva oferta de temporada."
         action={
           <>
             <ButtonsSubmit

@@ -216,7 +216,7 @@ export const PersonContactsCard = ({ personId, initialContacts }: Props) => {
                       )}
                       {contact.isBillingContact && (
                         <span className="text-xs font-medium bg-primary-100 text-primary-600 px-2 py-0.5 rounded-md flex items-center">
-                          <i className="ri-bill-line mr-1"></i> Facturación
+                          <i className="ri-bill-line mr-1"></i> Facturacón
                         </span>
                       )}
                     </div>

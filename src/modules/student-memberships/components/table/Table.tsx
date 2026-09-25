@@ -99,7 +99,7 @@ export const TableMemberships = ({
             </Table.Column>
             <Table.Column id="participation">
               <span className="text-xs font-semibold uppercase tracking-wide">
-                Participación
+                Participacón
               </span>
             </Table.Column>
             <Table.Column className="text-center">
@@ -178,7 +178,7 @@ export const TableMemberships = ({
                               <span className="font-medium text-foreground truncate group-hover:text-primary transition-colors">
                                 {courseSeason?.course?.name ??
                                   membership.courseSeason?.course?.name ??
-                                  "Ã¢ÂÂ"}
+                                  "—"}
                               </span>
                               <span className="text-xs text-muted truncate group-hover:text-primary/80 transition-colors">
                                 {courseSeason
@@ -188,7 +188,7 @@ export const TableMemberships = ({
                                           ?.map((s) => s.category?.name)
                                           .filter(Boolean),
                                       ),
-                                    ).join(" ÃÂ· ") || "Ã¢ÂÂ"
+                                    ).join(" · ") || "—"
                                   : [
                                       membership.courseSeasonShift?.category
                                         ?.name ??
@@ -196,11 +196,11 @@ export const TableMemberships = ({
                                       membership.courseSeasonShift?.shift?.name,
                                     ]
                                       .filter(Boolean)
-                                      .join(" ÃÂ· ") || "Ã¢ÂÂ"}{" "}
+                                      .join(" · ") || "—"}{" "}
                                 -{" "}
                                 {courseSeason?.season?.name ??
                                   membership.courseSeason?.season?.name ??
-                                  "Ã¢ÂÂ"}
+                                  "—"}
                               </span>
                             </>
                           );
@@ -223,7 +223,7 @@ export const TableMemberships = ({
                   )}
                   <Table.Cell className="py-3">
                     <span className="font-medium text-foreground">
-                      {membership.paymentPlan?.name ?? "Ã¢ÂÂ"}
+                      {membership.paymentPlan?.name ?? "—"}
                     </span>
                   </Table.Cell>
                   <Table.Cell className="py-3 text-right">

@@ -91,16 +91,16 @@ export const PaymentForm = ({
     const newErrors: Record<string, string> = {};
 
     if (!cardData.cardNumber || !validateCardNumber(cardData.cardNumber)) {
-      newErrors.cardNumber = "Niºmero de tarjeta invi¡lido";
+      newErrors.cardNumber = "Número de tarjeta inválido";
     }
     if (!cardData.cardHolder) {
       newErrors.cardHolder = "Nombre del titular requerido";
     }
     if (!cardData.expiryDate || !/^\d{2}\/\d{2}$/.test(cardData.expiryDate)) {
-      newErrors.expiryDate = "Fecha de vencimiento invi¡lida (MM/YY)";
+      newErrors.expiryDate = "Fecha de vencimiento inválida (MM/YY)";
     }
     if (!cardData.cvv || !/^\d{3,4}$/.test(cardData.cvv)) {
-      newErrors.cvv = "CVV invi¡lido";
+      newErrors.cvv = "CVV inválido";
     }
 
     setErrors(newErrors);
@@ -114,7 +114,7 @@ export const PaymentForm = ({
       newErrors.bankName = "Banco requerido";
     }
     if (!transferData.accountNumber) {
-      newErrors.accountNumber = "Niºmero de cuenta requerido";
+      newErrors.accountNumber = "Número de cuenta requerido";
     }
 
     setErrors(newErrors);
@@ -135,14 +135,14 @@ export const PaymentForm = ({
       if (selectedTab === "card") {
         isValid = validateCardForm();
         if (!isValid) {
-          toast.danger("Validación fallida");
+          toast.danger("Validacón fallida");
           return;
         }
         payload = { ...payload, ...cardData };
       } else {
         isValid = validateTransferForm();
         if (!isValid) {
-          toast.danger("Validación fallida");
+          toast.danger("Validacón fallida");
           return;
         }
         payload = { ...payload, ...transferData };
@@ -180,7 +180,7 @@ export const PaymentForm = ({
         <div className="text-sm text-accent">
           <p className="font-semibold">Pago Seguro</p>
           <p className="text-xs opacity-80">
-            Tu información esti¡ encriptada y protegida
+            Tu informacón está encriptada y protegida
           </p>
         </div>
       </motion.div>
@@ -192,12 +192,12 @@ export const PaymentForm = ({
             setSelectedTab(key as "card" | "transfer");
             setErrors({});
           }}
-          aria-label="Mi©todos de pago"
+          aria-label="Métodos de pago"
         >
           <Tabs.ListContainer>
             <Tabs.List aria-label="Options">
               <Tabs.Tab id="card">
-                Tarjeta de Cri©dito
+                Tarjeta de Crédito
                 <Tabs.Indicator />
               </Tabs.Tab>
               <Tabs.Tab id="transfer">
@@ -225,7 +225,7 @@ export const PaymentForm = ({
                   })
                 }
               >
-                <Label>Niºmero de Tarjeta</Label>
+                <Label>Número de Tarjeta</Label>
                 <Input placeholder="4532 1234 5678 9010" />
                 <FieldError>{errors.cardNumber}</FieldError>
               </TextField>
@@ -240,7 +240,7 @@ export const PaymentForm = ({
                 isDisabled={isLoading}
               >
                 <Label>Nombre del Titular</Label>
-                <Input placeholder="Juan Pi©rez" />
+                <Input placeholder="Juan Pérez" />
                 <FieldError>{errors.cardHolder}</FieldError>
               </TextField>
 
@@ -319,7 +319,7 @@ export const PaymentForm = ({
                       <Label>Banco Fassil</Label>
                     </ListBox.Item>
                     <ListBox.Item id="banco-ecb">
-                      <Label>Banco de Cri©dito Boliviano</Label>
+                      <Label>Banco de Crédito Boliviano</Label>
                     </ListBox.Item>
                   </ListBox>
                 </Select.Popover>
@@ -334,8 +334,8 @@ export const PaymentForm = ({
                 isInvalid={!!errors.accountNumber}
                 isDisabled={isLoading}
               >
-                <Label>Niºmero de Cuenta</Label>
-                <Input placeholder="Ingresa tu niºmero de cuenta" />
+                <Label>Número de Cuenta</Label>
+                <Input placeholder="Ingresa tu número de cuenta" />
                 <FieldError>{errors.accountNumber}</FieldError>
               </TextField>
 
@@ -346,7 +346,7 @@ export const PaymentForm = ({
                   className="text-warning shrink-0 mt-0.5"
                 />
                 <p className="text-xs text-warning">
-                  Recibiri¡s instrucciones de transferencia bancaria por correo
+                  Recibirás instrucciones de transferencia bancaria por correo
                 </p>
               </div>
             </motion.div>

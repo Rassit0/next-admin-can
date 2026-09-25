@@ -85,11 +85,11 @@ export const SessionAttendanceDrawer = ({
             <div className="flex items-center gap-2 text-foreground">
               <HugeiconsIcon icon={UserGroupIcon} size={24} />
               <Drawer.Heading className="text-xl font-bold">
-                Asistencia de Sesión
+                Asistencia de Sesón
               </Drawer.Heading>
             </div>
             <p className="text-sm text-muted">
-              Roster generado basado en la fecha de la sesión
+              Roster generado basado en la fecha de la sesón
             </p>
           </Drawer.Header>
 

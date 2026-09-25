@@ -68,7 +68,7 @@ export default async function ClubsPage({ searchParams }: Props) {
   return (
     <>
       <HeaderPage
-        title="Gestión de Clubes"
+        title="Gestón de Clubes"
         description="Administra los clubes deportivos"
       />
       {/* <!-- Search and Filter Bar (Tonal Architecture) --> */}

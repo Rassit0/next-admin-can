@@ -29,8 +29,8 @@ export default async function AccountingIndexPage() {
   if (!firstAllowedChild) {
     return (
       <ErrorPage
-        message="403 - No tienes permisos para acceder a ninguna sección de Contabilidad."
-        path={{ href: "/admin", label: "Volver a Administración" }}
+        message="403 - No tienes permisos para acceder a ninguna seccón de Contabilidad."
+        path={{ href: "/admin", label: "Volver a Administracón" }}
       />
     );
   }

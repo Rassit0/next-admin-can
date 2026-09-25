@@ -221,7 +221,7 @@ export default function DashboardPage() {
                 <div className="absolute left-0 top-1 w-6 h-6 rounded-full bg-sky-500 flex items-center justify-center">
                   <HugeiconsIcon icon={Tick02Icon} size={18} strokeWidth={2} />
                 </div>
-                <p className="text-sm font-bold">Inscripción</p>
+                <p className="text-sm font-bold">Inscripcón</p>
                 <p className="text-xs text-slate-400">
                   Facundo Garcí­a a Básquet U17.
                 </p>
@@ -272,7 +272,7 @@ export default function DashboardPage() {
                   </span>
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold">Ocupación</h4>
+                  <h4 className="text-xs font-bold">Ocupacón</h4>
                   <p className="text-[10px] text-slate-400">85% Hoy</p>
                 </div>
               </div>
@@ -322,7 +322,7 @@ export default function DashboardPage() {
               <span className="material-symbols-outlined text-sm">pool</span>
             </div>
             <div className="flex-1">
-              <p className="text-sm font-bold text-on-surface">Natación</p>
+              <p className="text-sm font-bold text-on-surface">Natacón</p>
               <p className="text-[11px] text-slate-500">549 Alumnos</p>
             </div>
             <span className="text-xs font-bold text-slate-400">--</span>

@@ -100,7 +100,7 @@ export const Person360Container = ({
     return (
       <div className="flex flex-col items-center justify-center p-12 text-default-500 border-2 border-dashed border-default-200 rounded-xl mt-6">
         <p className="text-lg">
-          Seleccione una persona para ver sus operaciones ri¡pidas.
+          Seleccione una persona para ver sus operaciones rápidas.
         </p>
       </div>
     );

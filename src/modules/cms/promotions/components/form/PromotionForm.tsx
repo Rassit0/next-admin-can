@@ -83,7 +83,7 @@ export const PromotionForm = ({
     const newErrors: Record<string, string> = {};
     if (!formData.title) newErrors.title = "El tí­tulo es obligatorio";
 
-    // Validación de imagen 16x9
+    // Validacón de imagen 16x9
     if (!promotion && files16x9.length === 0) {
       newErrors.image16x9 = "La imagen principal 16:9 es obligatoria";
     }
@@ -180,7 +180,7 @@ export const PromotionForm = ({
           </TextField>
 
           <TextField variant="secondary">
-            <Label>Redirección (URL o Ruta)</Label>
+            <Label>Redireccón (URL o Ruta)</Label>
             <Input
               placeholder="Ej: /actualidad o https://google.com"
               value={formData.redirectTo}
@@ -195,7 +195,7 @@ export const PromotionForm = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Select
             variant="secondary"
-            placeholder="Seleccione una posición"
+            placeholder="Seleccione una posicón"
             selectedKey={formData.position}
             onSelectionChange={(key) => {
               if (key)
@@ -205,7 +205,7 @@ export const PromotionForm = ({
                 });
             }}
           >
-            <Label>Posición</Label>
+            <Label>Posicón</Label>
             <Select.Trigger>
               <Select.Value />
               <Select.Indicator />
@@ -255,7 +255,7 @@ export const PromotionForm = ({
               maxSizeMB={5}
             />
             {formData.image16x9 && (
-              <div className="mt-2 text-sm text-success">Ã¢ÂÂ Cargada</div>
+              <div className="mt-2 text-sm text-success">✅ Cargada</div>
             )}
           </div>
 
@@ -273,7 +273,7 @@ export const PromotionForm = ({
             />
             {formData.image1x1 && (
               <div className="mt-2 text-sm text-success flex items-center justify-between">
-                <span>Ã¢ÂÂ Cargada</span>
+                <span>✅ Cargada</span>
                 <button
                   type="button"
                   onClick={() => setFormData({ ...formData, image1x1: "" })}
@@ -299,7 +299,7 @@ export const PromotionForm = ({
             />
             {formData.image3x4 && (
               <div className="mt-2 text-sm text-success flex items-center justify-between">
-                <span>Ã¢ÂÂ Cargada</span>
+                <span>✅ Cargada</span>
                 <button
                   type="button"
                   onClick={() => setFormData({ ...formData, image3x4: "" })}

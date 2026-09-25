@@ -75,7 +75,7 @@ export const InvoicePreview = ({
           className="flex items-center justify-between rounded-lg bg-surface p-3"
           variants={itemVariants}
         >
-          <span className="text-xs text-muted">Cuota de Inscripción</span>
+          <span className="text-xs text-muted">Cuota de Inscripcón</span>
           <span className="font-semibold text-foreground">
             {formatCurrency(assignment.registrationFeeAmount)}
           </span>
@@ -111,7 +111,7 @@ export const InvoicePreview = ({
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
           >
             <HugeiconsIcon icon={Tick01Icon} size={16} />
-            <span>Procesando inscripción...</span>
+            <span>Procesando inscripcón...</span>
           </motion.div>
         )}
       </motion.div>

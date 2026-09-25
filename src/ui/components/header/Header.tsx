@@ -37,18 +37,18 @@ export const Header = ({
     const direction = latest - previous;
 
     // 1. Prioridad: Si estamos en el tope (hasta 70px), siempre visible.
-    // Esto es el "cerrojo": no dejamos que nada mi¡s pase si estamos arriba.
+    // Esto es el "cerrojo": no dejamos que nada más pase si estamos arriba.
     if (latest <= 70) {
       setHidden(false);
       return;
     }
 
-    // 2. Si bajamos (dirección positiva), ocultar.
+    // 2. Si bajamos (direccón positiva), ocultar.
     if (direction > 0) {
       setHidden(true);
     }
-    // 3. Si subimos (dirección negativa), NO hacemos nada.
-    // Al no haber un 'setHidden(false)' aqui­, el header se mantiene oculto
+    // 3. Si subimos (direccón negativa), NO hacemos nada.
+    // Al no haber un 'setHidden(false)' aquí, el header se mantiene oculto
     // hasta que vuelvas a tocar el tope y se ejecute el punto 1.
   });
   return (

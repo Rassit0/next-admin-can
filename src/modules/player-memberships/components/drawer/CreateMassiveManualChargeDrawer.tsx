@@ -83,7 +83,7 @@ export const CreateMassiveManualChargeDrawer = ({
         onOpenChange(false);
       }
     } catch (error) {
-      toast.error("Ocurrió un error inesperado al generar los cargos masivos.");
+      toast.error("Ocurró un error inesperado al generar los cargos masivos.");
     } finally {
       setIsLoading(false);
     }
@@ -103,7 +103,7 @@ export const CreateMassiveManualChargeDrawer = ({
                     Generar Cargo Masivo
                   </Drawer.Heading>
                   <p className="mt-1 text-xs font-medium text-warning-500">
-                    Atención: Se aplicará este cargo a TODOS los miembros
+                    Atencón: Se aplicará este cargo a TODOS los miembros
                     activos y pendientes de esta temporada.
                   </p>
                 </div>
@@ -117,7 +117,7 @@ export const CreateMassiveManualChargeDrawer = ({
                   variant="secondary"
                 >
                   <Label className="text-sm font-semibold">
-                    Descripción del Cargo
+                    Descripcón del Cargo
                   </Label>
                   <InputGroup>
                     <InputGroup.Prefix>
@@ -127,7 +127,7 @@ export const CreateMassiveManualChargeDrawer = ({
                         className="text-muted-foreground"
                       />
                     </InputGroup.Prefix>
-                    <InputGroup.Input placeholder="Ej. Inscripción a Torneo, Equipamiento General..." />
+                    <InputGroup.Input placeholder="Ej. Inscripcón a Torneo, Equipamiento General..." />
                   </InputGroup>
                 </TextField>
 
@@ -232,17 +232,17 @@ export const CreateMassiveManualChargeDrawer = ({
             <AlertDialog.Header>
               <AlertDialog.Icon status="danger" />
               <AlertDialog.Heading>
-                Confirmar Generación Masiva
+                Confirmar Generacón Masiva
               </AlertDialog.Heading>
             </AlertDialog.Header>
             <AlertDialog.Body>
               <p>
-                ÃÂ¿Estás seguro de generar este cargo de{" "}
+                ¿Estás seguro de generar este cargo de{" "}
                 <strong>{pendingData?.amount} Bs</strong> a TODOS los miembros
                 activos y pendientes?
                 <br />
                 <br />
-                Esta acción no se puede deshacer de forma masiva.
+                Esta accón no se puede deshacer de forma masiva.
               </p>
             </AlertDialog.Body>
             <AlertDialog.Footer>

@@ -13,7 +13,7 @@ export const TableInstitutionHistory = ({
   return (
     <Table>
       <Table.ScrollContainer>
-        <Table.Content aria-label="Li­nea de tiempo">
+        <Table.Content aria-label="Línea de tiempo">
           <Table.Header>
             <Table.Column isRowHeader>AiO</Table.Column>
             <Table.Column>TiTULO</Table.Column>

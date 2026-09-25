@@ -36,7 +36,7 @@ export const RosterTable = ({
         onBookingsChange();
       }
     } catch {
-      toast.error("Ocurrió un error inesperado al registrar la asistencia.");
+      toast.error("Ocurró un error inesperado al registrar la asistencia.");
     } finally {
       setLoadingIds((prev) => prev.filter((id) => id !== studentId));
     }
@@ -53,7 +53,7 @@ export const RosterTable = ({
         onBookingsChange();
       }
     } catch {
-      toast.error("Ocurrió un error inesperado al eliminar la asistencia.");
+      toast.error("Ocurró un error inesperado al eliminar la asistencia.");
     } finally {
       setLoadingIds((prev) => prev.filter((id) => id !== studentId));
     }
@@ -62,7 +62,7 @@ export const RosterTable = ({
   return (
     <div className="w-full overflow-x-auto">
       <Table
-        aria-label="Roster de la sesión"
+        aria-label="Roster de la sesón"
         className="w-full shadow-none border-t border-border"
       >
         <Table.Header>
@@ -85,7 +85,7 @@ export const RosterTable = ({
         <Table.Body
           renderEmptyState={() => (
             <div className="py-10 text-center text-sm text-muted">
-              No hay estudiantes inscritos para esta sesión.
+              No hay estudiantes inscritos para esta sesón.
             </div>
           )}
         >

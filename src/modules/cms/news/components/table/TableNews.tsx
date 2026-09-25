@@ -32,11 +32,11 @@ export const TableNews = ({ news }: Props) => {
               PORTADA
             </Table.Column>
             <Table.Column allowsSorting id="title">
-              <SortableColumnHeader id="title">Ti­tulo</SortableColumnHeader>
+              <SortableColumnHeader id="title">Título</SortableColumnHeader>
             </Table.Column>
             <Table.Column allowsSorting id="category">
               <SortableColumnHeader id="category">
-                Categori­a
+                Categoría
               </SortableColumnHeader>
             </Table.Column>
             <Table.Column allowsSorting id="status">
@@ -44,7 +44,7 @@ export const TableNews = ({ news }: Props) => {
             </Table.Column>
             <Table.Column allowsSorting id="publishedAt">
               <SortableColumnHeader id="publishedAt">
-                Fecha de Publicación
+                Fecha de Publicacón
               </SortableColumnHeader>
             </Table.Column>
             <Table.Column className="text-center">ACCIONES</Table.Column>

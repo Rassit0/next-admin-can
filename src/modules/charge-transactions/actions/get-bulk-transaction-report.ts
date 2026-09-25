@@ -4,7 +4,7 @@ import { handleServerAction } from "@/utils";
 import { api } from "@/utils/api";
 
 /**
- * Obtiene el reporte PDF consolidado de miºltiples pagos desde el backend.
+ * Obtiene el reporte PDF consolidado de múltiples pagos desde el backend.
  * Usa api.postBlob() para manejar la respuesta binaria del PDF.
  */
 export const getBulkTransactionReport = async (

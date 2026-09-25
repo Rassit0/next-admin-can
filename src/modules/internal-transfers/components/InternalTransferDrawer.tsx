@@ -90,7 +90,7 @@ export const InternalTransferDrawer = ({
       onSuccess?.();
       router.refresh();
     } catch (error: any) {
-      toast.error(error.message || "Ocurrió un error");
+      toast.error(error.message || "Ocurró un error");
     } finally {
       setIsLoading(false);
     }
@@ -132,7 +132,7 @@ export const InternalTransferDrawer = ({
                 isRequired
                 className="w-full"
                 name="sourceAccountId"
-                placeholder="Selecciona cuenta que envi­a"
+                placeholder="Selecciona cuenta que envía"
                 variant="secondary"
                 selectedKey={sourceAccountId}
                 onSelectionChange={(key) =>
@@ -247,12 +247,12 @@ export const InternalTransferDrawer = ({
               </DatePicker>
 
               <TextField className="w-full" name="description" type="text">
-                <Label>Descripción</Label>
+                <Label>Descripcón</Label>
                 <Input
                   variant="secondary"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Ej. Depósito del di­a"
+                  placeholder="Ej. Depósito del día"
                 />
               </TextField>
 

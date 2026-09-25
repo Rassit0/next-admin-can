@@ -24,7 +24,7 @@ interface Props {
 }
 
 /**
- * Componente reutilizable para descargar/imprimir el recibo PDF de un pago o transacción.
+ * Componente reutilizable para descargar/imprimir el recibo PDF de un pago o transaccón.
  * Se puede usar desde cualquier lugar pasando el transactionId y el tipo de reporte.
  */
 export const PrintReportDialog = ({
@@ -98,7 +98,7 @@ export const PrintReportDialog = ({
         setTimeout(() => URL.revokeObjectURL(url), 10000);
         onOpenChange(false);
       } catch (error) {
-        toast.danger("Ocurrió un error al generar el recibo.");
+        toast.danger("Ocurró un error al generar el recibo.");
       } finally {
         setIsLoading(false);
         onSuccess?.();
@@ -130,8 +130,8 @@ export const PrintReportDialog = ({
           <AlertDialog.Body>
             <p className="text-sm text-muted">
               {paymentIds && paymentIds.length > 0
-                ? "Los pagos se registraron exitosamente. ÃÂ¿Qué deseas hacer con el recibo múltiple consolidado?"
-                : "El pago se registró exitosamente. ÃÂ¿Qué deseas hacer con el recibo?"}
+                ? "Los pagos se registraron exitosamente. ¿Qué deseas hacer con el recibo múltiple consolidado?"
+                : "El pago se registró exitosamente. ¿Qué deseas hacer con el recibo?"}
             </p>
           </AlertDialog.Body>
           <AlertDialog.Footer className="flex flex-col gap-2 sm:flex-row">

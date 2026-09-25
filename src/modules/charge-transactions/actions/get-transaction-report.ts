@@ -4,7 +4,7 @@ import { handleServerAction } from "@/utils";
 import { api } from "@/utils/api";
 
 /**
- * Obtiene el reporte PDF de un pago o transacción desde el backend.
+ * Obtiene el reporte PDF de un pago o transaccón desde el backend.
  * Usa api.getBlob() para manejar la respuesta binaria del PDF.
  */
 export const getTransactionReport = async (

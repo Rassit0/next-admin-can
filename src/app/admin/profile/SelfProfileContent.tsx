@@ -65,7 +65,7 @@ export function SelfProfileContent({ profile }: Props) {
                 icon={UserIcon}
                 className="w-12 h-12 mb-4 opacity-50"
               />
-              <p>Sin información personal vinculada.</p>
+              <p>Sin informacón personal vinculada.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -109,7 +109,7 @@ export function SelfProfileContent({ profile }: Props) {
               <div>
                 <p className="text-xs font-semibold text-on-surface-variant mb-1 uppercase tracking-wide flex items-center gap-1">
                   <HugeiconsIcon icon={SmartPhone01Icon} className="w-3 h-3" />{" "}
-                  Teli©fono
+                  Teléfono
                 </p>
                 <p className="font-medium text-on-surface">
                   {person.phone || "-"}
@@ -118,7 +118,7 @@ export function SelfProfileContent({ profile }: Props) {
               <div className="sm:col-span-2">
                 <p className="text-xs font-semibold text-on-surface-variant mb-1 uppercase tracking-wide flex items-center gap-1">
                   <HugeiconsIcon icon={Home01Icon} className="w-3 h-3" />{" "}
-                  Dirección
+                  Direccón
                 </p>
                 <p className="font-medium text-on-surface">
                   {person.address || "-"}

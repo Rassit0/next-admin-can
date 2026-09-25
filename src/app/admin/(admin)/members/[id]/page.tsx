@@ -55,7 +55,7 @@ export default async function MemberPage({
     <div className="p-8 max-w-7xl mx-auto space-y-12">
       <HeaderPage
         title="Perfil de Miembro"
-        description="Gestión y detalles del miembro seleccionado."
+        description="Gestón y detalles del miembro seleccionado."
         breadcrumb={[
           { label: "Miembros", href: "/admin/members" },
           { label: `${person.name}` },
@@ -67,7 +67,7 @@ export default async function MemberPage({
           <div className="relative group">
             <div className="absolute inset-0 athletic-gradient rounded-full blur-xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
             <img
-              alt="Mateo Velásquez Hincapié"
+              alt="Mateo Velásquez Hincapé"
               className="relative w-40 h-40 rounded-full object-cover border-4 border-white shadow-2xl"
               data-alt="Portrait of Mateo Velasquez, a young athletic man with dark hair, confident expression, soft natural lighting"
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3Qe2YeNO9xDkZEo9MX-WD0APSxLU0RZzpRfTCp5m-TDx8gCmaUmxXFN76QEeO0Tv4ObDqmRnWrhojoWPW5abwN-vEfZMzYwvotcy7gzr813ytfW4YlQx6DIK7VuLyWp6mRoXbXWMTd-tkmNIukCCvFQB29irYjQjwvlIE9RtkPXFijFmTxnYwhLDygsvIhBJEUa4kS7O-ny4LCM9GsQKPPClwNJhH7U4fAaqA9801l6Nu4pB9OT-dPC_Mb7OTlKwGcjFv53Xb0bns"
@@ -140,7 +140,7 @@ export default async function MemberPage({
           <section>
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-extrabold tracking-tight">
-                Gestión de Perfiles
+                Gestón de Perfiles
               </h2>
               <button className="bg-accent text-white px-5 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 shadow-lg shadow-primary/10 hover:bg-primary-container transition-all active:scale-95">
                 <HugeiconsIcon icon={AddCircleFreeIcons} /> Añadir Perfil
@@ -493,13 +493,13 @@ export default async function MemberPage({
                       Miembro
                     </th>
                     <th className="px-6 py-4 text-left text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-                      Identificación
+                      Identificacón
                     </th>
                     <th className="px-6 py-4 text-left text-[10px] font-bold text-slate-500 uppercase tracking-widest">
                       Parentesco / Rol
                     </th>
                     <th className="px-6 py-4 text-right text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-                      Acción
+                      Accón
                     </th>
                   </tr>
                 </thead>
@@ -549,7 +549,7 @@ export default async function MemberPage({
                     </td>
                     <td className="px-6 py-4">
                       <span className="text-sm text-slate-600">
-                        Hija / Jugadora Natación
+                        Hija / Jugadora Natacón
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right">
@@ -663,7 +663,7 @@ export default async function MemberPage({
                   Baloncesto
                 </span>
                 <span className="px-3 py-1 bg-slate-100 rounded-full text-xs font-semibold text-slate-700">
-                  Natación
+                  Natacón
                 </span>
                 <span className="px-3 py-1 bg-slate-100 rounded-full text-xs font-semibold text-slate-700">
                   Gimnasio
@@ -675,7 +675,7 @@ export default async function MemberPage({
           <div className="bg-surface-container-low rounded-2xl p-6 space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="font-black text-lg tracking-tight">
-                Documentación
+                Documentacón
               </h3>
               <span
                 className="material-symbols-outlined text-on-surface-variant"

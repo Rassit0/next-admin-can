@@ -82,7 +82,7 @@ export const HomeDisciplineForm = ({
     const newErrors: Record<string, string> = {};
     if (!formData.title) newErrors.title = "El tí­tulo es obligatorio";
 
-    // Validación de imagen 4x3
+    // Validacón de imagen 4x3
     if (!homeDiscipline && files4x3.length === 0) {
       newErrors.image4x3 = "La imagen principal 4:3 es obligatoria";
     }
@@ -167,7 +167,7 @@ export const HomeDisciplineForm = ({
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <TextField variant="secondary">
-            <Label>Redirección (URL o Ruta)</Label>
+            <Label>Redireccón (URL o Ruta)</Label>
             <Input
               placeholder="Ej: /equipos"
               value={formData.redirectTo || ""}
@@ -184,7 +184,7 @@ export const HomeDisciplineForm = ({
             <Label>
               <span className="flex items-center gap-2">
                 Orden (Sort Order)
-                <InfoTooltip text="Define el orden de aparición visual. Valores menores (ej: 0, 1) aparecerán primero en la lista." />
+                <InfoTooltip text="Define el orden de aparicón visual. Valores menores (ej: 0, 1) aparecerán primero en la lista." />
               </span>
             </Label>
             <Input
@@ -231,7 +231,7 @@ export const HomeDisciplineForm = ({
             maxSizeMB={5}
           />
           {formData.image4x3 && (
-            <div className="mt-2 text-sm text-success">Ã¢ÂÂ Cargada</div>
+            <div className="mt-2 text-sm text-success">✅ Cargada</div>
           )}
         </div>
       </div>

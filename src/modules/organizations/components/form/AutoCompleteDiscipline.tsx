@@ -85,7 +85,7 @@ export const AutoCompleteDiscipline = ({
         const message = isApiError ? error.message : "Error inesperado";
         const description =
           error.errors?.join(", ") ||
-          "Ocurrió un error al obtener las disciplinas";
+          "Ocurró un error al obtener las disciplinas";
 
         toast.danger(message, { description });
 

@@ -42,7 +42,7 @@ export const ListCardsCategories = ({
             Categorías Deportivas
           </h3>
           <p className="text-sm text-muted-foreground mt-1">
-            Gestiona las categorías, gi©neros y li­mites de edades para esta
+            Gestiona las categorías, géneros y límites de edades para esta
             temporada.
           </p>
         </div>
@@ -52,7 +52,7 @@ export const ListCardsCategories = ({
           onClick={handleOpenAdd}
         >
           <HugeiconsIcon icon={Add01Icon} size={20} />
-          Ai±adir
+          Añadir
         </button>
       </div>
 
@@ -62,10 +62,10 @@ export const ListCardsCategories = ({
             <HugeiconsIcon icon={Add01Icon} size={24} />
           </div>
           <p className="font-semibold text-foreground">
-            Aiºn no hay categorías
+            Aún no hay categorías
           </p>
           <p className="text-sm text-muted-foreground mt-1 max-w-sm">
-            Agrega una o mi¡s categorías deportivas para permitir inscripciones
+            Agrega una o más categorías deportivas para permitir inscripciones
             en esta temporada.
           </p>
           <button
@@ -74,7 +74,7 @@ export const ListCardsCategories = ({
             onClick={handleOpenAdd}
           >
             <HugeiconsIcon icon={Add01Icon} size={20} />
-            Ai±adir Categori­a
+            Añadir Categoría
           </button>
         </div>
       ) : (

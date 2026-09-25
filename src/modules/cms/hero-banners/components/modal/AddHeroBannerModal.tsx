@@ -68,7 +68,7 @@ export const AddHeroBannerModal = ({
                 <Modal.Heading>Agregar Hero Banner</Modal.Heading>
               </div>
               <p className="mt-1.5 text-sm leading-5 text-muted">
-                Agrega un nuevo Hero Banner para el carrusel de la pi¡gina
+                Agrega un nuevo Hero Banner para el carrusel de la página
                 principal.
               </p>
             </Modal.Header>

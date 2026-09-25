@@ -31,7 +31,7 @@ export const TableLocations = ({ locations }: Props) => {
     direction: "ascending",
   });
 
-  // Evitamos la hidratación fallida
+  // Evitamos la hidratacón fallida
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -96,13 +96,13 @@ export const TableLocations = ({ locations }: Props) => {
 
             <Table.Column allowsSorting id="isInternal">
               <SortableColumnHeader id="isInternal">
-                ÃÂ¿ES INTERNO?
+                ¿ES INTERNO?
               </SortableColumnHeader>
             </Table.Column>
 
             <Table.Column allowsSorting id="isRentable">
               <SortableColumnHeader id="isRentable">
-                ÃÂ¿SE PUEDE ALQUILAR?
+                ¿SE PUEDE ALQUILAR?
               </SortableColumnHeader>
             </Table.Column>
 

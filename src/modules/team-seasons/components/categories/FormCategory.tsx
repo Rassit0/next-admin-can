@@ -69,13 +69,13 @@ export const FormCategory = ({
 
     if (response.error) {
       toast.danger(
-        response.message || "Ocurrió un error al guardar la categori­a",
+        response.message || "Ocurró un error al guardar la categoría",
       );
       return;
     }
 
     toast.success(
-      `Categori­a ${isEditing ? "actualizada" : "creada"} exitosamente`,
+      `Categoría ${isEditing ? "actualizada" : "creada"} exitosamente`,
     );
     if (onSuccess) onSuccess();
   };
@@ -83,7 +83,7 @@ export const FormCategory = ({
   return (
     <form className="w-full flex flex-col gap-4" onSubmit={handleSubmit}>
       <div className="flex flex-col gap-1 w-full">
-        <label className="text-sm font-medium">Categori­a</label>
+        <label className="text-sm font-medium">Categoría</label>
         <select
           name="categoryId"
           className="h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
@@ -92,7 +92,7 @@ export const FormCategory = ({
           disabled={isEditing}
         >
           <option value="" disabled>
-            Seleccione una categori­a
+            Seleccione una categoría
           </option>
           {categoriesOptions.map((opt) => (
             <option key={opt.id} value={opt.id}>
@@ -103,7 +103,7 @@ export const FormCategory = ({
       </div>
 
       <div className="flex flex-col gap-1 w-full">
-        <label className="text-sm font-medium">Gi©nero</label>
+        <label className="text-sm font-medium">Género</label>
         <select
           name="gender"
           className="h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
@@ -112,7 +112,7 @@ export const FormCategory = ({
           disabled={isEditing}
         >
           <option value="" disabled>
-            Seleccione el gi©nero
+            Seleccione el género
           </option>
           <option value="MALE">Masculino</option>
           <option value="FEMALE">Femenino</option>
@@ -122,7 +122,7 @@ export const FormCategory = ({
 
       <div className="grid grid-cols-2 gap-4 w-full">
         <div className="flex flex-col gap-1 w-full">
-          <label className="text-sm font-medium">Mi­nimo de atletas</label>
+          <label className="text-sm font-medium">Mínimo de atletas</label>
           <input
             className="h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
             name="minMembers"
@@ -133,7 +133,7 @@ export const FormCategory = ({
           />
         </div>
         <div className="flex flex-col gap-1 w-full">
-          <label className="text-sm font-medium">Mi¡ximo de atletas</label>
+          <label className="text-sm font-medium">Máximo de atletas</label>
           <input
             className="h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
             name="maxMembers"
@@ -148,7 +148,7 @@ export const FormCategory = ({
       <div className="grid grid-cols-2 gap-4 w-full">
         <div className="flex flex-col gap-1 w-full">
           <label className="text-sm font-medium">
-            Ai±o Mi­n. de Nacimiento
+            Año Mín. de Nacimiento
           </label>
           <input
             className="h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
@@ -158,9 +158,7 @@ export const FormCategory = ({
           />
         </div>
         <div className="flex flex-col gap-1 w-full">
-          <label className="text-sm font-medium">
-            Ai±o Mi¡x. de Nacimiento
-          </label>
+          <label className="text-sm font-medium">Año Máx. de Nacimiento</label>
           <input
             className="h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
             name="maxBirthYear"
@@ -182,7 +180,7 @@ export const FormCategory = ({
           htmlFor="validateAge"
           className="text-sm font-medium leading-none"
         >
-          Validar Edad en la Inscripción
+          Validar Edad en la Inscripcón
         </label>
       </div>
 
@@ -202,7 +200,7 @@ export const FormCategory = ({
           className="h-10 px-4 py-2 rounded-md bg-primary text-white text-sm font-medium hover:bg-primary-dark transition-colors disabled:opacity-50"
           disabled={isLoading}
         >
-          {isEditing ? "Actualizar" : "Crear"} Categori­a
+          {isEditing ? "Actualizar" : "Crear"} Categoría
         </button>
       </div>
     </form>

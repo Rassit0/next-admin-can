@@ -37,11 +37,11 @@ export const ExtendModal = ({ isOpen, onOpenChange, courseSeason }: Props) => {
 
   const handleExtend = async () => {
     if (!reason) {
-      toast.danger("Debe ingresar un motivo de extensión");
+      toast.danger("Debe ingresar un motivo de extensón");
       return;
     }
     if (!newEndDate) {
-      toast.danger("Debe seleccionar una fecha de finalización");
+      toast.danger("Debe seleccionar una fecha de finalizacón");
       return;
     }
     setIsLoading(true);
@@ -65,7 +65,7 @@ export const ExtendModal = ({ isOpen, onOpenChange, courseSeason }: Props) => {
           .join("\n"); // Los separamos por saltos de lí­nea para el toast
       }
 
-      // 2. Pasamos la descripción formateada al componente de notificaciones
+      // 2. Pasamos la descripcón formateada al componente de notificaciones
       toast.danger(
         res.errors ? "Error al extender la temporada" : res.message,
         {
@@ -106,7 +106,7 @@ export const ExtendModal = ({ isOpen, onOpenChange, courseSeason }: Props) => {
               <Alert.Indicator />
               <Alert.Content>
                 <Alert.Title>
-                  ÃÂ¿Estás seguro de extender la temporada?
+                  ¿Estás seguro de extender la temporada?
                 </Alert.Title>
                 <Alert.Description>
                   Se extenderá la temporada y las membresí­as se actualizarán
@@ -142,7 +142,7 @@ export const ExtendModal = ({ isOpen, onOpenChange, courseSeason }: Props) => {
                 value={newEndDate}
                 onChange={setNewEndDate}
               >
-                <Label>Nueva Fecha de Finalización</Label>
+                <Label>Nueva Fecha de Finalizacón</Label>
                 <DateField.Group variant="secondary" fullWidth>
                   <DateField.Input>
                     {(segment) => <DateField.Segment segment={segment} />}
@@ -156,7 +156,7 @@ export const ExtendModal = ({ isOpen, onOpenChange, courseSeason }: Props) => {
                 <FieldError
                   children={
                     !newEndDate && (
-                      <>Debe seleccionar una fecha de finalización</>
+                      <>Debe seleccionar una fecha de finalizacón</>
                     )
                   }
                 />
@@ -198,10 +198,10 @@ export const ExtendModal = ({ isOpen, onOpenChange, courseSeason }: Props) => {
                 value={reason}
                 onChange={setReason}
               >
-                <Label>Motivo de Finalización</Label>
-                <TextArea placeholder="Describe brevemente los motivos de la finalización anticipada..." />
+                <Label>Motivo de Finalizacón</Label>
+                <TextArea placeholder="Describe brevemente los motivos de la finalizacón anticipada..." />
                 <FieldError>
-                  {!reason && "Debe ingresar un motivo de cancelación"}
+                  {!reason && "Debe ingresar un motivo de cancelacón"}
                 </FieldError>
               </TextField>
             </div>

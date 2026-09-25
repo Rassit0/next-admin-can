@@ -51,7 +51,7 @@ export const TransactionHistoryDrawer = ({
         }
       }
     } catch (err) {
-      setError("Ocurrió un error al cargar el historial.");
+      setError("Ocurró un error al cargar el historial.");
     } finally {
       setIsLoading(false);
     }

@@ -49,13 +49,13 @@ export const NewsCategoryForm = ({
 
     const trimmedName = name.trim();
     if (!trimmedName) {
-      newErrors.name = "Debe ingresar un nombre para la categori­a";
+      newErrors.name = "Debe ingresar un nombre para la categoría";
     } else if (trimmedName.length < 3) {
       newErrors.name = "El nombre debe tener al menos 3 caracteres";
     }
 
     if (sortOrder < 0 || isNaN(sortOrder)) {
-      newErrors.sortOrder = "El orden debe ser un niºmero mayor o igual a 0";
+      newErrors.sortOrder = "El orden debe ser un número mayor o igual a 0";
     }
 
     setErrors(newErrors);
@@ -115,7 +115,7 @@ export const NewsCategoryForm = ({
         {/* Slug Information - Readonly for Edit */}
         {category && (
           <TextField className="w-full" name="slug" type="text" isReadOnly>
-            <Label>Slug (Generado automi¡ticamente)</Label>
+            <Label>Slug (Generado automáticamente)</Label>
             <Input
               variant="secondary"
               value={category.slug}
@@ -141,7 +141,7 @@ export const NewsCategoryForm = ({
               setName(e.target.value);
               handleRemoveError("name");
             }}
-            placeholder="Ingrese el nombre de la categori­a"
+            placeholder="Ingrese el nombre de la categoría"
             disabled={isLoading}
           />
           <FieldError children={errors.name && <> {errors.name}</>} />
@@ -156,8 +156,8 @@ export const NewsCategoryForm = ({
         >
           <Label>
             <span className="flex items-center gap-2">
-              Orden de Visualización
-              <InfoTooltip text="Define el orden de aparición visual. Valores menores (ej: 0, 1) apareceri¡n primero en la lista." />
+              Orden de Visualizacón
+              <InfoTooltip text="Define el orden de aparicón visual. Valores menores (ej: 0, 1) aparecerán primero en la lista." />
             </span>
           </Label>
           <Input
@@ -180,10 +180,10 @@ export const NewsCategoryForm = ({
             <Switch.Content className="flex items-center justify-between w-full">
               <div className="flex flex-col gap-1">
                 <span className="font-semibold text-sm">
-                  Estado de la categori­a
+                  Estado de la categoría
                 </span>
                 <span className="text-xs text-default-500">
-                  Las categorías inactivas no se mostrari¡n en el portal web.
+                  Las categorías inactivas no se mostrarán en el portal web.
                 </span>
               </div>
               <Switch.Control

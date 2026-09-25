@@ -15,7 +15,7 @@ export default async function RolesPage() {
   return (
     <>
       <HeaderPage
-        title="Gestión de Roles y Permisos"
+        title="Gestón de Roles y Permisos"
         description="Administre los roles del sistema y asigne los permisos correspondientes."
       />
       <div className="mt-6 h-[calc(100vh-220px)] min-h-125">

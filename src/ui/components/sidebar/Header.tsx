@@ -18,7 +18,7 @@ export const Header = ({ organization }: Props) => {
           {organization.name}
         </h1>
         <p className="text-[10px] font-semibold text-foreground/70 uppercase tracking-wider">
-          Administración
+          Administracón
         </p>
       </div>
     </Link>

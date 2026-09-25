@@ -12,9 +12,9 @@ import { getPublicHomeDisciplines } from "@/modules/portal/home-disciplines/acti
 import { getPublicPromotions } from "@/modules/portal/promotions/actions/promotions.action";
 
 export const metadata = {
-  title: "Inicio | Club Atli©tico Nacional",
+  title: "Inicio | Club Atlético Nacional",
   description:
-    "Portal institucional del Club Atli©tico Nacional - Mi¡s de 1000 deportistas activos.",
+    "Portal institucional del Club Atlético Nacional - Más de 1000 deportistas activos.",
   openGraph: {
     images: ["/logo.png"],
   },
@@ -45,8 +45,8 @@ export default async function Page() {
   const promo1Banners = promotions.promo1 ? [promotions.promo1] : [];
   const promo2Banners = promotions.promo2 ? [promotions.promo2] : [];
 
-  // Transformación de Fixture
-  // Obtenemos disciplinas iºnicas del fixture
+  // Transformacón de Fixture
+  // Obtenemos disciplinas únicas del fixture
   const uniqueDisciplines = Array.from(
     new Set(matches.map((m) => m.discipline).filter(Boolean)),
   );

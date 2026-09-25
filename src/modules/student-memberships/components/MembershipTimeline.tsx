@@ -110,7 +110,7 @@ export function MembershipTimeline({ studentMembershipId }: Props) {
   if (histories.length === 0) {
     return (
       <div className="bg-default-50 p-8 rounded-medium border border-default-200 text-default-500 text-center">
-        No existen eventos registrados para esta membresi­a.
+        No existen eventos registrados para esta membresía.
       </div>
     );
   }

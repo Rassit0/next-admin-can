@@ -24,7 +24,7 @@ export const AddNewsCategoryModal = ({ buttonFloatingMobile }: Props) => {
         }`}
       >
         <HugeiconsIcon icon={Add01Icon} />
-        Crear Categori­a
+        Crear Categoría
       </Button>
 
       <Modal.Backdrop isOpen={state.isOpen} onOpenChange={state.setOpen}>
@@ -36,10 +36,10 @@ export const AddNewsCategoryModal = ({ buttonFloatingMobile }: Props) => {
                 <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
                   <HugeiconsIcon icon={Folder01Icon} />
                 </Modal.Icon>
-                <Modal.Heading>Agregar Categori­a</Modal.Heading>
+                <Modal.Heading>Agregar Categoría</Modal.Heading>
               </div>
               <p className="mt-1.5 text-sm leading-5 text-muted">
-                Agrega una nueva categori­a para clasificar las noticias del
+                Agrega una nueva categoría para clasificar las noticias del
                 portal.
               </p>
             </Modal.Header>

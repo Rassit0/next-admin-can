@@ -24,7 +24,7 @@ export const SchoolsCard = () => {
         </h3>
 
         <p className="text-sm text-gray-500 font-body leading-relaxed mb-6">
-          Gestión de academias, programas formativos y monitoreo de progreso
+          Gestón de academias, programas formativos y monitoreo de progreso
           deportivo.
         </p>
 

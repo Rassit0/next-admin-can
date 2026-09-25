@@ -73,10 +73,10 @@ export const PaymentsHistoryTable = ({
                     ? "Tarjeta"
                     : payment.method === "TRANSFER"
                       ? "Transferencia"
-                      : "Ã¢ÂÂ"}
+                      : "—"}
                 </Table.Cell>
                 <Table.Cell className="font-mono text-xs text-muted">
-                  {payment.reference ?? "Ã¢ÂÂ"}
+                  {payment.reference ?? "—"}
                 </Table.Cell>
                 <Table.Cell>
                   <PaymentStatusChip status={payment.status} />
@@ -96,7 +96,7 @@ export const PaymentsHistoryTable = ({
                       <span className="text-xs text-muted">
                         {payment.paidAt
                           ? payment.paidAt.toLocaleDateString("es-BO")
-                          : "Ã¢ÂÂ"}
+                          : "—"}
                       </span>
                     )}
                   </div>

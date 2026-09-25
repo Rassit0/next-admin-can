@@ -55,7 +55,7 @@ export const AddInstitutionHistoryItemModal = ({
       }
     } catch (error) {
       console.error(error);
-      toast.error("Ocurrió un error inesperado al guardar");
+      toast.error("Ocurró un error inesperado al guardar");
     } finally {
       setLoading(false);
     }
@@ -107,17 +107,17 @@ export const AddInstitutionHistoryItemModal = ({
             <form onSubmit={handleSubmit}>
               <Modal.Body className="px-6 py-4 flex flex-col gap-4">
                 <TextField name="year" isRequired>
-                  <Label>Ai±o / Periodo</Label>
+                  <Label>Año / Periodo</Label>
                   <Input placeholder="Ej. 1950" />
                 </TextField>
 
                 <TextField name="title" isRequired>
-                  <Label>Ti­tulo</Label>
-                  <Input placeholder="Ej. Fundación del Club" />
+                  <Label>Título</Label>
+                  <Input placeholder="Ej. Fundacón del Club" />
                 </TextField>
 
                 <TextField name="description" isRequired>
-                  <Label>Descripción</Label>
+                  <Label>Descripcón</Label>
                   <TextArea placeholder="Detalles del hito..." />
                 </TextField>
 

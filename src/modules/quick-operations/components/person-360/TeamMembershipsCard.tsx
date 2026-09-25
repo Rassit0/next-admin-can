@@ -77,7 +77,7 @@ export const TeamMembershipsCard = ({
                           </div>
                         ) : (
                           <div className="text-[10px] font-medium bg-success-50 text-success-600 px-1.5 py-0.5 rounded border border-success-200 h-fit">
-                            Al di­a
+                            Al día
                           </div>
                         ))}
                     </div>

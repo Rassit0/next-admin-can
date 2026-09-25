@@ -5,7 +5,7 @@ export default function AttendancePage() {
     <>
       <HeaderPage
         title="Asistencias"
-        description="Gestión y control de asistencias."
+        description="Gestón y control de asistencias."
         breadcrumb={[{ label: "Asistencias" }]}
       />
       <div>

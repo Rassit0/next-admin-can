@@ -34,7 +34,7 @@ export default async function ReportsPage({
     <div className="space-y-6">
       <div>
         <h2 className="text-2xl font-bold tracking-tight">
-          Cati¡logo de Reportes
+          Catálogo de Reportes
         </h2>
         <p className="text-default-500">
           Genera y exporta reportes financieros y consolidados del sistema.
@@ -51,7 +51,7 @@ export default async function ReportsPage({
             </div>
             <p className="text-sm text-default-500">
               Reporte contable gerencial en Excel. Resumen de flujos,
-              distribución contable y si¡bana detallada para reconciliación.
+              distribucón contable y sábana detallada para reconciliacón.
             </p>
           </div>
           <div className="h-px bg-default-200 w-full" />
@@ -68,15 +68,15 @@ export default async function ReportsPage({
               <p className="text-md font-bold">Informe de Arqueos de Caja</p>
             </div>
             <p className="text-sm text-default-500">
-              Auditori­a financiera de tesoreri­a. Historial de cierres,
-              sobrantes y faltantes agrupados por caja fi­sica.
+              Auditoría financiera de tesorería. Historial de cierres,
+              sobrantes y faltantes agrupados por caja física.
             </p>
           </div>
           <div className="h-px bg-default-200 w-full" />
           <div className="flex-1 space-y-4 p-6">
             <div className="space-y-2">
               <label className="text-sm font-medium">
-                Peri­odo de ani¡lisis
+                Período de análisis
               </label>
               <DateRangeFilter
                 startKey="closures_start"
@@ -103,14 +103,14 @@ export default async function ReportsPage({
             </div>
             <p className="text-sm text-default-500">
               Desglose de ingresos por grupos concepto (Escuelas, Equipos),
-              detallando recibos y distribución en cuentas financieras.
+              detallando recibos y distribucón en cuentas financieras.
             </p>
           </div>
           <div className="h-px bg-default-200 w-full" />
           <div className="flex-1 space-y-4 p-6">
             <div className="space-y-2">
               <label className="text-sm font-medium">
-                Peri­odo de ani¡lisis
+                Período de análisis
               </label>
               <DateRangeFilter
                 startKey="detailed_start"
@@ -133,11 +133,11 @@ export default async function ReportsPage({
           <div className="flex items-center gap-2 mb-2">
             <HugeiconsIcon icon={File01Icon} className="text-default-500" />
             <p className="text-md font-bold text-default-500">
-              Mi¡s reportes próximamente
+              Más reportes próximamente
             </p>
           </div>
           <p className="text-sm text-default-400">
-            Nuevos reportes como "Estado de Deudores" se iri¡n ai±adiendo aqui­.
+            Nuevos reportes como "Estado de Deudores" se irán añadiendo aquí.
           </p>
         </div>
       </div>

@@ -33,7 +33,7 @@ export const updateSession = async (
     return {
       error: false,
       data: res.data,
-      message: res.message || "Sesión actualizada exitosamente",
+      message: res.message || "Sesón actualizada exitosamente",
     };
   });
 };

@@ -42,7 +42,7 @@ export const CourseSeasonStaffTable = ({ staffList, courseSeason }: Props) => {
   }, []);
 
   const handleRemove = async (id: string) => {
-    if (!confirm("ÃÂ¿Está seguro de remover a este profesor/personal?")) return;
+    if (!confirm("¿Está seguro de remover a este profesor/personal?")) return;
 
     setLoadingId(id);
     const res = await removeCourseSeasonStaff(id);

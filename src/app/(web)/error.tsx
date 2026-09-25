@@ -19,7 +19,7 @@ export default function WebError({
   }, [error]);
 
   const isNetworkError =
-    error.message.includes("conexión") ||
+    error.message.includes("conexón") ||
     error.message.includes("fetch") ||
     error.message.includes("503");
 
@@ -36,12 +36,12 @@ export default function WebError({
           {isNetworkError ? "503" : "500"}
         </h1>
         <h2 className="mt-4 font-heading text-3xl font-700 uppercase tracking-tight text-primary sm:text-4xl">
-          {isNetworkError ? "Servidor en Mantenimiento" : "Algo salió mal"}
+          {isNetworkError ? "Servidor en Mantenimiento" : "Algo saló mal"}
         </h2>
         <p className="mt-4 max-w-md text-muted-foreground text-pretty">
           {isNetworkError
-            ? "No pudimos establecer conexión con los servidores del Club. Es posible que estemos realizando labores de mantenimiento o que haya un problema temporal en la red."
-            : "Ocurrió un error inesperado al cargar esta pi¡gina. Por favor, intenta de nuevo mi¡s tarde."}
+            ? "No pudimos establecer conexón con los servidores del Club. Es posible que estemos realizando labores de mantenimiento o que haya un problema temporal en la red."
+            : "Ocurró un error inesperado al cargar esta página. Por favor, intenta de nuevo más tarde."}
         </p>
 
         <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">

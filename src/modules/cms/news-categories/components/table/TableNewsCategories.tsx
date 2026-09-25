@@ -33,7 +33,7 @@ export const TableNewsCategories = ({ categories }: Props) => {
             </Table.Column>
             <Table.Column allowsSorting id="createdAt">
               <SortableColumnHeader id="createdAt">
-                Fecha de Creación
+                Fecha de Creacón
               </SortableColumnHeader>
             </Table.Column>
             <Table.Column className="text-center">ACCIONES</Table.Column>
@@ -49,7 +49,7 @@ export const TableNewsCategories = ({ categories }: Props) => {
                     No se encontraron categorías
                   </span>
                   <span className="text-sm text-default-400">
-                    Crea una nueva categori­a para empezar.
+                    Crea una nueva categoría para empezar.
                   </span>
                 </div>
               </div>

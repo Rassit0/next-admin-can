@@ -36,7 +36,7 @@ export const TableTransactions = ({ transactions }: Props) => {
   );
   const [isLoading, setIsLoading] = useState(false);
 
-  // Estado para el diálogo de impresión de recibo
+  // Estado para el diálogo de impresón de recibo
   const [printTransactionId, setPrintTransactionId] = useState<string | null>(
     null,
   );
@@ -59,14 +59,14 @@ export const TableTransactions = ({ transactions }: Props) => {
             account: t.financialAccountName || "Sin asignar",
             amount: t.amount,
           });
-          // Fix: Si alguna transacción del grupo sigue completada, el recibo entero sigue activo
+          // Fix: Si alguna transaccón del grupo sigue completada, el recibo entero sigue activo
           if (t.status === "COMPLETED") {
             group.status = "COMPLETED";
           }
         } else {
           const newGroup: ITransaction = {
             ...t,
-            _isGrouped: false, // Inicialmente falso, es una transacción normal
+            _isGrouped: false, // Inicialmente falso, es una transaccón normal
             _groupedDetails: [
               {
                 method: t.paymentMethod,
@@ -198,7 +198,7 @@ export const TableTransactions = ({ transactions }: Props) => {
               </Table.Column>
               <Table.Column isRowHeader>
                 <span className="text-xs font-semibold uppercase tracking-wide">
-                  NÃÂ° Recibo
+                  N° Recibo
                 </span>
               </Table.Column>
               <Table.Column>
@@ -427,7 +427,7 @@ export const TableTransactions = ({ transactions }: Props) => {
                     <div className="relative flex justify-center items-center gap-2">
                       <Dropdown>
                         <Button
-                          aria-label="Acciones de transacción"
+                          aria-label="Acciones de transaccón"
                           isIconOnly
                           size="sm"
                           variant="ghost"
@@ -436,7 +436,7 @@ export const TableTransactions = ({ transactions }: Props) => {
                         </Button>
                         <Dropdown.Popover>
                           <Dropdown.Menu
-                            aria-label="Acciones de Transacción"
+                            aria-label="Acciones de Transaccón"
                             onAction={(key) => {
                               if (key === "print") {
                                 setPrintPaymentIds([]);
@@ -492,7 +492,7 @@ export const TableTransactions = ({ transactions }: Props) => {
             </AlertDialog.Header>
             <AlertDialog.Body>
               <p>
-                ÃÂ¿Estás seguro de que deseas anular esta transacción? El monto
+                ¿Estás seguro de que deseas anular esta transaccón? El monto
                 será devuelto al saldo pendiente de la cuota.
               </p>
             </AlertDialog.Body>
@@ -512,7 +512,7 @@ export const TableTransactions = ({ transactions }: Props) => {
                 onPress={handleConfirmVoid}
               >
                 {isLoading && <Spinner color="current" />}
-                Anular Transacción
+                Anular Transaccón
               </Button>
             </AlertDialog.Footer>
           </AlertDialog.Dialog>

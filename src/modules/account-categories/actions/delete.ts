@@ -17,7 +17,7 @@ export const deleteAccountCategory = async (
     return {
       error: false,
       data: res.data,
-      message: res.message || "Categori­a eliminada exitosamente",
+      message: res.message || "Categoría eliminada exitosamente",
     };
   });
 };

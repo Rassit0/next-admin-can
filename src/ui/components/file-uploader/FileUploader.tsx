@@ -80,7 +80,7 @@ export function FileUploader({
       >
         <HugeiconsIcon icon={CloudUploadIcon} size={32} className="mb-2" />
         <p className="text-sm font-medium">
-          Haz clic o arrastra archivos aqui­
+          Haz clic o arrastra archivos aquí
         </p>
         <p className="text-xs mt-1 text-default-400">
           Max {maxFiles} archivos. Hasta {maxSizeMB}MB c/u.

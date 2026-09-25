@@ -23,7 +23,7 @@ export const addOrganization = async (data: {
     return {
       error: false,
       data: response.data,
-      message: response.message || "Organización agregada exitosamente",
+      message: response.message || "Organizacón agregada exitosamente",
     };
   });
 };

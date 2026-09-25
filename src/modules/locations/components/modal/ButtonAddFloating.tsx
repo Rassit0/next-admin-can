@@ -5,8 +5,8 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import React, { useState, useRef, useEffect } from "react";
 
-// CONSTANTE DE INGENIERiA: Espacio que queremos dejar al final (en pi­xeles)
-// Ej: 16px es un espacio esti¡ndar de Tailwind (p-4 o m-4)
+// CONSTANTE DE INGENIERiA: Espacio que queremos dejar al final (en píxeles)
+// Ej: 16px es un espacio estándar de Tailwind (p-4 o m-4)
 const FLOATING_MARGIN_BOTTOM = 16;
 
 export const ButtonAddFloating = () => {
@@ -40,7 +40,7 @@ export const ButtonAddFloating = () => {
     const isAtBottom =
       window.innerHeight + latest >= document.body.scrollHeight - 50;
 
-    // 2. Jerarqui­a de Lógica (Prioridad)
+    // 2. Jerarquía de Lógica (Prioridad)
 
     // A. Prioridad 1: Si estamos al fondo -> Visible
     if (isAtBottom) {
@@ -54,7 +54,7 @@ export const ButtonAddFloating = () => {
       return;
     }
 
-    // C. Prioridad 3: Lógica de dirección (Solo si estamos en el medio)
+    // C. Prioridad 3: Lógica de direccón (Solo si estamos en el medio)
     if (direction > 0) {
       setHidden(true); // Bajando -> Ocultar/Mover abajo
     } else {
@@ -73,7 +73,7 @@ export const ButtonAddFloating = () => {
         },
         hidden: {
           y: yOffset, // Movemos la distancia ajustada
-          scale: 0.92, // Pequei±a compresión visual
+          scale: 0.92, // Pequeña compresón visual
           transition: { type: "spring", stiffness: 120, damping: 20 },
         },
       }}
@@ -85,7 +85,7 @@ export const ButtonAddFloating = () => {
       <Button
         isIconOnly
         variant="primary"
-        className="shadow-2xl" // Una sombra mi¡s fuerte ayuda a que parezca flotar mi¡s
+        className="shadow-2xl" // Una sombra más fuerte ayuda a que parezca flotar más
       >
         <HugeiconsIcon icon={Add01Icon} />
       </Button>

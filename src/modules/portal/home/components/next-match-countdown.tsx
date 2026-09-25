@@ -101,7 +101,7 @@ export function NextMatchCountdown({ match }: NextMatchCountdownProps) {
         {/* PANEL CENTRAL COUNTDOWN */}
         <div className="relative z-20 flex shrink-0 flex-col items-center justify-center border-y border-white/10 bg-black/90 p-8 shadow-[0_0_40px_rgba(0,0,0,0.8)] md:border-x md:border-y-0 md:p-10">
           <div className="mb-6 inline-flex items-center rounded-full border border-neon/20 bg-neon/10 px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest text-neon backdrop-blur-md md:text-xs">
-            {isToday ? "Ã°ÂÂÂ¥ Hoy" : "Ã¢Â­Â Próximo Partido"}
+            {isToday ? "🔥 Hoy" : "⭐ Próximo Partido"}
           </div>
 
           <span className="mb-6 text-center text-[10px] font-bold uppercase tracking-widest text-neon/80">
@@ -181,11 +181,11 @@ export function NextMatchCountdown({ match }: NextMatchCountdownProps) {
       {/* FOOTER INFORMATIVO */}
       <div className="flex flex-col items-center justify-center gap-2 border-t border-white/5 bg-black/95 px-6 py-4 text-xs font-bold uppercase tracking-widest text-white/50 md:flex-row md:gap-6">
         <div className="flex items-center gap-2">
-          <span className="text-neon/70">Ã¢ÂÂ </span> {match.discipline}
+          <span className="text-neon/70">■</span> {match.discipline}
         </div>
         <div className="hidden text-white/10 md:block">-</div>
         <div className="flex items-center gap-2">
-          <span className="text-neon/70">Ã¢ÂÂ </span>{" "}
+          <span className="text-neon/70">■</span>{" "}
           {matchDate
             .toLocaleDateString("es-ES", {
               weekday: "short",
@@ -193,7 +193,7 @@ export function NextMatchCountdown({ match }: NextMatchCountdownProps) {
               month: "short",
             })
             .replace(",", "")}{" "}
-          ÃÂ·{" "}
+          ·{" "}
           {matchDate.toLocaleTimeString("es-ES", {
             hour: "2-digit",
             minute: "2-digit",
@@ -203,7 +203,7 @@ export function NextMatchCountdown({ match }: NextMatchCountdownProps) {
           <>
             <div className="hidden text-white/10 md:block">-</div>
             <div className="flex items-center gap-2">
-              <span className="text-neon/70">Ã¢ÂÂ </span> {match.locationName}
+              <span className="text-neon/70">■</span> {match.locationName}
             </div>
           </>
         )}

@@ -241,7 +241,7 @@ export const FormCourseSeason = ({
         newErrors.recurringFee = "Debe ingresar el valor de la cuota mensual";
       }
       if (!registrationFee) {
-        newErrors.registrationFee = "Debe ingresar el valor de la inscripción";
+        newErrors.registrationFee = "Debe ingresar el valor de la inscripcón";
       }
     }
     if (
@@ -261,7 +261,7 @@ export const FormCourseSeason = ({
     if (billingType !== "SINGLE_ONLY") {
       if (!billingFrequency) {
         newErrors.billingFrequency =
-          "Debe ingresar la frecuencia de facturación";
+          "Debe ingresar la frecuencia de facturacón";
       }
     }
     if (status === null) {
@@ -303,7 +303,7 @@ export const FormCourseSeason = ({
     };
 
     if (courseSeason && !isClone) {
-      // Modo edición: omitimos los turnos y capacidades
+      // Modo edicón: omitimos los turnos y capacidades
       const res = await editCourseSeason({
         id: courseSeason.id,
         data: baseData,
@@ -327,12 +327,12 @@ export const FormCourseSeason = ({
         return;
       }
 
-      toast.success("ÃÂ¡Cambios guardados!", {
+      toast.success("¡Cambios guardados!", {
         description: "La temporada se ha actualizado correctamente.",
       });
       router.push(urlRedirect);
     } else {
-      // Modo creación: la Oferta se crea con el primer turno, los demás se agregan como turnos adicionales
+      // Modo creacón: la Oferta se crea con el primer turno, los demás se agregan como turnos adicionales
       const firstShift = shifts[0];
       const res = await addCourseSeason({
         ...baseData,
@@ -412,7 +412,7 @@ export const FormCourseSeason = ({
         });
         router.push(urlRedirect);
       } else {
-        toast.success("ÃÂ¡Oferta Comercial Creada!", {
+        toast.success("¡Oferta Comercial Creada!", {
           description: `Se creó exitosamente la oferta con ${successes} turno(s).`,
         });
         router.push(urlRedirect);
@@ -444,14 +444,14 @@ export const FormCourseSeason = ({
               <Alert.Indicator />
               <Alert.Content>
                 <Alert.Title>
-                  Modo de Edición Restringido (Temporada Activa)
+                  Modo de Edicón Restringido (Temporada Activa)
                 </Alert.Title>
                 <Alert.Description>
                   Esta temporada se encuentra actualmente{" "}
                   <strong>Activa</strong>. Por seguridad e integridad de los
                   registros financieros y de membresí­as, los datos
                   estructurales (Categorí­a, Temporada, Género) y la
-                  configuración base de facturación están{" "}
+                  configuracón base de facturacón están{" "}
                   <strong>bloqueados</strong>. <br />
                   Aún puedes ajustar los <strong>montos de cobro</strong>{" "}
                   (Matrí­cula, Cuotas), cupos y lí­mites de edades, pero estos
@@ -462,7 +462,7 @@ export const FormCourseSeason = ({
             </Alert>
           </div>
         )}
-        {/* <!-- Section 1: Información Básica & Capacidad --> */}
+        {/* <!-- Section 1: Informacón Básica & Capacidad --> */}
         <div className="lg:col-span-7 space-y-6">
           {/* <!-- Basic Info Card --> */}
           <BasicInfoCard
@@ -517,7 +517,7 @@ export const FormCourseSeason = ({
           />
         </div>
 
-        {/* <!-- Section 3: Configuración de Turnos (Solo en Creación) --> */}
+        {/* <!-- Section 3: Configuracón de Turnos (Solo en Creacón) --> */}
         {!isEditMode && (
           <div className="lg:col-span-12 space-y-4">
             <div className="flex justify-between items-center mb-2">

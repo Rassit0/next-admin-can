@@ -68,7 +68,7 @@ export const ContactDetailsModal = ({
                 </div>
                 <div className="flex flex-col">
                   <span className="text-xs text-default-500 uppercase font-bold">
-                    Teli©fono
+                    Teléfono
                   </span>
                   <span className="font-medium">
                     {contact.contactPerson.phone || "No especificado"}
@@ -100,7 +100,7 @@ export const ContactDetailsModal = ({
                 )}
                 {contact.isBillingContact && (
                   <span className="px-3 py-1 bg-success/10 text-success rounded-full text-xs font-bold">
-                    Facturación
+                    Facturacón
                   </span>
                 )}
               </div>

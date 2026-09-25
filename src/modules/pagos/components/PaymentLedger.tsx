@@ -24,7 +24,7 @@ const formatCurrency = (amount: number, currency: string = "BOB") =>
   }).format(amount);
 
 const formatDate = (date: Date | null | undefined) => {
-  if (!date) return "Ã¢ÂÂ";
+  if (!date) return "—";
   return new Date(date).toLocaleDateString("es-BO", {
     year: "numeric",
     month: "short",
@@ -158,7 +158,7 @@ export const PaymentLedger = ({
                 </Table.Cell>
                 <Table.Cell className="py-3">
                   <code className="text-xs bg-surface px-2 py-1 rounded">
-                    {payment.reference || "Ã¢ÂÂ"}
+                    {payment.reference || "—"}
                   </code>
                 </Table.Cell>
                 <Table.Cell className="py-3">

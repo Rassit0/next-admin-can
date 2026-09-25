@@ -9,7 +9,7 @@ export const hasRequiredPermissions = (
   userPermissions: string[],
   rule?: PermissionRule,
 ): boolean => {
-  // Si no hay regla, es de acceso piºblico
+  // Si no hay regla, es de acceso público
   if (!rule || (!rule.anyOf && !rule.allOf)) {
     return true;
   }
@@ -49,7 +49,7 @@ export const getFirstAllowedChildRoute = (
 ) => {
   const allowed = getAllowedChildRoutes(moduleId, userPermissions, config);
   // Un "default candidate" en este contexto asume que debe poder mostrarse
-  // (es decir, no es una ruta dini¡mica u oculta, a menos que el flujo lo permita).
+  // (es decir, no es una ruta dinámica u oculta, a menos que el flujo lo permita).
   // Por requerimiento, evitamos auto-navegar a rutas como [personId].
   return allowed.find(
     (route) => !route.href.includes("[") && !route.href.includes("]"),

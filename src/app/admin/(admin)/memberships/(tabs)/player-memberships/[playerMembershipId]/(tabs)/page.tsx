@@ -77,7 +77,7 @@ export default async function PlayerMembershipInfoPage({
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">
-                  Teli©fono
+                  Teléfono
                 </p>
                 <p className="font-semibold text-foreground">
                   {membership.player?.person.phone || "No registrado"}
@@ -98,7 +98,7 @@ export default async function PlayerMembershipInfoPage({
         <Card className="p-5 shadow-sm border border-border">
           <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
             <HugeiconsIcon icon={File02Icon} className="text-primary" />
-            Detalles de la Membresi­a
+            Detalles de la Membresía
           </h3>
           <div className="flex flex-col gap-4">
             <div className="grid grid-cols-2 gap-4 items-center">

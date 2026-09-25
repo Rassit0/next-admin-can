@@ -44,7 +44,7 @@ export default async function UsersPage({ searchParams }: Props) {
     <>
       <div className="space-y-8">
         <HeaderPage
-          title="Gestión de Usuarios"
+          title="Gestón de Usuarios"
           description="Administre el acceso al sistema, asigne roles y controle permisos."
           action={<CreateUserButton />}
         />

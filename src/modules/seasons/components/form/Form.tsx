@@ -112,10 +112,10 @@ export const FormSeason = ({
               : messages;
             return `${field}: ${msgList}`;
           })
-          .join("\n"); // Los separamos por saltos de li­nea para el toast
+          .join("\n"); // Los separamos por saltos de línea para el toast
       }
 
-      // 2. Pasamos la descripción formateada al componente de notificaciones
+      // 2. Pasamos la descripcón formateada al componente de notificaciones
       toast.danger(res.message, {
         description: errorDescription,
       });
@@ -257,10 +257,10 @@ export const FormSeason = ({
             name="description"
             isInvalid={!!errors.description || undefined}
           >
-            <Label>Descripción</Label>
+            <Label>Descripcón</Label>
             <TextArea
               variant="secondary"
-              placeholder="Ingrese la descripción de la temporada"
+              placeholder="Ingrese la descripcón de la temporada"
               rows={4}
               value={description || ""}
               onChange={(e) => {

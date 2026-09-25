@@ -50,7 +50,7 @@ export const ListCards = ({ teamSeasons, urlBase }: Props) => {
           <div className="space-y-4 mb-8">
             <div>
               <div className="flex justify-between text-[10px] font-label-sm mb-1 uppercase text-outline">
-                Ocupación del Clan
+                Ocupacón del Clan
               </div>
               <div className="w-full h-2.5 bg-surface rounded-full overflow-hidden relative">
                 <div className="absolute inset-y-0 left-0 shimmer-bar rounded-full w-[80%]"></div>
@@ -104,20 +104,20 @@ export const ListCards = ({ teamSeasons, urlBase }: Props) => {
           <div className="space-y-4 mb-8">
             <div>
               <div className="flex justify-between text-[10px] font-label-sm mb-1 uppercase text-outline">
-                Ocupación del Clan
+                Ocupacón del Clan
               </div>
               <div className="w-full h-2.5 bg-surface rounded-full overflow-hidden relative">
                 <div className="absolute inset-y-0 left-0 bg-accent rounded-full w-full"></div>
               </div>
               <div className="flex justify-between text-[10px] mt-1 font-label-sm text-error font-bold">
                 <span>Capacidad: 25</span>
-                <span>ÃÂ¡MAXIMA CAPACIDAD!</span>
+                <span>¡MAXIMA CAPACIDAD!</span>
               </div>
             </div>
           </div>
           <div className="mt-auto space-y-3">
             <Button className="w-full py-3.5 bg-outline-variant/40 text-on-surface-variant/50 rounded-full font-extrabold text-md cursor-not-allowed border border-outline-variant/20">
-              ÃÂ¡Cupos Llenos!
+              ¡Cupos Llenos!
             </Button>
             <div className="grid grid-cols-2 gap-2">
               <Button variant="secondary" className="w-full">

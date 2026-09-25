@@ -20,7 +20,7 @@ export const CredentialAlertDialog: React.FC<Props> = ({
   email,
   password,
   title = "Credenciales de Usuario",
-  description = "Copia estas credenciales. Por seguridad, la contrasei±a no se volveri¡ a mostrar.",
+  description = "Copia estas credenciales. Por seguridad, la contraseña no se volverá a mostrar.",
 }) => {
   const [copied, setCopied] = useState(false);
 
@@ -57,7 +57,7 @@ export const CredentialAlertDialog: React.FC<Props> = ({
                 {password && (
                   <div className="flex flex-col gap-1 mt-2">
                     <span className="text-xs text-default-400 font-semibold uppercase tracking-wider">
-                      Contrasei±a Temporal
+                      Contraseña Temporal
                     </span>
                     <span className="text-sm font-mono font-medium">
                       {password}

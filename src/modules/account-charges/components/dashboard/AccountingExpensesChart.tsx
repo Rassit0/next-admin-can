@@ -33,10 +33,10 @@ export const AccountingExpensesChart = ({ data }: Props) => {
     <Card className="border-none bg-background/60 dark:bg-default-100/50 w-full h-full shadow-sm">
       <Card.Header className="px-6 pt-6 flex-col items-start gap-1">
         <Card.Title className="text-lg font-semibold flex items-center">
-          Distribución de Egresos
-          <InfoTooltip text="Muestra en qui© categorías se esti¡n gastando los recursos de la academia actualmente." />
+          Distribucón de Egresos
+          <InfoTooltip text="Muestra en qué categorías se están gastando los recursos de la academia actualmente." />
         </Card.Title>
-        <p className="text-sm text-muted-foreground">Gastos por categori­a</p>
+        <p className="text-sm text-muted-foreground">Gastos por categoría</p>
       </Card.Header>
       <div className="px-6 pb-6 pt-0 flex-1">
         <div className="w-full h-75 mt-4">

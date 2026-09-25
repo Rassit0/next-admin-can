@@ -33,13 +33,13 @@ export default async function MembershipsDashboardPage() {
 
   return (
     <div className="flex flex-col gap-8 p-1 animate-fade-in">
-      {/* Alertas Cri­ticas */}
+      {/* Alertas Críticas */}
       <MembershipsAlerts alerts={summary.alerts} />
 
       {/* Tarjetas KPI */}
       <KpiCards data={summary} />
 
-      {/* Gri¡ficos */}
+      {/* Gráficos */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
           <RevenueChart data={summary.revenueSummary} />

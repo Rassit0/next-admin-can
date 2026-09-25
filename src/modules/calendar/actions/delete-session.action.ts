@@ -19,7 +19,7 @@ export const deleteSession = async (
     return {
       error: false,
       data: res.data,
-      message: res.message || "Sesión eliminada exitosamente",
+      message: res.message || "Sesón eliminada exitosamente",
     };
   });
 };

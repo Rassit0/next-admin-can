@@ -23,7 +23,7 @@ export default async function TeamSeasonDetailLayout({
   const membership = membershipRes.data;
 
   const tabsRoutes = [
-    { value: "/", title: "Información General" },
+    { value: "/", title: "Informacón General" },
     { value: "/charges", title: "Cargos" },
     // { value: "/player-memberships", title: "Membresí­as" },
     // { value: "/payment-plans", title: "Planes de Pago" },
@@ -38,7 +38,7 @@ export default async function TeamSeasonDetailLayout({
             ? `${membership.player.person.name} ${membership.player.person.lastName} ${membership.player.person.secondLastName || ""}`
             : "Membresí­a del Atleta"
         }
-        description={`Equipo: ${membership.teamSeason.team.name} ÃÂ· Categorí­a: ${membership.teamSeasonCategories?.category?.name || "N/A"} ÃÂ· Temporada: ${membership.teamSeason.season.name}`}
+        description={`Equipo: ${membership.teamSeason.team.name} · Categorí­a: ${membership.teamSeasonCategories?.category?.name || "N/A"} · Temporada: ${membership.teamSeason.season.name}`}
         breadcrumb={[
           { label: "Membresí­as", href: `/admin/player-memberships` },
           {

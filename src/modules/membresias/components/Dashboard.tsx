@@ -78,10 +78,10 @@ export const Dashboard = ({
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-2xl font-extrabold text-foreground">
-              Gestión de Miembros
+              Gestón de Miembros
             </h2>
             <p className="mt-1 text-sm text-muted">
-              {teamSeason.team?.name} ÃÂ· {teamSeason.season?.name}
+              {teamSeason.team?.name} · {teamSeason.season?.name}
             </p>
           </div>
           <Button
@@ -156,7 +156,7 @@ export const Dashboard = ({
               isPending={refreshing}
               onPress={handleRefresh}
             >
-              Ã¢ÂÂ³
+              ⟳
             </Button>
           </div>
           <p className="text-3xl font-extrabold text-accent">

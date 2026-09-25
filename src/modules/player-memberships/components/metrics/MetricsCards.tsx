@@ -75,7 +75,7 @@ export const MetricsCards = ({
     {
       label: "Membresías activas",
       value: String(activeMembers),
-      hint: "Niºmero de atletas que se encuentran cursando activamente la temporada. No incluye suspendidos.",
+      hint: "Número de atletas que se encuentran cursando activamente la temporada. No incluye suspendidos.",
       icon: CheckmarkBadge01Icon,
       tone: "text-success",
       bg: "bg-success/10",
@@ -83,7 +83,7 @@ export const MetricsCards = ({
     {
       label: "Suspendidas",
       value: String(suspendedMembers),
-      hint: "Atletas cuya membresi­a ha sido suspendida (ej. por retiro temporal o falta de pago).",
+      hint: "Atletas cuya membresía ha sido suspendida (ej. por retiro temporal o falta de pago).",
       icon: PauseIcon,
       tone: "text-warning",
       bg: "bg-warning/10",
@@ -91,15 +91,15 @@ export const MetricsCards = ({
     {
       label: "Pendientes",
       value: String(pendingMembers),
-      hint: "Atletas recii©n inscritos cuya membresi­a esti¡ a la espera del pago inicial para activarse.",
+      hint: "Atletas recén inscritos cuya membresía está a la espera del pago inicial para activarse.",
       icon: PauseIcon,
       tone: "text-muted-foreground",
       bg: "bg-surface-secondary",
     },
     {
-      label: "Inscripción (Bs)",
+      label: "Inscripcón (Bs)",
       value: String(Number(teamSeason.billingConfig?.registrationFee)),
-      hint: "Costo fijo iºnico de matri­cula establecido para ingresar a esta temporada.",
+      hint: "Costo fijo único de matrícula establecido para ingresar a esta temporada.",
       icon: Ticket01Icon,
       tone: "text-primary",
       bg: "bg-primary/10",
@@ -131,7 +131,7 @@ export const MetricsCards = ({
     {
       label: "Total Pendiente",
       value: formatCurrency(globalTotalPending, "Bs"),
-      hint: "Suma de todos los cargos generados en esta temporada que aiºn se encuentran pendientes de cobro.",
+      hint: "Suma de todos los cargos generados en esta temporada que aún se encuentran pendientes de cobro.",
       icon: Coins01Icon,
       tone: "text-warning",
       bg: "bg-warning/10",

@@ -62,9 +62,9 @@ export const MetricsCards = ({
       bg: "bg-warning/10",
     },
     {
-      label: "Inscripción (Bs)",
+      label: "Inscripcón (Bs)",
       value: String(Number(teamSeason.billingConfig?.registrationFee)),
-      hint: "Tarifa iºnica de ingreso",
+      hint: "Tarifa única de ingreso",
       icon: Ticket01Icon,
       tone: "text-primary",
       bg: "bg-primary/10",
@@ -78,7 +78,7 @@ export const MetricsCards = ({
       bg: "bg-secondary/10",
     },
     {
-      label: "Recaudación inicial est.",
+      label: "Recaudacón inicial est.",
       value: formatCurrency(estimatedRevenue, "Bs"),
       hint: "Cargos iniciales activos",
       icon: Coins01Icon,

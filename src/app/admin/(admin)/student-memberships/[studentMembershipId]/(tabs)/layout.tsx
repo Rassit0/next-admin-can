@@ -23,7 +23,7 @@ export default async function StudentSeasonDetailLayout({
   const membership = membershipRes.data;
 
   const tabsRoutes = [
-    { value: "/", title: "Información General" },
+    { value: "/", title: "Informacón General" },
     { value: "/charges", title: "Cargos" },
     { value: "/histories", title: "Actividad" },
     // { value: "/player-memberships", title: "Membresí­as" },
@@ -39,7 +39,7 @@ export default async function StudentSeasonDetailLayout({
             ? `${membership.student.person.name} ${membership.student.person.lastName} ${membership.student.person.secondLastName || ""}`
             : "Membresí­a del Estudiante"
         }
-        description={`Curso: ${membership.courseSeason.course.name} ÃÂ· Temporada: ${membership.courseSeason.season.name}`}
+        description={`Curso: ${membership.courseSeason.course.name} · Temporada: ${membership.courseSeason.season.name}`}
         breadcrumb={[
           { label: "Membresí­as", href: `/admin/student-memberships` },
           {

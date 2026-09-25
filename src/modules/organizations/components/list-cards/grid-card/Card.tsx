@@ -21,7 +21,7 @@ export const CardOrganization = ({ organization }: Props) => {
       <Card.Header className="relative h-48 overflow-hidden rounded-t-[inherit]">
         <img
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          data-alt="A cinematic, high-action photograph of young athletes playing football on a lush green training pitch during a golden hour sunset. The lighting is warm and dramatic, highlighting the athletic movement and intensity. The visual style is professional sports photography with a clean, light-mode atmosphere, emphasizing the white and celeste colors of Club Atli©tico Nacional. The scene feels aspirational and disciplined."
+          data-alt="A cinematic, high-action photograph of young athletes playing football on a lush green training pitch during a golden hour sunset. The lighting is warm and dramatic, highlighting the athletic movement and intensity. The visual style is professional sports photography with a clean, light-mode atmosphere, emphasizing the white and celeste colors of Club Atlético Nacional. The scene feels aspirational and disciplined."
           src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEx1Y4941mKnNLam07K6qd3TVbSPp0cnWCnNmHLEsAfSWeceBsgKtPVkc3YvsW4OKa6wdLb_3tU1NN00FhC8Doyy-e3xBUh0r4Kt07p8IybZFlkQKeTXustrXR2hWCP-zCYJLU2SUGV4MsNdKtDrdT6NSuwUQzq_7nQ5ABaTev4pE2fmqfIvIIajvLN9-cNMsqYhmZ4EQPkwpNY1CMayLJ2YHcBnVwkblWG1fX8wYRQaJVW7TmiYBepIWVk6ZgVvG6O6Xcc5KKYeei"
         />
         {/* <Image

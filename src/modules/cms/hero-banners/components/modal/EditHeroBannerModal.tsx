@@ -34,7 +34,7 @@ export const EditHeroBannerModal = ({
               <Modal.Heading>Editar Hero Banner</Modal.Heading>
             </div>
             <p className="mt-1.5 text-sm leading-5 text-muted">
-              Actualice la información del Hero Banner seleccionado.
+              Actualice la informacón del Hero Banner seleccionado.
             </p>
           </Modal.Header>
           <Modal.Body className="p-6">

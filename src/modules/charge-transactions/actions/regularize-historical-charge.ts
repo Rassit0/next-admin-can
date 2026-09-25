@@ -37,7 +37,7 @@ export const regularizeHistoricalCharge = async (
       error: false,
       data: response.data,
       message:
-        response.message || "Regularización histórica creada exitosamente",
+        response.message || "Regularizacón histórica creada exitosamente",
     };
   });
 };

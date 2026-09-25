@@ -59,8 +59,8 @@ export default async function AdminHomeDashboard() {
     <div className="space-y-8">
       <HeaderPage
         title="Dashboard de Inicio"
-        description="Gestión centralizada del contenido de la pi¡gina Home."
-        breadcrumb={[{ label: "Web Piºblica" }, { label: "Inicio" }]}
+        description="Gestón centralizada del contenido de la página Home."
+        breadcrumb={[{ label: "Web Pública" }, { label: "Inicio" }]}
       />
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -142,7 +142,7 @@ export default async function AdminHomeDashboard() {
             </div>
             <div>
               <h3 className="text-lg font-bold">Promo 1</h3>
-              <p className="text-sm text-default-500">Promoción posición 1</p>
+              <p className="text-sm text-default-500">Promocón posicón 1</p>
             </div>
           </div>
           <div className="py-2">
@@ -151,7 +151,7 @@ export default async function AdminHomeDashboard() {
               <span className="font-semibold">
                 {activePromo1 > 0
                   ? "Configurado (Activo)"
-                  : "Vaci­o o Inactivo"}
+                  : "Vacío o Inactivo"}
               </span>
             </p>
           </div>
@@ -208,7 +208,7 @@ export default async function AdminHomeDashboard() {
           <div className="py-2 opacity-80">
             <p className="text-sm">
               <span className="font-bold text-lg">{totalMatches}</span> partido
-              {totalMatches !== 1 && "s"} piºblico{totalMatches !== 1 && "s"}
+              {totalMatches !== 1 && "s"} público{totalMatches !== 1 && "s"}
             </p>
             <p className="text-xs text-default-500 mt-1 uppercase tracking-wider font-semibold">
               Solo lectura
@@ -235,7 +235,7 @@ export default async function AdminHomeDashboard() {
             </div>
             <div>
               <h3 className="text-lg font-bold">Promo 2</h3>
-              <p className="text-sm text-default-500">Promoción posición 2</p>
+              <p className="text-sm text-default-500">Promocón posicón 2</p>
             </div>
           </div>
           <div className="py-2">
@@ -244,7 +244,7 @@ export default async function AdminHomeDashboard() {
               <span className="font-semibold">
                 {activePromo2 > 0
                   ? "Configurado (Activo)"
-                  : "Vaci­o o Inactivo"}
+                  : "Vacío o Inactivo"}
               </span>
             </p>
           </div>
@@ -272,7 +272,7 @@ export default async function AdminHomeDashboard() {
           </div>
           <div className="py-2 opacity-70">
             <p className="text-xs text-default-500 uppercase tracking-wider font-semibold">
-              Contenido esti¡tico
+              Contenido estático
             </p>
           </div>
           <div className="w-full pt-2"></div>
@@ -289,12 +289,12 @@ export default async function AdminHomeDashboard() {
             </div>
             <div>
               <h3 className="text-lg font-bold">Footer</h3>
-              <p className="text-sm text-default-500">Pie de pi¡gina global</p>
+              <p className="text-sm text-default-500">Pie de página global</p>
             </div>
           </div>
           <div className="py-2 opacity-70">
             <p className="text-xs text-default-500 uppercase tracking-wider font-semibold">
-              Contenido esti¡tico
+              Contenido estático
             </p>
           </div>
           <div className="w-full pt-2"></div>

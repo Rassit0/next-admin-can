@@ -229,7 +229,7 @@ export const AccountChargeDrawer = ({
         }
       }
     } catch (error) {
-      toast.error("Ocurrió un error inesperado");
+      toast.error("Ocurró un error inesperado");
     } finally {
       setIsLoading(false);
     }
@@ -248,10 +248,10 @@ export const AccountChargeDrawer = ({
           <Drawer.Body className="gap-6 pt-6 pb-6">
             <TextField className="w-full" isRequired>
               <Label className="text-sm font-semibold">
-                Ti­tulo / Concepto
+                Título / Concepto
               </Label>
               <Input
-                placeholder={`Ej. ${isReceivable ? "Cobro por alquiler" : "Pago de servicio eli©ctrico"}`}
+                placeholder={`Ej. ${isReceivable ? "Cobro por alquiler" : "Pago de servicio eléctrico"}`}
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 variant="secondary"
@@ -278,7 +278,7 @@ export const AccountChargeDrawer = ({
                     Liquidar Inmediatamente
                   </span>
                   <span className="text-xs text-default-500">
-                    Registrar el pago automi¡ticamente en caja
+                    Registrar el pago automáticamente en caja
                   </span>
                 </div>
                 <Switch
@@ -297,7 +297,7 @@ export const AccountChargeDrawer = ({
                 onSelectionChange={(key) => setPaymentMethod(String(key))}
                 isRequired
               >
-                <Label className="text-sm font-semibold">Mi©todo de Pago</Label>
+                <Label className="text-sm font-semibold">Método de Pago</Label>
                 <ComboBox.InputGroup>
                   <Input variant="secondary" />
                   <ComboBox.Trigger />
@@ -345,11 +345,11 @@ export const AccountChargeDrawer = ({
               }}
               isRequired
             >
-              <Label className="text-sm font-semibold">Categori­a</Label>
+              <Label className="text-sm font-semibold">Categoría</Label>
               <ComboBox.InputGroup>
                 <Input
                   variant="secondary"
-                  placeholder="Seleccione una categori­a"
+                  placeholder="Seleccione una categoría"
                 />
                 <ComboBox.Trigger />
               </ComboBox.InputGroup>
@@ -476,7 +476,7 @@ export const AccountChargeDrawer = ({
             {!defaultPerson && (
               <TextField className="w-full">
                 <Label className="text-sm font-semibold">
-                  Niºmero de Referencia
+                  Número de Referencia
                 </Label>
                 <Input
                   placeholder="Ej. Factura #12345"
@@ -488,7 +488,7 @@ export const AccountChargeDrawer = ({
             )}
 
             <TextField className="w-full">
-              <Label className="text-sm font-semibold">Descripción</Label>
+              <Label className="text-sm font-semibold">Descripcón</Label>
               <TextArea
                 placeholder="Detalles adicionales sobre este registro"
                 value={description}

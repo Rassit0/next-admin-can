@@ -46,7 +46,7 @@ export const AccountingBalancesCard = ({ accounts }: Props) => {
 
   const activeAccounts = accounts?.filter((acc) => acc.isActive) || [];
 
-  // Agrupamos por tipo (Cajas vs Bancos/Billeteras) para mejor visualización
+  // Agrupamos por tipo (Cajas vs Bancos/Billeteras) para mejor visualizacón
   const cashAccounts = activeAccounts.filter((acc) => acc.type === "CASH");
   const bankAccounts = activeAccounts.filter(
     (acc) => acc.type === "BANK" || acc.type === "DIGITAL_WALLET",

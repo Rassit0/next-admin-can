@@ -117,11 +117,11 @@ export const ScheduleForm = ({
       if (result.error) {
         toast.error(result.message || "Error al programar horario");
       } else {
-        toast.success(result.message || "Horario programado con i©xito");
+        toast.success(result.message || "Horario programado con éxito");
         onSubmited?.();
       }
     } catch (error) {
-      toast.error("Ocurrió un error de red");
+      toast.error("Ocurró un error de red");
     } finally {
       setIsSubmitting(false);
     }
@@ -131,11 +131,11 @@ export const ScheduleForm = ({
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       <Select
         name="locationId"
-        placeholder="Selecciona donde seri¡ la sesión"
+        placeholder="Selecciona donde será la sesón"
         selectedKey={formData.locationId || undefined}
         onSelectionChange={(key) => handleChange("locationId", key as string)}
       >
-        <Label>Ubicación</Label>
+        <Label>Ubicacón</Label>
         <Select.Trigger>
           <Select.Value />
           <Select.Indicator />
@@ -163,7 +163,7 @@ export const ScheduleForm = ({
             setErrors((prev) => ({ ...prev, startDate: "" }));
           }}
         >
-          <Label>Desde (Primera sesión)</Label>
+          <Label>Desde (Primera sesón)</Label>
           <DateField.Group>
             <DateField.Input>
               {(segment) => <DateField.Segment segment={segment} />}
@@ -210,7 +210,7 @@ export const ScheduleForm = ({
             setErrors((prev) => ({ ...prev, untilDate: "" }));
           }}
         >
-          <Label>Hasta (Li­mite de recurrencia)</Label>
+          <Label>Hasta (Límite de recurrencia)</Label>
           <DateField.Group>
             <DateField.Input>
               {(segment) => <DateField.Segment segment={segment} />}
@@ -279,7 +279,7 @@ export const ScheduleForm = ({
           className="w-full"
           isInvalid={!!errors.durationMin}
         >
-          <Label>Duración (Minutos)</Label>
+          <Label>Duracón (Minutos)</Label>
           <Input
             type="number"
             variant="secondary"
@@ -305,10 +305,10 @@ export const ScheduleForm = ({
             {[
               { id: "MO", label: "Lunes" },
               { id: "TU", label: "Martes" },
-              { id: "WE", label: "Mii©rcoles" },
+              { id: "WE", label: "Mércoles" },
               { id: "TH", label: "Jueves" },
               { id: "FR", label: "Viernes" },
-              { id: "SA", label: "Si¡bado" },
+              { id: "SA", label: "Sábado" },
               { id: "SU", label: "Domingo" },
             ].map((day) => (
               <Checkbox key={day.id} value={day.id}>

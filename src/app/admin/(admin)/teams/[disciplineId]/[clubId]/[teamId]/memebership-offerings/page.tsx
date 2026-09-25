@@ -94,8 +94,8 @@ export default async function BidManagementPage({
   return (
     <>
       <HeaderPage
-        title={`Gestión de Temporadas - ${teamResponse.data.name}`}
-        description="Gestión integral de las temporadas del equipo."
+        title={`Gestón de Temporadas - ${teamResponse.data.name}`}
+        description="Gestón integral de las temporadas del equipo."
         action={
           <ButtonAdd
             href={`/admin/teams/${disciplineId}/${clubId}/${teamId}/team-seasons/add`}

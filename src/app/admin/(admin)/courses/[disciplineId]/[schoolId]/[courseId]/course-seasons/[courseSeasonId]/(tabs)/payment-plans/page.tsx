@@ -39,7 +39,7 @@ export default async function PaymentPlansPage({
     getCourseSeasonById({ id: courseSeasonId }),
   ]);
 
-  // 1. Manejo de error especi­fico (Ej: 401 no autorizado)
+  // 1. Manejo de error específico (Ej: 401 no autorizado)
   if (paymentPlansResponse.error && paymentPlansResponse.statusCode === 401) {
     redirect("/login");
   }
@@ -59,7 +59,7 @@ export default async function PaymentPlansPage({
     <div className="mt-2 flex flex-col gap-6">
       <HeaderPage
         title="Planes de pago"
-        description="Aqui­ puedes ver todos los planes de pago de la temporada"
+        description="Aquí puedes ver todos los planes de pago de la temporada"
         action={<AddModal courseSeasonId={courseSeasonId} />}
         showButtonBack={false}
       />

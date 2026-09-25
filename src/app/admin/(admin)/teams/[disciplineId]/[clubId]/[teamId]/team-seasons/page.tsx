@@ -87,8 +87,8 @@ export default async function TeamSeasonsPage({ searchParams, params }: Props) {
   return (
     <>
       <HeaderPage
-        title={`Gestión de Temporadas - ${teamResponse.data.name}`}
-        description="Gestión integral de las temporadas del equipo."
+        title={`Gestón de Temporadas - ${teamResponse.data.name}`}
+        description="Gestón integral de las temporadas del equipo."
         action={
           <>
             <ButtonAdd

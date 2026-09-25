@@ -120,37 +120,37 @@ export const FormTeamOffering = ({ team, teamSeason, urlRedirect }: Props) => {
       newErrors.seasonId = "Debe ingresar una fecha de fin";
     }
     if (maxMembers === null) {
-      newErrors.maxMembers = "Debe ingresar el niºmero mi¡ximo de miembros";
+      newErrors.maxMembers = "Debe ingresar el número máximo de miembros";
     }
     if (minMembers === null) {
-      newErrors.minMembers = "Debe ingresar el niºmero mi­nimo de miembros";
+      newErrors.minMembers = "Debe ingresar el número mínimo de miembros";
     }
     if (minYear === null) {
-      newErrors.minYear = "Debe ingresar el ai±o mi­nimo";
+      newErrors.minYear = "Debe ingresar el año mínimo";
     }
     if (maxYear === null) {
-      newErrors.maxYear = "Debe ingresar el ai±o mi¡ximo";
+      newErrors.maxYear = "Debe ingresar el año máximo";
     }
     if (recurringFee === null) {
       newErrors.recurringFee = "Debe ingresar el valor de la cuota mensual";
     }
     if (registrationFee === null) {
-      newErrors.registrationFee = "Debe ingresar el valor de la inscripción";
+      newErrors.registrationFee = "Debe ingresar el valor de la inscripcón";
     }
     if (fullPaymentDiscountPercent === null) {
       newErrors.fullPaymentDiscountPercent =
         "Debe ingresar el porcentaje de descuento por pago completo";
     }
     if (lateFeePerDay === null) {
-      newErrors.lateFeePerDay = "Debe ingresar el valor de la multa por di­a";
+      newErrors.lateFeePerDay = "Debe ingresar el valor de la multa por día";
     }
     console.log({ graceDays });
     if (graceDays === null) {
-      newErrors.graceDays = "Debe ingresar el niºmero de días de gracia";
+      newErrors.graceDays = "Debe ingresar el número de días de gracia";
     }
     if (suspensionAfterMonthsDue === null) {
       newErrors.suspensionAfterMonthsDue =
-        "Debe ingresar el niºmero de meses de mora para la suspensión";
+        "Debe ingresar el número de meses de mora para la suspensón";
     }
     if (status === null) {
       newErrors.status = "Debe ingresar el estado";
@@ -198,10 +198,10 @@ export const FormTeamOffering = ({ team, teamSeason, urlRedirect }: Props) => {
               : messages;
             return `${field}: ${msgList}`;
           })
-          .join("\n"); // Los separamos por saltos de li­nea para el toast
+          .join("\n"); // Los separamos por saltos de línea para el toast
       }
 
-      // 2. Pasamos la descripción formateada al componente de notificaciones
+      // 2. Pasamos la descripcón formateada al componente de notificaciones
       toast.danger(res.message, {
         description: errorDescription,
       });
@@ -223,7 +223,7 @@ export const FormTeamOffering = ({ team, teamSeason, urlRedirect }: Props) => {
         onSubmit={handleSubmit}
         className="grid grid-cols-1 lg:grid-cols-12 gap-6"
       >
-        {/* <!-- Section 1: Información Bi¡sica & Capacidad --> */}
+        {/* <!-- Section 1: Informacón Básica & Capacidad --> */}
         <div className="lg:col-span-7 space-y-6">
           {/* <!-- Basic Info Card --> */}
           <BasicInfoCard
@@ -263,7 +263,7 @@ export const FormTeamOffering = ({ team, teamSeason, urlRedirect }: Props) => {
             handleRemoveError={handleRemoveError}
           />
         </div>
-        {/* <!-- Section 3: Poli­ticas de Mora (Full Width Bottom) --> */}
+        {/* <!-- Section 3: Políticas de Mora (Full Width Bottom) --> */}
         <div className="lg:col-span-12">
           <DelayPoliciesCard
             lateFeePerDay={lateFeePerDay}

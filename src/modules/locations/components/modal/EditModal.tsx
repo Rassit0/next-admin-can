@@ -37,7 +37,7 @@ export const EditModal = ({
           onPress={() => state.open()}
         >
           <HugeiconsIcon icon={Edit03Icon} />
-          {!isIcon && "Editar Instalación"}
+          {!isIcon && "Editar Instalacón"}
         </Button>
       )}
       <Modal.Backdrop isOpen={state.isOpen} onOpenChange={state.setOpen}>

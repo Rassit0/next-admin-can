@@ -44,8 +44,8 @@ export interface HttpAdapter {
 }
 
 const ERROR_MESSAGES: Readonly<Record<number, string>> = {
-  400: "Petición incorrecta",
-  401: "Token invi¡lido o expirado",
+  400: "Peticón incorrecta",
+  401: "Token inválido o expirado",
   403: "Acceso denegado",
   404: "Recurso no encontrado",
   500: "Error interno del servidor",
@@ -69,9 +69,9 @@ export class CANApiAdapter implements HttpAdapter {
   }
 
   /**
-   * Mi©todo centralizador: Contiene TODA la lógica de comunicación HTTP.
+   * Método centralizador: Contiene TODA la lógica de comunicacón HTTP.
    * Construye la URL, query params, timeout, AbortController, token,
-   * headers, body, cache, ejecuta el fetch y maneja errores de conexión.
+   * headers, body, cache, ejecuta el fetch y maneja errores de conexón.
    * Retorna el Response crudo sin procesarlo.
    */
   private async requestRaw(
@@ -83,7 +83,7 @@ export class CANApiAdapter implements HttpAdapter {
     if (!this.baseUrl) {
       throw new ApiError(
         500,
-        "El servicio no esti¡ disponible en este momento.",
+        "El servicio no está disponible en este momento.",
       );
     }
 
@@ -145,13 +145,13 @@ export class CANApiAdapter implements HttpAdapter {
       if ((error as Error).name === "AbortError") {
         throw new ApiError(
           408,
-          "La petición ha tardado demasiado tiempo (Timeout).",
+          "La peticón ha tardado demasiado tiempo (Timeout).",
         );
       }
 
       throw new ApiError(
         503,
-        "No se pudo establecer conexión con el servidor.",
+        "No se pudo establecer conexón con el servidor.",
         { originalError: error instanceof Error ? error.message : error },
       );
     } finally {
@@ -160,7 +160,7 @@ export class CANApiAdapter implements HttpAdapter {
   }
 
   /**
-   * Ejecuta la petición HTTP y procesa la respuesta como JSON.
+   * Ejecuta la peticón HTTP y procesa la respuesta como JSON.
    */
   private async request<T>(
     endpoint: string,
@@ -174,7 +174,7 @@ export class CANApiAdapter implements HttpAdapter {
 
   /**
    * Procesa la respuesta HTTP:
-   * - 204: retorna objeto vaci­o
+   * - 204: retorna objeto vacío
    * - OK + JSON: parsea y retorna
    * - OK + no-JSON: lanza ApiError (respuesta inesperada)
    * - Error: lanza ApiError con el mensaje del servidor
@@ -214,15 +214,15 @@ export class CANApiAdapter implements HttpAdapter {
     throw new ApiError(res.status, message, errorData.errors || errorData);
   }
 
-  // --- Mi©todos piºblicos ---
+  // --- Métodos públicos ---
 
   get<T>(endpoint: string, options?: HttpRequestOptions): Promise<T> {
     return this.request<T>(endpoint, "GET", undefined, options);
   }
 
   /**
-   * Descarga contenido binario (PDFs, imi¡genes, etc.).
-   * Reutiliza requestRaw() para la comunicación y handleResponse() para errores.
+   * Descarga contenido binario (PDFs, imágenes, etc.).
+   * Reutiliza requestRaw() para la comunicacón y handleResponse() para errores.
    */
   async getBlob(endpoint: string, options?: HttpRequestOptions): Promise<Blob> {
     const response = await this.requestRaw(endpoint, "GET", undefined, options);

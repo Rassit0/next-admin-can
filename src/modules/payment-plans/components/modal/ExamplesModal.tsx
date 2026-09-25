@@ -15,7 +15,7 @@ export const PAYMENT_PLAN_EXAMPLES: ExampleProps[] = [
   {
     name: "Plan Regular (Sin Descuentos)",
     description:
-      "El atleta paga ciclo a ciclo de forma normal sin ningiºn tipo de descuento ni cuotas adelantadas.",
+      "El atleta paga ciclo a ciclo de forma normal sin ningún tipo de descuento ni cuotas adelantadas.",
     details: [
       { label: "Agrupar Cuotas", value: "1" },
       { label: "Descuentos", value: "Ninguno" },
@@ -55,7 +55,7 @@ export const PAYMENT_PLAN_EXAMPLES: ExampleProps[] = [
   {
     name: 'Promo: "Paga 3 meses con 10% de descuento"',
     description:
-      "El atleta adelanta 3 meses (trimestre) recibiendo un 10% de descuento sobre ese total. Luego pagari¡ normal.",
+      "El atleta adelanta 3 meses (trimestre) recibiendo un 10% de descuento sobre ese total. Luego pagará normal.",
     details: [
       { label: "Agrupar Cuotas", value: "3" },
       { label: "Ciclos con descuento", value: "3" },
@@ -75,7 +75,7 @@ export const PAYMENT_PLAN_EXAMPLES: ExampleProps[] = [
   {
     name: "Beca Completa (100% Gratis Mensual)",
     description:
-      "El atleta no pagari¡ nunca la mensualidad, pero el sistema registrari¡ los ciclos a $0.",
+      "El atleta no pagará nunca la mensualidad, pero el sistema registrará los ciclos a $0.",
     details: [{ label: "Descuento Cuota Recurrente", value: "100%" }],
     planData: {
       name: "Beca Completa",
@@ -90,7 +90,7 @@ export const PAYMENT_PLAN_EXAMPLES: ExampleProps[] = [
   {
     name: "Pago Anual / Temporada Completa",
     description:
-      "El atleta paga todo el ai±o/temporada en su primer di­a con un descuento por pronto pago.",
+      "El atleta paga todo el año/temporada en su primer día con un descuento por pronto pago.",
     details: [
       { label: "Obligar Pago inico", value: "Activo" },
       { label: "Descuento Tarifa de Temporada", value: "15%" },

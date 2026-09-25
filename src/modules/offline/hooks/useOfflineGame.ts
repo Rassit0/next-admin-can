@@ -20,7 +20,7 @@ export const useOfflineGame = () => {
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
 
-  // Fi­sicas usando refs para evitar re-renders
+  // Físicas usando refs para evitar re-renders
   const playerY = useRef(GROUND_Y);
   const playerVelocity = useRef(0);
   const obstacles = useRef<Obstacle[]>([]);
@@ -54,7 +54,7 @@ export const useOfflineGame = () => {
       setScore(0);
       return;
     }
-    // Salta solo si esti¡ en el suelo (o muy cerca)
+    // Salta solo si está en el suelo (o muy cerca)
     if (playerY.current >= GROUND_Y - 1) {
       playerVelocity.current = JUMP_STRENGTH;
     }
@@ -75,12 +75,12 @@ export const useOfflineGame = () => {
 
     const currentSpeed = INITIAL_OBSTACLE_SPEED * speedMultiplier.current;
 
-    // Generar obsti¡culos (Conos deportivos)
+    // Generar obstáculos (Conos deportivos)
     if (
       obstacles.current.length === 0 ||
       obstacles.current[obstacles.current.length - 1].x < 220
     ) {
-      // Aleatoriedad ligeramente ajustada segiºn la velocidad para que no se separen demasiado
+      // Aleatoriedad ligeramente ajustada según la velocidad para que no se separen demasiado
       const spawnChance = Math.min(0.02 * speedMultiplier.current, 0.05);
       if (Math.random() < spawnChance) {
         obstacleIdCounter.current += 1;
@@ -113,7 +113,7 @@ export const useOfflineGame = () => {
         height: obs.height,
       };
 
-      // Detección AABB
+      // Deteccón AABB
       if (
         playerRect.x < obsRect.x + obsRect.width &&
         playerRect.x + playerRect.width > obsRect.x &&
@@ -123,12 +123,12 @@ export const useOfflineGame = () => {
         collision = true;
       }
 
-      // Puntuación
+      // Puntuacón
       if (!obs.passed && obs.x + obs.width < playerRect.x) {
         obs.passed = true;
         scoreRef.current += 10;
 
-        // Aumentar dificultad gradualmente con cada obsti¡culo superado
+        // Aumentar dificultad gradualmente con cada obstáculo superado
         speedMultiplier.current += 0.03;
       }
     });
@@ -145,7 +145,7 @@ export const useOfflineGame = () => {
         );
       }
     } else {
-      // Limpiar obsti¡culos que ya pasaron
+      // Limpiar obstáculos que ya pasaron
       obstacles.current = obstacles.current.filter((obs) => obs.x > -50);
 
       // Actualizar estado react

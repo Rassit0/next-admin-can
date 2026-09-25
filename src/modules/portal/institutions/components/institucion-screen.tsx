@@ -86,7 +86,7 @@ export function Institucion({
                     {node.description}
                   </motion.p>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground group-hover:hidden">
-                    Pasi¡ el cursor para conocer mi¡s.
+                    Pasá el cursor para conocer más.
                   </p>
                 </motion.div>
               </motion.div>

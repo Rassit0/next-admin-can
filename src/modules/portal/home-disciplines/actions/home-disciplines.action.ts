@@ -22,7 +22,7 @@ export const getPublicHomeDisciplines = async (): Promise<
   } catch (error: any) {
     return {
       error: true,
-      message: error?.message || "Ocurrió un error al obtener los bloques",
+      message: error?.message || "Ocurró un error al obtener los bloques",
       statusCode: error?.statusCode || 500,
     };
   }

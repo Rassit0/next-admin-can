@@ -59,7 +59,7 @@ export const InvoicePreview = ({
               Cargos Iniciales
             </p>
             <p className="text-[11px] text-muted">
-              Vista previa de facturación
+              Vista previa de facturacón
             </p>
           </div>
         </div>
@@ -127,7 +127,7 @@ export const InvoicePreview = ({
                     <p className="text-sm font-semibold text-foreground">
                       {line.type === "REGISTRATION" ||
                       line.type === "REGISTRATION_FEE"
-                        ? "Matri­cula de inscripción"
+                        ? "Matrícula de inscripcón"
                         : line.type === "RECURRING_FEE"
                           ? "Cuota Recurrente"
                           : line.type === "SEASON_FEE"

@@ -24,7 +24,7 @@ export const CardCourse = ({ course }: Props) => {
     <Card className="p-0 overflow-hidden flex flex-col group transition-all hover:shadow-xl hover:-translate-y-1">
       <Card.Header className="h-48 relative overflow-hidden">
         <img
-          alt="Ti¡ctica y Estrategia"
+          alt="Táctica y Estrategia"
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           data-alt="A focused group of teenage athletes listening to a coach in a modern indoor sports training facility. The lighting is soft and high-key, highlighting the clean white and blue uniforms. The atmosphere is professional and educational, fitting for an elite sports academy management dashboard."
           src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxha2sywVRQGWdlNCHe7loLa_lIpmtfaEw8ecwn_BzYHKm1bPL9ELGyWKzGRPy_9kQbz46svRCkiUAw9wy201RcAyyOXUe76LYfZ0Uqye6jAO5XIdSdyVQUrXo5bfAxP5PCWMC15bsLSjbOLIbluqR9HI5qh7-DBpxv-dcd5EV_QXfr_ZIZbBcPsA_gGuo45zdpL-iDR5I9dxV-wUiHYb34EUDxRuoWFj2GJV8yavZA1EjRcp4frh2OcILGWf_sxd2GQHZkxOI0CAS"

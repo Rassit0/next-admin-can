@@ -107,7 +107,7 @@ export const UserAccountDropdown = ({ user, person }: Props) => {
                   onPress={() => handleAction("logout")}
                 >
                   <Label className="cursor-pointer font-medium text-sm text-danger">
-                    Cerrar sesión
+                    Cerrar sesón
                   </Label>
                   <HugeiconsIcon
                     icon={Logout01Icon}

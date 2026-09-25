@@ -18,7 +18,7 @@ export const updateInstitutionHistorySettingsAction = async (
     return {
       error: false,
       data: res,
-      message: "Configuración de Historia actualizada correctamente",
+      message: "Configuracón de Historia actualizada correctamente",
     };
   });
 };

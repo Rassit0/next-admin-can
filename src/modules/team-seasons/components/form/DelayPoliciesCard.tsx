@@ -63,10 +63,10 @@ export const DelayPoliciesCard = ({
           </div>
           <div>
             <h3 className="font-headline font-bold text-lg text-on-surface">
-              Poli­ticas de Mora y Suspensión
+              Políticas de Mora y Suspensón
             </h3>
             <p className="text-xs text-on-surface-variant font-medium">
-              Configura los pari¡metros de recargos y suspensión de membresi­a.
+              Configura los parámetros de recargos y suspensón de membresía.
             </p>
           </div>
         </div>
@@ -78,12 +78,11 @@ export const DelayPoliciesCard = ({
             <Alert.Content>
               <Alert.Title>Motor de Recargos</Alert.Title>
               <Alert.Description>
-                Si habilitas esta opción, el sistema penalizari¡
-                automi¡ticamente a los atletas que no paguen a tiempo una vez
-                transcurridos los Días de Gracia permitidos, sumando el costo de
-                Mora por cada di­a de retraso a su factura. Adicionalmente,
-                puede suspender automi¡ticamente membresías que excedan el
-                li­mite de deudas.
+                Si habilitas esta opcón, el sistema penalizará automáticamente
+                a los atletas que no paguen a tiempo una vez transcurridos los
+                Días de Gracia permitidos, sumando el costo de Mora por cada
+                día de retraso a su factura. Adicionalmente, puede suspender
+                automáticamente membresías que excedan el límite de deudas.
               </Alert.Description>
             </Alert.Content>
           </Alert>
@@ -121,7 +120,7 @@ export const DelayPoliciesCard = ({
               >
                 <Label className="flex items-center gap-2 text-sm font-label font-bold">
                   <HugeiconsIcon icon={UnavailableIcon} />
-                  Ciclos de Mora para Suspensión (
+                  Ciclos de Mora para Suspensón (
                   {billingFrequency === "WEEKLY"
                     ? "Semanas"
                     : billingFrequency === "BIWEEKLY"
@@ -156,7 +155,7 @@ export const DelayPoliciesCard = ({
                     calendario completos
                   </b>{" "}
                   de atraso permitidos antes de suspender al atleta. (Ej. 2
-                  significa que se suspenderi¡ si debe mi¡s de 2{" "}
+                  significa que se suspenderá si debe más de 2{" "}
                   {billingFrequency === "WEEKLY"
                     ? "semanas"
                     : billingFrequency === "BIWEEKLY"
@@ -178,7 +177,7 @@ export const DelayPoliciesCard = ({
                 >
                   <Label className="flex items-center gap-2 text-sm font-label font-bold">
                     <HugeiconsIcon icon={MoneyExchange01Icon} />
-                    Recargo por di­a
+                    Recargo por día
                   </Label>
                   <InputGroup>
                     <InputGroup.Prefix>$</InputGroup.Prefix>

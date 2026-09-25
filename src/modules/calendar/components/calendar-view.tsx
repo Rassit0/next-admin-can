@@ -92,7 +92,7 @@ export const CalendarView = () => {
             },
           },
           createSession: {
-            text: "Crear Sesión",
+            text: "Crear Sesón",
             click: function () {
               sessionCreateModalState.setOpen(true);
             },
