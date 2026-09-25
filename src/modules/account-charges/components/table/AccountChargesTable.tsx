@@ -57,7 +57,7 @@ export const AccountChargesTable = ({
 
             <Table.Column allowsSorting id="category">
               <SortableColumnHeader id="category">
-                CategoriÂ­a
+                Categorí­a
               </SortableColumnHeader>
             </Table.Column>
 
@@ -100,8 +100,8 @@ export const AccountChargesTable = ({
                     No se encontraron registros
                   </span>
                   <span className="text-sm text-default-400">
-                    Intenta con otros tiÂ©rminos de biÂºsqueda o registra una
-                    nueva cuenta.
+                    Intenta con otros términos de búsqueda o registra una nueva
+                    cuenta.
                   </span>
                 </div>
               </div>

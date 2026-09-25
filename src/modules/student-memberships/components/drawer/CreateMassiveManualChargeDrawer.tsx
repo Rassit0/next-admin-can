@@ -157,7 +157,7 @@ export const CreateMassiveManualChargeDrawer = ({
                   defaultValue={today(getLocalTimeZone())}
                 >
                   <Label className="text-sm font-semibold">
-                    Fecha LiÂ­mite de Pago (Vencimiento)
+                    Fecha Lí­mite de Pago (Vencimiento)
                   </Label>
                   <DateField.Group variant="secondary">
                     <DateField.Input>
@@ -170,7 +170,7 @@ export const CreateMassiveManualChargeDrawer = ({
                     </DateField.Suffix>
                   </DateField.Group>
                   <DatePicker.Popover>
-                    <Calendar aria-label="Fecha LiÂ­mite de Pago">
+                    <Calendar aria-label="Fecha Lí­mite de Pago">
                       <Calendar.Header>
                         <Calendar.YearPickerTrigger>
                           <Calendar.YearPickerTriggerHeading />

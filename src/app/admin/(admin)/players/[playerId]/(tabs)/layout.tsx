@@ -29,7 +29,7 @@ export default async function PlayerGestionLayout({
 
   const tabsRoutes = [
     { value: "/", title: "Información General" },
-    { value: "/player-memberships", title: "MembresiÂ­as" },
+    { value: "/player-memberships", title: "Membresí­as" },
     // { value: "/charges", title: "Cargos" },
     // { value: "/payments", title: "Transacciones" },
   ];

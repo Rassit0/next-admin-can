@@ -25,7 +25,7 @@ export const DeleteNewsCategoryModal = ({ id, isOpen, setIsOpen }: Props) => {
       if (res.statusCode === 409) {
         toast.error("Acción denegada", {
           description:
-            "No se puede eliminar esta categoriÂ­a porque tiene noticias asociadas.",
+            "No se puede eliminar esta categorí­a porque tiene noticias asociadas.",
         });
       } else {
         toast.error("Error al eliminar", { description: res.message });
@@ -33,7 +33,7 @@ export const DeleteNewsCategoryModal = ({ id, isOpen, setIsOpen }: Props) => {
       return;
     }
 
-    toast.success("CategoriÂ­a eliminada correctamente");
+    toast.success("Categorí­a eliminada correctamente");
     state.close();
   };
 
@@ -47,12 +47,12 @@ export const DeleteNewsCategoryModal = ({ id, isOpen, setIsOpen }: Props) => {
               <Modal.Icon className="bg-danger/10 text-danger">
                 <HugeiconsIcon icon={Delete02Icon} />
               </Modal.Icon>
-              <Modal.Heading>Eliminar CategoriÂ­a</Modal.Heading>
+              <Modal.Heading>Eliminar Categorí­a</Modal.Heading>
             </div>
           </Modal.Header>
           <Modal.Body className="p-6">
             <p className="text-sm text-muted">
-              ÃÂ¿Estás seguro de que deseas eliminar esta categoriÂ­a? Esta
+              ÃÂ¿Estás seguro de que deseas eliminar esta categorí­a? Esta
               acción no se puede deshacer.
             </p>
           </Modal.Body>

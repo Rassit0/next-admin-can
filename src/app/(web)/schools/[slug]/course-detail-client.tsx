@@ -19,7 +19,7 @@ export function CourseDetailClient({ course }: CourseDetailClientProps) {
 
   if (!course) return null;
 
-  const ageRange = `${course.minAge} - ${course.maxAge} aiÂ±os`;
+  const ageRange = `${course.minAge} - ${course.maxAge} años`;
 
   return (
     <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
@@ -83,7 +83,7 @@ export function CourseDetailClient({ course }: CourseDetailClientProps) {
             <div className="rounded-lg border border-silver-deep bg-white p-4">
               <DollarSign className="mb-2 h-5 w-5 text-neon" />
               <p className="text-xs font-600 text-primary/60 uppercase">
-                MatriÂ­cula
+                Matrí­cula
               </p>
               <p className="font-oswald text-sm font-bold text-primary">
                 ${course.registrationFee}
@@ -178,7 +178,7 @@ export function CourseDetailClient({ course }: CourseDetailClientProps) {
                 <span className="text-xs font-500 text-primary/60">/mes</span>
               </p>
               <p className="mt-1 text-xs text-primary/50">
-                + ${course.registrationFee} de matriÂ­cula inicial
+                + ${course.registrationFee} de matrí­cula inicial
               </p>
             </div>
 
@@ -217,7 +217,7 @@ export function CourseDetailClient({ course }: CourseDetailClientProps) {
             </Magnetic>
 
             <p className="text-xs text-center text-primary/50">
-              Contacta con nuestra secretariÂ­a para inscribirte
+              Contacta con nuestra secretarí­a para inscribirte
             </p>
           </TiltCard>
         </motion.div>

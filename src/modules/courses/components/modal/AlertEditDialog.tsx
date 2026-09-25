@@ -62,7 +62,7 @@ export const AlertEditDialog = ({ isLoading, course, formId }: Props) => {
                   </Alert.Title>
 
                   <Alert.Description>
-                    Los cambios en el giÂ©nero o en los liÂ­mites de edad pueden
+                    Los cambios en el género o en los lí­mites de edad pueden
                     afectar a los jugadores asociados a este equipo. Los pases
                     que ya no cumplan con los criterios establecidos podrán ser
                     marcados para revisión o inactivados.
@@ -82,7 +82,7 @@ export const AlertEditDialog = ({ isLoading, course, formId }: Props) => {
                 onPress={() => state.close()}
                 variant="danger"
               >
-                SiÂ­, modificar
+                Sí­, modificar
               </Button>
             </AlertDialog.Footer>
           </AlertDialog.Dialog>

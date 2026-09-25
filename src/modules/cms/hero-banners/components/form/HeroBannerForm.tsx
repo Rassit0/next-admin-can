@@ -99,7 +99,7 @@ export const HeroBannerForm = ({
     if ((e.target as HTMLFormElement).id !== formId) return;
 
     const newErrors: Record<string, string> = {};
-    if (!formData.title) newErrors.title = "El tiÂ­tulo es obligatorio";
+    if (!formData.title) newErrors.title = "El tí­tulo es obligatorio";
 
     // Validación de imagen 16x9
     if (!heroBanner && files16x9.length === 0) {
@@ -205,7 +205,7 @@ export const HeroBannerForm = ({
     >
       <div className="flex flex-col gap-4 w-full">
         <TextField isRequired variant="secondary">
-          <Label>TiÂ­tulo</Label>
+          <Label>Tí­tulo</Label>
           <Input
             placeholder="Ej: Temporada 2024"
             value={formData.title}

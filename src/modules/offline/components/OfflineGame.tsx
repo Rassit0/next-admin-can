@@ -31,7 +31,7 @@ export const OfflineGame = () => {
         </span>
       </div>
 
-      {/* Escenario / LiÂ­nea del suelo */}
+      {/* Escenario / Lí­nea del suelo */}
       <div className="absolute bottom-7 left-0 w-full h-0.5 bg-slate-200/80 dark:bg-slate-700/80 rounded-full" />
 
       {/* Jugador (El Balón CAN) */}

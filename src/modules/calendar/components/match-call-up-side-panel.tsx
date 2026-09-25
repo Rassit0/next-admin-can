@@ -62,7 +62,7 @@ export const MatchCallUpSidePanel = ({
     if (configuredAt === null && hasCategory) {
       ids = new Set(candidates.map((c) => c.playerId));
     } else {
-      // Si ya fue configurado (incluso vaciÂ­o expliÂ­citamente), respetar lo que viene del backend
+      // Si ya fue configurado (incluso vací­o explí­citamente), respetar lo que viene del backend
       ids = new Set(initialCallUps.map((c) => c.playerId));
     }
 
@@ -155,14 +155,14 @@ export const MatchCallUpSidePanel = ({
         </h3>
         <p className="text-sm font-semibold">{teamName}</p>
         <p className="text-xs text-muted">
-          {categoryName || "Sin categoriÂ­a asignada"}
+          {categoryName || "Sin categorí­a asignada"}
         </p>
       </div>
 
       {!hasCategory ? (
         <div className="bg-warning/10 p-4 rounded-lg flex flex-col items-center justify-center text-center h-48 border border-warning/20">
           <p className="text-sm text-warning font-semibold">
-            Este equipo no tiene una categoriÂ­a administrada para gestionar
+            Este equipo no tiene una categorí­a administrada para gestionar
             convocados.
           </p>
         </div>

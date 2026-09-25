@@ -104,7 +104,7 @@ export const CourseSeasonStaffTable = ({ staffList, courseSeason }: Props) => {
           <Table.Body
             renderEmptyState={() => (
               <div className="py-10 text-center text-sm text-muted">
-                AiÂºn no hay personal asignado a esta temporada.
+                Aún no hay personal asignado a esta temporada.
               </div>
             )}
           >

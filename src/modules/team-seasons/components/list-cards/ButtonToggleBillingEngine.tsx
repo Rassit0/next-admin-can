@@ -115,7 +115,7 @@ export const ButtonToggleBillingEngine = ({
                   <Alert.Description>
                     {isEngineActive
                       ? "Al pausarlo, no se generarán nuevos cargos mensuales ni se aplicarán multas por atrasos a los miembros de esta temporada hasta que lo reanudes manualmente. Ideal si necesitas corregir configuraciones de precios."
-                      : "Al reanudarlo, el sistema volverá a evaluar a todos los miembros de esta temporada para emitir sus mensualidades y multas correspondientes segiÂºn el cronograma."}
+                      : "Al reanudarlo, el sistema volverá a evaluar a todos los miembros de esta temporada para emitir sus mensualidades y multas correspondientes según el cronograma."}
                   </Alert.Description>
                 </Alert.Content>
               </Alert>
@@ -133,7 +133,7 @@ export const ButtonToggleBillingEngine = ({
                     : "bg-success text-success-foreground hover:bg-success-hover"
                 }
               >
-                SiÂ­, {isEngineActive ? "pausar" : "reanudar"} motor
+                Sí­, {isEngineActive ? "pausar" : "reanudar"} motor
               </Button>
             </AlertDialog.Footer>
           </AlertDialog.Dialog>

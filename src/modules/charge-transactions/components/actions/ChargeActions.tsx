@@ -472,31 +472,31 @@ export const ChargeActions = ({
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">
-                          DiÂ­as transcurridos:
+                          Dí­as transcurridos:
                         </span>
                         <span className="font-semibold">
-                          {lateFeePreview.daysPassed} diÂ­as
+                          {lateFeePreview.daysPassed} dí­as
                         </span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">
-                          DiÂ­as de gracia permitidos:
+                          Dí­as de gracia permitidos:
                         </span>
                         <span className="font-semibold">
-                          {lateFeePreview.graceDays} diÂ­as
+                          {lateFeePreview.graceDays} dí­as
                         </span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">
-                          DiÂ­as sancionables:
+                          Dí­as sancionables:
                         </span>
                         <span className="font-semibold text-danger">
-                          {lateFeePreview.punishableDays} diÂ­as
+                          {lateFeePreview.punishableDays} dí­as
                         </span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">
-                          Recargo por diÂ­a:
+                          Recargo por dí­a:
                         </span>
                         <span className="font-semibold">
                           {lateFeePreview.lateFeePerDay} Bs
@@ -677,7 +677,7 @@ export const ChargeActions = ({
                         inputMode="text"
                         value={adjustmentAmount}
                         onChange={(e) => {
-                          // Permitir niÂºmeros, punto y signo menos
+                          // Permitir números, punto y signo menos
                           const val = e.target.value.replace(/[^0-9.-]/g, "");
                           setAdjustmentAmount(val);
                           setErrors({});

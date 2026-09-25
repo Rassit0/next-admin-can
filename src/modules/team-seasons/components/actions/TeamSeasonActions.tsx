@@ -323,7 +323,7 @@ export const TeamSeasonActions = ({ teamSeason, baseUrl }: Props) => {
                             className="text-muted-foreground"
                           />
                         </InputGroup.Prefix>
-                        <InputGroup.Input placeholder="Ej. Falta de alumnos, decisión tiÂ©cnica..." />
+                        <InputGroup.Input placeholder="Ej. Falta de alumnos, decisión técnica..." />
                       </InputGroup>
                     </TextField>
                   )}

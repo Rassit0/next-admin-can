@@ -47,7 +47,7 @@ export default async function QuickOperationsDashboardPage({
 
   return (
     <div className="flex flex-col gap-8 w-full">
-      {/* SECCIiÂN 1: SITUACIiÂN ACTUAL */}
+      {/* SECCIÓN 1: SITUACIÓN ACTUAL */}
       <section className="flex flex-col gap-4 bg-default-50/50 p-4 rounded-xl border border-default-100">
         <div className="flex flex-col">
           <h2 className="text-xl font-bold flex items-center gap-2">
@@ -72,12 +72,12 @@ export default async function QuickOperationsDashboardPage({
 
       <div className="h-px bg-divider w-full my-2 opacity-50" />
 
-      {/* SECCIiÂN 2: ANiÂLISIS DE PERiÂODO */}
+      {/* SECCIÓN 2: ANÁLISIS DE PERíODO */}
       <section className="flex flex-col gap-4">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div className="flex flex-col">
             <h2 className="text-xl font-bold flex items-center gap-2">
-              📊 Análisis de PeriÂ­odo
+              📊 Análisis de Perí­odo
             </h2>
             <p className="text-default-500 text-sm mt-1">{subtitle}</p>
           </div>

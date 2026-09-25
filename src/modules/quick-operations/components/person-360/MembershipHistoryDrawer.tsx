@@ -60,7 +60,7 @@ export const MembershipHistoryDrawer = ({
         setHistory(res.data || []);
       }
     } catch (err) {
-      setError("OcurriÃ¯Â¿Â½ un error al cargar el Historial de MembresiÂ­as.");
+      setError("OcurriÃ¯Â¿Â½ un error al cargar el Historial de Membresí­as.");
     } finally {
       setIsLoading(false);
     }
@@ -81,14 +81,14 @@ export const MembershipHistoryDrawer = ({
     <Drawer.Backdrop isOpen={isOpen} onOpenChange={onOpenChange}>
       <Drawer.Content placement="right">
         <Drawer.Dialog
-          aria-label="Historial de MembresiÂ­as"
+          aria-label="Historial de Membresí­as"
           className="w-full sm:max-w-md overflow-y-hidden flex flex-col h-full bg-surface"
         >
           <Drawer.CloseTrigger />
           <Drawer.Header className="border-b border-border shrink-0">
             <Drawer.Heading className="text-xl font-bold flex items-center gap-2">
               <i className="ri-history-line text-default-500"></i> Historial de
-              MembresiÂ­as
+              Membresí­as
             </Drawer.Heading>
             <p className="text-sm text-default-500">
               Mostrando el historial completo de{" "}
@@ -113,7 +113,7 @@ export const MembershipHistoryDrawer = ({
               ) : history.length === 0 ? (
                 <div className="flex flex-col items-center justify-center flex-1 py-12 text-default-500">
                   <i className="ri-inbox-line text-4xl mb-2"></i>
-                  <p>Sin Historial de MembresiÂ­as</p>
+                  <p>Sin Historial de Membresí­as</p>
                 </div>
               ) : (
                 <div className="flex flex-col gap-4">
@@ -151,7 +151,7 @@ export const MembershipHistoryDrawer = ({
                                 </div>
                               ) : (
                                 <div className="text-[10px] font-medium bg-success-50 text-success-600 px-1.5 py-0.5 rounded border border-success-200">
-                                  Al diÂ­a
+                                  Al dí­a
                                 </div>
                               ))}
                           </div>
@@ -186,7 +186,7 @@ export const MembershipHistoryDrawer = ({
                           )}
                           {item.categoryName && (
                             <p className="text-sm text-default-500">
-                              CategoriÂ­a {item.categoryName}
+                              Categorí­a {item.categoryName}
                             </p>
                           )}
                         </>

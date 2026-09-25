@@ -233,7 +233,7 @@ export const TableTransactions = ({ transactions }: Props) => {
               </Table.Column>
               <Table.Column>
                 <span className="text-xs font-semibold uppercase tracking-wide">
-                  MiÂ©todo
+                  Método
                 </span>
               </Table.Column>
               <Table.Column>
@@ -361,7 +361,7 @@ export const TableTransactions = ({ transactions }: Props) => {
                     {item._isGrouped ? (
                       <div className="flex flex-col">
                         <span className="text-default-400 text-xs italic">
-                          N/A (MiÂºltiples)
+                          N/A (Múltiples)
                         </span>
                       </div>
                     ) : (
@@ -390,7 +390,7 @@ export const TableTransactions = ({ transactions }: Props) => {
                           color="default"
                           className="font-medium"
                         >
-                          MiÂºltiples
+                          Múltiples
                         </Chip>
                         {item._groupedDetails?.map((d, idx) => (
                           <span

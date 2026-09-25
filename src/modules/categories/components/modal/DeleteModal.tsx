@@ -63,7 +63,7 @@ export const DeleteModal = ({
             </AlertDialog.Header>
             <AlertDialog.Body>
               <p>
-                Se eliminará permanentemente la categoriÂ­a{" "}
+                Se eliminará permanentemente la categorí­a{" "}
                 <strong>{category.name}</strong> si no tiene datos asociados a
                 este. Esta acción no se puede deshacer.
               </p>

@@ -73,20 +73,18 @@ export const TableLocations = ({ locations }: Props) => {
             </Table.Column> */}
 
             <Table.Column allowsSorting isRowHeader id="name">
-              <SortableColumnHeader id="name">
-                INSTALACIiÂN
-              </SortableColumnHeader>
+              <SortableColumnHeader id="name">INSTALACIÓN</SortableColumnHeader>
             </Table.Column>
 
             <Table.Column allowsSorting id="address">
               <SortableColumnHeader id="address">
-                DIRECCIiÂN
+                DIRECCIÓN
               </SortableColumnHeader>
             </Table.Column>
 
             <Table.Column allowsSorting id="description">
               <SortableColumnHeader id="description">
-                DESCRIPCIiÂN
+                DESCRIPCIÓN
               </SortableColumnHeader>
             </Table.Column>
 
@@ -121,8 +119,7 @@ export const TableLocations = ({ locations }: Props) => {
                     No se encontraron registros
                   </span>
                   <span className="text-sm text-default-400">
-                    Intenta con otros tiÂ©rminos de biÂºsqueda o agrega uno
-                    nuevo.
+                    Intenta con otros términos de búsqueda o agrega uno nuevo.
                   </span>
                 </div>
               </div>
@@ -155,7 +152,7 @@ export const TableLocations = ({ locations }: Props) => {
                     size="sm"
                     variant="soft"
                   >
-                    {location.isInternal ? "SiÂ­" : "No"}
+                    {location.isInternal ? "Sí­" : "No"}
                   </Chip>
                 </Table.Cell>
                 <Table.Cell>
@@ -168,7 +165,7 @@ export const TableLocations = ({ locations }: Props) => {
                     size="sm"
                     variant="soft"
                   >
-                    {location.isRentable ? "SiÂ­" : "No"}
+                    {location.isRentable ? "Sí­" : "No"}
                   </Chip>
                 </Table.Cell>
                 <Table.Cell>

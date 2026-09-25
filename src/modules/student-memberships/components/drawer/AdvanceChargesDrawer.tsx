@@ -317,9 +317,8 @@ export const AdvanceChargesDrawer = ({
                     <Alert.Title>Acerca de la Inscripción</Alert.Title>
                     <Alert.Description>
                       Esta acción buscará el siguiente mes (ciclo) disponible de
-                      la temporada al que aiÂºn no estás inscrito y te generará
-                      la cuota correspondiente. iÂsalo para continuar en el
-                      curso.
+                      la temporada al que aún no estás inscrito y te generará la
+                      cuota correspondiente. Úsalo para continuar en el curso.
                     </Alert.Description>
                   </Alert.Content>
                 </Alert>

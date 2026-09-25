@@ -37,19 +37,25 @@ const nextConfig: NextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "https://pub-38a41e7136394ef3bc6fbee7f3f957b7.r2.dev",
+        port: "",
+        pathname: "/**",
+      },
     ],
     dangerouslyAllowLocalIP: true,
   },
   async redirects() {
     return [
       {
-        source: '/admin/web/promos/promo-1',
-        destination: '/admin/web/promotions',
+        source: "/admin/web/promos/promo-1",
+        destination: "/admin/web/promotions",
         permanent: true,
       },
       {
-        source: '/admin/web/promos/promo-2',
-        destination: '/admin/web/promotions',
+        source: "/admin/web/promos/promo-2",
+        destination: "/admin/web/promotions",
         permanent: true,
       },
     ];
@@ -64,7 +70,8 @@ const nextConfig: NextConfig = {
       ? "'self' ws: wss: http://localhost:3001 https:"
       : "'self' https:"; // API connections
 
-    const imgSrc = "'self' data: blob: https://lh3.googleusercontent.com https://images.unsplash.com https://pub-d9fd1557230b4f54993890de726c12af.r2.dev";
+    const imgSrc =
+      "'self' data: blob: https://lh3.googleusercontent.com https://images.unsplash.com https://pub-d9fd1557230b4f54993890de726c12af.r2.dev";
 
     const csp = `
       default-src 'self';
@@ -79,7 +86,9 @@ const nextConfig: NextConfig = {
       base-uri 'self';
       form-action 'self';
       upgrade-insecure-requests;
-    `.replace(/\s{2,}/g, ' ').trim();
+    `
+      .replace(/\s{2,}/g, " ")
+      .trim();
 
     const securityHeaders = [
       {

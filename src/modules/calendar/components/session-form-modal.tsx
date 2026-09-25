@@ -131,7 +131,7 @@ export const SessionFormModal = ({
           setIsRecurrent(true);
           // NOTE: Extrapolating RRULE back to UI is complex. For this phase,
           // if we want to support full edit, we could parse RRULE.
-          // But as requested: "Implementar iÂºnicamente las opciones que el backend soporte"
+          // But as requested: "Implementar únicamente las opciones que el backend soporte"
           // We will reset or assume they need to re-select if they change recurrences.
         } else {
           setIsRecurrent(false);
@@ -280,7 +280,7 @@ export const SessionFormModal = ({
                 {/* Title */}
                 <TextField>
                   <Label className="font-semibold text-sm">
-                    TiÂ­tulo (Opcional)
+                    Tí­tulo (Opcional)
                   </Label>
                   <Input
                     variant="secondary"
@@ -304,7 +304,7 @@ export const SessionFormModal = ({
                       }
                     >
                       <Label className="text-sm">
-                        ÃÂ¿QuiÂ© deseas modificar?
+                        ÃÂ¿Qué deseas modificar?
                       </Label>
                       <Select.Trigger />
                       <Select.Popover>
@@ -399,7 +399,7 @@ export const SessionFormModal = ({
                 {/* Associations */}
                 <div className="flex flex-col gap-2">
                   <Label className="font-semibold text-sm">
-                    Equipos (CategoriÂ­as)
+                    Equipos (Categorí­as)
                   </Label>
                   <div className="border border-border rounded-lg p-3 max-h-48 overflow-y-auto bg-secondary/50">
                     <CheckboxGroup
@@ -475,11 +475,11 @@ export const SessionFormModal = ({
                           className="flex flex-row flex-wrap gap-2"
                         >
                           <Label className="text-sm font-semibold w-full">
-                            DiÂ­as de repetición
+                            Dí­as de repetición
                           </Label>
                           <Checkbox value="MO">Lun</Checkbox>
                           <Checkbox value="TU">Mar</Checkbox>
-                          <Checkbox value="WE">MiiÂ©</Checkbox>
+                          <Checkbox value="WE">Mié</Checkbox>
                           <Checkbox value="TH">Jue</Checkbox>
                           <Checkbox value="FR">Vie</Checkbox>
                           <Checkbox value="SA">Sáb</Checkbox>

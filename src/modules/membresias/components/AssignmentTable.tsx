@@ -80,7 +80,7 @@ export const AssignmentTable = ({
           <Table.Body
             renderEmptyState={() => (
               <div className="py-10 text-center text-sm text-muted">
-                No hay asignaciones para esta temporada aiÂºn.
+                No hay asignaciones para esta temporada aún.
               </div>
             )}
           >

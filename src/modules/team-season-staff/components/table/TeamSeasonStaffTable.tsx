@@ -86,7 +86,7 @@ export const TeamSeasonStaffTable = ({ staffList, teamSeason }: Props) => {
             </Table.Column>
             <Table.Column id="category">
               <span className="text-xs font-semibold uppercase tracking-wide">
-                CategoriÂ­a
+                Categorí­a
               </span>
             </Table.Column>
             <Table.Column allowsSorting id="startedAt">
@@ -105,7 +105,7 @@ export const TeamSeasonStaffTable = ({ staffList, teamSeason }: Props) => {
           <Table.Body
             renderEmptyState={() => (
               <div className="py-10 text-center text-sm text-muted">
-                AiÂºn no hay personal asignado a esta temporada.
+                Aún no hay personal asignado a esta temporada.
               </div>
             )}
           >

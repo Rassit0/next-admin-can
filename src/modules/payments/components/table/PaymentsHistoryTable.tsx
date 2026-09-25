@@ -23,7 +23,7 @@ const initialsFromName = (name: string) =>
 export const PaymentsHistoryTable = ({
   payments,
   onPay,
-  emptyLabel = "No hay pagos en esta categoriÂ­a.",
+  emptyLabel = "No hay pagos en esta categorí­a.",
 }: Props) => {
   return (
     <Table>
@@ -33,10 +33,10 @@ export const PaymentsHistoryTable = ({
             <Table.Column isRowHeader>ATLETA</Table.Column>
             <Table.Column>CONCEPTO</Table.Column>
             <Table.Column className="text-right">MONTO</Table.Column>
-            <Table.Column>MiÂTODO</Table.Column>
+            <Table.Column>MíTODO</Table.Column>
             <Table.Column>REFERENCIA</Table.Column>
             <Table.Column>ESTADO</Table.Column>
-            <Table.Column className="text-center">ACCIiÂN</Table.Column>
+            <Table.Column className="text-center">ACCIÓN</Table.Column>
           </Table.Header>
           <Table.Body
             renderEmptyState={() => (

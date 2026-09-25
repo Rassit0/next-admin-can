@@ -108,7 +108,7 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
   if (membership.totalPaidAmount === 0) {
     allActions.push({
       key: "remove",
-      label: "Eliminar MembresiÂ­a",
+      label: "Eliminar Membresí­a",
       icon: Logout01Icon, // Using Logout01Icon as standard for danger
       danger: true,
     });
@@ -225,7 +225,7 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
     <>
       <Dropdown>
         <Button
-          aria-label="Acciones de membresiÂ­a"
+          aria-label="Acciones de membresí­a"
           isIconOnly
           size="sm"
           variant="ghost"
@@ -276,7 +276,7 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
                 <p>
                   ÃÂ¿Estás seguro de que deseas ejecutar la acción{" "}
                   <strong>{selectedAction?.label.toLowerCase()}</strong> para
-                  esta membresiÂ­a?
+                  esta membresí­a?
                 </p>
 
                 {selectedAction?.key === "edit_start_date" && (

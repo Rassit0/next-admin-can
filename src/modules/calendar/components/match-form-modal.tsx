@@ -204,7 +204,7 @@ export const MatchFormModal = ({
         homeTeamSeasonCategoryId === awayTeamSeasonCategoryId
       ) {
         setApiError(
-          "Un equipo no puede jugar contra siÂ­ mismo en la misma categoriÂ­a (o categoriÂ­a nula).",
+          "Un equipo no puede jugar contra sí­ mismo en la misma categorí­a (o categorí­a nula).",
         );
         return;
       }
@@ -481,7 +481,7 @@ export const MatchFormModal = ({
                     }
                   >
                     <Label className="font-semibold text-sm">
-                      CategoriÂ­a Local (Opcional)
+                      Categorí­a Local (Opcional)
                     </Label>
                     <Select.Trigger>
                       <Select.Value />
@@ -519,7 +519,7 @@ export const MatchFormModal = ({
                     }
                   >
                     <Label className="font-semibold text-sm">
-                      CategoriÂ­a Visitante (Opcional)
+                      Categorí­a Visitante (Opcional)
                     </Label>
                     <Select.Trigger>
                       <Select.Value />

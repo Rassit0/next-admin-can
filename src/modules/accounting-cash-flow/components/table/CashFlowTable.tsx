@@ -111,13 +111,13 @@ export const CashFlowTable = ({ transactions }: Props) => {
                 <div className="font-semibold">Concepto</div>
               </Table.Column>
               <Table.Column id="category">
-                <div className="font-semibold">CategoriÂ­a</div>
+                <div className="font-semibold">Categorí­a</div>
               </Table.Column>
               <Table.Column allowsSorting id="type">
                 <SortableColumnHeader id="type">Tipo</SortableColumnHeader>
               </Table.Column>
               <Table.Column id="paymentMethod">
-                <div className="font-semibold">MiÂ©todo</div>
+                <div className="font-semibold">Método</div>
               </Table.Column>
               <Table.Column>Origen</Table.Column>
               <Table.Column>Cuenta Financiera</Table.Column>
@@ -150,7 +150,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
                       No se encontraron movimientos
                     </span>
                     <span className="text-sm text-default-400">
-                      AiÂºn no hay transacciones registradas en este periodo.
+                      Aún no hay transacciones registradas en este periodo.
                     </span>
                   </div>
                 </div>
@@ -242,7 +242,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
                               color="default"
                               className="font-medium"
                             >
-                              MiÂºltiples
+                              Múltiples
                             </Chip>
                             {transaction._groupedDetails?.map((d, idx) => (
                               <span
@@ -274,7 +274,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
                         {transaction.origin === "ACCOUNT_CHARGE"
                           ? "Administrativo"
                           : transaction.origin === "MEMBERSHIP"
-                            ? "MembresiÂ­a"
+                            ? "Membresí­a"
                             : transaction.origin === "STUDENT"
                               ? "Academia"
                               : transaction.origin === "BOOKING"
@@ -340,7 +340,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
                       {transaction._isGrouped ? (
                         <div className="flex flex-col items-end text-right">
                           <span className="text-default-400 text-xs italic">
-                            N/A (MiÂºltiples)
+                            N/A (Múltiples)
                           </span>
                         </div>
                       ) : (
@@ -462,7 +462,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
                 onPress={handleVoid}
                 isPending={isVoiding}
               >
-                SiÂ­, Anular
+                Sí­, Anular
               </Button>
             </AlertDialog.Footer>
           </AlertDialog.Dialog>

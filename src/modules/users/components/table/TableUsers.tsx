@@ -84,8 +84,8 @@ export const TableUsers: React.FC<Props> = ({ users }) => {
   const handleResetPassword = (user: IUser) => {
     setConfirmDialog({
       isOpen: true,
-      title: "Restablecer ContraseiÂ±a",
-      description: `ÃÂ¿Estás seguro de restablecer la contraseiÂ±a para ${user.email}? Esta acción invalidará su contraseiÂ±a actual inmediatamente.`,
+      title: "Restablecer Contraseña",
+      description: `ÃÂ¿Estás seguro de restablecer la contraseña para ${user.email}? Esta acción invalidará su contraseña actual inmediatamente.`,
       status: "danger",
       confirmText: "Restablecer",
       onConfirm: async () => {
@@ -97,7 +97,7 @@ export const TableUsers: React.FC<Props> = ({ users }) => {
         if (res.error) {
           toast.error(res.message);
         } else {
-          toast.success("ContraseiÂ±a restablecida exitosamente");
+          toast.success("Contraseña restablecida exitosamente");
           if (res.data?.tempPassword) {
             setCredentialDialog({
               isOpen: true,
@@ -167,7 +167,7 @@ export const TableUsers: React.FC<Props> = ({ users }) => {
             <Table.Body
               renderEmptyState={() => (
                 <div className="py-10 text-center text-sm text-muted">
-                  AiÂºn no hay usuarios registrados.
+                  Aún no hay usuarios registrados.
                 </div>
               )}
             >
@@ -277,7 +277,7 @@ export const TableUsers: React.FC<Props> = ({ users }) => {
                             >
                               <div className="flex items-center gap-2 text-warning">
                                 <HugeiconsIcon icon={Alert02Icon} size={18} />
-                                Restablecer ContraseiÂ±a
+                                Restablecer Contraseña
                               </div>
                             </Dropdown.Item>
                             <Dropdown.Item

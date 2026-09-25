@@ -17,7 +17,7 @@ const getChargeLabel = (type: string) => {
     case "LATE_FEE":
       return "Mora";
     case "REGISTRATION":
-      return "MatriÂ­cula";
+      return "Matrí­cula";
     case "MANUAL":
       return "Manual";
     default:
@@ -150,7 +150,7 @@ export function PaymentMatrixTable({
                   Estudiante
                 </Table.Column>
                 <Table.Column className="text-center min-w-25 border-x border-default-200 bg-default-100">
-                  MatriÂ­cula
+                  Matrí­cula
                 </Table.Column>
                 {periods.map((period) => (
                   <Table.Column
@@ -232,8 +232,8 @@ export function PaymentMatrixTable({
 
                             <div className="flex flex-col gap-3 flex-1">
                               {periodData.payments.map((p, idx) => {
-                                // Fallback a index si no hay ID, aunque idealmente deberiÂ­a haber un ID.
-                                // Si en el futuro backend aiÂ±ade ID, se puede usar p.id.
+                                // Fallback a index si no hay ID, aunque idealmente deberí­a haber un ID.
+                                // Si en el futuro backend añade ID, se puede usar p.id.
                                 const uniqueKey = idx;
 
                                 let receiptLine = p.receiptNumber || "";

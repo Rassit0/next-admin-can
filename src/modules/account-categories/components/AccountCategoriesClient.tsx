@@ -21,7 +21,7 @@ export const CreateCategoryButton = () => {
         className="flex items-center gap-2"
       >
         <HugeiconsIcon icon={PlusSignIcon} size={18} />
-        Nueva CategoriÂ­a
+        Nueva Categorí­a
       </Button>
       <AccountCategoryDrawer
         isOpen={isOpen}
@@ -49,7 +49,7 @@ export const AccountCategoriesClient = ({
 
   const handleDelete = async (category: IAccountCategory) => {
     if (
-      confirm(`ÃÂ¿Estás seguro de eliminar la categoriÂ­a "${category.name}"?`)
+      confirm(`ÃÂ¿Estás seguro de eliminar la categorí­a "${category.name}"?`)
     ) {
       const res = await deleteAccountCategory(category.id);
       if (res.error) {

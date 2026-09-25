@@ -62,7 +62,7 @@ export const ExtendModal = ({ isOpen, onOpenChange, courseSeason }: Props) => {
               : messages;
             return `${field}: ${msgList}`;
           })
-          .join("\n"); // Los separamos por saltos de liÂ­nea para el toast
+          .join("\n"); // Los separamos por saltos de lí­nea para el toast
       }
 
       // 2. Pasamos la descripción formateada al componente de notificaciones
@@ -109,7 +109,7 @@ export const ExtendModal = ({ isOpen, onOpenChange, courseSeason }: Props) => {
                   ÃÂ¿Estás seguro de extender la temporada?
                 </Alert.Title>
                 <Alert.Description>
-                  Se extenderá la temporada y las membresiÂ­as se actualizarán
+                  Se extenderá la temporada y las membresí­as se actualizarán
                   automáticamente.
                 </Alert.Description>
               </Alert.Content>
@@ -216,7 +216,7 @@ export const ExtendModal = ({ isOpen, onOpenChange, courseSeason }: Props) => {
               isPending={isLoading}
               variant="danger"
             >
-              SiÂ­, extender
+              Sí­, extender
             </Button>
           </AlertDialog.Footer>
         </AlertDialog.Dialog>

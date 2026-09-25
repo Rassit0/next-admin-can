@@ -242,7 +242,7 @@ export const EnrollMembershipForm = ({
       } else {
         if (!regDiscountPercent && !recDiscountPercent) {
           err.discountPercent =
-            "Debe ingresar al menos un porcentaje de descuento (MatriÂ­cula o Mensualidad).";
+            "Debe ingresar al menos un porcentaje de descuento (Matrí­cula o Mensualidad).";
         }
         if (regDiscountPercent && (isNaN(reg) || reg < 0 || reg > 100)) {
           err.regDiscountPercent =
@@ -522,10 +522,10 @@ export const EnrollMembershipForm = ({
               Turno / Horario
               {selectedShift && (
                 <InfoTooltip
-                  text={`CategoriÂ­a: ${selectedShift.category?.name || "Sin categoriÂ­a"}. ${
+                  text={`Categorí­a: ${selectedShift.category?.name || "Sin categorí­a"}. ${
                     selectedShift.minBirthYear || selectedShift.maxBirthYear
                       ? `Nacidos: ${selectedShift.minBirthYear || "Cualquiera"} al ${selectedShift.maxBirthYear || "Cualquiera"}`
-                      : `Edades: ${selectedShift.category?.minAge || 0} a ${selectedShift.category?.maxAge || "Sin liÂ­mite"} aiÂ±os`
+                      : `Edades: ${selectedShift.category?.minAge || 0} a ${selectedShift.category?.maxAge || "Sin lí­mite"} años`
                   }. Temporada: ${new Date(courseSeason.season.startDate).toLocaleDateString()} - ${new Date(courseSeason.season.endDate).toLocaleDateString()}.`}
                 />
               )}
@@ -589,8 +589,8 @@ export const EnrollMembershipForm = ({
                         {plan.isSinglePayment
                           ? courseSeason.billingConfig?.billingType ===
                             "MONTHLY_ONLY"
-                            ? `Pago iÂnico (Adelantado) - -${plan.recurringDiscountPercent}% (Mensualidades)`
-                            : `Pago iÂnico - -${plan.seasonFeeDiscountPercent}% (Temporada)`
+                            ? `Pago Único (Adelantado) - -${plan.recurringDiscountPercent}% (Mensualidades)`
+                            : `Pago Único - -${plan.seasonFeeDiscountPercent}% (Temporada)`
                           : `Insc. -${plan.registrationDiscountPercent}% - Mens. -${plan.recurringDiscountPercent}%`}
                       </span>
                     </div>
@@ -757,7 +757,7 @@ export const EnrollMembershipForm = ({
                         }
                       >
                         <Label className="text-sm font-semibold">
-                          Desc. MatriÂ­cula (%)
+                          Desc. Matrí­cula (%)
                         </Label>
                         <Input
                           variant="secondary"
@@ -769,7 +769,7 @@ export const EnrollMembershipForm = ({
                           }
                         />
                         <p className="text-xs text-muted mt-1 leading-tight">
-                          Dejar vaciÂ­o si no aplica.
+                          Dejar vací­o si no aplica.
                         </p>
                         {(errors.regDiscountPercent ||
                           errors.discountPercent) && (
@@ -800,7 +800,7 @@ export const EnrollMembershipForm = ({
                           }
                         />
                         <p className="text-xs text-muted mt-1 leading-tight">
-                          Dejar vaciÂ­o si no aplica.
+                          Dejar vací­o si no aplica.
                         </p>
                         {(errors.recDiscountPercent ||
                           (errors.discountPercent &&
@@ -934,8 +934,8 @@ export const EnrollMembershipForm = ({
                         <Switch.Thumb />
                       </Switch.Control>
                       <Label className="text-sm flex items-center">
-                        Cobrar MatriÂ­cula (Opcional)
-                        <InfoTooltip text="Fuerza la creación de la factura por inscripción/matriÂ­cula a pesar de ser migrado, en caso de que aiÂºn deba la inscripción." />
+                        Cobrar Matrí­cula (Opcional)
+                        <InfoTooltip text="Fuerza la creación de la factura por inscripción/matrí­cula a pesar de ser migrado, en caso de que aún deba la inscripción." />
                       </Label>
                     </Switch.Content>
                   </Switch>

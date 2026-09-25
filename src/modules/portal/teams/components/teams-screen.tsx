@@ -63,8 +63,8 @@ export function Teams({ teams }: { teams: Team[] }) {
           <span className="text-neon text-glow-neon">Competición</span>
         </h1>
         <p className="mt-3 max-w-xl text-muted-foreground text-pretty">
-          Filtrá por disciplina, sede y categoriÂ­a. Girá cada tarjeta para ver
-          la membresiÂ­a y solicitá tu cupo.
+          Filtrá por disciplina, sede y categorí­a. Girá cada tarjeta para ver
+          la membresí­a y solicitá tu cupo.
         </p>
       </div>
 
@@ -90,7 +90,7 @@ export function Teams({ teams }: { teams: Team[] }) {
           }}
         />
         <FilterSelect
-          label="CategoriÂ­a"
+          label="Categorí­a"
           value={category}
           options={categories}
           onChange={setCategory}
@@ -211,7 +211,7 @@ function FlipCard({ team, onApply }: { team: Team; onApply: () => void }) {
               {full
                 ? "Cupos Completos"
                 : lastSlots
-                  ? `ÃÂ¡iÂltimos Cupos! ${slotsLeft}/${team.capacity}`
+                  ? `ÃÂ¡Últimos Cupos! ${slotsLeft}/${team.capacity}`
                   : `Cupos: ${slotsLeft}/${team.capacity}`}
             </span>
           </div>
@@ -222,14 +222,14 @@ function FlipCard({ team, onApply }: { team: Team; onApply: () => void }) {
           <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-neon/20 blur-2xl" />
           <div>
             <span className="text-xs font-600 uppercase tracking-[0.22em] text-neon">
-              MembresiÂ­a
+              Membresí­a
             </span>
             <h3 className="mt-1 font-heading text-xl font-700 uppercase tracking-wide">
               {team.name}
             </h3>
             <div className="mt-4 space-y-2 text-sm">
               <div className="flex items-center justify-between border-b border-white/10 pb-2">
-                <span className="text-white/60">MatriÂ­cula</span>
+                <span className="text-white/60">Matrí­cula</span>
                 <span className="font-700">${team.registrationFee} USD</span>
               </div>
               <div className="flex items-center justify-between">
@@ -253,7 +253,7 @@ function FlipCard({ team, onApply }: { team: Team; onApply: () => void }) {
             )}
           >
             <Zap className="h-4 w-4" />
-            {full ? "Sin cupos" : "Solicitar MembresiÂ­a"}
+            {full ? "Sin cupos" : "Solicitar Membresí­a"}
           </button>
         </div>
       </div>
@@ -300,7 +300,7 @@ function MembershipModal({
               Solicitud enviada
             </h3>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground text-pretty">
-              Recibimos tu solicitud de membresiÂ­a para{" "}
+              Recibimos tu solicitud de membresí­a para{" "}
               <span className="font-600 text-primary">{team.name}</span>.
               Nuestro equipo se pondrá en contacto para coordinar la
               incorporación.

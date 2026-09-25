@@ -44,7 +44,7 @@ export const TableMemberships = ({
     <Table>
       <Table.ScrollContainer>
         <Table.Content
-          aria-label="MembresiÂ­as de atletas"
+          aria-label="Membresí­as de atletas"
           className="min-w-200"
         >
           <Table.Header className="bg-surface-secondary">
@@ -61,7 +61,7 @@ export const TableMemberships = ({
               <Table.Column allowsSorting id="teamSeason">
                 <SortableColumnHeader id="teamSeason">
                   <span className="text-xs font-semibold uppercase tracking-wide">
-                    Equipo / CategoriÂ­a
+                    Equipo / Categorí­a
                   </span>
                 </SortableColumnHeader>
               </Table.Column>
@@ -106,7 +106,7 @@ export const TableMemberships = ({
           <Table.Body
             renderEmptyState={() => (
               <div className="py-10 text-center text-sm text-muted">
-                AiÂºn no hay atletas inscritos en esta temporada.
+                Aún no hay atletas inscritos en esta temporada.
               </div>
             )}
           >

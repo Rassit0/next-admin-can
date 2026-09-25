@@ -69,7 +69,7 @@ export const AssignStaffDrawer = ({
 
     if (!staffId) err.staffId = "Debe seleccionar a un miembro del personal.";
     if (!teamSeasonCategoryId)
-      err.teamSeasonCategoryId = "La categoriÂ­a es obligatoria.";
+      err.teamSeasonCategoryId = "La categorí­a es obligatoria.";
     if (!role) err.role = "El rol es obligatorio.";
     if (role === "OTHER" && !customRole.trim()) {
       err.customRole = "Debe especificar el rol si seleccionó 'Otro'.";
@@ -215,7 +215,7 @@ export const AssignStaffDrawer = ({
                   isInvalid={!!errors.teamSeasonCategoryId || undefined}
                 >
                   <Label className="text-sm font-semibold flex items-center">
-                    CategoriÂ­a
+                    Categorí­a
                   </Label>
                   <Select.Trigger />
                   <Select.Popover>
@@ -295,7 +295,7 @@ export const AssignStaffDrawer = ({
                     </Label>
                     <Input
                       variant="secondary"
-                      placeholder="Ej: Preparador FiÂ­sico"
+                      placeholder="Ej: Preparador Fí­sico"
                       value={customRole}
                       onChange={(e) => setCustomRole(e.target.value)}
                     />
@@ -347,7 +347,7 @@ export const AssignStaffDrawer = ({
                       </Switch.Control>
                       <Label className="text-sm font-semibold flex items-center">
                         Es el profesor principal (Delegado principal)
-                        <InfoTooltip text="El profesor marcado como principal representará a esta categoriÂ­a/equipo en la App para funciones oficiales (ej. llamado de asistencia principal)." />
+                        <InfoTooltip text="El profesor marcado como principal representará a esta categorí­a/equipo en la App para funciones oficiales (ej. llamado de asistencia principal)." />
                       </Label>
                     </Switch.Content>
                   </Switch>

@@ -151,8 +151,8 @@ export const MatchLineupSidePanel = ({
     if (destructiveRemovals.length > 0) {
       const isMultiple = destructiveRemovals.length > 1;
       const msg = isMultiple
-        ? `Se eliminarán la participación y estadiÂ­sticas de ${destructiveRemovals.length} jugadores.\n\nÃÂ¿Deseas continuar?`
-        : `Se eliminarán la participación y estadiÂ­sticas de ${destructiveRemovals[0]}.\n\nÃÂ¿Deseas continuar?`;
+        ? `Se eliminarán la participación y estadí­sticas de ${destructiveRemovals.length} jugadores.\n\nÃÂ¿Deseas continuar?`
+        : `Se eliminarán la participación y estadí­sticas de ${destructiveRemovals[0]}.\n\nÃÂ¿Deseas continuar?`;
       if (!window.confirm(msg)) return;
     }
 
@@ -196,14 +196,14 @@ export const MatchLineupSidePanel = ({
         </h3>
         <p className="text-sm font-semibold">{teamName}</p>
         <p className="text-xs text-muted">
-          {categoryName || "Sin categoriÂ­a asignada"}
+          {categoryName || "Sin categorí­a asignada"}
         </p>
       </div>
 
       {!hasCategory ? (
         <div className="bg-warning/10 p-4 rounded-lg flex flex-col items-center justify-center text-center h-48 border border-warning/20">
           <p className="text-sm text-warning font-semibold">
-            Este equipo no tiene una categoriÂ­a gestionada.
+            Este equipo no tiene una categorí­a gestionada.
           </p>
         </div>
       ) : callUps.length === 0 ? (

@@ -73,7 +73,7 @@ export const CardCourseSeason = ({ courseSeason, urlBase }: Props) => {
             new Set(
               courseSeason.shifts?.map((s) => s.category?.name).filter(Boolean),
             ),
-          ).join(" ÃÂ· ") || "Varias CategoriÂ­as"}
+          ).join(" ÃÂ· ") || "Varias Categorí­as"}
         </h3>
         <p className="text-on-surface-variant text-xs mb-1 font-bold">
           {courseSeason.name}

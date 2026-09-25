@@ -112,7 +112,7 @@ export function NextMatchCountdown({ match }: NextMatchCountdownProps) {
           <div className="flex items-center justify-center rounded-xl border border-white/10 bg-black p-3 shadow-[inset_0_2px_15px_rgba(0,0,0,1)] md:p-4">
             {isClient && timeLeft ? (
               <div className="flex items-center gap-1 md:gap-2">
-                <TimeUnit value={timeLeft.d} label="DiÂ­as" />
+                <TimeUnit value={timeLeft.d} label="Dí­as" />
                 <Separator />
                 <TimeUnit value={timeLeft.h} label="Horas" />
                 <Separator />
@@ -122,7 +122,7 @@ export function NextMatchCountdown({ match }: NextMatchCountdownProps) {
               </div>
             ) : (
               <div className="flex items-center gap-1 opacity-30 md:gap-2">
-                <TimeUnit value={0} label="DiÂ­as" />
+                <TimeUnit value={0} label="Dí­as" />
                 <Separator />
                 <TimeUnit value={0} label="Horas" />
                 <Separator />

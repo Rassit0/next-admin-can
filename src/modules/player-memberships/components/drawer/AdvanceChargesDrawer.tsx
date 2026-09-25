@@ -129,7 +129,7 @@ export const AdvanceChargesDrawer = ({
                 Adelantar Cuotas
               </Drawer.Heading>
               <p className="mt-1 text-xs font-medium text-muted">
-                Genera las próximas cuotas de esta membresiÂ­a por adelantado.
+                Genera las próximas cuotas de esta membresí­a por adelantado.
               </p>
             </div>
           </Drawer.Header>

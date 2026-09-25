@@ -141,17 +141,17 @@ export default async function CourseSeasonDashboardPage({ params }: Props) {
               {courseSeason.billingConfig?.billingType === "MONTHLY_ONLY" &&
                 "Sólo Recurrente"}
               {courseSeason.billingConfig?.billingType === "SINGLE_ONLY" &&
-                "Sólo Pago iÂnico"}
+                "Sólo Pago Único"}
               {courseSeason.billingConfig?.billingType === "BOTH" &&
-                "Pago iÂnico o Recurrente"}
+                "Pago Único o Recurrente"}
             </p>
           </div>
           {courseSeason.billingConfig?.billingType !== "SINGLE_ONLY" && (
             <>
               <div>
                 <p className="text-xs text-muted-foreground mb-1 uppercase font-semibold flex items-center">
-                  MatriÂ­cula
-                  <InfoTooltip text="Costo iÂºnico que se cobra al inicio (o prorrateado) por ingresar al equipo en esta temporada." />
+                  Matrí­cula
+                  <InfoTooltip text="Costo único que se cobra al inicio (o prorrateado) por ingresar al equipo en esta temporada." />
                 </p>
                 <p className="font-bold text-sm">
                   {courseSeason.billingConfig?.registrationFee
@@ -184,7 +184,7 @@ export default async function CourseSeasonDashboardPage({ params }: Props) {
             <div>
               <p className="text-xs text-muted-foreground mb-1 uppercase font-semibold flex items-center">
                 Tarifa Temporada Completa
-                <InfoTooltip text="Costo de la temporada completa si el modelo permite o requiere Pago iÂnico (esquema cerrado)." />
+                <InfoTooltip text="Costo de la temporada completa si el modelo permite o requiere Pago Único (esquema cerrado)." />
               </p>
               <p className="font-bold text-sm">
                 {courseSeason.billingConfig?.seasonFee
@@ -196,12 +196,12 @@ export default async function CourseSeasonDashboardPage({ params }: Props) {
           <div className="col-span-full">
             <p className="text-xs text-muted-foreground mb-2 uppercase font-semibold flex items-center">
               Opciones de Prorrateo Activas
-              <InfoTooltip text="Si el jugador ingresa tarde (despuiÂ©s de la fecha de inicio del ciclo), el sistema cobrará la fracción correspondiente matemáticamente a los diÂ­as activos de las opciones que veas aquiÂ­ marcadas." />
+              <InfoTooltip text="Si el jugador ingresa tarde (después de la fecha de inicio del ciclo), el sistema cobrará la fracción correspondiente matemáticamente a los dí­as activos de las opciones que veas aquí­ marcadas." />
             </p>
             <div className="flex flex-wrap gap-2">
               {courseSeason.billingConfig?.prorateRegistrationFee && (
                 <Chip size="sm" variant="soft" color="default">
-                  MatriÂ­cula
+                  Matrí­cula
                 </Chip>
               )}
               {courseSeason.billingConfig?.prorateFirstRecurringFee && (
@@ -211,12 +211,12 @@ export default async function CourseSeasonDashboardPage({ params }: Props) {
               )}
               {courseSeason.billingConfig?.prorateLastRecurringFee && (
                 <Chip size="sm" variant="soft" color="default">
-                  iÂltimo Cargo Recurrente
+                  Último Cargo Recurrente
                 </Chip>
               )}
               {courseSeason.billingConfig?.prorateSeasonFee && (
                 <Chip size="sm" variant="soft" color="default">
-                  Tarifa Temporada (Pago iÂnico)
+                  Tarifa Temporada (Pago Único)
                 </Chip>
               )}
               {!courseSeason.billingConfig?.prorateRegistrationFee &&
@@ -260,14 +260,14 @@ export default async function CourseSeasonDashboardPage({ params }: Props) {
               </div>
               <div className="flex flex-col text-sm text-muted-foreground mt-2 space-y-1">
                 <span>
-                  <strong className="text-foreground">CategoriÂ­a:</strong>{" "}
+                  <strong className="text-foreground">Categorí­a:</strong>{" "}
                   {shiftItem.category?.name}
                 </span>
                 <span>
                   <strong className="text-foreground">Edades:</strong>{" "}
                   {shiftItem.minBirthYear || shiftItem.maxBirthYear
                     ? `${shiftItem.minBirthYear || "Cualquiera"} al ${shiftItem.maxBirthYear || "Cualquiera"}`
-                    : `${shiftItem.category?.minAge} a ${shiftItem.category?.maxAge || "Sin liÂ­mite"} aiÂ±os`}
+                    : `${shiftItem.category?.minAge} a ${shiftItem.category?.maxAge || "Sin lí­mite"} años`}
                 </span>
                 <span>
                   <strong className="text-foreground">Capacidad:</strong>{" "}

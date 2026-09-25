@@ -72,7 +72,7 @@ export const FormClub = ({
 
       if (res.errors) {
         // Convertimos el objeto { type: ["msg"] } en una lista de strings limpia
-        errorDescription = "Error de Validación"; // Los separamos por saltos de liÂ­nea para el toast
+        errorDescription = "Error de Validación"; // Los separamos por saltos de lí­nea para el toast
       }
 
       // 2. Pasamos la descripción formateada al componente de notificaciones

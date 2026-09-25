@@ -76,7 +76,7 @@ export const TableCharges = ({
     <Table>
       <Table.ScrollContainer>
         <Table.Content
-          aria-label="Cargos de la membresiÂ­a"
+          aria-label="Cargos de la membresí­a"
           className="min-w-200"
         >
           <Table.Header className="bg-surface-secondary">

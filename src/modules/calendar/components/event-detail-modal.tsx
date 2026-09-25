@@ -147,7 +147,7 @@ export const EventDetailModal = ({
                       <br />
                       <strong>Resultado CAN:</strong>{" "}
                       {(metadata as IMatchCalendarMetadata).result} <br />
-                      <strong>CategoriÂ­a:</strong>{" "}
+                      <strong>Categorí­a:</strong>{" "}
                       {(metadata as IMatchCalendarMetadata).homeCategory?.id ===
                       (metadata as IMatchCalendarMetadata).awayCategory?.id
                         ? (metadata as IMatchCalendarMetadata).homeCategory
@@ -289,7 +289,7 @@ export const EventDetailModal = ({
                           }
                         >
                           <Label className="text-sm">
-                            ÃÂ¿QuiÂ© deseas eliminar?
+                            ÃÂ¿Qué deseas eliminar?
                           </Label>
                           <Select.Trigger />
                           <Select.Popover>
@@ -362,10 +362,10 @@ export const EventDetailModal = ({
                         } else if (res && !res.error) {
                           toast.success(
                             type === "MATCH"
-                              ? "Partido eliminado con iÂ©xito"
+                              ? "Partido eliminado con éxito"
                               : type === "SESSION"
-                                ? "Sesión eliminada con iÂ©xito"
-                                : "Evento eliminado con iÂ©xito",
+                                ? "Sesión eliminada con éxito"
+                                : "Evento eliminado con éxito",
                           );
                           setConfirmDelete(false);
                           state.setOpen(false);

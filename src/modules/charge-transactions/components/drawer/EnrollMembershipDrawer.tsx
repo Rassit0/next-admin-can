@@ -133,7 +133,7 @@ export const EnrollMembershipDrawer = ({
       .substring(0, 10);
 
     if (!playerKey) err.playerKey = "Seleccione un atleta.";
-    if (!categoryKey) err.categoryKey = "Seleccione una categoriÂ­a.";
+    if (!categoryKey) err.categoryKey = "Seleccione una categorí­a.";
     if (!planKey) err.planKey = "Seleccione un plan de pago.";
     if (!startedAt) err.startedAt = "Debe ingresar una fecha de inicio.";
     else if (startedAt < sStartStr || startedAt > sEndStr) {
@@ -159,7 +159,7 @@ export const EnrollMembershipDrawer = ({
       } else {
         if (!regDiscountPercent && !recDiscountPercent) {
           err.discountPercent =
-            "Debe ingresar al menos un porcentaje de descuento (MatriÂ­cula o Mensualidad).";
+            "Debe ingresar al menos un porcentaje de descuento (Matrí­cula o Mensualidad).";
         }
         if (regDiscountPercent && (isNaN(reg) || reg < 0 || reg > 100)) {
           err.regDiscountPercent =
@@ -337,7 +337,7 @@ export const EnrollMembershipDrawer = ({
 
     if (startedAt < sStartStr || startedAt > sEndStr) {
       toast.danger("Fecha inválida", {
-        description: `La fecha de inicio de la membresiÂ­a debe estar dentro de la temporada (${sStartStr} al ${sEndStr}).`,
+        description: `La fecha de inicio de la membresí­a debe estar dentro de la temporada (${sStartStr} al ${sEndStr}).`,
       });
       return;
     }
@@ -495,8 +495,8 @@ export const EnrollMembershipDrawer = ({
                               {plan.isSinglePayment
                                 ? teamSeason.billingConfig?.billingType ===
                                   "MONTHLY_ONLY"
-                                  ? `Pago iÂnico (Adelantado) - -${plan.recurringDiscountPercent}% (Mensualidades)`
-                                  : `Pago iÂnico - -${plan.seasonFeeDiscountPercent}% (Temporada)`
+                                  ? `Pago Único (Adelantado) - -${plan.recurringDiscountPercent}% (Mensualidades)`
+                                  : `Pago Único - -${plan.seasonFeeDiscountPercent}% (Temporada)`
                                 : `Insc. -${plan.registrationDiscountPercent}% - Mens. -${plan.recurringDiscountPercent}%`}
                             </span>
                           </div>
@@ -506,12 +506,12 @@ export const EnrollMembershipDrawer = ({
                   </ComboBox.Popover>
                 </ComboBox>
 
-                {/* CategoriÂ­a */}
+                {/* Categorí­a */}
                 <ComboBox
                   className="w-full"
                   variant="secondary"
                   menuTrigger="focus"
-                  aria-label="Seleccionar CategoriÂ­a"
+                  aria-label="Seleccionar Categorí­a"
                   selectedKey={categoryKey}
                   onSelectionChange={(key) =>
                     setCategoryKey(key ? String(key) : null)
@@ -520,18 +520,18 @@ export const EnrollMembershipDrawer = ({
                   isInvalid={!!errors.categoryKey || undefined}
                 >
                   <Label className="text-sm font-semibold flex items-center">
-                    CategoriÂ­a
-                    <InfoTooltip text="La categoriÂ­a en la que el jugador será inscrito." />
+                    Categorí­a
+                    <InfoTooltip text="La categorí­a en la que el jugador será inscrito." />
                   </Label>
                   <ComboBox.InputGroup>
                     <Input
                       variant="secondary"
                       placeholder={
                         loadingCategories
-                          ? "Cargando categoriÂ­as..."
+                          ? "Cargando categorí­as..."
                           : categories.length === 0
-                            ? "No hay categoriÂ­as disponibles"
-                            : "Selecciona una categoriÂ­a"
+                            ? "No hay categorí­as disponibles"
+                            : "Selecciona una categorí­a"
                       }
                     />
                     <ComboBox.Trigger />
@@ -632,7 +632,7 @@ export const EnrollMembershipDrawer = ({
                               }
                             >
                               <Label className="text-sm font-semibold">
-                                Desc. MatriÂ­cula (%)
+                                Desc. Matrí­cula (%)
                               </Label>
                               <Input
                                 variant="secondary"
@@ -644,7 +644,7 @@ export const EnrollMembershipDrawer = ({
                                 }
                               />
                               <p className="text-xs text-muted mt-1 leading-tight">
-                                Dejar vaciÂ­o si no aplica.
+                                Dejar vací­o si no aplica.
                               </p>
                               {(errors.regDiscountPercent ||
                                 errors.discountPercent) && (
@@ -675,7 +675,7 @@ export const EnrollMembershipDrawer = ({
                                 }
                               />
                               <p className="text-xs text-muted mt-1 leading-tight">
-                                Dejar vaciÂ­o si no aplica.
+                                Dejar vací­o si no aplica.
                               </p>
                               {(errors.recDiscountPercent ||
                                 (errors.discountPercent &&

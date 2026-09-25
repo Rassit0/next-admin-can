@@ -38,7 +38,7 @@ type Phase = "form" | "processing" | "success" | "error";
 const BANKS = [
   { id: "bnb", name: "Banco Nacional de Bolivia" },
   { id: "bmsc", name: "Banco Mercantil Santa Cruz" },
-  { id: "bcp", name: "Banco de CriÂ©dito BCP" },
+  { id: "bcp", name: "Banco de Crédito BCP" },
   { id: "bu", name: "Banco Unión" },
 ];
 
@@ -177,7 +177,7 @@ export const PaymentGatewayModal = ({
                           />
                         </TextField>
                         <TextField className="w-full" name="cardNumber">
-                          <Label>NiÂºmero de tarjeta</Label>
+                          <Label>Número de tarjeta</Label>
                           <Input
                             variant="secondary"
                             inputMode="numeric"
@@ -258,7 +258,7 @@ export const PaymentGatewayModal = ({
                           </ComboBox.Popover>
                         </ComboBox>
                         <TextField className="w-full" name="reference">
-                          <Label>NiÂºmero de comprobante</Label>
+                          <Label>Número de comprobante</Label>
                           <Input
                             variant="secondary"
                             placeholder="Ej. 0098123455"

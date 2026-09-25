@@ -150,7 +150,7 @@ export const SelectOrCreatePlayer = ({
                           {item.person.birthDate && (
                             <span className="text-xs text-default-500 truncate">
                               - Edad deportiva:{" "}
-                              {calculateAge(item.person.birthDate)} aiÂ±os
+                              {calculateAge(item.person.birthDate)} años
                             </span>
                           )}
                         </div>

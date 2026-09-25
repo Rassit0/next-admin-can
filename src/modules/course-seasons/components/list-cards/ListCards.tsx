@@ -45,7 +45,7 @@ export const ListCards = ({ courseSeasons, urlBase }: Props) => {
             Hawaiian Waves 2024
           </h3>
           <p className="text-on-surface-variant text-sm mb-6 italic opacity-80">
-            "Ohana significa familia, y ningiÂºn jugador se queda atrás."
+            "Ohana significa familia, y ningún jugador se queda atrás."
           </p>
           <div className="space-y-4 mb-8">
             <div>
@@ -189,7 +189,7 @@ export const ListCards = ({ courseSeasons, urlBase }: Props) => {
                 <span className="material-symbols-outlined text-lg">
                   assessment
                 </span>
-                Ver Reporte / EstadiÂ­sticas
+                Ver Reporte / Estadí­sticas
               </Button>
               <Button className="w-full py-3.5 bg-surface-container-highest text-on-surface-variant rounded-full font-bold text-md flex items-center justify-center gap-2 hover:bg-surface-variant transition-all">
                 <span className="material-symbols-outlined text-lg">

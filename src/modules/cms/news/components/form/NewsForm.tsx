@@ -86,7 +86,7 @@ export const NewsForm = ({
     if ((e.target as HTMLFormElement).id !== formId) return;
 
     const newErrors: Record<string, string> = {};
-    if (!formData.title) newErrors.title = "El tiÂ­tulo es obligatorio";
+    if (!formData.title) newErrors.title = "El tí­tulo es obligatorio";
     if (!formData.excerpt) newErrors.excerpt = "El extracto es obligatorio";
     if (!formData.content) newErrors.content = "El contenido es obligatorio";
 
@@ -147,7 +147,7 @@ export const NewsForm = ({
     >
       <div className="flex flex-col gap-4 w-full">
         <TextField isRequired variant="secondary">
-          <Label>TiÂ­tulo</Label>
+          <Label>Tí­tulo</Label>
           <Input
             placeholder="Ej: Nuevo Torneo Apertura"
             value={formData.title}
@@ -195,13 +195,13 @@ export const NewsForm = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Select
             variant="secondary"
-            placeholder="Seleccione una categoriÂ­a"
+            placeholder="Seleccione una categorí­a"
             selectedKey={formData.categoryId || ""}
             onSelectionChange={(key) => {
               if (key) setFormData({ ...formData, categoryId: String(key) });
             }}
           >
-            <Label>CategoriÂ­a</Label>
+            <Label>Categorí­a</Label>
             <Select.Trigger>
               <Select.Value />
               <Select.Indicator />

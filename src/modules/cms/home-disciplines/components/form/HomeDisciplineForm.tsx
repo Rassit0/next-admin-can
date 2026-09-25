@@ -80,7 +80,7 @@ export const HomeDisciplineForm = ({
     if ((e.target as HTMLFormElement).id !== formId) return;
 
     const newErrors: Record<string, string> = {};
-    if (!formData.title) newErrors.title = "El tiÂ­tulo es obligatorio";
+    if (!formData.title) newErrors.title = "El tí­tulo es obligatorio";
 
     // Validación de imagen 4x3
     if (!homeDiscipline && files4x3.length === 0) {
@@ -150,9 +150,9 @@ export const HomeDisciplineForm = ({
     >
       <div className="flex flex-col gap-4 w-full">
         <TextField isRequired variant="secondary">
-          <Label>TiÂ­tulo</Label>
+          <Label>Tí­tulo</Label>
           <Input
-            placeholder="Ej: Escuela de FiÂºtbol"
+            placeholder="Ej: Escuela de Fútbol"
             value={formData.title}
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             onChange={(e: any) => {

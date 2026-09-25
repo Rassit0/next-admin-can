@@ -119,7 +119,7 @@ export const TablePayments = ({ payments }: Props) => {
               </Table.Column>
               <Table.Column>
                 <span className="text-xs font-semibold uppercase tracking-wide">
-                  MiÂ©todos de Pago
+                  Métodos de Pago
                 </span>
               </Table.Column>
               <Table.Column className="text-center">
@@ -136,7 +136,7 @@ export const TablePayments = ({ payments }: Props) => {
               )}
             >
               {payments.map((item) => {
-                // Obtener los metodos iÂºnicos del pago
+                // Obtener los metodos únicos del pago
                 const methods = Array.from(
                   new Set(item.transactions?.map((t) => t.paymentMethod) || []),
                 );
@@ -281,7 +281,7 @@ export const TablePayments = ({ payments }: Props) => {
               <p>
                 ÃÂ¿Anular este pago? Esta operación revertirá el efecto
                 financiero del pago, pero el comprobante permanecerá registrado
-                como "Anulado" para fines de auditoriÂ­a.
+                como "Anulado" para fines de auditorí­a.
               </p>
             </AlertDialog.Body>
             <AlertDialog.Footer>

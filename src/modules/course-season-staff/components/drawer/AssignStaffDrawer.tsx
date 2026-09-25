@@ -304,7 +304,7 @@ export const AssignStaffDrawer = ({
                     </Label>
                     <Input
                       variant="secondary"
-                      placeholder="Ej: Preparador FiÂ­sico"
+                      placeholder="Ej: Preparador Fí­sico"
                       value={customRole}
                       onChange={(e) => setCustomRole(e.target.value)}
                     />

@@ -149,7 +149,7 @@ export const FormLocation = ({
           <Label>Descripción</Label>
           <TextArea
             variant="secondary"
-            placeholder="Ingrese la descripción de la categoriÂ­a"
+            placeholder="Ingrese la descripción de la categorí­a"
             rows={4}
             value={description}
             onChange={(e) => {

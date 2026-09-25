@@ -204,12 +204,12 @@ export const FormCourseSeason = ({
             newErrors[`shift_${index}_shiftId`] = "Debe seleccionar un turno";
           if (!shift.categoryId)
             newErrors[`shift_${index}_categoryId`] =
-              "Debe seleccionar una categoriÂ­a";
+              "Debe seleccionar una categorí­a";
           if (!shift.gender)
-            newErrors[`shift_${index}_gender`] = "Debe seleccionar el giÂ©nero";
+            newErrors[`shift_${index}_gender`] = "Debe seleccionar el género";
           if (!shift.minMembers)
             newErrors[`shift_${index}_minMembers`] =
-              "Debe ingresar cupo miÂ­nimo";
+              "Debe ingresar cupo mí­nimo";
           if (!shift.maxMembers)
             newErrors[`shift_${index}_maxMembers`] =
               "Debe ingresar cupo máximo";
@@ -219,8 +219,8 @@ export const FormCourseSeason = ({
             shift.maxBirthYear &&
             shift.minBirthYear > shift.maxBirthYear
           ) {
-            newErrors[`shift_${index}_minBirthYear`] = "AiÂ±o min > max";
-            newErrors[`shift_${index}_maxBirthYear`] = "AiÂ±o max < min";
+            newErrors[`shift_${index}_minBirthYear`] = "Año min > max";
+            newErrors[`shift_${index}_maxBirthYear`] = "Año max < min";
           }
 
           // Prevenir turnos duplicados
@@ -252,11 +252,11 @@ export const FormCourseSeason = ({
         "Debe ingresar el valor para la tarifa de la temporada";
     }
     if (lateFeePerDay === null) {
-      newErrors.lateFeePerDay = "Debe ingresar el valor de la multa por diÂ­a";
+      newErrors.lateFeePerDay = "Debe ingresar el valor de la multa por dí­a";
     }
     console.log({ graceDays });
     if (graceDays === null) {
-      newErrors.graceDays = "Debe ingresar el niÂºmero de diÂ­as de gracia";
+      newErrors.graceDays = "Debe ingresar el número de dí­as de gracia";
     }
     if (billingType !== "SINGLE_ONLY") {
       if (!billingFrequency) {
@@ -449,14 +449,14 @@ export const FormCourseSeason = ({
                 <Alert.Description>
                   Esta temporada se encuentra actualmente{" "}
                   <strong>Activa</strong>. Por seguridad e integridad de los
-                  registros financieros y de membresiÂ­as, los datos
-                  estructurales (CategoriÂ­a, Temporada, GiÂ©nero) y la
+                  registros financieros y de membresí­as, los datos
+                  estructurales (Categorí­a, Temporada, Género) y la
                   configuración base de facturación están{" "}
                   <strong>bloqueados</strong>. <br />
-                  AiÂºn puedes ajustar los <strong>montos de cobro</strong>{" "}
-                  (MatriÂ­cula, Cuotas), cupos y liÂ­mites de edades, pero estos
+                  Aún puedes ajustar los <strong>montos de cobro</strong>{" "}
+                  (Matrí­cula, Cuotas), cupos y lí­mites de edades, pero estos
                   cambios afectarán{" "}
-                  <strong>iÂºnicamente a las nuevas inscripciones</strong>.
+                  <strong>únicamente a las nuevas inscripciones</strong>.
                 </Alert.Description>
               </Alert.Content>
             </Alert>
@@ -543,12 +543,12 @@ export const FormCourseSeason = ({
               variant="secondary"
               onPress={handleAddShift}
             >
-              + AiÂ±adir Otro Turno
+              + Añadir Otro Turno
             </Button>
           </div>
         )}
 
-        {/* <!-- Section 4: PoliÂ­ticas de Mora (Full Width Bottom) --> */}
+        {/* <!-- Section 4: Polí­ticas de Mora (Full Width Bottom) --> */}
         <div className="lg:col-span-12"></div>
         {/* <!-- Section 4: Estado Final (Floating Sticky-ish bottom or separate block) --> */}
         <div className="lg:col-span-12 flex justify-end items-center gap-8 p-4 lg:p-8 bg-surface-container-low rounded-full">

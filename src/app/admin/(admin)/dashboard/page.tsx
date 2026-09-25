@@ -181,7 +181,7 @@ export default function DashboardPage() {
               <div className="hidden sm:flex items-center gap-4 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-2xl">
                 <div className="w-12 h-12 bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center border border-sky-100 dark:border-slate-700">
                   <span className="text-[10px] font-bold text-sky-700">
-                    MAiÂ
+                    MAí
                   </span>
                   <span className="text-lg font-bold text-sky-900 dark:text-sky-400">
                     15
@@ -192,7 +192,7 @@ export default function DashboardPage() {
                     U13 Básquetbol - Mixto
                   </h4>
                   <p className="text-[11px] text-slate-500">
-                    10:00 - Pablo MiÂ©ndez
+                    10:00 - Pablo Méndez
                   </p>
                 </div>
                 <span className="material-symbols-outlined text-slate-300">
@@ -223,7 +223,7 @@ export default function DashboardPage() {
                 </div>
                 <p className="text-sm font-bold">Inscripción</p>
                 <p className="text-xs text-slate-400">
-                  Facundo GarciÂ­a a Básquet U17.
+                  Facundo Garcí­a a Básquet U17.
                 </p>
                 <span className="text-[9px] uppercase font-bold text-slate-500 tracking-wider">
                   Hace 12m

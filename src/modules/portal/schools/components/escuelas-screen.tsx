@@ -61,7 +61,7 @@ export function Escuelas({
               max={99}
               value={age}
               onChange={(e) => setAge(e.target.value)}
-              placeholder="Ej. 8 aiÂ±os"
+              placeholder="Ej. 8 años"
               className="w-full rounded-full border border-border bg-background py-3.5 pl-12 pr-4 text-sm font-500 text-primary outline-none transition-all focus:border-neon focus:shadow-neon-soft focus:ring-2 focus:ring-neon/30"
             />
           </div>
@@ -69,7 +69,7 @@ export function Escuelas({
         {parsedAge !== null && (
           <p className="mt-2 text-sm text-muted-foreground">
             {filtered.length} curso{filtered.length === 1 ? "" : "s"} para{" "}
-            <span className="font-600 text-neon">{parsedAge} aiÂ±os</span>.
+            <span className="font-600 text-neon">{parsedAge} años</span>.
           </p>
         )}
       </div>
@@ -102,7 +102,7 @@ export function Escuelas({
                       {course.discipline}
                     </span>
                     <span className="text-xs font-600 uppercase tracking-wide text-muted-foreground">
-                      {course.minAge}Ã¢ÂÂ{course.maxAge} aiÂ±os
+                      {course.minAge}Ã¢ÂÂ{course.maxAge} años
                     </span>
                   </div>
 

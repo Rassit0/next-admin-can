@@ -215,7 +215,7 @@ export const CourseSeasonActions = ({ courseSeason, baseUrl }: Props) => {
                 {selectedAction?.key === "cancel" && (
                   <div className="p-3 bg-warning/20 border border-warning/50 rounded-lg text-sm text-warning-800">
                     <strong>Atención:</strong> Cancelar el turno no lo elimina.
-                    La información histórica, membresiÂ­as, ciclos, deudas y
+                    La información histórica, membresí­as, ciclos, deudas y
                     cobros relacionados se conservan.
                   </div>
                 )}
@@ -337,7 +337,7 @@ export const CourseSeasonActions = ({ courseSeason, baseUrl }: Props) => {
                             className="text-muted-foreground"
                           />
                         </InputGroup.Prefix>
-                        <InputGroup.Input placeholder="Ej. Falta de alumnos, decisión tiÂ©cnica..." />
+                        <InputGroup.Input placeholder="Ej. Falta de alumnos, decisión técnica..." />
                       </InputGroup>
                     </TextField>
                   )}

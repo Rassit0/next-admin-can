@@ -235,7 +235,7 @@ export const FormPaymentPlan = ({
               : messages;
             return `${field}: ${msgList}`;
           })
-          .join("\n"); // Los separamos por saltos de liÂ­nea para el toast
+          .join("\n"); // Los separamos por saltos de lí­nea para el toast
       }
 
       // 2. Pasamos la descripción formateada al componente de notificaciones
@@ -407,7 +407,7 @@ export const FormPaymentPlan = ({
             >
               <Label>
                 Descuento Inscripción (%){" "}
-                <InfoTooltip text="Descuento aplicado al cargo iÂºnico de inscripción (MatriÂ­cula) al momento de registrarse en la temporada." />
+                <InfoTooltip text="Descuento aplicado al cargo único de inscripción (Matrí­cula) al momento de registrarse en la temporada." />
               </Label>
               <Input
                 variant="secondary"
@@ -484,7 +484,7 @@ export const FormPaymentPlan = ({
             >
               <Label>
                 Agrupar Cuotas (Pago Adelantado){" "}
-                <InfoTooltip text="Agrupa miÂºltiples meses en un solo recibo inicial. Ej: Si pones 2, al atleta se le cobrará el mes 1 y el mes 2 juntos en su primer diÂ­a." />
+                <InfoTooltip text="Agrupa múltiples meses en un solo recibo inicial. Ej: Si pones 2, al atleta se le cobrará el mes 1 y el mes 2 juntos en su primer dí­a." />
               </Label>
               <Input
                 variant="secondary"
@@ -503,8 +503,8 @@ export const FormPaymentPlan = ({
                 children={errors.advanceCycles && <> {errors.advanceCycles}</>}
               />
               <Description className="text-xs text-muted-foreground mt-1">
-                NiÂºmero de cuotas recurrentes que se cobrarán juntas en el
-                recibo inicial (Ej: 2 para adelantar un mes). MiÂ­nimo 1.
+                Número de cuotas recurrentes que se cobrarán juntas en el recibo
+                inicial (Ej: 2 para adelantar un mes). Mí­nimo 1.
               </Description>
             </TextField>
 
@@ -614,8 +614,8 @@ export const FormPaymentPlan = ({
               </Switch.Control>
               <div className="flex flex-col">
                 <Label className="text-sm text-foreground font-medium flex items-center">
-                  Obligar Pago iÂnico (Toda la temporada por adelantado)
-                  <InfoTooltip text="Fuerza a cobrar toda la temporada en un iÂºnico pago al momento de inscripción." />
+                  Obligar Pago Único (Toda la temporada por adelantado)
+                  <InfoTooltip text="Fuerza a cobrar toda la temporada en un único pago al momento de inscripción." />
                 </Label>
                 <p className="text-xs text-muted-foreground mt-1">
                   Activa esto para cobrar toda la temporada en un solo pago

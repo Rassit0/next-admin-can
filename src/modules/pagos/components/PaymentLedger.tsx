@@ -96,7 +96,7 @@ export const PaymentLedger = ({
             </Table.Column>
             <Table.Column id="method">
               <span className="text-xs font-semibold uppercase tracking-wide">
-                MiÂ©todo
+                Método
               </span>
             </Table.Column>
             <Table.Column allowsSorting id="status">
@@ -120,7 +120,7 @@ export const PaymentLedger = ({
           <Table.Body
             renderEmptyState={() => (
               <div className="py-10 text-center text-sm text-muted">
-                No hay registros de pago aiÂºn.
+                No hay registros de pago aún.
               </div>
             )}
           >

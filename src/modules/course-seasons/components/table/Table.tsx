@@ -79,7 +79,7 @@ export const TableCourseSeasons = ({ courseSeasons, urlBase }: Props) => {
 
             <Table.Column allowsSorting id="categoryName">
               <SortableColumnHeader id="categoryName">
-                CATEGORiÂAS
+                CATEGORíAS
               </SortableColumnHeader>
             </Table.Column>
 
@@ -112,8 +112,7 @@ export const TableCourseSeasons = ({ courseSeasons, urlBase }: Props) => {
                     No se encontraron registros
                   </span>
                   <span className="text-sm text-default-400">
-                    Intenta con otros tiÂ©rminos de biÂºsqueda o agrega uno
-                    nuevo.
+                    Intenta con otros términos de búsqueda o agrega uno nuevo.
                   </span>
                 </div>
               </div>

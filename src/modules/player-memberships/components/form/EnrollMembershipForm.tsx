@@ -134,7 +134,7 @@ export const EnrollMembershipForm = ({
       .substring(0, 10);
 
     if (!personKey) err.personKey = "Seleccione una persona.";
-    if (!categoryKey) err.categoryKey = "Seleccione una categoriÂ­a.";
+    if (!categoryKey) err.categoryKey = "Seleccione una categorí­a.";
     if (!planKey) err.planKey = "Seleccione un plan de pago.";
     if (!startedAt) err.startedAt = "Debe ingresar una fecha de inicio.";
     else if (startedAt < sStartStr || startedAt > sEndStr) {
@@ -160,7 +160,7 @@ export const EnrollMembershipForm = ({
       } else {
         if (!regDiscountPercent && !recDiscountPercent) {
           err.discountPercent =
-            "Debe ingresar al menos un porcentaje de descuento (MatriÂ­cula o Mensualidad).";
+            "Debe ingresar al menos un porcentaje de descuento (Matrí­cula o Mensualidad).";
         }
         if (regDiscountPercent && (isNaN(reg) || reg < 0 || reg > 100)) {
           err.regDiscountPercent =
@@ -479,8 +479,8 @@ export const EnrollMembershipForm = ({
                         {plan.isSinglePayment
                           ? teamSeason.billingConfig?.billingType ===
                             "MONTHLY_ONLY"
-                            ? `Pago iÂnico (Adelantado) - -${plan.recurringDiscountPercent}% (Mensualidades)`
-                            : `Pago iÂnico - -${plan.seasonFeeDiscountPercent}% (Temporada)`
+                            ? `Pago Único (Adelantado) - -${plan.recurringDiscountPercent}% (Mensualidades)`
+                            : `Pago Único - -${plan.seasonFeeDiscountPercent}% (Temporada)`
                           : `Insc. -${plan.registrationDiscountPercent}% - Mens. -${plan.recurringDiscountPercent}%`}
                       </span>
                     </div>
@@ -490,21 +490,21 @@ export const EnrollMembershipForm = ({
             </Select.Popover>
           </Select>
 
-          {/* CategoriÂ­a */}
+          {/* Categorí­a */}
           <Select
             className="w-full"
             variant="secondary"
-            aria-label="Seleccionar CategoriÂ­a"
+            aria-label="Seleccionar Categorí­a"
             value={categoryKey}
             onChange={(key: any) => setCategoryKey(key ? String(key) : null)}
             isDisabled={loadingCategories || categories.length === 0}
             isInvalid={!!errors.categoryKey || undefined}
           >
             <Label className="text-sm font-semibold flex items-center">
-              CategoriÂ­a
+              Categorí­a
               {selectedCategoryData ? (
                 <InfoTooltip
-                  text={`CategoriÂ­a: ${selectedCategoryData.category.name}. Edades: ${selectedCategoryData.category.minAge} a ${selectedCategoryData.category.maxAge || "Sin lÃ¯Â¿Â½mite"} aÃ¯Â¿Â½os. Temporada: ${new Date(teamSeason.season.startDate).toLocaleDateString()} - ${new Date(teamSeason.season.endDate).toLocaleDateString()}.`}
+                  text={`Categorí­a: ${selectedCategoryData.category.name}. Edades: ${selectedCategoryData.category.minAge} a ${selectedCategoryData.category.maxAge || "Sin lÃ¯Â¿Â½mite"} aÃ¯Â¿Â½os. Temporada: ${new Date(teamSeason.season.startDate).toLocaleDateString()} - ${new Date(teamSeason.season.endDate).toLocaleDateString()}.`}
                 />
               ) : (
                 <InfoTooltip text="La categorÃ¯Â¿Â½a en la que el jugador serÃ¯Â¿Â½ inscrito." />
@@ -618,7 +618,7 @@ export const EnrollMembershipForm = ({
                         }
                       >
                         <Label className="text-sm font-semibold">
-                          Desc. MatriÂ­cula (%)
+                          Desc. Matrí­cula (%)
                         </Label>
                         <Input
                           variant="secondary"
@@ -630,7 +630,7 @@ export const EnrollMembershipForm = ({
                           }
                         />
                         <p className="text-xs text-muted mt-1 leading-tight">
-                          Dejar vaciÂ­o si no aplica.
+                          Dejar vací­o si no aplica.
                         </p>
                         {(errors.regDiscountPercent ||
                           errors.discountPercent) && (
@@ -661,7 +661,7 @@ export const EnrollMembershipForm = ({
                           }
                         />
                         <p className="text-xs text-muted mt-1 leading-tight">
-                          Dejar vaciÂ­o si no aplica.
+                          Dejar vací­o si no aplica.
                         </p>
                         {(errors.recDiscountPercent ||
                           (errors.discountPercent &&
@@ -795,8 +795,8 @@ export const EnrollMembershipForm = ({
                         <Switch.Thumb />
                       </Switch.Control>
                       <Label className="text-sm flex items-center">
-                        Cobrar MatriÂ­cula (Opcional)
-                        <InfoTooltip text="Fuerza la creación de la factura por inscripción/matriÂ­cula a pesar de ser migrado, en caso de que aiÂºn deba la inscripción." />
+                        Cobrar Matrí­cula (Opcional)
+                        <InfoTooltip text="Fuerza la creación de la factura por inscripción/matrí­cula a pesar de ser migrado, en caso de que aún deba la inscripción." />
                       </Label>
                     </Switch.Content>
                   </Switch>

@@ -29,7 +29,7 @@ export const SiteFooter = ({ institution }: { institution: Institution }) => {
           </div>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-white">
             Institución polideportiva. Formando deportistas y comunidad desde
-            hace casi nueve diÂ©cadas.
+            hace casi nueve décadas.
           </p>
         </div>
 
@@ -71,14 +71,14 @@ export const SiteFooter = ({ institution }: { institution: Institution }) => {
               {defaultContact?.phone || "+591 73841415"}
             </li>
             <li>
-              <strong className="text-neon">TeliÂ©fono Fijo:</strong> 25233388
+              <strong className="text-neon">Teléfono Fijo:</strong> 25233388
             </li>
           </ul>
 
           {/* Redes Sociales */}
           <div className="mt-6">
             <h4 className="mb-4 font-heading text-sm font-700 uppercase tracking-[0.2em] text-neon">
-              SiÂ­guenos
+              Sí­guenos
             </h4>
             <div className="flex items-center gap-4">
               <Link

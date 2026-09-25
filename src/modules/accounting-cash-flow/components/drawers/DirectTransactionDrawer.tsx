@@ -132,9 +132,7 @@ export const DirectTransactionDrawer = ({
           return;
         }
         if (!s.paymentMethod) {
-          toast.error(
-            `Debe seleccionar un miÂ©todo de pago en la fila ${i + 1}`,
-          );
+          toast.error(`Debe seleccionar un método de pago en la fila ${i + 1}`);
           return;
         }
         const sAmount = Number(s.amount);
@@ -345,11 +343,11 @@ export const DirectTransactionDrawer = ({
                 }}
                 isRequired
               >
-                <Label className="text-sm font-semibold">CategoriÂ­a</Label>
+                <Label className="text-sm font-semibold">Categorí­a</Label>
                 <ComboBox.InputGroup>
                   <Input
                     variant="secondary"
-                    placeholder="Seleccione una categoriÂ­a"
+                    placeholder="Seleccione una categorí­a"
                   />
                   <ComboBox.Trigger />
                 </ComboBox.InputGroup>
@@ -408,7 +406,7 @@ export const DirectTransactionDrawer = ({
                   htmlFor="split-payment-toggle"
                   className="text-sm font-semibold cursor-pointer"
                 >
-                  Pago dividido (miÂºltiples miÂ©todos o cuentas)
+                  Pago dividido (múltiples métodos o cuentas)
                 </Label>
               </div>
 
@@ -529,12 +527,12 @@ export const DirectTransactionDrawer = ({
                           isRequired
                         >
                           <Label className="text-sm font-semibold">
-                            MiÂ©todo de Pago
+                            Método de Pago
                           </Label>
                           <ComboBox.InputGroup>
                             <Input
                               variant="secondary"
-                              placeholder="Seleccione el miÂ©todo de pago"
+                              placeholder="Seleccione el método de pago"
                             />
                             <ComboBox.Trigger />
                           </ComboBox.InputGroup>

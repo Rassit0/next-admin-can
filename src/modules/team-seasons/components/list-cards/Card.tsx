@@ -122,7 +122,7 @@ export const CardTeamSeason = ({ teamSeason, urlBase }: Props) => {
             <span className="material-symbols-outlined text-lg">
               assessment
             </span>
-            Ver Reporte / EstadiÂ­sticas
+            Ver Reporte / Estadí­sticas
           </Button>
           <Button className="w-full py-3.5 bg-surface-container-highest text-on-surface-variant rounded-full font-bold text-md flex items-center justify-center gap-2 hover:bg-surface-variant transition-all">
             <span className="material-symbols-outlined text-lg">
@@ -215,7 +215,7 @@ export const CardTeamSeason = ({ teamSeason, urlBase }: Props) => {
         <div className="mt-2">
           <div className="flex flex-col gap-2 mb-3">
             <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
-              CategoriÂ­as
+              Categorí­as
             </h4>
             <div className="flex flex-wrap gap-2 w-full">
               <div className="flex-1 min-w-35">

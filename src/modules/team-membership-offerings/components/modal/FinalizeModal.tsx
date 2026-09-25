@@ -49,7 +49,7 @@ export const FinalizeModal = ({ isOpen, onOpenChange, teamSeason }: Props) => {
               : messages;
             return `${field}: ${msgList}`;
           })
-          .join("\n"); // Los separamos por saltos de liÂ­nea para el toast
+          .join("\n"); // Los separamos por saltos de lí­nea para el toast
       }
 
       // 2. Pasamos la descripción formateada al componente de notificaciones
@@ -94,7 +94,7 @@ export const FinalizeModal = ({ isOpen, onOpenChange, teamSeason }: Props) => {
                   ÃÂ¿Estás seguro de finalizar la temporada?
                 </Alert.Title>
                 <Alert.Description>
-                  Se bloquearán nuevas inscripciones y las membresiÂ­as activas
+                  Se bloquearán nuevas inscripciones y las membresí­as activas
                   se moverán al historial.
                 </Alert.Description>
               </Alert.Content>
@@ -142,7 +142,7 @@ export const FinalizeModal = ({ isOpen, onOpenChange, teamSeason }: Props) => {
               isPending={isLoading}
               variant="danger"
             >
-              SiÂ­, finalizar
+              Sí­, finalizar
             </Button>
           </AlertDialog.Footer>
         </AlertDialog.Dialog>

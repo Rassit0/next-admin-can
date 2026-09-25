@@ -65,7 +65,7 @@ export const DeleteHomeDisciplineModal = ({ isOpen, setIsOpen, id }: Props) => {
               onPress={handleDelete}
               isPending={isLoading}
             >
-              SiÂ­, eliminar
+              Sí­, eliminar
             </Button>
           </Modal.Footer>
         </Modal.Dialog>

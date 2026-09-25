@@ -84,7 +84,7 @@ export const FormTeam = ({
               : messages;
             return `${field}: ${msgList}`;
           })
-          .join("\n"); // Los separamos por saltos de liÂ­nea para el toast
+          .join("\n"); // Los separamos por saltos de lí­nea para el toast
       }
 
       // 2. Pasamos la descripción formateada al componente de notificaciones

@@ -32,7 +32,7 @@ export function ContactClient({ institution }: ContactClientProps) {
           transition={{ delay: 0.1 }}
           className="mt-4 text-muted-foreground mx-auto max-w-2xl text-lg"
         >
-          Estamos aquiÂ­ para ayudarte. Contáctate con la institución para más
+          Estamos aquí­ para ayudarte. Contáctate con la institución para más
           información sobre inscripciones, eventos o consultas generales.
         </motion.p>
       </div>
@@ -136,7 +136,7 @@ export function ContactClient({ institution }: ContactClientProps) {
           className="rounded-3xl border border-border bg-card p-8 md:p-10 shadow-xl"
         >
           <h2 className="font-heading text-3xl font-700 uppercase text-primary mb-8">
-            EnviÂ­anos un Mensaje
+            Enví­anos un Mensaje
           </h2>
 
           <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
@@ -151,7 +151,7 @@ export function ContactClient({ institution }: ContactClientProps) {
                 type="text"
                 id="name"
                 className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm transition-colors focus:border-neon focus:outline-none focus:ring-1 focus:ring-neon"
-                placeholder="Juan PiÂ©rez"
+                placeholder="Juan Pérez"
               />
             </div>
 
@@ -201,7 +201,7 @@ export function ContactClient({ institution }: ContactClientProps) {
                 id="message"
                 rows={4}
                 className="w-full resize-none rounded-xl border border-border bg-background px-4 py-3 text-sm transition-colors focus:border-neon focus:outline-none focus:ring-1 focus:ring-neon"
-                placeholder="ÃÂ¿En quiÂ© te podemos ayudar?"
+                placeholder="ÃÂ¿En qué te podemos ayudar?"
               />
             </div>
 

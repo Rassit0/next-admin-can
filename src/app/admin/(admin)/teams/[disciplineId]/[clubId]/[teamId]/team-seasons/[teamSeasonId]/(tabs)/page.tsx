@@ -142,17 +142,17 @@ export default async function TeamSeasonDashboardPage({ params }: Props) {
               {teamSeason.billingConfig?.billingType === "MONTHLY_ONLY" &&
                 "Sólo Recurrente"}
               {teamSeason.billingConfig?.billingType === "SINGLE_ONLY" &&
-                "Sólo Pago iÂnico"}
+                "Sólo Pago Único"}
               {teamSeason.billingConfig?.billingType === "BOTH" &&
-                "Pago iÂnico o Recurrente"}
+                "Pago Único o Recurrente"}
             </p>
           </div>
           {teamSeason.billingConfig?.billingType !== "SINGLE_ONLY" && (
             <>
               <div>
                 <p className="text-xs text-muted-foreground mb-1 uppercase font-semibold flex items-center">
-                  MatriÂ­cula
-                  <InfoTooltip text="Costo iÂºnico que se cobra al inicio (o prorrateado) por ingresar al equipo en esta temporada." />
+                  Matrí­cula
+                  <InfoTooltip text="Costo único que se cobra al inicio (o prorrateado) por ingresar al equipo en esta temporada." />
                 </p>
                 <p className="font-bold text-sm">
                   {teamSeason.billingConfig?.registrationFee
@@ -184,7 +184,7 @@ export default async function TeamSeasonDashboardPage({ params }: Props) {
             <div>
               <p className="text-xs text-muted-foreground mb-1 uppercase font-semibold flex items-center">
                 Tarifa Temporada Completa
-                <InfoTooltip text="Costo de la temporada completa si el modelo permite o requiere Pago iÂnico (esquema cerrado)." />
+                <InfoTooltip text="Costo de la temporada completa si el modelo permite o requiere Pago Único (esquema cerrado)." />
               </p>
               <p className="font-bold text-sm">
                 {teamSeason.billingConfig?.seasonFee
@@ -196,12 +196,12 @@ export default async function TeamSeasonDashboardPage({ params }: Props) {
           <div className="col-span-full">
             <p className="text-xs text-muted-foreground mb-2 uppercase font-semibold flex items-center">
               Opciones de Prorrateo Activas
-              <InfoTooltip text="Si el jugador ingresa tarde (despuiÂ©s de la fecha de inicio del ciclo), el sistema cobrará la fracción correspondiente matemáticamente a los diÂ­as activos de las opciones que veas aquiÂ­ marcadas." />
+              <InfoTooltip text="Si el jugador ingresa tarde (después de la fecha de inicio del ciclo), el sistema cobrará la fracción correspondiente matemáticamente a los dí­as activos de las opciones que veas aquí­ marcadas." />
             </p>
             <div className="flex flex-wrap gap-2">
               {teamSeason.billingConfig?.prorateRegistrationFee && (
                 <Chip size="sm" variant="soft" color="default">
-                  MatriÂ­cula
+                  Matrí­cula
                 </Chip>
               )}
               {teamSeason.billingConfig?.prorateFirstRecurringFee && (
@@ -211,12 +211,12 @@ export default async function TeamSeasonDashboardPage({ params }: Props) {
               )}
               {teamSeason.billingConfig?.prorateLastRecurringFee && (
                 <Chip size="sm" variant="soft" color="default">
-                  iÂltimo Cargo Recurrente
+                  Último Cargo Recurrente
                 </Chip>
               )}
               {teamSeason.billingConfig?.prorateSeasonFee && (
                 <Chip size="sm" variant="soft" color="default">
-                  Tarifa Temporada (Pago iÂnico)
+                  Tarifa Temporada (Pago Único)
                 </Chip>
               )}
               {!teamSeason.billingConfig?.prorateRegistrationFee &&
@@ -234,11 +234,11 @@ export default async function TeamSeasonDashboardPage({ params }: Props) {
         <Alert status="accent">
           <Alert.Indicator />
           <Alert.Content>
-            <Alert.Title>Arquitectura Multi-CategoriÂ­a</Alert.Title>
+            <Alert.Title>Arquitectura Multi-Categorí­a</Alert.Title>
             <Alert.Description>
               Esta temporada es un contenedor global comercial y financiero. Las
-              restricciones de edades, cupos y giÂ©nero se definen
-              individualmente en cada CategoriÂ­a de esta temporada.
+              restricciones de edades, cupos y género se definen individualmente
+              en cada Categorí­a de esta temporada.
             </Alert.Description>
           </Alert.Content>
         </Alert>

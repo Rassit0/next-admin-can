@@ -36,10 +36,10 @@ export const FinalizeCategoryModal = ({
 
       if (res.error) {
         toast.error(
-          res.message || "Ocurrió un error al finalizar la categoriÂ­a",
+          res.message || "Ocurrió un error al finalizar la categorí­a",
         );
       } else {
-        toast.success("CategoriÂ­a finalizada exitosamente");
+        toast.success("Categorí­a finalizada exitosamente");
         state.close();
         if (onSuccess) onSuccess();
       }
@@ -72,7 +72,7 @@ export const FinalizeCategoryModal = ({
                   <HugeiconsIcon icon={CheckmarkBadge01Icon} />
                 </Modal.Icon>
                 <Modal.Heading>
-                  Finalizar CategoriÂ­a Anticipadamente
+                  Finalizar Categorí­a Anticipadamente
                 </Modal.Heading>
                 <p className="mt-1.5 text-sm leading-5 text-muted">
                   {category.category.name} - {category.gender}
@@ -86,7 +86,7 @@ export const FinalizeCategoryModal = ({
                     </p>
                     <ul className="list-disc pl-4 space-y-1 mt-2 text-warning-700">
                       <li>
-                        Todas las membresiÂ­as activas serán finalizadas de
+                        Todas las membresí­as activas serán finalizadas de
                         inmediato.
                       </li>
                       <li>

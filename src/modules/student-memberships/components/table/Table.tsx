@@ -44,7 +44,7 @@ export const TableMemberships = ({
     <Table>
       <Table.ScrollContainer>
         <Table.Content
-          aria-label="MembresiÂ­as de estudiantes"
+          aria-label="Membresí­as de estudiantes"
           className="min-w-200"
         >
           <Table.Header className="bg-surface-secondary">
@@ -61,7 +61,7 @@ export const TableMemberships = ({
               <Table.Column allowsSorting id="courseSeason">
                 <SortableColumnHeader id="courseSeason">
                   <span className="text-xs font-semibold uppercase tracking-wide">
-                    Curso / CategoriÂ­a
+                    Curso / Categorí­a
                   </span>
                 </SortableColumnHeader>
               </Table.Column>
@@ -93,7 +93,7 @@ export const TableMemberships = ({
             <Table.Column allowsSorting id="status">
               <SortableColumnHeader id="status">
                 <span className="text-xs font-semibold uppercase tracking-wide">
-                  MembresiÂ­a
+                  Membresí­a
                 </span>
               </SortableColumnHeader>
             </Table.Column>
@@ -111,7 +111,7 @@ export const TableMemberships = ({
           <Table.Body
             renderEmptyState={() => (
               <div className="py-10 text-center text-sm text-muted">
-                AiÂºn no hay estudiantes inscritos en esta temporada.
+                Aún no hay estudiantes inscritos en esta temporada.
               </div>
             )}
           >

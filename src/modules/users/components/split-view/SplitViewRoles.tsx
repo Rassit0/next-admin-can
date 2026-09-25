@@ -133,7 +133,7 @@ export const SplitViewRoles: React.FC<Props> = ({
     setConfirmDialog({
       isOpen: true,
       title: "Eliminar Rol",
-      description: `ÃÂ¿Está seguro de eliminar el rol "${selectedRole.name}"? Esta acción fallará si hay usuarios asignados a iÂ©l.`,
+      description: `ÃÂ¿Está seguro de eliminar el rol "${selectedRole.name}"? Esta acción fallará si hay usuarios asignados a él.`,
       status: "danger",
       confirmText: "Eliminar",
       onConfirm: async () => {
