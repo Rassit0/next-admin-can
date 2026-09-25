@@ -35,7 +35,7 @@ export async function handleServerAction<T>(
         const finalRedirectTo = callbackUrl || referer || undefined;
 
         if (isServerAction) {
-          // Si estamos en un Server Action (ej. click en botón), Si podemos modificar cookies
+          // Si estamos en un Server Action (ej. click en botón), SÍ podemos modificar cookies
           await logoutAction(finalRedirectTo);
         } else {
           // Si estamos en un Server Component (ej. cargando la página), NO podemos modificar cookies

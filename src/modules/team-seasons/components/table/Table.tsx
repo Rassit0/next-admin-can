@@ -62,7 +62,7 @@ export const TableTeamSeasons = ({ teamSeasons, urlBase }: Props) => {
             </Table.Column>
 
             <Table.Column allowsSorting id="categories">
-              CATEGORiAS
+              CATEGORÍAS
             </Table.Column>
 
             <Table.Column allowsSorting id="createdAt">

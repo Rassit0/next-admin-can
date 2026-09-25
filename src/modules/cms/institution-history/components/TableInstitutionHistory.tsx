@@ -15,8 +15,8 @@ export const TableInstitutionHistory = ({
       <Table.ScrollContainer>
         <Table.Content aria-label="Línea de tiempo">
           <Table.Header>
-            <Table.Column isRowHeader>AiO</Table.Column>
-            <Table.Column>TiTULO</Table.Column>
+            <Table.Column isRowHeader>AÑO</Table.Column>
+            <Table.Column>TÍTULO</Table.Column>
             <Table.Column>ORDEN</Table.Column>
             <Table.Column>ESTADO</Table.Column>
             <Table.Column className="text-right">ACCIONES</Table.Column>

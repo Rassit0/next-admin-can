@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Avatar, Popover, Label, Button } from "@heroui/react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { UserIcon, Logout01Icon } from "@hugeicons/core-free-icons";
@@ -14,8 +14,10 @@ interface Props {
 
 export const UserAccountDropdown = ({ user, person }: Props) => {
   const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleAction = (key: React.Key) => {
+    setIsOpen(false);
     if (key === "logout") {
       logoutAction();
     }
@@ -44,7 +46,7 @@ export const UserAccountDropdown = ({ user, person }: Props) => {
         </p>
       </div>
 
-      <Popover>
+      <Popover isOpen={isOpen} onOpenChange={setIsOpen}>
         <Popover.Trigger>
           <div className="cursor-pointer rounded-full border-2 border-primary-container/20">
             <Avatar size="sm">

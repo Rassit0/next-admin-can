@@ -67,7 +67,7 @@ export const TableCategories = ({ categories, disciplinesOptions }: Props) => {
             </Table.Column> */}
 
             <Table.Column isRowHeader allowsSorting id="name">
-              <SortableColumnHeader id="name">CATEGORiA</SortableColumnHeader>
+              <SortableColumnHeader id="name">CATEGORÍA</SortableColumnHeader>
             </Table.Column>
 
             <Table.Column allowsSorting id="maxAge">

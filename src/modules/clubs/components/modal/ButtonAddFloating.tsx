@@ -5,7 +5,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import React, { useState, useRef, useEffect } from "react";
 
-// CONSTANTE DE INGENIERiA: Espacio que queremos dejar al final (en píxeles)
+// CONSTANTE DE INGENIERÍA: Espacio que queremos dejar al final (en píxeles)
 // Ej: 16px es un espacio estándar de Tailwind (p-4 o m-4)
 const FLOATING_MARGIN_BOTTOM = 16;
 
