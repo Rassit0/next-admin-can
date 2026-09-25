@@ -11,6 +11,7 @@ export interface Data {
 export interface Breakdown {
   totalBaseAmount: number;
   totalDiscount: number;
+  totalLateFee?: number;
   totalNetAmount: number;
   currency: string;
 }
@@ -25,4 +26,5 @@ export interface Charge {
   dueDate: Date;
   billingYear: number;
   billingMonth: number;
+  parentChargeType?: string;
 }

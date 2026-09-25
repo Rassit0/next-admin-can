@@ -132,7 +132,9 @@ export const InvoicePreview = ({
                           ? "Cuota Recurrente"
                           : line.type === "SEASON_FEE"
                             ? "Pago de Temporada (Adelantado)"
-                            : line.type}
+                            : line.type === "LATE_FEE"
+                              ? "Recargo por Mora"
+                              : line.type}
                     </p>
                     <p className="text-[11px] text-muted">{line.description}</p>
                   </div>
@@ -181,6 +183,17 @@ export const InvoicePreview = ({
                   )}
                 </span>
               </div>
+              {breakdown.data.breakdown.totalLateFee ? (
+                <div className="flex items-center justify-between text-warning">
+                  <span>Moras</span>
+                  <span className="tabular-nums">
+                    +{formatCurrency(
+                      breakdown.data.breakdown.totalLateFee,
+                      breakdown.data.breakdown.currency,
+                    )}
+                  </span>
+                </div>
+              ) : null}
               {breakdown.data.breakdown.totalDiscount !== 0 ? (
                 <div
                   className={`flex items-center justify-between ${breakdown.data.breakdown.totalDiscount < 0 ? "text-success" : "text-danger"}`}
