@@ -1,7 +1,7 @@
 import { itemsWebNavigation } from "@/config";
 import { filterNavigation } from "@/shared/helpers/permissions";
 import { NavigationConfig } from "@/config/navigation";
-import { auth } from "@/auth";
+import { getCurrentUserContext } from "@/shared/helpers/server-context";
 import { getPermissionsArray } from "@/modules/roles";
 import { getClubsOptions, SelectClub } from "@/modules/clubs";
 import { getInstitutionContext } from "@/modules/organizations";
@@ -14,15 +14,8 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth();
-  let userPermissions: string[] = [];
-
-  if (session?.user?.roleId) {
-    const permRes = await getPermissionsArray({ roleId: session.user.roleId });
-    if (!permRes.error && permRes.data) {
-      userPermissions = permRes.data;
-    }
-  }
+  const context = await getCurrentUserContext();
+  const userPermissions = context?.permissions || [];
 
   const allowedItems = filterNavigation(itemsWebNavigation as NavigationConfig[], userPermissions);
 
@@ -46,7 +39,7 @@ export default async function AdminLayout({
         <div className="max-w-400 mx-auto">
           {/* Container for ultra-wide screens */}
           {/* <!-- TopNavBar --> */}
-          <Header />
+          <Header user={context?.user} person={context?.person} />
           {/* <!-- Dashboard Canvas --> */}
           <main className="page-content">
             {/* <!-- Header Section --> */}

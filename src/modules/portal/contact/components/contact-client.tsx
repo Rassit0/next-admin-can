@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, User, Send, CheckCircle2 } from "lucide-react";
+import { Mail, Phone, MapPin, User, CheckCircle2, MessageCircle } from "lucide-react";
 import { mockContacts } from "@/lib/mock-data";
 import { Institution } from "@/modules/portal/institutions/interfaces/institution.interface";
 
@@ -128,91 +128,29 @@ export function ContactClient({ institution }: ContactClientProps) {
           </div>
         </motion.div>
 
-        {/* Contact Form */}
+        {/* Contact WhatsApp */}
         <motion.div
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
-          className="rounded-3xl border border-border bg-card p-8 md:p-10 shadow-xl"
+          className="rounded-3xl border border-border bg-card p-8 md:p-10 shadow-xl flex flex-col items-center justify-center text-center"
         >
-          <h2 className="font-heading text-3xl font-700 uppercase text-primary mb-8">
-            Enví­anos un Mensaje
+          <h2 className="font-heading text-3xl font-700 uppercase text-primary mb-6">
+            Escríbenos por WhatsApp
           </h2>
+          <p className="text-muted-foreground mb-10 text-lg">
+            ¿Tienes alguna consulta? Escríbenos directamente a nuestro WhatsApp para una atención más rápida y personalizada.
+          </p>
 
-          <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
-            <div className="space-y-2">
-              <label
-                htmlFor="name"
-                className="text-sm font-600 uppercase tracking-wide text-primary"
-              >
-                Nombre Completo
-              </label>
-              <input
-                type="text"
-                id="name"
-                className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm transition-colors focus:border-neon focus:outline-none focus:ring-1 focus:ring-neon"
-                placeholder="Juan Pérez"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label
-                htmlFor="email"
-                className="text-sm font-600 uppercase tracking-wide text-primary"
-              >
-                Correo Electrónico
-              </label>
-              <input
-                type="email"
-                id="email"
-                className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm transition-colors focus:border-neon focus:outline-none focus:ring-1 focus:ring-neon"
-                placeholder="juan@ejemplo.com"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label
-                htmlFor="department"
-                className="text-sm font-600 uppercase tracking-wide text-primary"
-              >
-                Departamento a contactar
-              </label>
-              <select
-                id="department"
-                className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm transition-colors focus:border-neon focus:outline-none focus:ring-1 focus:ring-neon"
-                defaultValue={defaultContact?.id}
-              >
-                {contacts.map((c) => (
-                  <option key={c.id} value={c.id}>
-                    {c.department}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="space-y-2">
-              <label
-                htmlFor="message"
-                className="text-sm font-600 uppercase tracking-wide text-primary"
-              >
-                Tu Mensaje
-              </label>
-              <textarea
-                id="message"
-                rows={4}
-                className="w-full resize-none rounded-xl border border-border bg-background px-4 py-3 text-sm transition-colors focus:border-neon focus:outline-none focus:ring-1 focus:ring-neon"
-                placeholder="¿En qué te podemos ayudar?"
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="group flex w-full items-center justify-center gap-2 rounded-xl bg-neon px-8 py-4 text-sm font-700 uppercase tracking-wider text-primary transition-all hover:bg-neon/90 hover:shadow-neon"
-            >
-              <span>Enviar Mensaje</span>
-              <Send className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-            </button>
-          </form>
+          <a
+            href={`https://wa.me/${defaultContact?.phone?.replace(/\D/g, "") || ""}?text=Hola,%20me%20comunico%20desde%20la%20página%20web.`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex w-full max-w-sm items-center justify-center gap-3 rounded-xl bg-[#25D366] px-8 py-5 text-base font-700 uppercase tracking-wider text-white transition-all hover:bg-[#128C7E] shadow-[0_4px_14px_0_rgba(37,211,102,0.39)] hover:shadow-[0_6px_20px_rgba(37,211,102,0.23)] hover:-translate-y-1"
+          >
+            <MessageCircle className="h-6 w-6" />
+            <span>Chat en WhatsApp</span>
+          </a>
         </motion.div>
       </div>
     </div>

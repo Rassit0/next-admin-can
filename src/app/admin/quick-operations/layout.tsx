@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+import { getCurrentUserContext } from "@/shared/helpers/server-context";
 import { getPermissionsArray } from "@/modules/roles";
 import { Header, HeaderPage, TabsRouteNavigation, ModuleGuard } from "@/ui";
 import { redirect } from "next/navigation";
@@ -15,20 +15,13 @@ interface LayoutProps {
 }
 
 export default async function QuickOperationsLayout({ children }: LayoutProps) {
-  const session = await auth();
+  const context = await getCurrentUserContext();
 
-  if (!session) {
+  if (!context?.user) {
     redirect("/login");
   }
 
-  let userPermissions: string[] = [];
-
-  if (session?.user?.roleId) {
-    const permRes = await getPermissionsArray({ roleId: session.user.roleId });
-    if (!permRes.error && permRes.data) {
-      userPermissions = permRes.data;
-    }
-  }
+  const userPermissions = context.permissions || [];
 
   const allowedRoutes = getAllowedChildRoutes(
     "quick-operations",
@@ -53,6 +46,8 @@ export default async function QuickOperationsLayout({ children }: LayoutProps) {
           {/* <!-- TopNavBar --> */}
           <Header
             showLogo={true}
+            user={context?.user}
+            person={context?.person}
             actions={
               <Link href="/admin/dashboard">
                 <Button variant="outline" size="sm">

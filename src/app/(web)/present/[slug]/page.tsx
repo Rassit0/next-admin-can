@@ -23,7 +23,7 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
         </h1>
         <p className="text-primary/70 text-lg">
           No fue posible cargar esta noticia en este momento. Por favor, intenta
-          más tarde.
+          mi¡s tarde.
         </p>
       </div>
     );

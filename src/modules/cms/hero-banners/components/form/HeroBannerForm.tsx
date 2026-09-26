@@ -236,7 +236,7 @@ export const HeroBannerForm = ({
           <TextField variant="secondary">
             <Label>Redirección (URL o Ruta)</Label>
             <Input
-              placeholder="Ej: /actualidad o https://google.com"
+              placeholder="Ej: /present o https://google.com"
               value={formData.redirectTo || ""}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               onChange={(e: any) =>

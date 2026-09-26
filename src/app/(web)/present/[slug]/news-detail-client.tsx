@@ -8,11 +8,11 @@ import type { PublicNewsDetail } from "@/modules/portal/news/actions/news.action
 
 export function NewsDetailClient({ article }: { article: PublicNewsDetail }) {
   const publishDate = new Date(article.publishedAt);
-  
+
   return (
     <article className="mx-auto max-w-4xl px-4 py-24 sm:px-6 lg:px-8">
       <Link
-        href="/actualidad"
+        href="/present"
         className="mb-8 inline-flex items-center gap-2 text-sm font-600 uppercase tracking-wide text-neon transition-colors hover:text-neon/80"
       >
         <ArrowLeft className="h-4 w-4" />
@@ -32,7 +32,10 @@ export function NewsDetailClient({ article }: { article: PublicNewsDetail }) {
             </span>
             <span className="flex items-center gap-1">
               <Clock className="h-4 w-4" />
-              {publishDate.toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" })}
+              {publishDate.toLocaleTimeString("es-ES", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
             </span>
             {article.authorName && (
               <span className="flex items-center gap-1">
@@ -87,7 +90,9 @@ export function NewsDetailClient({ article }: { article: PublicNewsDetail }) {
       {article.tags && article.tags.length > 0 && (
         <div className="mt-12 flex flex-wrap items-center gap-2 border-t border-border pt-8">
           <Tag className="h-5 w-5 text-muted-foreground" />
-          <span className="text-sm font-600 uppercase text-muted-foreground">Etiquetas:</span>
+          <span className="text-sm font-600 uppercase text-muted-foreground">
+            Etiquetas:
+          </span>
           {article.tags.map((tag) => (
             <span
               key={tag}
