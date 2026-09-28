@@ -1,0 +1,47 @@
+/* puck-theme.css
+ * Integra el shell de Puck Editor con el sistema de tokens de HeroUI/next-themes
+ * Soporta Dark Mode de manera dinámica mapeando las custom properties nativas de Puck 0.23.0
+ */
+
+[data-theme="dark"],
+.dark {
+  /* --- Superficies y Fondos --- */
+  --puck-color-bg: var(--background);
+  --puck-color-surface: var(--surface);
+  --puck-color-surface-muted: var(--surface-secondary);
+  --puck-color-surface-subtle: var(--surface-tertiary);
+  --puck-color-surface-inverse: var(--foreground);
+  --puck-color-bg-disabled: var(--default);
+
+  /* --- Textos e Iconos --- */
+  --puck-color-text: var(--foreground);
+  --puck-color-text-secondary: var(--muted);
+  --puck-color-text-muted: var(--muted);
+  --puck-color-text-subtle: var(--muted);
+  --puck-color-text-inverse: var(--background);
+  --puck-color-text-disabled: var(--muted);
+
+  /* --- Bordes y Separadores --- */
+  --puck-color-border: var(--border);
+  --puck-color-border-hover: var(--default);
+  --puck-color-border-muted: var(--border);
+  --puck-color-border-inverse: var(--default);
+
+  /* --- Estados Interactivos --- */
+  --puck-color-interactive: var(--primary);
+  --puck-color-interactive-active: var(--primary);
+  --puck-color-interactive-hover: var(--primary);
+  --puck-color-interactive-subtle: var(--surface-secondary);
+  --puck-color-interactive-soft: var(--surface-tertiary);
+  --puck-color-interactive-soft-hover: var(--surface-secondary);
+  --puck-color-interactive-neutral-hover: var(--surface-secondary);
+
+  /* --- Accesibilidad y Foco --- */
+  --puck-color-focus-ring: var(--focus);
+  --puck-color-selection-bg: var(--primary);
+  --puck-color-selection-border: var(--primary);
+
+  /* --- Indicadores Drag & Drop --- */
+  --puck-color-highlight: var(--neon);
+  --puck-color-overlay-backdrop: rgba(0, 0, 0, 0.5);
+}

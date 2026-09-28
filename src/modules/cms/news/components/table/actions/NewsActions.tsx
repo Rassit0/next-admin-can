@@ -15,7 +15,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { INews } from "../../../interfaces/news.interface";
 import { editNews } from "../../../actions/edit";
-import { EditNewsModal } from "../../modal/EditNewsModal";
 import { DeleteNewsModal } from "../../modal/DeleteNewsModal";
 
 interface Props {
@@ -25,8 +24,6 @@ interface Props {
 export const NewsActions = ({ item }: Props) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-
-  const [isOpenEditModal, setIsOpenEditModal] = useState(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
 
   const handleStatusChange = async (newStatus: "DRAFT" | "PUBLISHED" | "ARCHIVED") => {
@@ -49,7 +46,7 @@ export const NewsActions = ({ item }: Props) => {
         key: "edit",
         label: "Editar",
         icon: Edit02Icon,
-        onPress: () => setIsOpenEditModal(true),
+        onPress: () => router.push(`/admin/web/news/${item.id}/edit`),
       },
     ];
 
@@ -141,15 +138,6 @@ export const NewsActions = ({ item }: Props) => {
         </Dropdown.Popover>
       </Dropdown>
       
-      {isOpenEditModal && (
-        <EditNewsModal
-          news={item}
-          isOpen={isOpenEditModal}
-          setIsOpen={setIsOpenEditModal}
-          showButton={false}
-        />
-      )}
-
       {isOpenDeleteModal && (
         <DeleteNewsModal
           id={item.id}

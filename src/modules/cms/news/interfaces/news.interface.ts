@@ -15,6 +15,8 @@ export interface INews {
   publishedAt: string | null; // o Date si se parsea
   createdAt: string;
   updatedAt: string;
+  structuredContent?: any;
+  contentSchemaVersion?: number | null;
 }
 
 export interface PostNewsInterface {

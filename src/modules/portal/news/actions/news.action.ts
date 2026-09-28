@@ -18,6 +18,8 @@ export interface PublicNewsDetail extends PublicNews {
   content: string;
   tags: string[];
   authorName: string | null;
+  structuredContent?: any;
+  contentSchemaVersion?: number;
 }
 
 export interface PublicNewsCategory {

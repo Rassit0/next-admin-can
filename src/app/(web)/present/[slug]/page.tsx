@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { NewsDetailClient } from "./news-detail-client";
+import { NewsDetail } from "./news-detail";
 import { getPublicNewsBySlug } from "@/modules/portal/news/actions/news.action";
 
 interface NewsDetailPageProps {
@@ -33,5 +33,5 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
     notFound();
   }
 
-  return <NewsDetailClient article={newsResponse.data} />;
+  return <NewsDetail article={newsResponse.data} />;
 }

@@ -1,4 +1,4 @@
-import { getNews, AddNewsModal, TableNews } from "@/modules/cms/news";
+import { getNews, TableNews } from "@/modules/cms/news";
 import { ButtonRedirect, HeaderPage } from "@/ui";
 import { resolvePageData } from "@/utils/resolvePageData";
 import {
@@ -34,7 +34,10 @@ export default async function NewsPage() {
                 href="/admin/web/news/categories"
                 label="Categorías"
               />
-              <AddNewsModal buttonFloatingMobile />
+              <ButtonRedirect
+                href="/admin/web/news/new"
+                label="Agregar Noticia"
+              />
             </>
           }
         />
