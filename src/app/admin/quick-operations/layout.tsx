@@ -9,6 +9,7 @@ import { itemsNavigation } from "@/config";
 import { getAllowedChildRoutes } from "@/shared/helpers/permissions";
 import { NavigationConfig } from "@/config/navigation";
 import { QuickOperationsPersonSelector } from "@/modules/quick-operations/components/QuickOperationsPersonSelector";
+import { TriggerLateFeesButton } from "@/modules/quick-operations/components/TriggerLateFeesButton";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -60,11 +61,12 @@ export default async function QuickOperationsLayout({ children }: LayoutProps) {
           <main className="page-content">
             {/* <!-- Header Section --> */}
             <div className="flex flex-col gap-4 max-w-300 mx-auto pb-10">
-              <div className="mb-2">
+              <div className="mb-2 flex items-center justify-between">
                 <HeaderPage
                   title="Operaciones Rápidas"
                   description="Gestón unificada de secretarí­a, operaciones y flujo de caja."
                 />
+                <TriggerLateFeesButton />
               </div>
 
               <TabsRouteNavigation

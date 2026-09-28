@@ -131,7 +131,7 @@ export function Noticias({
                         sizes="(max-width: 768px) 100vw, 33vw"
                       />
                     ) : (
-                      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-primary/10 to-primary/20 flex items-center justify-center transition-colors duration-500 group-hover:from-primary/10 group-hover:to-primary/30">
+                      <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-primary/10 to-primary/20 flex items-center justify-center transition-colors duration-500 group-hover:from-primary/10 group-hover:to-primary/30">
                         <div className="relative w-24 h-24 opacity-30 grayscale group-hover:opacity-50 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-500">
                           <Image
                             src="/logo.png"

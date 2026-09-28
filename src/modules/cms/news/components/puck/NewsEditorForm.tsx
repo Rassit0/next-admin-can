@@ -316,7 +316,7 @@ export const NewsEditorForm = ({
         <h2 className="text-xl font-bold mb-4 mx-6">
           Cuerpo del Artículo (Puck Editor)
         </h2>
-        <div className="border border-default-200 rounded-lg overflow-hidden h-[800px] relative flex flex-col">
+        <div className="border border-default-200 rounded-lg overflow-hidden h-200 relative flex flex-col">
           <Puck
             config={config}
             data={puckData}
