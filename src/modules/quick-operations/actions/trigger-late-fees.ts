@@ -2,30 +2,24 @@
 import { api } from "@/utils/api";
 import { ServiceResponse } from "@/types/api";
 import { handleServerAction } from "@/utils";
-import { auth } from "@/auth";
+import { updateTag } from "next/cache";
 
-export const triggerLateFeesAction = async (): Promise<ServiceResponse<void>> => {
-  const session = await auth();
-
-  if (!session?.user?.token)
-    return {
-      error: true,
-      statusCode: 401,
-      message: "Su sesión ha expirado. Por favor, inicie sesión nuevamente.",
-    };
-
+export const triggerLateFeesAction = async (): Promise<
+  ServiceResponse<void>
+> => {
   return handleServerAction(async () => {
     // We execute the club engine
-    await api.post("membership-charges/apply-mass", undefined, {
-      headers: {
-        Authorization: `Bearer ${session.user.token}`,
-      },
-    });
+    await api.post("membership-charges/apply-mass", undefined);
+
+    // Invalidate the cache so the UI updates
+    updateTag("charges");
+    updateTag("player-memberships");
 
     return {
       error: false,
       data: undefined,
-      message: "Motor de moras ejecutado exitosamente. Los recargos se han sincronizado.",
+      message:
+        "Motor de moras ejecutado exitosamente. Los recargos se han sincronizado.",
     };
   });
 };
