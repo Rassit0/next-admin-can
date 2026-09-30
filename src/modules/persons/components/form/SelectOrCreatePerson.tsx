@@ -98,6 +98,7 @@ export const SelectOrCreatePerson = ({
       <Autocomplete
         aria-label={label}
         isRequired={isRequired}
+        isDisabled={isDisabled}
         allowsEmptyCollection
         variant="secondary"
         className="flex-1"
@@ -207,33 +208,35 @@ export const SelectOrCreatePerson = ({
         </Autocomplete.Popover>
         <FieldError children={errors?.personId && <p>{errors.personId}</p>} />
       </Autocomplete>
-      <AddModal
-        isIcon
-        onSubmited={(person) => {
-          if (person) {
-            // Agregar la persona a la lista localmente para que se pueda seleccionar
-            const newPersonOption = {
-              id: person.id,
-              name: person.name,
-              lastName: person.lastName,
-              secondLastName: person.secondLastName,
-              documentType: person.documentType || null,
-              documentNumber: person.documentNumber,
-              gender: person.gender,
-              birthDate: person.birthDate,
-              imageUrl: person.imageUrl,
-              fullName:
-                `${person.lastName} ${person.secondLastName || ""} ${person.name}`
-                  .replace(/\s+/g, " ")
-                  .trim(),
-            };
-            list.append(newPersonOption);
-            list.setSelectedKeys(new Set([person.id]));
-            setPersonId(person.id);
-            setSelectedPerson?.(newPersonOption);
-          }
-        }}
-      />
+      {!isDisabled && (
+        <AddModal
+          isIcon
+          onSubmited={(person) => {
+            if (person) {
+              // Agregar la persona a la lista localmente para que se pueda seleccionar
+              const newPersonOption = {
+                id: person.id,
+                name: person.name,
+                lastName: person.lastName,
+                secondLastName: person.secondLastName,
+                documentType: person.documentType || null,
+                documentNumber: person.documentNumber,
+                gender: person.gender,
+                birthDate: person.birthDate,
+                imageUrl: person.imageUrl,
+                fullName:
+                  `${person.lastName} ${person.secondLastName || ""} ${person.name}`
+                    .replace(/\s+/g, " ")
+                    .trim(),
+              };
+              list.append(newPersonOption);
+              list.setSelectedKeys(new Set([person.id]));
+              setPersonId(person.id);
+              setSelectedPerson?.(newPersonOption);
+            }
+          }}
+        />
+      )}
     </div>
   );
 };

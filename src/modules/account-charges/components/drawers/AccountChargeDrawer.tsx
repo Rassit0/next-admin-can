@@ -350,6 +350,7 @@ export const AccountChargeDrawer = ({
                 defaultPerson={defaultPerson}
                 allowNone
                 isRequired={false}
+                isDisabled={!!defaultPerson}
               />
             </div>
 

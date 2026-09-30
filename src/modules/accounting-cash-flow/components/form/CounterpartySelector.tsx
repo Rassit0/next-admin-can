@@ -25,6 +25,7 @@ interface Props {
   errors?: Record<string, string>;
   handleRemoveError?: (fieldName: string) => void;
   allowNone?: boolean;
+  isDisabled?: boolean;
 }
 
 export const CounterpartySelector = ({
@@ -43,12 +44,14 @@ export const CounterpartySelector = ({
   errors,
   handleRemoveError,
   allowNone = false,
+  isDisabled = false,
 }: Props) => {
   return (
     <div className="flex flex-col gap-3 w-full">
       <Label className="text-sm font-medium">{label}</Label>
       <RadioGroup
         value={counterpartyType || (allowNone ? "NONE" : "PERSON")}
+        isDisabled={isDisabled}
         onChange={(val) => {
           const type = val as CounterpartyType | "NONE";
           setCounterpartyType(type === "NONE" ? null : type);
@@ -98,6 +101,7 @@ export const CounterpartySelector = ({
       {counterpartyType === "PERSON" && (
         <SelectOrCreatePerson
           isRequired={isRequired}
+          isDisabled={isDisabled}
           label="Seleccionar Persona"
           personId={personId}
           setPersonId={setPersonId}
@@ -111,6 +115,7 @@ export const CounterpartySelector = ({
       {counterpartyType === "COMPANY" && (
         <SelectOrCreateCompany
           isRequired={isRequired}
+          isDisabled={isDisabled}
           label="Seleccionar Empresa"
           companyId={companyId}
           setCompanyId={setCompanyId}
