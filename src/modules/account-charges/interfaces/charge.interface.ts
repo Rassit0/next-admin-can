@@ -11,6 +11,7 @@ export interface IAccountCharge {
   description?: string;
   title: string;
   externalEntity?: string;
+  companyId?: string;
   referenceNumber?: string;
   createdAt: Date;
   updatedAt: Date;
@@ -22,6 +23,10 @@ export interface IAccountCharge {
     id: string;
     name: string;
     lastName: string;
+  };
+  company?: {
+    id: string;
+    name: string;
   };
   immediateTransaction?: {
     data?: {

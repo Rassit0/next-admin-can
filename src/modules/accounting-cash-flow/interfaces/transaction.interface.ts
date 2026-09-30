@@ -18,10 +18,10 @@ export interface ITransaction {
   balanceBefore?: number | null;
   balanceAfter?: number | null;
   financialAccountName: string | null;
-  thirdParty: {
+  payerCompany: {
     id: string;
     name: string;
-    documentNumber: string | null;
+    taxId: string | null;
   } | null;
   payerPerson: {
     id: string;

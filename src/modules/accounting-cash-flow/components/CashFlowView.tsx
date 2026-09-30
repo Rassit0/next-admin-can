@@ -33,6 +33,7 @@ export const CashFlowView = ({
         <CashFlowSelectFilters
           financialAccounts={financialAccounts}
           allPaymentMethods={allPaymentMethods}
+          categories={categories}
         />
       </SectionFilters>
 

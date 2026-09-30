@@ -22,6 +22,10 @@ import { useRouter } from "next/navigation";
 import { FileUploader } from "@/ui/components/file-uploader/FileUploader";
 import { useStorage } from "@/hooks/useStorage";
 import { SelectOrCreatePerson } from "@/modules/persons";
+import {
+  CounterpartySelector,
+  CounterpartyType,
+} from "@/modules/accounting-cash-flow/components/form/CounterpartySelector";
 import { IPersonOption } from "@/modules/persons";
 import { PrintReportDialog } from "@/modules/charge-transactions/components/dialog/PrintReportDialog";
 import { SplitItem } from "@/modules/charge-transactions/components/drawer/PayChargeDrawer";
@@ -70,13 +74,12 @@ export const DirectTransactionDrawer = ({
   const [showPrintDialog, setShowPrintDialog] = useState(false);
 
   const [personId, setPersonId] = useState<string | null>(null);
-  const [selectedPerson, setSelectedPerson] = useState<IPersonOption | null>(
-    null,
-  );
+  const [companyId, setCompanyId] = useState<string | null>(null);
+  const [personType, setPersonType] = useState<CounterpartyType | null>(null);
 
   const [payerPersonId, setPayerPersonId] = useState<string | null>(null);
-  const [selectedPayerPerson, setSelectedPayerPerson] =
-    useState<IPersonOption | null>(null);
+  const [payerCompanyId, setPayerCompanyId] = useState<string | null>(null);
+  const [payerType, setPayerType] = useState<CounterpartyType | null>(null);
 
   const [transactionDate, setTransactionDate] = useState<DateValue | null>(
     today(getLocalTimeZone()),
@@ -104,9 +107,11 @@ export const DirectTransactionDrawer = ({
 
       setFiles([]);
       setPersonId(null);
-      setSelectedPerson(null);
+      setCompanyId(null);
+      setPersonType(null);
       setPayerPersonId(null);
-      setSelectedPayerPerson(null);
+      setPayerCompanyId(null);
+      setPayerType(null);
       setTransactionDate(today(getLocalTimeZone()));
     }
   }, [isOpen]);
@@ -192,8 +197,10 @@ export const DirectTransactionDrawer = ({
               }),
           ...(attachmentIds.length > 0 && { attachmentIds }),
           ...(payerPersonId && { payerPersonId }),
+          ...(payerCompanyId && { payerCompanyId }),
         },
         ...(personId && { personId }),
+        ...(companyId && { companyId }),
       });
 
       if (res.error) {
@@ -292,8 +299,8 @@ export const DirectTransactionDrawer = ({
                       <Calendar.Header>
                         <Calendar.YearPickerTrigger>
                           <Calendar.YearPickerTriggerHeading />
+                          <Calendar.YearPickerTriggerIndicator />
                         </Calendar.YearPickerTrigger>
-                        <Calendar.YearPickerTriggerIndicator />
                       </Calendar.Header>
                       <Calendar.Grid>
                         <Calendar.GridHeader>
@@ -317,28 +324,36 @@ export const DirectTransactionDrawer = ({
                 </DatePicker>
               </div>
 
-              <SelectOrCreatePerson
-                isRequired={false}
+              <CounterpartySelector
                 label="Beneficiario (Opcional)"
+                allowNone
+                counterpartyType={personType}
+                setCounterpartyType={setPersonType}
                 personId={personId}
                 setPersonId={setPersonId}
-                setSelectedPerson={setSelectedPerson}
+                companyId={companyId}
+                setCompanyId={setCompanyId}
+                isRequired={false}
               />
 
-              <SelectOrCreatePerson
-                isRequired={false}
+              <CounterpartySelector
                 label="Pagador (Opcional)"
+                allowNone
+                counterpartyType={payerType}
+                setCounterpartyType={setPayerType}
                 personId={payerPersonId}
                 setPersonId={setPayerPersonId}
-                setSelectedPerson={setSelectedPayerPerson}
+                companyId={payerCompanyId}
+                setCompanyId={setPayerCompanyId}
+                isRequired={false}
               />
 
               <ComboBox
                 className="w-full"
                 variant="secondary"
                 menuTrigger="focus"
-                selectedKey={categoryId}
-                onSelectionChange={(key) => {
+                value={categoryId}
+                onChange={(key) => {
                   if (key) setCategoryId(key as string);
                 }}
                 isRequired
@@ -447,8 +462,8 @@ export const DirectTransactionDrawer = ({
                     variant="secondary"
                     aria-label="Seleccionar cuenta financiera"
                     menuTrigger="focus"
-                    selectedKey={financialAccountId}
-                    onSelectionChange={(key) => {
+                    value={financialAccountId}
+                    onChange={(key) => {
                       if (key) {
                         setFinancialAccountId(key as string);
                         const selectedAcc = financialAccounts.find(
@@ -519,9 +534,9 @@ export const DirectTransactionDrawer = ({
                           className="w-full"
                           variant="secondary"
                           menuTrigger="focus"
-                          selectedKey={paymentMethod}
+                          value={paymentMethod}
                           isDisabled={!hasMethods}
-                          onSelectionChange={(key) => {
+                          onChange={(key) => {
                             if (key) setPaymentMethod(key as string);
                           }}
                           isRequired

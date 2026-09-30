@@ -9,6 +9,7 @@ export * from "./components/page/header/Header";
 export * from "./components/filters/Filters";
 export * from "./components/filters/SectionFilters";
 export * from "./components/filters/DateRangeFilter";
+export * from "./components/filters/StatusFilter";
 export * from "./components/pagination/Pagination";
 export * from "./components/pagination/PerPage";
 export * from "./components/page/error/ErrorPage";

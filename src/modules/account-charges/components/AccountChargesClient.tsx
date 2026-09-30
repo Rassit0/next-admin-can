@@ -9,6 +9,8 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { api } from "@/utils/api";
 import { cancelAccountCharge } from "../actions/cancel";
+import { PayChargeDrawer } from "@/modules/charge-transactions/components/drawer/PayChargeDrawer";
+import { ICharge } from "@/modules/charge-transactions/interfaces/charges.interface";
 
 export const CreateChargeButton = ({
   direction,
@@ -53,6 +55,10 @@ export const AccountChargesClient = ({
     null,
   );
   const [isCancelling, setIsCancelling] = useState(false);
+
+  const [isPayDrawerOpen, setIsPayDrawerOpen] = useState(false);
+  const [chargeToPay, setChargeToPay] = useState<ICharge | null>(null);
+
   const router = useRouter();
 
   const handleEdit = (charge: IAccountCharge) => {
@@ -62,6 +68,15 @@ export const AccountChargesClient = ({
 
   const handleCancelClick = (charge: IAccountCharge) => {
     setChargeToCancel(charge);
+  };
+
+  const handlePayClick = (accountCharge: IAccountCharge) => {
+    if (!accountCharge.charge) {
+      toast.error("Este registro no tiene un cargo asociado válido.");
+      return;
+    }
+    setChargeToPay(accountCharge.charge);
+    setIsPayDrawerOpen(true);
   };
 
   const executeCancel = async () => {
@@ -89,8 +104,10 @@ export const AccountChargesClient = ({
     <>
       <AccountChargesTable
         accountCharges={charges}
+        direction={direction}
         onEdit={handleEdit}
         onCancel={handleCancelClick}
+        onPay={handlePayClick}
       />
       <AccountChargeDrawer
         isOpen={isDrawerOpen}
@@ -99,6 +116,18 @@ export const AccountChargesClient = ({
         direction={direction}
         onSuccess={() => router.refresh()}
       />
+
+      {chargeToPay && (
+        <PayChargeDrawer
+          isOpen={isPayDrawerOpen}
+          onOpenChange={(open) => {
+            setIsPayDrawerOpen(open);
+            if (!open) setTimeout(() => setChargeToPay(null), 300);
+          }}
+          charge={chargeToPay}
+          transactionType={direction === "RECEIVABLE" ? "INCOME" : "EXPENSE"}
+        />
+      )}
 
       <AlertDialog.Backdrop
         isOpen={!!chargeToCancel}

@@ -3,7 +3,13 @@ import {
   AccountChargesClient,
   CreateChargeButton,
 } from "@/modules/account-charges";
-import { ErrorPage, PaginationSection, HeaderPage, SectionFilters } from "@/ui";
+import {
+  ErrorPage,
+  PaginationSection,
+  HeaderPage,
+  SectionFilters,
+  StatusFilter,
+} from "@/ui";
 import { Card } from "@heroui/react";
 import { Metadata } from "next";
 
@@ -26,7 +32,16 @@ export default async function AccountsReceivablePage({
   const search = resolvedSearchParams?.search || "";
   const page = resolvedSearchParams?.page || "1";
   const per_page = resolvedSearchParams?.per_page || "5";
-  const status = resolvedSearchParams?.status || ["PENDING", "PARTIAL"];
+  const statusRaw = resolvedSearchParams?.status;
+
+  let status: string | string[] | undefined;
+  if (statusRaw === "ALL") {
+    status = undefined;
+  } else if (statusRaw) {
+    status = statusRaw;
+  } else {
+    status = ["PENDING", "PARTIAL"];
+  }
 
   const res = await getAccountCharges({
     search,
@@ -52,7 +67,18 @@ export default async function AccountsReceivablePage({
             showButtonBack={false}
             action={<CreateChargeButton direction="RECEIVABLE" />}
           />
-          <SectionFilters />
+          <SectionFilters>
+            <StatusFilter
+              options={[
+                { id: "PENDING_AND_PARTIAL", name: "Pendientes y Parciales" },
+                { id: "PAID", name: "Cobrados" },
+                { id: "CANCELLED", name: "Anulados" },
+                { id: "ALL", name: "Todos" },
+              ]}
+              defaultSelected="PENDING_AND_PARTIAL"
+              className="w-50"
+            />
+          </SectionFilters>
 
           <AccountChargesClient charges={data} direction="RECEIVABLE" />
 

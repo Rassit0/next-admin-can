@@ -96,14 +96,15 @@ export const SelectOrCreatePerson = ({
   return (
     <div className="flex items-end gap-4 w-full">
       <Autocomplete
+        aria-label={label}
         isRequired={isRequired}
         allowsEmptyCollection
         variant="secondary"
         className="flex-1"
         placeholder="Buscar..."
         selectionMode="single"
-        selectedKey={personId}
-        onSelectionChange={(key) => {
+        value={personId}
+        onChange={(key) => {
           setPersonId(key ? key.toString() : null);
           const selectedPlayer = list.items.find((player) => player.id === key);
           if (selectedPlayer) {
@@ -120,7 +121,7 @@ export const SelectOrCreatePerson = ({
           <Autocomplete.ClearButton />
           <Autocomplete.Indicator />
         </Autocomplete.Trigger>
-        <Autocomplete.Popover>
+        <Autocomplete.Popover aria-label="Resultados de búsqueda">
           <Autocomplete.Filter
             inputValue={list.filterText}
             onInputChange={list.setFilterText}

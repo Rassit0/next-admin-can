@@ -320,8 +320,10 @@ export const CashFlowTable = ({ transactions }: Props) => {
                     <Table.Cell>
                       <div className="flex flex-col">
                         <span className="text-sm text-default-700 max-w-37.5 truncate">
-                          {transaction.thirdParty ? (
-                            transaction.thirdParty.name
+                          {transaction.payerPerson ? (
+                            `${transaction.payerPerson.name} ${transaction.payerPerson.lastName || ''}`.trim()
+                          ) : transaction.payerCompany ? (
+                            transaction.payerCompany.name
                           ) : (
                             <span className="text-default-400">—</span>
                           )}

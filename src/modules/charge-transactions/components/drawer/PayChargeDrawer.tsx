@@ -32,7 +32,10 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ICharge } from "../../interfaces/charges.interface";
 import { addTransaction } from "../../actions/add-transaction";
-import { SelectOrCreatePerson } from "@/modules/persons";
+import {
+  CounterpartySelector,
+  CounterpartyType,
+} from "@/modules/accounting-cash-flow/components/form/CounterpartySelector";
 import { IPersonOption } from "@/modules/persons";
 import { getFinancialAccounts } from "@/modules/financial-accounts/actions/get-all";
 import { FinancialAccount } from "@/modules/financial-accounts/interfaces/financial-account.interface";
@@ -43,6 +46,7 @@ interface Props {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
   charge: ICharge;
+  transactionType?: "INCOME" | "EXPENSE";
 }
 
 export interface SplitItem {
@@ -59,12 +63,20 @@ const PAYMENT_METHOD_LABELS: Record<string, string> = {
   QR: "Código QR",
 };
 
-export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
+export const PayChargeDrawer = ({
+  isOpen,
+  onOpenChange,
+  charge,
+  transactionType = "INCOME",
+}: Props) => {
   const router = useRouter();
   const pendingAmount = Number(charge.pendingAmount || 0);
 
   const [isLoading, setIsLoading] = useState(false);
   const [personId, setPersonId] = useState<string | null>(null);
+  const [companyId, setCompanyId] = useState<string | null>(null);
+  const [counterpartyType, setCounterpartyType] =
+    useState<CounterpartyType | null>(null);
   const [selectedPerson, setSelectedPerson] = useState<IPersonOption | null>(
     null,
   );
@@ -135,11 +147,6 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
         return;
       }
 
-      if (!personId) {
-        toast.danger("Debe seleccionar una persona.");
-        return;
-      }
-
       for (let i = 0; i < splits.length; i++) {
         if (!splits[i].financialAccountId) {
           toast.danger(
@@ -161,9 +168,10 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
       }
 
       const res = await addTransaction({
-        payerPersonId: personId!,
+        ...(personId && { payerPersonId: personId }),
+        ...(companyId && { payerCompanyId: companyId }),
         amount: totalAmountNum,
-        type: "INCOME",
+        type: transactionType,
         paymentMethod: splits[0].paymentMethod as "CASH" | "TRANSFER" | "QR",
         financialAccountId: splits[0].financialAccountId,
         notes,
@@ -184,6 +192,7 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
         toast.danger(res.message);
       } else {
         toast.success(res.message);
+        router.refresh();
 
         console.log("PAYMENT RESPONSE DATA:", res.data);
 
@@ -238,14 +247,14 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
         <Drawer.Content placement="right">
           <Drawer.Dialog
             className="w-full sm:max-w-md"
-            aria-label="Registrar Pago"
+            aria-label={`Registrar ${transactionType === "EXPENSE" ? "Pago" : "Cobro"}`}
           >
             <Drawer.CloseTrigger />
             <form onSubmit={handleSubmit} className="flex flex-col h-full">
               <Drawer.Header className="flex flex-col gap-1 border-b border-border">
                 <Drawer.Heading className="text-xl font-bold flex items-center gap-2">
                   <HugeiconsIcon icon={Wallet01Icon} />
-                  Registrar Pago
+                  Registrar {transactionType === "EXPENSE" ? "Pago" : "Cobro"}
                 </Drawer.Heading>
                 <p className="mt-1 text-xs font-medium text-muted">
                   {charge.description}
@@ -324,14 +333,18 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
                   </div>
                 </Card>
 
-                <SelectOrCreatePerson
+                <CounterpartySelector
+                  label="Pagador"
+                  counterpartyType={counterpartyType}
+                  setCounterpartyType={setCounterpartyType}
                   personId={personId}
                   setPersonId={setPersonId}
-                  setSelectedPerson={setSelectedPerson}
+                  companyId={companyId}
+                  setCompanyId={setCompanyId}
                   defaultPerson={defaultPersonOption}
-                  // isDisabled={noPlayers}
-                  label="Pagador"
                   errors={errors}
+                  allowNone={true}
+                  isRequired={false}
                 />
 
                 <PaymentDistributionsList
@@ -417,7 +430,7 @@ export const PayChargeDrawer = ({ isOpen, onOpenChange, charge }: Props) => {
                   Cancelar
                 </Button>
                 <Button variant="primary" type="submit" isPending={isLoading}>
-                  Confirmar Pago
+                  Confirmar {transactionType === "EXPENSE" ? "Pago" : "Cobro"}
                 </Button>
               </Drawer.Footer>
             </form>

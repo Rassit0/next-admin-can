@@ -206,6 +206,16 @@ export const TableTransactions = ({ transactions, onChange }: Props) => {
               </Table.Column>
               <Table.Column>
                 <span className="text-xs font-semibold uppercase tracking-wide">
+                  Concepto
+                </span>
+              </Table.Column>
+              <Table.Column>
+                <span className="text-xs font-semibold uppercase tracking-wide">
+                  Monto
+                </span>
+              </Table.Column>
+              <Table.Column>
+                <span className="text-xs font-semibold uppercase tracking-wide">
                   Pagador
                 </span>
               </Table.Column>
@@ -217,16 +227,6 @@ export const TableTransactions = ({ transactions, onChange }: Props) => {
               <Table.Column>
                 <span className="text-xs font-semibold uppercase tracking-wide">
                   Fecha
-                </span>
-              </Table.Column>
-              <Table.Column>
-                <span className="text-xs font-semibold uppercase tracking-wide">
-                  Concepto
-                </span>
-              </Table.Column>
-              <Table.Column>
-                <span className="text-xs font-semibold uppercase tracking-wide">
-                  Monto
                 </span>
               </Table.Column>
               <Table.Column>
@@ -285,44 +285,6 @@ export const TableTransactions = ({ transactions, onChange }: Props) => {
                   </Table.Cell>
                   <Table.Cell className="py-3">
                     <div className="flex flex-col">
-                      <span className="font-medium text-foreground">
-                        {item.payerPerson?.name
-                          ? `${item.payerPerson.lastName || ""} ${(item.payerPerson as any).secondLastName || ""} ${item.payerPerson.name}`
-                              .replace(/\s+/g, " ")
-                              .trim()
-                          : "-"}
-                      </span>
-                    </div>
-                  </Table.Cell>
-                  <Table.Cell className="py-3">
-                    <div className="flex flex-col">
-                      <span className="font-medium text-foreground">
-                        {item.thirdParty?.name || "-"}
-                      </span>
-                    </div>
-                  </Table.Cell>
-                  <Table.Cell className="py-3">
-                    <div className="flex flex-col">
-                      <span className="font-semibold text-foreground">
-                        {new Date(item.transactionDate).toLocaleDateString(
-                          "es-ES",
-                          {
-                            day: "2-digit",
-                            month: "2-digit",
-                            year: "numeric",
-                          },
-                        )}
-                      </span>
-                      <span className="text-xs text-default-400">
-                        {new Date(item.createdAt).toLocaleTimeString("es-ES", {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
-                      </span>
-                    </div>
-                  </Table.Cell>
-                  <Table.Cell className="py-3">
-                    <div className="flex flex-col">
                       <span
                         className="text-sm font-medium line-clamp-2 max-w-50"
                         title={item.concept}
@@ -358,6 +320,44 @@ export const TableTransactions = ({ transactions, onChange }: Props) => {
                           Anulado
                         </Chip>
                       )}
+                    </div>
+                  </Table.Cell>
+                  <Table.Cell className="py-3">
+                    <div className="flex flex-col">
+                      <span className="font-medium text-foreground">
+                        {item.payerPerson?.name
+                          ? `${item.payerPerson.lastName || ""} ${(item.payerPerson as any).secondLastName || ""} ${item.payerPerson.name}`
+                              .replace(/\s+/g, " ")
+                              .trim()
+                          : "-"}
+                      </span>
+                    </div>
+                  </Table.Cell>
+                  <Table.Cell className="py-3">
+                    <div className="flex flex-col">
+                      <span className="font-medium text-foreground">
+                        {item.payerCompany?.name || "-"}
+                      </span>
+                    </div>
+                  </Table.Cell>
+                  <Table.Cell className="py-3">
+                    <div className="flex flex-col">
+                      <span className="font-semibold text-foreground">
+                        {new Date(item.transactionDate).toLocaleDateString(
+                          "es-ES",
+                          {
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "numeric",
+                          },
+                        )}
+                      </span>
+                      <span className="text-xs text-default-400">
+                        {new Date(item.createdAt).toLocaleTimeString("es-ES", {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </span>
                     </div>
                   </Table.Cell>
                   <Table.Cell className="py-3">

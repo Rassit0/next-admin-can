@@ -19,10 +19,10 @@ export interface ITransaction {
   receiptUrls?: string[];
   createdAt: Date | string;
   updatedAt: Date | string;
-  thirdParty?: {
+  payerCompany?: {
     id: string;
     name: string;
-    documentNumber: string | null;
+    taxId: string | null;
   } | null;
   payerPerson?: {
     id: string;

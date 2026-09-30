@@ -6,23 +6,29 @@ import {
   ViewIcon,
   Edit02Icon,
   Delete01Icon,
+  Wallet01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { SortableColumnHeader } from "@/ui";
+import { TableActions } from "@/ui/components/table-actions/TableActions";
 import { IAccountCharge } from "../../interfaces/charge.interface";
 import Link from "next/link";
 import { formatCurrency } from "@/utils";
 
 interface Props {
   accountCharges: IAccountCharge[];
+  direction?: "RECEIVABLE" | "PAYABLE";
   onEdit?: (charge: IAccountCharge) => void;
   onCancel?: (charge: IAccountCharge) => void;
+  onPay?: (charge: IAccountCharge) => void;
 }
 
 export const AccountChargesTable = ({
   accountCharges,
+  direction,
   onEdit,
   onCancel,
+  onPay,
 }: Props) => {
   const statusMap: Record<
     string,
@@ -124,7 +130,7 @@ export const AccountChargesTable = ({
                   <Table.Cell>
                     <div className="font-medium">{accountCharge.title}</div>
                     {accountCharge.description && (
-                      <div className="text-xs text-default-500 max-w-[200px] truncate">
+                      <div className="text-xs text-default-500 max-w-50 truncate">
                         {accountCharge.description}
                       </div>
                     )}
@@ -172,39 +178,53 @@ export const AccountChargesTable = ({
                   </Table.Cell>
 
                   <Table.Cell>
-                    <div className="flex justify-center gap-2">
-                      <Link
-                        href={`/admin/accounting/charges/${accountCharge.id}`}
-                      >
-                        <Button isIconOnly size="sm" variant="ghost">
-                          <HugeiconsIcon icon={ViewIcon} size={18} />
-                        </Button>
-                      </Link>
-                      {onEdit && (
-                        <Button
-                          isIconOnly
-                          size="sm"
-                          variant="ghost"
-                          onPress={() => onEdit(accountCharge)}
-                        >
-                          <HugeiconsIcon
-                            icon={Edit02Icon}
-                            size={18}
-                            className="text-default-500"
-                          />
-                        </Button>
-                      )}
-                      {onCancel &&
-                        accountCharge.charge?.status !== "CANCELLED" && (
-                          <Button
-                            isIconOnly
-                            size="sm"
-                            variant="danger-soft"
-                            onPress={() => onCancel(accountCharge)}
-                          >
-                            <HugeiconsIcon icon={Delete01Icon} size={18} />
-                          </Button>
-                        )}
+                    <div className="flex justify-center w-full">
+                      <TableActions
+                        actions={[
+                          {
+                            key: "view",
+                            label: "Ver Detalles",
+                            icon: ViewIcon,
+                            href: `/admin/accounting/charges/${accountCharge.id}`,
+                          },
+                          ...(onPay &&
+                          accountCharge.charge?.status !== "PAID" &&
+                          accountCharge.charge?.status !== "CANCELLED"
+                            ? [
+                                {
+                                  key: "pay",
+                                  label: "Registrar Pago",
+                                  icon: Wallet01Icon,
+                                  onPress: () => onPay(accountCharge),
+                                },
+                              ]
+                            : []),
+                          ...(onEdit &&
+                          accountCharge.charge?.status !== "PAID" &&
+                          accountCharge.charge?.status !== "CANCELLED"
+                            ? [
+                                {
+                                  key: "edit",
+                                  label: "Editar",
+                                  icon: Edit02Icon,
+                                  onPress: () => onEdit(accountCharge),
+                                },
+                              ]
+                            : []),
+                          ...(onCancel &&
+                          accountCharge.charge?.status !== "CANCELLED"
+                            ? [
+                                {
+                                  key: "cancel",
+                                  label: "Anular",
+                                  icon: Delete01Icon,
+                                  danger: true,
+                                  onPress: () => onCancel(accountCharge),
+                                },
+                              ]
+                            : []),
+                        ]}
+                      />
                     </div>
                   </Table.Cell>
                 </Table.Row>

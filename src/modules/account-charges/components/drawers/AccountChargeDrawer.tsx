@@ -17,7 +17,8 @@ import {
   cn,
 } from "@heroui/react";
 import { useAsyncList } from "@react-stately/data";
-import { getPersonsOptions, IPersonOption } from "@/modules/persons";
+import { IPersonOption } from "@/modules/persons";
+import { CounterpartySelector, CounterpartyType } from "@/modules/accounting-cash-flow/components/form/CounterpartySelector";
 import { Cancel01Icon, FloppyDiskIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { IAccountCharge } from "../../interfaces/charge.interface";
@@ -58,33 +59,9 @@ export const AccountChargeDrawer = ({
   const [paymentMethod, setPaymentMethod] = useState("CASH");
 
   // Entity logic
-  const [entityType, setEntityType] = useState<"EXTERNAL" | "PERSON">(
-    "EXTERNAL",
-  );
-  const [externalEntity, setExternalEntity] = useState("");
-  const [personId, setPersonId] = useState("");
-
-  const list = useAsyncList<IPersonOption>({
-    async load({ cursor: page = "1", filterText, signal }) {
-      if (defaultPerson && !filterText) {
-        return {
-          cursor: undefined,
-          items: [defaultPerson],
-        };
-      }
-      const res = await getPersonsOptions({ search: filterText, page }, signal);
-      if (!res || res.error) {
-        return {
-          cursor: undefined,
-          items: [],
-        };
-      }
-      return {
-        cursor: res.data?.meta.nextPage?.toString() || undefined,
-        items: res.data?.data || [],
-      };
-    },
-  });
+  const [counterpartyType, setCounterpartyType] = useState<CounterpartyType | null>("PERSON");
+  const [personId, setPersonId] = useState<string | null>(null);
+  const [companyId, setCompanyId] = useState<string | null>(null);
 
   const isReceivable = direction === "RECEIVABLE";
   const drawerTitle = charge
@@ -107,11 +84,13 @@ export const AccountChargeDrawer = ({
         setReferenceNumber(charge.referenceNumber || "");
 
         if (charge.personId) {
-          setEntityType("PERSON");
+          setCounterpartyType("PERSON");
           setPersonId(charge.personId);
+        } else if (charge.companyId) {
+          setCounterpartyType("COMPANY");
+          setCompanyId(charge.companyId);
         } else {
-          setEntityType("EXTERNAL");
-          setExternalEntity(charge.externalEntity || "");
+          setCounterpartyType(null);
         }
       } else {
         resetForm();
@@ -141,13 +120,12 @@ export const AccountChargeDrawer = ({
     setReferenceNumber("");
 
     if (defaultPerson) {
-      setEntityType("PERSON");
+      setCounterpartyType("PERSON");
       setPersonId(defaultPerson.id);
-      setExternalEntity("");
     } else {
-      setEntityType("EXTERNAL");
-      setExternalEntity("");
-      setPersonId("");
+      setCounterpartyType("PERSON");
+      setPersonId(null);
+      setCompanyId(null);
     }
 
     setIsImmediate(false);
@@ -165,13 +143,8 @@ export const AccountChargeDrawer = ({
       return;
     }
 
-    if (entityType === "EXTERNAL" && !externalEntity) {
-      toast.error("Por favor ingrese el nombre de la entidad");
-      return;
-    }
-
-    if (entityType === "PERSON" && !personId) {
-      toast.error("Por favor seleccione una persona"); // In a real app we'd have an autocomplete here
+    if (!personId && !companyId) {
+      toast.error("Por favor seleccione una persona o empresa");
       return;
     }
 
@@ -185,9 +158,8 @@ export const AccountChargeDrawer = ({
           dueDate: new Date(dueDate).toISOString(),
           categoryId,
           referenceNumber: referenceNumber || undefined,
-          externalEntity:
-            entityType === "EXTERNAL" ? externalEntity : undefined,
-          personId: entityType === "PERSON" ? personId : undefined,
+          personId: personId || undefined,
+          companyId: companyId || undefined,
         };
         const res = await updateAccountCharge(charge.id, data);
         if (res.error) toast.error(res.message);
@@ -210,13 +182,13 @@ export const AccountChargeDrawer = ({
               : new Date().toISOString(),
           description: description || undefined,
           referenceNumber: referenceNumber || undefined,
-          externalEntity:
-            entityType === "EXTERNAL" ? externalEntity : undefined,
-          personId: entityType === "PERSON" ? personId : undefined,
+          personId: personId || undefined,
+          companyId: companyId || undefined,
           immediatePayment: isImmediate
             ? {
                 paymentMethod,
-                payerPersonId: entityType === "PERSON" ? personId : undefined,
+                payerPersonId: personId || undefined,
+                payerCompanyId: companyId || undefined,
               }
             : undefined,
         };
@@ -367,108 +339,18 @@ export const AccountChargeDrawer = ({
                 Entidad asociada (
                 {isReceivable ? "Cliente / Deudor" : "Proveedor / Acreedor"})
               </span>
-              <Tabs
-                selectedKey={entityType}
-                onSelectionChange={(key) => setEntityType(key as any)}
-                variant="secondary"
-              >
-                <Tabs.ListContainer>
-                  <Tabs.List>
-                    <Tabs.Tab id="EXTERNAL">
-                      Entidad Externa
-                      <Tabs.Indicator />
-                    </Tabs.Tab>
-                    <Tabs.Tab id="PERSON">
-                      Persona Registrada
-                      <Tabs.Indicator />
-                    </Tabs.Tab>
-                  </Tabs.List>
-                </Tabs.ListContainer>
-
-                <Tabs.Panel key="EXTERNAL" id="EXTERNAL">
-                  <Input
-                    placeholder="Nombre de la empresa o persona"
-                    value={externalEntity}
-                    onChange={(e) => setExternalEntity(e.target.value)}
-                    variant="secondary"
-                    className="mt-2"
-                  />
-                </Tabs.Panel>
-                <Tabs.Panel key="PERSON" id="PERSON">
-                  <Autocomplete
-                    allowsEmptyCollection
-                    variant="secondary"
-                    className="mt-2 w-full"
-                    placeholder="Buscar por nombre o documento..."
-                    selectionMode="single"
-                    selectedKey={personId}
-                    isDisabled={!!defaultPerson}
-                    onSelectionChange={(key) => {
-                      setPersonId(key?.toString() || "");
-                    }}
-                  >
-                    <Label className="text-sm font-semibold">
-                      Beneficiario / Estudiante (Opcional)
-                    </Label>
-                    <Autocomplete.Trigger>
-                      <Autocomplete.Value />
-                      <Autocomplete.ClearButton />
-                      <Autocomplete.Indicator />
-                    </Autocomplete.Trigger>
-                    <Autocomplete.Popover>
-                      <Autocomplete.Filter
-                        inputValue={list.filterText}
-                        onInputChange={list.setFilterText}
-                      >
-                        <SearchField
-                          autoFocus
-                          aria-label="Buscar personas"
-                          className="sticky top-0 z-10"
-                          name="search"
-                          variant="secondary"
-                        >
-                          <SearchField.Group>
-                            <SearchField.SearchIcon />
-                            <SearchField.Input placeholder="Buscar beneficiario..." />
-                            <Spinner
-                              size="sm"
-                              className={cn(
-                                "absolute top-1/2 right-2 -translate-y-1/2",
-                                {
-                                  "pointer-events-none opacity-0":
-                                    !list.isLoading,
-                                },
-                              )}
-                            />
-                          </SearchField.Group>
-                        </SearchField>
-                      </Autocomplete.Filter>
-                      <ListBox
-                        aria-label="Lista de personas"
-                        className="max-h-64 overflow-y-auto"
-                        items={list.items}
-                      >
-                        {(item: IPersonOption) => (
-                          <ListBox.Item
-                            id={item.id}
-                            key={item.id}
-                            textValue={item.fullName}
-                          >
-                            <div className="flex flex-col">
-                              <span className="font-semibold">
-                                {item.fullName}
-                              </span>
-                              <span className="text-sm text-default-400">
-                                {item.documentNumber || "Sin documento"}
-                              </span>
-                            </div>
-                          </ListBox.Item>
-                        )}
-                      </ListBox>
-                    </Autocomplete.Popover>
-                  </Autocomplete>
-                </Tabs.Panel>
-              </Tabs>
+              <CounterpartySelector
+                label="Beneficiario / Responsable"
+                counterpartyType={counterpartyType}
+                setCounterpartyType={setCounterpartyType}
+                personId={personId}
+                setPersonId={setPersonId}
+                companyId={companyId}
+                setCompanyId={setCompanyId}
+                defaultPerson={defaultPerson}
+                allowNone
+                isRequired={false}
+              />
             </div>
 
             {!defaultPerson && (

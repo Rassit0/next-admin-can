@@ -15,11 +15,13 @@ const PAYMENT_METHOD_LABELS: Record<string, string> = {
 interface Props {
   financialAccounts: FinancialAccountOption[];
   allPaymentMethods: string[];
+  categories: Array<{ id: string; name: string; type: string }>;
 }
 
 export const CashFlowSelectFilters = ({
   financialAccounts,
   allPaymentMethods,
+  categories,
 }: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -27,6 +29,8 @@ export const CashFlowSelectFilters = ({
 
   const currentAccountId = searchParams.get("financialAccountIds") || "all";
   const currentMethod = searchParams.get("paymentMethods") || "all";
+  const currentCategory = searchParams.get("categoryId") || "all";
+  const currentType = searchParams.get("type") || "all";
 
   const selectedAcc = financialAccounts.find((a) => a.id === currentAccountId);
   const availableMethods =
@@ -68,76 +72,166 @@ export const CashFlowSelectFilters = ({
     router.push(pathname + "?" + params.toString());
   };
 
+  const handleCategoryChange = (value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", "1");
+    if (value && value !== "all") {
+      params.set("categoryId", value);
+    } else {
+      params.delete("categoryId");
+    }
+    router.push(pathname + "?" + params.toString());
+  };
+
+  const handleTypeChange = (value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", "1");
+    if (value && value !== "all") {
+      params.set("type", value);
+    } else {
+      params.delete("type");
+    }
+    router.push(pathname + "?" + params.toString());
+  };
+
+  const accountOptions = [
+    { id: "all", name: "Todas las cuentas" },
+    ...financialAccounts.map((a) => ({ id: a.id, name: a.name })),
+  ];
+
+  const methodOptions = [
+    { id: "all", name: "Todos los métodos" },
+    ...availableMethods.map((m) => ({
+      id: m,
+      name: PAYMENT_METHOD_LABELS[m] || m,
+    })),
+  ];
+
+  const categoryOptions = [
+    { id: "all", name: "Todas las categorías" },
+    ...categories.map((c) => ({ id: c.id, name: c.name })),
+  ];
+
+  const typeOptions = [
+    { id: "all", name: "Todos los tipos" },
+    { id: "INCOME", name: "Ingreso" },
+    { id: "EXPENSE", name: "Egreso" },
+  ];
+
   return (
     <>
       <Select
-        className="w-full max-w-50"
-        placeholder="Cuentas contables"
-        value={currentAccountId}
-        onChange={(key) => handleAccountChange(key?.toString() || "all")}
+        className="w-full max-w-40"
+        placeholder="Tipo"
+        value={currentType}
+        onChange={(key) => handleTypeChange(key?.toString() || "all")}
+        aria-label="Tipo"
+        variant="secondary"
       >
-        <Label className="sr-only">Cuentas contables</Label>
         <Select.Trigger>
           <Select.Value />
           <Select.Indicator />
         </Select.Trigger>
         <Select.Popover className="bg-default">
-          <ListBox>
-            <ListBox.Item
-              id="all"
-              textValue="Todas las cuentas"
-              className="hover:bg-accent-soft"
-            >
-              Todas las cuentas
-              <ListBox.ItemIndicator />
-            </ListBox.Item>
-            {financialAccounts.map((acc) => (
+          <ListBox items={typeOptions}>
+            {(item) => (
               <ListBox.Item
-                key={acc.id}
-                id={acc.id}
-                textValue={acc.name}
+                key={item.id}
+                id={item.id}
+                textValue={item.name}
                 className="hover:bg-accent-soft"
               >
-                {acc.name}
+                {item.name}
                 <ListBox.ItemIndicator />
               </ListBox.Item>
-            ))}
+            )}
+          </ListBox>
+        </Select.Popover>
+      </Select>
+
+      <Select
+        className="w-full max-w-40"
+        placeholder="Categoría"
+        value={currentCategory}
+        onChange={(key) => handleCategoryChange(key?.toString() || "all")}
+        aria-label="Categoría"
+        variant="secondary"
+      >
+        <Select.Trigger>
+          <Select.Value />
+          <Select.Indicator />
+        </Select.Trigger>
+        <Select.Popover className="bg-default">
+          <ListBox items={categoryOptions}>
+            {(item) => (
+              <ListBox.Item
+                key={item.id}
+                id={item.id}
+                textValue={item.name}
+                className="hover:bg-accent-soft"
+              >
+                {item.name}
+                <ListBox.ItemIndicator />
+              </ListBox.Item>
+            )}
           </ListBox>
         </Select.Popover>
       </Select>
 
       <Select
         className="w-full max-w-50"
-        placeholder="Métodos de pago"
-        value={currentMethod}
-        onChange={(key) => handleMethodChange(key?.toString() || "all")}
+        placeholder="Cuentas contables"
+        value={currentAccountId}
+        onChange={(key) => handleAccountChange(key?.toString() || "all")}
+        aria-label="Cuentas contables"
+        variant="secondary"
       >
-        <Label className="sr-only">Métodos de pago</Label>
         <Select.Trigger>
           <Select.Value />
           <Select.Indicator />
         </Select.Trigger>
         <Select.Popover className="bg-default">
-          <ListBox>
-            <ListBox.Item
-              id="all"
-              textValue="Todos los métodos"
-              className="hover:bg-accent-soft"
-            >
-              Todos los métodos
-              <ListBox.ItemIndicator />
-            </ListBox.Item>
-            {availableMethods.map((method) => (
+          <ListBox items={accountOptions}>
+            {(item) => (
               <ListBox.Item
-                key={method}
-                id={method}
-                textValue={PAYMENT_METHOD_LABELS[method] || method}
+                key={item.id}
+                id={item.id}
+                textValue={item.name}
                 className="hover:bg-accent-soft"
               >
-                {PAYMENT_METHOD_LABELS[method] || method}
+                {item.name}
                 <ListBox.ItemIndicator />
               </ListBox.Item>
-            ))}
+            )}
+          </ListBox>
+        </Select.Popover>
+      </Select>
+
+      <Select
+        className="w-full max-w-40"
+        placeholder="Métodos de pago"
+        value={currentMethod}
+        onChange={(key) => handleMethodChange(key?.toString() || "all")}
+        aria-label="Métodos de pago"
+        variant="secondary"
+      >
+        <Select.Trigger>
+          <Select.Value />
+          <Select.Indicator />
+        </Select.Trigger>
+        <Select.Popover className="bg-default">
+          <ListBox items={methodOptions}>
+            {(item) => (
+              <ListBox.Item
+                key={item.id}
+                id={item.id}
+                textValue={item.name}
+                className="hover:bg-accent-soft"
+              >
+                {item.name}
+                <ListBox.ItemIndicator />
+              </ListBox.Item>
+            )}
           </ListBox>
         </Select.Popover>
       </Select>

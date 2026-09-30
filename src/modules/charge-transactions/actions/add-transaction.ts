@@ -7,7 +7,8 @@ import { ITransaction } from "../interfaces/transactions.interface";
 import { auth } from "@/auth";
 
 export interface AddTransactionData {
-  payerPersonId: string;
+  payerPersonId?: string | null;
+  payerCompanyId?: string | null;
   amount: number;
   transactionDate: string;
   description: string;
@@ -44,6 +45,7 @@ export const addTransaction = async (
 
     updateTag("transactions");
     updateTag("charges");
+    updateTag("account-charges");
     return {
       error: false,
       data: response.data,

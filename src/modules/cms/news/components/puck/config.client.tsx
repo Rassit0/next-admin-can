@@ -181,8 +181,9 @@ export const createPuckConfig = (
         },
         render: ({ text, level }) => {
           const Tag = level || "h2";
+          const sizeClass = Tag === "h2" ? "text-3xl sm:text-4xl" : "text-2xl sm:text-3xl";
           return (
-            <Tag className="font-heading font-700 text-oxford mb-4 mt-8">
+            <Tag className={`font-heading font-700 text-oxford mb-4 mt-8 ${sizeClass}`}>
               {text}
             </Tag>
           );
