@@ -200,7 +200,9 @@ export const SelectOrCreatePerson = ({
               >
                 <div className="flex items-center justify-center gap-2 py-2">
                   <Spinner size="sm" />
-                  <span className="muted text-sm">Loading more...</span>
+                  <span className="muted text-sm">
+                    Cargando más personas...
+                  </span>
                 </div>
               </ListBoxLoadMoreItem>
             </ListBox>

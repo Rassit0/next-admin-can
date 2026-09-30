@@ -19,8 +19,7 @@ export const uploadNewsAsset = async (
     }
 
     const response = await api.post<INewsAsset>("news/assets", formData, {
-      // Assuming api.post handles FormData correctly if no custom headers are needed,
-      // or we let it serialize properly. The NestJS API expects multipart/form-data.
+      timeout: 60000,
       headers: {
         // Let the browser/fetch set the multipart/form-data boundary
       },

@@ -5,7 +5,13 @@ import { PublicNewsDetail } from "@/modules/portal/news/actions/news.action";
 import { Render } from "@puckeditor/core";
 import { serverConfig } from "@/modules/cms/news/components/puck/config.server";
 
-export function NewsDetail({ article }: { article: PublicNewsDetail }) {
+export function NewsDetail({ 
+  article, 
+  puckConfig 
+}: { 
+  article: PublicNewsDetail; 
+  puckConfig?: any;
+}) {
   const isStructured =
     article.structuredContent && article.contentSchemaVersion === 1;
 
@@ -24,7 +30,7 @@ export function NewsDetail({ article }: { article: PublicNewsDetail }) {
       <p className="text-xl font-500 leading-relaxed text-oxford/80 mb-8">
         {article.excerpt}
       </p>
-      <Render config={serverConfig as any} data={article.structuredContent} />
+      <Render config={(puckConfig || serverConfig) as any} data={article.structuredContent} />
     </div>
   );
 

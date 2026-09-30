@@ -21,6 +21,9 @@ import { addNews } from "../../actions/add";
 import { editNews } from "../../actions/edit";
 import { cancelNewsUploadSession } from "../../actions/assets";
 import { createPuckConfig } from "./config.client";
+import { Maximize, Minimize } from "lucide-react";
+import { NewsPreview } from "./NewsPreview";
+import { PublicNewsDetail } from "@/modules/portal/news/actions/news.action";
 
 interface Props {
   mode: "create" | "edit";
@@ -28,21 +31,106 @@ interface Props {
   initialData?: INews;
 }
 
-const SaveButton = ({ isSaving, uploadingCount, handleSave }: any) => {
+const StatusIndicator = ({ status }: { status: string }) => {
+  if (status === "Guardado")
+    return (
+      <span className="text-success text-sm font-medium mr-2">✓ Guardado</span>
+    );
+  if (status === "Cambios sin guardar")
+    return (
+      <span className="text-warning text-sm font-medium mr-2">
+        ● Cambios sin guardar
+      </span>
+    );
+  if (status === "Guardando...")
+    return (
+      <span className="text-default-500 text-sm font-medium mr-2">
+        ◌ Guardando...
+      </span>
+    );
+  if (status === "Error")
+    return (
+      <span className="text-danger text-sm font-medium mr-2">
+        ⚠ No se pudo guardar
+      </span>
+    );
+  return null;
+};
+
+const CreateActions = ({
+  isSaving,
+  uploadingCount,
+  handleCreate,
+  handleCancel,
+  contentStatus,
+  isFullscreen,
+  toggleFullscreen,
+  openPreview,
+}: any) => {
   const { appState } = usePuck();
   return (
-    <Button
-      className="bg-primary text-white"
-      onPress={() => handleSave(appState.data)}
-      isDisabled={uploadingCount > 0 || isSaving}
-      isPending={isSaving}
-    >
-      {uploadingCount > 0
-        ? `Subiendo ${uploadingCount}...`
-        : isSaving
-          ? "Guardando..."
-          : "Guardar"}
-    </Button>
+    <div className="flex items-center gap-4">
+      <StatusIndicator status={contentStatus} />
+      <Button variant="ghost" size="sm" onPress={toggleFullscreen}>
+        {isFullscreen ? <Minimize size={18} /> : <Maximize size={18} />}
+      </Button>
+      <Button variant="ghost" size="sm" onPress={openPreview}>
+        Vista previa
+      </Button>
+      <Button variant="secondary" onPress={handleCancel} isDisabled={isSaving}>
+        Cancelar
+      </Button>
+      <Button
+        variant="primary"
+        onPress={() => handleCreate(appState.data)}
+        isDisabled={uploadingCount > 0 || isSaving}
+        isPending={isSaving}
+      >
+        {uploadingCount > 0 ? `Subiendo ${uploadingCount}...` : "Crear noticia"}
+      </Button>
+    </div>
+  );
+};
+
+const EditActions = ({
+  isSaving,
+  uploadingCount,
+  handleSave,
+  handleDiscard,
+  contentDirty,
+  contentStatus,
+  isFullscreen,
+  toggleFullscreen,
+  openPreview,
+}: any) => {
+  const { appState } = usePuck();
+  return (
+    <div className="flex items-center gap-4">
+      <StatusIndicator status={contentStatus} />
+      <Button variant="ghost" size="sm" onPress={toggleFullscreen}>
+        {isFullscreen ? <Minimize size={18} /> : <Maximize size={18} />}
+      </Button>
+      <Button variant="ghost" size="sm" onPress={openPreview}>
+        Vista previa
+      </Button>
+      <Button
+        variant="secondary"
+        onPress={handleDiscard}
+        isDisabled={!contentDirty || isSaving}
+      >
+        Descartar cambios
+      </Button>
+      <Button
+        variant="primary"
+        onPress={() => handleSave(appState.data)}
+        isDisabled={!contentDirty || uploadingCount > 0 || isSaving}
+        isPending={isSaving}
+      >
+        {uploadingCount > 0
+          ? `Subiendo ${uploadingCount}...`
+          : "Guardar contenido"}
+      </Button>
+    </div>
   );
 };
 
@@ -72,16 +160,93 @@ export const NewsEditorForm = ({
 
   const [categories, setCategories] = useState<any[]>([]);
 
-  // Puck State
+  // Metadata Dirty State
+  const [metadataBaseline, setMetadataBaseline] = useState({
+    title: initialData?.title || "",
+    excerpt: initialData?.excerpt || "",
+    categoryId: initialData?.category?.id || "",
+    authorName: initialData?.authorName || "",
+    status: initialData?.status || "DRAFT",
+    publishedAt: initialData?.publishedAt
+      ? new Date(initialData.publishedAt).toISOString().slice(0, 16)
+      : "",
+    coverUrl: initialData?.imageUrl || "",
+  });
+
+  const metadataDirty =
+    title !== metadataBaseline.title ||
+    excerpt !== metadataBaseline.excerpt ||
+    categoryId !== metadataBaseline.categoryId ||
+    authorName !== metadataBaseline.authorName ||
+    status !== metadataBaseline.status ||
+    publishedAt !== metadataBaseline.publishedAt ||
+    coverFiles.length > 0 ||
+    coverUrl !== metadataBaseline.coverUrl;
+
+  // Puck Content State & Baseline
+  const [contentDirty, setContentDirty] = useState(false);
+  const [contentStatus, setContentStatus] = useState<
+    "Guardado" | "Cambios sin guardar" | "Guardando..." | "Error"
+  >(mode === "create" ? "Cambios sin guardar" : "Guardado");
+  const [contentBaseline, setContentBaseline] = useState(
+    initialData?.structuredContent && initialData.contentSchemaVersion === 1
+      ? JSON.stringify(initialData.structuredContent)
+      : JSON.stringify({ content: [], root: {} }),
+  );
+
   const [puckData, setPuckData] = useState<any>(
     initialData?.structuredContent && initialData?.contentSchemaVersion === 1
       ? initialData.structuredContent
       : { content: [], root: {} },
   );
 
-  // Uploading state
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+
+  const handlePuckChange = (data: any) => {
+    setPuckData(data); // Keep in sync for discard
+    const currentStr = JSON.stringify(data);
+    if (currentStr !== contentBaseline) {
+      setContentDirty(true);
+      if (contentStatus !== "Guardando...") {
+        setContentStatus("Cambios sin guardar");
+      }
+    } else {
+      setContentDirty(false);
+      if (contentStatus !== "Guardando...") {
+        setContentStatus("Guardado");
+      }
+    }
+  };
+
+  // Uploading and Saving states
   const [uploadingCount, setUploadingCount] = useState(0);
-  const [isSaving, setIsSaving] = useState(false);
+  const [isSavingGeneral, setIsSavingGeneral] = useState(false);
+  const [isSavingContent, setIsSavingContent] = useState(false);
+  const [isSavingCreate, setIsSavingCreate] = useState(false);
+
+  // Fullscreen mode
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  useEffect(() => {
+    if (isFullscreen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isFullscreen]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isFullscreen) {
+        setIsFullscreen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isFullscreen]);
 
   useEffect(() => {
     getNewsCategories().then((res) => {
@@ -92,7 +257,6 @@ export const NewsEditorForm = ({
   }, []);
 
   // Suprimir logs de "unhandledRejection: [object Event]" en el dev overlay de Next.js
-  // Causados por el AutoFrame de Puck clonando los CSS chunks de HMR
   useEffect(() => {
     if (process.env.NODE_ENV !== "development") return;
 
@@ -117,71 +281,116 @@ export const NewsEditorForm = ({
     }
   };
 
-  const handleSave = async (data: any) => {
-    if (uploadingCount > 0) {
-      toast.error("Hay subidas de archivos en curso, por favor espere.");
-      return;
-    }
-
-    if (!title) {
-      toast.error("El título es obligatorio");
-      return;
-    }
-    if (!excerpt) {
-      toast.error("El extracto es obligatorio");
-      return;
-    }
-
-    setIsSaving(true);
-
+  const _buildMetadataPayload = () => {
     const payload = new FormData();
     payload.append("title", title);
     payload.append("excerpt", excerpt);
-    // Note: The backend validator doesn't expect `content` in POST if structuredContent is provided,
-    // but the DTO requires it, so we pass a placeholder or the backend ignores it.
-    // Wait, the backend News DTO might require `content`. Let's pass a dummy or let the backend derive it.
-    payload.append("content", "Derivado por backend");
     if (categoryId) payload.append("categoryId", categoryId);
     if (authorName) payload.append("authorName", authorName);
     payload.append("status", status);
     if (publishedAt) {
       payload.append("publishedAt", new Date(publishedAt).toISOString());
     }
-
     if (coverFiles.length > 0) {
       payload.append("cover", coverFiles[0]);
     } else if (initialData?.imageUrl && !coverUrl) {
       payload.append("removeImageUrl", "true");
     }
+    return payload;
+  };
 
+  const handleCreateNews = async (data: any) => {
+    if (uploadingCount > 0) {
+      toast.error("Hay subidas de archivos en curso, por favor espere.");
+      return;
+    }
+    if (!title || !excerpt) {
+      toast.error("El título y extracto son obligatorios.");
+      return;
+    }
+
+    setIsSavingCreate(true);
+    setContentStatus("Guardando...");
+    const payload = _buildMetadataPayload();
     payload.append("uploadSessionId", uploadSessionId);
     payload.append("structuredContent", JSON.stringify(data));
     payload.append("contentSchemaVersion", "1");
+    payload.append("content", "Derivado por backend");
 
-    let res;
-    if (mode === "edit" && initialData) {
-      res = await editNews(initialData.id, initialData.slug, payload);
-    } else {
-      res = await addNews(payload);
+    const res = await addNews(payload);
+    setIsSavingCreate(false);
+
+    if (res.error) {
+      toast.error(res.message);
+      setContentStatus("Error");
+      return;
     }
 
-    setIsSaving(false);
+    toast.success("Noticia creada correctamente");
+    router.push("/admin/web/news");
+  };
+
+  const handleSaveMetadata = async () => {
+    if (!title || !excerpt) {
+      toast.error("El título y extracto son obligatorios.");
+      return;
+    }
+    if (!initialData) return;
+
+    setIsSavingGeneral(true);
+    const payload = _buildMetadataPayload();
+
+    const res = await editNews(initialData.id, initialData.slug, payload);
+    setIsSavingGeneral(false);
 
     if (res.error) {
       toast.error(res.message);
       return;
     }
 
-    toast.success(res.message);
-
-    if (mode === "create") {
-      router.push("/admin/web/news");
-    } else {
-      router.push("/admin/web/news");
-    }
+    toast.success("Cambios generales guardados");
+    router.push("/admin/web/news");
   };
 
-  const handleCancel = async () => {
+  const handleSavePuckContent = async (data: any) => {
+    if (uploadingCount > 0) {
+      toast.error("Hay subidas de archivos en curso, por favor espere.");
+      return;
+    }
+    if (!initialData) return;
+
+    setIsSavingContent(true);
+    setContentStatus("Guardando...");
+
+    const payload = new FormData();
+    payload.append("uploadSessionId", uploadSessionId);
+    payload.append("structuredContent", JSON.stringify(data));
+    payload.append("contentSchemaVersion", "1");
+
+    const res = await editNews(initialData.id, initialData.slug, payload);
+    setIsSavingContent(false);
+
+    if (res.error) {
+      toast.error(res.message);
+      setContentStatus("Error");
+      return;
+    }
+
+    toast.success("Contenido guardado correctamente");
+    setContentBaseline(JSON.stringify(data));
+    setContentDirty(false);
+    setContentStatus("Guardado");
+  };
+
+  const handleDiscardPuckChanges = () => {
+    const baselineObj = JSON.parse(contentBaseline);
+    setPuckData(baselineObj);
+    toast.success("Cambios descartados, se restauró el contenido guardado");
+    setContentDirty(false);
+    setContentStatus("Guardado");
+  };
+
+  const handleCancelCreate = async () => {
     await cancelNewsUploadSession(uploadSessionId);
     router.back();
   };
@@ -195,8 +404,16 @@ export const NewsEditorForm = ({
 
   return (
     <div className="flex flex-col gap-6">
+      {/* SECCIÓN DATOS GENERALES */}
       <div className="bg-default-soft p-6 rounded-2xl shadow-sm border border-default-200">
-        <h2 className="text-xl font-bold mb-4">Información General</h2>
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-bold">Información General</h2>
+          {mode === "edit" && metadataDirty && (
+            <span className="text-warning text-sm font-medium">
+              ● Cambios sin guardar
+            </span>
+          )}
+        </div>
         <div className="grid grid-cols-1 gap-6">
           <TextField isRequired variant="secondary">
             <Label>Título</Label>
@@ -309,40 +526,113 @@ export const NewsEditorForm = ({
               </div>
             )}
           </div>
+
+          {mode === "edit" && (
+            <div className="flex justify-end mt-4 border-t border-default-200 pt-4">
+              <Button
+                variant="primary"
+                onPress={handleSaveMetadata}
+                isDisabled={!metadataDirty || isSavingGeneral}
+                isPending={isSavingGeneral}
+              >
+                Guardar cambios
+              </Button>
+            </div>
+          )}
         </div>
       </div>
 
-      <div className="bg-default-soft pt-6 rounded-2xl shadow-sm border border-default-200">
-        <h2 className="text-xl font-bold mb-4 mx-6">
-          Cuerpo del Artículo (Puck Editor)
-        </h2>
-        <div className="border border-default-200 rounded-lg overflow-hidden h-200 relative flex flex-col">
+      {/* SECCIÓN PUCK */}
+      <div
+        className={`bg-default-soft ${isFullscreen ? "p-0" : "pt-6"} rounded-2xl ${isFullscreen ? "shadow-none border-none" : "shadow-sm border border-default-200"}`}
+      >
+        {!isFullscreen && (
+          <h2 className="text-xl font-bold mb-4 mx-6">
+            Contenido del Artículo (Editor Puck)
+          </h2>
+        )}
+        <div
+          className={
+            isFullscreen
+              ? "fixed inset-0 z-[50] bg-white flex flex-col m-0 p-0 rounded-none h-[100dvh] w-full"
+              : "border border-default-200 rounded-lg overflow-auto h-[800px] min-h-[600px] relative flex flex-col mx-0 resize-y"
+          }
+        >
           <Puck
             config={config}
             data={puckData}
-            onPublish={handleSave}
-            // iframe={{ enabled: false }}
+            onChange={handlePuckChange}
+            onPublish={
+              mode === "create" ? handleCreateNews : handleSavePuckContent
+            }
             overrides={{
-              headerActions: ({ children }) => (
-                <>
-                  <Button
-                    variant="secondary"
-                    onPress={handleCancel}
-                    isDisabled={isSaving}
-                  >
-                    Cancelar
-                  </Button>
-                  <SaveButton
-                    isSaving={isSaving}
+              headerActions: () => {
+                if (mode === "create") {
+                  return (
+                    <CreateActions
+                      isSaving={isSavingCreate}
+                      uploadingCount={uploadingCount}
+                      handleCreate={handleCreateNews}
+                      handleCancel={handleCancelCreate}
+                      contentStatus={contentStatus}
+                      isFullscreen={isFullscreen}
+                      toggleFullscreen={() => setIsFullscreen(!isFullscreen)}
+                      openPreview={() => setIsPreviewOpen(true)}
+                    />
+                  );
+                }
+                return (
+                  <EditActions
+                    isSaving={isSavingContent}
                     uploadingCount={uploadingCount}
-                    handleSave={handleSave}
+                    handleSave={handleSavePuckContent}
+                    handleDiscard={handleDiscardPuckChanges}
+                    contentDirty={contentDirty}
+                    contentStatus={contentStatus}
+                    isFullscreen={isFullscreen}
+                    toggleFullscreen={() => setIsFullscreen(!isFullscreen)}
+                    openPreview={() => setIsPreviewOpen(true)}
                   />
-                </>
-              ),
+                );
+              },
             }}
           />
         </div>
       </div>
+
+      {mode === "edit" && !isFullscreen && (
+        <div className="flex justify-start mt-4">
+          <Button
+            variant="secondary"
+            onPress={() => router.push("/admin/web/news")}
+          >
+            Volver a noticias
+          </Button>
+        </div>
+      )}
+
+      {isPreviewOpen && (
+        <NewsPreview
+          article={{
+            id: initialData?.id || "preview-id",
+            slug: initialData?.slug || "preview-slug",
+            title,
+            excerpt,
+            imageUrl: coverUrl,
+            category: categories.find((c) => c.id === categoryId)?.name || "",
+            categoryId,
+            publishedAt: publishedAt || new Date().toISOString(),
+            content: "",
+            tags: [],
+            authorName,
+            structuredContent: puckData,
+            contentSchemaVersion: 1,
+          }}
+          puckConfig={config}
+          isDirty={metadataDirty || contentDirty}
+          onClose={() => setIsPreviewOpen(false)}
+        />
+      )}
     </div>
   );
 };
