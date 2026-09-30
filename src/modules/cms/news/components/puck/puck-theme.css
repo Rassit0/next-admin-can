@@ -81,6 +81,30 @@
   font-size: 1.25rem !important; /* 20px */
   line-height: 1.75rem !important;
   font-weight: 700 !important;
-  margin-top: 1.5em !important;
-  margin-bottom: 0.5em !important;
+}
+
+/* --- Forzar visibilidad del header de Puck en móviles --- */
+@media (max-width: 768px) {
+  [class^="_PuckHeader_"],
+  [class*=" _PuckHeader_"] {
+    height: auto !important;
+    min-height: 56px !important;
+  }
+  
+  [class^="_PuckHeader-inner_"],
+  [class*=" _PuckHeader-inner_"] {
+    flex-wrap: wrap !important;
+    height: auto !important;
+    padding: 8px !important;
+    gap: 8px !important;
+  }
+
+  [class^="_PuckHeader-tools_"],
+  [class*=" _PuckHeader-tools_"] {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    width: 100% !important;
+    justify-content: flex-end !important;
+    margin-top: 8px !important;
+  }
 }

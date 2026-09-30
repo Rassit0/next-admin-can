@@ -21,7 +21,7 @@ import { addNews } from "../../actions/add";
 import { editNews } from "../../actions/edit";
 import { cancelNewsUploadSession } from "../../actions/assets";
 import { createPuckConfig } from "./config.client";
-import { Maximize, Minimize } from "lucide-react";
+import { Maximize, Minimize, Eye } from "lucide-react";
 import { NewsPreview } from "./NewsPreview";
 import { PublicNewsDetail } from "@/modules/portal/news/actions/news.action";
 
@@ -69,24 +69,41 @@ const CreateActions = ({
 }: any) => {
   const { appState } = usePuck();
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-4">
       <StatusIndicator status={contentStatus} />
-      <Button variant="ghost" size="sm" onPress={toggleFullscreen}>
+      <Button
+        variant="ghost"
+        size="sm"
+        onPress={toggleFullscreen}
+        className="min-w-10 px-2"
+      >
         {isFullscreen ? <Minimize size={18} /> : <Maximize size={18} />}
       </Button>
-      <Button variant="ghost" size="sm" onPress={openPreview}>
-        Vista previa
+      <Button
+        variant="ghost"
+        size="sm"
+        onPress={openPreview}
+        className="min-w-10 px-2"
+      >
+        <Eye size={18} className="sm:hidden" />
+        <span className="hidden sm:inline">Vista previa</span>
       </Button>
-      <Button variant="secondary" onPress={handleCancel} isDisabled={isSaving}>
+      <Button
+        variant="secondary"
+        size="sm"
+        onPress={handleCancel}
+        isDisabled={isSaving}
+      >
         Cancelar
       </Button>
       <Button
         variant="primary"
+        size="sm"
         onPress={() => handleCreate(appState.data)}
         isDisabled={uploadingCount > 0 || isSaving}
         isPending={isSaving}
       >
-        {uploadingCount > 0 ? `Subiendo ${uploadingCount}...` : "Crear noticia"}
+        {uploadingCount > 0 ? `Subiendo...` : "Crear"}
       </Button>
     </div>
   );
@@ -105,30 +122,49 @@ const EditActions = ({
 }: any) => {
   const { appState } = usePuck();
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-4">
       <StatusIndicator status={contentStatus} />
-      <Button variant="ghost" size="sm" onPress={toggleFullscreen}>
+      <Button
+        variant="ghost"
+        size="sm"
+        onPress={toggleFullscreen}
+        className="min-w-10 px-2"
+      >
         {isFullscreen ? <Minimize size={18} /> : <Maximize size={18} />}
       </Button>
-      <Button variant="ghost" size="sm" onPress={openPreview}>
-        Vista previa
+      <Button
+        variant="ghost"
+        size="sm"
+        onPress={openPreview}
+        className="min-w-10 px-2"
+      >
+        <Eye size={18} className="sm:hidden" />
+        <span className="hidden sm:inline">Vista previa</span>
       </Button>
       <Button
         variant="secondary"
+        size="sm"
         onPress={handleDiscard}
         isDisabled={!contentDirty || isSaving}
       >
-        Descartar cambios
+        <span className="hidden sm:inline">Descartar cambios</span>
+        <span className="inline sm:hidden">Descartar</span>
       </Button>
       <Button
         variant="primary"
+        size="sm"
         onPress={() => handleSave(appState.data)}
         isDisabled={!contentDirty || uploadingCount > 0 || isSaving}
         isPending={isSaving}
       >
-        {uploadingCount > 0
-          ? `Subiendo ${uploadingCount}...`
-          : "Guardar contenido"}
+        {uploadingCount > 0 ? (
+          `Subiendo...`
+        ) : (
+          <>
+            <span className="hidden sm:inline">Guardar contenido</span>
+            <span className="inline sm:hidden">Guardar</span>
+          </>
+        )}
       </Button>
     </div>
   );
@@ -554,8 +590,8 @@ export const NewsEditorForm = ({
         <div
           className={
             isFullscreen
-              ? "fixed inset-0 z-[50] bg-white flex flex-col m-0 p-0 rounded-none h-[100dvh] w-full"
-              : "border border-default-200 rounded-lg overflow-auto h-[800px] min-h-[600px] relative flex flex-col mx-0 resize-y"
+              ? "fixed inset-0 z-50 bg-white flex flex-col m-0 p-0 rounded-none h-dvh w-full"
+              : "border border-default-200 rounded-lg overflow-auto h-200 min-h-150 relative flex flex-col mx-0 resize-y"
           }
         >
           <Puck

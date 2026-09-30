@@ -57,9 +57,9 @@ export function NewsPreview({
       <ParticlesBackground />
       {/* Toolbar */}
       <div className="relative z-10 flex h-14 shrink-0 items-center justify-between border-b border-border bg-white/80 backdrop-blur-md px-4 shadow-sm">
-        <div className="flex items-center gap-4">
-          <span className="font-600 uppercase tracking-wide text-oxford">
-            Vista previa de la noticia
+        <div className="flex items-center gap-2 sm:gap-4">
+          <span className="text-xs sm:text-sm font-600 uppercase tracking-wide text-oxford">
+            Vista previa
           </span>
           <div className="h-4 w-px bg-border" />
           <div className="flex items-center gap-1 z-100">
@@ -89,20 +89,20 @@ export function NewsPreview({
             </Button>
           </div>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
           {isDirty ? (
-            <span className="text-sm font-medium text-warning flex items-center gap-2">
+            <span className="text-xs sm:text-sm font-medium text-warning flex items-center gap-2" title="Cambios sin guardar">
               <span className="h-2 w-2 rounded-full bg-warning" />
-              Cambios sin guardar
+              <span className="hidden sm:inline">Cambios sin guardar</span>
             </span>
           ) : (
-            <span className="text-sm font-medium text-default-500">
+            <span className="text-xs sm:text-sm font-medium text-default-500 hidden sm:inline">
               Vista previa
             </span>
           )}
-          <Button variant="ghost" size="sm" onPress={onClose}>
-            <X size={16} className="mr-2" />
-            Volver al editor
+          <Button variant="ghost" size="sm" onPress={onClose} className="min-w-10 px-2">
+            <X size={18} className="sm:mr-2" />
+            <span className="hidden sm:inline">Volver al editor</span>
           </Button>
         </div>
       </div>
