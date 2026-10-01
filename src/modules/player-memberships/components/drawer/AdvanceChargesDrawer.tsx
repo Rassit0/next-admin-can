@@ -244,6 +244,17 @@ export const AdvanceChargesDrawer = ({
                             </span>
                           </div>
                         )}
+                        {previewData.breakdown.totalLateFee !== undefined && previewData.breakdown.totalLateFee > 0 && (
+                          <div className="flex justify-between items-center text-sm text-danger">
+                            <span>Mora (Retraso):</span>
+                            <span className="font-medium">
+                              +
+                              {formatCurrency(
+                                previewData.breakdown.totalLateFee,
+                              )}
+                            </span>
+                          </div>
+                        )}
                         <div className="flex justify-between items-center pt-2 border-t border-border/50">
                           <span className="font-bold text-foreground">
                             Total:
