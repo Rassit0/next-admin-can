@@ -13,10 +13,11 @@ interface CreateMatchPayload {
   homeTeamId: string;
   awayTeamId: string;
   startDate: string;
-  endDate: string;
+  endDate?: string | null;
   type: string;
   homeScore?: number | null;
   awayScore?: number | null;
+  partials?: import('../interfaces/calendar.interface').IMatchPartial[];
   result?: string;
 }
 

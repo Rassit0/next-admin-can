@@ -18,6 +18,14 @@ export interface ISessionCalendarMetadata extends IBaseCalendarMetadata {
   courses: Array<{ id: string; name: string }>;
 }
 
+export interface IMatchPartial {
+  id?: string;
+  sequence: number;
+  label?: string | null;
+  homeScore?: number | null;
+  awayScore?: number | null;
+}
+
 export interface IMatchCalendarMetadata extends IBaseCalendarMetadata {
   homeTeam: {
     id: string;
@@ -29,6 +37,7 @@ export interface IMatchCalendarMetadata extends IBaseCalendarMetadata {
   };
   homeScore: number | null;
   awayScore: number | null;
+  partials?: IMatchPartial[];
   matchType: string;
   result: string | null;
   homeCategory: {

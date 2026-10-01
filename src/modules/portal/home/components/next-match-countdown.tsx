@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import type { PublicFixture } from "../actions/fixture.action";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Navigation02Icon } from "@hugeicons/core-free-icons";
 
 const getInitials = (name: string) => {
   const words = name.trim().split(" ").filter(Boolean);
@@ -18,9 +20,15 @@ const getInitials = (name: string) => {
 
 interface NextMatchCountdownProps {
   match: PublicFixture;
+  mode?: "UPCOMING" | "PLAYED";
+  title?: string;
 }
 
-export function NextMatchCountdown({ match }: NextMatchCountdownProps) {
+export function NextMatchCountdown({
+  match,
+  mode = "UPCOMING",
+  title,
+}: NextMatchCountdownProps) {
   const [timeLeft, setTimeLeft] = useState<{
     d: number;
     h: number;
@@ -71,144 +79,224 @@ export function NextMatchCountdown({ match }: NextMatchCountdownProps) {
   const isToday = new Date().toDateString() === matchDate.toDateString();
 
   return (
-    <div className="relative mb-12 w-full overflow-hidden rounded-3xl bg-[#0a0f18] text-white shadow-2xl border border-white/5">
-      <div className="relative z-10 flex min-h-[300px] w-full flex-col items-stretch justify-center md:flex-row">
-        {/* PANEL LOCAL */}
-        <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden bg-white/5 p-8 pb-10 pt-16 md:pb-8 md:pt-12">
-          <div className="absolute -bottom-20 -left-20 h-40 w-40 rounded-full bg-neon/20 blur-3xl" />
-          <span className="mb-4 text-[10px] font-bold uppercase tracking-widest text-white/40">
-            Local
-          </span>
-          <div className="relative z-10 mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-white p-3 shadow-lg md:h-28 md:w-28">
-            {match.homeTeam.imageUrl ? (
-              <Image
-                src={match.homeTeam.imageUrl}
-                alt={match.homeTeam.name}
-                fill
-                className="object-contain p-2"
-              />
-            ) : (
-              <span className="font-heading text-2xl font-bold uppercase text-primary/70 md:text-4xl">
-                {getInitials(match.homeTeam.name)}
-              </span>
-            )}
-          </div>
-          <span className="relative z-10 text-center font-heading text-lg font-black uppercase tracking-wide md:text-xl">
-            {match.homeTeam.name}
-          </span>
-        </div>
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="relative mb-12 w-full"
+    >
+      {/* GLOW DE FONDO */}
+      <div className="absolute inset-0 z-0 bg-linear-to-r from-neon/10 via-primary/10 to-neon/10 blur-3xl rounded-3xl" />
 
-        {/* PANEL CENTRAL COUNTDOWN */}
-        <div className="relative z-20 flex shrink-0 flex-col items-center justify-center border-y border-white/10 bg-black/90 p-8 shadow-[0_0_40px_rgba(0,0,0,0.8)] md:border-x md:border-y-0 md:p-10">
-          <div className="mb-6 inline-flex items-center rounded-full border border-neon/20 bg-neon/10 px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest text-neon backdrop-blur-md md:text-xs">
-            {isToday ? "🔥 Hoy" : "⭐ Próximo Partido"}
-          </div>
-
-          <span className="mb-6 text-center text-[10px] font-bold uppercase tracking-widest text-neon/80">
-            Tiempo Restante
-          </span>
-
-          {/* Bloque Scoreboard Unificado */}
-          <div className="flex items-center justify-center rounded-xl border border-white/10 bg-black p-3 shadow-[inset_0_2px_15px_rgba(0,0,0,1)] md:p-4">
-            {isClient && timeLeft ? (
-              <div className="flex items-center gap-1 md:gap-2">
-                <TimeUnit value={timeLeft.d} label="Dí­as" />
-                <Separator />
-                <TimeUnit value={timeLeft.h} label="Horas" />
-                <Separator />
-                <TimeUnit value={timeLeft.m} label="Min" />
-                <Separator />
-                <TimeUnit value={timeLeft.s} label="Seg" />
-              </div>
-            ) : (
-              <div className="flex items-center gap-1 opacity-30 md:gap-2">
-                <TimeUnit value={0} label="Dí­as" />
-                <Separator />
-                <TimeUnit value={0} label="Horas" />
-                <Separator />
-                <TimeUnit value={0} label="Min" />
-                <Separator />
-                <TimeUnit value={0} label="Seg" />
-              </div>
-            )}
-          </div>
-
-          {/* Estado al llegar a cero */}
-          <div className="mt-6 min-h-[2rem]">
-            {isClient &&
-              timeLeft &&
-              timeLeft.d === 0 &&
-              timeLeft.h === 0 &&
-              timeLeft.m === 0 &&
-              timeLeft.s === 0 && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="font-heading text-base font-black uppercase tracking-widest text-neon md:text-lg"
-                >
-                  Hora del partido
-                </motion.div>
+      <div className="relative z-10 w-full overflow-hidden rounded-3xl bg-[#0a0f18] text-white shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] border border-white/10">
+        <div className="relative z-10 flex min-h-75 w-full flex-col items-stretch justify-center md:flex-row">
+          {/* PANEL LOCAL */}
+          <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden bg-white/5 p-8 pb-10 pt-16 md:pb-8 md:pt-12">
+            <div className="absolute -bottom-20 -left-20 h-40 w-40 rounded-full bg-neon/20 blur-3xl" />
+            <span className="mb-4 text-[10px] font-bold uppercase tracking-widest text-white/40">
+              Local
+            </span>
+            <motion.div
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+              className="relative z-10 mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-white p-3 shadow-lg md:h-28 md:w-28"
+            >
+              {match.homeTeam.imageUrl ? (
+                <Image
+                  src={match.homeTeam.imageUrl}
+                  alt={match.homeTeam.name}
+                  fill
+                  className="object-contain p-2"
+                />
+              ) : (
+                <span className="font-heading text-2xl font-bold uppercase text-primary/70 md:text-4xl">
+                  {getInitials(match.homeTeam.name)}
+                </span>
               )}
+            </motion.div>
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, delay: 0.3 }}
+              className="relative z-10 text-center font-heading text-lg font-black uppercase tracking-wide md:text-xl"
+            >
+              {match.homeTeam.name}
+            </motion.span>
           </div>
-        </div>
 
-        {/* PANEL VISITANTE */}
-        <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden bg-white/5 p-8 pb-20 pt-10 md:pb-8 md:pt-12">
-          <div className="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-neon/20 blur-3xl" />
-          <span className="mb-4 text-[10px] font-bold uppercase tracking-widest text-white/40">
-            Visitante
-          </span>
-          <div className="relative z-10 mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-white p-3 shadow-lg md:h-28 md:w-28">
-            {match.awayTeam.imageUrl ? (
-              <Image
-                src={match.awayTeam.imageUrl}
-                alt={match.awayTeam.name}
-                fill
-                className="object-contain p-2"
-              />
+          {/* PANEL CENTRAL COUNTDOWN / SCORE */}
+          <div className="relative z-20 flex shrink-0 flex-col items-center justify-center border-y border-white/10 bg-black/90 p-8 shadow-[0_0_40px_rgba(0,0,0,0.8)] md:border-x md:border-y-0 md:p-10">
+            <div className="mb-6 inline-flex items-center rounded-full border border-neon/20 bg-neon/10 px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest text-neon backdrop-blur-md md:text-xs">
+              {title ? title : isToday ? "🔥 Hoy" : "⭐ Próximo Partido"}
+            </div>
+
+            <span className="mb-6 text-center text-[10px] font-bold uppercase tracking-widest text-neon/80">
+              {mode === "PLAYED" ? "Resultado Final" : "Tiempo Restante"}
+            </span>
+
+            {/* Bloque Scoreboard Unificado */}
+            {mode === "PLAYED" ? (
+              <div className="flex items-center justify-center rounded-xl border border-white/10 bg-black p-3 shadow-[inset_0_2px_15px_rgba(0,0,0,1)] md:p-6 gap-6 md:gap-10">
+                <span
+                  className="font-heading text-4xl font-black text-white md:text-6xl"
+                  style={{ textShadow: "0 0 10px rgba(255,255,255,0.2)" }}
+                >
+                  {match.homeScore ?? "-"}
+                </span>
+                <span className="text-white/30 text-2xl font-black">-</span>
+                <span
+                  className="font-heading text-4xl font-black text-white md:text-6xl"
+                  style={{ textShadow: "0 0 10px rgba(255,255,255,0.2)" }}
+                >
+                  {match.awayScore ?? "-"}
+                </span>
+              </div>
             ) : (
-              <span className="font-heading text-2xl font-bold uppercase text-primary/70 md:text-4xl">
-                {getInitials(match.awayTeam.name)}
-              </span>
+              <>
+                <div className="flex items-center justify-center rounded-xl border border-white/10 bg-black p-3 shadow-[inset_0_2px_15px_rgba(0,0,0,1)] md:p-4">
+                  {isClient && timeLeft ? (
+                    <div className="flex items-center gap-1 md:gap-2">
+                      <TimeUnit value={timeLeft.d} label="Días" />
+                      <Separator />
+                      <TimeUnit value={timeLeft.h} label="Horas" />
+                      <Separator />
+                      <TimeUnit value={timeLeft.m} label="Min" />
+                      <Separator />
+                      <TimeUnit value={timeLeft.s} label="Seg" />
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-1 opacity-30 md:gap-2">
+                      <TimeUnit value={0} label="Días" />
+                      <Separator />
+                      <TimeUnit value={0} label="Horas" />
+                      <Separator />
+                      <TimeUnit value={0} label="Min" />
+                      <Separator />
+                      <TimeUnit value={0} label="Seg" />
+                    </div>
+                  )}
+                </div>
+
+                {/* Estado al llegar a cero */}
+                <div className="mt-6 min-h-8">
+                  {isClient &&
+                    timeLeft &&
+                    timeLeft.d === 0 &&
+                    timeLeft.h === 0 &&
+                    timeLeft.m === 0 &&
+                    timeLeft.s === 0 && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="font-heading text-base font-black uppercase tracking-widest text-neon md:text-lg"
+                      >
+                        Hora del partido
+                      </motion.div>
+                    )}
+                </div>
+              </>
             )}
           </div>
-          <span className="relative z-10 text-center font-heading text-lg font-black uppercase tracking-wide md:text-xl">
-            {match.awayTeam.name}
-          </span>
-        </div>
-      </div>
 
-      {/* FOOTER INFORMATIVO */}
-      <div className="flex flex-col items-center justify-center gap-2 border-t border-white/5 bg-black/95 px-6 py-4 text-xs font-bold uppercase tracking-widest text-white/50 md:flex-row md:gap-6">
-        <div className="flex items-center gap-2">
-          <span className="text-neon/70">■</span> {match.discipline}
+          {/* PANEL VISITANTE */}
+          <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden bg-white/5 p-8 pb-20 pt-10 md:pb-8 md:pt-12">
+            <div className="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-neon/20 blur-3xl" />
+            <span className="mb-4 text-[10px] font-bold uppercase tracking-widest text-white/40">
+              Visitante
+            </span>
+            <motion.div
+              initial={{ opacity: 0, x: 10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+              className="relative z-10 mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-white p-3 shadow-lg md:h-28 md:w-28"
+            >
+              {match.awayTeam.imageUrl ? (
+                <Image
+                  src={match.awayTeam.imageUrl}
+                  alt={match.awayTeam.name}
+                  fill
+                  className="object-contain p-2"
+                />
+              ) : (
+                <span className="font-heading text-2xl font-bold uppercase text-primary/70 md:text-4xl">
+                  {getInitials(match.awayTeam.name)}
+                </span>
+              )}
+            </motion.div>
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, delay: 0.3 }}
+              className="relative z-10 text-center font-heading text-lg font-black uppercase tracking-wide md:text-xl"
+            >
+              {match.awayTeam.name}
+            </motion.span>
+          </div>
         </div>
-        <div className="hidden text-white/10 md:block">-</div>
-        <div className="flex items-center gap-2">
-          <span className="text-neon/70">■</span>{" "}
-          {matchDate
-            .toLocaleDateString("es-ES", {
-              weekday: "short",
-              day: "numeric",
-              month: "short",
-            })
-            .replace(",", "")}{" "}
-          ·{" "}
-          {matchDate.toLocaleTimeString("es-ES", {
-            hour: "2-digit",
-            minute: "2-digit",
-          })}
+
+        {/* FOOTER INFORMATIVO */}
+        <div className="flex flex-col items-center justify-center gap-2 border-t border-white/5 bg-black/95 px-6 py-4 text-xs font-bold uppercase tracking-widest text-white/50 md:flex-row md:gap-6 text-center">
+          <div className="flex items-center gap-2 flex-wrap justify-center">
+            <span className="text-neon/70">■</span> {match.discipline}
+          </div>
+          <div className="hidden text-white/10 md:block">-</div>
+          <div className="flex items-center gap-2 flex-wrap justify-center">
+            <span className="text-neon/70">■</span>{" "}
+            {matchDate
+              .toLocaleDateString("es-ES", {
+                weekday: "short",
+                day: "numeric",
+                month: "short",
+              })
+              .replace(",", "")}{" "}
+            ·{" "}
+            {matchDate.toLocaleTimeString("es-ES", {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </div>
+          {match.locationName && (
+            <>
+              <div className="hidden text-white/10 md:block">-</div>
+              <div className="flex items-center gap-2 flex-wrap justify-center">
+                <span className="text-neon/70">■</span> {match.locationName}
+                {match.location &&
+                  (() => {
+                    const hasCoordinates =
+                      match.location.latitude !== null &&
+                      match.location.longitude !== null;
+                    const externalLink =
+                      match.location.mapsUrl ||
+                      (hasCoordinates
+                        ? `https://maps.google.com/?q=${match.location.latitude},${match.location.longitude}`
+                        : null);
+
+                    if (!externalLink) return null;
+
+                    return (
+                      <a
+                        href={externalLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center p-1 text-neon/70 hover:text-neon hover:bg-neon/10 rounded-md transition-colors shrink-0 group ml-1"
+                        title="Abrir ubicación en Google Maps"
+                        aria-label="Abrir ubicación en Google Maps"
+                      >
+                        <HugeiconsIcon
+                          icon={Navigation02Icon}
+                          size={16}
+                          className="group-hover:scale-110 group-hover:-translate-y-px transition-transform"
+                        />
+                      </a>
+                    );
+                  })()}
+              </div>
+            </>
+          )}
         </div>
-        {match.locationName && (
-          <>
-            <div className="hidden text-white/10 md:block">-</div>
-            <div className="flex items-center gap-2">
-              <span className="text-neon/70">■</span> {match.locationName}
-            </div>
-          </>
-        )}
       </div>
-    </div>
+    </motion.div>
   );
 }
 

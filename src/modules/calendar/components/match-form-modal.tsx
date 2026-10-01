@@ -13,7 +13,7 @@ import {
   CloseButton,
 } from "@heroui/react";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Add01Icon, Edit02Icon } from "@hugeicons/core-free-icons";
+import { Add01Icon, Edit02Icon, Delete02Icon } from "@hugeicons/core-free-icons";
 import { toast } from "sonner";
 import { createMatch } from "../actions/create-match.action";
 import { updateMatch } from "../actions/update-match.action";
@@ -30,10 +30,11 @@ interface MatchInitialData {
   awayTeamSeasonCategoryId?: string | null;
   locationId?: string | null;
   startDate: string;
-  endDate: string;
+  endDate: string | null;
   type: string;
   homeScore?: number | null;
   awayScore?: number | null;
+  partials?: import('../interfaces/calendar.interface').IMatchPartial[];
 }
 
 interface Props {
@@ -78,6 +79,15 @@ export const MatchFormModal = ({
   const [type, setType] = useState("LEAGUE");
   const [homeScore, setHomeScore] = useState("");
   const [awayScore, setAwayScore] = useState("");
+  const [partials, setPartials] = useState<
+    {
+      id?: string;
+      sequence: number;
+      label: string;
+      homeScore: string;
+      awayScore: string;
+    }[]
+  >([]);
 
   const [apiError, setApiError] = useState<string | null>(null);
 
@@ -135,7 +145,7 @@ export const MatchFormModal = ({
         setAwayTeamSeasonCategoryId(initialData.awayTeamSeasonCategoryId || "");
         setLocationId(initialData.locationId || "");
 
-        const toLocalDatetimeLocal = (iso: string) => {
+        const toLocalDatetimeLocal = (iso: string | null) => {
           if (!iso) return "";
           const d = new Date(iso);
           d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
@@ -155,6 +165,19 @@ export const MatchFormModal = ({
             ? String(initialData.awayScore)
             : "",
         );
+        if (initialData.partials && initialData.partials.length > 0) {
+          setPartials(
+            initialData.partials.map((p) => ({
+              id: p.id,
+              sequence: p.sequence,
+              label: p.label || "",
+              homeScore: p.homeScore !== null && p.homeScore !== undefined ? String(p.homeScore) : "",
+              awayScore: p.awayScore !== null && p.awayScore !== undefined ? String(p.awayScore) : "",
+            })),
+          );
+        } else {
+          setPartials([]);
+        }
       } else {
         resetForm();
       }
@@ -192,7 +215,7 @@ export const MatchFormModal = ({
   };
 
   const handleSubmit = async () => {
-    if (!homeTeamId || !awayTeamId || !startDate || !endDate) {
+    if (!homeTeamId || !awayTeamId || !startDate) {
       setApiError("Por favor complete los campos obligatorios.");
       return;
     }
@@ -210,7 +233,7 @@ export const MatchFormModal = ({
       }
     }
 
-    if (startDate > endDate) {
+    if (endDate && startDate > endDate) {
       setApiError("La fecha de fin no puede ser anterior a la de inicio.");
       return;
     }
@@ -228,10 +251,17 @@ export const MatchFormModal = ({
       awayTeamId,
       locationId: locationId || null,
       startDate: startObj.toISOString(),
-      endDate: endObj.toISOString(),
+      endDate: endDate ? new Date(endDate).toISOString() : null,
       type,
       homeScore: homeScore !== "" ? Number(homeScore) : null,
       awayScore: awayScore !== "" ? Number(awayScore) : null,
+      partials: partials.map(p => ({
+        id: p.id,
+        sequence: p.sequence,
+        label: p.label || null,
+        homeScore: p.homeScore !== "" ? Number(p.homeScore) : null,
+        awayScore: p.awayScore !== "" ? Number(p.awayScore) : null,
+      })),
     };
 
     let res;
@@ -268,6 +298,7 @@ export const MatchFormModal = ({
     setType("LEAGUE");
     setHomeScore("");
     setAwayScore("");
+    setPartials([]);
     setApiError(null);
     setDisciplineFilter("");
   };
@@ -459,7 +490,7 @@ export const MatchFormModal = ({
                   </TextField>
 
                   <TextField>
-                    <Label className="font-semibold text-sm">Fecha Fin *</Label>
+                    <Label className="font-semibold text-sm">Fin estimada (Opcional)</Label>
                     <Input
                       type="datetime-local"
                       variant="secondary"
@@ -607,11 +638,13 @@ export const MatchFormModal = ({
                   </Select.Popover>
                 </Select>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <TextField>
-                    <Label className="font-semibold text-sm">
-                      Puntuación Local
-                    </Label>
+                <div className="mt-4 border-t border-border pt-4">
+                  <h4 className="text-sm font-bold text-default-700 uppercase mb-2">Marcador Final</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <TextField>
+                      <Label className="font-semibold text-sm">
+                        Puntuación Local
+                      </Label>
                     <Input
                       type="number"
                       min="0"
@@ -631,7 +664,96 @@ export const MatchFormModal = ({
                       value={awayScore}
                       onChange={(e) => setAwayScore(e.target.value)}
                     />
-                  </TextField>
+                    </TextField>
+                  </div>
+                </div>
+
+                <div className="mt-4 border-t border-border pt-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="text-sm font-bold text-default-700 uppercase">Parciales</h4>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onPress={() =>
+                        setPartials([
+                          ...partials,
+                          {
+                            sequence: partials.length + 1,
+                            label: `Parcial ${partials.length + 1}`,
+                            homeScore: "",
+                            awayScore: "",
+                          },
+                        ])
+                      }
+                    >
+                      <HugeiconsIcon icon={Add01Icon} size={14} />
+                      Agregar parcial
+                    </Button>
+                  </div>
+                  
+                  {partials.length > 0 ? (
+                    <div className="flex flex-col gap-2">
+                      {partials.map((p, index) => (
+                        <div key={index} className="flex flex-row items-center gap-2">
+                          <TextField className="w-1/3">
+                            <Input
+                              placeholder="Ej. Q1"
+                              value={p.label}
+                              onChange={(e) => {
+                                const newPartials = [...partials];
+                                newPartials[index].label = e.target.value;
+                                setPartials(newPartials);
+                              }}
+                            />
+                          </TextField>
+                          <TextField className="w-1/4">
+                            <Input
+                              type="number"
+                              min="0"
+                              placeholder="Local"
+                              value={p.homeScore}
+                              onChange={(e) => {
+                                const newPartials = [...partials];
+                                newPartials[index].homeScore = e.target.value;
+                                setPartials(newPartials);
+                              }}
+                            />
+                          </TextField>
+                          <span className="text-default-400 font-bold">-</span>
+                          <TextField className="w-1/4">
+                            <Input
+                              type="number"
+                              min="0"
+                              placeholder="Visita"
+                              value={p.awayScore}
+                              onChange={(e) => {
+                                const newPartials = [...partials];
+                                newPartials[index].awayScore = e.target.value;
+                                setPartials(newPartials);
+                              }}
+                            />
+                          </TextField>
+                          <Button
+                            isIconOnly
+                            variant="ghost"
+                            className="text-danger"
+                            onPress={() => {
+                              const newPartials = partials.filter((_, i) => i !== index);
+                              // Renumber sequence to avoid gaps
+                              newPartials.forEach((np, i) => {
+                                np.sequence = i + 1;
+                              });
+                              setPartials(newPartials);
+                            }}
+                          >
+                            <HugeiconsIcon icon={Delete02Icon} size={16} />
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-sm text-default-400 italic">No hay parciales agregados.</p>
+                  )}
                 </div>
               </div>
             </Modal.Body>

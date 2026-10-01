@@ -49,6 +49,9 @@ export const FormLocation = ({
   const [isInternal, setIsInternal] = useState(
     location?.isInternal === true ? true : false,
   );
+  const [latitude, setLatitude] = useState<string>(location?.latitude?.toString() || "");
+  const [longitude, setLongitude] = useState<string>(location?.longitude?.toString() || "");
+  const [googleMapsUrl, setGoogleMapsUrl] = useState<string>(location?.googleMapsUrl || "");
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -62,6 +65,18 @@ export const FormLocation = ({
     if (!address) {
       newErrors.address = "Debe ingresar una dirección";
     }
+    const latNum = latitude ? parseFloat(latitude) : null;
+    const lngNum = longitude ? parseFloat(longitude) : null;
+
+    if ((latNum !== null && lngNum === null) || (latNum === null && lngNum !== null)) {
+      newErrors.latitude = "Debes ingresar tanto la latitud como la longitud juntas, o dejar ambas en blanco.";
+      newErrors.longitude = "Debes ingresar tanto la latitud como la longitud juntas, o dejar ambas en blanco.";
+    }
+
+    if (googleMapsUrl && !/^https?:\/\/.+/i.test(googleMapsUrl)) {
+      newErrors.googleMapsUrl = "Debe ser un enlace válido que comience con http:// o https://";
+    }
+
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) {
       return;
@@ -72,9 +87,11 @@ export const FormLocation = ({
       name,
       address,
       description,
-      // isActive: true,
       isRentable,
       isInternal,
+      latitude: latNum,
+      longitude: lngNum,
+      googleMapsUrl: googleMapsUrl || null,
     };
     if (location) {
       res = await editLocation({ id: location.id, data });
@@ -162,6 +179,70 @@ export const FormLocation = ({
             children={errors.description && <> {errors.description}</>}
           />
         </TextField>
+
+        <div className="flex flex-col gap-2 mt-4 p-4 border border-border/50 rounded-lg bg-muted/10">
+          <h3 className="font-heading text-primary font-bold uppercase tracking-wider text-sm mb-2">Ubicación geográfica</h3>
+          <span className="text-xs text-muted-foreground mb-4">Latitud y longitud deben completarse juntas. (Opcional)</span>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <TextField
+              className="w-full"
+              name="latitude"
+              type="number"
+              isInvalid={!!errors.latitude || undefined}
+            >
+              <Label>Latitud (opcional)</Label>
+              <Input
+                variant="secondary"
+                value={latitude}
+                onChange={(e) => {
+                  setLatitude(e.target.value);
+                  setErrors({});
+                }}
+                placeholder="Ej: -17.9647"
+              />
+              <FieldError children={errors.latitude && <> {errors.latitude}</>} />
+            </TextField>
+
+            <TextField
+              className="w-full"
+              name="longitude"
+              type="number"
+              isInvalid={!!errors.longitude || undefined}
+            >
+              <Label>Longitud (opcional)</Label>
+              <Input
+                variant="secondary"
+                value={longitude}
+                onChange={(e) => {
+                  setLongitude(e.target.value);
+                  setErrors({});
+                }}
+                placeholder="Ej: -67.1060"
+              />
+              <FieldError children={errors.longitude && <> {errors.longitude}</>} />
+            </TextField>
+          </div>
+
+          <TextField
+            className="w-full mt-2"
+            name="googleMapsUrl"
+            type="url"
+            isInvalid={!!errors.googleMapsUrl || undefined}
+          >
+            <Label>Enlace del mapa (opcional)</Label>
+            <Input
+              variant="secondary"
+              value={googleMapsUrl}
+              onChange={(e) => {
+                setGoogleMapsUrl(e.target.value);
+                setErrors({});
+              }}
+              placeholder="Ej: https://maps.google.com/..."
+            />
+            <FieldError children={errors.googleMapsUrl && <> {errors.googleMapsUrl}</>} />
+          </TextField>
+        </div>
 
         <CheckboxGroup
           name="preferences"

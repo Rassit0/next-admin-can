@@ -17,8 +17,11 @@ interface InicioProps {
   promo2Banners?: PublicPromotion[];
   disciplineBanners?: IHomeDiscipline[];
   news?: PublicNews[];
-  matches?: PublicFixture[];
-  disciplines?: string[];
+  globalMatches?: PublicFixture[];
+  viewMatches?: PublicFixture[];
+  view?: string;
+  fromDate?: string;
+  toDate?: string;
 }
 
 export function Inicio({
@@ -27,8 +30,11 @@ export function Inicio({
   promo2Banners = [],
   disciplineBanners = [],
   news = [],
-  matches = [],
-  disciplines = [],
+  globalMatches = [],
+  viewMatches = [],
+  view = "today",
+  fromDate,
+  toDate,
 }: InicioProps) {
   const promo1 = promo1Banners[0];
   const promo2 = promo2Banners[0];
@@ -59,7 +65,13 @@ export function Inicio({
       <ActualidadSection news={news} />
 
       {/* 5. Fixture (Básquetbol y Voleibol) */}
-      <FixtureSection initialFixtures={matches} />
+      <FixtureSection 
+        globalFixtures={globalMatches} 
+        viewFixtures={viewMatches}
+        view={view}
+        fromDate={fromDate}
+        toDate={toDate}
+      />
 
       {/* 6. Banner promocional 2 */}
       {promo2 && (

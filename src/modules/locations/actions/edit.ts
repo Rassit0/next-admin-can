@@ -15,6 +15,9 @@ interface Props {
     // isActive: boolean;
     isRentable: boolean;
     isInternal: boolean;
+    latitude?: number | null;
+    longitude?: number | null;
+    googleMapsUrl?: string | null;
   };
 }
 
@@ -29,6 +32,7 @@ export const editLocation = async ({
     );
 
     updateTag("locations");
+    updateTag("public-fixtures");
 
     return {
       error: false,

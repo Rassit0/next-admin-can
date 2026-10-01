@@ -19,23 +19,55 @@ export const metadata = {
     images: ["/logo.png"],
   },
 };
-export default async function Page() {
+
+import { parseDate, today } from "@internationalized/date";
+
+export default async function Page(props: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
+  const searchParams = await props.searchParams;
+  const view = (searchParams.view as string) || "today";
+  let fromParam = searchParams.from as string | undefined;
+  let toParam = searchParams.to as string | undefined;
+
+  let fromIso: string | undefined;
+  let toIso: string | undefined;
+
+  if (view === "today") {
+    const t = today("America/La_Paz");
+    fromIso = t.toDate("America/La_Paz").toISOString();
+    toIso = t.add({ days: 1 }).toDate("America/La_Paz").toISOString();
+  } else if (view === "played") {
+    try {
+      if (fromParam && toParam) {
+        const fromDate = parseDate(fromParam);
+        const toDate = parseDate(toParam);
+        fromIso = fromDate.toDate("America/La_Paz").toISOString();
+        toIso = toDate.add({ days: 1 }).toDate("America/La_Paz").toISOString();
+      }
+    } catch {
+      // Ignore parsing errors
+    }
+  }
+
   const [
-    fixturesResponse,
+    fixturesGlobalResponse,
+    fixturesViewResponse,
     newsResponse,
     heroBannersResponse,
     homeDisciplinesResponse,
     promotionsResponse,
   ] = await Promise.all([
     getPublicFixture(),
-
+    (view === "today" || view === "played") && fromIso && toIso
+      ? getPublicFixture({ from: fromIso, to: toIso }) 
+      : Promise.resolve(null),
     getPublicNews(4), // Solicitando exactamente 4 noticias
     getPublicHeroBanners(),
     getPublicHomeDisciplines(),
     getPublicPromotions(),
   ]);
 
-  const matches = fixturesResponse?.data || [];
+  const globalMatches = fixturesGlobalResponse?.data || [];
+  const viewMatches = fixturesViewResponse?.data || globalMatches;
   const news = newsResponse?.data || [];
   const heroBanners = heroBannersResponse?.data || [];
   const disciplineBanners = homeDisciplinesResponse?.data || [];
@@ -46,9 +78,9 @@ export default async function Page() {
   const promo2Banners = promotions.promo2 ? [promotions.promo2] : [];
 
   // Transformación de Fixture
-  // Obtenemos disciplinas únicas del fixture
+  // Obtenemos disciplinas únicas de la respuesta global
   const uniqueDisciplines = Array.from(
-    new Set(matches.map((m) => m.discipline).filter(Boolean)),
+    new Set(globalMatches.map((m) => m.discipline).filter(Boolean)),
   );
 
   return (
@@ -58,8 +90,11 @@ export default async function Page() {
       promo2Banners={promo2Banners}
       disciplineBanners={disciplineBanners as any}
       news={news}
-      matches={matches}
-      disciplines={uniqueDisciplines}
+      globalMatches={globalMatches}
+      viewMatches={viewMatches}
+      view={view}
+      fromDate={fromParam}
+      toDate={toParam}
     />
   );
 }

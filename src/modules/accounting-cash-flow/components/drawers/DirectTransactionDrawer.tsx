@@ -215,11 +215,10 @@ export const DirectTransactionDrawer = ({
             res.data.immediateTransaction.data.transaction.id,
           );
           setShowPrintDialog(true);
-          return;
+        } else {
+          onOpenChange(false);
+          onSuccess?.();
         }
-
-        onOpenChange(false);
-        onSuccess?.();
       }
     } catch (error) {
       toast.error("Ocurró un error inesperado");
@@ -620,10 +619,12 @@ export const DirectTransactionDrawer = ({
       <PrintReportDialog
         transactionId={printTransactionId}
         isOpen={showPrintDialog}
-        onOpenChange={setShowPrintDialog}
-        onSuccess={() => {
-          onOpenChange(false);
-          onSuccess?.();
+        onOpenChange={(open) => {
+          setShowPrintDialog(open);
+          if (!open) {
+            onOpenChange(false);
+            onSuccess?.();
+          }
         }}
       />
     </>

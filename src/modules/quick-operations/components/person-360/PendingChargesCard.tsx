@@ -57,7 +57,7 @@ export const PendingChargesCard = ({
     }
   };
 
-  const getChargeTypeLabel = (type: string) => {
+    const getChargeTypeLabel = (type: string) => {
     switch (type) {
       case "MEMBERSHIP":
         return "Jugador";
@@ -105,6 +105,27 @@ export const PendingChargesCard = ({
     }
   };
 
+  const sortedCharges = React.useMemo(() => {
+    return [...charges].sort((a, b) => {
+      const dateA = new Date(a.dueDate).getTime();
+      const dateB = new Date(b.dueDate).getTime();
+      
+      // Orden cronológico (las más antiguas primero)
+      if (dateA !== dateB) {
+        return dateA - dateB;
+      }
+
+      // Si tienen la misma fecha, asegurar que la mora vaya después de la cuota
+      const isMoraA = a.description?.toLowerCase().includes('mora') || false;
+      const isMoraB = b.description?.toLowerCase().includes('mora') || false;
+      
+      if (isMoraA && !isMoraB) return 1;
+      if (!isMoraA && isMoraB) return -1;
+      
+      return 0;
+    });
+  }, [charges]);
+
   return (
     <Card className="h-full shadow-sm flex flex-col">
       <Card.Header className="flex justify-between items-center bg-danger/5 border-b border-danger/10 rounded-t-2xl">
@@ -124,7 +145,7 @@ export const PendingChargesCard = ({
       </Card.Header>
 
       <Card.Content className="p-0 flex-1 overflow-y-auto">
-        {charges.length === 0 ? (
+        {sortedCharges.length === 0 ? (
           <div className="flex flex-col items-center justify-center p-8 text-default-400 h-full">
             <i className="ri-checkbox-circle-line text-3xl mb-2 text-success"></i>
             <p className="font-medium text-default-500">
@@ -135,7 +156,7 @@ export const PendingChargesCard = ({
         ) : (
           <div className="flex flex-col divide-y divide-default-100">
             <AnimatePresence initial={false}>
-              {charges.map((charge) => {
+              {sortedCharges.map((charge) => {
                 const isSelected = selectedChargeIds.includes(charge.id);
                 const isSelectable =
                   charge.pendingAmount > 0 && charge.status !== "CANCELLED";

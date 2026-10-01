@@ -76,13 +76,13 @@ export function NewsDetail({
 
       {/* Hero Image */}
       {article.imageUrl && (
-        <div className="relative mb-12 aspect-video w-full overflow-hidden rounded-3xl border border-border shadow-neon-soft">
+        <div className="relative mb-12 aspect-video w-full overflow-hidden rounded-3xl border border-border shadow-neon-soft bg-muted/20">
           <Image
             src={article.imageUrl}
             alt={article.title}
             fill
             priority
-            className="object-cover"
+            className="object-contain"
           />
         </div>
       )}

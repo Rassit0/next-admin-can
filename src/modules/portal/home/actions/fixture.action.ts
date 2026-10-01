@@ -11,6 +11,12 @@ export interface PublicFixture {
   homeCategoryName: string | null;
   awayCategoryName: string | null;
   locationName: string | null;
+  location?: {
+    name: string;
+    latitude: number | null;
+    longitude: number | null;
+    mapsUrl: string | null;
+  } | null;
   date: string;
   homeTeam: {
     name: string;
@@ -22,6 +28,12 @@ export interface PublicFixture {
   };
   homeScore: number | null;
   awayScore: number | null;
+  partials?: {
+    sequence: number;
+    label: string | null;
+    homeScore: number | null;
+    awayScore: number | null;
+  }[];
   status: "PENDING" | "PLAYED";
   discipline: string;
 }

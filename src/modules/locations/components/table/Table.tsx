@@ -7,6 +7,7 @@ import {
   Edit03Icon,
   EyeIcon,
   Search01Icon,
+  Navigation02Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import clsx from "clsx";
@@ -106,6 +107,12 @@ export const TableLocations = ({ locations }: Props) => {
               </SortableColumnHeader>
             </Table.Column>
 
+            <Table.Column id="mapa">
+              <SortableColumnHeader id="mapa">
+                MAPA
+              </SortableColumnHeader>
+            </Table.Column>
+
             <Table.Column className="text-center">ACCIONES</Table.Column>
           </Table.Header>
           <Table.Body
@@ -167,6 +174,18 @@ export const TableLocations = ({ locations }: Props) => {
                   >
                     {location.isRentable ? "Sí­" : "No"}
                   </Chip>
+                </Table.Cell>
+                <Table.Cell>
+                  {(location.latitude !== null && location.longitude !== null) || location.googleMapsUrl ? (
+                    <Chip size="sm" variant="soft" color="accent">
+                      <div className="flex items-center gap-1">
+                        <HugeiconsIcon icon={Navigation02Icon} size={14} />
+                        Configurado
+                      </div>
+                    </Chip>
+                  ) : (
+                    <span className="text-muted-foreground text-xs">Sin mapa</span>
+                  )}
                 </Table.Cell>
                 <Table.Cell>
                   <div className="flex items-center justify-center gap-1">
