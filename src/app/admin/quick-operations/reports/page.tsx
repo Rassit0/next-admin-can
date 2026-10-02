@@ -4,6 +4,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { DateRangeFilter } from "@/ui";
 import { DownloadReportButton } from "@/modules/reports/components/DownloadReportButton";
 import { DownloadMonthlyAccountingButton } from "@/modules/reports/components/DownloadMonthlyAccountingButton";
+import { CourseCycleReportForm } from "@/modules/reports/components/CourseCycleReportForm";
 
 export const metadata = {
   title: "Reportes | Operaciones Rápidas",
@@ -59,8 +60,9 @@ export default async function QuickOperationsReportsPage({
             <DownloadMonthlyAccountingButton />
           </div>
         </div>
+
         {/* Tarjeta: Informe de Arqueos de Caja */}
-        <div className="flex flex-col bg-white dark:bg-zinc-900 rounded-xl border border-default-200 shadow-sm overflow-hidden">
+        {/* <div className="flex flex-col bg-white dark:bg-zinc-900 rounded-xl border border-default-200 shadow-sm overflow-hidden">
           <div className="flex flex-col gap-3 p-6 pb-4">
             <div className="flex items-center gap-2">
               <HugeiconsIcon icon={File01Icon} className="text-primary" />
@@ -85,11 +87,13 @@ export default async function QuickOperationsReportsPage({
           <div className="p-6 pt-4">
             <DownloadReportButton
               reportId="accounting.cash-closures"
-              start={closures_start}
-              end={closures_end}
+              params={{
+                ...(closures_start ? { startDate: closures_start } : {}),
+                ...(closures_end ? { endDate: closures_end } : {}),
+              }}
             />
           </div>
-        </div>
+        </div> */}
 
         {/* Tarjeta: Reporte Detallado de Contabilidad */}
         <div className="flex flex-col bg-white dark:bg-zinc-900 rounded-xl border border-default-200 shadow-sm overflow-hidden">
@@ -117,13 +121,18 @@ export default async function QuickOperationsReportsPage({
           <div className="p-6 pt-4">
             <DownloadReportButton
               reportId="accounting.detailed"
-              start={detailed_start}
-              end={detailed_end}
+              params={{
+                ...(detailed_start ? { startDate: detailed_start } : {}),
+                ...(detailed_end ? { endDate: detailed_end } : {}),
+              }}
             />
           </div>
         </div>
 
-        {/* Espacio para futuros reportes (ej. Reporte de Deudores) */}
+        {/* Tarjeta: Reporte de Lista de Inscritos de Escuelas */}
+        <CourseCycleReportForm />
+
+        {/* Espacio para futuros reportes */}
         <div className="flex flex-col bg-default-50 border-2 border-dashed border-default-200 rounded-xl p-6">
           <div className="flex items-center gap-2 mb-2">
             <HugeiconsIcon icon={File01Icon} className="text-default-500" />
