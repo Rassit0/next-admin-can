@@ -327,6 +327,15 @@ export const itemsNavigation: NavigationConfig[] = [
     entryStrategy: "firstAllowedChild",
     routes: [
       {
+        id: "reports-general",
+        label: "General",
+        href: "/admin/reports/general",
+        action: "reports",
+        subject: "REPORTS",
+        showInTabs: true,
+        requiredPermissions: { anyOf: ["READ_REPORTS"] },
+      },
+      {
         id: "reports-schools",
         label: "Escuelas",
         href: "/admin/reports/schools",
