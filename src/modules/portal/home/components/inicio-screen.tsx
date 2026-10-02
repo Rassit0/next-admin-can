@@ -10,6 +10,7 @@ import type { PublicNews } from "@/modules/portal/news/actions/news.action";
 import type { IHeroBanner } from "@/modules/cms/hero-banners";
 import type { IHomeDiscipline } from "@/modules/cms/home-disciplines";
 import type { PublicPromotion } from "@/modules/portal/promotions/actions/promotions.action";
+import type { ISponsor } from "@/modules/cms/sponsors";
 
 interface InicioProps {
   heroBanners?: IHeroBanner[];
@@ -19,6 +20,7 @@ interface InicioProps {
   news?: PublicNews[];
   globalMatches?: PublicFixture[];
   viewMatches?: PublicFixture[];
+  sponsors?: ISponsor[];
   view?: string;
   fromDate?: string;
   toDate?: string;
@@ -32,6 +34,7 @@ export function Inicio({
   news = [],
   globalMatches = [],
   viewMatches = [],
+  sponsors = [],
   view = "today",
   fromDate,
   toDate,
@@ -87,7 +90,7 @@ export function Inicio({
       )}
 
       {/* 7. Sponsors */}
-      <SponsorsSection />
+      <SponsorsSection sponsors={sponsors} />
     </div>
   );
 }

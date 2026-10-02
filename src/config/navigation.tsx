@@ -395,7 +395,7 @@ export const itemsNavigation: NavigationConfig[] = [
       "Gestiona las noticias, publicaciones, anuncios, historia e información de 'Nosotros' en el portal web del club.",
     tagText: "CMS y Portales",
     requiredPermissions: {
-      anyOf: ["READ_BANNERS", "READ_NEWS", "READ_PROMOTIONS"],
+      anyOf: ["READ_BANNERS", "READ_NEWS", "READ_PROMOTIONS", "READ_SPONSORS"],
     },
   },
   {
@@ -465,5 +465,14 @@ export const itemsWebNavigation: NavigationConfig[] = [
     subject: "home",
     icon: "calendar", // using calendar as an icon, or dashboard. The user said: "Elegir icon existente coherente con: Historia / Timeline / Institución". I'll check available icons later.
     requiredPermissions: { anyOf: ["READ_INSTITUTION_HISTORY"] },
+  },
+  {
+    id: "web-sponsors",
+    label: "Auspiciadores",
+    href: "sponsors",
+    action: "web_banners",
+    subject: "home",
+    icon: "news", 
+    requiredPermissions: { anyOf: ["READ_SPONSORS"] },
   },
 ];

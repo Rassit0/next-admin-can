@@ -10,6 +10,7 @@ import { getPublicNews } from "@/modules/portal/news/actions/news.action";
 import { getPublicHeroBanners } from "@/modules/portal/hero-banners/actions/hero-banners.action";
 import { getPublicHomeDisciplines } from "@/modules/portal/home-disciplines/actions/home-disciplines.action";
 import { getPublicPromotions } from "@/modules/portal/promotions/actions/promotions.action";
+import { getPublicSponsors } from "@/modules/cms/sponsors/actions/get";
 
 export const metadata = {
   title: "Inicio | Club Atlético Nacional",
@@ -55,6 +56,7 @@ export default async function Page(props: { searchParams: Promise<{ [key: string
     heroBannersResponse,
     homeDisciplinesResponse,
     promotionsResponse,
+    sponsorsResponse,
   ] = await Promise.all([
     getPublicFixture(),
     (view === "today" || view === "played") && fromIso && toIso
@@ -64,6 +66,7 @@ export default async function Page(props: { searchParams: Promise<{ [key: string
     getPublicHeroBanners(),
     getPublicHomeDisciplines(),
     getPublicPromotions(),
+    getPublicSponsors(),
   ]);
 
   const globalMatches = fixturesGlobalResponse?.data || [];
@@ -72,6 +75,7 @@ export default async function Page(props: { searchParams: Promise<{ [key: string
   const heroBanners = heroBannersResponse?.data || [];
   const disciplineBanners = homeDisciplinesResponse?.data || [];
   const promotions = promotionsResponse?.data || { promo1: null, promo2: null };
+  const sponsors = sponsorsResponse?.data || [];
 
   // Promociones
   const promo1Banners = promotions.promo1 ? [promotions.promo1] : [];
@@ -92,6 +96,7 @@ export default async function Page(props: { searchParams: Promise<{ [key: string
       news={news}
       globalMatches={globalMatches}
       viewMatches={viewMatches}
+      sponsors={sponsors as any}
       view={view}
       fromDate={fromParam}
       toDate={toParam}

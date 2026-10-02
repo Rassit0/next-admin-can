@@ -1,16 +1,16 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Droplet, Hexagon, Shield, Star, Zap } from "lucide-react"; // Using lucide icons as mock sponsor logos
+import { ISponsor } from "@/modules/cms/sponsors";
+import Link from "next/link";
+import Image from "next/image";
 
-export function SponsorsSection() {
-  const sponsors = [
-    { id: "s1", icon: Shield, name: "Sponsor 1" },
-    { id: "s2", icon: Zap, name: "Sponsor 2" },
-    { id: "s3", icon: Hexagon, name: "Sponsor 3" },
-    { id: "s4", icon: Droplet, name: "Sponsor 4" },
-    { id: "s5", icon: Star, name: "Sponsor 5" },
-  ];
+interface Props {
+  sponsors?: ISponsor[];
+}
+
+export function SponsorsSection({ sponsors = [] }: Props) {
+  if (sponsors.length === 0) return null;
 
   return (
     <section className="mx-auto w-full max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
@@ -23,27 +23,42 @@ export function SponsorsSection() {
       >
         <div className="mb-10 text-center">
           <h3 className="font-heading text-xl font-700 uppercase tracking-widest text-white/90">
-            Sponsors 2026
+            Auspiciadores 2026
           </h3>
         </div>
 
         <div className="flex flex-wrap items-center justify-center gap-10 sm:gap-16 lg:gap-24">
-          {sponsors.map((sponsor, idx) => (
-            <motion.div
-              key={sponsor.id}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1, duration: 0.5 }}
-              className="flex items-center justify-center transition-transform hover:scale-110"
-              title={sponsor.name}
-            >
-              <sponsor.icon
-                className="h-16 w-16 text-white sm:h-20 sm:w-20"
-                strokeWidth={1.5}
-              />
-            </motion.div>
-          ))}
+          {sponsors.map((sponsor, idx) => {
+            const Content = (
+              <motion.div
+                key={sponsor.id}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1, duration: 0.5 }}
+                className="flex items-center justify-center transition-transform hover:scale-110 h-24 w-48 sm:h-32 sm:w-64 relative"
+                title={sponsor.name}
+              >
+                {/* Usamos un div con bg-center/contain o img normal */}
+                <Image
+                  src={sponsor.imageUrl}
+                  alt={sponsor.name}
+                  fill
+                  sizes="(max-width: 768px) 128px, 160px"
+                  className="object-contain drop-shadow-sm transition-all"
+                />
+              </motion.div>
+            );
+
+            if (sponsor.websiteUrl) {
+              return (
+                <Link key={sponsor.id} href={sponsor.websiteUrl} target="_blank">
+                  {Content}
+                </Link>
+              );
+            }
+            return Content;
+          })}
         </div>
       </motion.div>
     </section>
