@@ -50,6 +50,7 @@ export async function handleServerAction<T>(
         message: error.message,
         errors: error.errors,
         statusCode: error.statusCode,
+        code: error.code,
       };
     }
 

@@ -67,6 +67,10 @@ export const Person360Container = ({
     }
   }, [initialSummary]);
 
+  useEffect(() => {
+    setSelectedChargeIds([]);
+  }, [personId, initialSummary]);
+
   const refreshSummary = async () => {
     if (!personId) return;
     try {

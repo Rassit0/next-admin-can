@@ -28,6 +28,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { IChargeSummary } from "@/modules/quick-operations/interfaces/secretary-summary.interface";
 import { addBulk } from "../../actions/add-bulk";
+import { invalidatePaymentCaches } from "../../actions/invalidate-payment-caches";
 import { getFinancialAccounts } from "@/modules/financial-accounts/actions/get-all";
 import { FinancialAccount } from "@/modules/financial-accounts/interfaces/financial-account.interface";
 import { formatCurrency } from "@/utils/constants";
@@ -221,6 +222,12 @@ export const BulkPaymentDrawer = ({
         toast.danger(
           res.message || "Es posible que el saldo de los cargos haya cambiado.",
         );
+        if (res.errors?.code === "CYCLE_ENROLLMENT_EXPIRED_CLEANED" || res.message?.includes("expirado y fue liberada")) {
+          await invalidatePaymentCaches(payerPerson?.id);
+          router.refresh();
+          onOpenChange(false);
+          return;
+        }
         if (onError) onError();
       } else {
         toast.success(

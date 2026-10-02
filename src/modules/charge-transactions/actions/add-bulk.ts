@@ -4,6 +4,7 @@ import { ServiceResponse } from "@/types/api";
 import { updateTag } from "next/cache";
 import { handleServerAction } from "@/utils";
 import { auth } from "@/auth";
+import { invalidatePaymentCaches } from "./invalidate-payment-caches";
 
 export interface AddBulkTransactionData {
   payerPersonId?: string;
@@ -41,13 +42,23 @@ export const addBulk = async (
     if (!sanitizedData.notes) delete sanitizedData.notes;
     if (!sanitizedData.transactionDate) delete sanitizedData.transactionDate;
 
-    const response = await api.post<AddBulkTransactionResponse & { message?: string }>(
-      `transactions/bulk`, 
-      sanitizedData
-    );
+    let response;
+    try {
+      response = await api.post<AddBulkTransactionResponse & { message?: string }>(
+        `transactions/bulk`, 
+        sanitizedData
+      );
+    } catch (error: any) {
+      if (
+        error?.errors?.code === "CYCLE_ENROLLMENT_EXPIRED_CLEANED" ||
+        error?.message?.includes("expirado y fue liberada")
+      ) {
+        await invalidatePaymentCaches(sanitizedData.payerPersonId);
+      }
+      throw error;
+    }
 
-    updateTag("transactions");
-    updateTag("charges");
+    await invalidatePaymentCaches(sanitizedData.payerPersonId);
     
     return {
       error: false,

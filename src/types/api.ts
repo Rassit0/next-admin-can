@@ -7,6 +7,7 @@ export type ServiceResponse<T> =
       message: string;
       errors?: any;
       statusCode: number;
+      code?: string;
     };
 
 export interface IPaginationMeta {

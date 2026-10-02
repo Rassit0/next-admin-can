@@ -32,6 +32,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ICharge } from "../../interfaces/charges.interface";
 import { addTransaction } from "../../actions/add-transaction";
+import { invalidatePaymentCaches } from "../../actions/invalidate-payment-caches";
 import {
   CounterpartySelector,
   CounterpartyType,
@@ -190,6 +191,13 @@ export const PayChargeDrawer = ({
 
       if (res.error) {
         toast.danger(res.message);
+        
+        // Si el pago falló porque expiró y fue limpiado, cerramos y refrescamos
+        if (res.errors?.code === "CYCLE_ENROLLMENT_EXPIRED_CLEANED" || res.message?.includes("expirado y fue liberada")) {
+           await invalidatePaymentCaches(personId || undefined, charge.id);
+           router.refresh();
+           onOpenChange(false);
+        }
       } else {
         toast.success(res.message);
         router.refresh();

@@ -5,6 +5,7 @@ import { updateTag } from "next/cache";
 import { handleServerAction } from "@/utils";
 import { ITransaction } from "../interfaces/transactions.interface";
 import { auth } from "@/auth";
+import { invalidatePaymentCaches } from "./invalidate-payment-caches";
 
 export interface AddTransactionData {
   payerPersonId?: string | null;
@@ -38,14 +39,24 @@ export const addTransaction = async (
     if (!sanitizedData.notes) delete sanitizedData.notes;
     if (!sanitizedData.chargeId) delete sanitizedData.chargeId;
 
-    const response = await api.post<{
-      message: string;
-      data: { transaction: ITransaction; paymentData: any };
-    }>(`transactions`, sanitizedData);
+    let response;
+    try {
+      response = await api.post<{
+        message: string;
+        data: { transaction: ITransaction; paymentData: any };
+      }>(`transactions`, sanitizedData);
+    } catch (error: any) {
+      if (
+        error?.errors?.code === "CYCLE_ENROLLMENT_EXPIRED_CLEANED" ||
+        error?.message?.includes("expirado y fue liberada")
+      ) {
+        // Forzar actualización de cache si se hizo cleanup en el backend
+        await invalidatePaymentCaches(sanitizedData.payerPersonId, sanitizedData.chargeId);
+      }
+      throw error;
+    }
 
-    updateTag("transactions");
-    updateTag("charges");
-    updateTag("account-charges");
+    await invalidatePaymentCaches(sanitizedData.payerPersonId, sanitizedData.chargeId);
     return {
       error: false,
       data: response.data,
