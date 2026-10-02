@@ -30,6 +30,8 @@ export interface ITransaction {
     secondLastName?: string | null;
     documentNumber: string | null;
   } | null;
+  payerName: string | null;
+  beneficiaryName: string | null;
   createdAt: Date | string;
 
   // Frontend grouping fields
