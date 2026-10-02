@@ -87,8 +87,8 @@ export default async function ReportsPage({
             <DownloadReportButton
               reportId="accounting.cash-closures"
               params={{
-                ...(closures_start ? { startDate: closures_start } : {}),
-                ...(closures_end ? { endDate: closures_end } : {}),
+                ...(closures_start ? { start: closures_start } : {}),
+                ...(closures_end ? { end: closures_end } : {}),
               }}
             />
           </div>
@@ -121,8 +121,8 @@ export default async function ReportsPage({
             <DownloadReportButton
               reportId="accounting.detailed"
               params={{
-                ...(detailed_start ? { startDate: detailed_start } : {}),
-                ...(detailed_end ? { endDate: detailed_end } : {}),
+                ...(detailed_start ? { start: detailed_start } : {}),
+                ...(detailed_end ? { end: detailed_end } : {}),
               }}
             />
           </div>
