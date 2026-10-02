@@ -317,6 +317,27 @@ export const itemsNavigation: NavigationConfig[] = [
     requiredPermissions: { anyOf: ["READ_SHIFTS"] },
   },
   {
+    id: "reports",
+    label: "Reportes",
+    href: "reports",
+    action: "reports",
+    subject: "REPORTS",
+    icon: "news", // Using news or similar icon for reports
+    mobile: { priority: 10 },
+    entryStrategy: "firstAllowedChild",
+    routes: [
+      {
+        id: "reports-schools",
+        label: "Escuelas",
+        href: "/admin/reports/schools",
+        action: "reports",
+        subject: "REPORTS",
+        showInTabs: true,
+        requiredPermissions: { anyOf: ["READ_REPORTS", "READ_COURSE_SEASONS"] },
+      },
+    ],
+  },
+  {
     id: "users",
     label: "Usuarios",
     href: "users",

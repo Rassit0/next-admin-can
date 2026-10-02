@@ -9,16 +9,18 @@ import { toast } from "sonner";
 
 interface Props {
   reportId: string;
-  start?: string;
-  end?: string;
   format?: string;
+  params?: Record<string, string>;
+  label?: string;
+  icon?: React.ReactNode;
 }
 
 export function DownloadReportButton({
   reportId,
-  start,
-  end,
   format = "pdf",
+  params = {},
+  label = "Descargar Reporte",
+  icon = <HugeiconsIcon icon={Download01Icon} />
 }: Props) {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -27,9 +29,8 @@ export function DownloadReportButton({
       setIsLoading(true);
       const result = await downloadReportAction({
         reportId,
-        start,
-        end,
         format,
+        params,
       });
 
       if (!result.success || !result.url) {
@@ -69,8 +70,8 @@ export function DownloadReportButton({
       onClick={handleDownload}
       isDisabled={isLoading}
     >
-      {!isLoading && <HugeiconsIcon icon={Download01Icon} />}
-      Descargar PDF
+      {!isLoading && icon}
+      {label}
     </Button>
   );
 }

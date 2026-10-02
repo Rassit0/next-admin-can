@@ -4,18 +4,19 @@ import { api } from '@/utils/api';
 
 interface DownloadReportParams {
   reportId: string;
-  start?: string;
-  end?: string;
   format?: string;
+  params?: Record<string, string>;
 }
 
-export async function downloadReportAction({ reportId, start, end, format = 'pdf' }: DownloadReportParams) {
+export async function downloadReportAction({ reportId, format = 'pdf', params = {} }: DownloadReportParams) {
   try {
     const query = new URLSearchParams();
     query.append('id', reportId);
     query.append('format', format);
-    if (start) query.append('start', start);
-    if (end) query.append('end', end);
+    
+    Object.entries(params).forEach(([key, value]) => {
+      if (value) query.append(key, value);
+    });
 
     const blob = await api.getBlob(`reports/download?${query.toString()}`);
     
