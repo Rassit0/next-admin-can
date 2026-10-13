@@ -7,7 +7,7 @@ import { InternalTransferDrawer } from "./InternalTransferDrawer";
 import { Table, Button, Card, Chip } from "@heroui/react";
 import { toast } from "sonner";
 import { cancelInternalTransfer } from "../actions/cancel";
-import { Add01Icon, Cancel01Icon } from "@hugeicons/core-free-icons";
+import { Add01Icon, Cancel01Icon, Download01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useRouter } from "next/navigation";
 
@@ -43,6 +43,34 @@ export const InternalTransfersClient = ({ transfers, accounts }: Props) => {
       toast.error(error.message || "Error al anular");
     } finally {
       setCancellingId(null);
+    }
+  };
+
+  const handleDownload = async (id: string) => {
+    try {
+      const { downloadInternalTransferReceipt } = await import("../actions/download-receipt");
+      const result = await downloadInternalTransferReceipt(id);
+
+      if (!result.success || !result.url) {
+        throw new Error(result.error || "Recibo no disponible para esta transferencia histórica.");
+      }
+
+      const base64Part = result.url.split(",")[1];
+      const byteCharacters = atob(base64Part);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: "application/pdf" });
+      const blobUrl = URL.createObjectURL(blob);
+
+      window.open(blobUrl, "_blank");
+
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
+      toast.success("Recibo generado exitosamente");
+    } catch (error: any) {
+      toast.error(error.message || "Error al descargar");
     }
   };
 
@@ -141,9 +169,19 @@ export const InternalTransfersClient = ({ transfers, accounts }: Props) => {
                       </Chip>
                     </Table.Cell>
                     <Table.Cell>
-                      <div className="flex justify-center">
+                      <div className="flex justify-center gap-2">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          isIconOnly
+                          onPress={() => handleDownload(transfer.id)}
+                          aria-label="Descargar Recibo"
+                        >
+                          <HugeiconsIcon icon={Download01Icon} className="w-4 h-4" />
+                        </Button>
                         <Button
                           variant="danger"
+                          size="sm"
                           isDisabled={transfer.status === "CANCELLED"}
                           onPress={() => handleCancel(transfer.id)}
                         >

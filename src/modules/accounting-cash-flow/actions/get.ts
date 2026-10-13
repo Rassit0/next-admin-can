@@ -66,7 +66,7 @@ export const getTransactions = async ({
     if (orderBy) params.set("orderBy", orderBy);
 
     const res = await api.get<ITransactionsResponse>(
-      `transactions?${params.toString()}`,
+      `transactions/cash-flow/operations?${params.toString()}`,
       {
         next: {
           tags: ["transactions"],

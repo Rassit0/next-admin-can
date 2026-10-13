@@ -26,65 +26,29 @@ interface Props {
 }
 
 export const CashFlowTable = ({ transactions }: Props) => {
-  const [printTransactionId, setPrintTransactionId] = useState<string | null>(
+  const [printTransactionId, setPrintTransactionId] = useState<{id: string, kind: string} | null>(
     null,
   );
   const [showPrintDialog, setShowPrintDialog] = useState(false);
-  const [voidTransactionId, setVoidTransactionId] = useState<string | null>(
+  const [voidTarget, setVoidTarget] = useState<{id: string, kind: string} | null>(
     null,
   );
   const [isVoiding, setIsVoiding] = useState(false);
 
-  const groupedTransactions = React.useMemo(() => {
-    const groups = new Map<string, ITransaction>();
-    const result: ITransaction[] = [];
-
-    for (const t of transactions) {
-      if (t.paymentId) {
-        if (groups.has(t.paymentId)) {
-          const group = groups.get(t.paymentId)!;
-          group.amount += t.amount;
-          group._isGrouped = true; // Solo es agrupado si hay más de 1
-          group._groupedDetails!.push({
-            method: t.paymentMethod,
-            account: t.financialAccountName || "Sin asignar",
-            amount: t.amount,
-          });
-        } else {
-          const newGroup: ITransaction = {
-            ...t,
-            _isGrouped: false, // Inicialmente falso, es una transacción normal
-            _groupedDetails: [
-              {
-                method: t.paymentMethod,
-                account: t.financialAccountName || "Sin asignar",
-                amount: t.amount,
-              },
-            ],
-          };
-          groups.set(t.paymentId, newGroup);
-          result.push(newGroup);
-        }
-      } else {
-        result.push(t);
-      }
-    }
-    return result;
-  }, [transactions]);
-
+  const groupedTransactions = transactions;
   const handleVoid = async () => {
-    if (!voidTransactionId) return;
+    if (!voidTarget) return;
     setIsVoiding(true);
     try {
-      const res = await deleteTransaction(voidTransactionId);
+      const res = await deleteTransaction(voidTarget.id, voidTarget.kind);
       if (res.error) {
         toast.error(res.message);
       } else {
         toast.success(res.message);
-        setVoidTransactionId(null);
+        setVoidTarget(null);
       }
     } catch (error) {
-      toast.error("Ocurró un error al anular el pago");
+      toast.error("Ocurrió un error al anular la operación");
     } finally {
       setIsVoiding(false);
     }
@@ -245,10 +209,10 @@ export const CashFlowTable = ({ transactions }: Props) => {
                         size="sm"
                         variant="soft"
                         color={
-                          transaction.type === "INCOME" ? "success" : "danger"
+                          transaction.type === "INCOME" ? "success" : transaction.type === "EXPENSE" ? "danger" : "default"
                         }
                       >
-                        {transaction.type === "INCOME" ? "Ingreso" : "Egreso"}
+                        {transaction.type === "INCOME" ? "Ingreso" : transaction.type === "EXPENSE" ? "Egreso" : "Transferencia"}
                       </Chip>
                     </Table.Cell>
                     <Table.Cell>
@@ -272,7 +236,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
                             Reverso
                           </Chip>
                         )}
-                        {transaction._isGrouped ? (
+                        {transaction.kind === "PAYMENT" ? (
                           <div className="flex flex-col gap-1">
                             <Chip
                               size="sm"
@@ -282,19 +246,15 @@ export const CashFlowTable = ({ transactions }: Props) => {
                             >
                               Múltiples
                             </Chip>
-                            {transaction._groupedDetails?.map((d, idx) => (
-                              <span
-                                key={idx}
-                                className="text-default-500 text-xs whitespace-nowrap"
-                              >
-                                {d.method === "CASH"
-                                  ? "Efectivo"
-                                  : d.method === "TRANSFER"
-                                    ? "Transf."
-                                    : "QR"}{" "}
-                                ({d.amount} Bs)
+                            {transaction.groupedDetails ? transaction.groupedDetails.map((detail, idx) => (
+                              <span key={idx} className="text-default-600 text-xs">
+                                {detail.method === "CASH" ? "Efectivo" : detail.method === "TRANSFER" ? "Transferencia" : detail.method === "QR" ? "QR" : detail.method}
                               </span>
-                            ))}
+                            )) : (
+                              <span className="text-default-600 text-xs italic">
+                                Varios métodos
+                              </span>
+                            )}
                           </div>
                         ) : (
                           <span className="text-default-600 text-sm">
@@ -302,7 +262,9 @@ export const CashFlowTable = ({ transactions }: Props) => {
                               ? "Efectivo"
                               : transaction.paymentMethod === "TRANSFER"
                                 ? "Transferencia"
-                                : "QR"}
+                                : transaction.paymentMethod === "QR"
+                                  ? "QR"
+                                  : transaction.paymentMethod}
                           </span>
                         )}
                       </div>
@@ -321,20 +283,27 @@ export const CashFlowTable = ({ transactions }: Props) => {
                       </span>
                     </Table.Cell>
                     <Table.Cell>
-                      {transaction._isGrouped ? (
+                      {transaction.kind === "INTERNAL_TRANSFER" ? (
+                        <div className="flex flex-col gap-1 text-sm text-default-700">
+                          <span className="truncate max-w-32">{transaction.sourceAccountName || "Origen"}</span>
+                          <span className="text-default-400">↓</span>
+                          <span className="truncate max-w-32">{transaction.destAccountName || "Destino"}</span>
+                        </div>
+                      ) : transaction.kind === "PAYMENT" ? (
                         <div className="flex flex-col gap-1">
-                          {transaction._groupedDetails?.map((d, idx) => (
-                            <span
-                              key={idx}
-                              className="text-default-700 text-xs whitespace-nowrap truncate max-w-32"
-                            >
-                              {d.account}
+                          {transaction.groupedDetails ? transaction.groupedDetails.map((detail, idx) => (
+                            <span key={idx} className="text-default-700 text-xs">
+                              {detail.account}
                             </span>
-                          ))}
+                          )) : (
+                            <span className="text-default-700 text-xs italic">
+                              Múltiples cuentas
+                            </span>
+                          )}
                         </div>
                       ) : (
                         <span className="text-default-700 text-sm">
-                          {transaction.financialAccountName || (
+                          {transaction.accountName ? transaction.accountName : (
                             <span className="text-default-400 italic">
                               Sin asignar
                             </span>
@@ -343,11 +312,41 @@ export const CashFlowTable = ({ transactions }: Props) => {
                       )}
                     </Table.Cell>
                     <Table.Cell>
-                      {transaction._isGrouped ? (
-                        <div className="flex flex-col items-end text-right">
-                          <span className="text-default-400 text-xs italic">
-                            N/A (Múltiples)
-                          </span>
+                      {transaction.kind === "INTERNAL_TRANSFER" ? (
+                        <div className="flex flex-col items-end text-right gap-2">
+                          <div className="flex flex-col">
+                            <span className="font-mono text-[10px] text-default-500">
+                              {transaction.sourceBalanceBefore != null ? Number(transaction.sourceBalanceBefore).toFixed(2) : "-"}
+                            </span>
+                            <span className="font-mono text-xs font-medium text-danger">
+                              {transaction.sourceBalanceAfter != null ? Number(transaction.sourceBalanceAfter).toFixed(2) : "-"}
+                            </span>
+                          </div>
+                          <div className="flex flex-col">
+                            <span className="font-mono text-[10px] text-default-500">
+                              {transaction.destBalanceBefore != null ? Number(transaction.destBalanceBefore).toFixed(2) : "-"}
+                            </span>
+                            <span className="font-mono text-xs font-medium text-success">
+                              {transaction.destBalanceAfter != null ? Number(transaction.destBalanceAfter).toFixed(2) : "-"}
+                            </span>
+                          </div>
+                        </div>
+                      ) : transaction.kind === "PAYMENT" ? (
+                        <div className="flex flex-col items-end text-right gap-1">
+                          {transaction.groupedDetails ? transaction.groupedDetails.map((detail, idx) => (
+                            <div key={idx} className="flex flex-col">
+                              <span className="font-mono text-[10px] text-default-500">
+                                Ant: {detail.balanceBefore != null ? Number(detail.balanceBefore).toFixed(2) : "-"}
+                              </span>
+                              <span className="font-mono text-[10px] font-medium text-foreground">
+                                Nu: {detail.balanceAfter != null ? Number(detail.balanceAfter).toFixed(2) : "-"}
+                              </span>
+                            </div>
+                          )) : (
+                            <span className="text-default-400 text-xs italic">
+                              N/A (Múltiples)
+                            </span>
+                          )}
                         </div>
                       ) : (
                         <div className="flex flex-col items-end text-right">
@@ -382,10 +381,10 @@ export const CashFlowTable = ({ transactions }: Props) => {
                               aria-label="Acciones de Transacción"
                               onAction={(key) => {
                                 if (key === "print") {
-                                  setPrintTransactionId(transaction.id);
+                                  setPrintTransactionId({ id: transaction.id, kind: transaction.kind || "TRANSACTION" });
                                   setShowPrintDialog(true);
                                 } else if (key === "void") {
-                                  setVoidTransactionId(transaction.id);
+                                  setVoidTarget({ id: transaction.id, kind: transaction.kind || "TRANSACTION" });
                                 }
                               }}
                             >
@@ -425,15 +424,15 @@ export const CashFlowTable = ({ transactions }: Props) => {
       </Table>
 
       <PrintReportDialog
-        transactionId={printTransactionId}
+        transactionId={printTransactionId?.id || null}
         isOpen={showPrintDialog}
         onOpenChange={setShowPrintDialog}
       />
 
       <AlertDialog.Backdrop
-        isOpen={!!voidTransactionId}
+        isOpen={!!voidTarget}
         onOpenChange={(isOpen) => {
-          if (!isOpen && !isVoiding) setVoidTransactionId(null);
+          if (!isOpen && !isVoiding) setVoidTarget(null);
         }}
       >
         <AlertDialog.Container>
@@ -458,7 +457,7 @@ export const CashFlowTable = ({ transactions }: Props) => {
             <AlertDialog.Footer>
               <Button
                 variant="tertiary"
-                onPress={() => setVoidTransactionId(null)}
+                onPress={() => setVoidTarget(null)}
                 isDisabled={isVoiding}
               >
                 Cancelar

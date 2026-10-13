@@ -2,45 +2,49 @@ import { PaginatedResponse } from "@/types/api";
 
 export interface ITransaction {
   id: string;
-  paymentId?: string | null;
-  type: "INCOME" | "EXPENSE";
-  amount: number;
-  concept: string;
-  category: string | null;
-  origin: string;
-  paymentMethod: "CASH" | "TRANSFER" | "QR";
+  kind: 'TRANSACTION' | 'PAYMENT' | 'INTERNAL_TRANSFER';
   transactionDate: Date | string;
-  status: string;
-  receiptSeries: string;
-  receiptNumber: number;
-  reference: string | null;
-  reversesId?: string | null;
+  createdAt: Date | string;
+  receiptSeries: string | null;
+  receiptNumber: number | null;
+  concept: string;
+  amount: number;
+  type?: 'INCOME' | 'EXPENSE' | 'TRANSFER';
+  
+  accountId?: string | null;
+  accountName?: string | null;
+  paymentMethod?: string | null;
+  reference?: string | null;
+
+  sourceAccountId?: string | null;
+  sourceAccountName?: string | null;
+  destAccountId?: string | null;
+  destAccountName?: string | null;
+
   balanceBefore?: number | null;
   balanceAfter?: number | null;
-  financialAccountName: string | null;
-  payerCompany: {
-    id: string;
-    name: string;
-    taxId: string | null;
-  } | null;
-  payerPerson: {
-    id: string;
-    name: string;
-    lastName: string | null;
-    secondLastName?: string | null;
-    documentNumber: string | null;
-  } | null;
-  payerName: string | null;
-  beneficiaryName: string | null;
-  createdAt: Date | string;
+  sourceBalanceBefore?: number | null;
+  sourceBalanceAfter?: number | null;
+  destBalanceBefore?: number | null;
+  destBalanceAfter?: number | null;
 
-  // Frontend grouping fields
-  _isGrouped?: boolean;
-  _groupedDetails?: {
+  groupedDetails?: {
     method: string;
     account: string;
+    accountId?: string;
     amount: number;
+    balanceBefore: number | null;
+    balanceAfter: number | null;
   }[];
+
+  payerName?: string | null;
+  beneficiaryName?: string | null;
+  status?: string;
+  
+  // Retro-compatibility fields for the generic table renderer (if any)
+  category?: string | null;
+  origin?: string;
+  reversesId?: string | null;
 }
 
 export type ITransactionsResponse = PaginatedResponse<ITransaction>;
