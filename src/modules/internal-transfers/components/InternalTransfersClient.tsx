@@ -4,12 +4,13 @@ import { useState } from "react";
 import { InternalTransfer } from "../interfaces/internal-transfer.interface";
 import { FinancialAccount } from "../../financial-accounts/interfaces/financial-account.interface";
 import { InternalTransferDrawer } from "./InternalTransferDrawer";
-import { Table, Button, Card, Chip } from "@heroui/react";
+import { Table, Button, Card, Chip, AlertDialog } from "@heroui/react";
 import { toast } from "sonner";
 import { cancelInternalTransfer } from "../actions/cancel";
-import { Add01Icon, Cancel01Icon, Download01Icon } from "@hugeicons/core-free-icons";
+import { Add01Icon, Cancel01Icon, Download01Icon, Alert02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useRouter } from "next/navigation";
+import { TableActions, ActionDef } from "@/ui";
 
 interface Props {
   transfers: InternalTransfer[];
@@ -18,31 +19,27 @@ interface Props {
 
 export const InternalTransfersClient = ({ transfers, accounts }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [cancellingId, setCancellingId] = useState<string | null>(null);
+  const [transferToCancel, setTransferToCancel] = useState<string | null>(null);
+  const [isCancelling, setIsCancelling] = useState(false);
   const router = useRouter();
 
-  const handleCancel = async (id: string) => {
-    if (
-      !confirm(
-        "¿Está seguro de anular esta transferencia? Esto revertirá los saldos de ambas cuentas.",
-      )
-    ) {
-      return;
-    }
+  const handleConfirmCancel = async () => {
+    if (!transferToCancel || isCancelling) return;
 
-    setCancellingId(id);
+    setIsCancelling(true);
     try {
-      const response = await cancelInternalTransfer(id);
+      const response = await cancelInternalTransfer(transferToCancel);
       if (response.error) {
         toast.error(response.message || "Error al anular");
         return;
       }
       toast.success(response.message || "Transferencia anulada exitosamente");
+      setTransferToCancel(null);
       router.refresh();
     } catch (error: any) {
       toast.error(error.message || "Error al anular");
     } finally {
-      setCancellingId(null);
+      setIsCancelling(false);
     }
   };
 
@@ -112,7 +109,7 @@ export const InternalTransfersClient = ({ transfers, accounts }: Props) => {
                 <Table.Column>MONTO</Table.Column>
                 <Table.Column>REFERENCIA / NOTA</Table.Column>
                 <Table.Column>ESTADO</Table.Column>
-                <Table.Column>ACCIONES</Table.Column>
+                <Table.Column className="text-center">ACCIONES</Table.Column>
               </Table.Header>
               <Table.Body
                 renderEmptyState={() => (
@@ -123,78 +120,93 @@ export const InternalTransfersClient = ({ transfers, accounts }: Props) => {
                   </div>
                 )}
               >
-                {transfers.map((transfer) => (
-                  <Table.Row key={transfer.id}>
-                    <Table.Cell>
-                      {new Intl.DateTimeFormat("es-ES", {
-                        day: "2-digit",
-                        month: "short",
-                        year: "numeric",
-                      }).format(new Date(transfer.date))}
-                    </Table.Cell>
-                    <Table.Cell>
-                      <span className="text-danger font-medium">
-                        {transfer.sourceTransaction?.financialAccount?.name ||
-                          "Desconocido"}
-                      </span>
-                    </Table.Cell>
-                    <Table.Cell>
-                      <span className="text-success font-medium">
-                        {transfer.destinationTransaction?.financialAccount
-                          ?.name || "Desconocido"}
-                      </span>
-                    </Table.Cell>
-                    <Table.Cell>
-                      <span className="font-bold">
-                        Bs. {Number(transfer.amount).toFixed(2)}
-                      </span>
-                    </Table.Cell>
-                    <Table.Cell>
-                      <div className="flex flex-col">
-                        <span className="text-small">
-                          {transfer.description || "-"}
+                {transfers.map((transfer) => {
+                  const canDownloadReceipt = transfer.status === "COMPLETED";
+                  const canCancel =
+                    transfer.status === "COMPLETED" ||
+                    transfer.status === "PENDING";
+
+                  const rowActions: ActionDef[] = [];
+
+                  if (canDownloadReceipt) {
+                    rowActions.push({
+                      key: "download",
+                      label: "Descargar Recibo",
+                      icon: Download01Icon,
+                      onPress: () => handleDownload(transfer.id),
+                    });
+                  }
+
+                  if (canCancel) {
+                    rowActions.push({
+                      key: "cancel",
+                      label: "Anular Transferencia",
+                      icon: Cancel01Icon,
+                      danger: true,
+                      onPress: () => setTransferToCancel(transfer.id),
+                    });
+                  }
+
+                  return (
+                    <Table.Row key={transfer.id}>
+                      <Table.Cell>
+                        {new Intl.DateTimeFormat("es-ES", {
+                          day: "2-digit",
+                          month: "short",
+                          year: "numeric",
+                        }).format(new Date(transfer.date))}
+                      </Table.Cell>
+                      <Table.Cell>
+                        <span className="text-danger font-medium">
+                          {transfer.sourceTransaction?.financialAccount?.name ||
+                            "Desconocido"}
                         </span>
-                        <span className="text-tiny text-default-400">
-                          Ref: {transfer.reference || "N/A"}
+                      </Table.Cell>
+                      <Table.Cell>
+                        <span className="text-success font-medium">
+                          {transfer.destinationTransaction?.financialAccount
+                            ?.name || "Desconocido"}
                         </span>
-                      </div>
-                    </Table.Cell>
-                    <Table.Cell>
-                      <Chip color={statusColorMap[transfer.status]}>
-                        {transfer.status === "COMPLETED"
-                          ? "COMPLETADO"
-                          : transfer.status === "PENDING"
-                            ? "PENDIENTE"
-                            : "ANULADO"}
-                      </Chip>
-                    </Table.Cell>
-                    <Table.Cell>
-                      <div className="flex justify-center gap-2">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          isIconOnly
-                          onPress={() => handleDownload(transfer.id)}
-                          aria-label="Descargar Recibo"
-                        >
-                          <HugeiconsIcon icon={Download01Icon} className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          variant="danger"
-                          size="sm"
-                          isDisabled={transfer.status === "CANCELLED"}
-                          onPress={() => handleCancel(transfer.id)}
-                        >
-                          <HugeiconsIcon
-                            icon={Cancel01Icon}
-                            className="w-4 h-4"
-                          />
-                          {cancellingId === transfer.id && "Anulando..."}
-                        </Button>
-                      </div>
-                    </Table.Cell>
-                  </Table.Row>
-                ))}
+                      </Table.Cell>
+                      <Table.Cell>
+                        <span className="font-bold">
+                          Bs. {Number(transfer.amount).toFixed(2)}
+                        </span>
+                      </Table.Cell>
+                      <Table.Cell>
+                        <div className="flex flex-col">
+                          <span className="text-small">
+                            {transfer.description || "-"}
+                          </span>
+                          <span className="text-tiny text-default-400">
+                            Ref: {transfer.reference || "N/A"}
+                          </span>
+                        </div>
+                      </Table.Cell>
+                      <Table.Cell>
+                        <Chip color={statusColorMap[transfer.status]}>
+                          {transfer.status === "COMPLETED"
+                            ? "COMPLETADO"
+                            : transfer.status === "PENDING"
+                              ? "PENDIENTE"
+                              : "ANULADO"}
+                        </Chip>
+                      </Table.Cell>
+                      <Table.Cell>
+                        <div className="flex justify-center items-center">
+                          {rowActions.length > 0 ? (
+                            <TableActions
+                              mode="dropdown"
+                              actions={rowActions}
+                            />
+                          ) : (
+                            <span className="text-default-400 text-xs italic">—</span>
+                          )}
+                        </div>
+                      </Table.Cell>
+                    </Table.Row>
+                  );
+                })}
               </Table.Body>
             </Table.Content>
           </Table.ScrollContainer>
@@ -206,6 +218,47 @@ export const InternalTransfersClient = ({ transfers, accounts }: Props) => {
         onOpenChange={setIsOpen}
         accounts={accounts}
       />
+
+      <AlertDialog.Backdrop
+        isOpen={!!transferToCancel}
+        onOpenChange={(open) => {
+          if (!open && !isCancelling) setTransferToCancel(null);
+        }}
+      >
+        <AlertDialog.Container>
+          <AlertDialog.Dialog className="sm:max-w-md">
+            <AlertDialog.Header>
+              <AlertDialog.Icon className="bg-danger/10 text-danger">
+                <HugeiconsIcon icon={Alert02Icon} />
+              </AlertDialog.Icon>
+              <AlertDialog.Heading>
+                Anular Transferencia Interna
+              </AlertDialog.Heading>
+            </AlertDialog.Header>
+            <AlertDialog.Body>
+              <p className="text-default-500 text-sm">
+                ¿Está seguro de anular esta transferencia? Esto revertirá los saldos en ambas cuentas financieras y no se podrá deshacer.
+              </p>
+            </AlertDialog.Body>
+            <AlertDialog.Footer>
+              <Button
+                variant="tertiary"
+                onPress={() => setTransferToCancel(null)}
+                isDisabled={isCancelling}
+              >
+                Cancelar
+              </Button>
+              <Button
+                variant="danger"
+                onPress={handleConfirmCancel}
+                isPending={isCancelling}
+              >
+                Confirmar Anulación
+              </Button>
+            </AlertDialog.Footer>
+          </AlertDialog.Dialog>
+        </AlertDialog.Container>
+      </AlertDialog.Backdrop>
     </div>
   );
 };

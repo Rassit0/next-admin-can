@@ -74,7 +74,7 @@ export const QuickOperationsPersonSelector = () => {
   };
 
   // Ocultar el selector si no estamos en la pestaña principal (Ficha Personal)
-  const isExcluded = ["/cash-flow", "/dashboard", "/reports"].some((route) =>
+  const isExcluded = ["/cash-flow", "/dashboard", "/reports", "/transfers"].some((route) =>
     pathname.includes(route),
   );
   if (isExcluded) return null;

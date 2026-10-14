@@ -149,10 +149,16 @@ export class CANApiAdapter implements HttpAdapter {
         );
       }
 
+      const cause = (error as any)?.cause;
+      console.error(`[CANApiAdapter] Network fetch failed to ${url}:`, cause || error);
+
       throw new ApiError(
         503,
-        "No se pudo establecer conexón con el servidor.",
-        { originalError: error instanceof Error ? error.message : error },
+        "No se pudo conectar al servidor por temas de seguridad.",
+        {
+          originalError: error instanceof Error ? error.message : error,
+          cause: cause instanceof Error ? cause.message : cause,
+        },
       );
     } finally {
       clearTimeout(timeout);

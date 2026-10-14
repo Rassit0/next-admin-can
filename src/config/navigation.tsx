@@ -66,6 +66,15 @@ export const itemsNavigation: NavigationConfig[] = [
         requiredPermissions: { anyOf: ["READ_TRANSACTIONS", "READ_CASH_FLOW"] },
       },
       {
+        id: "quick-ops-transfers",
+        label: "Transferencias",
+        href: "/admin/quick-operations/transfers",
+        action: "quick-operations",
+        subject: "INTERNAL_TRANSFERS",
+        showInTabs: true,
+        requiredPermissions: { anyOf: ["READ_INTERNAL_TRANSFERS", "READ_TRANSACTIONS"] },
+      },
+      {
         id: "quick-ops-reports",
         label: "Reportes",
         href: "/admin/quick-operations/reports",

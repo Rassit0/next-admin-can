@@ -73,6 +73,12 @@ export const getCurrentUserContext = cache(async (): Promise<CurrentUserContext 
     }),
   ]);
 
+  if (permissionsRes.error) {
+    throw new Error(
+      "No se pudo conectar al servidor.",
+    );
+  }
+
   const permissions = !permissionsRes.error && permissionsRes.data ? permissionsRes.data : [];
 
   return {
