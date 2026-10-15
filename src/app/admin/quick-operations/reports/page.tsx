@@ -5,6 +5,9 @@ import { DateRangeFilter } from "@/ui";
 import { DownloadReportButton } from "@/modules/reports/components/DownloadReportButton";
 import { DownloadMonthlyAccountingButton } from "@/modules/reports/components/DownloadMonthlyAccountingButton";
 import { CourseCycleReportForm } from "@/modules/reports/components/CourseCycleReportForm";
+import { TeamSeasonCategoryReportForm } from "@/modules/reports/components/TeamSeasonCategoryReportForm";
+import { getCurrentUserPermissions } from "@/shared/helpers/server-permissions";
+import { hasRequiredPermissions } from "@/shared/helpers/permissions";
 
 export const metadata = {
   title: "Reportes | Operaciones Rápidas",
@@ -30,6 +33,11 @@ export default async function QuickOperationsReportsPage({
     detailed_start,
     detailed_end,
   } = await searchParams;
+
+  const userPermissions = await getCurrentUserPermissions();
+  const canReadTeamSeasons = hasRequiredPermissions(userPermissions, {
+    anyOf: ["READ_TEAM_SEASONS"],
+  });
 
   return (
     <div className="space-y-6">
@@ -60,40 +68,6 @@ export default async function QuickOperationsReportsPage({
             <DownloadMonthlyAccountingButton />
           </div>
         </div>
-
-        {/* Tarjeta: Informe de Arqueos de Caja */}
-        {/* <div className="flex flex-col bg-white dark:bg-zinc-900 rounded-xl border border-default-200 shadow-sm overflow-hidden">
-          <div className="flex flex-col gap-3 p-6 pb-4">
-            <div className="flex items-center gap-2">
-              <HugeiconsIcon icon={File01Icon} className="text-primary" />
-              <p className="text-md font-bold">Informe de Arqueos de Caja</p>
-            </div>
-            <p className="text-sm text-default-500">
-              Auditoría financiera de tesorería. Historial de cierres, sobrantes
-              y faltantes agrupados por caja física.
-            </p>
-          </div>
-          <div className="h-px bg-default-200 w-full" />
-          <div className="flex-1 space-y-4 p-6">
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Período de análisis</label>
-              <DateRangeFilter
-                startKey="closures_start"
-                endKey="closures_end"
-              />
-            </div>
-          </div>
-          <div className="h-px bg-default-200 w-full" />
-          <div className="p-6 pt-4">
-            <DownloadReportButton
-              reportId="accounting.cash-closures"
-              params={{
-                ...(closures_start ? { start: closures_start } : {}),
-                ...(closures_end ? { end: closures_end } : {}),
-              }}
-            />
-          </div>
-        </div> */}
 
         {/* Tarjeta: Reporte Detallado de Contabilidad */}
         <div className="flex flex-col bg-white dark:bg-zinc-900 rounded-xl border border-default-200 shadow-sm overflow-hidden">
@@ -131,6 +105,9 @@ export default async function QuickOperationsReportsPage({
 
         {/* Tarjeta: Reporte de Lista de Inscritos de Escuelas */}
         <CourseCycleReportForm />
+
+        {/* Tarjeta: Control de Pagos por Categoría de Equipo */}
+        {canReadTeamSeasons && <TeamSeasonCategoryReportForm />}
 
         {/* Espacio para futuros reportes */}
         <div className="flex flex-col bg-default-50 border-2 border-dashed border-default-200 rounded-xl p-6">

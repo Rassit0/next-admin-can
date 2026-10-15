@@ -86,9 +86,10 @@ export function PaymentMatrixTable({
     try {
       setIsDownloading(true);
       const isCourse = group.type === "COURSE_SEASON_SHIFT";
+      const nowUtc = new Date().toISOString();
       const endpoint = isCourse
-        ? `reports/payments-matrix/course-season-shifts/${group.id}/pdf`
-        : `reports/payments-matrix/team-seasons/${group.id}/pdf${teamSeasonCategoryId ? `?teamSeasonCategoryId=${teamSeasonCategoryId}` : ""}`;
+        ? `reports/payments-matrix/course-season-shifts/${group.id}/pdf?issuedAt=${encodeURIComponent(nowUtc)}`
+        : `reports/payments-matrix/team-seasons/${group.id}/pdf?${teamSeasonCategoryId ? `teamSeasonCategoryId=${teamSeasonCategoryId}&` : ""}issuedAt=${encodeURIComponent(nowUtc)}`;
 
       const result = await downloadMatrixAction(endpoint);
 

@@ -275,6 +275,7 @@ export function CourseCycleReportForm() {
               courseSeasonShiftId: courseSeasonShiftId as string,
               cycleStartDate: selectedCycle.cycleStartDate,
               cycleEndDate: selectedCycle.cycleEndDate,
+              issuedAt: new Date().toISOString(),
             }}
             label="Descargar Reporte"
           />

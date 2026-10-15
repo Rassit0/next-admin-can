@@ -154,7 +154,7 @@ export class CANApiAdapter implements HttpAdapter {
 
       throw new ApiError(
         503,
-        "No se pudo conectar al servidor por temas de seguridad.",
+        "No se pudo conectar al servidor.",
         {
           originalError: error instanceof Error ? error.message : error,
           cause: cause instanceof Error ? cause.message : cause,
