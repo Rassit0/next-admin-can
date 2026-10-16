@@ -11,6 +11,7 @@ import { getCurrentUserContext } from "@/shared/helpers/server-context";
 import { getPermissionsArray } from "@/modules/roles";
 import { filterNavigation } from "@/shared/helpers/permissions";
 import { itemsNavigation, NavigationConfig } from "@/config/navigation";
+import { getTeacherContext } from "@/modules/teacher/actions/get-teacher-context";
 
 export default async function HomePage() {
   const context = await getCurrentUserContext();
@@ -20,7 +21,20 @@ export default async function HomePage() {
     itemsNavigation as NavigationConfig[],
     userPermissions,
   );
-  const launcherItems = allowedItems.filter((item) => item.showInLauncher);
+  let launcherItems = allowedItems.filter((item) => item.showInLauncher);
+
+  // Verificación de Staff activo para la tarjeta de Profesor (sin chequeo de rol por nombre)
+  const hasTeacherOption = launcherItems.some(
+    (item) => item.id === "teacher-portal",
+  );
+  if (hasTeacherOption) {
+    const staffContextRes = await getTeacherContext();
+    if (!staffContextRes?.data?.isStaff) {
+      launcherItems = launcherItems.filter(
+        (item) => item.id !== "teacher-portal",
+      );
+    }
+  }
 
   const [institutionsResponse] = await resolvePageData([
     getInstitutionContext(),

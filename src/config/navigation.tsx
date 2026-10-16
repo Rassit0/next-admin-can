@@ -408,6 +408,26 @@ export const itemsNavigation: NavigationConfig[] = [
     },
   },
   {
+    id: "teacher-portal",
+    label: "Profesor",
+    href: "/teacher",
+    action: "teacher",
+    subject: "home",
+    icon: "teacher",
+    mobile: { priority: 2 },
+    showInLauncher: true,
+    hiddenInSidebar: true,
+    description: "Gestión de grupos, sesiones, asistencia y evaluaciones.",
+    tagText: "Cuerpo Técnico",
+    requiredPermissions: {
+      anyOf: [
+        "READ_SESSIONS",
+        "READ_SESSION_BOOKINGS",
+        "READ_PROGRESS_EVALUATIONS",
+      ],
+    },
+  },
+  {
     id: "portal",
     label: "Portal Web",
     href: "/",
