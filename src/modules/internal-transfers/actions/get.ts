@@ -12,6 +12,8 @@ interface SearchParams {
   destinationAccountId?: string;
   startDate?: string;
   endDate?: string;
+  start?: string;
+  end?: string;
 }
 
 export const getInternalTransfers = async ({
@@ -21,6 +23,8 @@ export const getInternalTransfers = async ({
   destinationAccountId,
   startDate,
   endDate,
+  start,
+  end,
 }: SearchParams = {}): Promise<ServiceResponse<InternalTransfersResponse>> => {
   return handleServerAction(async () => {
     const queryParams = new URLSearchParams({
@@ -28,10 +32,13 @@ export const getInternalTransfers = async ({
       per_page,
     });
 
+    const effectiveStart = startDate || start;
+    const effectiveEnd = endDate || end;
+
     if (sourceAccountId) queryParams.append("sourceAccountId", sourceAccountId);
     if (destinationAccountId) queryParams.append("destinationAccountId", destinationAccountId);
-    if (startDate) queryParams.append("startDate", startDate);
-    if (endDate) queryParams.append("endDate", endDate);
+    if (effectiveStart) queryParams.append("startDate", effectiveStart);
+    if (effectiveEnd) queryParams.append("endDate", effectiveEnd);
 
     const res = await api.get<InternalTransfersResponse>(`internal-transfers?${queryParams.toString()}`, {
       next: {

@@ -10,7 +10,7 @@ import { cancelInternalTransfer } from "../actions/cancel";
 import { Add01Icon, Cancel01Icon, Download01Icon, Alert02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useRouter } from "next/navigation";
-import { TableActions, ActionDef } from "@/ui";
+import { TableActions, ActionDef, SectionFilters, DateRangeFilter } from "@/ui";
 
 interface Props {
   transfers: InternalTransfer[];
@@ -82,18 +82,24 @@ export const InternalTransfersClient = ({ transfers, accounts }: Props) => {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-2xl font-bold">Transferencias Internas</h1>
-          <p className="text-default-500">
-            Gestiona los movimientos de dinero entre tus propias cuentas
-          </p>
-        </div>
-        <Button onPress={() => setIsOpen(true)}>
-          <HugeiconsIcon icon={Add01Icon} className="w-4 h-4" />
-          Nueva Transferencia
-        </Button>
+      <div className="flex flex-col gap-2">
+        <h1 className="text-2xl font-bold">Transferencias Internas</h1>
+        <p className="text-default-500">
+          Gestiona los movimientos de dinero entre tus propias cuentas
+        </p>
       </div>
+
+      <SectionFilters
+        showSearch={false}
+        actions={
+          <Button onPress={() => setIsOpen(true)}>
+            <HugeiconsIcon icon={Add01Icon} className="w-4 h-4" />
+            Nueva Transferencia
+          </Button>
+        }
+      >
+        <DateRangeFilter />
+      </SectionFilters>
 
       <Card>
         <Table aria-label="Tabla de transferencias internas">

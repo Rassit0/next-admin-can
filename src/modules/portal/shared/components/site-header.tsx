@@ -187,7 +187,13 @@ function MobileNavItem({
 
 import { Institution } from "@/modules/portal/institutions/interfaces/institution.interface";
 
-export function SiteHeader({ institution }: { institution: Institution }) {
+export function SiteHeader({
+  institution,
+  isLoggedIn = false,
+}: {
+  institution: Institution;
+  isLoggedIn?: boolean;
+}) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
 
@@ -266,10 +272,10 @@ export function SiteHeader({ institution }: { institution: Institution }) {
           </nav>
 
           <Link
-            href="/login"
+            href={isLoggedIn ? "/admin" : "/login"}
             className="hidden lg:flex items-center justify-center rounded-xl bg-accent px-5 py-2 text-sm font-bold uppercase tracking-wide text-white transition-transform hover:-translate-y-0.5 shadow-md hover:shadow-lg"
           >
-            Ingresar
+            {isLoggedIn ? "Panel" : "Ingresar"}
           </Link>
 
           <button
@@ -305,11 +311,11 @@ export function SiteHeader({ institution }: { institution: Institution }) {
               ))}
               <div className="mt-4 border-t border-border/50 pt-4 px-4 pb-2">
                 <Link
-                  href="/login"
+                  href={isLoggedIn ? "/admin" : "/login"}
                   onClick={() => setMobileOpen(false)}
                   className="flex w-full items-center justify-center rounded-xl bg-accent px-5 py-3 text-base font-bold uppercase tracking-wide text-white shadow-md active:scale-95 transition-transform"
                 >
-                  Ingresar
+                  {isLoggedIn ? "Panel" : "Ingresar"}
                 </Link>
               </div>
             </div>

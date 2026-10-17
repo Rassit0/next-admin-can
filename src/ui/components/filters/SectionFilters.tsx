@@ -16,7 +16,7 @@ export const SectionFilters = ({
   return (
     <div className="flex flex-wrap flex-row gap-2 justify-between items-end w-full">
       {/* Contenedor izquierdo: Search + Filtros */}
-      <div className="flex flex-wrap flex-1 gap-2 items-center">
+      <div className="flex flex-wrap flex-1 gap-2 items-end">
         <Filters showSearch={showSearch} searchPlaceholder={searchPlaceholder}>
           {children}
         </Filters>

@@ -20,6 +20,8 @@ export default async function QuickOperationsTransfersPage({
     destinationAccountId?: string;
     startDate?: string;
     endDate?: string;
+    start?: string;
+    end?: string;
   }>;
 }) {
   const resolvedSearchParams = await searchParams;
@@ -30,6 +32,8 @@ export default async function QuickOperationsTransfersPage({
     destinationAccountId,
     startDate,
     endDate,
+    start,
+    end,
   } = resolvedSearchParams;
 
   const [transfersRes, accountsRes] = await resolvePageData([
@@ -38,8 +42,8 @@ export default async function QuickOperationsTransfersPage({
       per_page,
       sourceAccountId,
       destinationAccountId,
-      startDate,
-      endDate,
+      startDate: start || startDate,
+      endDate: end || endDate,
     }),
     getFinancialAccounts(),
   ]);

@@ -61,18 +61,8 @@ export const authConfig = {
       const isLoggedIn = !!(auth?.user && (auth.user as BackendUser).token);
       const path = nextUrl.pathname;
 
-      // Si ya está logueado e intenta acceder al login, lo redirigimos a /admin
-      if (
-        isLoggedIn &&
-        (path.startsWith("/login") || path.startsWith("/admin/login"))
-      ) {
-        // Si viene con expired=true, permitimos que llegue al login para que el cliente ejecute signOut()
-        if (nextUrl.searchParams.get("expired") === "true") {
-          return true;
-        }
-        return NextResponse.redirect(new URL("/admin", nextUrl));
-      }
-
+      // Permitir acceso a rutas públicas de autenticación y páginas de error
+      // La redirección a /admin para usuarios con sesión activa se gestiona en app/login/page.tsx vía redirect()
       if (
         path.startsWith("/login") ||
         path.startsWith("/admin/login") ||
@@ -81,9 +71,10 @@ export const authConfig = {
         return true;
       }
 
-      const isAdminRoute = path.startsWith("/admin");
+      const isProtectedRoute =
+        path.startsWith("/admin") || path.startsWith("/teacher");
 
-      if (isAdminRoute) {
+      if (isProtectedRoute) {
         if (!isLoggedIn) return false; // Redirige a /login si no está autenticado
         return true;
       }

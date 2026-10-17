@@ -1,8 +1,22 @@
 import { Suspense } from "react";
 import { ParticlesBackground, Crest } from "@/ui";
 import { LoginForm } from "@/modules/auth";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
+import { BackendUser } from "@/auth.config";
 
-export default function LoginPage() {
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ expired?: string }>;
+}) {
+  const resolvedSearchParams = await searchParams;
+  if (resolvedSearchParams?.expired !== "true") {
+    const session = await auth();
+    if (session?.user && (session.user as BackendUser).token) {
+      redirect("/admin");
+    }
+  }
   return (
     <div className="flex min-h-dvh w-full bg-background overflow-hidden">
       {/* Zona Izquierda - Branding y Motivación (Solo Desktop) */}

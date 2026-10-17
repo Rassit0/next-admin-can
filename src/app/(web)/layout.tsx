@@ -37,6 +37,8 @@ export const viewport: Viewport = {
 };
 
 import { getInstitution } from "@/modules/portal/institutions/actions/institutions.action";
+import { auth } from "@/auth";
+import { BackendUser } from "@/auth.config";
 import { notFound } from "next/navigation";
 
 export default async function RootLayout({
@@ -44,7 +46,11 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const institutionRes = await getInstitution();
+  const [institutionRes, session] = await Promise.all([
+    getInstitution(),
+    auth(),
+  ]);
+  const isLoggedIn = !!(session?.user && (session.user as BackendUser).token);
 
   if (institutionRes.error || !institutionRes.data) {
     const { default: WebError } = await import("./error");
@@ -72,9 +78,6 @@ export default async function RootLayout({
     );
   }
 
-  // Si necesitamos pasar los datos de institutionRes.data al contexto o header, lo haremos aquí.
-  // Por ahora validamos que la API responda.
-
   return (
     <div
       className={`${geistSans.variable} ${geistMono.variable} ${oswald.variable} light`}
@@ -84,7 +87,10 @@ export default async function RootLayout({
         <div className="relative min-h-screen bg-[var(--background-portal)]">
           <CinematicLoader />
           <ParticlesBackground />
-          <SiteHeader institution={institutionRes.data} />
+          <SiteHeader
+            institution={institutionRes.data}
+            isLoggedIn={isLoggedIn}
+          />
           <main className="relative">{children}</main>
           <SiteFooter institution={institutionRes.data} />
         </div>

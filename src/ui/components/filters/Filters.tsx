@@ -42,8 +42,12 @@ export const Filters = ({
     handleUrlUpdate(value); // Debounce para la URL
   };
 
+  if (!showSearch && !children) {
+    return null;
+  }
+
   return (
-    <div className="flex flex-wrap gap-2 md:gap-4 items-end w-full">
+    <div className="flex flex-wrap gap-2 md:gap-4 items-end">
       {/* Si showSearch es true, renderiza el estándar */}
       {showSearch && (
         <SearchField
