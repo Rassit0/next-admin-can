@@ -67,15 +67,21 @@ export const InternalTransferDrawer = ({
 
     setIsLoading(true);
     try {
+      let formattedDate: string | undefined = undefined;
+      if (date) {
+        const isToday = date.compare(today(getLocalTimeZone())) === 0;
+        formattedDate = isToday
+          ? new Date().toISOString()
+          : date.toDate(getLocalTimeZone()).toISOString();
+      }
+
       const response = await createInternalTransfer({
         amount: Number(amount),
         sourceAccountId,
         destinationAccountId,
         description: description || undefined,
         reference: reference || undefined,
-        date: date
-          ? new Date(`${date.toString()}T12:00:00`).toISOString()
-          : undefined,
+        date: formattedDate,
       });
 
       if (response.error) {
@@ -205,6 +211,7 @@ export const InternalTransferDrawer = ({
                 name="date"
                 value={date}
                 onChange={setDate}
+                maxValue={today(getLocalTimeZone())}
               >
                 <Label>Fecha</Label>
                 <DateField.Group fullWidth variant="secondary">
