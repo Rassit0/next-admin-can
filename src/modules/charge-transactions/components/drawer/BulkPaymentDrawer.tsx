@@ -32,6 +32,7 @@ import { invalidatePaymentCaches } from "../../actions/invalidate-payment-caches
 import { getFinancialAccounts } from "@/modules/financial-accounts/actions/get-all";
 import { FinancialAccount } from "@/modules/financial-accounts/interfaces/financial-account.interface";
 import { formatCurrency } from "@/utils/constants";
+import { resolveTransactionDate } from "@/utils";
 import { IPersonOption } from "@/modules/persons";
 import { PrintReportDialog } from "../dialog/PrintReportDialog";
 import { PaymentDistributionsList } from "./PaymentDistributionsList";
@@ -167,6 +168,14 @@ export const BulkPaymentDrawer = ({
       }
     }
 
+    if (transactionDate) {
+      const { isFuture } = resolveTransactionDate(transactionDate);
+      if (isFuture) {
+        newErrors.date = "La fecha de pago no puede ser en el futuro.";
+        toast.danger("La fecha de pago no puede ser en el futuro.");
+      }
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -199,9 +208,12 @@ export const BulkPaymentDrawer = ({
         };
       });
 
-      const payloadDate = transactionDate
-        ? transactionDate.toDate(getLocalTimeZone()).toISOString()
-        : new Date().toISOString();
+      const { dateISO, isFuture } = resolveTransactionDate(transactionDate);
+      if (isFuture) {
+        toast.danger("La fecha de pago no puede ser en el futuro.");
+        setIsLoading(false);
+        return;
+      }
 
       const res = await addBulk({
         payerPersonId: payerPerson?.id,
@@ -215,7 +227,7 @@ export const BulkPaymentDrawer = ({
         financialAccountId: financialAccountId,
         reference: reference.trim() || undefined,
         notes: notes.trim() || undefined,
-        transactionDate: payloadDate,
+        transactionDate: dateISO,
       });
 
       if (res.error) {
@@ -538,6 +550,7 @@ export const BulkPaymentDrawer = ({
                   name="date"
                   value={transactionDate}
                   onChange={setTransactionDate}
+                  maxValue={today(getLocalTimeZone())}
                 >
                   <Label>Fecha de Pago</Label>
                   <DateField.Group fullWidth>

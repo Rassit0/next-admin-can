@@ -47,13 +47,24 @@ export default async function TeacherGroupsPage() {
               <span>Inicio</span>
             </Link>
             <span className="text-default-300">/</span>
-            <span className="text-xs text-primary font-medium">Mis grupos</span>
+            <span className="text-xs text-primary font-medium">
+              {data.isSupervisor ? "Supervisión de grupos" : "Mis grupos"}
+            </span>
           </div>
-          <h1 className="text-2xl font-extrabold text-foreground tracking-tight">
-            Mis Grupos Asignados
-          </h1>
+          <div className="flex items-center gap-2">
+            <h1 className="text-2xl font-extrabold text-foreground tracking-tight">
+              {data.isSupervisor ? "Todos los Grupos Activos" : "Mis Grupos Asignados"}
+            </h1>
+            {data.isSupervisor && (
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-secondary/15 text-secondary border border-secondary/30">
+                Supervisión
+              </span>
+            )}
+          </div>
           <p className="text-sm text-default-500 mt-0.5">
-            Turnos de escuela y categorías competitivas vinculadas a tu cuenta de personal.
+            {data.isSupervisor
+              ? "Acceso de supervisión técnica a todos los turnos y categorías activas del club."
+              : "Turnos de escuela y categorías competitivas vinculadas a tu cuenta de personal."}
           </p>
         </div>
 

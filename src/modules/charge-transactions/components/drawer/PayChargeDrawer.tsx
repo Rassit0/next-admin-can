@@ -33,6 +33,7 @@ import { useRouter } from "next/navigation";
 import { ICharge } from "../../interfaces/charges.interface";
 import { addTransaction } from "../../actions/add-transaction";
 import { invalidatePaymentCaches } from "../../actions/invalidate-payment-caches";
+import { resolveTransactionDate } from "@/utils";
 import {
   CounterpartySelector,
   CounterpartyType,
@@ -168,6 +169,12 @@ export const PayChargeDrawer = ({
         return;
       }
 
+      const { dateISO, isFuture } = resolveTransactionDate(transactionDate);
+      if (isFuture) {
+        toast.danger("La fecha de la transacción no puede ser en el futuro.");
+        return;
+      }
+
       const res = await addTransaction({
         ...(personId && { payerPersonId: personId }),
         ...(companyId && { payerCompanyId: companyId }),
@@ -176,9 +183,7 @@ export const PayChargeDrawer = ({
         paymentMethod: splits[0].paymentMethod as "CASH" | "TRANSFER" | "QR",
         financialAccountId: splits[0].financialAccountId,
         notes,
-        transactionDate: transactionDate
-          ? transactionDate.toDate(getLocalTimeZone()).toISOString()
-          : new Date().toISOString(),
+        transactionDate: dateISO,
         description: `Pago para: ${charge.description}`,
         chargeId: charge.id,
         splitTransactions: splits.map((s) => ({
@@ -367,6 +372,7 @@ export const PayChargeDrawer = ({
                     name="date"
                     value={transactionDate}
                     onChange={setTransactionDate}
+                    maxValue={today(getLocalTimeZone())}
                   >
                     <Label>Fecha de Recepción (Comprobante)</Label>
                     <DateField.Group fullWidth>

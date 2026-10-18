@@ -58,12 +58,14 @@ export interface TeacherDashboardData {
   stats: TeacherDashboardStats;
   groups: TeacherGroup[];
   upcomingSessions?: UpcomingSession[];
+  isSupervisor?: boolean;
 }
 
 export interface MyGroupsData {
   staffId: string;
   person: StaffPersonSummary;
   groups: TeacherGroup[];
+  isSupervisor?: boolean;
 }
 
 export interface StaffContextData {
@@ -71,6 +73,7 @@ export interface StaffContextData {
   staffId?: string | null;
   hasAssignments: boolean;
   activeGroupsCount: number;
+  isSupervisor?: boolean;
 }
 
 export interface TeacherParticipant {

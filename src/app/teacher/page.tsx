@@ -40,11 +40,20 @@ export default async function TeacherDashboardPage() {
       {/* 1. Header / Saludo Personal */}
       <section className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-divider/60">
         <div>
-          <h1 className="text-2xl font-extrabold text-foreground tracking-tight">
-            Hola, {personName} 👋
-          </h1>
+          <div className="flex items-center gap-2">
+            <h1 className="text-2xl font-extrabold text-foreground tracking-tight">
+              Hola, {personName} 👋
+            </h1>
+            {data.isSupervisor && (
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-secondary/15 text-secondary border border-secondary/30">
+                Supervisión
+              </span>
+            )}
+          </div>
           <p className="text-sm text-default-500 mt-0.5">
-            Esta es tu actividad docente y técnica actual en el club.
+            {data.isSupervisor
+              ? "Supervisión global de grupos y actividades técnicas en el club."
+              : "Esta es tu actividad docente y técnica actual en el club."}
           </p>
         </div>
 
@@ -55,7 +64,9 @@ export default async function TeacherDashboardPage() {
               variant="primary"
               className="flex items-center gap-1.5"
             >
-              <span>Mis Grupos ({data.stats.activeGroups})</span>
+              <span>
+                {data.isSupervisor ? "Todos los Grupos" : "Mis Grupos"} ({data.stats.activeGroups})
+              </span>
               <HugeiconsIcon icon={ArrowRight02Icon} size={15} />
             </Button>
           </Link>
@@ -75,7 +86,7 @@ export default async function TeacherDashboardPage() {
             <div className="flex items-center gap-2">
               <HugeiconsIcon icon={Mortarboard02Icon} size={20} className="text-primary" />
               <h2 className="text-lg font-bold text-foreground">
-                Mis Grupos Asignados
+                {data.isSupervisor ? "Todos los Grupos Activos" : "Mis Grupos Asignados"}
               </h2>
             </div>
             {hasGroups && (

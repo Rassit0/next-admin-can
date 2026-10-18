@@ -17,6 +17,7 @@ import { getLocalTimeZone, today } from "@internationalized/date";
 import { Cancel01Icon, FloppyDiskIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { toast } from "sonner";
+import { resolveTransactionDate } from "@/utils";
 import { createAccountCharge } from "@/modules/account-charges/actions/create";
 import { useRouter } from "next/navigation";
 import { FileUploader } from "@/ui/components/file-uploader/FileUploader";
@@ -163,6 +164,12 @@ export const DirectTransactionDrawer = ({
       }
     }
 
+    const { dateISO, isFuture } = resolveTransactionDate(transactionDate);
+    if (isFuture) {
+      toast.error("La fecha de la transacción no puede ser en el futuro");
+      return;
+    }
+
     setIsLoading(true);
     try {
       let attachmentIds: string[] = [];
@@ -179,9 +186,7 @@ export const DirectTransactionDrawer = ({
         categoryId,
         dueDate: new Date().toISOString(),
         immediatePayment: {
-          transactionDate: transactionDate
-            ? transactionDate.toDate(getLocalTimeZone()).toISOString()
-            : new Date().toISOString(),
+          transactionDate: dateISO,
           ...(isSplitPayment
             ? {
                 splitTransactions: splits.map((s) => ({
@@ -279,6 +284,7 @@ export const DirectTransactionDrawer = ({
                   name="date"
                   value={transactionDate}
                   onChange={setTransactionDate}
+                  maxValue={today(getLocalTimeZone())}
                 >
                   <Label className="text-sm font-semibold">
                     Fecha de Comprobante
