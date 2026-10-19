@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   Button,
   Input,
+  InputGroup,
   Label,
   Surface,
   TextArea,
@@ -20,6 +21,7 @@ import {
   PencilEdit01Icon,
   SafeIcon,
   SecurityPasswordIcon,
+  Search01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { toast } from "sonner";
@@ -61,6 +63,7 @@ export const SplitViewRoles: React.FC<Props> = ({
   const [description, setDescription] = useState("");
   const [selectedPermissions, setSelectedPermissions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [permissionSearch, setPermissionSearch] = useState("");
 
   // Handle select role
   const handleSelect = (role: IRole) => {
@@ -153,13 +156,68 @@ export const SplitViewRoles: React.FC<Props> = ({
     });
   };
 
-  // Group permissions by module
-  const groupedPermissions = permissions.reduce((acc: any, perm: any) => {
-    const mod = perm.module?.displayName || perm.module?.name || "Otros";
-    if (!acc[mod]) acc[mod] = [];
-    acc[mod].push(perm);
-    return acc;
-  }, {});
+  // Agrupar y ordenar permisos alfabéticamente por módulo y nombre
+  const groupedPermissions = useMemo(() => {
+    const grouped = permissions.reduce(
+      (acc: Record<string, any[]>, perm: any) => {
+        const mod = perm.module?.displayName || perm.module?.name || "Otros";
+        if (!acc[mod]) acc[mod] = [];
+        acc[mod].push(perm);
+        return acc;
+      },
+      {},
+    );
+
+    // Ordenar los permisos dentro de cada módulo alfabéticamente
+    Object.values(grouped).forEach((perms) => {
+      perms.sort((a, b) =>
+        a.name.localeCompare(b.name, "es", { sensitivity: "base" }),
+      );
+    });
+
+    // Ordenar los módulos alfabéticamente
+    const sortedEntries = Object.entries(grouped).sort(([modA], [modB]) =>
+      modA.localeCompare(modB, "es", { sensitivity: "base" }),
+    );
+
+    // Filtrar si hay búsqueda activa
+    const query = permissionSearch.trim().toLowerCase();
+    if (!query) return sortedEntries;
+
+    return sortedEntries
+      .map(([mod, perms]) => {
+        const matchModule = mod.toLowerCase().includes(query);
+        if (matchModule) {
+          return [mod, perms] as [string, any[]];
+        }
+        const filteredPerms = perms.filter(
+          (p: any) =>
+            p.name.toLowerCase().includes(query) ||
+            p.description?.toLowerCase().includes(query),
+        );
+        return [mod, filteredPerms] as [string, any[]];
+      })
+      .filter(([_, perms]) => perms.length > 0);
+  }, [permissions, permissionSearch]);
+
+  const handleToggleModulePermissions = (modulePerms: any[]) => {
+    if (!isEditing) return;
+    const modulePermIds = modulePerms.map((p) => p.id);
+    const allSelected = modulePermIds.every((id) =>
+      selectedPermissions.includes(id),
+    );
+
+    if (allSelected) {
+      setSelectedPermissions((prev) =>
+        prev.filter((id) => !modulePermIds.includes(id)),
+      );
+    } else {
+      setSelectedPermissions((prev) => [
+        ...prev,
+        ...modulePermIds.filter((id) => !prev.includes(id)),
+      ]);
+    }
+  };
 
   return (
     <div className="flex h-full w-full gap-6 overflow-hidden">
@@ -329,10 +387,32 @@ export const SplitViewRoles: React.FC<Props> = ({
                 </TextField>
               </div>
 
-              <div className="mb-4 flex items-center justify-between">
-                <h3 className="font-semibold text-lg border-b-2 border-accent pb-1 inline-block">
-                  Permisos del Sistema
-                </h3>
+              <div className="mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-border">
+                <div>
+                  <h3 className="font-semibold text-lg text-foreground">
+                    Permisos del Sistema
+                  </h3>
+                  <p className="text-xs text-muted">
+                    {groupedPermissions.length} módulo{groupedPermissions.length !== 1 ? "s" : ""} ordenado{groupedPermissions.length !== 1 ? "s" : ""} alfabéticamente
+                    {selectedPermissions.length > 0 && ` • ${selectedPermissions.length} seleccionado${selectedPermissions.length !== 1 ? "s" : ""}`}
+                  </p>
+                </div>
+                <div className="w-full sm:w-72">
+                  <InputGroup className="w-full" variant="secondary">
+                    <InputGroup.Prefix>
+                      <HugeiconsIcon
+                        icon={Search01Icon}
+                        size={16}
+                        className="text-muted"
+                      />
+                    </InputGroup.Prefix>
+                    <InputGroup.Input
+                      value={permissionSearch}
+                      onChange={(e) => setPermissionSearch(e.target.value)}
+                      placeholder="Buscar módulo o permiso..."
+                    />
+                  </InputGroup>
+                </div>
               </div>
 
               {selectedRole?.isSuperAdmin ? (
@@ -358,35 +438,70 @@ export const SplitViewRoles: React.FC<Props> = ({
                   isDisabled={!isEditing}
                 >
                   <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-8 gap-y-6">
-                    {Object.entries(groupedPermissions).map(
-                      ([mod, perms]: any) => (
-                        <div
-                          key={mod}
-                          className={`border border-border rounded-xl p-5 transition-colors ${!isEditing ? "bg-surface-secondary/10 opacity-80" : "bg-background"}`}
-                        >
-                          <div className="flex items-center gap-2 mb-4 pb-2 border-b border-border">
-                            <Label className="font-semibold text-foreground m-0">
-                              {mod}
-                            </Label>
+                    {groupedPermissions.length === 0 ? (
+                      <div className="col-span-full py-12 text-center text-muted">
+                        <p className="text-sm">
+                          No se encontraron permisos o módulos que coincidan con &ldquo;{permissionSearch}&rdquo;.
+                        </p>
+                      </div>
+                    ) : (
+                      groupedPermissions.map(([mod, perms]: [string, any[]]) => {
+                        const selectedCount = perms.filter((p: any) =>
+                          selectedPermissions.includes(p.id),
+                        ).length;
+                        const allSelected =
+                          perms.length > 0 && selectedCount === perms.length;
+
+                        return (
+                          <div
+                            key={mod}
+                            className={`border border-border rounded-xl p-5 transition-colors ${!isEditing ? "bg-surface-secondary/10 opacity-80" : "bg-background"}`}
+                          >
+                            <div className="flex items-center justify-between gap-2 mb-4 pb-2 border-b border-border">
+                              <div className="flex items-center gap-2">
+                                <Label className="font-semibold text-foreground m-0">
+                                  {mod}
+                                </Label>
+                                <span className="text-xs text-muted font-normal">
+                                  ({selectedCount}/{perms.length})
+                                </span>
+                              </div>
+                              {isEditing && (
+                                <button
+                                  type="button"
+                                  onClick={() => handleToggleModulePermissions(perms)}
+                                  className="text-xs font-medium text-accent hover:underline cursor-pointer transition-colors"
+                                >
+                                  {allSelected
+                                    ? "Deseleccionar todos"
+                                    : "Seleccionar todos"}
+                                </button>
+                              )}
+                            </div>
+                            <div className="space-y-3">
+                              {perms.map((p: any) => (
+                                <Checkbox key={p.id} value={p.id}>
+                                  <Checkbox.Content>
+                                    <Checkbox.Control>
+                                      <Checkbox.Indicator />
+                                    </Checkbox.Control>
+                                    <div className="flex flex-col ml-1">
+                                      <span className="text-sm font-medium leading-none mb-1">
+                                        {p.name}
+                                      </span>
+                                      {p.description && (
+                                        <span className="text-xs text-muted font-normal line-clamp-1">
+                                          {p.description}
+                                        </span>
+                                      )}
+                                    </div>
+                                  </Checkbox.Content>
+                                </Checkbox>
+                              ))}
+                            </div>
                           </div>
-                          <div className="space-y-3">
-                            {perms.map((p: any) => (
-                              <Checkbox key={p.id} value={p.id}>
-                                <Checkbox.Content>
-                                  <Checkbox.Control>
-                                    <Checkbox.Indicator />
-                                  </Checkbox.Control>
-                                  <div className="flex flex-col ml-1">
-                                    <span className="text-sm font-medium leading-none mb-1">
-                                      {p.name}
-                                    </span>
-                                  </div>
-                                </Checkbox.Content>
-                              </Checkbox>
-                            ))}
-                          </div>
-                        </div>
-                      ),
+                        );
+                      })
                     )}
                   </div>
                 </CheckboxGroup>

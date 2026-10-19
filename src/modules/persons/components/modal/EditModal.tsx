@@ -3,19 +3,20 @@ import { Button, Modal, ProgressCircle, useOverlayState } from "@heroui/react";
 import {
   Edit01Icon,
   Edit03Icon,
-  Layers01Icon,
+  UserIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { FormPerson } from "../form/Form";
 import { useState } from "react";
-import { IPerson } from "@/modules/persons";
+import { IPersonBase } from "@/modules/persons";
 
 interface Props {
-  person: IPerson;
+  person: IPersonBase;
   isIcon?: boolean;
   showButton?: boolean;
   isOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
+  onSuccess?: () => void;
 }
 
 export const EditModal = ({
@@ -24,6 +25,7 @@ export const EditModal = ({
   showButton = true,
   isOpen,
   onOpenChange,
+  onSuccess,
 }: Props) => {
   const state = useOverlayState({ isOpen, onOpenChange });
   const [isLoading, setIsLoading] = useState(false);
@@ -37,7 +39,7 @@ export const EditModal = ({
           onPress={() => state.open()}
         >
           <HugeiconsIcon icon={Edit03Icon} />
-          {!isIcon && "Editar Disciplina"}
+          {!isIcon && "Editar Persona"}
         </Button>
       )}
       <Modal.Backdrop isOpen={state.isOpen} onOpenChange={state.setOpen}>
@@ -47,19 +49,22 @@ export const EditModal = ({
             <Modal.Header>
               <div className="flex gap-2 items-center ">
                 <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
-                  <HugeiconsIcon icon={Layers01Icon} />
+                  <HugeiconsIcon icon={UserIcon} />
                 </Modal.Icon>
-                <Modal.Heading>Agregar Disciplina</Modal.Heading>
+                <Modal.Heading>Editar Persona</Modal.Heading>
               </div>
               <p className="mt-1.5 text-sm leading-5 text-muted">
-                Agrega una nueva disciplina al sistema.
+                Modifica los datos personales en el sistema.
               </p>
             </Modal.Header>
             <Modal.Body className="p-6">
               <FormPerson
                 formId="edit-person-form"
                 person={person}
-                onSubmited={() => state.close()}
+                onSubmited={() => {
+                  state.close();
+                  onSuccess?.();
+                }}
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
               />

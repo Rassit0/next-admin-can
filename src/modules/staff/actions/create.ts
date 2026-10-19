@@ -4,7 +4,7 @@ import { ServiceResponse } from "@/types/api";
 import { updateTag } from "next/cache";
 import { handleServerAction } from "@/utils";
 
-import { IStaff } from "../interfaces";
+import { IStaff, normalizeStaffPerson } from "../interfaces";
 
 export const createStaff = async (
   personId: string,
@@ -17,9 +17,8 @@ export const createStaff = async (
 
     updateTag("staff");
     
-    // Parse the date
-    if (response.data?.person?.birthDate) {
-      response.data.person.birthDate = new Date(response.data.person.birthDate);
+    if (response.data?.person) {
+      response.data.person = normalizeStaffPerson(response.data.person);
     }
 
     return {

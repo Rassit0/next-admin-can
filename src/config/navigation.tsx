@@ -376,6 +376,16 @@ export const itemsNavigation: NavigationConfig[] = [
     requiredPermissions: { anyOf: ["READ_ROLES"] },
   },
   {
+    id: "staff",
+    label: "Personal (Staff)",
+    href: "staff",
+    action: "staff",
+    subject: "STAFF",
+    icon: "users",
+    showInLauncher: false,
+    requiredPermissions: { anyOf: ["READ_STAFF"] },
+  },
+  {
     id: "calendar",
     label: "Calendario Institucional",
     href: "calendar",

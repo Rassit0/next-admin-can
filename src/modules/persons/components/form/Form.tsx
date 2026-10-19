@@ -32,7 +32,9 @@ import { SectionProfiles } from "./SectionProfiles";
 import {
   addPerson,
   editPerson,
+  updatePersonAvatar,
   IPerson,
+  IPersonBase,
   TDocumentType,
   TGender,
 } from "@/modules/persons";
@@ -53,7 +55,7 @@ const capitalizeWords = (str: string | null) => {
 
 interface Props {
   buttonsSubmit?: boolean;
-  person?: IPerson;
+  person?: IPersonBase;
   formId: string;
   onSubmited?: (person?: IPerson) => void;
   isLoading?: boolean;
@@ -203,7 +205,6 @@ export const FormPerson = ({
       lastName: lastName!,
       secondLastName,
       birthDate: birthDate ? birthDate.toDate(getLocalTimeZone()) : null,
-      image,
       documentType: documentType || null,
       documentNumber: documentNumber || null,
       phone,
@@ -218,8 +219,10 @@ export const FormPerson = ({
         data,
       });
     }
-    setIsLoading?.(false);
+
     if (res.error) {
+      // Caso C — Falla al actualizar datos personales: no iniciar subida de avatar
+      setIsLoading?.(false);
       let errorDescription = res.message;
 
       if (res.errors) {
@@ -234,7 +237,7 @@ export const FormPerson = ({
           .join("\n"); // Los separamos por saltos de línea para el toast
       }
 
-      // 2. Pasamos la descripción formateada al componente de notificaciones
+      // Pasamos la descripción formateada al componente de notificaciones
       toast.error(res.message, {
         description: errorDescription,
       });
@@ -243,12 +246,50 @@ export const FormPerson = ({
       }
       return;
     }
+
+    let finalPerson: IPerson = res.data;
+
+    // Si se seleccionó una nueva foto, actualizar avatar mediante endpoint dedicado
+    if (image) {
+      const targetId = person?.id || res.data?.id;
+      if (targetId) {
+        const avatarFormData = new FormData();
+        avatarFormData.append("file", image);
+
+        const avatarRes = await updatePersonAvatar(targetId, avatarFormData);
+
+        if (avatarRes.error) {
+          // Caso D — Datos personales actualizados, pero falla el avatar
+          setIsLoading?.(false);
+          toast.warning("Datos personales guardados con advertencia", {
+            description:
+              "Los datos personales fueron guardados correctamente, pero ocurrió un error al actualizar la fotografía de perfil. Puede volver a presionar Guardar para reintentar la subida.",
+          });
+          return;
+        }
+
+        // Caso B — Éxito tanto en datos personales como en foto
+        if (avatarRes.data?.imageUrl) {
+          finalPerson = {
+            ...finalPerson,
+            imageUrl: avatarRes.data.imageUrl,
+          };
+          setPreviewUrl(avatarRes.data.imageUrl);
+          setImage(null);
+        }
+      }
+    }
+
+    setIsLoading?.(false);
+
     toast.success(res.message, {
       description: person
-        ? "La persona se ha editado exitosamente"
+        ? image
+          ? "Los datos personales y la foto de perfil se han actualizado exitosamente"
+          : "La persona se ha editado exitosamente"
         : "La persona se ha agregado exitosamente",
     });
-    onSubmited?.(res.data);
+    onSubmited?.(finalPerson);
   };
   return (
     <Surface variant="transparent">

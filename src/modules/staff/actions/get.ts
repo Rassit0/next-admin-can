@@ -2,7 +2,7 @@
 import { api } from "@/utils/api";
 import { ServiceResponse } from "@/types/api";
 import { handleServerAction } from "@/utils";
-import { IStaffResponse } from "../interfaces";
+import { IStaff, IStaffDetailResponse, IStaffResponse, normalizeStaffPerson } from "../interfaces";
 
 interface SearchParams {
   search?: string;
@@ -10,6 +10,7 @@ interface SearchParams {
   page?: string;
   sortField?: string;
   orderBy?: string;
+  status?: string;
 }
 
 export const getStaff = async ({
@@ -18,7 +19,8 @@ export const getStaff = async ({
   page = "1",
   sortField = "name",
   orderBy = "asc",
-}: SearchParams): Promise<ServiceResponse<IStaffResponse>> => {
+  status,
+}: SearchParams = {}): Promise<ServiceResponse<IStaffResponse>> => {
   return handleServerAction(async () => {
     const params = new URLSearchParams();
     if (search) params.set("search", search);
@@ -26,6 +28,7 @@ export const getStaff = async ({
     if (page) params.set("page", page);
     if (sortField) params.set("sortField", sortField);
     if (orderBy) params.set("orderBy", orderBy);
+    if (status && status !== "ALL") params.set("status", status);
 
     const res = await api.get<IStaffResponse>(`staff?${params.toString()}`, {
       next: {
@@ -38,14 +41,35 @@ export const getStaff = async ({
       error: false,
       data: {
         ...res,
-        data: res.data.map((staff) => ({
+        data: (res.data || []).map((staff) => ({
           ...staff,
-          person: {
-            ...staff.person,
-            birthDate: staff.person.birthDate ? new Date(staff.person.birthDate) : null,
-          },
+          person: normalizeStaffPerson(staff.person),
         })),
       },
+      message: res.message || "Personal obtenido exitosamente",
+    };
+  });
+};
+
+export const getStaffById = async (
+  id: string,
+): Promise<ServiceResponse<IStaff>> => {
+  return handleServerAction(async () => {
+    const res = await api.get<IStaffDetailResponse>(`staff/${id}`, {
+      next: {
+        tags: ["staff", `staff-${id}`],
+        revalidate: 60 * 60,
+      },
+    });
+
+    const staff = res.data;
+    if (staff?.person) {
+      staff.person = normalizeStaffPerson(staff.person);
+    }
+
+    return {
+      error: false,
+      data: staff,
       message: res.message || "Personal obtenido exitosamente",
     };
   });

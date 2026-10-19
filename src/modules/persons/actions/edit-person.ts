@@ -28,7 +28,6 @@ export const editPerson = async ({
     if (data.email) formData.append("email", data.email);
     if (data.phone) formData.append("phone", data.phone);
     if (data.address) formData.append("address", data.address);
-    if (data.image) formData.append("image", data.image);
     if (data.birthDate)
       formData.append("birthDate", data.birthDate.toISOString());
     const res = await api.patch<{ message: string; data: IPerson }>(
@@ -38,6 +37,7 @@ export const editPerson = async ({
 
     updateTag("persons");
     updateTag("persons-options");
+    updateTag("staff");
     return {
       error: false,
       data: res.data,

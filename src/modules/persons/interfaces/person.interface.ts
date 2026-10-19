@@ -6,7 +6,7 @@ export interface IPersonsResponse {
 export type TGender = "MALE" | "FEMALE";
 export type TDocumentType = "CI" | "NIT";
 
-export interface IPerson {
+export interface IPersonBase {
   id: string;
   name: string;
   lastName: string;
@@ -19,6 +19,9 @@ export interface IPerson {
   phone: string | null;
   address: string | null;
   gender: TGender | null;
+}
+
+export interface IPerson extends IPersonBase {
   createdAt: Date;
   updatedAt: Date;
 }

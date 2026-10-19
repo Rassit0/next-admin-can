@@ -9,6 +9,7 @@ import { createStaff, IStaff } from "@/modules/staff";
 import { toast } from "@heroui/react";
 import { Add01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { usePermissions } from "@/shared/providers/PermissionsProvider";
 
 interface Props {
   onSubmited?: (staff: IStaff) => void;
@@ -16,10 +17,16 @@ interface Props {
 }
 
 export const CreateStaffModal = ({ onSubmited, isIcon }: Props) => {
+  const permissions = usePermissions();
+  const canCreate = permissions.includes("CREATE_STAFF");
   const [isOpen, setIsOpen] = useState(false);
   const [personId, setPersonId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  if (!canCreate) {
+    return null;
+  }
 
   const handleRemoveError = (fieldName: string) => {
     setErrors((prev) => {

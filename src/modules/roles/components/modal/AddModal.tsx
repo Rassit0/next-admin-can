@@ -62,13 +62,25 @@ export const AddModal: React.FC<Props> = ({ permissions }) => {
     }
   };
 
-  // Agrupar permisos
-  const groupedPermissions = permissions.reduce((acc: any, perm: any) => {
-    const mod = perm.module?.displayName || perm.module?.name || "Otros";
-    if (!acc[mod]) acc[mod] = [];
-    acc[mod].push(perm);
-    return acc;
-  }, {});
+  // Agrupar y ordenar permisos alfabéticamente
+  const groupedPermissions = React.useMemo(() => {
+    const grouped = permissions.reduce((acc: any, perm: any) => {
+      const mod = perm.module?.displayName || perm.module?.name || "Otros";
+      if (!acc[mod]) acc[mod] = [];
+      acc[mod].push(perm);
+      return acc;
+    }, {});
+
+    Object.values(grouped).forEach((perms: any) => {
+      perms.sort((a: any, b: any) =>
+        a.name.localeCompare(b.name, "es", { sensitivity: "base" }),
+      );
+    });
+
+    return Object.entries(grouped).sort(([modA], [modB]) =>
+      modA.localeCompare(modB, "es", { sensitivity: "base" }),
+    );
+  }, [permissions]);
 
   return (
     <Modal>
@@ -121,7 +133,7 @@ export const AddModal: React.FC<Props> = ({ permissions }) => {
                     onChange={setSelectedPermissions}
                   >
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
-                      {Object.entries(groupedPermissions).map(
+                      {groupedPermissions.map(
                         ([mod, perms]: any) => (
                           <div
                             key={mod}

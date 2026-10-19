@@ -3,6 +3,7 @@ import { api } from "@/utils/api";
 import { ServiceResponse } from "@/types/api";
 import { handleServerAction } from "@/utils";
 import { auth } from "@/auth";
+import { updateTag } from "next/cache";
 
 export const updatePersonAvatar = async (personId: string, formData: FormData): Promise<ServiceResponse<{ imageUrl: string }>> => {
   const session = await auth();
@@ -14,6 +15,10 @@ export const updatePersonAvatar = async (personId: string, formData: FormData): 
     });
     
     const result = res.data ?? (res as unknown as { imageUrl: string });
+
+    updateTag("persons");
+    updateTag("persons-options");
+    updateTag("staff");
     
     return { error: false, data: result, message: res.message || "Avatar actualizado exitosamente" };
   });
