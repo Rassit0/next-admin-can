@@ -43,6 +43,7 @@ import {
 } from "@/modules/player-memberships";
 import { AdvanceChargesDrawer } from "../drawer/AdvanceChargesDrawer";
 import { RegularizeHistoricalChargeDrawer } from "@/modules/charge-transactions/components/drawer/RegularizeHistoricalChargeDrawer";
+import { ReentryMembershipModal } from "../modal/ReentryMembershipModal";
 
 interface Props {
   membership: IPlayerMembership;
@@ -73,7 +74,9 @@ const ACTIONS_BY_STATUS: Record<IPlayerMembership["status"], ActionDef[]> = {
     { key: "finish", label: "Finalizar", icon: CheckmarkCircle02Icon },
     { key: "withdraw", label: "Dar de baja", icon: Logout01Icon, danger: true },
   ],
-  WITHDRAWN: [{ key: "reactivate", label: "Reactivar", icon: PlayIcon }],
+  WITHDRAWN: [
+    { key: "reentry", label: "Registrar reingreso", icon: PlayIcon },
+  ],
   FINISHED: [],
   PENDING_ACTIVE: [
     { key: "edit_start_date", label: "Modificar inicio", icon: Calendar01Icon },
@@ -92,6 +95,7 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
   const confirmState = useOverlayState();
   const advanceState = useOverlayState();
   const regularizeState = useOverlayState();
+  const reentryState = useOverlayState();
   const [selectedAction, setSelectedAction] = useState<ActionDef | null>(null);
 
   const localStartedAt = membership.startedAt
@@ -130,6 +134,11 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
 
     if (key === "regularize") {
       regularizeState.open();
+      return;
+    }
+
+    if (key === "reentry") {
+      reentryState.open();
       return;
     }
 
@@ -515,6 +524,16 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
         membershipId={membership.id}
         type="membership"
         onSuccess={onSuccess}
+      />
+
+      <ReentryMembershipModal
+        isOpen={reentryState.isOpen}
+        onOpenChange={reentryState.setOpen}
+        membership={membership}
+        onSuccess={() => {
+          router.refresh();
+          onSuccess?.();
+        }}
       />
     </>
   );

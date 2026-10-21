@@ -27,6 +27,11 @@ export const createSession = async (
     );
 
     updateTag("calendar");
+    updateTag("sessions");
+    updateTag("teacher-sessions");
+    updateTag("staff-groups");
+    updateTag("course-seasons");
+    updateTag("team-seasons");
 
     return {
       error: false,

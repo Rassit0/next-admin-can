@@ -34,11 +34,13 @@ import {
   removeStudentMembership,
 } from "@/modules/student-memberships";
 import { TransferShiftDrawer } from "../drawer/TransferShiftDrawer";
-import { isMembershipInGap } from "@/modules/student-memberships/helpers/domain";
+import { isMembershipInGap, getPendingCurrentCycle } from "@/modules/student-memberships/helpers/domain";
 import { reactivateStudentMembership } from "@/modules/student-memberships/actions/reactivate";
+import { ReenterStudentMembershipModal } from "../modal/ReenterStudentMembershipModal";
 import { generateAdvanceCharges } from "@/modules/student-memberships/actions/generate-advance-charges";
 import { AdvanceChargesDrawer as AdvanceChargesDrawerStudent } from "../drawer/AdvanceChargesDrawer";
 import { RegularizeHistoricalChargeDrawer } from "@/modules/charge-transactions/components/drawer/RegularizeHistoricalChargeDrawer";
+import { CancelCycleModal } from "../modal/CancelCycleModal";
 
 interface Props {
   membership: IStudentMembership;
@@ -57,6 +59,7 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
   const router = useRouter();
   const params = useParams();
   const [loading, setLoading] = useState(false);
+  const [reentryModalOpen, setReentryModalOpen] = useState(false);
 
   const isGap = isMembershipInGap(membership);
   const statusActions: ActionDef[] = [];
@@ -114,10 +117,15 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
   } else if (membership.status === "WITHDRAWN") {
     statusActions.push({
       key: "reentry",
-      label: "Reingresar al curso",
+      label: "Registrar reingreso",
       icon: PlayIcon,
     });
   } else if (membership.status === "PENDING_ACTIVE") {
+    statusActions.push({
+      key: "advance",
+      label: "Inscribir a Ciclo",
+      icon: PlayIcon,
+    });
     statusActions.push({
       key: "transfer",
       label: "Transferir turno",
@@ -137,10 +145,24 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
     });
   }
 
+  const pendingCycle =
+    getPendingCurrentCycle(membership.cycleEnrollments) ||
+    membership.cycleEnrollments?.find((c: any) => c.status === "PENDING");
+
+  if (pendingCycle) {
+    statusActions.push({
+      key: "cancel_cycle",
+      label: "Cancelar ciclo pendiente",
+      icon: Logout01Icon,
+      danger: true,
+    });
+  }
+
   const confirmState = useOverlayState();
   const transferState = useOverlayState();
   const advanceState = useOverlayState();
   const regularizeState = useOverlayState();
+  const [cancelCycleOpen, setCancelCycleOpen] = useState(false);
   const [selectedAction, setSelectedAction] = useState<ActionDef | null>(null);
 
   const allActions: ActionDef[] = [
@@ -178,6 +200,16 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
 
     if (key === "regularize") {
       regularizeState.open();
+      return;
+    }
+
+    if (key === "cancel_cycle") {
+      setCancelCycleOpen(true);
+      return;
+    }
+
+    if (key === "reentry" && membership.status === "WITHDRAWN") {
+      setReentryModalOpen(true);
       return;
     }
 
@@ -564,6 +596,43 @@ export const MembershipActions = ({ membership, origin, onSuccess }: Props) => {
         membershipId={membership.id}
         type="student"
         onSuccess={onSuccess}
+      />
+
+      <CancelCycleModal
+        isOpen={cancelCycleOpen}
+        onOpenChange={setCancelCycleOpen}
+        cycle={
+          pendingCycle
+            ? {
+                id: pendingCycle.id,
+                studentName: membership.student?.person?.name
+                  ? `${membership.student.person.name} ${membership.student.person.lastName || ""}`
+                  : undefined,
+                courseName: membership.courseSeason?.course?.name,
+                shiftName: membership.courseSeasonShift?.shift?.name,
+                cycleStartDate: pendingCycle.cycleStartDate,
+                cycleEndDate: pendingCycle.cycleEndDate,
+                amount:
+                  (pendingCycle as any).charge?.amount ||
+                  (membership as any).totalPendingAmount,
+                status: pendingCycle.status,
+              }
+            : null
+        }
+        onSuccess={() => {
+          router.refresh();
+          onSuccess?.();
+        }}
+      />
+
+      <ReenterStudentMembershipModal
+        isOpen={reentryModalOpen}
+        onOpenChange={setReentryModalOpen}
+        membership={membership}
+        onSuccess={() => {
+          router.refresh();
+          onSuccess?.();
+        }}
       />
     </>
   );

@@ -22,6 +22,8 @@ export interface PaymentMatrixPeriodData {
 export interface PaymentMatrixStudent {
   id: string;
   name: string;
+  status?: 'ACTIVE' | 'SUSPENDED' | 'WITHDRAWN' | 'PENDING_ACTIVE' | 'FINISHED';
+  suspensionReason?: string;
   registration?: PaymentMatrixPeriodData;
   paymentsByPeriod: Record<string, PaymentMatrixPeriodData>;
 }

@@ -102,3 +102,80 @@ export interface Meta {
   nextPage: number | null;
   prevPage: number | null;
 }
+
+export interface IReenterPlayerMembershipDto {
+  previousMembershipId: string;
+  teamSeasonCategoryId: string;
+  paymentPlanId: string;
+  startedAt: string;
+  chargeRegistration?: boolean;
+  skipCurrentMonthRecurringFee?: boolean;
+  notes?: string;
+}
+
+export interface IPlayerMembershipReentryInfo {
+  player: {
+    id: string;
+    personId: string;
+    fullName: string;
+    documentNumber?: string | null;
+    birthDate?: string | null;
+  };
+  previousMembership: {
+    id: string;
+    teamSeasonId: string;
+    teamSeasonName: string;
+    categoryName: string;
+    startedAt: string;
+    endedAt: string | null;
+    withdrawalReason: string | null;
+  };
+  registrationFeeStatus: {
+    hasPaidInSeason: boolean;
+    paidAmount?: number;
+    paymentDate?: string;
+    receiptNumber?: string;
+    seasonFeeAmount: number;
+  };
+  currentMonthStatus: {
+    currentYear: number;
+    currentMonth: number;
+    hasPaidCurrentMonth: boolean;
+    paidAmount?: number;
+    receiptNumber?: string;
+  };
+  historicalDebts: {
+    hasPendingDebts: boolean;
+    totalPendingAmount: number;
+    pendingCharges: {
+      id: string;
+      description: string;
+      amount: number;
+      pendingAmount: number;
+      dueDate: string;
+      type: string;
+    }[];
+  };
+  cancelledChargesOnWithdrawal: {
+    id: string;
+    description: string;
+    amount: number;
+    dueDate: string;
+  }[];
+  availableCategories: {
+    id: string;
+    name: string;
+    maxMembers: number | null;
+    activeMembers: number;
+    availableSpots: number | null;
+    isCurrentCategory: boolean;
+  }[];
+  availablePaymentPlans: {
+    id: string;
+    name: string;
+    registrationDiscountPercent: number;
+    recurringDiscountPercent: number;
+    isSinglePayment: boolean;
+    advanceCycles: number;
+  }[];
+}

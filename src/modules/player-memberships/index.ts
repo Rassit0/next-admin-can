@@ -12,6 +12,7 @@ export * from "./actions/pauses";
 export * from "./actions/get-team-season-context";
 export * from "./actions/get-team-season-categories";
 export * from "./actions/update";
+export * from "./actions/reenter";
 
 // Helpers
 export * from "./helpers/initial-charges";
@@ -29,6 +30,7 @@ export * from "./components/table/Table";
 export * from "./components/metrics/MetricsCards";
 export * from "./components/drawer/CreateMassiveManualChargeDrawer";
 export * from "./components/actions/CreateMassiveManualChargeButton";
+export * from "./components/modal/ReentryMembershipModal";
 
 // Interfaces
 export * from "./interfaces/player-membership.interface";

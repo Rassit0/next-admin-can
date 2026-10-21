@@ -63,7 +63,7 @@ export const ParticipationChip = ({ membership, size = "sm" }: Props) => {
     let expirationText = "";
     if (pendingCycle.createdAt) {
       const expirationDate = new Date(
-        new Date(pendingCycle.createdAt).getTime() + 24 * 60 * 60 * 1000,
+        new Date(pendingCycle.createdAt).getTime() + 72 * 60 * 60 * 1000,
       );
       const now = new Date();
       const diffMs = Math.max(0, expirationDate.getTime() - now.getTime());

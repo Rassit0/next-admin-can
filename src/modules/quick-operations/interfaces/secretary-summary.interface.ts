@@ -1,3 +1,9 @@
+import {
+  ICycleEnrollment,
+  StudentCharge,
+  MembershipCharge,
+} from "@/modules/charge-transactions/interfaces/charges.interface";
+
 export interface IChargeSummary {
   id: string;
   description?: string;
@@ -9,9 +15,10 @@ export interface IChargeSummary {
   status: string;
   type: "MEMBERSHIP" | "STUDENT" | "ACCOUNT";
   originName: string;
-  membershipCharges: { type: string }[];
-  studentCharges: { type: string }[];
-  payments: { amount: string | number; status: string }[];
+  membershipCharges?: MembershipCharge[] | { type: string }[];
+  studentCharges?: StudentCharge[] | { type: string; studentMembership?: any }[];
+  payments?: { amount: string | number; status: string }[];
+  cycleEnrollment?: ICycleEnrollment | null;
 }
 
 export interface IPlayerMembershipSummary {

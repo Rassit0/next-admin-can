@@ -32,7 +32,7 @@ export const getPendingCurrentCycle = (cycles?: ICycleEnrollment[]): ICycleEnrol
   return cycles.find(cycle => {
     if (cycle.status !== "PENDING") return false;
     if (cycle.createdAt) {
-      const expiration = new Date(new Date(cycle.createdAt).getTime() + 24 * 60 * 60 * 1000);
+      const expiration = new Date(new Date(cycle.createdAt).getTime() + 72 * 60 * 60 * 1000);
       if (now >= expiration) return false;
     }
     
@@ -57,7 +57,7 @@ export const isMembershipInGap = (membership: IStudentMembership): boolean => {
   const coveringCycle = membership.cycleEnrollments.find(cycle => {
     if (cycle.status === "CANCELLED") return false;
     if (cycle.status === "PENDING" && cycle.createdAt) {
-      const expiration = new Date(new Date(cycle.createdAt).getTime() + 24 * 60 * 60 * 1000);
+      const expiration = new Date(new Date(cycle.createdAt).getTime() + 72 * 60 * 60 * 1000);
       if (now >= expiration) return false;
     }
     

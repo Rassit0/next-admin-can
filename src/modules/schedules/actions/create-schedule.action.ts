@@ -12,6 +12,10 @@ export const createScheduleAction = async (payload: ICreateSchedulePayload) => {
     // Invalidamos el caché del calendario y de las sesiones
     updateTag("calendar");
     updateTag("sessions");
+    updateTag("teacher-sessions");
+    updateTag("staff-groups");
+    updateTag("course-seasons");
+    updateTag("team-seasons");
 
     return {
       error: false,

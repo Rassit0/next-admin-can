@@ -33,6 +33,9 @@ import {
   previewLateFee,
   ILateFeePreview,
 } from "../../actions/preview-late-fee";
+import { CancelCycleModal } from "@/modules/student-memberships/components/modal/CancelCycleModal";
+import { cancelCycleEnrollmentAction } from "@/modules/student-memberships/actions/cancel-cycle";
+import { usePermissions } from "@/shared/providers/PermissionsProvider";
 
 interface Props {
   charge: ICharge;
@@ -58,6 +61,24 @@ export const ChargeActions = ({
   const [loading, setLoading] = useState(false);
   const confirmState = useOverlayState();
   const [selectedAction, setSelectedAction] = useState<ActionDef | null>(null);
+
+  // Permisos funcionales para ciclo de estudiante
+  let permissions: string[] = [];
+  try {
+    permissions = usePermissions() || [];
+  } catch {
+    permissions = [];
+  }
+  const canCancelCycle =
+    permissions.includes("UPDATE_STUDENT_MEMBERSHIPS") ||
+    permissions.includes("DELETE_STUDENT_MEMBERSHIPS");
+
+  // Modal para cancelar ciclo directamente desde el cargo
+  const [cancelCycleOpen, setCancelCycleOpen] = useState(false);
+  // Propósito cuando un ajuste reduce el saldo a cero en ciclo PENDING ('CONFIRM' | 'CANCEL' | null)
+  const [zeroBalanceIntent, setZeroBalanceIntent] = useState<
+    "CONFIRM" | "CANCEL" | null
+  >(null);
 
   // State for Add Discount form
   const [adjustmentAmount, setAdjustmentAmount] = useState(
@@ -190,6 +211,33 @@ export const ChargeActions = ({
     });
   }
 
+  // Check if there are completed or processing payments
+  const hasPaymentsOrProcessing = charge.payments
+    ? charge.payments.some(
+        (p) =>
+          (p.status === "COMPLETED" || p.status === "PROCESSING") &&
+          Number(p.amount) > 0,
+      )
+    : paidAmount > 0;
+
+  // Cancel cycle and charge if linked to a cancelable pending cycle without payments and user has required permission
+  const isCancelableCycle =
+    canCancelCycle &&
+    !!charge.cycleEnrollment &&
+    charge.cycleEnrollment.status === "PENDING" &&
+    charge.status === "PENDING" &&
+    !hasPaymentsOrProcessing &&
+    paidAmount === 0;
+
+  if (isCancelableCycle) {
+    allActions.push({
+      key: "cancel-cycle-charge",
+      label: "Cancelar cargo e inscripción",
+      icon: Logout01Icon,
+      danger: true,
+    });
+  }
+
   const handleActionSelect = (key: string) => {
     if (key === "pay" && onPay) {
       onPay(charge);
@@ -198,6 +246,11 @@ export const ChargeActions = ({
 
     if (key === "details" && detailsHref) {
       router.push(detailsHref);
+      return;
+    }
+
+    if (key === "cancel-cycle-charge") {
+      setCancelCycleOpen(true);
       return;
     }
 
@@ -235,6 +288,7 @@ export const ChargeActions = ({
           charge.adjustmentAmount ? charge.adjustmentAmount.toString() : "",
         );
         setDiscountReason(charge.adjustmentReason || "");
+        setZeroBalanceIntent(null);
         setErrors({});
       } else if (key === "edit-charge") {
         setChargeDescription(charge.description);
@@ -308,11 +362,66 @@ export const ChargeActions = ({
         return;
       }
 
-      res = await addChargeAdjustment({
-        id: charge.id,
-        adjustmentAmount: amountNum,
-        adjustmentReason,
-      });
+      // Comprobación de saldo cero en ciclos PENDING
+      const isCyclePending =
+        charge.cycleEnrollment && charge.cycleEnrollment.status === "PENDING";
+      const isZeroBalance = chargeAmountNum + amountNum <= 0;
+
+      if (isCyclePending && isZeroBalance) {
+        if (!zeroBalanceIntent) {
+          setErrors({
+            zeroBalanceIntent:
+              "Debes seleccionar una opción: Mantener inscripción (Descuento total autorizado) o Cancelar inscripción y cargo.",
+          });
+          setLoading(false);
+          return;
+        }
+
+        if (zeroBalanceIntent === "CANCEL") {
+          if (!canCancelCycle) {
+            setErrors({
+              zeroBalanceIntent:
+                "No tienes permisos para cancelar inscripciones de estudiantes.",
+            });
+            setLoading(false);
+            return;
+          }
+          if (adjustmentReason.trim().length < 5) {
+            setErrors({
+              adjustmentReason:
+                "El motivo de cancelación debe tener al menos 5 caracteres.",
+            });
+            setLoading(false);
+            return;
+          }
+          // Opción 2: Cancelación de ciclo canónica
+          res = await cancelCycleEnrollmentAction(charge.cycleEnrollment!.id, {
+            reason: adjustmentReason.trim(),
+          });
+        } else {
+          if (adjustmentReason.trim().length < 5) {
+            setErrors({
+              adjustmentReason:
+                "El motivo o justificación de la autorización debe tener al menos 5 caracteres.",
+            });
+            setLoading(false);
+            return;
+          }
+          // Opción 1: Mantener inscripción — Descuento total autorizado
+          res = await addChargeAdjustment({
+            id: charge.id,
+            adjustmentAmount: amountNum,
+            adjustmentReason: adjustmentReason.trim(),
+            isScholarship: true,
+          });
+        }
+      } else {
+        res = await addChargeAdjustment({
+          id: charge.id,
+          adjustmentAmount: amountNum,
+          adjustmentReason: adjustmentReason.trim(),
+        });
+      }
     } else if (action === "edit-charge") {
       const amountNum = Number(chargeAmount);
       const adjustmentNum = Number(charge.adjustmentAmount || 0);
@@ -693,6 +802,118 @@ export const ChargeActions = ({
                       />
                     </TextField>
 
+                    {/* Intercepción de saldo cero en ciclos pendientes */}
+                    {charge.cycleEnrollment &&
+                      charge.cycleEnrollment.status === "PENDING" &&
+                      !isNaN(Number(adjustmentAmount)) &&
+                      Number(charge.amount) + Number(adjustmentAmount) <= 0 &&
+                      Number(adjustmentAmount) !== 0 && (
+                        <div className="p-3 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900 rounded-lg flex flex-col gap-2.5 text-xs">
+                          <div className="font-semibold text-amber-800 dark:text-amber-200 flex items-center gap-1.5">
+                            <HugeiconsIcon icon={Note01Icon} size={16} />
+                            Este ajuste reduce el saldo exigible a cero (Bs 0.00)
+                          </div>
+                          <p className="text-amber-700 dark:text-amber-300 text-[11px] leading-relaxed">
+                            Este cargo pertenece a un ciclo escolar pendiente. Seleccione el propósito de la operación para mantener la integridad de inscripción y cupo:
+                          </p>
+
+                          <div className="flex flex-col gap-2.5 mt-0.5">
+                            {/* Opción 1: Mantener inscripción — Descuento total autorizado */}
+                            <div
+                              onClick={() => {
+                                setZeroBalanceIntent("CONFIRM");
+                                setErrors({});
+                              }}
+                              className={`p-3 rounded-lg border text-left cursor-pointer transition-all ${
+                                zeroBalanceIntent === "CONFIRM"
+                                  ? "border-primary-500 bg-primary-50/90 dark:bg-primary-950/40 text-primary-950 dark:text-primary-100 shadow-xs"
+                                  : "border-default-200 hover:bg-default-100/70"
+                              }`}
+                            >
+                              <div className="font-semibold flex items-center gap-2 text-sm text-primary-700 dark:text-primary-300">
+                                <input
+                                  type="radio"
+                                  name="zeroBalanceIntent"
+                                  checked={zeroBalanceIntent === "CONFIRM"}
+                                  onChange={() => {
+                                    setZeroBalanceIntent("CONFIRM");
+                                    setErrors({});
+                                  }}
+                                  className="accent-primary h-4 w-4"
+                                />
+                                OPCIÓN 1 — Mantener y confirmar inscripción
+                              </div>
+                              <div className="text-xs text-default-600 dark:text-default-400 ml-6 mt-1 leading-relaxed">
+                                El estudiante continuará inscrito y podrá asistir. El cargo quedará liquidado mediante un descuento total autorizado.
+                              </div>
+                              <div className="flex flex-wrap gap-1.5 ml-6 mt-2 text-[10px] text-default-500">
+                                <span className="bg-default-200/60 dark:bg-default-800/60 px-2 py-0.5 rounded">
+                                  Conserva el cupo en el turno
+                                </span>
+                                <span className="bg-default-200/60 dark:bg-default-800/60 px-2 py-0.5 rounded">
+                                  Cargo: PAGADO (bonificación)
+                                </span>
+                                <span className="bg-default-200/60 dark:bg-default-800/60 px-2 py-0.5 rounded">
+                                  Ciclo: CONFIRMADO
+                                </span>
+                              </div>
+                            </div>
+
+                            {/* Opción 2: Cancelar inscripción y cargo */}
+                            <div
+                              onClick={() => {
+                                setZeroBalanceIntent("CANCEL");
+                                setErrors({});
+                              }}
+                              className={`p-3 rounded-lg border text-left cursor-pointer transition-all ${
+                                zeroBalanceIntent === "CANCEL"
+                                  ? "border-danger-500 bg-danger-50/90 dark:bg-danger-950/40 text-danger-950 dark:text-danger-100 shadow-xs"
+                                  : "border-default-200 hover:bg-default-100/70"
+                              }`}
+                            >
+                              <div className="font-semibold flex items-center gap-2 text-sm text-danger-700 dark:text-danger-300">
+                                <input
+                                  type="radio"
+                                  name="zeroBalanceIntent"
+                                  checked={zeroBalanceIntent === "CANCEL"}
+                                  onChange={() => {
+                                    setZeroBalanceIntent("CANCEL");
+                                    setErrors({});
+                                  }}
+                                  className="accent-danger h-4 w-4"
+                                />
+                                OPCIÓN 2 — Cancelar inscripción y cargo
+                              </div>
+                              <div className="text-xs text-default-600 dark:text-default-400 ml-6 mt-1 leading-relaxed">
+                                Se cancelará el ciclo, se liberará el cupo y la deuda quedará anulada.
+                              </div>
+                              <div className="flex flex-wrap gap-1.5 ml-6 mt-2 text-[10px] text-default-500">
+                                <span className="bg-default-200/60 dark:bg-default-800/60 px-2 py-0.5 rounded">
+                                  Libera el cupo inmediatamente
+                                </span>
+                                <span className="bg-default-200/60 dark:bg-default-800/60 px-2 py-0.5 rounded">
+                                  Cargo y ciclo: CANCELADOS
+                                </span>
+                                <span className="bg-default-200/60 dark:bg-default-800/60 px-2 py-0.5 rounded">
+                                  Permite reinscripción (intento + 1)
+                                </span>
+                              </div>
+                              {!canCancelCycle && (
+                                <div className="text-[11px] text-danger-600 dark:text-danger-400 ml-6 mt-1 font-medium">
+                                  ⚠️ No tienes permisos para cancelar inscripciones de estudiantes.
+                                </div>
+                              )}
+                            </div>
+                          </div>
+
+                          {errors.zeroBalanceIntent && (
+                            <span className="text-danger font-semibold text-xs mt-1">
+                              {errors.zeroBalanceIntent}
+                            </span>
+                          )}
+                        </div>
+                      )}
+
                     <TextField
                       name="adjustmentReason"
                       className="w-full"
@@ -700,7 +921,15 @@ export const ChargeActions = ({
                       isInvalid={!!errors.adjustmentReason || undefined}
                     >
                       <Label className="text-sm font-semibold">
-                        Motivo u Observación
+                        {charge.cycleEnrollment &&
+                        charge.cycleEnrollment.status === "PENDING" &&
+                        !isNaN(Number(adjustmentAmount)) &&
+                        Number(charge.amount) + Number(adjustmentAmount) <= 0 &&
+                        Number(adjustmentAmount) !== 0
+                          ? zeroBalanceIntent === "CANCEL"
+                            ? "Motivo obligatorio de cancelación"
+                            : "Motivo obligatorio de autorización (Descuento total)"
+                          : "Motivo u Observación"}
                       </Label>
                       <InputGroup>
                         <InputGroup.Prefix>
@@ -717,7 +946,17 @@ export const ChargeActions = ({
                             setDiscountReason(e.target.value);
                             setErrors({});
                           }}
-                          placeholder="Ej. Beca, Hermano, etc."
+                          placeholder={
+                            charge.cycleEnrollment &&
+                            charge.cycleEnrollment.status === "PENDING" &&
+                            !isNaN(Number(adjustmentAmount)) &&
+                            Number(charge.amount) + Number(adjustmentAmount) <= 0 &&
+                            Number(adjustmentAmount) !== 0
+                              ? zeroBalanceIntent === "CANCEL"
+                                ? "Ej. Error administrativo, desistimiento del apoderado..."
+                                : "Ej. Autorizado por Gerencia General, Beca deportiva, Convenio institucional..."
+                              : "Ej. Autorizado por dirección, recargo por mora..."
+                          }
                         />
                       </InputGroup>
                       <FieldError
@@ -741,16 +980,66 @@ export const ChargeActions = ({
                 </Button>
                 <Button
                   type="submit"
-                  variant={selectedAction?.danger ? "danger" : "primary"}
+                  variant={
+                    selectedAction?.key === "add-adjustment" &&
+                    zeroBalanceIntent === "CANCEL"
+                      ? "danger"
+                      : selectedAction?.danger
+                        ? "danger"
+                        : "primary"
+                  }
                   isPending={loading}
                 >
-                  Confirmar
+                  {selectedAction?.key === "add-adjustment" &&
+                  charge.cycleEnrollment?.status === "PENDING" &&
+                  !isNaN(Number(adjustmentAmount)) &&
+                  Number(charge.amount) + Number(adjustmentAmount) <= 0 &&
+                  Number(adjustmentAmount) !== 0
+                    ? zeroBalanceIntent === "CANCEL"
+                      ? "Confirmar cancelación de ciclo"
+                      : zeroBalanceIntent === "CONFIRM"
+                        ? "Confirmar descuento total"
+                        : "Confirmar ajuste"
+                    : "Confirmar"}
                 </Button>
               </AlertDialog.Footer>
             </form>
           </AlertDialog.Dialog>
         </AlertDialog.Container>
       </AlertDialog.Backdrop>
+
+      <CancelCycleModal
+        isOpen={cancelCycleOpen}
+        onOpenChange={setCancelCycleOpen}
+        cycle={
+          charge.cycleEnrollment
+            ? {
+                id: charge.cycleEnrollment.id,
+                studentName:
+                  charge.studentCharges?.[0]?.studentMembership?.student?.person
+                    ? `${charge.studentCharges[0].studentMembership.student.person.name} ${charge.studentCharges[0].studentMembership.student.person.lastName || ""}`.trim()
+                    : (charge.cycleEnrollment as any)?.studentMembership?.student?.person
+                      ? `${(charge.cycleEnrollment as any).studentMembership.student.person.name} ${(charge.cycleEnrollment as any).studentMembership.student.person.lastName || ""}`.trim()
+                      : undefined,
+                courseName:
+                  charge.cycleEnrollment.courseSeason?.course?.name ||
+                  (charge.studentCharges?.[0]?.studentMembership as any)?.courseSeason?.course?.name,
+                shiftName:
+                  charge.cycleEnrollment.courseSeasonShift?.shift?.name ||
+                  (charge.studentCharges?.[0]?.studentMembership as any)?.courseSeasonShift?.shift?.name,
+                cycleStartDate: charge.cycleEnrollment.cycleStartDate,
+                cycleEndDate: charge.cycleEnrollment.cycleEndDate,
+                amount: charge.pendingAmount || charge.amount,
+                status: charge.cycleEnrollment.status,
+              }
+            : null
+        }
+        onSuccess={() => {
+          router.refresh();
+          onSuccess?.();
+        }}
+      />
     </>
   );
 };
+

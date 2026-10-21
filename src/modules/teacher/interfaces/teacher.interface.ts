@@ -270,6 +270,8 @@ export interface CreateTeacherSessionInput {
   endDate: string;
   durationMin?: number;
   locationId?: string | null;
+  recurrenceRule?: string;
+  timezone?: string;
 }
 
 export interface UpdateTeacherSessionInput {

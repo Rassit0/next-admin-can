@@ -169,7 +169,30 @@ export function PaymentMatrixTable({
                 {students.map((student) => (
                   <Table.Row key={student.id} id={student.id}>
                     <Table.Cell className="font-medium border-x border-b border-default-200 align-top py-3">
-                      {student.name}
+                      {student.status === "SUSPENDED" ? (
+                        <div className="flex flex-col gap-1">
+                          <div className="flex items-center gap-1.5 flex-wrap">
+                            <span>{student.name}</span>
+                            <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-danger-100 text-danger-700 dark:bg-danger-900/40 dark:text-danger-300">
+                              SUSPENDIDO
+                            </span>
+                          </div>
+                          <span className="text-[11px] text-default-500 italic">
+                            Motivo: {student.suspensionReason || "Motivo no registrado"}
+                          </span>
+                        </div>
+                      ) : student.status === "WITHDRAWN" ? (
+                        <div className="flex flex-col gap-1">
+                          <div className="flex items-center gap-1.5 flex-wrap">
+                            <span className="text-default-600">{student.name}</span>
+                            <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-default-200 text-default-700">
+                              BAJA
+                            </span>
+                          </div>
+                        </div>
+                      ) : (
+                        student.name
+                      )}
                     </Table.Cell>
 
                     {!student.registration ||

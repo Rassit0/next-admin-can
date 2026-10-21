@@ -2,6 +2,7 @@
 
 import { ServiceResponse } from "@/types/api";
 import { handleServerAction } from "@/utils";
+import { updateTag } from "next/cache";
 import { patchGroupSession } from "../api/teacher.api";
 import {
   UpdateTeacherSessionInput,
@@ -16,6 +17,12 @@ export const updateTeacherSession = async (
 ): Promise<ServiceResponse<TeacherGroupSession>> => {
   return handleServerAction(async () => {
     const data = await patchGroupSession(type, groupId, sessionId, payload);
+
+    updateTag("calendar");
+    updateTag("sessions");
+    updateTag("teacher-sessions");
+    updateTag("staff-groups");
+
     return {
       error: false,
       data,

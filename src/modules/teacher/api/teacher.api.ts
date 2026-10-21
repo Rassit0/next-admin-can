@@ -234,17 +234,18 @@ export const postGroupSession = async (
   type: string,
   groupId: string,
   payload: CreateTeacherSessionInput,
-): Promise<TeacherGroupSession> => {
-  const res = await api.post<TeacherGroupSession | { data: TeacherGroupSession }>(
-    `staff/me/groups/${type}/${groupId}/sessions`,
-    payload,
-  );
+): Promise<TeacherGroupSession | TeacherGroupSession[]> => {
+  const res = await api.post<
+    | TeacherGroupSession
+    | TeacherGroupSession[]
+    | { data: TeacherGroupSession | TeacherGroupSession[] }
+  >(`staff/me/groups/${type}/${groupId}/sessions`, payload);
 
-  if (res && typeof res === "object" && "data" in res && (res as any).data?.id) {
+  if (res && typeof res === "object" && "data" in res) {
     return (res as any).data;
   }
 
-  return res as TeacherGroupSession;
+  return res as TeacherGroupSession | TeacherGroupSession[];
 };
 
 export const fetchGroupSession = async (

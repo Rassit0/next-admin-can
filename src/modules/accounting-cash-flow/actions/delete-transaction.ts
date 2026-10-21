@@ -19,7 +19,12 @@ export const deleteTransaction = async (
       res = await api.delete<{ message: string }>(`transactions/${id}`);
     }
 
+    // @ts-ignore
     updateTag("transactions");
+    // @ts-ignore
+    updateTag("payments");
+    // @ts-ignore
+    updateTag("charges");
     return {
       error: false,
       data: null,

@@ -10,6 +10,7 @@ export interface AddAdjustmentData {
   id: string;
   adjustmentAmount: number;
   adjustmentReason?: string;
+  isScholarship?: boolean;
 }
 
 export const addChargeAdjustment = async (
@@ -38,11 +39,13 @@ export const addChargeAdjustment = async (
     updateTag("charges");
     updateTag("player-memberships");
     updateTag("student-memberships");
+    updateTag("course-seasons");
+    updateTag("person-summary");
     updateTag("transactions");
     return {
       error: false,
       data: response.data,
-      message: response.message || "Descuento aplicado exitosamente",
+      message: response.message || "Ajuste aplicado exitosamente",
     };
   });
 };

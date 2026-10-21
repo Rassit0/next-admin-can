@@ -28,7 +28,31 @@ export interface ICharge {
     person?: Person | null;
     company?: { id: string; name: string; taxId: string | null } | null;
   } | null;
+  cycleEnrollment?: ICycleEnrollment | null;
 }
+
+export interface ICycleEnrollment {
+  id: string;
+  status: "PENDING" | "CONFIRMED" | "CANCELLED";
+  cycleStartDate: string | Date;
+  cycleEndDate: string | Date;
+  attempt?: number;
+  cancellationReason?: string | null;
+  cancelledAt?: string | Date | null;
+  courseSeason?: {
+    id: string;
+    course?: {
+      name: string;
+    };
+  } | null;
+  courseSeasonShift?: {
+    id: string;
+    shift?: {
+      name: string;
+    };
+  } | null;
+}
+
 
 export interface StudentCharge {
   id: string;

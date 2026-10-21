@@ -14,6 +14,9 @@ export interface ICycleEnrollment {
   cycleStartDate: string;
   cycleEndDate: string;
   status: CycleEnrollmentStatus;
+  attempt?: number;
+  cancellationReason?: string | null;
+  cancelledAt?: string | null;
   createdAt: string;
 }
 

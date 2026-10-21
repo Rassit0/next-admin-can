@@ -18,7 +18,7 @@ import {
   TeacherGroupSession,
   TeacherGroupType,
 } from "../../interfaces/teacher.interface";
-import { SessionFormModal } from "./SessionFormModal";
+import { SessionFormModal } from "@/modules/calendar";
 import { cancelTeacherSession } from "../../actions/cancel-teacher-session";
 
 interface TeacherSessionListProps {
@@ -329,11 +329,30 @@ export const TeacherSessionList: React.FC<TeacherSessionListProps> = ({
       <SessionFormModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        groupType={groupType}
-        groupId={groupId}
-        groupName={groupName}
-        groupDetail={groupDetail}
-        sessionToEdit={selectedSession}
+        mode={selectedSession ? "edit" : "create"}
+        initialData={
+          selectedSession
+            ? {
+                id: selectedSession.id,
+                title: selectedSession.title,
+                startDate:
+                  typeof selectedSession.startDate === "string"
+                    ? selectedSession.startDate
+                    : selectedSession.startDate.toISOString(),
+                durationMin: selectedSession.durationMin,
+                locationId: selectedSession.location?.id,
+              }
+            : null
+        }
+        presetGroup={{
+          type: groupType,
+          groupId: groupId,
+          groupName: `${groupName} ${groupDetail ? `(${groupDetail})` : ""}`.trim(),
+          isTeacherContext: true,
+        }}
+        onSuccess={() => {
+          router.refresh();
+        }}
       />
     </div>
   );

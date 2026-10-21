@@ -1,7 +1,22 @@
 import { PaginatedResponse } from "@/types/api";
 
+export interface PaymentBreakdownItem {
+  transactionId: string;
+  method: string;
+  accountId: string;
+  accountName: string;
+  amount: number;
+  balanceBefore?: number | null;
+  balanceAfter?: number | null;
+  status?: string;
+}
+
 export interface ITransaction {
   id: string;
+  rawId?: string;
+  transactionId?: string;
+  paymentId?: string | null;
+  internalTransferId?: string | null;
   kind: 'TRANSACTION' | 'PAYMENT' | 'INTERNAL_TRANSFER';
   transactionDate: Date | string;
   createdAt: Date | string;
@@ -28,6 +43,7 @@ export interface ITransaction {
   destBalanceBefore?: number | null;
   destBalanceAfter?: number | null;
 
+  paymentBreakdown?: PaymentBreakdownItem[];
   groupedDetails?: {
     method: string;
     account: string;
@@ -35,6 +51,8 @@ export interface ITransaction {
     amount: number;
     balanceBefore: number | null;
     balanceAfter: number | null;
+    status?: string;
+    transactionId?: string;
   }[];
 
   payerName?: string | null;

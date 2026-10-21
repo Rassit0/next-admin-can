@@ -1,5 +1,5 @@
 "use client";
-import { Button, Dropdown, Label } from "@heroui/react";
+import { Button, Dropdown, Label, useOverlayState } from "@heroui/react";
 import { toast } from "sonner";
 import {
   MoreVerticalSquare01Icon,
@@ -16,6 +16,7 @@ import {
   IPlayerMembership,
   MembershipLifecycleAction,
   updateMembershipLifecycle,
+  ReentryMembershipModal,
 } from "@/modules/player-memberships";
 
 interface Props {
@@ -40,7 +41,9 @@ const ACTIONS_BY_STATUS: Record<IPlayerMembership["status"], ActionDef[]> = {
     { key: "finish", label: "Finalizar", icon: CheckmarkCircle02Icon },
     { key: "withdraw", label: "Dar de baja", icon: Logout01Icon, danger: true },
   ],
-  WITHDRAWN: [{ key: "reactivate", label: "Reactivar", icon: PlayIcon }],
+  WITHDRAWN: [
+    { key: "reentry", label: "Registrar reingreso", icon: PlayIcon },
+  ],
   FINISHED: [],
   PENDING_ACTIVE: [{ key: "activate", label: "Activar", icon: PlayIcon }],
 };
@@ -49,6 +52,7 @@ export const MembershipActions = ({ membership }: Props) => {
   const router = useRouter();
   const params = useParams();
   const [loading, setLoading] = useState(false);
+  const reentryState = useOverlayState();
   const statusActions = ACTIONS_BY_STATUS[membership.status] ?? [];
 
   const allActions: ActionDef[] = [
@@ -60,6 +64,11 @@ export const MembershipActions = ({ membership }: Props) => {
     if (key === "manage") {
       const manageUrl = `/admin/teams/${params.disciplineId}/${params.clubId}/${params.teamId}/team-seasons/${params.teamSeasonId}/player-memberships/${membership.id}`;
       router.push(manageUrl);
+      return;
+    }
+
+    if (key === "reentry") {
+      reentryState.open();
       return;
     }
 
@@ -76,40 +85,49 @@ export const MembershipActions = ({ membership }: Props) => {
   };
 
   return (
-    <Dropdown>
-      <Button
-        aria-label="Acciones de membresía"
-        isIconOnly
-        size="sm"
-        variant="ghost"
-        isPending={loading}
-      >
-        <HugeiconsIcon icon={MoreVerticalSquare01Icon} />
-      </Button>
-      <Dropdown.Popover>
-        <Dropdown.Menu onAction={(key) => run(key as string)}>
-          {allActions.map((action) => (
-            <Dropdown.Item
-              key={action.key}
-              id={action.key}
-              textValue={action.label}
-              href={
-                action.key === "manage"
-                  ? `/admin/teams/${params.disciplineId}/${params.clubId}/${params.teamId}/team-seasons/${params.teamSeasonId}/player-memberships/${membership.id}`
-                  : undefined
-              }
-            >
-              <HugeiconsIcon
-                className={action.danger ? "text-danger" : undefined}
-                icon={action.icon}
-              />
-              <Label className={action.danger ? "text-danger" : undefined}>
-                {action.label}
-              </Label>
-            </Dropdown.Item>
-          ))}
-        </Dropdown.Menu>
-      </Dropdown.Popover>
-    </Dropdown>
+    <>
+      <Dropdown>
+        <Button
+          aria-label="Acciones de membresía"
+          isIconOnly
+          size="sm"
+          variant="ghost"
+          isPending={loading}
+        >
+          <HugeiconsIcon icon={MoreVerticalSquare01Icon} />
+        </Button>
+        <Dropdown.Popover>
+          <Dropdown.Menu onAction={(key) => run(key as string)}>
+            {allActions.map((action) => (
+              <Dropdown.Item
+                key={action.key}
+                id={action.key}
+                textValue={action.label}
+                href={
+                  action.key === "manage"
+                    ? `/admin/teams/${params.disciplineId}/${params.clubId}/${params.teamId}/team-seasons/${params.teamSeasonId}/player-memberships/${membership.id}`
+                    : undefined
+                }
+              >
+                <HugeiconsIcon
+                  className={action.danger ? "text-danger" : undefined}
+                  icon={action.icon}
+                />
+                <Label className={action.danger ? "text-danger" : undefined}>
+                  {action.label}
+                </Label>
+              </Dropdown.Item>
+            ))}
+          </Dropdown.Menu>
+        </Dropdown.Popover>
+      </Dropdown>
+
+      <ReentryMembershipModal
+        isOpen={reentryState.isOpen}
+        onOpenChange={reentryState.setOpen}
+        membership={membership}
+        onSuccess={() => router.refresh()}
+      />
+    </>
   );
 };

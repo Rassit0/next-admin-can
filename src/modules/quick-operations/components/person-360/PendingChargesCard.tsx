@@ -223,6 +223,15 @@ export const PendingChargesCard = ({
                                   onClick={(e) => {
                                     e.stopPropagation();
                                   }}
+                                  onPointerDown={(e) => {
+                                    e.stopPropagation();
+                                  }}
+                                  onMouseDown={(e) => {
+                                    e.stopPropagation();
+                                  }}
+                                  onKeyDown={(e) => {
+                                    e.stopPropagation();
+                                  }}
                                 >
                                   <ChargeActions
                                     charge={charge as unknown as ICharge}
