@@ -5,7 +5,7 @@ import {
 } from "@/modules/accounting-cash-flow/actions/get";
 import { CashFlowView } from "@/modules/accounting-cash-flow/components/CashFlowView";
 import { getAccountCategories } from "@/modules/account-categories/actions/get";
-import { getFinancialAccountOptions } from "@/modules/financial-accounts/actions/get-options";
+import { getFinancialAccounts } from "@/modules/financial-accounts/actions/get-all";
 import { resolvePageData } from "@/utils/resolvePageData";
 
 export const metadata: Metadata = {
@@ -51,7 +51,7 @@ export default async function CashFlowPage({
         categoryId,
       }),
       getAccountCategories({ per_page: "100" }),
-      getFinancialAccountOptions(),
+      getFinancialAccounts(),
       getPaymentMethods(),
     ]);
 

@@ -10,6 +10,7 @@ export interface FinancialAccountOption {
   type: string;
   isDefault: boolean;
   allowedPaymentMethods: string[];
+  isActive?: boolean;
 }
 
 export const getFinancialAccountOptions = async (): Promise<ServiceResponse<FinancialAccountOption[]>> => {

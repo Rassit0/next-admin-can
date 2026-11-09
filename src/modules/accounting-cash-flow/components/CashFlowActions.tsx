@@ -54,7 +54,7 @@ export const CashFlowActions = ({ categories, financialAccounts }: Props) => {
             c.type ===
             (transactionType === "INCOME" ? "RECEIVABLE" : "PAYABLE"),
         )}
-        financialAccounts={financialAccounts}
+        financialAccounts={financialAccounts.filter((a) => a.isActive !== false)}
       />
     </>
   );

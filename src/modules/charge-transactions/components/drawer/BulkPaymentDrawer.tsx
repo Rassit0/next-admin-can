@@ -94,7 +94,9 @@ export const BulkPaymentDrawer = ({
 
   useEffect(() => {
     getFinancialAccounts().then((res) => {
-      if (res.data) setFinancialAccounts(res.data);
+      if (res.data) {
+        setFinancialAccounts(res.data.filter((acc) => acc.isActive));
+      }
     });
   }, []);
 
@@ -102,7 +104,8 @@ export const BulkPaymentDrawer = ({
     if (isOpen) {
       setTransactionDate(today(getLocalTimeZone()));
       const defaultAccount =
-        financialAccounts.find((a) => a.isDefault) || financialAccounts[0];
+        financialAccounts.find((a) => a.isDefault && a.isActive) ||
+        financialAccounts[0];
       if (defaultAccount) {
         setFinancialAccountId(defaultAccount.id);
         if (defaultAccount.allowedPaymentMethods?.length > 0) {

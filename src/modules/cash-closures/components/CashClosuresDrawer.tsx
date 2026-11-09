@@ -61,9 +61,15 @@ export const CashClosuresDrawer = ({
               </Drawer.Header>
               <Drawer.Body className="flex flex-col gap-5 pt-6">
                 <div className="flex justify-end mb-4">
-                  <Button variant="primary" onPress={() => setIsFormOpen(true)}>
-                    Realizar Arqueo
-                  </Button>
+                  {account?.isActive ? (
+                    <Button variant="primary" onPress={() => setIsFormOpen(true)}>
+                      Realizar Arqueo
+                    </Button>
+                  ) : (
+                    <span className="text-xs text-default-400 italic">
+                      Caja inactiva (no permite nuevos arqueos)
+                    </span>
+                  )}
                 </div>
 
                 {isLoading ? (

@@ -96,7 +96,10 @@ export const CashFlowSelectFilters = ({
 
   const accountOptions = [
     { id: "all", name: "Todas las cuentas" },
-    ...financialAccounts.map((a) => ({ id: a.id, name: a.name })),
+    ...financialAccounts.map((a) => ({
+      id: a.id,
+      name: a.isActive === false ? `${a.name} (Inactiva)` : a.name,
+    })),
   ];
 
   const methodOptions = [

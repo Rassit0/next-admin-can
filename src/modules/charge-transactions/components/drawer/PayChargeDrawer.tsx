@@ -106,7 +106,9 @@ export const PayChargeDrawer = ({
 
   useEffect(() => {
     getFinancialAccounts().then((res) => {
-      if (res.data) setFinancialAccounts(res.data);
+      if (res.data) {
+        setFinancialAccounts(res.data.filter((acc) => acc.isActive));
+      }
     });
   }, []);
 
@@ -115,7 +117,9 @@ export const PayChargeDrawer = ({
       setTransactionDate(today(getLocalTimeZone()));
       setNotes("");
 
-      const defaultAcc = financialAccounts.find((a) => a.isDefault);
+      const defaultAcc =
+        financialAccounts.find((a) => a.isDefault && a.isActive) ||
+        financialAccounts[0];
       setSplits([
         {
           id: Math.random().toString(),
