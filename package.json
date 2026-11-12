@@ -1,6 +1,8 @@
 {
   "name": "next-gestion360",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "Plataforma web administrativa y operativa de Gestión360 para la gestión integral de Club Atlético Nacional.",
+  "author": "Mauricio Ariel Aramayo Vidaurre",
   "private": true,
   "scripts": {
     "dev": "next dev",

@@ -6,6 +6,7 @@ import { UserIcon, Logout01Icon } from "@hugeicons/core-free-icons";
 import { CurrentPerson, AuthIdentity } from "@/shared/helpers/server-context";
 import { logoutAction } from "@/modules/auth/actions/logout";
 import { useRouter } from "next/navigation";
+import { APP_NAME, APP_VERSION } from "@/config/version";
 
 interface Props {
   user?: AuthIdentity;
@@ -124,6 +125,16 @@ export const UserAccountDropdown = ({ user, person }: Props) => {
                     className="size-4 text-danger"
                   />
                 </Button>
+              </div>
+
+              <div className="px-3.5 py-2.5 border-t border-border/60 bg-surface-secondary/40 rounded-b-xl flex flex-col gap-0.5 select-none">
+                <p className="text-xs font-semibold text-foreground/85 font-heading leading-tight flex items-center justify-between">
+                  <span>{APP_NAME}</span>
+                  <span className="text-[11px] font-mono font-medium text-muted">v{APP_VERSION}</span>
+                </p>
+                <p className="text-[10px] text-muted leading-tight">
+                  Sistema de Gestión CAN
+                </p>
               </div>
             </div>
           </Popover.Dialog>
