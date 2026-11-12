@@ -28,27 +28,33 @@ export const UserAccountDropdown = ({ user, person }: Props) => {
 
   const displayName = person
     ? `${person.name} ${person.lastName}`
-    : user?.email || "Admin CAN";
+    : user?.email || "Mi cuenta";
   const displayEmail = user?.email || "";
   const initial =
     person?.name?.charAt(0)?.toUpperCase() ||
     user?.email?.charAt(0)?.toUpperCase() ||
-    "A";
+    "U";
 
   return (
-    <div className="flex items-center gap-3">
-      <div className="text-right hidden sm:block">
-        <p className="text-sm font-semibold text-on-surface font-headline leading-tight">
+    <div className="flex items-center gap-2.5 sm:gap-3">
+      <div className="text-right hidden sm:block min-w-0">
+        <p className="text-sm font-semibold text-foreground font-heading leading-tight truncate max-w-36 md:max-w-48">
           {displayName}
         </p>
-        <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wide">
-          Administrador
-        </p>
+        {person && displayEmail && (
+          <p className="text-[11px] text-muted leading-tight truncate max-w-36 md:max-w-48">
+            {displayEmail}
+          </p>
+        )}
       </div>
 
       <Popover isOpen={isOpen} onOpenChange={setIsOpen}>
         <Popover.Trigger>
-          <div className="cursor-pointer rounded-full border-2 border-primary-container/20">
+          <button
+            type="button"
+            aria-label={`Menú de cuenta de ${displayName}`}
+            className="inline-flex items-center justify-center cursor-pointer rounded-full p-0.5 border border-border hover:border-primary/40 hover:bg-surface-secondary/60 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+          >
             <Avatar size="sm">
               {person?.imageUrl && (
                 <Avatar.Image
@@ -60,31 +66,33 @@ export const UserAccountDropdown = ({ user, person }: Props) => {
                 {initial}
               </Avatar.Fallback>
             </Avatar>
-          </div>
+          </button>
         </Popover.Trigger>
 
-        <Popover.Content className="p-0 min-w-50">
+        <Popover.Content className="p-0 min-w-56">
           <Popover.Dialog className="w-full outline-none p-0">
             <div className="w-full flex flex-col">
-              <div className="px-4 py-3 flex items-center gap-3 border-b border-outline-variant/30">
+              <div className="px-4 py-3 flex items-center gap-3 border-b border-border">
                 <Avatar size="sm">
                   {person?.imageUrl && (
                     <Avatar.Image alt={displayName} src={person.imageUrl} />
                   )}
                   <Avatar.Fallback
                     delayMs={600}
-                    className="bg-primary text-on-primary"
+                    className="bg-primary text-white"
                   >
                     {initial}
                   </Avatar.Fallback>
                 </Avatar>
-                <div className="flex flex-col">
-                  <p className="text-sm font-bold text-on-surface">
+                <div className="flex flex-col min-w-0">
+                  <p className="text-sm font-bold text-foreground truncate">
                     {displayName}
                   </p>
-                  <p className="text-xs text-on-surface-variant">
-                    {displayEmail}
-                  </p>
+                  {displayEmail && (
+                    <p className="text-xs text-muted truncate">
+                      {displayEmail}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -109,7 +117,7 @@ export const UserAccountDropdown = ({ user, person }: Props) => {
                   onPress={() => handleAction("logout")}
                 >
                   <Label className="cursor-pointer font-medium text-sm text-danger">
-                    Cerrar sesón
+                    Cerrar sesión
                   </Label>
                   <HugeiconsIcon
                     icon={Logout01Icon}

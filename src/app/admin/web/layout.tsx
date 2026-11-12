@@ -5,7 +5,13 @@ import { getCurrentUserContext } from "@/shared/helpers/server-context";
 import { getPermissionsArray } from "@/modules/roles";
 import { getClubsOptions, SelectClub } from "@/modules/clubs";
 import { getInstitutionContext } from "@/modules/organizations";
-import { BottonNavBar, ErrorPage, Header, Sidebar } from "@/ui";
+import {
+  BottonNavBar,
+  ErrorPage,
+  Header,
+  Sidebar,
+  SidebarContentArea,
+} from "@/ui";
 import { iconMap } from "@/utils";
 import { HugeiconsIcon } from "@hugeicons/react";
 
@@ -35,7 +41,7 @@ export default async function AdminLayout({
         urlBase={`/admin/web`}
       />
       {/* <!-- Main Content Area --> */}
-      <div className="lg:ml-64 min-h-screen transition-all duration-300 pb-16 lg:pb-2">
+      <SidebarContentArea>
         <div className="max-w-400 mx-auto">
           {/* Container for ultra-wide screens */}
           {/* <!-- TopNavBar --> */}
@@ -48,7 +54,7 @@ export default async function AdminLayout({
         </div>
         {/* <!-- Mobile BottomNavBar --> */}
         <BottonNavBar items={allowedItems} urlBase={`/admin/web`} />
-      </div>
+      </SidebarContentArea>
     </>
   );
 }

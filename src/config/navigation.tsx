@@ -34,7 +34,7 @@ export const itemsNavigation: NavigationConfig[] = [
     mobile: { priority: 1 },
     entryStrategy: "self",
     showInLauncher: true,
-    description: "Gestón unificada de secretaría, operaciones y flujo de caja.",
+    description: "Gestión unificada de secretaría, operaciones y flujo de caja.",
     tagText: "Secretaría",
     requiredPermissions: { anyOf: ["READ_PERSONS"] },
     routes: [
@@ -92,6 +92,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "dashboard",
     subject: "home",
     icon: "dashboard",
+    group: "general",
     mobile: { priority: 10 },
     showInLauncher: true,
     description:
@@ -116,6 +117,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "disciplines",
     subject: "DISCIPLINES",
     icon: "disciplines",
+    group: "admin",
     requiredPermissions: { anyOf: ["READ_DISCIPLINES"] },
   },
   {
@@ -124,14 +126,16 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "locations",
     subject: "LOCATIONS",
     icon: "locations",
+    group: "admin",
     requiredPermissions: { anyOf: ["READ_LOCATIONS"] },
   },
   {
-    label: "Categorias",
+    label: "Categorías",
     href: "categories",
     action: "categories",
     subject: "CATEGORIES",
     icon: "categories",
+    group: "admin",
     requiredPermissions: { anyOf: ["READ_CATEGORIES"] },
   },
   {
@@ -140,6 +144,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "seasons",
     subject: "SEASONS",
     icon: "seasons",
+    group: "sports",
     requiredPermissions: { anyOf: ["READ_SEASONS"] },
   },
   {
@@ -148,6 +153,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "clubs",
     subject: "CLUBS",
     icon: "clubs",
+    group: "sports",
     requiredPermissions: { anyOf: ["READ_CLUBS"] },
   },
   {
@@ -156,6 +162,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "teams",
     subject: "TEAMS",
     icon: "teams",
+    group: "sports",
     mobile: { priority: 7 },
     requiredPermissions: { anyOf: ["READ_TEAMS"] },
   },
@@ -165,6 +172,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "players",
     subject: "PLAYERS",
     icon: "players",
+    group: "sports",
     requiredPermissions: { anyOf: ["READ_PLAYERS"] },
   },
   {
@@ -174,6 +182,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "memberships",
     subject: ["PLAYER_MEMBERSHIPS", "STUDENT_MEMBERSHIPS"],
     icon: "memberships",
+    group: "general",
     mobile: { priority: 9 },
     entryStrategy: "firstAllowedChild",
     routes: [
@@ -203,6 +212,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "schools",
     subject: "SCHOOLS",
     icon: "schools",
+    group: "academic",
     requiredPermissions: { anyOf: ["READ_SCHOOLS"] },
   },
   {
@@ -211,6 +221,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "courses",
     subject: "COURSES",
     icon: "courses",
+    group: "academic",
     mobile: { priority: 8 },
     requiredPermissions: { anyOf: ["READ_COURSES"] },
   },
@@ -220,6 +231,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "students",
     subject: "STUDENTS",
     icon: "students",
+    group: "academic",
     requiredPermissions: { anyOf: ["READ_STUDENTS"] },
   },
   {
@@ -229,6 +241,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "accounting",
     subject: ["ACCOUNT_CHARGES", "ACCOUNT_CATEGORIES"],
     icon: "accounting",
+    group: "finance",
     entryStrategy: "firstAllowedChild",
     routes: [
       {
@@ -314,6 +327,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "members",
     subject: "PERSONS",
     icon: "players",
+    group: "general",
     showInLauncher: false,
     requiredPermissions: { anyOf: ["READ_PERSONS"] },
   },
@@ -323,6 +337,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "shifts",
     subject: "home",
     icon: "shifts",
+    group: "admin",
     requiredPermissions: { anyOf: ["READ_SHIFTS"] },
   },
   {
@@ -332,6 +347,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "reports",
     subject: "REPORTS",
     icon: "news", // Using news or similar icon for reports
+    group: "finance",
     mobile: { priority: 10 },
     entryStrategy: "firstAllowedChild",
     routes: [
@@ -362,6 +378,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "users",
     subject: "USERS",
     icon: "users",
+    group: "admin",
     showInLauncher: false,
     requiredPermissions: { anyOf: ["READ_USERS"] },
   },
@@ -372,6 +389,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "roles",
     subject: "ROLES",
     icon: "roles",
+    group: "admin",
     showInLauncher: false,
     requiredPermissions: { anyOf: ["READ_ROLES"] },
   },
@@ -382,6 +400,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "staff",
     subject: "STAFF",
     icon: "users",
+    group: "admin",
     showInLauncher: false,
     requiredPermissions: { anyOf: ["READ_STAFF"] },
   },
@@ -392,6 +411,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "calendar",
     subject: "home",
     icon: "calendar",
+    group: "general",
     hiddenInSidebar: true,
     showInLauncher: true,
     description:
@@ -408,6 +428,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "web",
     subject: "home",
     icon: "web",
+    group: "admin",
     hiddenInSidebar: true,
     showInLauncher: true,
     description:
@@ -424,6 +445,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "teacher",
     subject: "home",
     icon: "teacher",
+    group: "academic",
     mobile: { priority: 2 },
     showInLauncher: true,
     hiddenInSidebar: true,
@@ -444,6 +466,7 @@ export const itemsNavigation: NavigationConfig[] = [
     action: "web",
     subject: "home",
     icon: "web",
+    group: "general",
     showInLauncher: true,
     description: "Ir a la página principal del portal público.",
     tagText: "Público",

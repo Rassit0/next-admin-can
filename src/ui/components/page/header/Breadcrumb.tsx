@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { resolveNavigationHref } from "@/ui/components/navigation/navigation-url";
 
 interface BreadcrumbItem {
   label: string;
@@ -13,8 +14,9 @@ interface Props {
 export const Breadcrumb = ({ breadcrumb, isLast, urlBase }: Props) => {
   return breadcrumb?.href ? (
     <Link
-      href={urlBase ? `${urlBase}/${breadcrumb.href}` : breadcrumb.href}
-      className={`${isLast ? "text-foreground font-bold" : "text-foreground/50"}`}
+      href={resolveNavigationHref(breadcrumb.href, urlBase)}
+      aria-current={isLast ? "page" : undefined}
+      className={`${isLast ? "text-foreground font-bold" : "text-foreground/50"} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus rounded`}
     >
       {breadcrumb.label}
     </Link>

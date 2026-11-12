@@ -1,24 +1,22 @@
 "use client";
 import Link from "next/link";
-import {
-  Notification01Icon,
-  Search01Icon,
-  SidebarLeftIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { ThemeButton } from "./ThemeButton";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
-import { Button } from "@heroui/react";
 import { Crest } from "../crest";
 import { UserAccountDropdown } from "./UserAccountDropdown";
 
 import { CurrentPerson, AuthIdentity } from "@/shared/helpers/server-context";
 
+const SCROLL_TOP_THRESHOLD = 64;
+const SCROLL_DELTA_THRESHOLD = 10;
+
 interface HeaderProps {
   title?: React.ReactNode;
   actions?: React.ReactNode;
   showLogo?: boolean;
+  sticky?: boolean;
+  hideOnScroll?: boolean;
   user?: AuthIdentity;
   person?: CurrentPerson | null;
 }
@@ -26,30 +24,30 @@ export const Header = ({
   title,
   actions,
   showLogo,
+  sticky = true,
+  hideOnScroll = true,
   user,
   person,
 }: HeaderProps) => {
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
+  const lastAnchorY = useRef(0);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    const previous = scrollY.getPrevious() || 0;
-    const direction = latest - previous;
-
-    // 1. Prioridad: Si estamos en el tope (hasta 70px), siempre visible.
-    // Esto es el "cerrojo": no dejamos que nada más pase si estamos arriba.
-    if (latest <= 70) {
+    if (!hideOnScroll || latest <= SCROLL_TOP_THRESHOLD) {
+      lastAnchorY.current = latest;
       setHidden(false);
       return;
     }
 
-    // 2. Si bajamos (dirección positiva), ocultar.
-    if (direction > 0) {
+    const delta = latest - lastAnchorY.current;
+    if (delta > SCROLL_DELTA_THRESHOLD) {
+      lastAnchorY.current = latest;
       setHidden(true);
+    } else if (delta < -SCROLL_DELTA_THRESHOLD) {
+      lastAnchorY.current = latest;
+      setHidden(false);
     }
-    // 3. Si subimos (dirección negativa), NO hacemos nada.
-    // Al no haber un 'setHidden(false)' aquí, el header se mantiene oculto
-    // hasta que vuelvas a tocar el tope y se ejecute el punto 1.
   });
   return (
     <motion.header
@@ -57,50 +55,39 @@ export const Header = ({
         visible: { y: 0 },
         hidden: { y: "-100%" },
       }}
-      animate={hidden ? "hidden" : "visible"}
-      transition={{ duration: 0.35, ease: "easeInOut" }}
-      className="sticky top-0 z-40 w-full flex justify-between items-center px-1 md:px-4 lg:px-8 md:pl-2 py-0 md:py-2 lg:py-4 backdrop-blur-xl"
+      animate={hideOnScroll && hidden ? "hidden" : "visible"}
+      transition={{ duration: 0.22, ease: "easeOut" }}
+      onFocusCapture={() => setHidden(false)}
+      className={`w-full h-14 lg:h-16 flex justify-between items-center gap-2 sm:gap-4 px-3 sm:px-4 lg:px-8 ${
+        sticky
+          ? "sticky top-0 z-40 bg-background/85 backdrop-blur-md border-b border-border/70"
+          : "bg-transparent"
+      }`}
     >
-      {/* <div className="flex items-center gap-4 flex-1">
-        <div className="relative w-full max-w-md">
-          <HugeiconsIcon
-            icon={Search01Icon}
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
-          />
-          <input
-            className="w-full pl-10 pr-4 py-2 bg-slate-100 dark:bg-slate-800 border-none rounded-full text-sm text-foreground focus:ring-2 focus:ring-sky-500 transition-all"
-            placeholder="Buscar..."
-            type="text"
-          />
-        </div>
-      </div> */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
         <Link
           href="/admin"
-          className={`flex items-center justify-center mr-2 ${showLogo ? "" : "lg:hidden"}`}
+          aria-label="Ir al inicio de administración"
+          className={`flex items-center justify-center rounded-lg p-1 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus ${showLogo ? "" : "lg:hidden"}`}
         >
-          <Crest className="w-9 h-9 md:w-10 md:h-10 object-contain" />
+          <Crest className="w-8 h-8 md:w-9 md:h-9 object-contain" />
         </Link>
-        <span className="hidden md:block text-3xl font-semibold text-on-surface font-headline leading-tight">
-          {title}
-        </span>
-        <span className="text-sm text-muted"></span>
+        {title && (
+          <span className="hidden sm:block text-lg md:text-xl lg:text-2xl font-semibold text-foreground font-heading leading-tight truncate">
+            {title}
+          </span>
+        )}
       </div>
-      <div className="flex items-center gap-2 md:gap-6">
-        <div>{actions}</div>
-        <div className="flex items-center gap-1 md:gap-2">
-          <button className="hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full p-2 relative">
-            <HugeiconsIcon icon={Notification01Icon} />
-            <span className="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
-          </button>
-        </div>
-        <div className="flex items-center gap-1 md:gap-2">
-          <ThemeButton />
-        </div>
-        <div className="h-8 w-px bg-outline-variant/30 hidden md:block"></div>
-        <div className="flex items-center gap-3">
-          <UserAccountDropdown user={user} person={person} />
-        </div>
+      <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
+        {actions && (
+          <div className="flex items-center gap-1.5 sm:gap-2">{actions}</div>
+        )}
+        <ThemeButton />
+        <div
+          className="h-6 w-px bg-border/80 hidden sm:block"
+          aria-hidden="true"
+        ></div>
+        <UserAccountDropdown user={user} person={person} />
       </div>
     </motion.header>
   );

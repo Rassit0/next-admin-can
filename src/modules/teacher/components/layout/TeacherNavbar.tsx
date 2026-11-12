@@ -21,9 +21,11 @@ export const TeacherNavbar: React.FC<TeacherNavbarProps> = ({
   ];
 
   return (
-    <div className="w-full border-b border-divider bg-background sticky top-0 z-40 backdrop-blur-md bg-background/80">
+    <div className="w-full border-b border-border bg-background/85 sticky top-0 z-40 backdrop-blur-md">
       <Header
         showLogo={true}
+        sticky={false}
+        hideOnScroll={false}
         user={user}
         person={person}
         actions={

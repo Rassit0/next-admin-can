@@ -1,6 +1,3 @@
-import { ChevronRight } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { Breadcrumb } from "./Breadcrumb";
 import { ButtonBack } from "../../button-back/ButtonBack";
 import { BreadcrumbList } from "./BreadcrumbList";
 
@@ -28,30 +25,34 @@ export const HeaderPage = ({
   showButtonBack = true,
 }: Props) => {
   return (
-    <section className="flex flex-row justify-between items-center gap-4 mb-0 lg:mb-4">
-      <div className="flex justify-between flex-wrap">
-        <div>
-          <div className="flex flex-col">
-            <BreadcrumbList breadcrumb={breadcrumb} urlBase={urlBase} />
+    <section className="flex flex-col sm:flex-row sm:items-start md:items-center justify-between gap-3 sm:gap-4 mb-2 lg:mb-4 min-w-0 flex-1">
+      <div className="flex flex-col gap-1.5 min-w-0 flex-1">
+        <div className="flex flex-col min-w-0">
+          <BreadcrumbList breadcrumb={breadcrumb} urlBase={urlBase} />
 
-            {typeof title === "string" ? (
-              <h2 className="text-2xl md:text-4xl font-extrabold text-sky-800 dark:text-sky-300 font-headline tracking-tight">
-                {title}
-              </h2>
-            ) : (
-              title
-            )}
-          </div>
-          {typeof description === "string" ? (
-            <p className="text-slate-500 text-sm mt-1">{description}</p>
+          {typeof title === "string" ? (
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-sky-800 dark:text-sky-300 font-heading tracking-tight break-words leading-tight">
+              {title}
+            </h2>
           ) : (
-            description
+            title
           )}
         </div>
-        <div className="flex gap-2">{children}</div>
+        {typeof description === "string" ? (
+          <p className="text-muted text-xs sm:text-sm leading-relaxed break-words">
+            {description}
+          </p>
+        ) : (
+          description
+        )}
+        {children && (
+          <div className="flex flex-wrap items-center gap-2 pt-1">
+            {children}
+          </div>
+        )}
       </div>
       {(action || showButtonBack) && (
-        <div className="flex flex-row flex-wrap w-full md:w-auto justify-end gap-2">
+        <div className="flex flex-row flex-wrap items-center justify-end gap-2 shrink-0 self-end sm:self-center">
           {action}
           {showButtonBack && <ButtonBack />}
         </div>

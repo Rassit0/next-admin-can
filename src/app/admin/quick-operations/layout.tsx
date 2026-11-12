@@ -64,7 +64,7 @@ export default async function QuickOperationsLayout({ children }: LayoutProps) {
               <div className="mb-2 flex items-center justify-between">
                 <HeaderPage
                   title="Operaciones Rápidas"
-                  description="Gestón unificada de secretarí­a, operaciones y flujo de caja."
+                  description="Gestión unificada de secretaría, operaciones y flujo de caja."
                 />
                 <TriggerLateFeesButton />
               </div>

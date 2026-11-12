@@ -1,6 +1,7 @@
 export { Crest } from "./components/crest";
 
 export * from "./components/sidebar/Sidebar";
+export * from "./components/sidebar/SidebarContentArea";
 export * from "./components/header/Header";
 export * from "./components/bottom-navbar/BottonNavBar";
 export * from "./components/bottom-navbar/ButtonFloating";

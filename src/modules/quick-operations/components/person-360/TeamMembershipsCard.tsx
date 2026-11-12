@@ -40,7 +40,7 @@ export const TeamMembershipsCard = ({
             >
               <i className={`${origin.iconClass} text-sm`} />
             </span>
-            <span>Membresías Team</span>
+            <span>Membresías Equipo</span>
           </h3>
           <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-default/60 text-muted tabular-nums">
             {memberships.length}

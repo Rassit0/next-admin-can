@@ -20,21 +20,25 @@ export const BreadcrumbList = ({ breadcrumb, urlBase }: Props) => {
   }
 
   return (
-    <div className="hidden lg:flex items-center md:gap-2 text-outline text-[10px] md:mb-2 font-semibold tracking-wide uppercase">
+    <nav
+      aria-label="Ruta de navegación"
+      className="hidden sm:flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-muted text-[11px] mb-1 font-semibold tracking-wide uppercase"
+    >
       {breadcrumb.map((item, index) => (
-        <div key={index} className="flex items-center md:gap-2">
+        <div key={index} className="flex items-center gap-1.5">
           <Breadcrumb
-            key={index}
             breadcrumb={item}
             urlBase={urlBase}
             isLast={index === breadcrumb.length - 1}
           />
 
           {index < breadcrumb.length - 1 && (
-            <HugeiconsIcon icon={ChevronRight} size={16} />
+            <span aria-hidden="true" className="inline-flex text-muted/70">
+              <HugeiconsIcon icon={ChevronRight} size={14} />
+            </span>
           )}
         </div>
       ))}
-    </div>
+    </nav>
   );
 };

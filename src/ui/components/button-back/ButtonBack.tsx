@@ -1,11 +1,8 @@
 "use client";
 import { Button, Tooltip } from "@heroui/react";
-import {
-  DashboardCircleEditIcon,
-  LinkBackwardIcon,
-} from "@hugeicons/core-free-icons";
+import { LinkBackwardIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export const ButtonBack = () => {
   const router = useRouter();
@@ -17,13 +14,14 @@ export const ButtonBack = () => {
     <Tooltip delay={0}>
       <Button
         isIconOnly
-        className="hover:bg-accent/30"
-        size="lg"
+        aria-label="Volver"
+        className="h-9 w-9 min-w-9 rounded-xl hover:bg-accent/20"
+        size="md"
         variant="ghost"
-        onClick={handleGestion}
+        onPress={handleGestion}
       >
         <HugeiconsIcon
-          className="w-8 text-accent h-8"
+          className="w-5 h-5 text-accent"
           icon={LinkBackwardIcon}
         />
       </Button>

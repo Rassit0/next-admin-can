@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+import { getCurrentUserContext } from "@/shared/helpers/server-context";
 import { Header } from "@/ui";
 import { redirect } from "next/navigation";
 import React from "react";
@@ -10,9 +10,9 @@ interface LayoutProps {
 }
 
 export default async function CalendarLayout({ children }: LayoutProps) {
-  const session = await auth();
+  const context = await getCurrentUserContext();
 
-  if (!session) {
+  if (!context?.user) {
     redirect("/login");
   }
 
@@ -23,6 +23,8 @@ export default async function CalendarLayout({ children }: LayoutProps) {
         {/* <!-- TopNavBar --> */}
         <Header
           showLogo={true}
+          user={context.user}
+          person={context.person}
           actions={
             <Link href="/admin">
               <Button variant="outline" size="sm">
