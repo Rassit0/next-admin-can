@@ -1,14 +1,11 @@
-import { getClubsOptions, SelectClub } from "@/modules/clubs";
 import {
-  Footer,
   HeaderPageLouncher,
   ModuleGrid,
 } from "@/modules/module-louncher";
 import { getInstitutionContext } from "@/modules/organizations";
-import { ErrorPage, Header } from "@/ui";
+import { Header, GlobalFooter } from "@/ui";
 import { resolvePageData } from "@/utils/resolvePageData";
 import { getCurrentUserContext } from "@/shared/helpers/server-context";
-import { getPermissionsArray } from "@/modules/roles";
 import { filterNavigation } from "@/shared/helpers/permissions";
 import { itemsNavigation, NavigationConfig } from "@/config/navigation";
 import { getTeacherContext } from "@/modules/teacher/actions/get-teacher-context";
@@ -43,8 +40,8 @@ export default async function HomePage() {
   const institution = institutionsResponse.data;
 
   return (
-    <>
-      <div className="max-w-400 mx-auto">
+    <div className="min-h-screen flex flex-col transition-all duration-300">
+      <div className="max-w-400 mx-auto flex-1 w-full">
         {/* Container for ultra-wide screens */}
         {/* <!-- TopNavBar --> */}
         <Header
@@ -58,9 +55,9 @@ export default async function HomePage() {
           {/* <!-- Header Section --> */}
           <HeaderPageLouncher />
           <ModuleGrid items={launcherItems} />
-          <Footer />
         </main>
       </div>
-    </>
+      <GlobalFooter />
+    </div>
   );
 }

@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import { getCurrentUserContext } from "@/shared/helpers/server-context";
 import { getTeacherContext } from "@/modules/teacher/actions/get-teacher-context";
 import { TeacherNavbar } from "@/modules/teacher/components/layout/TeacherNavbar";
+import { GlobalFooter } from "@/ui";
 import { redirect } from "next/navigation";
 import React from "react";
 
@@ -37,14 +38,15 @@ export default async function TeacherLayout({ children }: TeacherLayoutProps) {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground transition-all duration-300">
+    <div className="min-h-screen bg-background text-foreground flex flex-col transition-all duration-300">
       <TeacherNavbar
         user={userContext?.user}
         person={userContext?.person}
       />
-      <main className="max-w-400 mx-auto p-4 md:px-8 py-6">
+      <main className="max-w-400 mx-auto p-4 md:px-8 py-6 flex-1 w-full">
         {children}
       </main>
+      <GlobalFooter />
     </div>
   );
 }

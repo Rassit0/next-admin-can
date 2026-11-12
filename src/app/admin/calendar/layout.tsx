@@ -1,5 +1,5 @@
 import { getCurrentUserContext } from "@/shared/helpers/server-context";
-import { Header } from "@/ui";
+import { Header, GlobalFooter } from "@/ui";
 import { redirect } from "next/navigation";
 import React from "react";
 import { Button } from "@heroui/react";
@@ -17,8 +17,8 @@ export default async function CalendarLayout({ children }: LayoutProps) {
   }
 
   return (
-    <div className="min-h-screen transition-all duration-300">
-      <div className="max-w-400 mx-auto">
+    <div className="min-h-screen flex flex-col transition-all duration-300">
+      <div className="max-w-400 mx-auto flex-1 w-full">
         {/* Container for ultra-wide screens */}
         {/* <!-- TopNavBar --> */}
         <Header
@@ -40,6 +40,7 @@ export default async function CalendarLayout({ children }: LayoutProps) {
           </div>
         </main>
       </div>
+      <GlobalFooter />
     </div>
   );
 }

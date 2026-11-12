@@ -1,6 +1,5 @@
 import { getCurrentUserContext } from "@/shared/helpers/server-context";
-import { getPermissionsArray } from "@/modules/roles";
-import { Header, HeaderPage, TabsRouteNavigation, ModuleGuard } from "@/ui";
+import { Header, HeaderPage, TabsRouteNavigation, ModuleGuard, GlobalFooter } from "@/ui";
 import { redirect } from "next/navigation";
 import React from "react";
 import { Button } from "@heroui/react";
@@ -41,8 +40,8 @@ export default async function QuickOperationsLayout({ children }: LayoutProps) {
 
   return (
     <ModuleGuard moduleId="quick-operations">
-      <div className="min-h-screen transition-all duration-300">
-        <div className="max-w-400 mx-auto">
+      <div className="min-h-screen flex flex-col transition-all duration-300">
+        <div className="max-w-400 mx-auto flex-1 w-full">
           {/* Container for ultra-wide screens */}
           {/* <!-- TopNavBar --> */}
           <Header
@@ -82,6 +81,7 @@ export default async function QuickOperationsLayout({ children }: LayoutProps) {
             </div>
           </main>
         </div>
+        <GlobalFooter />
       </div>
     </ModuleGuard>
   );

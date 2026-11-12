@@ -4,7 +4,6 @@ import clsx from "clsx";
 import { IOrganization } from "@/modules/organizations";
 import { NavItem } from "@/ui/interfaces/sidebar/sidebar";
 import { Body } from "./Body";
-import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Item } from "./Item";
 import { useSidebarCollapsed } from "./useSidebarPrefs";
@@ -59,8 +58,6 @@ export const Sidebar = ({ organization, items, urlBase }: Props) => {
           urlBase={urlBase}
         />
       </div>
-
-      <Footer isCollapsed={isCollapsed} />
     </aside>
   );
 };

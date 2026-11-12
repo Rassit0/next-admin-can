@@ -30,3 +30,4 @@ export * from "./components/particles-background/particles-background";
 export * from "./components/table-actions/TableActions";
 export * from "./components/InfoTooltip";
 export * from "./components/page/error/ModuleGuard";
+export * from "./components/footer/GlobalFooter";
