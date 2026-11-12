@@ -1,5 +1,6 @@
 "use client";
 
+import { HugeiconsIcon } from "@hugeicons/react";
 import { getChargeOriginConfig } from "../constants/charge-origin";
 
 interface Props {
@@ -27,9 +28,13 @@ export const ChargeOriginBadge = ({
     <span
       className={`inline-flex items-center font-medium rounded-full border shrink-0 leading-none ${sizeClasses} ${origin.badgeClass} ${className}`.trim()}
     >
-      <i className={`${origin.iconClass} text-[11px] shrink-0`} aria-hidden />
+      <HugeiconsIcon
+        icon={origin.icon}
+        size={size === "xs" ? 11 : 13}
+        className="shrink-0"
+        aria-hidden
+      />
       <span>{origin.label}</span>
     </span>
   );
 };
-

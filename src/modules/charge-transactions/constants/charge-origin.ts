@@ -1,9 +1,21 @@
+import {
+  UserGroupIcon,
+  BookOpen01Icon,
+  Invoice01Icon,
+  File01Icon,
+} from "@hugeicons/core-free-icons";
+
 export type ChargeOriginKey = "MEMBERSHIP" | "STUDENT" | "ACCOUNT" | "OTHER";
+
+type HugeIconType =
+  | [string, { [key: string]: string | number }][]
+  | readonly (readonly [string, { readonly [key: string]: string | number }])[];
 
 export interface ChargeOriginConfig {
   origin: ChargeOriginKey;
   label: string;
   iconClass: string;
+  icon: HugeIconType;
   badgeClass: string;
   accentBorderClass: string;
   cardTintClass: string;
@@ -16,6 +28,7 @@ const CHARGE_ORIGIN_MAP: Record<ChargeOriginKey, ChargeOriginConfig> = {
     origin: "MEMBERSHIP",
     label: "Equipo",
     iconClass: "ri-group-line",
+    icon: UserGroupIcon,
     badgeClass:
       "bg-blue-500/10 text-blue-700 border-blue-500/20 dark:bg-blue-400/15 dark:text-blue-300 dark:border-blue-400/25",
     accentBorderClass: "border-l-[3px] border-l-blue-500 dark:border-l-blue-400",
@@ -28,6 +41,7 @@ const CHARGE_ORIGIN_MAP: Record<ChargeOriginKey, ChargeOriginConfig> = {
     origin: "STUDENT",
     label: "Curso",
     iconClass: "ri-book-read-line",
+    icon: BookOpen01Icon,
     badgeClass:
       "bg-violet-500/10 text-violet-700 border-violet-500/20 dark:bg-violet-400/15 dark:text-violet-300 dark:border-violet-400/25",
     accentBorderClass:
@@ -41,6 +55,7 @@ const CHARGE_ORIGIN_MAP: Record<ChargeOriginKey, ChargeOriginConfig> = {
     origin: "ACCOUNT",
     label: "Cargo directo",
     iconClass: "ri-file-list-3-line",
+    icon: Invoice01Icon,
     badgeClass:
       "bg-slate-500/10 text-slate-700 border-slate-500/20 dark:bg-slate-400/15 dark:text-slate-300 dark:border-slate-400/25",
     accentBorderClass:
@@ -54,6 +69,7 @@ const CHARGE_ORIGIN_MAP: Record<ChargeOriginKey, ChargeOriginConfig> = {
     origin: "OTHER",
     label: "Cargo",
     iconClass: "ri-bill-line",
+    icon: File01Icon,
     badgeClass:
       "bg-slate-500/10 text-slate-700 border-slate-500/20 dark:bg-slate-400/15 dark:text-slate-300 dark:border-slate-400/25",
     accentBorderClass:
@@ -110,4 +126,3 @@ export function shouldShowOriginalAmountStrikethrough(charge: {
   const pendingAmount = Number(charge.pendingAmount || 0);
   return amount > 0 && pendingAmount < amount;
 }
-

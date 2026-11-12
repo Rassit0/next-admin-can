@@ -6,6 +6,12 @@ import { IPersonOption } from "@/modules/persons";
 import { usePermissions } from "@/shared/providers/PermissionsProvider";
 import { Person360EditAction } from "./Person360EditAction";
 import { PersonHeroParticles } from "./PersonHeroParticles";
+import { HugeiconsIcon } from "@hugeicons/react";
+import {
+  IdentityCardIcon,
+  Call02Icon,
+  Mail01Icon,
+} from "@hugeicons/core-free-icons";
 
 interface Props {
   profile: IPersonProfileSummary;
@@ -39,18 +45,33 @@ export const PersonHeader = ({ profile, selectedPerson }: Props) => {
           </h2>
           <div className="flex gap-4 mt-1 text-sm text-default-500">
             {profile.documentNumber && (
-              <span className="flex items-center gap-1">
-                <i className="ri-id-card-line"></i> {profile.documentNumber}
+              <span className="flex items-center gap-1.5">
+                <HugeiconsIcon
+                  icon={IdentityCardIcon}
+                  size={15}
+                  className="shrink-0 text-default-400"
+                />
+                <span>{profile.documentNumber}</span>
               </span>
             )}
             {profile.phone && (
-              <span className="flex items-center gap-1">
-                <i className="ri-phone-line"></i> {profile.phone}
+              <span className="flex items-center gap-1.5">
+                <HugeiconsIcon
+                  icon={Call02Icon}
+                  size={15}
+                  className="shrink-0 text-default-400"
+                />
+                <span>{profile.phone}</span>
               </span>
             )}
             {profile.email && (
-              <span className="flex items-center gap-1">
-                <i className="ri-mail-line"></i> {profile.email}
+              <span className="flex items-center gap-1.5">
+                <HugeiconsIcon
+                  icon={Mail01Icon}
+                  size={15}
+                  className="shrink-0 text-default-400"
+                />
+                <span>{profile.email}</span>
               </span>
             )}
           </div>

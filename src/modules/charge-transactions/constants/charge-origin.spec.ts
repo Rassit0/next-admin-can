@@ -11,6 +11,7 @@ describe("charge-origin helper", () => {
     expect(config.origin).toBe("MEMBERSHIP");
     expect(config.label).toBe("Equipo");
     expect(config.iconClass).toBe("ri-group-line");
+    expect(config.icon).toBeDefined();
     expect(config.badgeClass).toContain("blue");
     expect(config.accentBorderClass).toContain("border-l-blue");
   });
@@ -21,6 +22,7 @@ describe("charge-origin helper", () => {
     expect(config.origin).toBe("STUDENT");
     expect(config.label).toBe("Curso");
     expect(config.iconClass).toBe("ri-book-read-line");
+    expect(config.icon).toBeDefined();
     expect(config.badgeClass).toContain("violet");
     expect(config.accentBorderClass).toContain("border-l-violet");
   });
@@ -31,6 +33,7 @@ describe("charge-origin helper", () => {
     expect(config.origin).toBe("ACCOUNT");
     expect(config.label).toBe("Cargo directo");
     expect(config.iconClass).toBe("ri-file-list-3-line");
+    expect(config.icon).toBeDefined();
     expect(config.badgeClass).toContain("slate");
   });
 
@@ -39,6 +42,7 @@ describe("charge-origin helper", () => {
       const config = getChargeOriginConfig(input);
       expect(config.origin).toBe("OTHER");
       expect(config.label).toBe("Cargo");
+      expect(config.icon).toBeDefined();
       expect(config.badgeClass).toContain("slate");
     }
   });

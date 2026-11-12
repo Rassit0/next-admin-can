@@ -49,7 +49,7 @@ export const itemsNavigation: NavigationConfig[] = [
       },
       {
         id: "quick-ops-dashboard",
-        label: "Dashboard",
+        label: "Resumen",
         href: "/admin/quick-operations/dashboard",
         action: "quick-operations",
         subject: "home",
@@ -246,7 +246,7 @@ export const itemsNavigation: NavigationConfig[] = [
     routes: [
       {
         id: "accounting-dashboard",
-        label: "Dashboard",
+        label: "Resumen",
         href: "/admin/accounting/dashboard",
         action: "accounting",
         subject: "ACCOUNT_CHARGES",

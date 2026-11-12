@@ -14,6 +14,12 @@ import { formatCurrency } from "@/utils";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { listItemTransition } from "@/ui/animations/transitions";
 import { getChargeOriginConfig } from "@/modules/charge-transactions/constants/charge-origin";
+import { HugeiconsIcon } from "@hugeicons/react";
+import {
+  UserGroupIcon,
+  Calendar03Icon,
+  InboxIcon,
+} from "@hugeicons/core-free-icons";
 
 interface Props {
   memberships: IPlayerMembershipSummary[];
@@ -38,7 +44,7 @@ export const TeamMembershipsCard = ({
               className={`inline-flex items-center justify-center w-6 h-6 rounded-md border ${origin.headerIconBoxClass}`}
               aria-hidden
             >
-              <i className={`${origin.iconClass} text-sm`} />
+              <HugeiconsIcon icon={origin.icon || UserGroupIcon} size={14} />
             </span>
             <span>Membresías Equipo</span>
           </h3>
@@ -50,7 +56,12 @@ export const TeamMembershipsCard = ({
       <Card.Content className="px-4 pt-1 pb-4 flex flex-col gap-2.5 h-full">
         {memberships.length === 0 ? (
           <div className="flex flex-col items-center justify-center grow p-4 text-muted">
-            <i className="ri-inbox-line text-2xl mb-1" aria-hidden />
+            <HugeiconsIcon
+              icon={InboxIcon}
+              size={32}
+              className="mb-1 opacity-60 text-muted"
+              aria-hidden
+            />
             <p className="text-sm text-center">No hay membresías de equipo</p>
           </div>
         ) : (
@@ -89,8 +100,10 @@ export const TeamMembershipsCard = ({
                 {/* Bloque intermedio: temporada */}
                 {membership.seasonName && (
                   <div className="flex items-center gap-2 rounded-lg bg-default/45 border border-border/40 px-2.5 py-1 text-xs font-medium text-foreground/95 min-w-0">
-                    <i
-                      className={`ri-calendar-event-line ${origin.seasonIconClass} shrink-0 text-[13px]`}
+                    <HugeiconsIcon
+                      icon={Calendar03Icon}
+                      size={13}
+                      className={`${origin.seasonIconClass} shrink-0`}
                       aria-hidden
                     />
                     <span className="leading-snug wrap-break-word min-w-0">
@@ -114,7 +127,12 @@ export const TeamMembershipsCard = ({
                       </span>
                     </div>
                     <span className="text-[11px] text-muted flex items-center gap-1 shrink-0 tabular-nums ml-auto">
-                      <i className="ri-calendar-line text-[12px]" aria-hidden />
+                      <HugeiconsIcon
+                        icon={Calendar03Icon}
+                        size={12}
+                        className="text-muted shrink-0"
+                        aria-hidden
+                      />
                       <span>
                         {new Date(membership.startedAt).toLocaleDateString()}
                       </span>

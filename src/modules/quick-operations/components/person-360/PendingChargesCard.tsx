@@ -4,7 +4,13 @@ import { Card, Chip, Checkbox, Button } from "@heroui/react";
 import { IChargeSummary } from "../../interfaces/secretary-summary.interface";
 import { formatCurrency } from "@/utils/constants";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Invoice01Icon, Wallet01Icon } from "@hugeicons/core-free-icons";
+import {
+  Invoice01Icon,
+  Wallet01Icon,
+  CheckmarkCircle01Icon,
+  Alert02Icon,
+  Calendar03Icon,
+} from "@hugeicons/core-free-icons";
 import { ChargeActions } from "../../../charge-transactions/components/actions/ChargeActions";
 import { ICharge } from "../../../charge-transactions/interfaces/charges.interface";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
@@ -42,13 +48,6 @@ export const PendingChargesCard = ({
     .filter((c) => selectedChargeIds.includes(c.id))
     .reduce((acc, c) => acc + c.pendingAmount, 0);
 
-  const selectableCharges = charges.filter(
-    (c) => c.pendingAmount > 0 && c.status !== "CANCELLED",
-  );
-  const isAllSelected =
-    selectableCharges.length > 0 &&
-    selectableCharges.every((c) => selectedChargeIds.includes(c.id));
-  const isIndeterminate = selectedChargeIds.length > 0 && !isAllSelected;
 
   const renderStatusChip = (status: string) => {
     switch (status) {
@@ -111,7 +110,8 @@ export const PendingChargesCard = ({
       <Card.Header className="flex justify-between items-center bg-danger/5 border-b border-danger/10 rounded-t-2xl">
         <div className="flex items-center gap-3">
           <h3 className="font-semibold text-lg flex items-center gap-2 text-danger">
-            <i className="ri-money-dollar-circle-line"></i> Cargos Pendientes
+            <HugeiconsIcon icon={Invoice01Icon} size={20} className="shrink-0" />
+            <span>Cargos Pendientes</span>
           </h3>
         </div>
         <div className="flex flex-col items-end">
@@ -127,7 +127,11 @@ export const PendingChargesCard = ({
       <Card.Content className="p-0 flex-1 overflow-y-auto">
         {sortedCharges.length === 0 ? (
           <div className="flex flex-col items-center justify-center p-8 text-default-400 h-full">
-            <i className="ri-checkbox-circle-line text-3xl mb-2 text-success"></i>
+            <HugeiconsIcon
+              icon={CheckmarkCircle01Icon}
+              size={36}
+              className="mb-2 text-success shrink-0"
+            />
             <p className="font-medium text-default-500">
               No hay cargos pendientes
             </p>
@@ -181,8 +185,10 @@ export const PendingChargesCard = ({
                                 <ChargeOriginBadge type={charge.type} />
                                 {isLateFee && (
                                   <span className="inline-flex items-center gap-1 text-[11px] font-medium px-1.5 py-0.5 rounded-full bg-amber-500/10 text-amber-700 border border-amber-500/20 dark:bg-amber-400/15 dark:text-amber-300 dark:border-amber-400/25 shrink-0 leading-none">
-                                    <i
-                                      className="ri-alarm-warning-line text-[10px]"
+                                    <HugeiconsIcon
+                                      icon={Alert02Icon}
+                                      size={11}
+                                      className="shrink-0"
                                       aria-hidden
                                     />
                                     <span>Mora</span>
@@ -233,9 +239,15 @@ export const PendingChargesCard = ({
                             </div>
                           </div>
                           <div className="flex justify-between items-end mt-2">
-                            <span className="text-xs text-default-500 flex items-center gap-1">
-                              <i className="ri-calendar-event-line"></i> Vence:{" "}
-                              {new Date(charge.dueDate).toLocaleDateString()}
+                            <span className="text-xs text-default-500 flex items-center gap-1.5">
+                              <HugeiconsIcon
+                                icon={Calendar03Icon}
+                                size={13}
+                                className="shrink-0 text-default-400"
+                              />
+                              <span>
+                                Vence: {new Date(charge.dueDate).toLocaleDateString()}
+                              </span>
                             </span>
                             {renderStatusChip(charge.status)}
                           </div>
