@@ -121,7 +121,7 @@ export default async function AccountingDashboardPage({ searchParams }: Props) {
       {/* SECCIÓN B — Análisis del período (Dependiente del filtro) */}
       <section
         aria-label="Análisis del período"
-        className="rounded-3xl border border-sky-500/25 bg-sky-500/[0.02] dark:bg-sky-500/[0.03] p-5 sm:p-7 shadow-xs space-y-6"
+        className="rounded-3xl border border-sky-500/25 bg-sky-500/2 dark:bg-sky-500/3 p-5 sm:p-7 shadow-xs space-y-6"
       >
         {/* Encabezado y Filtro integrados */}
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-5 border-b border-sky-500/15">

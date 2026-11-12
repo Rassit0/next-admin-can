@@ -73,7 +73,7 @@ export const AccountingAlerts = ({ alerts }: Props) => {
               {alert.label}
             </p>
             <div className="flex flex-wrap items-center gap-1.5 mt-1">
-              <span className="text-[10px] text-foreground/55 truncate max-w-[120px] sm:max-w-none">
+              <span className="text-[10px] text-foreground/55 truncate max-w-30 sm:max-w-none">
                 {alert.context === "StudentCharges"
                   ? "Cuotas escolares"
                   : alert.context === "Memberships"

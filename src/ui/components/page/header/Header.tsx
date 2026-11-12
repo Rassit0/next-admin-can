@@ -31,7 +31,7 @@ export const HeaderPage = ({
           <BreadcrumbList breadcrumb={breadcrumb} urlBase={urlBase} />
 
           {typeof title === "string" ? (
-            <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-sky-800 dark:text-sky-300 font-heading tracking-tight break-words leading-tight">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-sky-800 dark:text-sky-300 font-heading tracking-tight wrap-break-word leading-tight">
               {title}
             </h2>
           ) : (
@@ -39,7 +39,7 @@ export const HeaderPage = ({
           )}
         </div>
         {typeof description === "string" ? (
-          <p className="text-muted text-xs sm:text-sm leading-relaxed break-words">
+          <p className="text-muted text-xs sm:text-sm leading-relaxed wrap-break-word">
             {description}
           </p>
         ) : (
