@@ -10,6 +10,10 @@ import {
   Card,
 } from "@heroui/react";
 import { SplitItem } from "./PayChargeDrawer";
+import {
+  FinancialAccountOptionContent,
+  FinancialAccountSelectItem,
+} from "@/modules/financial-accounts/components/FinancialAccountOptionContent";
 
 const PAYMENT_METHOD_LABELS: Record<string, string> = {
   CASH: "Efectivo",
@@ -17,12 +21,7 @@ const PAYMENT_METHOD_LABELS: Record<string, string> = {
   QR: "Código QR",
 };
 
-export interface IFinancialAccountMinimal {
-  id: string;
-  name: string;
-  allowedPaymentMethods?: string[];
-  isDefault?: boolean;
-}
+export type IFinancialAccountMinimal = FinancialAccountSelectItem;
 
 interface PaymentDistributionsListProps {
   splits: SplitItem[];
@@ -76,10 +75,18 @@ export const PaymentDistributionsList = ({
               >
                 <Label>Cuenta Destino</Label>
                 <Select.Trigger>
-                  <Select.Value />
+                  <Select.Value>
+                    {({ isPlaceholder, selectedText }) =>
+                      isPlaceholder ? (
+                        "Caja/Banco"
+                      ) : (
+                        <span className="block truncate">{selectedText}</span>
+                      )
+                    }
+                  </Select.Value>
                   <Select.Indicator />
                 </Select.Trigger>
-                <Select.Popover>
+                <Select.Popover className="min-w-72 max-w-[calc(100vw-2rem)]">
                   <ListBox>
                     {financialAccounts.map((account) => (
                       <ListBox.Item
@@ -87,7 +94,7 @@ export const PaymentDistributionsList = ({
                         id={account.id}
                         textValue={account.name}
                       >
-                        {account.name}
+                        <FinancialAccountOptionContent account={account} />
                         <ListBox.ItemIndicator />
                       </ListBox.Item>
                     ))}

@@ -43,6 +43,7 @@ export const createAccountCharge = async (
 
     updateTag("account-charges");
     updateTag("transactions");
+    updateTag("financial-accounts");
 
     return {
       error: false,

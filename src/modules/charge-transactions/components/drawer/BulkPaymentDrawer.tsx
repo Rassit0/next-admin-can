@@ -24,7 +24,7 @@ import {
 } from "@internationalized/date";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Wallet01Icon, Calendar02Icon } from "@hugeicons/core-free-icons";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { IChargeSummary } from "@/modules/quick-operations/interfaces/secretary-summary.interface";
 import { addBulk } from "../../actions/add-bulk";
@@ -37,6 +37,8 @@ import { IPersonOption } from "@/modules/persons";
 import { PrintReportDialog } from "../dialog/PrintReportDialog";
 import { PaymentDistributionsList } from "./PaymentDistributionsList";
 import { SplitItem } from "./PayChargeDrawer";
+import { FinancialAccountOptionContent } from "@/modules/financial-accounts/components/FinancialAccountOptionContent";
+import { ChargeOriginBadge } from "../ChargeOriginBadge";
 
 interface Props {
   isOpen: boolean;
@@ -72,6 +74,7 @@ export const BulkPaymentDrawer = ({
   const [financialAccounts, setFinancialAccounts] = useState<
     FinancialAccount[]
   >([]);
+  const financialAccountsRef = useRef<FinancialAccount[]>([]);
 
   const [paymentMethod, setPaymentMethod] = useState<string>("");
   const [financialAccountId, setFinancialAccountId] = useState<string>("");
@@ -93,19 +96,41 @@ export const BulkPaymentDrawer = ({
   const [printPaymentIds, setPrintPaymentIds] = useState<string[]>([]);
 
   useEffect(() => {
+    let cancelled = false;
     getFinancialAccounts().then((res) => {
-      if (res.data) {
-        setFinancialAccounts(res.data.filter((acc) => acc.isActive));
+      if (cancelled || !res.data) return;
+      const activeAccounts = res.data.filter((acc) => acc.isActive);
+      financialAccountsRef.current = activeAccounts;
+      setFinancialAccounts(activeAccounts);
+
+      if (isOpen) {
+        const defaultAccount =
+          activeAccounts.find((a) => a.isDefault && a.isActive) ||
+          activeAccounts[0];
+        if (defaultAccount) {
+          setFinancialAccountId((prevId) => {
+            if (prevId) return prevId;
+            setPaymentMethod(
+              defaultAccount.allowedPaymentMethods?.[0] || "",
+            );
+            return defaultAccount.id;
+          });
+        }
       }
     });
-  }, []);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isOpen]);
 
   useEffect(() => {
     if (isOpen) {
       setTransactionDate(today(getLocalTimeZone()));
+      const currentAccounts = financialAccountsRef.current;
       const defaultAccount =
-        financialAccounts.find((a) => a.isDefault && a.isActive) ||
-        financialAccounts[0];
+        currentAccounts.find((a) => a.isDefault && a.isActive) ||
+        currentAccounts[0];
       if (defaultAccount) {
         setFinancialAccountId(defaultAccount.id);
         if (defaultAccount.allowedPaymentMethods?.length > 0) {
@@ -123,7 +148,7 @@ export const BulkPaymentDrawer = ({
       setExpandedChargeId(null);
       setErrors({});
     }
-  }, [isOpen, financialAccounts]);
+  }, [isOpen]);
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
@@ -302,6 +327,7 @@ export const BulkPaymentDrawer = ({
                   <Select
                     className="w-full"
                     variant="secondary"
+                    placeholder="Seleccione una cuenta"
                     value={financialAccountId}
                     onChange={(key) => {
                       const val = key as string;
@@ -324,7 +350,17 @@ export const BulkPaymentDrawer = ({
                   >
                     <Label>Cuenta Destino Global</Label>
                     <Select.Trigger>
-                      <Select.Value />
+                      <Select.Value>
+                        {({ isPlaceholder, selectedText }) =>
+                          isPlaceholder ? (
+                            "Seleccione una cuenta"
+                          ) : (
+                            <span className="block truncate">
+                              {selectedText}
+                            </span>
+                          )
+                        }
+                      </Select.Value>
                       <Select.Indicator />
                     </Select.Trigger>
                     <Select.Popover>
@@ -335,7 +371,7 @@ export const BulkPaymentDrawer = ({
                             id={acc.id}
                             textValue={acc.name}
                           >
-                            {acc.name} - {acc.currency}
+                            <FinancialAccountOptionContent account={acc} />
                             <ListBox.ItemIndicator />
                           </ListBox.Item>
                         ))}
@@ -417,14 +453,32 @@ export const BulkPaymentDrawer = ({
                             key={charge.id}
                             className="flex flex-col gap-2 border-b border-default-100 pb-2"
                           >
-                            <div className="flex justify-between items-center text-sm">
-                              <span
-                                className="text-default-700 line-clamp-1 flex-1 pr-2"
-                                title={charge.description}
-                              >
-                                {charge.description}
-                              </span>
-                              <span className="font-medium text-right shrink-0">
+                            <div className="flex justify-between items-start gap-3 text-sm">
+                              <div className="flex-1 min-w-0 flex flex-col gap-0.5">
+                                <div className="flex items-center gap-1.5 min-w-0">
+                                  <ChargeOriginBadge
+                                    type={charge.type}
+                                    size="xs"
+                                  />
+                                  {charge.originName && (
+                                    <span
+                                      className="text-xs font-medium text-default-500 truncate"
+                                      title={charge.originName}
+                                    >
+                                      {charge.originName}
+                                    </span>
+                                  )}
+                                </div>
+                                <span
+                                  className="text-default-700 line-clamp-1"
+                                  title={
+                                    charge.description || "Cargo sin descripción"
+                                  }
+                                >
+                                  {charge.description || "Cargo sin descripción"}
+                                </span>
+                              </div>
+                              <span className="font-medium text-right shrink-0 pt-0.5 tabular-nums">
                                 Bs{" "}
                                 {formatCurrency(
                                   Number(charge.pendingAmount || 0),

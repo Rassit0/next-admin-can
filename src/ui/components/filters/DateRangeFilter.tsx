@@ -174,7 +174,7 @@ export function DateRangeFilter({
                 Mes pasado
               </Button>
               <Button size="sm" variant="ghost" onPress={setLast6Months}>
-                iltimos 6 meses
+                últimos 6 meses
               </Button>
               <Button size="sm" variant="ghost" onPress={setThisYear}>
                 Este año

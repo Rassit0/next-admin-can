@@ -2,8 +2,8 @@
 import {
   VolleyballIcon,
   BasketballIcon,
-  FootballIcon, // itil para Futsal
-  BookOpenIcon, // itil para Cursos/Educación
+  FootballIcon, // útil para Futsal
+  BookOpenIcon, // útil para Cursos/Educación
   ActivityIcon, // El genérico por defecto
   TennisBallIcon,
   TennisRacketIcon,

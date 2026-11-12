@@ -64,11 +64,22 @@ const toLocalIso = (dateStr: string) => {
   return new Date(`${dateStr}T00:00:00`).toISOString();
 };
 
-const getInitialDate = (seasonStart: Date) => {
+const getInitialDate = (seasonStart: Date | string) => {
   const t = today();
-  const sStart = seasonStart.toISOString().slice(0, 10);
+  const sStart = new Date(seasonStart).toISOString().slice(0, 10);
   return t < sStart ? sStart : t;
 };
+
+const formatDateInput = (value?: Date | string | null): string => {
+  if (!value) return "";
+  const parsed = new Date(value);
+  return isNaN(parsed.getTime()) ? "" : parsed.toISOString().substring(0, 10);
+};
+
+const isSinglePaymentPlan = (
+  billingType?: string | null,
+  plan?: IPaymentPlan | null,
+): boolean => billingType === "SINGLE_ONLY" || plan?.isSinglePayment === true;
 
 export const EnrollMembershipForm = ({
   courseSeason,
@@ -134,6 +145,11 @@ export const EnrollMembershipForm = ({
   );
 
   const selectedPlan = paymentPlans.find((p) => p.id === planKey) ?? null;
+  const isSinglePaymentMode = isSinglePaymentPlan(
+    courseSeason.billingConfig?.billingType,
+    selectedPlan,
+  );
+  const seasonEndDateStr = formatDateInput(courseSeason.season?.endDate);
   const selectedShift =
     courseSeason.shifts?.find((s) => s.id === shiftKey) ?? null;
   const [breakdown, setBreakdown] = useState<IPreviewChargesResponse | null>(
@@ -185,17 +201,28 @@ export const EnrollMembershipForm = ({
   const currentCapacity = useMemo(() => {
     if (!startedAt || cycleCapacities.length === 0) return null;
 
-    // Normalizar la fecha seleccionada a UTC para matchear con los ciclos
-    const startedAtDate = new Date(`${startedAt}T00:00:00Z`);
+    if (isSinglePaymentMode) {
+      const sStartStr = new Date(courseSeason.season.startDate)
+        .toISOString()
+        .substring(0, 10);
+      const sEndStr = new Date(courseSeason.season.endDate)
+        .toISOString()
+        .substring(0, 10);
+
+      if (startedAt >= sStartStr && startedAt <= sEndStr) {
+        return cycleCapacities[0] || null;
+      }
+      return null;
+    }
 
     const match = cycleCapacities.find((c) => {
-      const cycleStart = new Date(c.cycleStartDate);
-      const cycleEnd = new Date(c.cycleEndDate);
-      return startedAtDate >= cycleStart && startedAtDate < cycleEnd;
+      const cStartStr = new Date(c.cycleStartDate).toISOString().substring(0, 10);
+      const cEndStr = new Date(c.cycleEndDate).toISOString().substring(0, 10);
+      return startedAt >= cStartStr && startedAt < cEndStr;
     });
 
     return match || null;
-  }, [startedAt, cycleCapacities]);
+  }, [startedAt, cycleCapacities, courseSeason, isSinglePaymentMode]);
 
   const isCapacityFull = currentCapacity?.status === "FULL";
   const isUnknownCapacity =
@@ -262,7 +289,7 @@ export const EnrollMembershipForm = ({
         err.discountReason = "Especifique una razón o justificación.";
       }
 
-      if (discountEndDate) {
+      if (!isSinglePaymentMode && discountEndDate) {
         if (discountEndDate < startedAt) {
           err.discountEndDate =
             "La fecha de fin no puede ser menor a la de inicio.";
@@ -296,6 +323,7 @@ export const EnrollMembershipForm = ({
     discountReason,
     courseSeason,
     selectedPlan,
+    isSinglePaymentMode,
     isCapacityFull,
     isUnknownCapacity,
     capacityError,
@@ -332,6 +360,7 @@ export const EnrollMembershipForm = ({
     hasDiscount,
     regDiscountPercent,
     recDiscountPercent,
+    seasonDiscountPercent,
     discountEndDate,
     forceFullCycleFee,
   ]);
@@ -355,15 +384,16 @@ export const EnrollMembershipForm = ({
         (regDiscountPercent !== "" ||
           recDiscountPercent !== "" ||
           seasonDiscountPercent !== "") && {
-          membershipDiscounts: [
+          studentDiscounts: [
             {
               registrationDiscountPercent: Number(regDiscountPercent) || 0,
               recurringDiscountPercent: Number(recDiscountPercent) || 0,
               seasonFeeDiscountPercent: Number(seasonDiscountPercent) || 0,
               startDate: toLocalIso(startedAt)!,
-              ...(discountEndDate && {
-                endDate: toLocalIso(discountEndDate),
-              }),
+              ...(!isSinglePaymentMode &&
+                discountEndDate && {
+                  endDate: toLocalIso(discountEndDate),
+                }),
             },
           ],
         }),
@@ -403,15 +433,16 @@ export const EnrollMembershipForm = ({
         chargeCurrentMonthOnMigration,
       }),
       ...(hasDiscount && {
-        membershipDiscounts: [
+        studentDiscounts: [
           {
             registrationDiscountPercent: Number(regDiscountPercent) || 0,
             recurringDiscountPercent: Number(recDiscountPercent) || 0,
             seasonFeeDiscountPercent: Number(seasonDiscountPercent) || 0,
             startDate: toLocalIso(startedAt)!,
-            ...(discountEndDate && {
-              endDate: toLocalIso(discountEndDate),
-            }),
+            ...(!isSinglePaymentMode &&
+              discountEndDate && {
+                endDate: toLocalIso(discountEndDate),
+              }),
             type: discountType,
             reason: discountReason || undefined,
           },
@@ -556,7 +587,20 @@ export const EnrollMembershipForm = ({
             className="w-full"
             variant="secondary"
             value={planKey}
-            onChange={(key: any) => setPlanKey(key ? String(key) : null)}
+            onChange={(key: any) => {
+              const nextKey = key ? String(key) : null;
+              setPlanKey(nextKey);
+              const nextPlan =
+                paymentPlans.find((p) => p.id === nextKey) ?? null;
+              if (
+                isSinglePaymentPlan(
+                  courseSeason.billingConfig?.billingType,
+                  nextPlan,
+                )
+              ) {
+                setDiscountEndDate("");
+              }
+            }}
             isDisabled={noPlans}
             isInvalid={!!errors.planKey || undefined}
           >
@@ -884,7 +928,11 @@ export const EnrollMembershipForm = ({
 
                 <TextField
                   className="w-full"
-                  isInvalid={!!errors.discountEndDate || undefined}
+                  isDisabled={isSinglePaymentMode}
+                  isInvalid={
+                    (!isSinglePaymentMode && !!errors.discountEndDate) ||
+                    undefined
+                  }
                 >
                   <Label className="text-sm font-semibold">
                     Fecha Fin del Descuento (Opcional)
@@ -892,14 +940,22 @@ export const EnrollMembershipForm = ({
                   <Input
                     variant="secondary"
                     type="date"
-                    value={discountEndDate}
-                    onChange={(e) => setDiscountEndDate(e.target.value)}
+                    disabled={isSinglePaymentMode}
+                    value={
+                      isSinglePaymentMode ? seasonEndDateStr : discountEndDate
+                    }
+                    onChange={(e) => {
+                      if (!isSinglePaymentMode) {
+                        setDiscountEndDate(e.target.value);
+                      }
+                    }}
                   />
                   <p className="text-xs text-muted mt-1 leading-tight">
-                    Si se deja en blanco, el descuento será permanente hasta que
-                    termine la temporada.
+                    {isSinglePaymentMode
+                      ? "En pago único, el descuento se aplica al total de la temporada."
+                      : "Si se deja en blanco, el descuento será permanente hasta que termine la temporada."}
                   </p>
-                  {errors.discountEndDate && (
+                  {!isSinglePaymentMode && errors.discountEndDate && (
                     <FieldError>{errors.discountEndDate}</FieldError>
                   )}
                 </TextField>

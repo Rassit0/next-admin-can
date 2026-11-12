@@ -3,6 +3,7 @@
 import { updateTag } from "next/cache";
 
 export const invalidatePaymentCaches = async (personId?: string, chargeId?: string) => {
+  updateTag("financial-accounts");
   updateTag("transactions");
   updateTag("charges");
   updateTag("account-charges");

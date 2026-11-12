@@ -13,6 +13,7 @@ import { revalidatePersonSummaryCache } from "../../actions/revalidate-summary";
 import { formatCurrency } from "@/utils";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { listItemTransition } from "@/ui/animations/transitions";
+import { getChargeOriginConfig } from "@/modules/charge-transactions/constants/charge-origin";
 
 interface Props {
   memberships: IPlayerMembershipSummary[];
@@ -26,19 +27,30 @@ export const TeamMembershipsCard = ({
   onSuccess,
 }: Props) => {
   const prefersReducedMotion = useReducedMotion();
+  const origin = getChargeOriginConfig("MEMBERSHIP");
 
   return (
     <Card className="h-full shadow-sm">
-      <Card.Header>
-        <h3 className="font-semibold text-lg flex items-center gap-2">
-          <i className="ri-group-line text-default-500"></i> Membresías Team (
-          {memberships.length})
-        </h3>
+      <Card.Header className="pb-1">
+        <div className="flex items-center justify-between gap-2 w-full">
+          <h3 className="font-semibold text-base sm:text-lg flex items-center gap-2 text-foreground">
+            <span
+              className={`inline-flex items-center justify-center w-6 h-6 rounded-md border ${origin.headerIconBoxClass}`}
+              aria-hidden
+            >
+              <i className={`${origin.iconClass} text-sm`} />
+            </span>
+            <span>Membresías Team</span>
+          </h3>
+          <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-default/60 text-muted tabular-nums">
+            {memberships.length}
+          </span>
+        </div>
       </Card.Header>
-      <Card.Content className="px-4 py-2 flex flex-col gap-3 h-full">
+      <Card.Content className="px-4 pt-1 pb-4 flex flex-col gap-2.5 h-full">
         {memberships.length === 0 ? (
-          <div className="flex flex-col items-center justify-center grow p-4 text-default-400">
-            <i className="ri-inbox-line text-2xl mb-1"></i>
+          <div className="flex flex-col items-center justify-center grow p-4 text-muted">
+            <i className="ri-inbox-line text-2xl mb-1" aria-hidden />
             <p className="text-sm text-center">No hay membresías de equipo</p>
           </div>
         ) : (
@@ -51,36 +63,18 @@ export const TeamMembershipsCard = ({
                 initial="hidden"
                 animate="show"
                 exit="exit"
-                className="border border-default-200 rounded-lg p-3 flex flex-col gap-2 origin-top"
+                className={`rounded-xl border border-border/80 ${origin.accentBorderClass} bg-surface-secondary/50 hover:bg-surface-secondary/80 transition-colors p-3 flex flex-col gap-2 origin-top`}
               >
-                <div className="flex justify-between items-start gap-2">
-                  <div>
-                    <h4 className="font-semibold text-sm leading-tight">
-                      {membership.teamName}
-                    </h4>
-                    <p className="text-xs text-default-500 mt-0.5">
-                      {membership.disciplineName}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="flex flex-col items-end gap-1">
-                      <PlayerStatusChip
-                        status={membership.status as PlayerMembershipStatus}
-                      />
-                      {membership.status !== "CANCELLED" &&
-                        membership.status !== "WITHDRAWN" &&
-                        membership.totalPendingAmount !== undefined &&
-                        (membership.totalPendingAmount > 0 ? (
-                          <div className="text-[10px] font-medium bg-warning-50 text-warning-600 px-1.5 py-0.5 rounded border border-warning-200 h-fit">
-                            Deuda:{" "}
-                            {formatCurrency(membership.totalPendingAmount)}
-                          </div>
-                        ) : (
-                          <div className="text-[10px] font-medium bg-success-50 text-success-600 px-1.5 py-0.5 rounded border border-success-200 h-fit">
-                            Al día
-                          </div>
-                        ))}
-                    </div>
+                {/* Bloque superior: identificación */}
+                <div className="flex items-start justify-between gap-2">
+                  <h4 className="font-semibold text-sm text-foreground leading-snug min-w-0 flex-1 wrap-break-word">
+                    {membership.teamName}
+                  </h4>
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    <PlayerStatusChip
+                      status={membership.status as PlayerMembershipStatus}
+                      size="sm"
+                    />
                     <MembershipActions
                       membership={membership as unknown as IPlayerMembership}
                       origin="person-360"
@@ -91,14 +85,58 @@ export const TeamMembershipsCard = ({
                     />
                   </div>
                 </div>
-                <div className="flex justify-between items-end mt-1">
-                  <span className="text-xs font-medium bg-default-100 text-default-600 px-2 py-0.5 rounded-md">
-                    {membership.categoryName}
-                  </span>
-                  <span className="text-xs text-default-500">
-                    <i className="ri-calendar-line"></i>{" "}
-                    {new Date(membership.startedAt).toLocaleDateString()}
-                  </span>
+
+                {/* Bloque intermedio: temporada */}
+                {membership.seasonName && (
+                  <div className="flex items-center gap-2 rounded-lg bg-default/45 border border-border/40 px-2.5 py-1 text-xs font-medium text-foreground/95 min-w-0">
+                    <i
+                      className={`ri-calendar-event-line ${origin.seasonIconClass} shrink-0 text-[13px]`}
+                      aria-hidden
+                    />
+                    <span className="leading-snug wrap-break-word min-w-0">
+                      {membership.seasonName}
+                    </span>
+                  </div>
+                )}
+
+                {/* Bloque inferior: información complementaria */}
+                <div className="pt-2 border-t border-border/50 flex flex-col gap-1.5">
+                  <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-xs">
+                    <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 min-w-0">
+                      <span className="font-medium text-foreground/85 wrap-break-word">
+                        {membership.disciplineName}
+                      </span>
+                      <span className="text-muted/60" aria-hidden>
+                        •
+                      </span>
+                      <span className="text-muted wrap-break-word">
+                        {membership.categoryName}
+                      </span>
+                    </div>
+                    <span className="text-[11px] text-muted flex items-center gap-1 shrink-0 tabular-nums ml-auto">
+                      <i className="ri-calendar-line text-[12px]" aria-hidden />
+                      <span>
+                        {new Date(membership.startedAt).toLocaleDateString()}
+                      </span>
+                    </span>
+                  </div>
+
+                  {membership.status !== "CANCELLED" &&
+                    membership.status !== "WITHDRAWN" &&
+                    membership.totalPendingAmount !== undefined && (
+                      <div className="flex items-center justify-between gap-2 text-[11px]">
+                        <span className="text-muted">Estado de cuenta</span>
+                        {membership.totalPendingAmount > 0 ? (
+                          <span className="font-medium text-warning tabular-nums">
+                            Deuda: {formatCurrency(membership.totalPendingAmount)}
+                          </span>
+                        ) : (
+                          <span className="font-medium text-success">
+                            Al día
+                          </span>
+                        )}
+                      </div>
+                    )}
                 </div>
               </motion.div>
             ))}

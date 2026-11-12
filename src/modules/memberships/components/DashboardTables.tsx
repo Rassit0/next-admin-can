@@ -166,11 +166,11 @@ export const DashboardTables = ({
       <Card className="border-none bg-background/60 dark:bg-default-100/50 shadow-sm flex flex-col">
         <Card.Header className="px-6 pt-6">
           <Card.Title className="text-lg font-semibold">
-            iltimos Pagos
+            últimos Pagos
           </Card.Title>
         </Card.Header>
         <div className="px-6 pb-6 pt-0 flex-1">
-          <Table aria-label="iltimos pagos" className="mt-2">
+          <Table aria-label="últimos pagos" className="mt-2">
             <Table.ScrollContainer>
               <Table.Content>
                 <Table.Header>

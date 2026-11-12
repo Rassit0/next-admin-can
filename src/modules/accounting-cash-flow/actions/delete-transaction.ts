@@ -21,6 +21,7 @@ export const deleteTransaction = async (
 
     // @ts-ignore
     updateTag("transactions");
+    updateTag("financial-accounts");
     // @ts-ignore
     updateTag("payments");
     // @ts-ignore

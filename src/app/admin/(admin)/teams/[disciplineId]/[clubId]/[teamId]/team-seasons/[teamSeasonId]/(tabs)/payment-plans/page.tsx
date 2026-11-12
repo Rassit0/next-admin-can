@@ -60,7 +60,14 @@ export default async function PaymentPlansPage({
       <HeaderPage
         title="Planes de pago"
         description="Aquí puedes ver todos los planes de pago de la temporada"
-        action={<AddModal teamSeasonId={teamSeasonId} />}
+        action={
+          <AddModal
+            teamSeasonId={teamSeasonId}
+            teamSeasonBillingType={
+              teamSeasonResponse.data.billingConfig?.billingType
+            }
+          />
+        }
         showButtonBack={false}
       />
 
@@ -70,6 +77,9 @@ export default async function PaymentPlansPage({
       <TablePaymentPlans
         paymentPlans={paymentPlansResponse.data.data}
         teamSeasonId={teamSeasonId}
+        teamSeasonBillingType={
+          teamSeasonResponse.data.billingConfig?.billingType
+        }
       />
       <PaginationSection
         totalPages={paymentPlansResponse.data.meta.totalPages}

@@ -15,10 +15,20 @@ export interface AddStudentMembershipData {
   isMigrated: boolean;
   chargeRegistrationOnMigration?: boolean;
   chargeCurrentMonthOnMigration?: boolean;
+  studentDiscounts?: {
+    registrationDiscountPercent: number;
+    recurringDiscountPercent: number;
+    seasonFeeDiscountPercent?: number;
+    startDate: string;
+    endDate?: string;
+    type: string;
+    reason?: string;
+  }[];
+  /** @deprecated Usar studentDiscounts */
   membershipDiscounts?: {
     registrationDiscountPercent: number;
     recurringDiscountPercent: number;
-    seasonFeeDiscountPercent: number;
+    seasonFeeDiscountPercent?: number;
     startDate: string;
     endDate?: string;
     type: string;

@@ -49,7 +49,7 @@ export default async function UserAccountPage({ params }: Props) {
               <span>{new Date(user.createdAt).toLocaleDateString()}</span>
             </div>
             <div className="flex justify-between">
-              <span>iltima mod:</span>
+              <span>última mod:</span>
               <span>{new Date(user.updatedAt).toLocaleDateString()}</span>
             </div>
             {user.role?.isSystem && (

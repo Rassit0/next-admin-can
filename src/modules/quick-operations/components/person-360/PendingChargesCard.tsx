@@ -9,6 +9,12 @@ import { ChargeActions } from "../../../charge-transactions/components/actions/C
 import { ICharge } from "../../../charge-transactions/interfaces/charges.interface";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { listItemTransition } from "@/ui/animations/transitions";
+import { ChargeOriginBadge } from "../../../charge-transactions/components/ChargeOriginBadge";
+import {
+  getChargeOriginConfig,
+  isLateFeeCharge,
+  shouldShowOriginalAmountStrikethrough,
+} from "../../../charge-transactions/constants/charge-origin";
 
 interface Props {
   charges: IChargeSummary[];
@@ -43,32 +49,6 @@ export const PendingChargesCard = ({
     selectableCharges.length > 0 &&
     selectableCharges.every((c) => selectedChargeIds.includes(c.id));
   const isIndeterminate = selectedChargeIds.length > 0 && !isAllSelected;
-
-  const getChargeTypeColor = (type: string) => {
-    switch (type) {
-      case "MEMBERSHIP":
-        return "primary";
-      case "STUDENT":
-        return "secondary";
-      case "ACCOUNT":
-        return "default";
-      default:
-        return "default";
-    }
-  };
-
-    const getChargeTypeLabel = (type: string) => {
-    switch (type) {
-      case "MEMBERSHIP":
-        return "Jugador";
-      case "STUDENT":
-        return "Estudiante";
-      case "ACCOUNT":
-        return "Cuenta";
-      default:
-        return type;
-    }
-  };
 
   const renderStatusChip = (status: string) => {
     switch (status) {
@@ -160,6 +140,10 @@ export const PendingChargesCard = ({
                 const isSelected = selectedChargeIds.includes(charge.id);
                 const isSelectable =
                   charge.pendingAmount > 0 && charge.status !== "CANCELLED";
+                const origin = getChargeOriginConfig(charge.type);
+                const isLateFee = isLateFeeCharge(charge);
+                const showOriginalStrikethrough =
+                  shouldShowOriginalAmountStrikethrough(charge);
 
                 return (
                   <motion.div
@@ -181,7 +165,7 @@ export const PendingChargesCard = ({
                         }
                       }}
                       isDisabled={!isSelectable}
-                      className={`w-full max-w-full m-0 p-4 transition-all border-l-4 ${isSelected ? "bg-primary/10 border-l-primary" : "border-l-transparent hover:bg-default-50"}`}
+                      className={`w-full max-w-full m-0 p-4 transition-all ${origin.accentBorderClass} ${isSelected ? "bg-primary/8 ring-1 ring-inset ring-primary/35" : "hover:bg-default-50"}`}
                     >
                       <Checkbox.Content className="w-full flex items-start gap-3">
                         {isSelectable && (
@@ -192,18 +176,23 @@ export const PendingChargesCard = ({
 
                         <div className="flex-1 flex flex-col gap-2 w-full">
                           <div className="flex justify-between items-start gap-4">
-                            <div className="flex-1">
-                              <div className="flex items-center gap-2 mb-1">
-                                <Chip
-                                  size="sm"
-                                  color={getChargeTypeColor(charge.type) as any}
-                                  variant="soft"
-                                >
-                                  {getChargeTypeLabel(charge.type)}
-                                </Chip>
-                                <span className="text-xs font-semibold text-default-500 line-clamp-1">
-                                  {charge.originName}
-                                </span>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center flex-wrap gap-1.5 mb-1">
+                                <ChargeOriginBadge type={charge.type} />
+                                {isLateFee && (
+                                  <span className="inline-flex items-center gap-1 text-[11px] font-medium px-1.5 py-0.5 rounded-full bg-amber-500/10 text-amber-700 border border-amber-500/20 dark:bg-amber-400/15 dark:text-amber-300 dark:border-amber-400/25 shrink-0 leading-none">
+                                    <i
+                                      className="ri-alarm-warning-line text-[10px]"
+                                      aria-hidden
+                                    />
+                                    <span>Mora</span>
+                                  </span>
+                                )}
+                                {charge.originName && (
+                                  <span className="text-xs font-semibold text-default-500 line-clamp-1 min-w-0">
+                                    {charge.originName}
+                                  </span>
+                                )}
                               </div>
                               <h4 className="font-medium text-sm leading-tight text-default-800">
                                 {charge.description || "Cargo sin descripción"}
@@ -215,9 +204,11 @@ export const PendingChargesCard = ({
                                   <span className="font-bold text-sm text-danger">
                                     {formatCurrency(charge.pendingAmount)}
                                   </span>
-                                  <span className="text-xs text-default-400 line-through">
-                                    {formatCurrency(charge.amount)}
-                                  </span>
+                                  {showOriginalStrikethrough && (
+                                    <span className="text-xs text-default-400 line-through">
+                                      {formatCurrency(charge.amount)}
+                                    </span>
+                                  )}
                                 </div>
                                 <div
                                   onClick={(e) => {

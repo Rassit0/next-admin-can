@@ -28,7 +28,7 @@ import {
   Calendar02Icon,
   Invoice01Icon,
 } from "@hugeicons/core-free-icons";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { ICharge } from "../../interfaces/charges.interface";
 import { addTransaction } from "../../actions/add-transaction";
@@ -85,6 +85,7 @@ export const PayChargeDrawer = ({
   const [financialAccounts, setFinancialAccounts] = useState<
     FinancialAccount[]
   >([]);
+  const financialAccountsRef = useRef<FinancialAccount[]>([]);
 
   const getLocalDatetime = () => {
     const tzOffset = new Date().getTimezoneOffset() * 60000;
@@ -105,21 +106,51 @@ export const PayChargeDrawer = ({
   const [showPrintDialog, setShowPrintDialog] = useState(false);
 
   useEffect(() => {
+    let cancelled = false;
     getFinancialAccounts().then((res) => {
-      if (res.data) {
-        setFinancialAccounts(res.data.filter((acc) => acc.isActive));
+      if (cancelled || !res.data) return;
+      const activeAccounts = res.data.filter((acc) => acc.isActive);
+      financialAccountsRef.current = activeAccounts;
+      setFinancialAccounts(activeAccounts);
+
+      if (isOpen) {
+        const defaultAcc =
+          activeAccounts.find((a) => a.isDefault && a.isActive) ||
+          activeAccounts[0];
+        if (defaultAcc) {
+          setSplits((prev) => {
+            if (prev.length === 1 && !prev[0].financialAccountId) {
+              return [
+                {
+                  ...prev[0],
+                  financialAccountId: defaultAcc.id,
+                  paymentMethod:
+                    prev[0].paymentMethod ||
+                    defaultAcc.allowedPaymentMethods?.[0] ||
+                    "",
+                },
+              ];
+            }
+            return prev;
+          });
+        }
       }
     });
-  }, []);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isOpen]);
 
   useEffect(() => {
     if (isOpen) {
       setTransactionDate(today(getLocalTimeZone()));
       setNotes("");
 
+      const currentAccounts = financialAccountsRef.current;
       const defaultAcc =
-        financialAccounts.find((a) => a.isDefault && a.isActive) ||
-        financialAccounts[0];
+        currentAccounts.find((a) => a.isDefault && a.isActive) ||
+        currentAccounts[0];
       setSplits([
         {
           id: Math.random().toString(),
@@ -131,7 +162,7 @@ export const PayChargeDrawer = ({
       ]);
       setErrors({});
     }
-  }, [isOpen, pendingAmount, financialAccounts]);
+  }, [isOpen, pendingAmount]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

@@ -10,7 +10,7 @@ import {
 export const metadata = {
   title: "Central de Anuncios y Noticias | Club Atlético Nacional",
   description:
-    "iltimas noticias, anuncios y resultados del Club Atlético Nacional.",
+    "últimas noticias, anuncios y resultados del Club Atlético Nacional.",
   openGraph: {
     images: ["/logo.png"],
   },

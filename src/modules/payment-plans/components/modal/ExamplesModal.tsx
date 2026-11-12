@@ -92,7 +92,7 @@ export const PAYMENT_PLAN_EXAMPLES: ExampleProps[] = [
     description:
       "El atleta paga todo el año/temporada en su primer día con un descuento por pronto pago.",
     details: [
-      { label: "Obligar Pago inico", value: "Activo" },
+      { label: "Obligar Pago único", value: "Activo" },
       { label: "Descuento Tarifa de Temporada", value: "15%" },
     ],
     planData: {

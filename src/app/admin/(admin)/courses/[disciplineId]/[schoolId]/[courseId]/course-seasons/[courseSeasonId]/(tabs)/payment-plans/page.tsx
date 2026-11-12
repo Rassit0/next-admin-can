@@ -60,7 +60,14 @@ export default async function PaymentPlansPage({
       <HeaderPage
         title="Planes de pago"
         description="Aquí puedes ver todos los planes de pago de la temporada"
-        action={<AddModal courseSeasonId={courseSeasonId} />}
+        action={
+          <AddModal
+            courseSeasonId={courseSeasonId}
+            courseSeasonBillingType={
+              courseSeasonResponse.data.billingConfig?.billingType
+            }
+          />
+        }
         showButtonBack={false}
       />
 

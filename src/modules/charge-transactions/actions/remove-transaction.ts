@@ -29,6 +29,7 @@ export const removeTransaction = async (
     });
 
     updateTag("transactions");
+    updateTag("financial-accounts");
     updateTag("charges");
     return {
       error: false,

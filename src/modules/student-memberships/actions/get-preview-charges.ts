@@ -8,10 +8,18 @@ export interface GetPreviewChargesData {
   courseSeasonId: string;
   paymentPlanId: string;
   startDate: string;
+  studentDiscounts?: {
+    registrationDiscountPercent: number;
+    recurringDiscountPercent: number;
+    seasonFeeDiscountPercent?: number;
+    startDate: string;
+    endDate?: string;
+  }[];
+  /** @deprecated Usar studentDiscounts */
   membershipDiscounts?: {
     registrationDiscountPercent: number;
     recurringDiscountPercent: number;
-    seasonFeeDiscountPercent: number;
+    seasonFeeDiscountPercent?: number;
     startDate: string;
     endDate?: string;
   }[];
@@ -25,7 +33,6 @@ export const getPreviewCharges = async (
   data: GetPreviewChargesData,
 ): Promise<ServiceResponse<IPreviewChargesResponse>> => {
   return handleServerAction(async () => {
-    console.log({ data });
     const response = await api.post<IPreviewChargesResponse>(
       `student-charges/preview`,
       data,

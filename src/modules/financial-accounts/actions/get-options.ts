@@ -8,6 +8,7 @@ export interface FinancialAccountOption {
   name: string;
   currency: string;
   type: string;
+  cachedBalance?: number | string | null;
   isDefault: boolean;
   allowedPaymentMethods: string[];
   isActive?: boolean;

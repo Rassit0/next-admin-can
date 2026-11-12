@@ -122,9 +122,9 @@ export const FinancialStructureCard = ({
               </ListBox.Item>
               <ListBox.Item
                 id="SINGLE_ONLY"
-                textValue="Pago inico (Toda la temporada)"
+                textValue="Pago único (Toda la temporada)"
               >
-                Pago inico (Toda la temporada)
+                Pago único (Toda la temporada)
                 <ListBox.ItemIndicator />
               </ListBox.Item>
               <ListBox.Item
@@ -142,7 +142,7 @@ export const FinancialStructureCard = ({
           <Description className="text-xs text-muted-foreground mt-1">
             <b>Recurrente:</b> genera cobros iterativos (semanal, quincenal, o
             mensual). <br />
-            <b>inico:</b> cobra el valor de toda la temporada por adelantado.{" "}
+            <b>único:</b> cobra el valor de toda la temporada por adelantado.{" "}
             <br />
             <b>Ambos:</b> permite al cliente elegir su modalidad al inscribirse.
           </Description>
@@ -301,7 +301,7 @@ export const FinancialStructureCard = ({
             type="text"
             isInvalid={!!errors.seasonFee || undefined}
           >
-            <Label>Tarifa de Temporada (Pago inico)</Label>
+            <Label>Tarifa de Temporada (Pago único)</Label>
             <InputGroup>
               <InputGroup.Prefix>$</InputGroup.Prefix>
               <InputGroup.Input

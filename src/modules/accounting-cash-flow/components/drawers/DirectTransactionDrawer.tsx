@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import {
   Button,
   Drawer,
@@ -33,6 +33,11 @@ import { SplitItem } from "@/modules/charge-transactions/components/drawer/PayCh
 import { PaymentDistributionsList } from "@/modules/charge-transactions/components/drawer/PaymentDistributionsList";
 
 import { FinancialAccountOption } from "@/modules/financial-accounts/actions/get-options";
+import { getFinancialAccounts } from "@/modules/financial-accounts/actions/get-all";
+import {
+  FinancialAccountOptionContent,
+  FinancialAccountSelectItem,
+} from "@/modules/financial-accounts/components/FinancialAccountOptionContent";
 
 const PAYMENT_METHOD_LABELS: Record<string, string> = {
   CASH: "Efectivo",
@@ -62,6 +67,22 @@ export const DirectTransactionDrawer = ({
   const [amount, setAmount] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [financialAccountId, setFinancialAccountId] = useState("");
+  const [refreshedAccounts, setRefreshedAccounts] = useState<
+    FinancialAccountSelectItem[] | null
+  >(null);
+  const activeFinancialAccounts = useMemo(
+    () =>
+      (refreshedAccounts ?? financialAccounts).filter(
+        (a) => a.isActive !== false,
+      ),
+    [refreshedAccounts, financialAccounts],
+  );
+  const activeAccountsRef = useRef<FinancialAccountSelectItem[]>(
+    activeFinancialAccounts,
+  );
+  useEffect(() => {
+    activeAccountsRef.current = activeFinancialAccounts;
+  }, [activeFinancialAccounts]);
   const [paymentMethod, setPaymentMethod] = useState("CASH");
   const [isSplitPayment, setIsSplitPayment] = useState(false);
   const [splits, setSplits] = useState<SplitItem[]>([]);
@@ -87,12 +108,26 @@ export const DirectTransactionDrawer = ({
   );
 
   useEffect(() => {
+    let cancelled = false;
+    if (!isOpen) return;
+
+    getFinancialAccounts().then((res) => {
+      if (cancelled || res.error || !res.data) return;
+      setRefreshedAccounts(res.data);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
     if (isOpen) {
       setConcept("");
       setAmount("");
       setCategoryId("");
 
-      const defaultAcc = financialAccounts.find((a) => a.isDefault);
+      const defaultAcc = activeAccountsRef.current.find((a) => a.isDefault);
       setFinancialAccountId(defaultAcc ? defaultAcc.id : "");
       setPaymentMethod(defaultAcc?.allowedPaymentMethods?.[0] || "CASH");
       setIsSplitPayment(false);
@@ -395,7 +430,7 @@ export const DirectTransactionDrawer = ({
                   onChange={(e) => {
                     setIsSplitPayment(e.target.checked);
                     if (e.target.checked && splits.length === 0) {
-                      const defaultAcc = financialAccounts.find(
+                      const defaultAcc = activeFinancialAccounts.find(
                         (a) => a.isDefault,
                       );
                       setSplits([
@@ -435,13 +470,13 @@ export const DirectTransactionDrawer = ({
                   <PaymentDistributionsList
                     splits={splits}
                     setSplits={setSplits}
-                    financialAccounts={financialAccounts}
+                    financialAccounts={activeFinancialAccounts}
                   />
                   <Button
                     variant="outline"
                     className="w-full border-dashed"
                     onPress={() => {
-                      const defaultAcc = financialAccounts.find(
+                      const defaultAcc = activeFinancialAccounts.find(
                         (a) => a.isDefault,
                       );
                       setSplits([
@@ -471,7 +506,7 @@ export const DirectTransactionDrawer = ({
                     onChange={(key) => {
                       if (key) {
                         setFinancialAccountId(key as string);
-                        const selectedAcc = financialAccounts.find(
+                        const selectedAcc = activeFinancialAccounts.find(
                           (a) => a.id === key,
                         );
                         if (
@@ -506,19 +541,14 @@ export const DirectTransactionDrawer = ({
                       <ComboBox.Trigger />
                     </ComboBox.InputGroup>
                     <ComboBox.Popover>
-                      <ListBox items={financialAccounts}>
-                        {(item: FinancialAccountOption) => (
+                      <ListBox items={activeFinancialAccounts}>
+                        {(item: FinancialAccountSelectItem) => (
                           <ListBox.Item
                             key={item.id}
                             id={item.id}
                             textValue={item.name}
                           >
-                            <div className="flex flex-col">
-                              <span className="text-small">{item.name}</span>
-                              <span className="text-tiny text-default-400">
-                                {item.type} - {item.currency}
-                              </span>
-                            </div>
+                            <FinancialAccountOptionContent account={item} />
                           </ListBox.Item>
                         )}
                       </ListBox>
@@ -526,7 +556,7 @@ export const DirectTransactionDrawer = ({
                   </ComboBox>
 
                   {(() => {
-                    const selectedAcc = financialAccounts.find(
+                    const selectedAcc = activeFinancialAccounts.find(
                       (a) => a.id === financialAccountId,
                     );
                     const hasMethods =

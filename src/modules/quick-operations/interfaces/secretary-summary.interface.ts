@@ -26,6 +26,7 @@ export interface IPlayerMembershipSummary {
   disciplineName: string;
   categoryName: string;
   teamName: string;
+  seasonName?: string;
   status: string;
   startedAt: string;
   totalPendingAmount?: number;
@@ -36,6 +37,7 @@ export interface IStudentMembershipSummary {
   id: string;
   courseName: string;
   institutionName: string;
+  seasonName?: string;
   status: string;
   startedAt: string;
   shiftName?: string | null;

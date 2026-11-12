@@ -32,6 +32,7 @@ export const removePayment = async (
     updateTag("payments");
     // @ts-ignore
     updateTag("transactions");
+    updateTag("financial-accounts");
     // @ts-ignore
     updateTag("charges");
 
