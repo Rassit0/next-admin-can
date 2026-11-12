@@ -41,10 +41,14 @@ export const TeamMembershipsCard = ({
         <div className="flex items-center justify-between gap-2 w-full">
           <h3 className="font-semibold text-base sm:text-lg flex items-center gap-2 text-foreground">
             <span
-              className={`inline-flex items-center justify-center w-6 h-6 rounded-md border ${origin.headerIconBoxClass}`}
+              className={`inline-flex items-center justify-center w-6 h-6 rounded-md border shrink-0 ${origin.headerIconBoxClass}`}
               aria-hidden
             >
-              <HugeiconsIcon icon={origin.icon || UserGroupIcon} size={14} />
+              <HugeiconsIcon
+                icon={UserGroupIcon}
+                size={14}
+                className="shrink-0 text-current"
+              />
             </span>
             <span>Membresías Equipo</span>
           </h3>
