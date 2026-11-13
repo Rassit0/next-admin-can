@@ -33,12 +33,11 @@ export default async function AdminLayout({
       <Sidebar organization={organization} items={allowedItems} urlBase="/admin" />
       {/* <!-- Main Content Area --> */}
       <SidebarContentArea>
-        <div className="max-w-400 mx-auto">
-          {/* Container for ultra-wide screens */}
-          {/* <!-- TopNavBar --> */}
-          <Header user={context?.user} person={context?.person} />
-          {/* <!-- Dashboard Canvas --> */}
-          <main className="p-4 md:px-8 md:py-3 space-y-6 md:space-y-8">
+        {/* <!-- TopNavBar: ocupa siempre todo el ancho restante, pegado al borde del Sidebar --> */}
+        <Header user={context?.user} person={context?.person} />
+        {/* <!-- Dashboard Canvas --> */}
+        <div className="w-full max-w-400 mx-auto flex-1 flex flex-col min-w-0">
+          <main className="p-4 md:px-8 md:py-3 space-y-6 md:space-y-8 flex-1">
             {/* <!-- Header Section --> */}
             {children}
           </main>

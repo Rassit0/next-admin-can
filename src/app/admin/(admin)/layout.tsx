@@ -1,7 +1,6 @@
 import { itemsNavigation } from "@/config";
 import { filterNavigation } from "@/shared/helpers/permissions";
 import { NavigationConfig } from "@/config/navigation";
-import { getClubsOptions, SelectClub } from "@/modules/clubs";
 import { getInstitutionContext } from "@/modules/organizations";
 import {
   BottonNavBar,
@@ -10,8 +9,6 @@ import {
   Sidebar,
   SidebarContentArea,
 } from "@/ui";
-import { iconMap } from "@/utils";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { getCurrentUserContext } from "@/shared/helpers/server-context";
 
 export default async function AdminLayout({
@@ -41,12 +38,11 @@ export default async function AdminLayout({
       />
       {/* <!-- Main Content Area --> */}
       <SidebarContentArea>
-        <div className="max-w-400 mx-auto">
-          {/* Container for ultra-wide screens */}
-          {/* <!-- TopNavBar --> */}
-          <Header user={context?.user} person={context?.person} />
-          {/* <!-- Dashboard Canvas --> */}
-          <main className="page-content">
+        {/* <!-- TopNavBar: ocupa siempre todo el ancho restante, pegado al borde del Sidebar --> */}
+        <Header user={context?.user} person={context?.person} />
+        {/* <!-- Dashboard Canvas --> */}
+        <div className="w-full max-w-400 mx-auto flex-1 flex flex-col min-w-0">
+          <main className="page-content flex-1">
             {/* <!-- Header Section --> */}
             {children}
           </main>

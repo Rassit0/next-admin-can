@@ -15,11 +15,11 @@ export const SidebarContentArea = ({ children }: Props) => {
   return (
     <div
       className={clsx(
-        "min-h-screen flex flex-col transition-[margin] duration-300 motion-reduce:transition-none pb-20 lg:pb-0",
+        "min-h-screen flex flex-col transition-[margin] duration-300 motion-reduce:transition-none pb-20 lg:pb-0 min-w-0",
         isCollapsed ? "lg:ml-20" : "lg:ml-64",
       )}
     >
-      <div className="flex-1 w-full flex flex-col">{children}</div>
+      <div className="flex-1 w-full flex flex-col min-w-0">{children}</div>
       <GlobalFooter />
     </div>
   );
